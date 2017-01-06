@@ -48,9 +48,9 @@ def cjust(s,l):
 def reportheader(title,application):
     lines = []
     lines.append('* ' + ('=' * 80))
-    lines.append('* CodeHawk C Analyzer: ' + title)
+    lines.append('* KT Advance C Analyzer: ' + title)
     lines.append('* application: ' + application)
-    lines.append('* date       ; ' + str(datetime.datetime.now())[:19])
+    lines.append('* date       : ' + str(datetime.datetime.now())[:19])
     lines.append('* ' + ('=' * 80))
     return '\n'.join(lines)
 

@@ -112,6 +112,11 @@ class CFile():
         self._initialize_gvardefs()
         return self.gvardefs.values()
 
+    def getglobalvarinfos(self):
+        gvardecls = self.getgvardecls()
+        gvardefs = self.getgvardefs()
+        return [ v.getvarinfo() for v in (gvardecls + gvardefs) ]
+
     def getgfunctions(self):
         self._initialize_gfunctions()
         return self.gfunctions.values()

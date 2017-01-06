@@ -40,7 +40,7 @@ class CApplication():
         self.path = os.path.join(path,'ktadvance')
         self.srcpath = os.path.join(path,'sourcefiles')
         self.appname = appname
-        self.xnode = UF.get_linkfile_xnode(self.path,self.appname)
+        self.xnode = UF.get_targetfiles_xnode(self.path)
         self.filenames = {}          # file index -> filename
         self.files = {}              # filename -> CFile
         self.compinfos = {}          # ckey -> CCompInfo 
@@ -48,6 +48,8 @@ class CApplication():
         self._initialize()
 
     def getfilenames(self): return self.filenames.values()
+
+    def getpath(self): return self.path
 
     def getfiles(self):
 		self._initialize_files()
@@ -66,7 +68,6 @@ class CApplication():
         for i in self.filenames:
             if self.filenames[i] == fname: return i
             
-
     def getsrcfile(self,fname):
         return CSrcFile(self,os.path.join(self.srcpath,fname))
 
@@ -100,6 +101,12 @@ class CApplication():
 		self._initialize_varinfos()
 		return self.varinfos.values()
 
+    def getfileglobalvarinfos(self):
+        result = []
+        def f(f):result.extend(f.getglobalvarinfos())
+        self.fileiter(f)
+        return result
+
     '''
 
     def get_ppo_results(self):
@@ -119,8 +126,7 @@ class CApplication():
     '''
         
     def _initialize(self):
-        cfiles = self.xnode.find('c-files')
-        for c in cfiles.findall('c-file'):
+        for c in self.xnode.findall('c-file'):
             id = c.get('id')
             if id is None:
                 print('No id found for ' + c.get('name'))

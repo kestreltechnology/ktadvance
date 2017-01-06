@@ -38,6 +38,9 @@ class CVarInfo():
         self.location = CLocation(self.xnode.find('vdecl'))
         self.hasglobalid = hasglobalid
 
+    '''Globally unique id.'''
+    def getid(self): return (self.cappfile.getindex(),self.getvid())
+
     def getvid(self): return int(self.xnode.get('vid'))
 
     def getname(self): return self.xnode.get('vname')

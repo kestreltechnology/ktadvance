@@ -48,16 +48,35 @@ def get_linkfile_filename(path,appname):
 def get_linkfile_xnode(path,appname):
     filename = get_linkfile_filename(path,appname)
     return get_xnode(filename,'target','Link file')
+
+def get_targetfiles_filename(path):
+    return os.path.join(path,'target_files.xml')
+
+def get_targetfiles_xnode(path):
+    filename = get_targetfiles_filename(path)
+    return get_xnode(filename,'c-files','File that holds the names of source files')
         
 # ------------------------------------------------------------------- files ----
 
 def get_cfile_filename(path,cfilename):
     if cfilename.endswith('.c'):
         return os.path.join(path,cfilename[:-2] + '_cfile.xml')
+    else:
+        return os.path.join(path,cfilename + '_cfile.xml')
 
 def get_cfile_xnode(path,cfilename):
     filename = get_cfile_filename(path,cfilename)
     return get_xnode(filename,'c-file','C source file')
+
+def get_cxreffile_filename(path,cfilename):
+    if cfilename.endswith('.c'):
+        return os.path.join(path,cfilename[:-2] + '_gxrefs.xml')
+    else:
+        return os.path.join(path,cfilename + '_gxrefs.xml')
+
+def get_cxreffile_xnode(path,cfilename):
+    filename = get_cxreffile_filename(path,cfilename)
+    return get_xnode(filename,'global-xrefs','File with global cross references')
 
 # ----------------------------------------------------------------- functions --
 

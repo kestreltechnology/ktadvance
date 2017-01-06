@@ -199,7 +199,12 @@ class CExp():
         self.cappfile = cappfile            # CApplication / CFile
         self.xnode = xnode
 
-    def __str__(self): return self.xnode.get('xstr')
+    def __str__(self): 
+        if 'xstr' in self.xnode.attrib:
+            return self.xnode.get('xstr')
+        if self.isintegerconstant():
+            return str(self.getconstantintegervalue())
+        return '??'
 
     def gettag(self): return self.xnode.get('etag')
 
