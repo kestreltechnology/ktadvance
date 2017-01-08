@@ -250,5 +250,64 @@ class CExp():
 
     def _equalsizeof(self,other):
         return self.getsizeoftype().equal(other.getsizeoftype())
+
+
+class CLval():
+
+    def __init__(self,cappfile,xnode):
+        self.cappfile = cappfile
+        self.xnode = xnode
+
+    def getlhost(self): 
+        return CLhost(self.cappfile,self.xnode.find('lhost'))
+
+    def getoffset(self):
+        xonode = self.xnode.find('offset')
+        if not xonode is None:
+            return COffset(self.cappfile,xonode)
+
+    def __str__(self):
+        host = self.getlhost()
+        offset = self.getoffset()
+        if offset is None: 
+            return str(host)
+        return str(host) + str(offset)
         
+
+
+class CLhost():
+
+    def __init__(self,cappfile,xnode):
+        self.cappfile = cappfile
+        self.xnode = xnode
+
+    def isvar(self):
+        return not self.xnode.find('var') is None
+
+    def ismem(self):
+        return not self.xnode.find('mem') is None
+
+    def __str__(self):
+        if self.isvar(): return self.xnode.find('var').get('vname')
+        return ('*' + str(CExp(self.cappfile,self.xnode.find('mem'))))
         
+
+class COffset():
+
+    def __init__(self,cappfile,xnode):
+        self.cappfile = cappfile
+        self.xnode = xnode
+
+    def isfield(self):
+        return not self.xnode.find('field') is None
+
+    def isindex(self):
+        return not self.xnode.find('index') is None
+
+    def __str__(self):
+        if self.isfield():
+            return ('.' + self.xnode.find('field').get('fname'))
+        if self.isindex():
+            exp = CExp(self.cappfile,self.xnode.find('index'))
+            return ('[' + str(exp) + ']')
+        return ''
