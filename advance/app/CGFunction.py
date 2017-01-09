@@ -45,6 +45,8 @@ class CGFunction():
 
     def getname(self): return self.getvarinfo().getname()
 
+    def getlinenr(self): return self.varinfo.getline()
+
     def __str__(self):
         if len(self.args) == 0:
             return (str(self.returnty) + ' ' + self.varinfo.getname() + '()')

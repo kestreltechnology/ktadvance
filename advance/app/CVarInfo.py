@@ -51,5 +51,7 @@ class CVarInfo():
 
     def getlocation(self): return self.location
 
+    def getline(self):return self.location.getline()
+
     def __str__(self):
         return self.getname()

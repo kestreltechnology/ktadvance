@@ -36,10 +36,9 @@ from advance.source.CSrcFile import CSrcFile
 class CApplication():
     '''Primary access point for source code and analysis results.'''
 
-    def __init__(self,path,appname):
+    def __init__(self,path):
         self.path = os.path.join(path,'ktadvance')
         self.srcpath = os.path.join(path,'sourcefiles')
-        self.appname = appname
         self.xnode = UF.get_targetfiles_xnode(self.path)
         self.filenames = {}          # file index -> filename
         self.files = {}              # filename -> CFile
@@ -74,6 +73,9 @@ class CApplication():
     def fileiter(self,f):
         for file in self.getfiles(): f(file)
 
+    def filenameiter(self,f):
+        for fname in self.filenames.values(): f(fname)
+
     def getexternals(self):
 		result = {}
 		for e in self.xnode.find('global-definitions').find('external-varinfos'):
@@ -106,6 +108,9 @@ class CApplication():
         def f(f):result.extend(f.getglobalvarinfos())
         self.fileiter(f)
         return result
+
+    def getfile_ppo_results(self,filename):
+        return self.file(filename).get_ppo_results()
 
     '''
 
