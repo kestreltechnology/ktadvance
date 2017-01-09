@@ -25,8 +25,12 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+from advance.app.CLocation import CLocation
 from advance.app.CFunctionBody import CFunctionBody
 from advance.app.CVarInfo import CVarInfo
+
+from advance.api.CFunctionApi import CFunctionApi
+from advance.proof.CFunctionProofs import CFunctionProofs
 
 class CFunction():
     '''Function implementation.'''
@@ -36,9 +40,8 @@ class CFunction():
         self.xnode = xnode
         self.formals = {}                            # vid -> CVarInfo
         self.locals = {}                             # vid -> CVarInfo
-        '''
         self.proofs = CFunctionProofs(self)          # CFunctionProofs object
-        '''
+        self.api = CFunctionApi(self)                # CFunctionApi object
         self._initialize()
 
     def getname(self):
@@ -47,21 +50,24 @@ class CFunction():
     def getid(self):
         return int(self.xnode.find('svar').get('vid'))
 
+    def getapi(self): return self.api
+
+    def getlocation(self):
+        return CLocation(self.xnode.find('svar').find('vdecl'))
+
+    def getlinenr(self): return self.getlocation().getline()
+
     def getformals(self): return self.formals.values()
 
     def getlocals(self): return self.locals.values()
 
     def getbody(self): return CFunctionBody(self,self.xnode.find('sbody'))
 
-    '''
-
     def getproofs(self): return self.proofs
 
     def get_ppo_results(self): return self.proofs.get_ppo_results()
 
     def get_open_ppos(self): return self.proofs.get_open_ppos()
-
-    '''
 
     def _initialize(self):
         for v in self.xnode.find('sformals').findall('varinfo'):
