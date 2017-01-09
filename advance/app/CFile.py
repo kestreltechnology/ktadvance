@@ -35,6 +35,8 @@ from advance.app.CGType import CGType
 from advance.app.CGVarDecl import CGVarDecl
 from advance.app.CGVarDef import CGVarDef
 
+from advance.source.CSrcFile import CSrcFile
+
 class CFile():
     '''C File level declarations.'''
 
@@ -52,12 +54,18 @@ class CFile():
         self.gfunctions = {}        # vid -> CGFunction
         self.functions = {}         # vid -> CFunction
         self.functionnames = {}     # functionname -> vid
+        self.sourcefile = None      # CSrcFile
 
     def getindex(self): return self.index
 
     def getxrefs(self): return self.xrefs
 
     def getfilename(self): return self.xnode.get('filename')
+
+    def getsourceline(self,n):
+        self._initializesource()
+        if not self.sourcefile is None:
+            return self.sourcefile.getline(n)
 
     def getgtypes(self):
         self._initialize_gtypes()
@@ -115,7 +123,8 @@ class CFile():
     def getglobalvarinfos(self):
         gvardecls = self.getgvardecls()
         gvardefs = self.getgvardefs()
-        return [ v.getvarinfo() for v in (gvardecls + gvardefs) ]
+        gfundecls = self.getgfunctions()
+        return [ v.getvarinfo() for v in (gvardecls + gvardefs + gfundecls) ]
 
     def getgfunctions(self):
         self._initialize_gfunctions()
@@ -141,8 +150,6 @@ class CFile():
     def fniter(self,f):
         for fn in self.getfunctions(): f(fn)
 
-    '''
-
     def get_ppo_results(self):
         results = {}
         def add(t,m,v):
@@ -164,8 +171,6 @@ class CFile():
             results[fn.getname()] = openppos
         self.fniter(f)
         return results
-
-    '''
 
     def _initialize_gtypes(self):
         if len(self.gtypes) > 0: return
@@ -227,4 +232,7 @@ class CFile():
         self._initialize_gfunctions()
         for vid in self.gfunctions.keys():
             self._initialize_function(vid)
-        
+
+    def _initializesource(self):
+        if self.sourcefile is None:
+            self.sourcefile = self.capp.getsrcfile(self.getfilename())
