@@ -33,6 +33,21 @@ class CSrcFile():
     def __init__(self,capp,fname):
         self.capp = capp
         self.fname = fname
+        self.lines = {}
+        if not self.fname.endswith('.c'): self.fname = fname + '.c'
 
     def getlinecount(self):
         return sum(1 for line in open(self.fname))
+
+    def getline(self,n):
+        self._initialize()
+        if n <= len(self.lines):
+            return (str(n) + '  ' + self.lines[n])
+
+    def _initialize(self):
+        if len(self.lines) > 0: return
+        n = 1
+        with open(self.fname) as f:
+            for line in f:
+                self.lines[n] = line
+                n += 1
