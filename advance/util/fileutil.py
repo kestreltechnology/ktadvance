@@ -42,13 +42,6 @@ def get_xnode(filename,rootnode,desc,show=True):
 
 # ------------------------------------------------------------------------------
 
-def get_linkfile_filename(path,appname):
-    return os.path.join(path,appname + '_linked.xml')
-
-def get_linkfile_xnode(path,appname):
-    filename = get_linkfile_filename(path,appname)
-    return get_xnode(filename,'target','Link file')
-
 def get_targetfiles_filename(path):
     return os.path.join(path,'target_files.xml')
 
@@ -58,11 +51,20 @@ def get_targetfiles_xnode(path):
         
 # ------------------------------------------------------------------- files ----
 
+def get_cfilenamebase(cfilename):
+    if cfilename.endswith('.c'): return cfilename[:-2]
+    return cfilename
+
 def get_cfile_filename(path,cfilename):
-    if cfilename.endswith('.c'):
-        return os.path.join(path,cfilename[:-2] + '_cfile.xml')
-    else:
-        return os.path.join(path,cfilename + '_cfile.xml')
+    cfilename = get_cfilenamebase(cfilename)
+    return os.path.join(path,cfilename + '_cfile.xml')
+
+def get_cfile_directory(path,cfilename):
+    return os.path.join(path,get_cfilenamebase(cfilename))
+
+def get_cfile_logfiles_directory(path,cfilename):
+    logpath = os.path.join(path,'logfiles')
+    return os.path.join(logpath,get_cfilenamebase(cfilename))
 
 def get_cfile_xnode(path,cfilename):
     filename = get_cfile_filename(path,cfilename)
@@ -80,32 +82,47 @@ def get_cxreffile_xnode(path,cfilename):
 
 # ----------------------------------------------------------------- functions --
 
-def get_cfun_filename(path,cfilename,fname):
+def get_cfun_basename(path,cfilename,fname):
     cfiledir = os.path.join(path,cfilename)
     basename = os.path.basename(cfilename)
-    return os.path.join(cfiledir,basename + '_' + fname + '_cfun.xml')
+    return os.path.join(cfiledir,basename + '_' + fname)
+
+def get_cfun_filename(path,cfilename,fname):
+    return (get_cfun_basename(path,cfilename,fname) + '_cfun.xml')
 
 def get_cfun_xnode(path,cfilename,fname):
     filename = get_cfun_filename(path,cfilename,fname)
     return get_xnode(filename,'function','C source function file')
 
+def get_api_filename(path,cfilename,fname):
+    return (get_cfun_basename(path,cfilename,fname) + '_api.xml')
+
+def get_api_xnode(path,cfilename,fname):
+    filename = get_api_filename(path,cfilename,fname)
+    return get_xnode(filename,'function','Function api file')
+
+def get_invs_filename(path,cfilename,fname):
+    return (get_cfun_basename(path,cfilename,fname) + '_invs.xml')
+
 def get_ppo_filename(path,cfilename,fname):
-    cfiledir = os.path.join(path,cfilename)
-    basename = os.path.basename(cfilename)
-    return os.path.join(cfiledir,basename + '_' + fname + '_ppo.xml')
+    return (get_cfun_basename(path,cfilename,fname) + '_ppo.xml')
 
 def get_ppo_xnode(path,cfilename,fname):
     filename = get_ppo_filename(path,cfilename,fname)
     return get_xnode(filename,'function','Primary proof obligations file')
 
 def get_pev_filename(path,cfilename,fname):
-    cfiledir = os.path.join(path,cfilename)
-    basename = os.path.basename(cfilename)
-    return os.path.join(cfiledir,basename + '_' + fname + '_pev.xml')
+    return (get_cfun_basename(path,cfilename,fname) + '_pev.xml')
 
 def get_pev_xnode(path,cfilename,fname):
     filename = get_pev_filename(path,cfilename,fname)
     return get_xnode(filename,'function','Primary evidence file')
+
+def get_spo_filename(path,cfilename,fname):
+    return (get_cfun_basename(path,cfilename,fname) + '_spo.xml')
+
+def get_sev_filename(path,cfilename,fname):
+    return (get_cfun_basename(path,cfilename,fname) + '_sev.xml')
 
 # --------------------------------------------------------------- source code --
 
