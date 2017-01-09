@@ -28,7 +28,9 @@
 from advance.app.CContext import CContext
 from advance.app.CLocation import CLocation
 
-from advance.proof.CPOPredicate import CPOPredicate
+import advance.proof.CPOUtil as P
+
+'''
 from advance.proof.CPOPredicateCast import CPOPredicateCast
 from advance.proof.CPOPredicateIndexLowerBound import CPOPredicateIndexLowerBound
 from advance.proof.CPOPredicateIndexUpperBound import CPOPredicateIndexUpperBound
@@ -43,6 +45,7 @@ from advance.proof.CPOPredicateValidMem import CPOPredicateValidMem
 from advance.proof.CPOPredicateWidthOverflow import CPOPredicateWidthOverflow
 from advance.proof.CPOPredicateLowerBound import CPOPredicateLowerBound
 from advance.proof.CPOPredicateUpperBound import CPOPredicateUpperBound
+'''
 
 import advance.util.printutil as UP
 
@@ -65,6 +68,8 @@ class CFunctionPPO():
 
     def getpredicate(self): 
         pnode = self.xnode.find('predicate')
+        return P.getpredicate(self.cfun,pnode)
+    '''
         tag = pnode.get('tag')
         if tag == 'cast':
             return CPOPredicateCast(self.cfun,pnode)
@@ -96,6 +101,7 @@ class CFunctionPPO():
             return CPOPredicateUpperBound(self.cfun,pnode)
         else:
             return CPOPredicate(self.cfun,pnode)
+    '''
 
     def getcontext(self):
         return CContext(self.cfun,self.xnode.find('context'))
