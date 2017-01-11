@@ -42,8 +42,6 @@ class CApplication():
         self.xnode = UF.get_targetfiles_xnode(self.path)
         self.filenames = {}          # file index -> filename
         self.files = {}              # filename -> CFile
-        self.compinfos = {}          # ckey -> CCompInfo 
-        self.varinfos = {}           # vid -> CVarInfo         
         self._initialize()
 
     def getfilenames(self): return self.filenames.values()
@@ -85,10 +83,6 @@ class CApplication():
 			if vfile not in result: result[vfile] = []
 			result[vfile].append((vname,summarized))
 		return result
-
-    def getcompinfos(self):
-		self._initialize_compinfos()
-		return self.compinfos
 
     def getcompinfo(self,fileindex,ckey):
         return self.getfilebyindex(fileindex).getcompinfo(ckey)
@@ -137,20 +131,6 @@ class CApplication():
                 print('No id found for ' + c.get('name'))
             else:
                 self.filenames[int(id)] = c.get('name')
-
-    def _initialize_compinfos(self):
-		if len(self.compinfos) > 0: return
-		cinfos = self.xnode.find('global-definitions').find('compinfos')
-		for c in cinfos.findall('compinfo'):
-			ckey = int(c.get('ckey'))
-			self.compinfos[ckey] = CCompInfo(self,c,hasglobalid=True)
-
-    def _initialize_varinfos(self):
-		if len(self.varinfos) > 0: return
-		vinfos = self.xnode.find('global-definitions').find('varinfos')
-		for v in vinfos.findall('varinfo'):
-			vid = int(v.get('vid'))
-			self.varinfos[vid] = CVarInfo(self,v)
 
     def _initialize_files(self):
 		for i,f in self.filenames.items(): self._initialize_file(i,f)
