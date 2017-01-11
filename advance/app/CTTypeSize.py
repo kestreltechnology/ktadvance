@@ -31,6 +31,7 @@ class CTTypeSize():
 
     def __init__(self):
         self.basetypes = {}
+        self.unknowns = []
 
     def add(self,t,count=1):
         if not t in self.basetypes: self.basetypes[t] = 0
@@ -43,6 +44,10 @@ class CTTypeSize():
     def addsize(self,other):
         for (t,c) in other.getitems():
             self.add(t,count=c)
+        self.unknowns += other.getunknowns()
+
+    def addunknown(self,u):
+        self.unknowns.append(u)
 
     def get(self,t):
         if t in self.basetypes: return self.basetypes[t]
@@ -56,12 +61,20 @@ class CTTypeSize():
         if self.getcount() != other.getcount(): return False
         for t in self.basetypes:
             if self.get(t) != other.get(t): return False
-        return True
+        return (self.getunknowncount() == other.getunknowncount())
+
+    def hasunknowns(self): return len(self.unknowns) > 0
+
+    def getunknowns(self): return self.unknowns[:]
+
+    def getunknowncount(self): return len(self.unknowns)
 
     def __str__(self):
         lines = []
         for t in self.basetypes:
             lines.append(str(t) + ':' + str(self.basetypes[t]))
+        if len(self.unknowns) > 0:
+            lines.append('(unknowns:[' + ';'.join(str(u) for u in self.unknowns) + '])')
         if len(lines) > 0:
             return ', '.join(lines)
         return 'no basetypes found'

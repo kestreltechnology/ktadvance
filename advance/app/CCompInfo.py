@@ -28,6 +28,7 @@
 import hashlib
 
 from advance.app.CFieldInfo import CFieldInfo
+from advance.app.CTTypeSize import CTTypeSize
 
 class CCompInfo():
     '''Global struct definition.'''
@@ -56,6 +57,12 @@ class CCompInfo():
     def getfieldnames(self): return self.fields.keys()
 
     def getfieldcount(self): return len(self.fields)
+
+    def getsize(self):
+        size = CTTypeSize()
+        for (_,f) in self.getfields():
+            size.addsize(f.gettype().getsize())
+        return size
 
     def isstructurallycompatible(self,other):
         return (self.getmd5hash() == other.getmd5hash())

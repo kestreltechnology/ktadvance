@@ -27,6 +27,8 @@
 
 from advance.app.CTTypeSize import CTTypeSize
 
+opdisplay = { 'minusa':' - ', 'plusa':' + ', 'mult':' * ' }
+
 class CTType():
     '''Variable type.'''
 
@@ -55,7 +57,7 @@ class CTType():
     def getarraybasetype(self):
         return CTType(self.cappfile,self.xnode.find('typ'))
 
-    def getarraysize(self):
+    def getarraysizeexpr(self):
         xsize = self.xnode.find('exp')
         if not xsize is None:
             return CExp(self.cappfile,xsize)
@@ -117,12 +119,17 @@ class CTType():
         for (_,f) in c.getfields():
             size.addsize(f.gettype().getsize())
 
+    '''Add array size
+       If no expression is provided, add size of one element. '''
     def addarraysize(self,size):
-        arraybasesize = self.getarraybasetype().getsize()
-        arrayelementcount = self.getarraysize()
-        if arrayelementcount.isintegerconstant():
-            arraybasesize.multiply(arrayelementcount.getconstantintegervalue())
-        size.addsize(arraybasesize)
+        arraysize = self.getarraybasetype().getsize()
+        arraysizeexpr = self.getarraysizeexpr()
+        if not arraysizeexpr is None:
+            if arraysizeexpr.isintegerconstant():
+                arraysize.multiply(arraysizeexpr.getconstantintegervalue())
+            else: arraysize.addunknown(arraysizeexpr)
+        else: arraysize.addunknown('no-size-expr')
+        size.addsize(arraysize)
 
     def _equalinttype(self,t1,t2): return t1.getikind() == t2.getikind()
 
@@ -154,8 +161,8 @@ class CTType():
         tt1 = t1.getarraybasetype()
         tt2 = t2.getarraybasetype()
         if tt1.groundequaltype(tt2):
-            size1 = t1.getarraysize()
-            size2 = t2.getarraysize()
+            size1 = t1.getarraysizeexpr()
+            size2 = t2.getarraysizeexpr()
             if size1 is None or size2 is None: return False
             return size1.equal(size2) or size1.equalvalue(size2)
         return False
@@ -164,8 +171,9 @@ class CTType():
         tt1 = t1.getarraybasetype()
         tt2 = t2.getarraybasetype()
         if tt1.shallowcompatible(tt2,incompatibles):
-            size1 = t1.getarraysize()
-            size2 = t2.getarraysize()
+            size1 = t1.getarraysizeexpr()
+            size2 = t2.getarraysizeexpr()
+            if size1 is None and size2 is None: return True
             if size1 is None or size2 is None: return False
             return size1.equal(size2) or size1.equalvalue(size2)
         return False
@@ -233,6 +241,9 @@ class CExp():
             return self.xnode.get('xstr')
         if self.isintegerconstant():
             return str(self.getconstantintegervalue())
+        tag = self.gettag()
+        if tag == 'binop': return self._str_binop()
+        if tag == 'sizeof': return self._str_sizeof()
         return '??'
 
     def gettag(self): return self.xnode.get('etag')
@@ -243,7 +254,8 @@ class CExp():
 
     def getsubexp2(self): return CExp(self.cappfile,self.xnode.find('exp2'))
 
-    def getsizeoftype(self): return CTType(self.cappfile,self.xnode.find('typ'))
+    def getsizeoftype(self): 
+        return CTType(self.cappfile,self.xnode.find('typ')).getsize()
 
     def isconstant(self): return self.gettag() == 'const'
 
@@ -279,6 +291,15 @@ class CExp():
 
     def _equalsizeof(self,other):
         return self.getsizeoftype().equal(other.getsizeoftype())
+
+    def _str_binop(self):
+        binop = self.getbinop()
+        if binop in opdisplay:
+            binop = opdisplay[binop]
+        return (str(self.getsubexp1()) + binop + str(self.getsubexp2()))
+
+    def _str_sizeof(self):
+        return ('sizeof(' + str(self.getsizeoftype()) + ')')
 
 
 class CLval():
