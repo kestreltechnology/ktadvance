@@ -96,7 +96,11 @@ class CFile():
             print(str(key))
 
     def getcompinfos(self):
-        return [ c.getcompinfo() for c in (self.getgcomptagdecls() + self.getgcomptagdefs()) ]
+        result = {}
+        for c in (self.getgcomptagdecls() + self.getgcomptagdefs()):
+            if c.getcompinfo().getkey() in result: continue
+            result[c.getcompinfo().getkey()] = c.getcompinfo()
+        return result.values()
 
     def getcompinfo(self,key):
         comptag = self.getgcomptag(key)
