@@ -25,6 +25,8 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+from advance.app.CTTypeSize import CTTypeSize
+
 class CTType():
     '''Variable type.'''
 
@@ -66,7 +68,7 @@ class CTType():
                 return etype.expand()
         return self
 
-    def shallowcompatible(self,other,incompatibles=[]):
+    def shallowcompatible(self,other,incompatibles=set([])):
         t1 = self.expand()
         t2 = other.expand()
         if t1 is None or t2 is None: return False
@@ -97,6 +99,31 @@ class CTType():
             return False
         return False
 
+    def getsize(self):
+        size = CTTypeSize()
+        t = self.expand()
+        if not t is None:
+            tag = t.gettag()
+            if tag == 'tint': size.add(t.getikind())
+            if tag == 'tfloat': size.add(t.getfkind())
+            if tag == 'tptr': size.add('ptr')
+            if tag == 'tfun': size.add('ptr')
+            if tag == 'tcomp': t.addcompsize(size)
+            if tag == 'tarray': t.addarraysize(size)
+        return size
+
+    def addcompsize(self,size):
+        c = self.getfile().getcompinfo(self.getckey())
+        for (_,f) in c.getfields():
+            size.addsize(f.gettype().getsize())
+
+    def addarraysize(self,size):
+        arraybasesize = self.getarraybasetype().getsize()
+        arrayelementcount = self.getarraysize()
+        if arrayelementcount.isintegerconstant():
+            arraybasesize.multiply(arrayelementcount.getconstantintegervalue())
+        size.addsize(arraybasesize)
+
     def _equalinttype(self,t1,t2): return t1.getikind() == t2.getikind()
 
     def _equalfloattype(self,t1,t2): return t1.getfkind() == t2.getfkind()
@@ -104,7 +131,7 @@ class CTType():
     def _equalptrtype(self,t1,t2):
         return t1.getpointedtotype().equal(t2.getpointedtotype())
 
-    def _shallowcompatibleptrtype(self,t1,t2,incompatibles=[]):
+    def _shallowcompatibleptrtype(self,t1,t2,incompatibles=set([])):
         return t1.getpointedtotype().shallowcompatible(t2.getpointedtotype(),incompatibles)
 
     def _equalcomptype(self,t1,t2):
@@ -112,14 +139,16 @@ class CTType():
             return t1.getckey() == t2.getckey()
         return False
 
-    def _shallowcompatiblecomptype(self,t1,t2,incompatibles=[]):
+    def _shallowcompatiblecomptype(self,t1,t2,incompatibles=set([])):
         c1 = t1.getfile().getcompinfo(t1.getckey())
         c2 = t2.getfile().getcompinfo(t2.getckey())
-        if (((c1.getid(),c2.getid()) in incompatibles) or
-            (c2.getid(),c1.getid()) in incompatibles): return False
+        id1 = c1.getid()
+        id2 = c2.getid()
+        if (((id1,id2) in incompatibles) or ((id2,id1) in incompatibles)): 
+            return False
         return c1.isstructurallycompatible(c2)
 
-    def _equalfuntype(self,t1,t2): return False
+    def _equalfuntype(self,t1,t2): return True
 
     def _equalarraytype(self,t1,t2):
         tt1 = t1.getarraybasetype()
@@ -131,7 +160,7 @@ class CTType():
             return size1.equal(size2) or size1.equalvalue(size2)
         return False
         
-    def _shallowcompatiblearraytype(self,t1,t2,incompatibles=[]):
+    def _shallowcompatiblearraytype(self,t1,t2,incompatibles=set([])):
         tt1 = t1.getarraybasetype()
         tt2 = t2.getarraybasetype()
         if tt1.shallowcompatible(tt2,incompatibles):
