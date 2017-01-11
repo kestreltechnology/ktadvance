@@ -42,7 +42,6 @@ class CLinker():
         self.globalcompinfos = {}
         self.compinfoxrefs = {}
         self.varinfoxrefs = {}
-        print('File compinfos: ' + str(len(self.compinfos)))
 
     def getfilecompinfoxrefs(self,fileindex):
         result = {}
@@ -59,6 +58,9 @@ class CLinker():
     def linkcompinfos(self):
         self._checkcompinfopairs()
 
+        print('Found ' + str(len(self.possiblycompatiblestructs)) + 
+              ' compatible combinations')
+
         ppcount = len(self.possiblycompatiblestructs) + len(self.notcompatiblestructs)
         pcount = len(self.possiblycompatiblestructs)
 
@@ -66,6 +68,7 @@ class CLinker():
             ppcount = pcount
             self._checkcompinfopairs()
             pcount = len(self.possiblycompatiblestructs)
+            print('Found ' + str(pcount) + ' compatible combinations')
 
         gcomps = UnionFind()
         for c in self.compinfos: gcomps[ c.getid() ]
@@ -74,6 +77,8 @@ class CLinker():
         eqclasses = set([])
         for c in self.compinfos:
             eqclasses.add(gcomps[c.getid()])
+
+        print('Created ' + str(len(eqclasses)) + ' globally unique struct ids')
 
         gckey = 1
         for c in sorted(eqclasses):
@@ -103,7 +108,7 @@ class CLinker():
     def _checkcompinfopairs(self):
         self.possiblycompatiblestructs = []
         compinfos = sorted(self.compinfos,key=lambda(c):c.getid())
-        print('Checking ' + str(len(compinfos)))
+        print('Checking all combinations of ' + str(len(compinfos)) + ' struct definitions')
         for (c1,c2) in itertools.combinations(compinfos,2):
             if c1.getid() == c2.getid(): continue
             pair = (c1.getid(),c2.getid())
@@ -111,7 +116,6 @@ class CLinker():
                 if pair in self.notcompatiblestructs: continue
                 cc = CompCompatibility(c1,c2)
                 if cc.are_shallow_compatible(self.notcompatiblestructs):
-                    print(str(c1.getid()) + ', ' + str(c2.getid()) + ' possibly compatible')
                     self.possiblycompatiblestructs.append(pair)
                 else:
                     self.notcompatiblestructs.add(pair)
