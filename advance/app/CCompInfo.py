@@ -25,6 +25,8 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import hashlib
+
 from advance.app.CFieldInfo import CFieldInfo
 
 class CCompInfo():
@@ -35,6 +37,7 @@ class CCompInfo():
         self.xnode = xnode
         self.hasglobalid = hasglobalid
         self.fields = {}                # (seqno,name) -> CFieldInfo
+        self.md5hash = ''       # hash of fieldnames to check structural compatibility
         self._initialize()
 
     def getfile(self): return self.cappfile
@@ -46,6 +49,8 @@ class CCompInfo():
                                  
     def getname(self): return self.xnode.get('cname')
 
+    def getmd5hash(self): return self.md5hash
+
     def getfields(self): return self.fields.items()
 
     def getfieldnames(self): return self.fields.keys()
@@ -53,8 +58,7 @@ class CCompInfo():
     def getfieldcount(self): return len(self.fields)
 
     def isstructurallycompatible(self,other):
-        if self.getfieldcount() == other.getfieldcount():
-            return (set(self.getfieldnames()) == set(other.getfieldnames()))
+        return (self.getmd5hash() == other.getmd5hash())
 
     def getfield(self,name):
         for (i,fieldname) in self.fields:
@@ -68,7 +72,10 @@ class CCompInfo():
         return '\n'.join(lines)
 
     def _initialize(self):
+        h = hashlib.md5()
         for i,f in enumerate(self.xnode.find('cfields').findall('fieldinfo')):
             name = f.get('fname')
+            h.update(name)
             self.fields[(i,name)] = (CFieldInfo(self,f))
+        self.md5hash = h.hexdigest()
     
