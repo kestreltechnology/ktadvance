@@ -38,14 +38,13 @@ from advance.linker.CLinker import CLinker
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('path',help='directory that holds ktadvance directory')
-    parser.add_argument('app',help='name of the application')
     args = parser.parse_args()
     return args    
 
 if __name__ == '__main__':
 
     args = parse()
-    capp = CApplication(args.path,args.app)
+    capp = CApplication(args.path)
     linker = CLinker(capp)
 
     linker.linkcompinfos()
