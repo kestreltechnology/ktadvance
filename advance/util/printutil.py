@@ -45,11 +45,10 @@ def cjust(s,l):
     suflen = l - (length + prelen)
     return ((' ' * prelen) + s + (' ' * suflen))
 
-def reportheader(title,application):
+def reportheader(title):
     lines = []
     lines.append('* ' + ('=' * 80))
     lines.append('* KT Advance C Analyzer: ' + title)
-    lines.append('* application: ' + application)
     lines.append('* date       : ' + str(datetime.datetime.now())[:19])
     lines.append('* ' + ('=' * 80))
     return '\n'.join(lines)

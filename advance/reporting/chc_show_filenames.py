@@ -34,17 +34,16 @@ from advance.app.CApplication import CApplication
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('path',help='directory that holds ktadvance directory')
-    parser.add_argument('app',help='name of the application')
     args = parser.parse_args()
     return args
 
 if __name__ == '__main__':
 
     args = parse()
-    capp = CApplication(args.path,args.app)
+    capp = CApplication(args.path)
     cfiles = capp.getfilenames()
     total = 0
-    print(UP.reportheader('Source files included',args.app))
+    print(UP.reportheader('Source files included'))
     for f in sorted(cfiles): 
         linecount = capp.getsrcfile(f).getlinecount()
         total += linecount
