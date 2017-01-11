@@ -33,11 +33,6 @@ class CompCompatibility():
         self.comp1 = comp1                # CCompInfo
         self.comp2 = comp2                # CCompInfo
 
-    '''Return true if they have the same key and originate from the same source file.'''
-    def are_identical(self):
-        return ((self.comp1.getkey() == self.comp2.getkey()) and 
-                (self.comp1.getfile().getindex() == self.comp2.getfile().getindex()))
-
     '''Return true if they have the same fields (but not necessarily compatible field types)'''
     def are_structurally_compatible(self):
         if (self.comp1.getfieldcount() == self.comp2.getfieldcount()):
@@ -47,13 +42,13 @@ class CompCompatibility():
     '''Return true if they are structurally compatible and if the types of their fields
     are structurally compatible, taking into account a list of pairs of struct tags
     that are explicitly declared incompatible.'''
-    def are_shallow_compatible(self,incompatibles=[]):
+    def are_shallow_compatible(self,incompatibles=set([])):
         if self.are_structurally_compatible():
             return self._forall_shallowcompatiblefieldtype(incompatibles)
         return False
 
     def __str__(self):
-        if self.are_identical(): return 'identical'
+        if self.comp1.getid() == self.comp2.getid(): return 'identical'
         if self.are_shallow_compatible():
             return 'shallow compatible (without incompatibles declared)'
         if self.are_structurally_compatible():
@@ -69,7 +64,7 @@ class CompCompatibility():
                 return ('t1: ' + str(t1) + '\nt2: ' + str(t2))
         return 'no incompatible fields found'
 
-    def _forall_shallowcompatiblefieldtype(self,incompatibles=[]):
+    def _forall_shallowcompatiblefieldtype(self,incompatibles=set([])):
         fieldpairs = zip(sorted(self.comp1.getfields()),sorted(self.comp2.getfields()))
         for ((_,finfo1),(_,finfo2)) in fieldpairs:
             t1 = finfo1.gettype()

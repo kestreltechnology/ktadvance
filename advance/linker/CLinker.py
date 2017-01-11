@@ -42,6 +42,7 @@ class CLinker():
         self.globalcompinfos = {}
         self.compinfoxrefs = {}
         self.varinfoxrefs = {}
+        print('File compinfos: ' + str(len(self.compinfos)))
 
     def getfilecompinfoxrefs(self,fileindex):
         result = {}
@@ -101,12 +102,19 @@ class CLinker():
 
     def _checkcompinfopairs(self):
         self.possiblycompatiblestructs = []
-        for (c1,c2) in itertools.combinations(self.compinfos,2):
-            cc = CompCompatibility(c1,c2)
-            if cc.are_identical: pass
+        compinfos = sorted(self.compinfos,key=lambda(c):c.getid())
+        print('Checking ' + str(len(compinfos)))
+        for (c1,c2) in itertools.combinations(compinfos,2):
+            if c1.getid() == c2.getid(): continue
             pair = (c1.getid(),c2.getid())
-            if cc.are_shallow_compatible(list(self.notcompatiblestructs)):
-                self.possiblycompatiblestructs.append(pair)
+            if c1.getfieldcount() == c2.getfieldcount():
+                if pair in self.notcompatiblestructs: continue
+                cc = CompCompatibility(c1,c2)
+                if cc.are_shallow_compatible(self.notcompatiblestructs):
+                    print(str(c1.getid()) + ', ' + str(c2.getid()) + ' possibly compatible')
+                    self.possiblycompatiblestructs.append(pair)
+                else:
+                    self.notcompatiblestructs.add(pair)
             else:
                 self.notcompatiblestructs.add(pair)
         
