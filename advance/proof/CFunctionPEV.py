@@ -47,3 +47,7 @@ class CFunctionPEV():
 
     def isdelegated(self):
         return (not self.xnode.find('assumptions') is None)
+
+    def isviolation(self):
+        return ('violation' in self.xnode.attrib and
+                self.xnode.get('violation') == 'true')

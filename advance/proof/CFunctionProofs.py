@@ -72,6 +72,14 @@ class CFunctionProofs():
         self.iterppos(f)
         return result
 
+    def getviolations(self):
+        result = {}
+        def f(ppo,pev):
+            if not pev is None:
+                if pev.isviolation(): result[ppo.getid()] = pev
+        self.iterpposev(f)
+        return result
+
     def _getppos(self):
         if self.ppos is None:
             xnode = UF.get_ppo_xnode(self.capp.path,self.cfile.getfilename(),
