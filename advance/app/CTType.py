@@ -25,23 +25,52 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import xml.etree.ElementTree as ET
+
 from advance.app.CTTypeSize import CTTypeSize
 
 opdisplay = { 'minusa':' - ', 'plusa':' + ', 'mult':' * ' }
 
 class CTType():
-    '''Variable type.'''
+    '''Variable type.
 
-    def __init__(self,cappfile,xnode):
+    By default a variable type is local to a particular c file, that is,
+    it has local struct keys.
+
+    A global type is created by adding a mapping ckeyxrefs that maps local
+    ckeys to global keys, with the goal to create a type with the same
+    observable behavior for all equivalent types in the application.
+
+    The ckeyxrefs are propagated to the expression to ensure correct behavior
+    for the sizeof operator.
+    '''
+
+    def __init__(self,cappfile,xnode,ckeyxrefs={}):
         self.cappfile = cappfile                # CApplication / CFile
         self.xnode = xnode
+        self.ckeyxrefs = ckeyxrefs
+
+    def _convertkey(self,ckey):
+        if ckey in self.ckeyxrefs: return self.ckeyxrefs[ckey]
+        return ckey
 
     def getfile(self): return self.cappfile
 
-    def isfunction(self):
-        return (self.xnode.get('ttag') == 'tfun')
-
     def gettag(self): return self.xnode.get('ttag')
+
+    def isfunction(self): return (self.gettag() == 'tfun')
+
+    def isstruct(self): return (self.gettag() == 'tcomp')
+
+    def ispointer(self): return (self.gettag() == 'tptr')
+
+    def isarray(self): return (self.gettag() == 'tarray')
+
+    def isint(self): return (self.gettag() == 'tint')
+
+    def isfloat(self): return (self.gettag() == 'tfloat')
+
+    def isnamed(self): return (self.gettag() == 'tnamed')
 
     def getikind(self): return self.xnode.get('ikind')
 
@@ -49,18 +78,18 @@ class CTType():
 
     def getname(self): return self.xnode.get('tname')
 
-    def getckey(self): return int(self.xnode.get('ckey'))
+    def getckey(self): return self._convertkey(int(self.xnode.get('ckey')))
 
     def getpointedtotype(self):
-        return CTType(self.cappfile,self.xnode.find('typ'))
+        return CTType(self.cappfile,self.xnode.find('typ'),ckeyxrefs=self.ckeyxrefs)
 
     def getarraybasetype(self):
-        return CTType(self.cappfile,self.xnode.find('typ'))
+        return CTType(self.cappfile,self.xnode.find('typ'),ckeyxrefs=self.ckeyxrefs)
 
     def getarraysizeexpr(self):
         xsize = self.xnode.find('exp')
         if not xsize is None:
-            return CExp(self.cappfile,xsize)
+            return CExp(self.cappfile,xsize,ckeyxrefs=self.ckeyxrefs)
 
     def expand(self):
         if self.gettag() == 'tnamed':
@@ -131,6 +160,29 @@ class CTType():
         else: arraysize.addunknown('no-size-expr')
         size.addsize(arraysize)
 
+    def writexml(self,cnode):
+        cnode.set('ttag',self.gettag())
+        if self.isstruct():
+            cnode.set('ckey',str(self.getckey()))
+        elif self.isint():
+            cnode.set('ikind',str(self.getikind()))
+        elif self.isfloat():
+            cnode.set('fkind',str(self.getfkind()))
+        elif self.isnamed():
+            cnode.set('tname',self.getname())
+        elif self.ispointer():
+            tnode = ET.Element('typ')
+            self.getpointedtotype().writexml(tnode)
+            cnode.append(tnode)
+        elif self.isarray():
+            tnode = ET.Element('typ')
+            enode = ET.Element('exp')
+            self.getarraybasetype().writexml(tnode)
+            sizexpr = self.getarraysizeexpr()
+            if not sizexpr is None:
+                sizexpr.writexml(enode)
+            cnode.extend([tnode,enode])
+
     def _equalinttype(self,t1,t2): return t1.getikind() == t2.getikind()
 
     def _equalfloattype(self,t1,t2): return t1.getfkind() == t2.getfkind()
@@ -200,20 +252,23 @@ class CTType():
         return '?float'
 
     def _str_ptr(self):
-        t = self.xnode.find('typ')
-        return ('(' + str(CTType(self.cappfile,t)) + ' *)')
+        return ('(' + str(self.getpointedtotype()) + ' *)')
 
     def _str_comp(self):
-        key = int(self.xnode.get('ckey'))
-        return self.cappfile.getcompinfo(key).getname()
+        key = self.getckey()
+        compinfo = self.cappfile.getcompinfo(key)
+        if compinfo is None:
+            return 'compinfo-name not found'
+        else:
+            return self.cappfile.getcompinfo(key).getname()
 
     def _str_array(self):
-        etype = CTType(self.cappfile,self.xnode.find('typ'))
+        etype = self.getarraybasetype()
         xsize = self.xnode.find('exp')
         if xsize is None:
             size = '?'
         else:
-            size = CExp(self.cappfile,self.xnode.find('exp'))
+            size = self.getarraysizeexpr()
         return str(str(etype) + '[' + str(size) + ']')
 
     def __str__(self):
@@ -232,9 +287,10 @@ class CTType():
 class CExp():
     '''Expression.'''
 
-    def __init__(self,cappfile,xnode):
+    def __init__(self,cappfile,xnode,ckeyxrefs={}):
         self.cappfile = cappfile            # CApplication / CFile
         self.xnode = xnode
+        self.ckeyxrefs = ckeyxrefs
 
     def __str__(self): 
         if 'xstr' in self.xnode.attrib:
@@ -248,16 +304,26 @@ class CExp():
 
     def gettag(self): return self.xnode.get('etag')
 
+    def isbinop(self): return self.gettag() == 'binop'
+
     def getbinop(self): return self.xnode.get('binop')
 
-    def getsubexp1(self): return CExp(self.cappfile,self.xnode.find('exp1'))
+    def getsubexp1(self):
+        return CExp(self.cappfile,self.xnode.find('exp1'),ckeyxrefs=self.ckeyxrefs)
 
-    def getsubexp2(self): return CExp(self.cappfile,self.xnode.find('exp2'))
+    def getsubexp2(self):
+        return CExp(self.cappfile,self.xnode.find('exp2'),ckeyxrefs=self.ckeyxrefs)
 
-    def getsizeoftype(self): 
-        return CTType(self.cappfile,self.xnode.find('typ')).getsize()
+    def issizeof(self): return self.gettag() == 'sizeof'
+
+    def getsizeoftype(self):
+        return CTType(self.cappfile,self.xnode.find('typ'),ckeyxrefs=self.ckeyxrefs)
+
+    def getsizeoftypesize(self): return self.getsizeoftype().getsize()
 
     def isconstant(self): return self.gettag() == 'const'
+
+    def getctag(self): return self.xnode.get('ctag')
 
     def isintegerconstant(self):
         if self.isconstant():
@@ -282,6 +348,25 @@ class CExp():
             return False
         return False
 
+    def writexml(self,cnode):
+        cnode.set('etag',self.gettag())
+        if self.isconstant():
+            enode = ET.Element('constant')
+            for a in self.xnode.find('constant').attrib:
+                enode.set(a,self.xnode.find('constant').get(a))
+            cnode.append(enode)
+        elif self.isbinop():
+            cnode.set('binop',self.getbinop())
+            e1node = ET.Element('exp1')
+            e2node = ET.Element('exp2')
+            self.getsubexp1().writexml(e1node)
+            self.getsubexp2().writexml(e2node)
+            cnode.extend([e1node, e2node])
+        elif self.issizeof():
+            tnode = ET.Element('typ')
+            self.getsizeoftype().writexml(tnode)
+            cnode.append(tnode)
+
     def _equalbinop(self,other):
         if self.getbinop() == other.getbinop():
             if self.getsubexp1().equal(other.getsubexp1()):
@@ -290,7 +375,7 @@ class CExp():
         return False
 
     def _equalsizeof(self,other):
-        return self.getsizeoftype().equal(other.getsizeoftype())
+        return self.getsizeoftypesize().equal(other.getsizeoftypesize())
 
     def _str_binop(self):
         binop = self.getbinop()
@@ -299,7 +384,7 @@ class CExp():
         return (str(self.getsubexp1()) + binop + str(self.getsubexp2()))
 
     def _str_sizeof(self):
-        return ('sizeof(' + str(self.getsizeoftype()) + ')')
+        return ('sizeof(' + str(self.getsizeoftypesize()) + ')')
 
 
 class CLval():
