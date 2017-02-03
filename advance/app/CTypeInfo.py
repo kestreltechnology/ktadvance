@@ -39,6 +39,6 @@ class CTypeInfo():
     def gettype(self):
         t = self.xnode.find('ttype')
         if not t is None:
-            return CTType(self.cfile,self.xnode.find('ttype'))
+            return CTType(self.cfile,t)
         else:
             print('No ttype element found for ' + self.getname())
