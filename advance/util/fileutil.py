@@ -48,6 +48,9 @@ def get_targetfiles_filename(path):
 def get_targetfiles_xnode(path):
     filename = get_targetfiles_filename(path)
     return get_xnode(filename,'c-files','File that holds the names of source files')
+
+def get_globaldefinitions_filename(path):
+    return os.path.join(path,'globaldefinitions.xml')
         
 # ------------------------------------------------------------------- files ----
 
