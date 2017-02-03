@@ -25,19 +25,32 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import xml.etree.ElementTree as ET
+
 from advance.app.CLocation import CLocation
 from advance.app.CTType import CTType
 
+
 class CFieldInfo():
+    '''Definition of a struct field.'''
 
     def __init__(self,ccompinfo,xnode):
         self.ccompinfo = ccompinfo
         self.xnode = xnode
-        self.ftype = CTType(self.ccompinfo.cappfile,self.xnode.find('ftyp'))
-        self.location = CLocation(self.xnode.find('loc'))
+        self.ftype = CTType(self.ccompinfo.cappfile,self.xnode.find('ftyp'),
+                            ckeyxrefs=self.ccompinfo.ckeyxrefs)
+        self.location = CLocation(self.xnode.find('floc'))
 
     def getname(self): return self.xnode.get('fname')
 
     def gettype(self): return self.ftype
 
     def getlocation(self): return self.location
+
+    def writexml(self,cnode):
+        tnode = ET.Element('ftyp')
+        lnode = ET.Element('floc')
+        cnode.set('fname',self.getname())
+        self.ftype.writexml(tnode)
+        self.location.writexml(lnode)
+        cnode.extend([ tnode, lnode ])
