@@ -26,24 +26,43 @@
 # ------------------------------------------------------------------------------
 
 import hashlib
+import xml.etree.ElementTree as ET
 
 from advance.app.CFieldInfo import CFieldInfo
 from advance.app.CTTypeSize import CTTypeSize
 
 class CCompInfo():
-    '''Global struct definition.'''
+    '''Struct definition.
 
-    def __init__(self,cappfile,xnode,hasglobalid=False):
+    A struct definition is by default a local struct definition that is
+    associated with a particular CFile
+
+    A struct definition can be made into a global struct definition by
+    adding to a local struct definition a keymapping (ckeyxrefs) that maps
+    local keys to global keys, with the goal to produce a struct definition
+    with identical observables for all equivalent structs in the application.
+    '''
+
+    def __init__(self,cappfile,xnode,ckeyxrefs={}):
         self.cappfile = cappfile        # CApplication / CFile
         self.xnode = xnode
-        self.hasglobalid = hasglobalid
+        self.ckeyxrefs = ckeyxrefs
         self.fields = {}                # (seqno,name) -> CFieldInfo
         self.md5hash = ''       # hash of fieldnames to check structural compatibility
         self._initialize()
 
+    def _convertkey(self,ckey):
+        if ckey in self.ckeyxrefs: return self.ckeyxrefs[ckey]
+        return ckey
+
     def getfile(self): return self.cappfile
 
-    def getkey(self): return int(self.xnode.get('ckey'))
+    def getkey(self): return self._convertkey(int(self.xnode.get('ckey')))
+
+    def isstruct(self):
+        if 'cstruct' in self.xnode.attrib:
+            return (self.xnode.get('cstruct') == 'true')
+        return True
 
     '''The id is a unique combination of file index and comptag (local) key.'''
     def getid(self): return (self.cappfile.getindex(),self.getkey())
@@ -70,6 +89,15 @@ class CCompInfo():
     def getfield(self,name):
         for (i,fieldname) in self.fields:
             if fieldname == name: return self.fields[(i,fieldname)]
+
+    def writexml(self,cnode):
+        cnode.set('ckey',str(self.getkey()))
+        ffnode = ET.Element('cfields')
+        cnode.append(ffnode)
+        for (i,fname) in sorted(self.fields):
+            fnode = ET.Element('fieldinfo')
+            self.fields[(i,fname)].writexml(fnode)
+            ffnode.append(fnode)
 
     def __str__(self):
         lines = []
