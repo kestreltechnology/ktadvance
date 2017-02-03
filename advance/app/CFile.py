@@ -176,6 +176,14 @@ class CFile():
         self.fniter(f)
         return results
 
+    def getviolations(self):
+        results = {}
+        def f(fn):
+            violations = fn.getviolations()
+            if len(violations) > 0: results[fn.getname()] = violations
+        self.fniter(f)
+        return results
+
     def _initialize_gtypes(self):
         if len(self.gtypes) > 0: return
         for t in self.xnode.find('global-type-definitions').findall('gtype'):

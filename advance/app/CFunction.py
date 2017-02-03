@@ -69,6 +69,8 @@ class CFunction():
 
     def get_open_ppos(self): return self.proofs.get_open_ppos()
 
+    def getviolations(self): return self.proofs.getviolations()
+
     def _initialize(self):
         for v in self.xnode.find('sformals').findall('varinfo'):
             vid = int(v.get('vid'))

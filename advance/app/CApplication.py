@@ -106,8 +106,6 @@ class CApplication():
     def getfile_ppo_results(self,filename):
         return self.file(filename).get_ppo_results()
 
-    '''
-
     def get_ppo_results(self):
         results = {}
         def add(t,m,v):
@@ -122,8 +120,14 @@ class CApplication():
         self.fileiter(f)
         return results
 
-    '''
-        
+    def getviolations(self):
+        results = {}
+        def f(file):
+            violations = file.getviolations()
+            if len(violations) > 0: results[file.getfilename()] = violations
+        self.fileiter(f)
+        return results
+
     def _initialize(self):
         for c in self.xnode.findall('c-file'):
             id = c.get('id')
