@@ -25,6 +25,8 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import xml.etree.ElementTree as ET
+
 class CLocation():
     '''Location in a C source program.'''
 
@@ -36,6 +38,14 @@ class CLocation():
     def getline(self): return int(self.xnode.get('line'))
 
     def getfile(self): return self.xnode.get('file')
+
+    def writexml(self,cnode):
+        if not self.xnode is None:
+            cnode.set('byte',str(self.getbyte()))
+            cnode.set('line',str(self.getline()))
+            cnode.set('file',self.getfile())
+        else:
+            print('Location node missing')
 
     def __str__(self):
         return (self.getfile() + ':' + str(self.getline()))
