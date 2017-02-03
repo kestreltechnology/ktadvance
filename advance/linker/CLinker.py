@@ -28,19 +28,36 @@
 import itertools
 
 from advance.linker.CompCompatibility import CompCompatibility
+from advance.app.CCompInfo import CCompInfo
 
 from advance.util.UnionFind import UnionFind
+
+'''
+Starting point: a list of (fileindex,compinfo key) pairs that identify the
+   locally declared structs
+
+Goal: produce equivalence classes of (fileindex,compinfo key) pairs that
+   are associated with (structurally) equivalent structs, assign a
+   global id to each distinct struct, and create a mapping between the
+   (fileindex,compinfo key) pairs and the global id (xrefs) and a
+   mapping between the global id and an instance of a struct from the
+   corresponding equivalence class. All nested field struct types must
+   be renamed with global ids.
+
+'''
 
 class CLinker():
 
     def __init__(self,capp):
-        self.capp = capp                # CApplication
-        self.compinfos = capp.getfilecompinfos()
+        self.capp = capp                              # CApplication
+        self.compinfos = capp.getfilecompinfos()      # CCompInfo list
         self.varinfos = capp.getfileglobalvarinfos()
-        self.possiblycompatiblestructs = []
-        self.notcompatiblestructs = set([])
-        self.globalcompinfos = {}
-        self.compinfoxrefs = {}
+        self.possiblycompatiblestructs = []           # (id,id) list
+        self.notcompatiblestructs = set([])           # (id,id) set
+        self.globalcompinfos = {}                     # id representative -> global id
+        self.compinfoxrefs = {}                       # id -> global id
+        self.compinfoinstances = {}                   # global id -> global compinfo
+        self.sharedinstances = {}                     # global id -> (compinfo list)
         self.varinfoxrefs = {}
 
     def getfilecompinfoxrefs(self,fileindex):
@@ -54,6 +71,10 @@ class CLinker():
         for (fidx,vid) in self.varinfoxrefs:
             if fidx == fileindex: result[vid] = self.varinfoxrefs[(fidx,vid)]
         return result
+
+    def getglobalcompinfos(self): return self.compinfoinstances
+
+    def getsharedinstances(self): return self.sharedinstances
 
     def linkcompinfos(self):
         self._checkcompinfopairs()
@@ -87,7 +108,19 @@ class CLinker():
 
         for c in self.compinfos:
             id = c.getid()
-            self.compinfoxrefs[id] = self.globalcompinfos[gcomps[id]]
+            gckey = self.globalcompinfos[gcomps[id]]
+            self.compinfoxrefs[id] = gckey
+
+            if not gckey in self.compinfoinstances:
+                fidx = id[0]
+                xrefs = self.getfilecompinfoxrefs(fidx)
+                self.compinfoinstances[gckey] = CCompInfo(c.cappfile,c.xnode,
+                                                             ckeyxrefs=xrefs)
+                filename = self.capp.getfilebyindex(id[0]).getfilename()
+                self.sharedinstances[gckey] = [ (filename,c) ]
+            else:
+                filename = self.capp.getfilebyindex(id[0]).getfilename()
+                self.sharedinstances[gckey].append((filename,c))
 
     def linkvarinfos(self): 
         globalvarinfos = {}       
