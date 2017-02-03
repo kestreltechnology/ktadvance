@@ -39,7 +39,32 @@ def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('path',help='directory that holds ktadvance directory')
     args = parser.parse_args()
-    return args    
+    return args
+
+def saveglobalcompinfos(path,compinfos,sharedinstances):
+    xroot = UX.get_xml_header('globals','globals')
+    xnode = ET.Element('globals')
+    xroot.append(xnode)
+    cxnode = ET.Element('global-compinfos')
+    xnode.extend([ cxnode ])
+    for gckey in sorted(compinfos):
+        cnode = ET.Element('gcompinfo')
+        ffnode = ET.Element('shared-instances')
+        cnode.append(ffnode)
+        for (fname,compinfo) in sorted(sharedinstances[gckey]):
+            fnode = ET.Element('fstruct')
+            fnode.set('filename',fname)
+            fnode.set('ckey',str(compinfo.getkey()))
+            fnode.set('cname',compinfo.getname())
+            if not compinfo.isstruct():
+                fnode.set('cstruct','false')
+            ffnode.append(fnode)
+        cnode.set('gckey',str(gckey))
+        compinfos[gckey].writexml(cnode)
+        cxnode.append(cnode)
+    filename = UF.get_globaldefinitions_filename(path)
+    with open(filename,'w') as fp:
+        fp.write(UX.doc_to_pretty(ET.ElementTree(xroot)))
 
 if __name__ == '__main__':
 
@@ -78,3 +103,5 @@ if __name__ == '__main__':
         xreffile.write(UX.doc_to_pretty(ET.ElementTree(xrefroot)))
 
     capp.fileiter(savexrefs)
+    saveglobalcompinfos(capp.getpath(),linker.getglobalcompinfos(),
+                        linker.getsharedinstances())
