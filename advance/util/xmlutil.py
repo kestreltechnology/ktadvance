@@ -34,10 +34,10 @@ def attributes_to_pretty (attr,indent=0):
     if len(attr) > 4:
         lines = []
         for key in sorted(attr):
-            lines.append(((' ' * (indent + 2)) + key + '="' + attr[key] + '"'))
+            lines.append(((' ' * (indent + 2)) + key + '="' + str(attr[key]) + '"'))
         return ('\n' + '\n'.join(lines))
     else:
-        return (' ' + ' '.join(key + '="' + attr[key] + '"' for key in sorted(attr)))
+        return (' ' + ' '.join(key + '="' + str(attr[key]) + '"' for key in sorted(attr)))
 
 def element_to_pretty (e,indent=0):
     lines = []
