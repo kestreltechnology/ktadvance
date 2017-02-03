@@ -34,7 +34,6 @@ from advance.app.CApplication import CApplication
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('path',help='directory that holds the analysis results')
-    parser.add_argument('app',help='name of the application')
     parser.add_argument('cfile',help='relative filename of the c source file')
     args = parser.parse_args()
     return args
@@ -42,11 +41,10 @@ def parse():
 if __name__ == '__main__':
 
     args = parse()
-    capp = CApplication(args.path,args.app)
+    capp = CApplication(args.path)
     cfile = capp.getfile(args.cfile)
 
-    print(UP.reportheader('Global definitions and declarations for ' + args.cfile,
-                          args.app))
+    print(UP.reportheader('Global definitions and declarations for ' + args.cfile))
 
     print('-' * 80)
     print('Global type definitions')
