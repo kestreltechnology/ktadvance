@@ -67,14 +67,17 @@ if __name__ == '__main__':
                 fline = line+1
                 prefix = '   '
                 delegated = ''
+                violation = ''
                 if ev is None:
                     lines.append('   ' + str(p))
                 else:
                     d = ev.getdischargemethod()
                     if d == 'invariants': prefix = 'II '
                     if d == 'check-valid': prefix = 'CV '
+                    if ev.isviolation(): prefix = 'XX '
                     if ev.isdelegated(): delegated = '--' + ev.getassumptiontype() + '--'
-                    lines.append(prefix + str(p) + ': ' + delegated + ev.getevidence())
+                    if ev.isviolation(): violation = ' ***** '
+                    lines.append(prefix + str(p) + ': ' + delegated + violation + ev.getevidence() + violation)
             print(cfunction.getname() + ' in ' + cfile.getfilename())            
             print(ProofObligationResults(cfunction.get_ppo_results()).report())
             cfunction.getproofs().iterpposev(fpo)
@@ -86,4 +89,10 @@ if __name__ == '__main__':
         print(ProofObligationResults(capp.get_ppo_results()).report())
 
 
-    
+    violations = capp.getviolations()
+    for file in sorted(violations):
+        print(file)
+        for fn in sorted(violations[file]):
+            print('  ' + fn)
+            for id in sorted(violations[file][fn]):
+                print('    ' + str(id) + ': ' + str(violations[file][fn][id].getevidence()))
