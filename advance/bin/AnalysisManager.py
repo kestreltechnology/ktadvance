@@ -32,23 +32,24 @@ from advance.bin.Config import Config
 
 class AnalysisManager():
 
-    def __init__(self,capp):
+    def __init__(self,capp,onefile=False):
         '''Initialize the analyzer location and target file location'''
 
         self.capp = capp                             # CApplication
         self.config = Config()
-        self.chcmdpath = self.config.cmddir
         self.chsummaries = self.config.summaries
         self.path = self.capp.getpath()
         self.canalyzer = self.config.canalyzer
+        self.onefile = onefile
 
     def create_file_primaryproofobligations(self,cfilename):
         try:
             print('Creating primary proof obligations for ' + cfilename)
             sumopt = ' -summaries ' + self.chsummaries
             cmdopt = ' -command primary '
+            linkopt = '' if self.onefile else ' -nolinkinfo '
             fileopt = ' -cfile ' + cfilename + ' '
-            cmd = self.canalyzer + sumopt + cmdopt + fileopt + self.path
+            cmd = self.canalyzer + sumopt + cmdopt + linkopt + fileopt + self.path
             result = subprocess.check_output(cmd,shell=True)
             print(result)
         except subprocess.CalledProcessError, args:
@@ -62,8 +63,9 @@ class AnalysisManager():
             sumopt = ' -summaries ' + self.chsummaries
             cmdopt = ' -command localinvs '
             domainopt = ' -domains ' + domains
+            linkopt = '' if self.onefile else ' -nolinkinfo '
             fileopt = ' -cfile ' + cfilename + ' '
-            cmd = self.canalyzer + sumopt + cmdopt + domainopt + fileopt + self.path
+            cmd = self.canalyzer + sumopt + cmdopt + domainopt + linkopt + fileopt + self.path
             result = subprocess.check_output(cmd,shell=True)
             print(result)
         except subprocess.CalledProcessError, args:
@@ -75,9 +77,10 @@ class AnalysisManager():
         try:
             print('Checking proof obligations for ' + cfilename)
             sumopt = ' -summaries ' + self.chsummaries
-            cmdopt = ' -command check ' 
+            cmdopt = ' -command check '
+            linkopt = '' if self.onefile else ' -nolinkinfo '
             fileopt = ' -cfile ' + cfilename + ' '
-            cmd = self.canalyzer + sumopt + cmdopt + fileopt + self.path
+            cmd = self.canalyzer + sumopt + cmdopt + linkopt + fileopt + self.path
             result = subprocess.check_output(cmd,shell=True)
             print(result)
         except subprocess.CalledProcessError, args:

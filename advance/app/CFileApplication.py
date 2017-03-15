@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# Location of analyzer executable
+# Access to the C Analyzer Analysis Results
 # Author: Henny Sipma
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
@@ -24,27 +24,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # ------------------------------------------------------------------------------
-
 import os
 
-class Config():
+import advance.util.fileutil as UF
 
-    def __init__(self):
-        '''Location of analyzer executables and summaries.'''
+from advance.app.CCompInfo import CCompInfo
+from advance.app.CFile import CFile
+from advance.app.CVarInfo import CVarInfo
+from advance.source.CSrcFile import CSrcFile
 
-        '''default settings'''
-        self.bindir = os.path.dirname(os.path.abspath(__file__))   # advance/bin
-        self.rootdir = os.path.dirname(self.bindir)                # advance
-        summariesdir = os.path.join(self.rootdir,'summaries')
-        self.summaries = os.path.join(summariesdir,'cchsummaries.jar')
-        self.cparser = os.path.join(self.bindir,'parseFile')
-        self.canalyzer = os.path.join(self.bindir,'canalyzer')
+class CFileApplication():
+    '''Primary access point for source code and analysis results for one-file application.'''
 
-        '''user-specific settings (if applicable).'''
-        self.cchhome = '/Users/henny/repo/CodeHawk/CHC'
-        self.cparser = os.path.join(os.path.join(self.cchhome,'cchcil'),'parseFile')
-        self.canalyzer = os.path.join(os.path.join(self.cchhome,'cchcmdline'),'canalyzer')
-        self.summaries = os.path.join(os.path.join(self.cchhome,'cchsummaries'),'cchsummaries.jar')
+    def __init__(self,path,cfile):
+        self.path = os.path.join(path,'ktadvance')
+        self.srcpath = os.path.join(path,'sourcefiles')
+        self.cfile = cfile
 
-        
-        
+    def getpath(self): return self.path
