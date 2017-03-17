@@ -154,6 +154,13 @@ class CFile():
     def fniter(self,f):
         for fn in self.getfunctions(): f(fn)
 
+    def get_ppos(self):
+        result = {}
+        def f(fn):
+            result[fn.getname()] = fn.get_ppos()
+        self.fniter(f)
+        return result
+
     def get_ppo_results(self):
         results = {}
         def add(t,m,v):

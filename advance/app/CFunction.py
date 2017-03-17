@@ -44,6 +44,8 @@ class CFunction():
         self.api = CFunctionApi(self)                # CFunctionApi object
         self._initialize()
 
+    def iterppos(self,f): self.proofs.iterppos(f)
+
     def getname(self):
         return self.xnode.find('svar').get('vname')
 
@@ -64,6 +66,8 @@ class CFunction():
     def getbody(self): return CFunctionBody(self,self.xnode.find('sbody'))
 
     def getproofs(self): return self.proofs
+
+    def get_ppos(self): return self.proofs.get_ppos()
 
     def get_ppo_results(self): return self.proofs.get_ppo_results()
 
