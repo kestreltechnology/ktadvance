@@ -51,3 +51,11 @@ class CFunctionPEV():
     def isviolation(self):
         return ('violation' in self.xnode.attrib and
                 self.xnode.get('violation') == 'true')
+
+    def issafe(self):
+        return not self.isdelegated() and not self.isviolation()
+
+    def getstatus(self):
+        if self.issafe(): return 'safe'
+        if self.isviolation(): return 'violation'
+        if self.isdelegated(): return 'deferred:api'

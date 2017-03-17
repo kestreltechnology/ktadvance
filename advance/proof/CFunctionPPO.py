@@ -30,23 +30,6 @@ from advance.app.CLocation import CLocation
 
 import advance.proof.CPOUtil as P
 
-'''
-from advance.proof.CPOPredicateCast import CPOPredicateCast
-from advance.proof.CPOPredicateIndexLowerBound import CPOPredicateIndexLowerBound
-from advance.proof.CPOPredicateIndexUpperBound import CPOPredicateIndexUpperBound
-from advance.proof.CPOPredicateInitialized import CPOPredicateInitialized
-from advance.proof.CPOPredicateNotNull import CPOPredicateNotNull
-from advance.proof.CPOPredicateNonNegative import CPOPredicateNonNegative
-from advance.proof.CPOPredicatePointerCast import CPOPredicatePointerCast
-from advance.proof.CPOPredicatePtrLowerBound import CPOPredicatePtrLowerBound
-from advance.proof.CPOPredicatePtrUpperBound import CPOPredicatePtrUpperBound
-from advance.proof.CPOPredicatePtrUpperBoundDeref import CPOPredicatePtrUpperBoundDeref
-from advance.proof.CPOPredicateValidMem import CPOPredicateValidMem
-from advance.proof.CPOPredicateWidthOverflow import CPOPredicateWidthOverflow
-from advance.proof.CPOPredicateLowerBound import CPOPredicateLowerBound
-from advance.proof.CPOPredicateUpperBound import CPOPredicateUpperBound
-'''
-
 import advance.util.printutil as UP
 
 class CFunctionPPO():
@@ -69,42 +52,14 @@ class CFunctionPPO():
     def getpredicate(self): 
         pnode = self.xnode.find('predicate')
         return P.getpredicate(self.cfun,pnode)
-    '''
-        tag = pnode.get('tag')
-        if tag == 'cast':
-            return CPOPredicateCast(self.cfun,pnode)
-        if tag == 'index-lower-bound':
-            return CPOPredicateIndexLowerBound(self.cfun,pnode)
-        if tag == 'index-upper-bound':
-            return CPOPredicateIndexUpperBound(self.cfun,pnode)
-        if tag == 'initialized':
-            return CPOPredicateInitialized(self.cfun,pnode)
-        if tag == 'not-null':
-            return CPOPredicateNotNull(self.cfun,pnode)
-        if tag == 'pointer-cast':
-            return CPOPredicatePointerCast(self.cfun,pnode)
-        if tag =='valid-mem':
-            return CPOPredicateValidMem(self.cfun,pnode)
-        if tag =='width-overflow':
-            return CPOPredicateWidthOverflow(self.cfun,pnode)
-        if tag == 'ptr-lower-bound':
-            return CPOPredicatePtrLowerBound(self.cfun,pnode)
-        if tag == 'ptr-upper-bound':
-            return CPOPredicatePtrUpperBound(self.cfun,pnode)
-        if tag == 'ptr-upper-bound-deref':
-            return CPOPredicatePtrUpperBoundDeref(self.cfun,pnode)
-        if tag == 'non-negative':
-            return CPOPredicateNonNegative(self.cfun,pnode)
-        if tag == 'lower-bound':
-            return CPOPredicateLowerBound(self.cfun,pnode)
-        if tag == 'upper-bound':
-            return CPOPredicateUpperBound(self.cfun,pnode)
-        else:
-            return CPOPredicate(self.cfun,pnode)
-    '''
 
     def getcontext(self):
         return CContext(self.cfun,self.xnode.find('context'))
+
+    def getstatus(self):
+        if self.isdischarged():
+            return self.getevidence().getstatus()
+        return 'unknown'
 
     def isdischarged(self):
         return self.cppos.cproofs.is_ppo_discharged(self.getid())
