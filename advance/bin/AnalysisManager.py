@@ -63,7 +63,7 @@ class AnalysisManager():
             sumopt = ' -summaries ' + self.chsummaries
             cmdopt = ' -command localinvs '
             domainopt = ' -domains ' + domains
-            linkopt = '' if self.onefile else ' -nolinkinfo '
+            linkopt = ' -nolinkinfo ' if self.onefile else ''
             fileopt = ' -cfile ' + cfilename + ' '
             cmd = self.canalyzer + sumopt + cmdopt + domainopt + linkopt + fileopt + self.path
             result = subprocess.check_output(cmd,shell=True)
@@ -78,7 +78,7 @@ class AnalysisManager():
             print('Checking proof obligations for ' + cfilename)
             sumopt = ' -summaries ' + self.chsummaries
             cmdopt = ' -command check '
-            linkopt = '' if self.onefile else ' -nolinkinfo '
+            linkopt = ' -nolinkinfo ' if self.onefile else ''
             fileopt = ' -cfile ' + cfilename + ' '
             cmd = self.canalyzer + sumopt + cmdopt + linkopt + fileopt + self.path
             result = subprocess.check_output(cmd,shell=True)
