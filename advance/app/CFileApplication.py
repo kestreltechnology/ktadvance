@@ -36,9 +36,20 @@ from advance.source.CSrcFile import CSrcFile
 class CFileApplication():
     '''Primary access point for source code and analysis results for one-file application.'''
 
-    def __init__(self,path,cfile):
+    def __init__(self,path,fname):
         self.path = os.path.join(path,'ktadvance')
         self.srcpath = os.path.join(path,'sourcefiles')
-        self.cfile = cfile
+        self.fname = fname
+        self.cfile = None
+        self._initialize()
 
     def getpath(self): return self.path
+
+    def get_ppo_results(self): return self.cfile.get_ppo_results()
+
+    def get_ppos(self): return self.cfile.get_ppos()
+
+    def _initialize(self):
+        cfile = UF.get_cfile_xnode(self.path,self.fname)
+        if not cfile is None:
+            self.cfile = CFile(self,1,cfile)
