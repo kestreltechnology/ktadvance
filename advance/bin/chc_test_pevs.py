@@ -94,6 +94,14 @@ if __name__ == '__main__':
     else:
         print('All files found')
 
+    for cfilename in cfiles:
+        if testmanager.hasdomains(cfilename):
+            for d in testmanager.getdomains(cfilename):
+                capp = CFileApplication(cpath,cfilename)
+                am = AnalysisManager(capp,onefile=True)
+                am.generate_file_localinvariants(cfilename,d)
+                am.check_file_proofobligations(cfilename)
+
     ppos = {}
     for cfilename in cfiles:
         capp = CFileApplication(cpath,cfilename)
