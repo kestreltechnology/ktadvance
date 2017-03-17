@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# Functions to run the C Analyzer
+# KT Advance C Source Code Analyzer
 # Author: Henny Sipma
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
@@ -47,7 +47,7 @@ class AnalysisManager():
             print('Creating primary proof obligations for ' + cfilename)
             sumopt = ' -summaries ' + self.chsummaries
             cmdopt = ' -command primary '
-            linkopt = '' if self.onefile else ' -nolinkinfo '
+            linkopt = ' -nolinkinfo ' if self.onefile else ''
             fileopt = ' -cfile ' + cfilename + ' '
             cmd = self.canalyzer + sumopt + cmdopt + linkopt + fileopt + self.path
             result = subprocess.check_output(cmd,shell=True)
