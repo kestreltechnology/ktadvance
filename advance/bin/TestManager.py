@@ -45,11 +45,28 @@ class TestManager():
 
     def getcfiles(self): return sorted(self.testspec['cfiles'].keys())
 
+    def getcfile(self,cfilename):
+        if cfilename in self.testspec['cfiles']:
+            return self.testspec['cfiles'][cfilename]
+
     def getcfilefunctions(self,cfilename):
-        return sorted(self.testspec['cfiles'][cfilename].keys())
+        return sorted(self.testspec['cfiles'][cfilename]['functions'].keys())
+
+    def getcfilefunction(self,cfilename,cfun):
+        return self.testspec['cfiles'][cfilename]['functions'][cfun]
 
     def getfunctionppos(self,cfilename,cfun):
-        return self.testspec['cfiles'][cfilename][cfun]['ppos']
+        return self.getcfilefunction(cfilename,cfun)['ppos']
+
+    def hasdomains(self,cfilename):
+        if 'domains' in self.getcfile(cfilename):
+            return len(self.getcfile(cfilename)['domains']) > 0
+        return False
+
+    def getdomains(self,cfilename):
+        if self.hasdomains(cfilename):
+            return self.getcfile(cfilename)['domains']
+        return []
 
     def clean(self):
         for cfilename in self.getcfiles():
