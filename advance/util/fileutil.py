@@ -86,6 +86,7 @@ def get_cxreffile_xnode(path,cfilename):
 # ----------------------------------------------------------------- functions --
 
 def get_cfun_basename(path,cfilename,fname):
+    cfilename = get_cfilenamebase(cfilename)
     cfiledir = os.path.join(path,cfilename)
     basename = os.path.basename(cfilename)
     return os.path.join(cfiledir,basename + '_' + fname)
