@@ -45,6 +45,12 @@ class CFunctionProofs():
         self._getppos()
         self.ppos.iter(f)
 
+    def get_ppos(self):
+        result = []
+        def f(ppo): result.append(ppo)
+        self.iterppos(f)
+        return result
+
     def iterpposev(self,f):
         self._getppos()
         self._getpevs()
@@ -87,7 +93,7 @@ class CFunctionProofs():
             if not xnode is None:
                 self.ppos = CFunctionPPOs(self,xnode)
             else:
-                print('Unable to load ' + self.capp.appname + ' ' + self.cfun.getname())
+                print('Unable to load ' + self.cfun.getname())
 
     def _getpevs(self):
         if self.pevs is None:
@@ -96,7 +102,7 @@ class CFunctionProofs():
             if not xnode is None:
                 self.pevs = CFunctionPEVs(self,xnode)
             else:
-                print('Unable to load ' + self.capp.appname + ' ' + self.cfun.getname())
+                print('Unable to load ' + self.cfun.getname())
         
         
         
