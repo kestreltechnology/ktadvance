@@ -95,7 +95,7 @@ class ParseManager():
                 '-targetdirectory', self.tgtxpath, ifilename ]
         print('Parse file: ' + str(cmd))
         p = subprocess.call(cmd,stderr=subprocess.STDOUT)
-        print('Result: ' + str(p))
+        return p
         
 
     def _initializepaths(self):
