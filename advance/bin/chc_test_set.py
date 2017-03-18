@@ -25,15 +25,12 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-
 import argparse
 import json
 import os
 
-from advance.bin.AnalysisManager import AnalysisManager
+from advance.bin.ParseManager import ParseManager
 from advance.bin.TestManager import TestManager
-
-from advance.app.CFileApplication import CFileApplication
 
 def parse():
     parser = argparse.ArgumentParser()
@@ -41,13 +38,17 @@ def parse():
     parser.add_argument('test',help='name of test directory')
     args = parser.parse_args()
     return args
-    
+
 if __name__ == '__main__':
 
     args = parse()
     testpath = args.path
     testname = args.test
     cpath = os.path.join(os.path.abspath(testpath),testname)
+    parsemanager = ParseManager(cpath,cpath)
     testmanager = TestManager(cpath,cpath,testname)
+    testmanager.testparser()
+    testmanager.testppos()
     testmanager.testpevs()
     testmanager.printtestresults()
+        

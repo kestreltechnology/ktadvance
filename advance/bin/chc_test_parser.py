@@ -47,25 +47,8 @@ if __name__ == '__main__':
     cpath = os.path.join(os.path.abspath(testpath),testname)
     parsemanager = ParseManager(cpath,cpath)
     testmanager = TestManager(cpath,cpath,testname)
-    testmanager.clean()
-
-    print('\nParsing files\n' + ('-' * 80))
-    for cfilename in testmanager.getcfiles():
-        ifilename = parsemanager.preprocess_file_withgcc(cfilename,mac=True)
-        parsemanager.parse_ifile(ifilename)
-
-    print('\nChecking existence of generated files\n' + ('-' * 80))
-    for cfilename in testmanager.getcfiles():
-        if testmanager.xcfile_exists(cfilename):
-            print(cfilename + ': ok')
-        else:
-            print(cfilename + ': not found')
-        for cfun in testmanager.getcfilefunctions(cfilename):
-            if testmanager.xffile_exists(cfilename,cfun):
-                print('  ' + cfun + ': ok')
-            else:
-                print('  ' + cfun + ': not found')
-        
+    testmanager.testparser()
+    testmanager.printtestresults()
         
     
     

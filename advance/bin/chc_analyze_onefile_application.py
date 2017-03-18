@@ -70,7 +70,11 @@ if __name__ == '__main__':
     if not os.path.isdir(targetpath): os.mkdir(args.targetpath)
     if not os.path.isdir(analysisdir): os.mkdir(analysisdir)
     if not os.path.isdir(sourcedir): os.mkdir(sourcedir)
-    gcccmd = [ 'gcc', '-E', '-g', '-o', ifile, cfile]
+    gcccmd = [ 'gcc', '-fno-inline', '-fno-builtin',
+                   '-U___BLOCKS___',
+                   '-D_ANSI_SOURCE',
+                   '-D_FORTIFY_SOURCE=0',
+                   '-E', '-g', '-o', ifile, cfile]
     print('\nPreprocess file: ' + str(gcccmd))
     p = subprocess.call(gcccmd,cwd=cpath,stderr=subprocess.STDOUT)
     print('result: ' + str(p))
