@@ -37,6 +37,9 @@ class CCfgContext():
 
     def getdepth(self): return len(self.xnode.findall('node'))
 
+    def contextstring(self):
+        return '_'.join(n.contextstring() for n in self.nodes)
+
     def _initialize(self):
         for n in self.xnode.findall('node'):
             self.nodes.append( CCfgContextNode(self,n) )

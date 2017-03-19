@@ -33,4 +33,12 @@ class CExpContextNode():
         self.xnode = xnode
 
     def getname(self): return self.xnode.get('name')
+
+    def getnum(self): return int(self.xnode.get('num'))
+
+    def contextstring(self):
+        if 'num' in self.xnode.attrib:
+            return self.getname() + ':' + str(self.getnum())
+        else:
+            return self.getname()
     

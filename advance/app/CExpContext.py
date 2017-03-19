@@ -25,6 +25,8 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+from advance.app.CExpContextNode import CExpContextNode
+
 class CExpContext():
 
     def __init__(self,ccfgctxt,xnode):
@@ -32,6 +34,9 @@ class CExpContext():
         self.xnode = xnode
         self.nodes = []                   # [ CExpContextNode ]
         self._initialize()
+
+    def contextstring(self):
+        return '_'.join(n.contextstring() for n in self.nodes)
 
     def _initialize(self):
         for n in self.xnode.findall('node'):

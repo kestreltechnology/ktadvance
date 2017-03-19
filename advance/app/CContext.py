@@ -36,3 +36,10 @@ class CContext():
         self.xnode = xnode
         self.cfgcontext = CCfgContext(self.cfun,self.xnode.find('cfg-context'))
         self.expcontext = CExpContext(self.cfgcontext,self.xnode.find('exp-context'))
+
+    def getcfgcontext(self): return self.cfgcontext
+
+    def getexpcontext(self): return self.expcontext
+
+    def contextstrings(self):
+        return (self.getcfgcontext().contextstring(), self.getexpcontext().contextstring())
