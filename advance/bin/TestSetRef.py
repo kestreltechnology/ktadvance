@@ -25,13 +25,17 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import json
+
 from advance.bin.TestCFileRef import TestCFileRef
 
 class TestSetRef():
     '''Provides access to the reference results of a set of C files.'''
 
-    def __init__(self,r):
-        self.r = r
+    def __init__(self,specfilename):
+        self.specfilename = specfilename
+        with open(specfilename) as fp:
+            self.r = json.load(fp)
         self.cfiles = {}
         self._initialize()
 
@@ -44,6 +48,9 @@ class TestSetRef():
         if cfilename in self.cfiles:
             return self.cfiles[cfilename]
 
+    def setppos(self,cfilename,cfun,ppos):
+        self.r['cfiles'][cfilename]['functions'][cfun]['ppos'] = ppos
+
     def hascharacteristics(self): return 'characteristics' in self.r
 
     def getcharacteristics(self):
@@ -55,6 +62,29 @@ class TestSetRef():
     def getrestrictions(self):
         if 'restrictions' in self.r:
             return self.r['restrictions']
+
+    def save(self):
+        with open(self.specfilename,'w') as fp:
+            fp.write(json.dumps(self.r,indent=4,sort_keys=True))
+
+    def __str__(self):
+        lines = []
+        for cfile in self.getcfiles():
+            lines.append(cfile.getname())
+            for cfun in cfile.getfunctions():
+                lines.append('  ' + cfun.getname())
+                if cfun.hasppos():
+                    for ppo in sorted(cfun.getppos(),key=lambda(p):p.getline()):
+                        hasmultiple = cfun.hasmultiple(ppo.getline(),ppo.getpredicate())
+                        ctxt = ppo.getcontextstring() if hasmultiple else ''
+                        if ppo.getstatus() == ppo.gettgtstatus():
+                            status = ppo.getstatus().ljust(11)
+                        else:
+                            status = ppo.getstatus().ljust(11) + ' (' + ppo.gettgtstatus() + ')'
+                        lines.append(
+                            '    ' + str(ppo.getline()).rjust(4) + '  ' + ppo.getpredicate().ljust(20) +
+                            ' ' + status + ' ' + ctxt)
+        return '\n'.join(lines)
 
     def _initialize(self):
         for f in self.r['cfiles']:

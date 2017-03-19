@@ -33,14 +33,28 @@ class TestCFunctionRef():
         self.testcfileref = testcfileref
         self.name = name
         self.r = r
-        self.ppos = []
+        self.ppos = {}
         self._initialize()
 
     def getname(self): return self.name
 
-    def getppos(self): return self.ppos
+    def getppos(self):
+        result = []
+        for l in self.ppos: result.extend(self.ppos[l])
+        return result
+
+    def hasppos(self): return len(self.ppos) > 0
+
+    def hasmultiple(self,line,pred):
+        if line in self.ppos:
+            ppopreds = [ p for p in self.ppos[line] if p.getpredicate() == pred ]
+        return len(ppopreds) > 1
 
     def _initialize(self):
-        for p in self.r['ppos']:
-            self.ppos.append(TestPPORef(self,p))
+        if 'ppos' in self.r:
+            for p in self.r['ppos']:
+                ppo = TestPPORef(self,p)
+                line = ppo.getline()
+                if not line in self.ppos: self.ppos[line] = []
+                self.ppos[line].append(ppo)
 

@@ -31,9 +31,17 @@ class TestPPORef():
         self.testcfunctionref = testcfunctionref
         self.r = r
 
-    def getlocation(self): return self.r['loc']
+    def getline(self): return int(self.r['line'])
 
-    def getbyte(self): return self.r['loc']['byte']
+    def getcfgcontext(self): return self.r['cfgctxt']
+
+    def getexpcontext(self): return self.r['expctxt']
+
+    def getcontext(self):
+        return (self.getcfgcontext(),self.getexpcontext())
+
+    def getcontextstring(self):
+        return ('(' + str(self.getcfgcontext()) + ',' + self.getexpcontext() + ')')
 
     def getpredicate(self): return self.r['predicate']
 

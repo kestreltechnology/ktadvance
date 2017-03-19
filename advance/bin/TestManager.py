@@ -57,20 +57,29 @@ from advance.bin.TestResults import TestResults
 from advance.bin.TestSetRef import TestSetRef
 
 class TestManager():
-    '''Provides utility functions to support regression and platform tests.'''
+    '''Provides utility functions to support regression and platform tests.
+    
+    Args:
+        cpath: directory that holds the source code
+        tgtpath: directory that holds the ktadvance directory
+        testname: name of the test directory
+        mac: indicates if test is run on MacOS
+        saveref: adds missing ppos to functions in the json spec file and 
+                 overwrites the json file with the result
+    '''
 
-    def __init__(self,cpath,tgtpath,testname,mac=True):
+    def __init__(self,cpath,tgtpath,testname,mac=True,saveref=False):
         self.cpath = cpath
         self.tgtpath = tgtpath
         self.mac = mac
+        self.saveref = saveref
         self.parsemanager = ParseManager(self.cpath,self.tgtpath)
         self.tgtxpath = os.path.join(self.tgtpath,'ktadvance')
         self.tgtspath = os.path.join(self.tgtpath,'sourcefiles')
         testfilename = os.path.join(self.cpath,testname + '.json')
-        with open(testfilename) as fp:
-            self.testspec = json.load(fp)
-        self.testsetref = TestSetRef(self.testspec)
-        self.testresults = TestResults(self.testspec)
+        self.testsetref = TestSetRef(testfilename)
+        self.testresults = TestResults(self.testsetref)
+        print(str(self.testsetref))
 
     def gettestresults(self): return self.testresults
 
@@ -103,19 +112,36 @@ class TestManager():
     def checkppos(self,cfilename,cfun,ppos,refppos):
         d = {}
         for ppo in ppos:
-            b = ppo.getlocation().getbyte()
-            if not b in d: d[b] = []
-            d[b].append(ppo.getpredicatetag())
+            context = ppo.getcontextstrings()
+            if not context in d: d[context] = []
+            d[context].append(ppo.getpredicatetag())
         for ppo in refppos:
             p = ppo.getpredicate()
-            b = ppo.getbyte()
-            if not b in d:
-                self.testresults.add_missingppo(cfilename,cfun,b,p)
-                raise FunctionPPOError(cfilename + ':' + cfun + ':' + str(b))
+            context = ppo.getcontext()
+            if not context in d:
+                self.testresults.add_missingppo(cfilename,cfun,context,p)
+                for c in d:
+                    print(c)
+                raise FunctionPPOError(cfilename + ':' + cfun + ':' + str(context))
             else:
-                if not p in d[b]:
-                    self.testresults.add_missingppo(cfilename,cfun,b,p)
-                    raise FunctionPPOError(cfilename + ':' + cfun + ':' + str(b) + ':' + p)
+                if not p in d[context]:
+                    self.testresults.add_missingppo(cfilename,cfun,context,p)
+                    raise FunctionPPOError(
+                        cfilename + ':' + cfun + ':' + str(context) + ':' + p)
+                
+    def createreferenceppos(self,cfilename,fname,ppos):
+        result = []
+        for ppo in ppos:
+            ctxt = ppo.getcontextstrings()
+            d = {}
+            d['line'] = ppo.getline()
+            d['cfgctxt'] = ctxt[0]
+            d['expctxt'] = ctxt[1]
+            d['predicate'] = ppo.getpredicatetag()
+            d['tgtstatus'] = 'unknown'
+            d['status'] = 'unknown'
+            result.append(d)
+        self.testsetref.setppos(cfilename,fname,result)
 
     def testppos(self):
         self.testresults.set_ppos()
@@ -128,42 +154,52 @@ class TestManager():
                 ppos = capp.get_ppos()
                 for cfun in cfile.getfunctions():
                     fname = cfun.getname()
-                    refppos = cfun.getppos()
-                    funppos = ppos[fname]
-                    if len(refppos) == len(funppos):
-                        self.testresults.add_ppocountsuccess(cfilename,fname)
-                        self.checkppos(cfilename,fname,funppos,refppos)
+                    if self.saveref:
+                        if cfun.hasppos():
+                            print('Ppos not created for ' + fname + ' (delete first)')
+                        else:
+                            self.createreferenceppos(cfilename,fname,ppos[fname])
                     else:
-                        self.testresults.add_ppocounterror(
-                            cfilename,fname,len(funppos),len(refppos))
-                        raise FunctionPPOError(cfilename + ':' + fname)
+                        refppos = cfun.getppos()
+                        funppos = ppos[fname]
+                        if len(refppos) == len(funppos):
+                            self.testresults.add_ppocountsuccess(cfilename,fname)
+                            self.checkppos(cfilename,fname,funppos,refppos)
+                        else:
+                            self.testresults.add_ppocounterror(
+                                cfilename,fname,len(funppos),len(refppos))
+                            raise FunctionPPOError(cfilename + ':' + fname)
         except FunctionPPOError as detail:
             self.printtestresults()
             print('Function PPO error: ' + str(detail))
             exit()
+        if self.saveref:
+            self.testsetref.save()
+            exit()
 
     def checkpevs(self,cfilename,cfun,funppos,refppos):
         d = {}
+        fname = cfun.getname()
         for ppo in funppos:
-            b = ppo.getlocation().getbyte()
-            if not b in d: d[b] = {}
+            context = ppo.getcontextstrings()
+            if not context in d: d[context] = {}
             p = ppo.getpredicatetag()
-            if p in d[b]:
+            if p in d[context]:
                 raise FunctionPEVError(
-                    cfilename + ':' + cfun + ':' + str(b) + ': ' +
+                    cfilename + ':' + fname + ':' + str(context) + ': ' +
                     'multiple instances of ' + p)
             else:
-                d[b][p] = ppo.getstatus()
+                d[context][p] = ppo.getstatus()
         for ppo in refppos:
-            b = ppo.getbyte()
+            context = ppo.getcontext()
             p = ppo.getpredicate()
-            if not b in d:
+            if not context in d:
                 raise FunctionPEVError(
-                    cfilename + ':' + cfun + ':' + str(b) + ': missing')
+                    cfilename + ':' + fname + ':' + str(context) + ': missing')
             else:
-                if ppo.getstatus() != d[b][p]:
+                if ppo.getstatus() != d[context][p]:
                     self.testresults.add_pevdiscrepancy(
-                        cfilename,cfun,b,p,d[b][p],ppo['status'])
+                        cfilename,cfun,ppo,d[context][p])
 
     def testpevs(self):
         self.testresults.set_pevs()
@@ -181,7 +217,7 @@ class TestManager():
                 fname = cfun.getname()
                 funppos = ppos[fname]
                 refppos = cfun.getppos()
-                self.checkpevs(cfilename,fname,funppos,refppos)
+                self.checkpevs(cfilename,cfun,funppos,refppos)
 
     def getcfilenames(self): return self.testsetref.getcfilenames()
 

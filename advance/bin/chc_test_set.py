@@ -36,6 +36,7 @@ def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('path',help='directory that holds test sets')
     parser.add_argument('test',help='name of test directory')
+    parser.add_argument('--saveref',help='print out ppo specs',action='store_true')
     args = parser.parse_args()
     return args
 
@@ -46,7 +47,7 @@ if __name__ == '__main__':
     testname = args.test
     cpath = os.path.join(os.path.abspath(testpath),testname)
     parsemanager = ParseManager(cpath,cpath)
-    testmanager = TestManager(cpath,cpath,testname)
+    testmanager = TestManager(cpath,cpath,testname,saveref=args.saveref)
     testmanager.testparser()
     testmanager.testppos()
     testmanager.testpevs()
