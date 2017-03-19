@@ -46,6 +46,8 @@ class CFunctionPPO():
 
     def getlocation(self): return CLocation(self.xnode.find('location'))
 
+    def getline(self): return self.getlocation().getline()
+
     def getpredicatetag(self):
         return self.xnode.find('predicate').get('tag')
 
@@ -55,6 +57,8 @@ class CFunctionPPO():
 
     def getcontext(self):
         return CContext(self.cfun,self.xnode.find('context'))
+
+    def getcontextstrings(self): return self.getcontext().contextstrings()
 
     def getstatus(self):
         if self.isdischarged():
