@@ -52,6 +52,7 @@ class FunctionPEVError(Exception):
 from advance.app.CFileApplication import CFileApplication
 
 from advance.bin.AnalysisManager import AnalysisManager
+from advance.bin.Config import Config
 from advance.bin.ParseManager import ParseManager
 from advance.bin.TestResults import TestResults
 from advance.bin.TestSetRef import TestSetRef
@@ -63,35 +64,36 @@ class TestManager():
         cpath: directory that holds the source code
         tgtpath: directory that holds the ktadvance directory
         testname: name of the test directory
-        mac: indicates if test is run on MacOS
         saveref: adds missing ppos to functions in the json spec file and 
                  overwrites the json file with the result
     '''
 
-    def __init__(self,cpath,tgtpath,testname,mac=True,saveref=False):
+    def __init__(self,cpath,tgtpath,testname,saveref=False):
         self.cpath = cpath
         self.tgtpath = tgtpath
-        self.mac = mac
         self.saveref = saveref
+        self.config = Config()
+        self.ismac = self.config.platform == 'mac'
         self.parsemanager = ParseManager(self.cpath,self.tgtpath)
         self.tgtxpath = os.path.join(self.tgtpath,'ktadvance')
         self.tgtspath = os.path.join(self.tgtpath,'sourcefiles')
         testfilename = os.path.join(self.cpath,testname + '.json')
         self.testsetref = TestSetRef(testfilename)
         self.testresults = TestResults(self.testsetref)
-        print(str(self.testsetref))
 
     def gettestresults(self): return self.testresults
 
     def printtestresults(self): print(str(self.testresults))
  
     def testparser(self):
+        if self.ismac and self.testsetref.islinuxonly():
+            return False
         self.testresults.set_parsing()
         self.clean()
         print('\nParsing files\n' + ('-' * 80))
         for cfile in self.getcfiles():
             cfilename = cfile.getname()
-            ifilename = self.parsemanager.preprocess_file_withgcc(cfilename,self.mac)
+            ifilename = self.parsemanager.preprocess_file_withgcc(cfilename,self.ismac)
             parseresult = self.parsemanager.parse_ifile(ifilename)
             if parseresult != 0:
                 self.testresults.add_parseerror(cfilename,str(parseresult))
@@ -108,6 +110,7 @@ class TestManager():
                 else:
                     self.testresults.add_xffileerror(cfilename,fname)
                     raise FileParseErro(cfilename)
+        return True
 
     def checkppos(self,cfilename,cfun,ppos,refppos):
         d = {}

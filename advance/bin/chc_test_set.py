@@ -31,12 +31,13 @@ import os
 
 from advance.bin.ParseManager import ParseManager
 from advance.bin.TestManager import TestManager
+from advance.bin.TestManager import FileParseError
 
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('path',help='directory that holds test sets')
     parser.add_argument('test',help='name of test directory')
-    parser.add_argument('--saveref',help='print out ppo specs',action='store_true')
+    parser.add_argument('--saveref',help='save ppo specs',action='store_true')
     args = parser.parse_args()
     return args
 
@@ -46,10 +47,33 @@ if __name__ == '__main__':
     testpath = args.path
     testname = args.test
     cpath = os.path.join(os.path.abspath(testpath),testname)
+    if not os.path.isdir(cpath):
+        print('*' * 80)
+        print('Test directory ')
+        print('    ' + cpath)
+        print('not found.')
+        print('*' * 80)
+        exit()
+    testfilename = os.path.join(cpath,testname + '.json')
+    if not os.path.isfile(testfilename):
+        print('*' * 80)
+        print('Test directory does not contain a test specification.')
+        print('Expected to find the file')
+        print('    ' + testfilename + '.')
+        print('*' * 80)
+        exit()
     parsemanager = ParseManager(cpath,cpath)
     testmanager = TestManager(cpath,cpath,testname,saveref=args.saveref)
-    testmanager.testparser()
-    testmanager.testppos()
-    testmanager.testpevs()
-    testmanager.printtestresults()
+    try:
+        if testmanager.testparser():
+            testmanager.testppos()
+            testmanager.testpevs()
+            testmanager.printtestresults()
+        else:
+            print(
+                '\n' + ('*' * 80) + '\nThis test set is not supported on the mac.' +
+                '\n' + ('*' * 80) )
+    except FileParseError as e:
+        print(': Unable to parse ' + str(e))
+        
         

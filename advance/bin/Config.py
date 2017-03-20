@@ -30,21 +30,21 @@ import os
 class Config():
 
     def __init__(self):
-        '''Location of analyzer executables and summaries.'''
+        '''user-specific settings'''
+        # self.platform = 'mac'
+        self.platform = 'linux'
+        self.canalyzerhome = '/home/username'
 
-        '''default settings'''
+        '''general settings'''
         self.bindir = os.path.dirname(os.path.abspath(__file__))   # advance/bin
         self.rootdir = os.path.dirname(self.bindir)                # advance
         summariesdir = os.path.join(self.rootdir,'summaries')
         self.summaries = os.path.join(summariesdir,'cchsummaries.jar')
-        self.cparser = os.path.join(self.bindir,'parseFile')
-        self.canalyzer = os.path.join(self.bindir,'canalyzer')
+        self.cparser = os.path.join(self.bindir,'parseFile_linux')
+        if self.platform == 'mac':
+            self.cparser = os.path.join(self.bindir,'parseFile_mac')
+        self.canalyzer = os.path.join(self.canalyzerhome,'canalyzer')
 
-        '''user-specific settings (if applicable).'''
-        self.cchhome = '/Users/henny/repo/CodeHawk/CHC'
-        self.cparser = os.path.join(os.path.join(self.cchhome,'cchcil'),'parseFile')
-        self.canalyzer = os.path.join(os.path.join(self.cchhome,'cchcmdline'),'canalyzer')
-        self.summaries = os.path.join(os.path.join(self.cchhome,'cchsummaries'),'cchsummaries.jar')
 
         
         

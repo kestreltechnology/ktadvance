@@ -62,6 +62,11 @@ class TestSetRef():
     def getrestrictions(self):
         if 'restrictions' in self.r:
             return self.r['restrictions']
+        else:
+            return []
+
+    def islinuxonly(self):
+        return 'linux-only' in self.getrestrictions()
 
     def save(self):
         with open(self.specfilename,'w') as fp:
