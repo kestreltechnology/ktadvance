@@ -72,6 +72,10 @@ if __name__ == '__main__':
                 '\n' + ('*' * 80) )
     except FileParseError as e:
         print(': Unable to parse ' + str(e))
+    except OSError as e:
+        print('*' * 80)
+        print('OS Error: ' + str(e) + ': Please check the platform settings in Config.py')
+        print('*' * 80)
     
         
     

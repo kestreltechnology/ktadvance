@@ -49,6 +49,12 @@ class FunctionPEVError(Exception):
     def __str__(self):
         return self.msg
 
+class AnalyzerMissingError(Exception):
+    def __init__(self,msg):
+        self.msg = msg
+    def __str__(self):
+        return self.msg
+
 from advance.app.CFileApplication import CFileApplication
 
 from advance.bin.AnalysisManager import AnalysisManager
@@ -147,6 +153,8 @@ class TestManager():
         self.testsetref.setppos(cfilename,fname,result)
 
     def testppos(self):
+        if not os.path.isfile(self.config.canalyzer):
+            raise AnalyzerMissingError(self.config.canalyzer)
         self.testresults.set_ppos()
         try:
             for cfile in self.getcfiles():
@@ -205,6 +213,8 @@ class TestManager():
                         cfilename,cfun,ppo,d[context][p])
 
     def testpevs(self):
+        if not os.path.isfile(self.config.canalyzer):
+            raise AnalyzerMissingError(self.config.canalyzer)
         self.testresults.set_pevs()
         for cfile in self.getcfiles():
             cfilename = cfile.getname()
