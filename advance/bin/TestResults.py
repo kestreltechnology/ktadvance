@@ -142,7 +142,7 @@ class TestResults():
                                     '    ' + str(ppo.getline()).rjust(4) + ' ' +
                                     ppo.getpredicate().ljust(20) +
                                     '  found:' + status.ljust(11) +
-                                    '  expected:' + ppo.getstatus().ljust(11))
+                                    '  expected:' + ppo.getstatus().ljust(11) + '  ' + ctxt)
                                             
         return '\n'.join(lines)
             
