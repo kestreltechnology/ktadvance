@@ -32,8 +32,8 @@ import os
 
 from advance.bin.AnalysisManager import AnalysisManager
 from advance.bin.TestManager import TestManager
-
-from advance.app.CFileApplication import CFileApplication
+from advance.bin.TestManager import AnalyzerMissingError
+from advance.bin.TestManager import XmlFileNotFoundError
 
 def parse():
     parser = argparse.ArgumentParser()
@@ -48,6 +48,36 @@ if __name__ == '__main__':
     testpath = args.path
     testname = args.test
     cpath = os.path.join(os.path.abspath(testpath),testname)
+    if not os.path.isdir(cpath):
+        print('*' * 80)
+        print('Test directory ')
+        print('    ' + cpath)
+        print('not found.')
+        print('*' * 80)
+        exit()
+    testfilename = os.path.join(cpath,testname + '.json')
+    if not os.path.isfile(testfilename):
+        print('*' * 80)
+        print('Test directory does not contain a test specification.')
+        print('Expected to find the file')
+        print('    ' + testfilename + '.')
+        print('*' * 80)
+        exit()    
     testmanager = TestManager(cpath,cpath,testname)
-    testmanager.testpevs()
-    testmanager.printtestresults()
+    try:
+        testmanager.testpevs()
+        testmanager.printtestresults()
+    except AnalyzerMissingError as e:
+        print('*' * 80)
+        print('Analyzer not found at ' + str(e) + ': Please set analyzer location in Config.py')
+        print('*' * 80)
+    except XmlFileNotFoundError as e:
+        print('*' * 80)
+        print('Xml file with semantic representation not found at ')
+        print('   ' + str(e))
+        print('   Please check that c source file has been parsed successfully')
+        print('*' * 80)
+    except OSError as e:
+        print('*' * 80)
+        print('OS Error: ' + str(e) + ': Please check the platform settings in Config.py')
+        print('*' * 80)

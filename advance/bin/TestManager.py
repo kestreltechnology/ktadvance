@@ -37,6 +37,12 @@ class FileParseError(Exception):
     def __str__(self):
         return self.msg
 
+class XmlFileNotFoundError(Exception):
+    def __init__(self,msg):
+        self.msg = msg
+    def __str__(self):
+        return self.msg
+
 class FunctionPPOError(Exception):
     def __init__(self,msg):
         self.msg = msg
@@ -159,6 +165,9 @@ class TestManager():
         try:
             for cfile in self.getcfiles():
                 cfilename = cfile.getname()
+                cfilefilename = UF.get_cfile_filename(self.tgtxpath,cfilename)
+                if not os.path.isfile(cfilefilename):
+                    raise XmlFileNotFoundError(cfilefilename)
                 capp = CFileApplication(self.cpath,cfilename)
                 am = AnalysisManager(capp,onefile=True)
                 am.create_file_primaryproofobligations(cfilename)
@@ -218,6 +227,9 @@ class TestManager():
         self.testresults.set_pevs()
         for cfile in self.getcfiles():
             cfilename = cfile.getname()
+            cfilefilename = UF.get_cfile_filename(self.tgtxpath,cfilename)
+            if not os.path.isfile(cfilefilename):
+                raise XmlFileNotFoundError(cfilefilename)
             capp = CFileApplication(self.cpath,cfilename)
             # only generate invariants if required
             if cfile.hasdomains():
