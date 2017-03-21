@@ -50,7 +50,6 @@ class ParseManager():
         self.tgtxpath = os.path.join(self.tgtpath,'ktadvance')
         self.tgtspath = os.path.join(self.tgtpath,'sourcefiles')   # for .c and .i files
         self.config = Config()
-        self._initializepaths()
 
     def preprocess_file_withgcc(self,cfilename,mac=False,copyfiles=False):
         '''Invoke gcc preprocessor on c source file.
@@ -74,8 +73,8 @@ class ParseManager():
         p = subprocess.call(cmd,cwd=self.cpath,stderr=subprocess.STDOUT)
         print('Result: ' + str(p))
         if copyfiles:
-            tgtcfilename = os.path.join(tgtspath,cfilename)
-            tgtifilename = os.path.join(tgtspath,ifilename)
+            tgtcfilename = os.path.join(self.tgtspath,cfilename)
+            tgtifilename = os.path.join(self.tgtspath,ifilename)
             os.chdir(self.cpath)
             shutil.copy(cfilename,tgtcfilename)
             shutil.copy(ifilename,tgtifilename)
@@ -155,7 +154,7 @@ class ParseManager():
         return p
         
 
-    def _initializepaths(self):
+    def initializepaths(self):
         '''Create directories for the target path.'''
         if not os.path.isdir(self.tgtpath): os.mkdir(self.tgtpath)
         if not os.path.isdir(self.tgtxpath): os.mkdir(self.tgtxpath)

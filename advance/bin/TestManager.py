@@ -102,10 +102,11 @@ class TestManager():
             return False
         self.testresults.set_parsing()
         self.clean()
+        self.parsemanager.initializepaths()
         print('\nParsing files\n' + ('-' * 80))
         for cfile in self.getcfiles():
             cfilename = cfile.getname()
-            ifilename = self.parsemanager.preprocess_file_withgcc(cfilename,self.ismac)
+            ifilename = self.parsemanager.preprocess_file_withgcc(cfilename,self.ismac,copyfiles=True)
             parseresult = self.parsemanager.parse_ifile(ifilename)
             if parseresult != 0:
                 self.testresults.add_parseerror(cfilename,str(parseresult))
