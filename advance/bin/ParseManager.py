@@ -34,7 +34,7 @@ from advance.bin.Config import Config
 class ParseManager():
     '''Utility functions to support preprocessing and parsing source code.'''
 
-    def __init__(self,cpath,tgtpath):
+    def __init__(self,cpath,tgtpath,nofilter=False):
         '''Initialize paths to code, results, and parser executable.
 
         Args:
@@ -46,6 +46,7 @@ class ParseManager():
         '''
         self.cpath = cpath
         self.tgtpath = tgtpath
+        self.nofilter = nofilter
         self.tgtxpath = os.path.join(self.tgtpath,'ktadvance')
         self.tgtspath = os.path.join(self.tgtpath,'sourcefiles')   # for .c and .i files
         self.config = Config()
@@ -79,6 +80,62 @@ class ParseManager():
             shutil.copy(cfilename,tgtcfilename)
             shutil.copy(ifilename,tgtifilename)
         return ifilename
+
+    def preprocess(ccommand):
+        print('\n\n' + ('=' * 80))
+        print('***** ' + ccomand['file'] + ' *****')
+        print('=' * 80)
+        for p in ccommand:
+            print(p + ': ' + ccommand[p])
+        command = shlex.split(ccommand['command'],posix=False)
+        ecommand = command[:]
+        if file.endswith('.c'):
+            outputfile = file[:-1] + 'i'
+            try:
+                outputflagindex = command.index('-o')
+                ecommand[outputflagindex+1] = outputfile
+            except ValueError:
+                ecommand.append('o')
+                ecommand.append(outputfile)
+            try:
+                ecommand.remove('-O2')
+            except:
+                pass
+            ecommand.append('-g')
+            ecommand.append('-E')
+            ecommand.append('-fno-stack-protector')
+            ecommand.append('-fno-inline')
+            ecommand.append('-fno-builtin')
+            ecommand.append('-fno-asm')
+            print('\nIssue command: ' + str(ecommand) + '\n')
+            p = subprocess.call(ecommand,cwd=ccommand['directory'],stderr=subprocess.STDOUT)
+            print('result: ' + str(p))
+            print('\nIssue original command: ' + str(command) + '\n')
+            p = subprocess.call(command,cwd=ccommand['directory'],stderr=subprocess.STDOUT)
+            print('result: ' + str(p))
+            return (file,outputfile)
+        else:
+            print('\nFilename not recognized: ' + file)
+
+    def parse_with_ccomands(compilecommands):
+        for c in compilecommands:
+            (cfilename,ifilename) = preprocess(c)
+            cfilename = os.path.abspath(cfilename)
+            ifilename = os.path.abspath(ifilename)
+            command = [ self.config.cparser, '-projectpath', self.cpath,
+                            '-targetdirectory', self.tgtxpath ]
+            if self.nofilter:
+                command.append('-nofilter')
+            command.append(ifilename)
+            cfilelen = getfilelength(cfilename)
+            cfiles[cfilename] = cfilelen
+            print('\nRun the parser: ' + str(command) + '\n')
+            subprocess.call(command)
+            print('\n' + ('-' * 80) + '\n\n')
+
+    def normalizefilename(filename,path):
+        if filename.startswith(path):
+            return filename[len(path)+1:]
 
     def parse_ifile(self,ifilename):
         '''Invoke kt advance parser frontend on preprocessed source file
