@@ -27,9 +27,13 @@
 
 import os
 import subprocess
+import shlex
 import shutil
+import xml.etree.ElementTree as ET
 
 from advance.bin.Config import Config
+
+import advance.util.xmlutil as UX
 
 class ParseManager():
     '''Utility functions to support preprocessing and parsing source code.'''
@@ -80,22 +84,34 @@ class ParseManager():
             shutil.copy(ifilename,tgtifilename)
         return ifilename
 
-    def preprocess(ccommand):
+    def getfilelength(self,fname):
+        with open(fname) as f:
+            for i,l in enumerate(f): pass
+        return i+1
+
+    def normalizefilename(self,filename):
+        if filename.startswith(self.cpath):
+            return filename[len(self.cpath)+1:]
+        else:
+            return filename
+        
+    def preprocess(self,ccommand,copyfiles=True):
         print('\n\n' + ('=' * 80))
-        print('***** ' + ccomand['file'] + ' *****')
+        print('***** ' + ccommand['file'] + ' *****')
         print('=' * 80)
         for p in ccommand:
             print(p + ': ' + ccommand[p])
         command = shlex.split(ccommand['command'],posix=False)
         ecommand = command[:]
-        if file.endswith('.c'):
-            outputfile = file[:-1] + 'i'
+        cfilename = ccommand['file']
+        if cfilename.endswith('.c'):
+            ifilename = cfilename[:-1] + 'i'
             try:
                 outputflagindex = command.index('-o')
-                ecommand[outputflagindex+1] = outputfile
+                ecommand[outputflagindex+1] = ifilename
             except ValueError:
                 ecommand.append('o')
-                ecommand.append(outputfile)
+                ecommand.append(ifilename)
             try:
                 ecommand.remove('-O2')
             except:
@@ -112,13 +128,14 @@ class ParseManager():
             print('\nIssue original command: ' + str(command) + '\n')
             p = subprocess.call(command,cwd=ccommand['directory'],stderr=subprocess.STDOUT)
             print('result: ' + str(p))
-            return (file,outputfile)
+            return (cfilename,ifilename)
         else:
-            print('\nFilename not recognized: ' + file)
+            print('\nFilename not recognized: ' + cfilename)
 
-    def parse_with_ccomands(compilecommands):
+    def parse_with_ccomands(self,compilecommands,copyfiles=True):
+        cfiles = {}
         for c in compilecommands:
-            (cfilename,ifilename) = preprocess(c)
+            (cfilename,ifilename) = self.preprocess(c,copyfiles)
             cfilename = os.path.abspath(cfilename)
             ifilename = os.path.abspath(ifilename)
             command = [ self.config.cparser, '-projectpath', self.cpath,
@@ -126,16 +143,32 @@ class ParseManager():
             if self.nofilter:
                 command.append('-nofilter')
             command.append(ifilename)
-            cfilelen = getfilelength(cfilename)
+            cfilelen = self.getfilelength(cfilename)
             cfiles[cfilename] = cfilelen
             print('\nRun the parser: ' + str(command) + '\n')
             subprocess.call(command)
             print('\n' + ('-' * 80) + '\n\n')
-
-    def normalizefilename(filename,path):
-        if filename.startswith(path):
-            return filename[len(path)+1:]
-
+        tgtroot = UX.get_xml_header('target-files','c-files')
+        cfilesnode = ET.Element('c-files')
+        tgtroot.append(cfilesnode)
+        print('\n\nCollect c files')
+        cfilesnode.set('count',str(len(cfiles)))
+        counter = 1
+        for n in cfiles:
+            n = os.path.abspath(n)
+            name = self.normalizefilename(n)
+            print('   Add ' + name + ' (' + str(cfiles[n]) + ' lines)')
+            cfile = ET.Element('c-file')
+            cfile.set('name',name)
+            cfile.set('id',str(counter))
+            counter += 1
+            cfilesnode.append(cfile)
+        tgtfilename = os.path.join(self.tgtxpath,'target-files.xml')
+        tgtfile = open(tgtfilename,'w')
+        tgtfile.write(UX.doc_to_pretty(ET.ElementTree(tgtroot)))
+        linecount = sum(cfiles[n] for n in cfiles)
+        print('\nTotal ' + str(len(cfiles)) + ' files (' + str(linecount) + ' lines)')
+        
     def parse_ifile(self,ifilename):
         '''Invoke kt advance parser frontend on preprocessed source file
 

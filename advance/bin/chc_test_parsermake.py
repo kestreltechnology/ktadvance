@@ -29,6 +29,7 @@
 import argparse
 import json
 import os
+import subprocess
 
 from advance.bin.Config import Config
 from advance.bin.ParseManager import ParseManager
@@ -66,4 +67,13 @@ if __name__ == '__main__':
         print('Processing make files is not supported for mac')
         print('*' * 80)
         exit()
-    
+    cleancmd = [ 'make', 'clean' ]
+    p = subprocess.call(cleancmd,cwd=cpath,stderr=subprocess.STDOUT)
+    bearcmd = [ 'bear', 'make' ]
+    p = subprocess.call(bearcmd,cwd=cpath,stderr=subprocess.STDOUT)
+    print('Result: ' + str(p))
+    parsemanager = ParseManager(cpath,cpath,nofilter=True)
+    compilecommandsfilename = os.path.join(cpath,'compile_commands.json')
+    with open(compilecommandsfilename) as fp:
+        compilecommands = json.load(fp)
+    parsemanager.parse_with_ccomands(compilecommands,copyfiles=True)
