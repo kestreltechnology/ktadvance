@@ -171,7 +171,7 @@ class ParseManager():
             print('\nRun the parser: ' + str(command) + '\n')
             subprocess.call(command)
             print('\n' + ('-' * 80) + '\n\n')
-        tgtroot = UX.get_xml_header('target-files','c-files')
+        tgtroot = UX.get_xml_header('target_files','c-files')
         cfilesnode = ET.Element('c-files')
         tgtroot.append(cfilesnode)
         print('\n\nCollect c files')
@@ -186,7 +186,7 @@ class ParseManager():
             cfile.set('id',str(counter))
             counter += 1
             cfilesnode.append(cfile)
-        tgtfilename = os.path.join(self.tgtxpath,'target-files.xml')
+        tgtfilename = os.path.join(self.tgtxpath,'target_files.xml')
         tgtfile = open(tgtfilename,'w')
         tgtfile.write(UX.doc_to_pretty(ET.ElementTree(tgtroot)))
         linecount = sum(cfiles[n] for n in cfiles)

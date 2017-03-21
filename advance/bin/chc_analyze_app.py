@@ -39,6 +39,8 @@ from advance.bin.AnalysisManager import AnalysisManager
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('path',help='directory that holds that analysis results')
+    parser.add_argument('--nofilter',help='disable filtering out files with absolute path',
+                            action='store_true')
     args = parser.parse_args()
     return args
 
@@ -55,7 +57,7 @@ if __name__ == '__main__':
     capp = CApplication(args.path)
     path = capp.getpath()
 
-    am = AnalysisManager(capp)
+    am = AnalysisManager(capp,nofilter=args.nofilter)
 
     with timing('creating primary proof obligations'):
         am.create_app_primaryproofobligations()

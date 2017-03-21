@@ -32,7 +32,7 @@ from advance.bin.Config import Config
 
 class AnalysisManager():
 
-    def __init__(self,capp,onefile=False):
+    def __init__(self,capp,onefile=False,nofilter=False):
         '''Initialize the analyzer location and target file location'''
 
         self.capp = capp                             # CApplication
@@ -41,17 +41,22 @@ class AnalysisManager():
         self.path = self.capp.getpath()
         self.canalyzer = self.config.canalyzer
         self.onefile = onefile
+        self.nofilter = nofilter
 
     def create_file_primaryproofobligations(self,cfilename):
         try:
             print('Creating primary proof obligations for ' + cfilename)
-            sumopt = ' -summaries ' + self.chsummaries
-            cmdopt = ' -command primary '
-            linkopt = ' -nolinkinfo ' if self.onefile else ''
-            fileopt = ' -cfile ' + cfilename + ' '
-            cmd = self.canalyzer + sumopt + cmdopt + linkopt + fileopt + self.path
-            result = subprocess.check_output(cmd,shell=True)
-            print(result)
+            cmd = [ self.canalyzer, '-summaries', self.chsummaries,
+                        '-command', 'primary', '-cfile', cfilename ]
+            if self.onefile: cmd.append('-nolinkinfo')
+            if self.nofilter: cmd.append('-nofilter')
+            cmd.append(self.path)
+            print(str(cmd))
+            result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT)
+            print('\nResult: ' + str(result))
+            if result != 0:
+                print('Error in creating primary proof obligations')
+                exit(1)
         except subprocess.CalledProcessError, args:
             print(args.output)
             print(args)
@@ -60,14 +65,17 @@ class AnalysisManager():
     def generate_file_localinvariants(self,cfilename,domains):
         try:
             print('Generating invariants for ' + cfilename)
-            sumopt = ' -summaries ' + self.chsummaries
-            cmdopt = ' -command localinvs '
-            domainopt = ' -domains ' + domains
-            linkopt = ' -nolinkinfo ' if self.onefile else ''
-            fileopt = ' -cfile ' + cfilename + ' '
-            cmd = self.canalyzer + sumopt + cmdopt + domainopt + linkopt + fileopt + self.path
-            result = subprocess.check_output(cmd,shell=True)
-            print(result)
+            cmd = [ self.canalyzer, '-summaries', self.chsummaries,
+                        '-command', 'localinvs', '-cfile', cfilename,
+                        '-domains', domains ]
+            if self.onefile: cmd.append('-nolinkinfo')
+            if self.nofilter: cmd.append('-nofilter')
+            cmd.append(self.path)
+            result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT)
+            print('\nResult: ' + str(result))
+            if result != 0:
+                print('Error in generating invariants')
+                exit(1)
         except subprocess.CalledProcessError, args:
             print(args.output)
             print(args)
@@ -81,8 +89,16 @@ class AnalysisManager():
             linkopt = ' -nolinkinfo ' if self.onefile else ''
             fileopt = ' -cfile ' + cfilename + ' '
             cmd = self.canalyzer + sumopt + cmdopt + linkopt + fileopt + self.path
-            result = subprocess.check_output(cmd,shell=True)
-            print(result)
+            cmd = [ self.canalyzer, '-summaries', self.chsummaries,
+                        '-command', 'check', '-cfile', cfilename ]
+            if self.onefile: cmd.append('-nolinkinfo')
+            if self.nofilter: cmd.append('-nofilter')
+            cmd.append(self.path)
+            result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT)
+            print('\nResult: ' + str(result))
+            if result != 0:
+                print('Error in checking proof obligations')
+                exit(1)
         except subprocess.CalledProcessError, args:
             print(args.output)
             print(args)
