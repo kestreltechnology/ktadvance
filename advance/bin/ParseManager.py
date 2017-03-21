@@ -128,6 +128,12 @@ class ParseManager():
             print('\nIssue original command: ' + str(command) + '\n')
             p = subprocess.call(command,cwd=ccommand['directory'],stderr=subprocess.STDOUT)
             print('result: ' + str(p))
+            if copyfiles:
+                tgtcfilename = os.path.join(self.tgtspath,self.normalizefilename(cfilename))
+                tgtifilename = os.path.join(self.tgtspath,self.normalizefilename(ifilename))
+                os.chdir(self.cpath)
+                shutil.copy(cfilename,tgtcfilename)
+                shutil.copy(ifilename,tgtifilename)
             return (cfilename,ifilename)
         else:
             print('\nFilename not recognized: ' + cfilename)
@@ -168,6 +174,8 @@ class ParseManager():
         tgtfile.write(UX.doc_to_pretty(ET.ElementTree(tgtroot)))
         linecount = sum(cfiles[n] for n in cfiles)
         print('\nTotal ' + str(len(cfiles)) + ' files (' + str(linecount) + ' lines)')
+        os.chdir(self.cpath)
+        shutil.copy('compile_commands.json',self.tgtspath)
         
     def parse_ifile(self,ifilename):
         '''Invoke kt advance parser frontend on preprocessed source file
