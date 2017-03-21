@@ -40,9 +40,8 @@ from advance.bin.TestManager import FileParseError
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('path',help='directory that holds application test case')
-    parser.add_argument('--savepackagedtar',
-                        help='create and save a tar file with semantics files',
-                        default=None)
+    parser.add_argument('--savesemantics',help='create tar file with semantics files',
+                        action='store_true')
     args = parser.parse_args()
     return args
 
@@ -82,19 +81,5 @@ if __name__ == '__main__':
     with open(compilecommandsfilename) as fp:
         compilecommands = json.load(fp)
     parsemanager.parse_with_ccomands(compilecommands,copyfiles=True)
-    if args.savepackagedtar:
-        tardir = os.path.join(cpath,args.savepackagedtar)
-        if os.path.isdir(tardir):
-            shutil.rmtree(tardir)
-        os.mkdir(tardir)
-        os.chdir(cpath)
-        ktadvancedir = os.path.join(cpath,'ktadvance')
-        srcdir = os.path.join(cpath,'sourcefiles')
-
-        tarfilename = os.path.join(cpath,args.savepackagedtar + '.tar')
-        shutil.move(ktadvancedir,tardir)
-        shutil.move(srcdir,tardir)
-        tarcmd = [ 'tar', '-cf', tarfilename, tardir ]
-        zipcmd = [ 'gzip', tarfilename ]
-        subprocess.call(tarcmd,cwd=cpath,stderr=subprocess.STDOUT)
-        subprocess.call(zipcmd,cwd=cpath,stderr=subprocess.STDOUT)
+    if args.savesemantics:
+        parsemanager.savesemantics()

@@ -37,6 +37,8 @@ def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('path',help='directory that holds test sets')
     parser.add_argument('test',help='name of test directory')
+    parser.add_argument('--savesemantics',help='create tar file with semantics files',
+                            action='store_true')
     args = parser.parse_args()
     return args
 
@@ -76,6 +78,8 @@ if __name__ == '__main__':
         print('*' * 80)
         print('OS Error: ' + str(e) + ': Please check the platform settings in Config.py')
         print('*' * 80)
+    if args.savesemantics:
+        parsemanager.savesemantics()
     
         
     

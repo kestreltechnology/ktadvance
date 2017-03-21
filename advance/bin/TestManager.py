@@ -87,8 +87,9 @@ class TestManager():
         self.config = Config()
         self.ismac = self.config.platform == 'mac'
         self.parsemanager = ParseManager(self.cpath,self.tgtpath)
-        self.tgtxpath = os.path.join(self.tgtpath,'ktadvance')
-        self.tgtspath = os.path.join(self.tgtpath,'sourcefiles')
+        self.sempath = self.parsemanager.getsempath()
+        self.tgtxpath = self.parsemanager.gettgtxpath()
+        self.tgtspath = self.parsemanager.gettgtspath()
         testfilename = os.path.join(self.cpath,testname + '.json')
         self.testsetref = TestSetRef(testfilename)
         self.testresults = TestResults(self.testsetref)
@@ -169,7 +170,7 @@ class TestManager():
                 cfilefilename = UF.get_cfile_filename(self.tgtxpath,cfilename)
                 if not os.path.isfile(cfilefilename):
                     raise XmlFileNotFoundError(cfilefilename)
-                capp = CFileApplication(self.cpath,cfilename)
+                capp = CFileApplication(self.sempath,cfilename)
                 am = AnalysisManager(capp,onefile=True)
                 am.create_file_primaryproofobligations(cfilename)
                 ppos = capp.get_ppos()
@@ -231,7 +232,7 @@ class TestManager():
             cfilefilename = UF.get_cfile_filename(self.tgtxpath,cfilename)
             if not os.path.isfile(cfilefilename):
                 raise XmlFileNotFoundError(cfilefilename)
-            capp = CFileApplication(self.cpath,cfilename)
+            capp = CFileApplication(self.sempath,cfilename)
             # only generate invariants if required
             if cfile.hasdomains():
                 for d in cfile.getdomains():

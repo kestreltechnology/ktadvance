@@ -51,9 +51,26 @@ class ParseManager():
         self.cpath = cpath
         self.tgtpath = tgtpath
         self.nofilter = nofilter
-        self.tgtxpath = os.path.join(self.tgtpath,'ktadvance')
-        self.tgtspath = os.path.join(self.tgtpath,'sourcefiles')   # for .c and .i files
+        self.sempath = os.path.join(self.tgtpath,'semantics')
+        self.tgtxpath = os.path.join(self.sempath,'ktadvance')
+        self.tgtspath = os.path.join(self.sempath,'sourcefiles')   # for .c and .i files
         self.config = Config()
+
+    def getsempath(self): return self.sempath
+
+    def gettgtxpath(self): return self.tgtxpath
+
+    def gettgtspath(self): return self.tgtspath
+
+    def savesemantics(self):
+        os.chdir(self.cpath)
+        tarfilename = 'semantics_' + self.config.platform + '.tar'
+        if os.path.isfile(tarfilename): os.remove(tarfilename)
+        if os.path.isfile(tarfilename + '.gz'): os.remove(tarfilename + '.gz')
+        tarcmd = [ 'tar', '-cf' , tarfilename , 'semantics']
+        subprocess.call(tarcmd,cwd=self.cpath,stderr=subprocess.STDOUT)
+        gzipcmd = [ 'gzip', tarfilename ]
+        subprocess.call(gzipcmd,cwd=self.cpath,stderr=subprocess.STDOUT)
 
     def preprocess_file_withgcc(self,cfilename,mac=False,copyfiles=False):
         '''Invoke gcc preprocessor on c source file.
@@ -198,5 +215,6 @@ class ParseManager():
     def initializepaths(self):
         '''Create directories for the target path.'''
         if not os.path.isdir(self.tgtpath): os.mkdir(self.tgtpath)
+        if not os.path.isdir(self.sempath): os.mkdir(self.sempath)
         if not os.path.isdir(self.tgtxpath): os.mkdir(self.tgtxpath)
         if not os.path.isdir(self.tgtspath): os.mkdir(self.tgtspath)
