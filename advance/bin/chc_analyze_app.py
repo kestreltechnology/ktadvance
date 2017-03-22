@@ -28,21 +28,30 @@
 import argparse
 import time
 import os
+import subprocess
 
 from contextlib import contextmanager
 
 import advance.util.fileutil as UF
 
+from advance.bin.Config import Config
 from advance.app.CApplication import CApplication
 from advance.bin.AnalysisManager import AnalysisManager
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('path',help='directory that holds that analysis results')
+    parser.add_argument('path',help='directory that holds the semantics directory (or tar.gz file)')
     parser.add_argument('--nofilter',help='disable filtering out files with absolute path',
                             action='store_true')
     args = parser.parse_args()
     return args
+
+def invokelinker(path):
+    cmd = [ 'python', 'chc_link.py', args.path ]
+    result = subprocess.call(cmd,cwd=Config().bindir,stderr=subprocess.STDOUT)
+    if result != 0:
+        print('Error in linking')
+        exit(1)
 
 @contextmanager
 def timing(activity):
@@ -54,7 +63,21 @@ def timing(activity):
 
 if __name__ == '__main__':
     args = parse()
-    capp = CApplication(args.path)
+    semdir = os.path.join(args.path,'semantics')
+    if not os.path.isdir(semdir):
+        success = UF.unpack_tar_file(args.path)
+        if not success:
+            print('No file or directory found with semantics')
+            exit(1)
+        else:
+            invokelinker(args.path)
+
+    # check linkinfo
+    globaldefs = os.path.join(semdir,os.path.join('ktadvance','globaldefinitions.xml'))
+    if not os.path.isfile(globaldefs):
+        invokelinker(args.path)
+    
+    capp = CApplication(semdir)
     path = capp.getpath()
 
     am = AnalysisManager(capp,nofilter=args.nofilter)

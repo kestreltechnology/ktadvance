@@ -84,11 +84,6 @@ class AnalysisManager():
     def check_file_proofobligations(self,cfilename):
         try:
             print('Checking proof obligations for ' + cfilename)
-            sumopt = ' -summaries ' + self.chsummaries
-            cmdopt = ' -command check '
-            linkopt = ' -nolinkinfo ' if self.onefile else ''
-            fileopt = ' -cfile ' + cfilename + ' '
-            cmd = self.canalyzer + sumopt + cmdopt + linkopt + fileopt + self.path
             cmd = [ self.canalyzer, '-summaries', self.chsummaries,
                         '-command', 'check', '-cfile', cfilename ]
             if self.onefile: cmd.append('-nolinkinfo')
