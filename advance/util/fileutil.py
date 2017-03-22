@@ -26,6 +26,7 @@
 # ------------------------------------------------------------------------------
 
 import os
+import subprocess
 import xml.etree.ElementTree as ET
 
 def get_xnode(filename,rootnode,desc,show=True):
@@ -137,5 +138,28 @@ def get_srcfile_lines(path,cfilename):
     filename = get_src_filename(path,cfilename)
     with open(filename,'r') as fp:
         return fp.readlines()
-    
-                                
+
+# ------------------------------------------------------------ unzip tar file --
+
+def unpack_tar_file(path):
+    os.chdir(path)
+    linuxtar = 'semantics_linux.tar'
+    linuxtargz = linuxtar + '.gz'
+    if os.path.isfile(linuxtargz):
+        cmd = [ 'gunzip' , linuxtargz ]
+        result = subprocess.call(cmd,cwd=path,stderr=subprocess.STDOUT)
+        if result != 0:
+            print('Error in ' + ' '.join(cmd))
+            return False
+        else:
+            print('Successfully unzipped ' + linuxtargz)
+    if os.path.isfile(linuxtar):
+        cmd = [ 'tar', '-xf', linuxtar ]
+        result = subprocess.call(cmd,cwd=path,stderr=subprocess.STDOUT)
+        if result != 0:
+            print('Error in ' + ' '.join(cmd))
+            return False
+        else:
+            print('Successfully extracted ' + linuxtar)
+    return os.path.isdir('semantics')
+        
