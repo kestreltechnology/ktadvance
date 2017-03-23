@@ -38,6 +38,8 @@ class Config():
         '''general settings'''
         self.bindir = os.path.dirname(os.path.abspath(__file__))   # advance/bin
         self.rootdir = os.path.dirname(self.bindir)                # advance
+        self.topdir = os.path.dirname(self.rootdir)
+        self.testdir = os.path.join(self.topdir,'tests')
         summariesdir = os.path.join(self.rootdir,'summaries')
         self.summaries = os.path.join(summariesdir,'cchsummaries.jar')
         self.cparser = os.path.join(self.bindir,'parseFile_linux')
