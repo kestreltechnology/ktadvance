@@ -46,8 +46,25 @@ class CFunctionPPOs():
         for ppo in sorted(self.ppos,key=lambda(p):(self.ppos[p].getlocation().getline(),self.ppos[p].getid())): 
             f(self.ppos[ppo])
 
+    def get_ppo_methods(self):
+        '''Return a dictionary of method -> count.'''
+        results = {}
+        def add(m):
+            if not m in results: results[m] = 0
+            results[m] += 1
+        for ppoid in self.ppos:
+            if self.cproofs.is_ppo_discharged(ppoid):
+                pev = self.cproofs.get_ppo_evidence(ppoid)
+                if pev.isdelegated():
+                    add(pev.getassumptiontype())
+                else:
+                    add(pev.getdischargemethod())
+            else:
+                add('open')
+        return results
+
     def getresults(self):
-        '''Return a dictionary of method -> predicate tag -> count.'''
+        '''Return a dictionary of predicate tag -> method -> count.'''
         results = {}
         def add(t,m):
             if not t in results: results[t] = {}

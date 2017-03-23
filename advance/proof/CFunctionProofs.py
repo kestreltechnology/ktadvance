@@ -67,6 +67,10 @@ class CFunctionProofs():
         self._getpevs()
         return self.pevs.get_evidence(ppoid)
 
+    def get_ppo_methods(self):
+        self._getppos()
+        return self.ppos.get_ppo_methods()
+
     def get_ppo_results(self): 
         self._getppos()
         return self.ppos.getresults()
