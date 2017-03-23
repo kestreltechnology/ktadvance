@@ -47,5 +47,21 @@ class CLocation():
         else:
             print('Location node missing')
 
+    def getloc(self):
+        return (self.getfile(), self.getline(), self.getbyte())
+
+
+    def __ge__(self,loc): return self.getloc >= loc.getloc()
+
+    def __gt__(self,loc): return self.getloc > loc.getloc()
+
+    def __le__(self,loc): return self.getloc <= loc.getloc()
+
+    def __lt__(self,loc): return self.getloc < loc.getloc()
+
+    def __eq__(self,loc): return self.getloc == loc.getloc()
+
+    def __ne__(self,loc): return self.getloc != loc.getloc()
+        
     def __str__(self):
         return (self.getfile() + ':' + str(self.getline()))
