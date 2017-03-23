@@ -30,8 +30,10 @@ from advance.proof.CPOPredicateCast import CPOPredicateCast
 from advance.proof.CPOPredicateIndexLowerBound import CPOPredicateIndexLowerBound
 from advance.proof.CPOPredicateIndexUpperBound import CPOPredicateIndexUpperBound
 from advance.proof.CPOPredicateInitialized import CPOPredicateInitialized
+from advance.proof.CPOPredicateInitializedRange import CPOPredicateInitializedRange
 from advance.proof.CPOPredicateNotNull import CPOPredicateNotNull
 from advance.proof.CPOPredicateNonNegative import CPOPredicateNonNegative
+from advance.proof.CPOPredicateNullTerminated import CPOPredicateNullTerminated
 from advance.proof.CPOPredicatePointerCast import CPOPredicatePointerCast
 from advance.proof.CPOPredicatePtrLowerBound import CPOPredicatePtrLowerBound
 from advance.proof.CPOPredicatePtrUpperBound import CPOPredicatePtrUpperBound
@@ -40,6 +42,7 @@ from advance.proof.CPOPredicateValidMem import CPOPredicateValidMem
 from advance.proof.CPOPredicateWidthOverflow import CPOPredicateWidthOverflow
 from advance.proof.CPOPredicateLowerBound import CPOPredicateLowerBound
 from advance.proof.CPOPredicateUpperBound import CPOPredicateUpperBound
+from advance.proof.CPOPredicateNoOverlap import CPOPredicateNoOverlap
 
 
 def getpredicate(cfun,pnode):
@@ -52,6 +55,8 @@ def getpredicate(cfun,pnode):
         return CPOPredicateIndexUpperBound(cfun,pnode)
     if tag == 'initialized':
         return CPOPredicateInitialized(cfun,pnode)
+    if tag == 'initialized-range':
+        return CPOPredicateInitializedRange(cfun,pnode)
     if tag == 'not-null':
         return CPOPredicateNotNull(cfun,pnode)
     if tag == 'pointer-cast':
@@ -72,5 +77,9 @@ def getpredicate(cfun,pnode):
         return CPOPredicateLowerBound(cfun,pnode)
     if tag == 'upper-bound':
         return CPOPredicateUpperBound(cfun,pnode)
+    if tag == 'null-terminated':
+        return CPOPredicateNullTerminated(cfun,pnode)
+    if tag == 'no-overlap':
+        return CPOPredicateNoOverlap(cfun,pnode)
     else:
         return CPOPredicate(cfun,pnode)
