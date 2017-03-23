@@ -104,7 +104,9 @@ class AnalysisManager():
         self.capp.filenameiter(f)
 
     def generate_app_localinvariants(self,domains):
-        def f(cfile):self.generate_file_localinvariants(cfile,domains)
+        def f(cfile):
+            for d in domains:
+                self.generate_file_localinvariants(cfile,d)
         self.capp.filenameiter(f)
 
     def check_app_proofobligations(self):

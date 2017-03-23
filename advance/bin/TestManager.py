@@ -265,7 +265,6 @@ class TestManager():
             print('Removing ' + self.tgtspath)
             shutil.rmtree(self.tgtspath)            
 
-
     def xcfile_exists(self,cfilename):
         '''Checks existence of xml file for cfilename.'''
         xfilename = UF.get_cfile_filename(self.tgtxpath,cfilename)

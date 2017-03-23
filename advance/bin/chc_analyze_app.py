@@ -85,7 +85,7 @@ if __name__ == '__main__':
     with timing('creating primary proof obligations'):
         am.create_app_primaryproofobligations()
     with timing('generating local invariants'):
-        am.generate_app_localinvariants('llvis')
+        am.generate_app_localinvariants(['llvis'])
     with timing('checking proof obligations'):
         am.check_app_proofobligations()
 
