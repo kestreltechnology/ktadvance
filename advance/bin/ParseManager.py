@@ -156,7 +156,7 @@ class ParseManager():
         else:
             print('\nFilename not recognized: ' + cfilename)
 
-    def parse_with_ccomands(self,compilecommands,copyfiles=True):
+    def parse_with_ccommands(self,compilecommands,copyfiles=True):
         cfiles = {}
         for c in compilecommands:
             (cfilename,ifilename) = self.preprocess(c,copyfiles)

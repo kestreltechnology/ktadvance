@@ -124,7 +124,7 @@ if __name__ == '__main__':
         print('*' * 80)
         exit(1)
         
-    parsemanager.parse_with_ccomands(compilecommands,copyfiles=True)
+    parsemanager.parse_with_ccommands(compilecommands,copyfiles=True)
 
     if args.savesemantics:
         parsemanager.savesemantics()

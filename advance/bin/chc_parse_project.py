@@ -105,7 +105,7 @@ if __name__ == '__main__':
         exit(1)
 
     ccfilename = os.path.join(cpath,'compile_commands.json')
-    if not oslpath.isfile(ccfilename):
+    if not os.path.isfile(ccfilename):
         print('*' * 80)
         print('File to be produced by bear make not found.')
         print('Expected to find file')
