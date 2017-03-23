@@ -72,7 +72,7 @@ class ParseManager():
         gzipcmd = [ 'gzip', tarfilename ]
         subprocess.call(gzipcmd,cwd=self.cpath,stderr=subprocess.STDOUT)
 
-    def preprocess_file_withgcc(self,cfilename,mac=False,copyfiles=False):
+    def preprocess_file_withgcc(self,cfilename,copyfiles=True):
         '''Invoke gcc preprocessor on c source file.
 
         Args:
@@ -83,6 +83,7 @@ class ParseManager():
             the original source file and the generated .i file to the 
             tgtpath/sourcefiles directory
         '''
+        mac = self.config.platform == 'mac'
         ifilename = cfilename[:-1] + 'i'
         macoptions = [ '-U___BLOCKS___',
                        '-D_DARWIN_C_SOURCE',
