@@ -63,6 +63,13 @@ if __name__ == '__main__':
     zitserpath = os.path.join(sardpath,'zitser')
     testpath = os.path.join(zitserpath,args.testapp)
     cpath = os.path.abspath(testpath)
+    
+    if Config().platform == 'mac':
+        print('*' * 80)
+        print('Processing make files is not supported for mac')
+        print('*' * 80)
+        exit()
+
     if not os.path.isdir(cpath):
         print('*' * 80)
         print('Test directory ')
@@ -79,22 +86,45 @@ if __name__ == '__main__':
         print('    ' + makefilename + '.')
         print('*' * 80)
         exit()
+
     parsemanager = ParseManager(cpath,cpath)
-    if Config().platform == 'mac':
-        print('*' * 80)
-        print('Processing make files is not supported for mac')
-        print('*' * 80)
-        exit()
+    parsemanager.initializepaths()
+    
     cleancmd = [ 'make', 'clean' ]
     p = subprocess.call(cleancmd,cwd=cpath,stderr=subprocess.STDOUT)
+    if p != 0:
+        print('*' * 80)
+        print('Error in running make clean.')
+        print('*' * 80)
+        exit(1)    
+    
     bearcmd = [ 'bear', 'make' ]
     p = subprocess.call(bearcmd,cwd=cpath,stderr=subprocess.STDOUT)
-    print('Result: ' + str(p))
-    parsemanager = ParseManager(cpath,cpath,nofilter=True)
-    parsemanager.initializepaths()
-    compilecommandsfilename = os.path.join(cpath,'compile_commands.json')
+    if p != 0:
+        print('*' * 80)
+        print('Error in running bear make.')
+        print('*' * 80)
+        exit(1)
+
+    ccfilename = os.path.join(cpath,'compile_commands.json')
+    if not oslpath.isfile(ccfilename):
+        print('*' * 80)
+        print('File to be produced by bear make not found.')
+        print('Expected to find file')
+        print('   ' + ccfilename)
+        print('*' * 80)
+        exit(1)
+    
     with open(compilecommandsfilename) as fp:
         compilecommands = json.load(fp)
+
+    if len(compilecommands) == 0:
+        print('*' * 80)
+        print('The compile_commands.json file was found empty.')
+        print('*' * 80)
+        exit(1)
+        
     parsemanager.parse_with_ccomands(compilecommands,copyfiles=True)
+
     if args.savesemantics:
         parsemanager.savesemantics()
