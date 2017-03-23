@@ -71,6 +71,7 @@ if __name__ == '__main__':
         print('*' * 80)
         exit()
 
+    makefilename = os.path.join(cpath,'Makefile')
     if not os.path.isfile(makefilename):
         print('*' * 80)
         print('Test directory does not contain a Makefile.')
