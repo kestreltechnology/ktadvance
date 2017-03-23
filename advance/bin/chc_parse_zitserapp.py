@@ -87,7 +87,7 @@ if __name__ == '__main__':
         print('*' * 80)
         exit()
 
-    parsemanager = ParseManager(cpath,cpath)
+    parsemanager = ParseManager(cpath,cpath,nofilter=True)
     parsemanager.initializepaths()
     
     cleancmd = [ 'make', 'clean' ]
@@ -107,7 +107,7 @@ if __name__ == '__main__':
         exit(1)
 
     ccfilename = os.path.join(cpath,'compile_commands.json')
-    if not oslpath.isfile(ccfilename):
+    if not os.path.isfile(ccfilename):
         print('*' * 80)
         print('File to be produced by bear make not found.')
         print('Expected to find file')
@@ -115,7 +115,7 @@ if __name__ == '__main__':
         print('*' * 80)
         exit(1)
     
-    with open(compilecommandsfilename) as fp:
+    with open(ccfilename) as fp:
         compilecommands = json.load(fp)
 
     if len(compilecommands) == 0:

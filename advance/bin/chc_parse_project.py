@@ -44,6 +44,8 @@ def parse():
                             default=None)
     parser.add_argument('--savesemantics',help='create gzipped tar file with semantics files',
                         action='store_true')
+    parser.add_argument('--nofilter',help='do not filter out files with absolute filenames',
+                        action='store_true')
     args = parser.parse_args()
     return args
 
@@ -85,7 +87,7 @@ if __name__ == '__main__':
         print('*' * 80)
         exit(1)
 
-    parsemanager = ParseManager(cpath,tgtpath)
+    parsemanager = ParseManager(cpath,tgtpath,nofilter=args.nofilter)
     parsemanager.initializepaths()
 
     cleancmd = [ 'make', 'clean' ]
