@@ -123,7 +123,7 @@ class TestManager():
                     self.testresults.add_xffilesuccess(cfilename,fname)
                 else:
                     self.testresults.add_xffileerror(cfilename,fname)
-                    raise FileParseErro(cfilename)
+                    raise FileParseError(cfilename)
         return True
 
     def checkppos(self,cfilename,cfun,ppos,refppos):
