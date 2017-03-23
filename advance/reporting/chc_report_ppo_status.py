@@ -26,6 +26,7 @@
 # ------------------------------------------------------------------------------
 
 import argparse
+import os
 
 import advance.util.printutil as UP
 
@@ -34,7 +35,7 @@ from advance.reporting.ProofObligationResults import ProofObligationResults
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('path',help='directory that holds the analysis results')
+    parser.add_argument('path',help='directory that holds the semantics directory')
     parser.add_argument('--cfile',
                         help='only show this file: relative filename of the c source file',
                         default=None)
@@ -46,7 +47,8 @@ def parse():
 if __name__ == '__main__':
 
     args = parse()
-    capp = CApplication(args.path)
+    semdir = os.path.join(args.path,'semantics')
+    capp = CApplication(semdir)
 
     lines = []
 

@@ -52,7 +52,11 @@ class ProofObligationResults():
                                             for tag in self.results)),sz(m))
                                             for m in methods)
         total = sum(sum(self._getcount(tag,m) for m in self.results[tag]) for tag in self.results)
+        mperc = '  '.join(UP.rjust('{:6.2f}'.format(float(sum(self._getcount(tag,m)
+                                                     for tag in self.results)/float(total))),sz(m))
+                              for m in methods)
         lines.append(UP.ljust('total',taglen) + mtotal + '  ' + UP.rjust(str(total),8))
+        lines.append(UP.ljust('perc',taglen) + mperc)
         return '\n'.join(lines)
 
     def _getcount(self,tag,m):
