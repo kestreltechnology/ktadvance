@@ -161,6 +161,18 @@ class CFile():
         self.fniter(f)
         return result
 
+    def get_ppo_methods(self):
+        results = {}
+        def add(m,v):
+            if not m in results: results[m] = 0
+            results[m] += v
+        def f(fn):
+            fnresults = fn.get_ppo_methods()
+            for m in fnresults:
+                add(m,fnresults[m])
+        self.fniter(f)
+        return results
+
     def get_ppo_results(self):
         results = {}
         def add(t,m,v):

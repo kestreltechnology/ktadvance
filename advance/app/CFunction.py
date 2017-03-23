@@ -69,6 +69,8 @@ class CFunction():
 
     def get_ppos(self): return self.proofs.get_ppos()
 
+    def get_ppo_methods(self): return self.proofs.get_ppo_methods()
+
     def get_ppo_results(self): return self.proofs.get_ppo_results()
 
     def get_open_ppos(self): return self.proofs.get_open_ppos()
