@@ -29,6 +29,8 @@ import os
 import subprocess
 import xml.etree.ElementTree as ET
 
+from advance.bin.Config import Config
+
 def get_xnode(filename,rootnode,desc,show=True):
     if os.path.isfile(filename):
         try:
@@ -143,23 +145,23 @@ def get_srcfile_lines(path,cfilename):
 
 def unpack_tar_file(path):
     os.chdir(path)
-    linuxtar = 'semantics_linux.tar'
-    linuxtargz = linuxtar + '.gz'
-    if os.path.isfile(linuxtargz):
-        cmd = [ 'gunzip' , linuxtargz ]
+    tarfile = 'semantics_linux.tar'
+    targzfile = tarfile + '.gz'
+    if os.path.isfile(targzfile):
+        cmd = [ 'gunzip' , targzfile ]
         result = subprocess.call(cmd,cwd=path,stderr=subprocess.STDOUT)
         if result != 0:
             print('Error in ' + ' '.join(cmd))
             return False
         else:
-            print('Successfully unzipped ' + linuxtargz)
-    if os.path.isfile(linuxtar):
-        cmd = [ 'tar', '-xf', linuxtar ]
+            print('Successfully unzipped ' + targzfile)
+    if os.path.isfile(tarfile):
+        cmd = [ 'tar', '-xf', tarfile ]
         result = subprocess.call(cmd,cwd=path,stderr=subprocess.STDOUT)
         if result != 0:
             print('Error in ' + ' '.join(cmd))
             return False
         else:
-            print('Successfully extracted ' + linuxtar)
+            print('Successfully extracted ' + tarfile)
     return os.path.isdir('semantics')
         
