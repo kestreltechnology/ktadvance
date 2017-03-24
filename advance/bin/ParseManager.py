@@ -38,7 +38,7 @@ import advance.util.xmlutil as UX
 class ParseManager():
     '''Utility functions to support preprocessing and parsing source code.'''
 
-    def __init__(self,cpath,tgtpath,nofilter=False):
+    def __init__(self,cpath,tgtpath,nofilter=False,posix=False):
         '''Initialize paths to code, results, and parser executable.
 
         Args:
@@ -51,6 +51,7 @@ class ParseManager():
         self.cpath = cpath
         self.tgtpath = tgtpath
         self.nofilter = nofilter
+        self.posix = posix
         self.sempath = os.path.join(self.tgtpath,'semantics')
         self.tgtxpath = os.path.join(self.sempath,'ktadvance')
         self.tgtspath = os.path.join(self.sempath,'sourcefiles')   # for .c and .i files
@@ -119,7 +120,7 @@ class ParseManager():
         print('=' * 80)
         for p in ccommand:
             print(p + ': ' + ccommand[p])
-        command = shlex.split(ccommand['command'],posix=False)
+        command = shlex.split(ccommand['command'],self.posix)
         ecommand = command[:]
         cfilename = ccommand['file']
         if cfilename.endswith('.c'):
@@ -128,7 +129,7 @@ class ParseManager():
                 outputflagindex = command.index('-o')
                 ecommand[outputflagindex+1] = ifilename
             except ValueError:
-                ecommand.append('o')
+                ecommand.append('-o')
                 ecommand.append(ifilename)
             try:
                 ecommand.remove('-O2')
@@ -149,6 +150,9 @@ class ParseManager():
             if copyfiles:
                 tgtcfilename = os.path.join(self.tgtspath,self.normalizefilename(cfilename))
                 tgtifilename = os.path.join(self.tgtspath,self.normalizefilename(ifilename))
+                tgtcdir = os.path.dirname(tgtcfilename)
+                if not os.path.isdir(tgtcdir):
+                    os.makedirs(tgtcdir)
                 os.chdir(self.cpath)
                 shutil.copy(cfilename,tgtcfilename)
                 shutil.copy(ifilename,tgtifilename)
