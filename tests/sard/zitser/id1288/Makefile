@@ -1,8 +1,8 @@
 
-all:	mp-ok create
+all:	mp-ok
 
 clean:	
-	rm -f *-ok create
+	rm -f *-ok
 
 mp-ok: mapped-path-ok.c
 	gcc -o mp-ok mapped-path-ok.c

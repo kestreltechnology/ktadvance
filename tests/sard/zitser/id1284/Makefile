@@ -2,7 +2,7 @@
 all:	obo-ok
 
 clean:	
-	rm -rf *-ok /tmp/foo
+	rm -rf *-ok
 
 obo-ok: call_fb_realpath.c realpath-ok.c
 	gcc -o obo-ok call_fb_realpath.c realpath-ok.c

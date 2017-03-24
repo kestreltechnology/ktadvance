@@ -1,8 +1,8 @@
 
-all:	nsl-bad create
+all:	nsl-bad
 
 clean:	
-	rm -f *-bad *-ok create
+	rm -f *-bad *-ok
 
 nsl-bad: ns-lookup-bad.c
 	gcc -o nsl-bad ns-lookup-bad.c
