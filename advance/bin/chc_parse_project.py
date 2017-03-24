@@ -87,6 +87,14 @@ if __name__ == '__main__':
         print('*' * 80)
         exit(1)
 
+    if args.savesemantics:
+        semdir = os.path.join(tgtpath,'semantics')
+        if os.path.isdir(semdir):
+            print('*' * 80)
+            print('Please remove semantics directory, so a clean version will be saved.')
+            print('*' * 80)
+            exit(1)
+
     parsemanager = ParseManager(cpath,tgtpath,nofilter=args.nofilter)
     parsemanager.initializepaths()
 
@@ -126,4 +134,5 @@ if __name__ == '__main__':
 
     parsemanager.parse_with_ccommands(compilecommands,copyfiles=True)
 
-    
+    if args.savesemantics:
+        parsemanager.savesemantics()
