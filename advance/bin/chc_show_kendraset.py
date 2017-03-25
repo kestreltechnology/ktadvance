@@ -26,22 +26,47 @@
 # ------------------------------------------------------------------------------
 
 import argparse
+import json
 import os
 
-from advance.bin.TestManager import TestManager
+from advance.bin.Config import Config
+from advance.bin.TestSetRef import TestSetRef
 
 def parse():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('path',help='directory that holds test sets')
-    parser.add_argument('test',help='name of test directory')
+    usage = ('\nCall with the directory name of one of the subdirectories in\n' +
+                 'tests/sard/kendra\n\n' +
+                 '   Example: python chc_show_kendraset.py id115Q\n')
+    description('Displays the proof obligations and their expected (desired) status')
+    parser = argparse.ArgumentParser(usage=usage,description=description)
+    parser.add_argument('testset',help='name of test directory')
     args = parser.parse_args()
     return args
 
 if __name__ == '__main__':
 
     args = parse()
-    testpath = args.path
-    testname = args.test
+    config = Config()
+    sardpath = os.path.join(config.testdir,'sard')
+    testpath = os.path.join(sardpath,'kendra')
+    testname = args.testset
     cpath = os.path.join(os.path.abspath(testpath),testname)
-    testmanager = TestManager(cpath,cpath,testname)
-    testmanager.clean()
+    if not os.path.isdir(cpath):
+        print('*' * 80)
+        print('Test directory')
+        print('   ' + cpath)
+        print('not found')
+        print('*' * 80)
+        exit(1)
+
+    testfilename = os.path.join(cpath,testname + '.json')
+    if not os.path.isfile(testfilename):
+        print('*' * 80)
+        print('Test directory does not contain a test specification.')
+        print('Expected to find the file')
+        print('   ' + testfilename)
+        print('*' * 80)
+        exit(1)
+        
+    testsetref = TestSetRef(testfilename)
+    print(str(testsetref))
+        

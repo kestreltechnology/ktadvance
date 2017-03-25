@@ -258,12 +258,9 @@ class TestManager():
             if os.path.isfile(cfilename):
                 print('Removing ' + cfilename)
                 os.remove(cfilename)
-        if os.path.isdir(self.tgtxpath):
-            print('Removing ' + self.tgtxpath)
-            shutil.rmtree(self.tgtxpath)
-        if os.path.isdir(self.tgtspath):
-            print('Removing ' + self.tgtspath)
-            shutil.rmtree(self.tgtspath)            
+        if os.path.isdir(self.sempath):
+            print('Removing ' + self.sempath)
+            shutil.rmtree(self.sempath)
 
     def xcfile_exists(self,cfilename):
         '''Checks existence of xml file for cfilename.'''

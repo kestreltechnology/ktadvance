@@ -26,25 +26,32 @@
 # ------------------------------------------------------------------------------
 
 import argparse
-import json
 import os
 
-from advance.bin.TestSetRef import TestSetRef
+from advance.bin.Config import Config
+from advance.bin.TestManager import TestManager
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('path',help='directory that holds test sets')
-    parser.add_argument('test',help='name of test directory')
+    parser.add_argument('testset',help='name of test directory')
     args = parser.parse_args()
     return args
 
 if __name__ == '__main__':
 
     args = parse()
-    testpath = args.path
-    testname = args.test
+    config = Config()
+    sardpath = os.path.join(config.testdir,'sard')
+    testpath = os.path.join(sardpath,'kendra')
+    testname = args.testset
     cpath = os.path.join(os.path.abspath(testpath),testname)
-    testfilename = os.path.join(cpath,testname + '.json')
-    testsetref = TestSetRef(testfilename)
-    print(str(testsetref))
-        
+    if not os.path.isdir(cpath):
+        print('*' * 80)
+        print('Test directory')
+        print('   ' + cpath)
+        print('not found')
+        print('*' * 80)
+        exit(1)
+    
+    testmanager = TestManager(cpath,cpath,testname)
+    testmanager.clean()
