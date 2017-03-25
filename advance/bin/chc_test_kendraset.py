@@ -63,7 +63,8 @@ if __name__ == '__main__':
         print('    ' + cpath)
         print('not found.')
         print('*' * 80)
-        exit()
+        exit(1)
+
     testfilename = os.path.join(cpath,testname + '.json')
     if not os.path.isfile(testfilename):
         print('*' * 80)
@@ -71,7 +72,8 @@ if __name__ == '__main__':
         print('Expected to find the file')
         print('    ' + testfilename + '.')
         print('*' * 80)
-        exit()
+        exit(1)
+
     parsemanager = ParseManager(cpath,cpath)
     testmanager = TestManager(cpath,cpath,testname,saveref=args.saveref)
     try:

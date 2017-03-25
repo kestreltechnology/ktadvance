@@ -36,7 +36,7 @@ def parse():
     usage = ('\nCall with the directory name of one of the subdirectories in\n' +
                  'tests/sard/kendra\n\n' +
                  '   Example: python chc_show_kendraset.py id115Q\n')
-    description('Displays the proof obligations and their expected (desired) status')
+    description = ('Displays the proof obligations and their expected (desired) status')
     parser = argparse.ArgumentParser(usage=usage,description=description)
     parser.add_argument('testset',help='name of test directory')
     args = parser.parse_args()

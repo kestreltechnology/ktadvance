@@ -70,7 +70,8 @@ if __name__ == '__main__':
 
     if not os.path.isfile(config.canalyzer):
         print('*' * 80)
-        print('Analyzer not found at ' + config.canalyzer + ': Please set analyzer location in Config.py')
+        print('Analyzer not found at ' + config.canalyzer)
+        print('  Please set analyzer location in Config.py')
         print('*' * 80)
         exit(1)
         
@@ -80,7 +81,7 @@ if __name__ == '__main__':
         print('    ' + cpath)
         print('not found.')
         print('*' * 80)
-        exit()
+        exit(1)
 
     semdir = os.path.join(cpath,'semantics')
     if not os.path.isdir(semdir):
