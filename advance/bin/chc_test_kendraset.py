@@ -80,6 +80,10 @@ if __name__ == '__main__':
             testmanager.testppos()
             testmanager.testpevs()
             testmanager.printtestresults()
+        elif UF.unpack_tar_file(cpath):
+            testmanager.testppos()
+            testmanager.testpevs()
+            testmanager.printtestresults()
         else:
             print(
                 '\n' + ('*' * 80) + '\nThis test set is not supported on the mac.' +
