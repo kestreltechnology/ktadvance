@@ -141,6 +141,37 @@ def get_srcfile_lines(path,cfilename):
     with open(filename,'r') as fp:
         return fp.readlines()
 
+# ------------------------------------------------------------ kendra tests ----
+
+def get_kendra_path():
+    sardpath = os.path.join(Config().testdir,'sard')
+    return os.path.abspath(os.path.join(sardpath,'kendra'))
+
+def get_kendra_testpath(testname):
+    return os.path.join(get_kendra_path(),testname)
+
+def get_kendra_testpath_byid(testid):
+    testname = 'id' + str(testid) + 'Q'
+    testpath = get_kendra_testpath(testname)
+    if os.path.isdir(testpath):
+        return testpath
+
+def get_kendra_cpath(cfilename):
+    testid = int(cfilename[2:-2])
+    if testid % 2 == 1:
+        testpath = get_kendra_testpath_byid(testid)
+        if not testpath is None:
+            return testpath
+        else:
+            return get_kendra_testpath_byid(testid - 2)
+    else:
+        testpath = get_kendra_testpath_byid(testid - 1)
+        if not testpath is None:
+            return testpath
+        else:
+            return get_kendra_testpath_byid(testid - 3)
+            
+
 # ------------------------------------------------------------ unzip tar file --
 
 def unpack_tar_file(path):
