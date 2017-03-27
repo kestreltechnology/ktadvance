@@ -32,6 +32,7 @@ import advance.util.printutil as UP
 
 from advance.app.CApplication import CApplication
 from advance.reporting.ProofObligationResults import ProofObligationResults
+from advance.reporting.ProofObligationDisplay import ProofObligationDisplay
 
 def parse():
     parser = argparse.ArgumentParser()
@@ -54,35 +55,28 @@ if __name__ == '__main__':
 
     if not args.cfile is None:
         cfile = capp.getfile(args.cfile)
+        if cfile is None:
+            print('*' * 80)
+            print('File ' + args.cfile + ' not found in this application')
+            print('Valid filenames for this application are: ')
+            def f(cf): print(' - ' + cf.getfilename())
+            capp.fileiter(f)
+            print('*' * 80)
+            exit(1)
         if not args.cfunction is None:
-            cfunction = cfile.getfunctionbyname(args.cfunction)
-            fline = cfunction.getlocation().getline()
-            lines.append(cfile.getsourceline(fline))
-            def fpo(p,ev):
-                global fline
-                line = p.getlocation().getline()
-                if line >= fline:
-                    lines.append('-' * 80)
-                    for n in range(fline,line+1):
-                        lines.append(str(cfile.getsourceline(n)).strip())
-                    lines.append('-' * 80)
-                fline = line+1
-                prefix = '   '
-                delegated = ''
-                violation = ''
-                if ev is None:
-                    lines.append('   ' + str(p))
-                else:
-                    d = ev.getdischargemethod()
-                    if d == 'invariants': prefix = 'II '
-                    if d == 'check-valid': prefix = 'CV '
-                    if ev.isviolation(): prefix = 'XX '
-                    if ev.isdelegated(): delegated = '--' + ev.getassumptiontype() + '--'
-                    if ev.isviolation(): violation = ' ***** '
-                    lines.append(prefix + str(p) + ': ' + delegated + violation + ev.getevidence() + violation)
-            print(cfunction.getname() + ' in ' + cfile.getfilename())            
-            print(ProofObligationResults(cfunction.get_ppo_results()).report())
-            cfunction.getproofs().iterpposev(fpo)
+            cfun = cfile.getfunctionbyname(args.cfunction)
+            if cfun is None:
+                print('*' * 80)
+                print('Function ' + args.cfunction + ' not found in file ' + cfile.getfilename())
+                print('Functions in this file are: ')
+                def f(fn): print(' - ' + fn.getname())
+                cfile.fniter(f)
+                print('*' * 80)
+                exit(1)
+                
+            lines.append(ProofObligationDisplay(cfile,cfun).showppos())
+            print(cfun.getname() + ' in ' + cfile.getfilename())            
+            print(ProofObligationResults(cfun.get_ppo_results()).report())
             print('\n'.join(lines))
         else:
             print(cfile.getfilename())

@@ -25,48 +25,38 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import argparse
 import os
 
-from advance.bin.Config import Config
-from advance.app.CApplication import CApplication
+import advance.util.printutil as UP
+import advance.util.fileutil as UF
 
-zitser = os.path.join(os.path.join(Config().testdir,'sard'),'zitser')
-testcases = [ 'id' + str(i) for i in range(1284,1311) ]
+from advance.bin.Config import Config
+from advance.app.CFileApplication import CFileApplication
+from advance.reporting.ProofObligationDisplay import ProofObligationDisplay
+
+def parse():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('cfilename',help='name of kendra c file (.e.g., id115.c)')
+    args = parser.parse_args()
+    return args
 
 if __name__ == '__main__':
 
-    header = [ 'open', 'api', 'rv', 'global', 'invariants', 'check-valid' ]
+    args = parse()
+    cfilename = args.cfilename
+    cpath = UF.get_kendra_cpath(cfilename)
+    if cpath is None:
+        print('*' * 80)
+        print('Unable to find the test set for file ' + cfilename)
+        print('*' * 80)
+        exit(1)
 
-    title = 'testcase     ppos     %open     %api     %rv   %global   %invs  %checkvalid'
-
-    missing = []
-    
-    print('\n' + title)
-    print('-' * 80)
-    for t in sorted(testcases):
-        testdir = os.path.join(zitser,t)
-        semdir = os.path.join(testdir,'semantics')
-        if os.path.isdir(semdir):
-            results = {}                      
-            capp = CApplication(semdir)
-            ppomethods = capp.get_ppo_methods()
-            total = sum(ppomethods[m] for m in ppomethods)
-            line = [ t , str(total).rjust(8) ]
-            for m in header:
-                if m in ppomethods:
-                    p = float(ppomethods[m])/float(total) * 100.0
-                    mp = '{:> 6.1f}'.format(p)
-                    line.append(mp)
-                else:
-                    line.append('0.0'.rjust(6))
-            print('   '.join(line))
-        else:
-            missing.append(t)
-
-    if len(missing) > 0:
-        print('\n\nNo semantics files found for')
-        for t in missing:
-            print('  ' + t)
-        
-        
+    sempath = os.path.join(cpath,'semantics')
+    cfapp = CFileApplication(sempath,cfilename)
+    cfile = cfapp.getcfile()
+    def f(cfun):
+        d = ProofObligationDisplay(cfile,cfun);
+        print(d.showppos())
+    cfapp.fniter(f)
 
