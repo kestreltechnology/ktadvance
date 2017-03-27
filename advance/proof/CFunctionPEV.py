@@ -38,6 +38,13 @@ class CFunctionPEV():
 
     def getdischargemethod(self): return self.xnode.get('method')
 
+    def getdisplayprefix(self):
+        if self.isviolation(): return '<*>'
+        d = self.getdischargemethod()
+        if d == 'invariants': return 'II '
+        if d == 'check-valid': return 'CV '
+        return '   '
+
     def getevidence(self):
         return self.xnode.find('evidence').get('comment')
 
