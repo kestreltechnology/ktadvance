@@ -98,7 +98,7 @@ class TestManager():
 
     def printtestresults(self): print(str(self.testresults))
  
-    def testparser(self):
+    def testparser(self,savesemantics=False):
         if self.ismac and self.testsetref.islinuxonly():
             return False
         self.testresults.set_parsing()
@@ -124,6 +124,8 @@ class TestManager():
                 else:
                     self.testresults.add_xffileerror(cfilename,fname)
                     raise FileParseError(cfilename)
+        if savesemantics:
+            parsemanager.savesemantics()
         return True
 
     def checkppos(self,cfilename,cfun,ppos,refppos):

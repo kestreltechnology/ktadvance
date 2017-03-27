@@ -29,6 +29,8 @@ import argparse
 import json
 import os
 
+import advance.util.fileutil as UF
+
 from advance.bin.Config import Config
 from advance.bin.ParseManager import ParseManager
 from advance.bin.TestManager import TestManager
@@ -52,11 +54,8 @@ def parse():
 if __name__ == '__main__':
 
     args = parse()
-    config = Config()
-    sardpath = os.path.join(config.testdir,'sard')
-    testpath = os.path.join(sardpath,'kendra')
     testname = args.testset
-    cpath = os.path.join(os.path.abspath(testpath),testname)
+    cpath = UF.get_kendra_testpath(testname)
     if not os.path.isdir(cpath):
         print('*' * 80)
         print('Test directory ')
@@ -77,7 +76,7 @@ if __name__ == '__main__':
     parsemanager = ParseManager(cpath,cpath)
     testmanager = TestManager(cpath,cpath,testname,saveref=args.saveref)
     try:
-        if testmanager.testparser():
+        if testmanager.testparser(savesemantics=args.savesenantics):
             testmanager.testppos()
             testmanager.testpevs()
             testmanager.printtestresults()
@@ -98,7 +97,5 @@ if __name__ == '__main__':
         print('OS Error: ' + str(e) + ': Please check the platform settings in Config.py')
         print('*' * 80)
         exit(1)
-    if args.savesemantics:
-        parsemanager.savesemantics()
         
         
