@@ -43,6 +43,13 @@ class CFileApplication():
         self.cfile = None
         self._initialize()
 
+    def getcfile(self): return self.cfile
+
+    def getsrcfile(self,fname):
+        return CSrcFile(self,os.path.join(self.srcpath,fname))
+
+    def fniter(self,f): self.cfile.fniter(f)
+
     def getpath(self): return self.path
 
     def get_ppo_results(self): return self.cfile.get_ppo_results()
@@ -53,3 +60,8 @@ class CFileApplication():
         cfile = UF.get_cfile_xnode(self.path,self.fname)
         if not cfile is None:
             self.cfile = CFile(self,1,cfile)
+        else:
+            print('*' * 80)
+            print('Xml _cfile ' + UF.get_cfile_filename(self.path,self.fname) + ' not found')
+            print('*' * 80)
+            exit(1)
