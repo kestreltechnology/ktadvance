@@ -76,7 +76,7 @@ if __name__ == '__main__':
     parsemanager = ParseManager(cpath,cpath)
     testmanager = TestManager(cpath,cpath,testname,saveref=args.saveref)
     try:
-        if testmanager.testparser(savesemantics=args.savesenantics):
+        if testmanager.testparser(savesemantics=args.savesemantics):
             testmanager.testppos()
             testmanager.testpevs()
             testmanager.printtestresults()

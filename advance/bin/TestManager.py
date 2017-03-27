@@ -125,7 +125,7 @@ class TestManager():
                     self.testresults.add_xffileerror(cfilename,fname)
                     raise FileParseError(cfilename)
         if savesemantics:
-            parsemanager.savesemantics()
+            self.parsemanager.savesemantics()
         return True
 
     def checkppos(self,cfilename,cfun,ppos,refppos):
