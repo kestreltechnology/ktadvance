@@ -38,4 +38,4 @@ class CPOPredicateNoOverlap(CPOPredicate):
     def getexp2(self): return self.xnode.find('exp2').get('xstr')
 
     def __str__(self):
-        return ('no-overlap(' + self.getexp1() + ',' + self.getexp2() + ')')
+        return ('no-overlap(' + str(self.getexp1()) + ',' + str(self.getexp2()) + ')')

@@ -38,4 +38,5 @@ class CPOPredicateInitializedRange(CPOPredicate):
     def getlenexp(self): return self.xnode.find('len-exp').get('xstr')
 
     def __str__(self):
-        return ('initialized-range(' + self.getbaseexp() + ',' + self.getlenexp() + ')')
+        return ('initialized-range(' + str(self.getbaseexp()) + ',' +
+                    str(self.getlenexp()) + ')')
