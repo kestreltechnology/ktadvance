@@ -179,15 +179,7 @@ def unpack_tar_file(path):
     tarfile = 'semantics_linux.tar'
     targzfile = tarfile + '.gz'
     if os.path.isfile(targzfile):
-        cmd = [ 'gunzip' , targzfile ]
-        result = subprocess.call(cmd,cwd=path,stderr=subprocess.STDOUT)
-        if result != 0:
-            print('Error in ' + ' '.join(cmd))
-            return False
-        else:
-            print('Successfully unzipped ' + targzfile)
-    if os.path.isfile(tarfile):
-        cmd = [ 'tar', '-xf', tarfile ]
+        cmd = [ 'tar', 'xfz', targzfile ]
         result = subprocess.call(cmd,cwd=path,stderr=subprocess.STDOUT)
         if result != 0:
             print('Error in ' + ' '.join(cmd))
