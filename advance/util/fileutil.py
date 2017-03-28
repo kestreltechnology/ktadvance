@@ -27,6 +27,7 @@
 
 import os
 import subprocess
+import shutil
 import xml.etree.ElementTree as ET
 
 from advance.bin.Config import Config
@@ -174,25 +175,23 @@ def get_kendra_cpath(cfilename):
 
 # ------------------------------------------------------------ unzip tar file --
 
-def unpack_tar_file(path):
+def unpack_tar_file(path,deletesemantics=False):
     os.chdir(path)
-    tarfile = 'semantics_linux.tar'
-    targzfile = tarfile + '.gz'
+    if os.path.isdir('semantics'):
+        if deletesemantics:
+            print('Removing existing semantics directory')
+            shutil.rmtree('semantics')
+        else:
+            return True
+
+    targzfile = 'semantics_linux.tar.gz'
     if os.path.isfile(targzfile):
-        cmd = [ 'gunzip' , targzfile ]
+        cmd = [ 'tar', 'xfz', targzfile ]
         result = subprocess.call(cmd,cwd=path,stderr=subprocess.STDOUT)
         if result != 0:
             print('Error in ' + ' '.join(cmd))
             return False
         else:
-            print('Successfully unzipped ' + targzfile)
-    if os.path.isfile(tarfile):
-        cmd = [ 'tar', '-xf', tarfile ]
-        result = subprocess.call(cmd,cwd=path,stderr=subprocess.STDOUT)
-        if result != 0:
-            print('Error in ' + ' '.join(cmd))
-            return False
-        else:
-            print('Successfully extracted ' + tarfile)
+            print('Successfully extracted ' + targzfile)
     return os.path.isdir('semantics')
         

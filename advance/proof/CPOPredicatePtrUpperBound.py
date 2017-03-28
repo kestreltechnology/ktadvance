@@ -43,7 +43,7 @@ class CPOPredicatePtrUpperBound(CPOPredicate):
 
     def __str__(self):
         return ('ptr-upper-bound(op:' + self.getop() + 
-                ', exp1:' + self.getexp1() +
-                ', exp2:' + self.getexp2() +
+                ', exp1:' + str(self.getexp1()) +
+                ', exp2:' + str(self.getexp2()) +
                 ', tgttype:' + str(self.gettargettype()) + ')')
 

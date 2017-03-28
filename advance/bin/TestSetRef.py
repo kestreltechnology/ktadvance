@@ -82,13 +82,15 @@ class TestSetRef():
                     for ppo in sorted(cfun.getppos(),key=lambda(p):p.getline()):
                         hasmultiple = cfun.hasmultiple(ppo.getline(),ppo.getpredicate())
                         ctxt = ppo.getcontextstring() if hasmultiple else ''
+                        status = ppo.getstatus().ljust(12)
                         if ppo.getstatus() == ppo.gettgtstatus():
-                            status = ppo.getstatus().ljust(11)
+                            tgtstatus = ''
                         else:
-                            status = ppo.getstatus().ljust(11) + ' (' + ppo.gettgtstatus() + ')'
+                            tgtstatus = '(' + ppo.gettgtstatus() + ')'
                         lines.append(
-                            '    ' + str(ppo.getline()).rjust(4) + '  ' + ppo.getpredicate().ljust(20) +
-                            ' ' + status + ' ' + ctxt)
+                            '    ' + str(ppo.getline()).rjust(4) + '  ' +
+                            ppo.getpredicate().ljust(22) +
+                            ' ' + status + ' ' + ctxt.ljust(40) + tgtstatus)
         return '\n'.join(lines)
 
     def _initialize(self):

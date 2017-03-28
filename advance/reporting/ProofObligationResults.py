@@ -64,7 +64,6 @@ class ProofObligationResults():
             if m in self.results[tag]:
                 return self.results[tag][m]
         return 0
-        
 
     def _getmethods(self):
         methods = []

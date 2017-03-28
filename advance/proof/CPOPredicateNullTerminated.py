@@ -36,4 +36,4 @@ class CPOPredicateNullTerminated(CPOPredicate):
     def getexp(self): return self.xnode.find('exp').get('xstr')
 
     def __str__(self):
-        return ('null-terminated(' + self.getexp() + ')')
+        return ('null-terminated(' + str(self.getexp()) + ')')

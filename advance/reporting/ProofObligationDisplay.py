@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2016-2017 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,18 +25,36 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.proof.CPOPredicate import CPOPredicate
+class ProofObligationDisplay():
 
-class CPOPredicateInitializedRange(CPOPredicate):
+    def __init__(self,cfile,cfunction):
+        self.cfile = cfile
+        self.cfunction = cfunction
+        self.fline = cfunction.getlocation().getline()
 
-    def __init__(self,cfun,xnode):
-        self.cfun = cfun
-        self.xnode = xnode
+    def getsourceline(self,line):
+        return self.cfile.getsourceline(line).strip()
 
-    def getbaseexp(self): return self.xnode.find('base-exp').get('xstr')
-
-    def getlenexp(self): return self.xnode.find('len-exp').get('xstr')
-
-    def __str__(self):
-        return ('initialized-range(' + str(self.getbaseexp()) + ',' +
-                    str(self.getlenexp()) + ')')
+    def showppos(self):
+        lines = []
+        def fpo(p,ev):
+            line = p.getlocation().getline()
+            if line >= self.fline:
+                lines.append('-' * 80)
+                for n in range(self.fline,line+1):
+                    lines.append(self.getsourceline(n))
+                lines.append('-' * 80)
+            self.fline = line + 1
+            delegated = ''
+            if ev is None:
+                lines.append('    ' + str(p))
+                lines.append((' ' * 18) + '--')
+            else:
+                prefix = ev.getdisplayprefix()
+                if ev.isdelegated(): delegated = '--' + ev.getassumptiontype() + '--'
+                lines.append(prefix + ' ' + str(p) + delegated)
+                lines.append((' ' * 18) + ev.getevidence())
+        self.cfunction.getproofs().iterpposev(fpo)
+        return '\n'.join(lines)
+                                 
+        

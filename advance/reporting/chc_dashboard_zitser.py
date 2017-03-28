@@ -31,17 +31,18 @@ from advance.bin.Config import Config
 from advance.app.CApplication import CApplication
 
 zitser = os.path.join(os.path.join(Config().testdir,'sard'),'zitser')
-testcases = [ 'id' + str(i) for i in range(1284,1294) ]
+testcases = [ 'id' + str(i) for i in range(1284,1311) ]
 
 if __name__ == '__main__':
 
     header = [ 'open', 'api', 'rv', 'global', 'invariants', 'check-valid' ]
 
-    title = 'testcase   ppos       %open     %api     %rv   %global   %invs  %checkvalid'
+    title = 'testcase     ppos     %open     %api     %rv   %global   %invs  %checkvalid'
 
-    lines = []
-    lines.append(title)
-    lines.append('-' * 80)
+    missing = []
+    
+    print('\n' + title)
+    print('-' * 80)
     for t in sorted(testcases):
         testdir = os.path.join(zitser,t)
         semdir = os.path.join(testdir,'semantics')
@@ -58,11 +59,14 @@ if __name__ == '__main__':
                     line.append(mp)
                 else:
                     line.append('0.0'.rjust(6))
-            lines.append('   '.join(line))
+            print('   '.join(line))
         else:
-            print('No semantics found for ' + t)
-    for l in lines:
-        print(l)
+            missing.append(t)
+
+    if len(missing) > 0:
+        print('\n\nNo semantics files found for')
+        for t in missing:
+            print('  ' + t)
         
         
 

@@ -55,7 +55,8 @@ class CApplication():
     def getfile(self,fname):
         index = self.getfileindex(fname)
         self._initialize_file(index,fname)
-        return self.files[fname]
+        if fname in self.files:
+            return self.files[fname]
 
     def getfilebyindex(self,index):
         if index in self.filenames:

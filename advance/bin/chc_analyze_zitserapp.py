@@ -49,6 +49,9 @@ def parse():
                        'semantics_linux.tar.gz or semantics_linux.tar.')
     parser = argparse.ArgumentParser(usage=usage,description=description)
     parser.add_argument('testapp',help='name of the test case (e.g., id1284)')
+    parser.add_argument('--deletesemantics',
+                            help='Unpack a fresh version of the semantics files',
+                            action='store_true')
     args = parser.parse_args()
     return args
 
@@ -84,8 +87,8 @@ if __name__ == '__main__':
         exit(1)
 
     semdir = os.path.join(cpath,'semantics')
-    if not os.path.isdir(semdir):
-        success = UF.unpack_tar_file(cpath)
+    if (not os.path.isdir(semdir)) or args.deletesemantics:
+        success = UF.unpack_tar_file(cpath,args.deletesemantics)
         if not success:
             print('*' * 80)
             print('No file or directory found with semantics')

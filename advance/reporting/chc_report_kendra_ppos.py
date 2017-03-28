@@ -25,18 +25,38 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.proof.CPOPredicate import CPOPredicate
+import argparse
+import os
 
-class CPOPredicateInitializedRange(CPOPredicate):
+import advance.util.printutil as UP
+import advance.util.fileutil as UF
 
-    def __init__(self,cfun,xnode):
-        self.cfun = cfun
-        self.xnode = xnode
+from advance.bin.Config import Config
+from advance.app.CFileApplication import CFileApplication
+from advance.reporting.ProofObligationDisplay import ProofObligationDisplay
 
-    def getbaseexp(self): return self.xnode.find('base-exp').get('xstr')
+def parse():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('cfilename',help='name of kendra c file (.e.g., id115.c)')
+    args = parser.parse_args()
+    return args
 
-    def getlenexp(self): return self.xnode.find('len-exp').get('xstr')
+if __name__ == '__main__':
 
-    def __str__(self):
-        return ('initialized-range(' + str(self.getbaseexp()) + ',' +
-                    str(self.getlenexp()) + ')')
+    args = parse()
+    cfilename = args.cfilename
+    cpath = UF.get_kendra_cpath(cfilename)
+    if cpath is None:
+        print('*' * 80)
+        print('Unable to find the test set for file ' + cfilename)
+        print('*' * 80)
+        exit(1)
+
+    sempath = os.path.join(cpath,'semantics')
+    cfapp = CFileApplication(sempath,cfilename)
+    cfile = cfapp.getcfile()
+    def f(cfun):
+        d = ProofObligationDisplay(cfile,cfun);
+        print(d.showppos())
+    cfapp.fniter(f)
+
