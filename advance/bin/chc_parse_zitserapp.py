@@ -38,20 +38,23 @@ from advance.bin.TestManager import TestManager
 from advance.bin.TestManager import FileParseError
 
 def parse():
-    usage = ('\nCall with the directory name of one of the subdirectories in\n' +
-                 'tests/sard/zitser\n\n' +
-                 '  Example: python chc_parse_zitserapp.py id1284\n\n' +
-                 'Use the option --savesemantics to save the semantics directory in\n' +
-                 'a gzipped tar file for potential analysis on a different platform\n')
-    description = ('Parses a benchmark application from the NIST Software Assurance\n' +
-                       'Reference Dataset (SARD) and produces xml files that hold the\n' +
-                       'semantics of the application source files.\n' +
-                       'It uses the command-line utility bear to extract the compilation\n' +
-                       'commands from the Makefile.')
+    usage = (
+        '\nCall with the directory name of one of the subdirectories in\n' +
+        'tests/sard/zitser\n\n' +
+        '  Example: python chc_parse_zitserapp.py id1284\n\n' +
+        'Use the option --savesemantics to save the semantics directory in\n' +
+        'a gzipped tar file for potential analysis on a different platform\n')
+    description = (
+        'Parses a benchmark application from the NIST Software Assurance\n' +
+        'Reference Dataset (SARD) and produces xml files that hold the\n' +
+        'semantics of the application source files.\n' +
+        'It uses the command-line utility bear to extract the compilation\n' +
+        'commands from the Makefile.')
     parser = argparse.ArgumentParser(usage=usage,description=description)
     parser.add_argument('testapp',help='name of the test case (e.g., id1284)')
-    parser.add_argument('--savesemantics',help='create gzipped tar file with semantics files',
-                        action='store_true')
+    parser.add_argument('--savesemantics',
+                            help='create gzipped tar file with semantics files',
+                            action='store_true')
     args = parser.parse_args()
     return args
 
@@ -86,6 +89,16 @@ if __name__ == '__main__':
         print('    ' + makefilename + '.')
         print('*' * 80)
         exit()
+
+    if args.savesemantics:
+        os.chdir(cpath)
+        print('Removing semantics directory and gzipped semantics tar file')
+        if os.path.isdir('semantics'):
+            print('Removing semantics directory')
+            shutil.rmtree('semantics')
+        if os.path.isfile('semantics_linux.tar.gz'):
+            print('Removing semantics_linux.tar.gz')
+            os.remove('semantics_linux.tar.gz')
 
     parsemanager = ParseManager(cpath,cpath,nofilter=True)
     parsemanager.initializepaths()
