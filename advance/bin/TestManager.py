@@ -140,8 +140,8 @@ class TestManager():
             if not context in d:
                 self.testresults.add_missingppo(cfilename,cfun,context,p)
                 for c in d:
-                    print(c)
-                raise FunctionPPOError(cfilename + ':' + cfun + ':' + str(context))
+                    print(str(c))
+                raise FunctionPPOError(cfilename + ':' + cfun + ':' + ' Missing ppo: ' + str(context))
             else:
                 if not p in d[context]:
                     self.testresults.add_missingppo(cfilename,cfun,context,p)

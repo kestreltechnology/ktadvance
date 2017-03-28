@@ -38,11 +38,13 @@ from advance.bin.TestManager import FileParseError
 from advance.bin.TestManager import AnalyzerMissingError
 
 def parse():
-    usage = ('\nCall with the directory name of one of the subdirectories in\n' +
-                 'tests/sard/kendra\n\n  Example: python chc_test_kendraset.py id115Q\n')
-    description = ('Parses and analyzes a set of 4 test cases from the NIST Software Assurance\n ' +
-                       'Reference Dataset (SARD) and compares the results with a set of reference\n ' +
-                       'results\n')
+    usage = (
+        '\nCall with the directory name of one of the subdirectories in\n' +
+        'tests/sard/kendra\n\n  Example: python chc_test_kendraset.py id115Q\n')
+    description = (
+        'Parses and analyzes a set of 4 test cases from the NIST Software Assurance\n ' +
+        'Reference Dataset (SARD) and compares the results with a set of reference\n ' +
+        'results\n')
     parser = argparse.ArgumentParser(usage=usage,description=description)
     parser.add_argument('testset',help='name of the test case (e.g., id115Q)')
     parser.add_argument('--saveref',help='save ppo specs',action='store_true')
@@ -75,6 +77,7 @@ if __name__ == '__main__':
 
     parsemanager = ParseManager(cpath,cpath)
     testmanager = TestManager(cpath,cpath,testname,saveref=args.saveref)
+    testmanager.clean()
     try:
         if testmanager.testparser(savesemantics=args.savesemantics):
             testmanager.testppos()
