@@ -34,7 +34,7 @@ from advance.app.CApplication import CApplication
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('path',help='directory that holds the analysis results')
+    parser.add_argument('path',help='directory that holds the semantics directory (or tar.gz file)')
     args = parser.parse_args()
     return args
 
@@ -67,7 +67,14 @@ def resetlogfiles(d):
 if __name__ == '__main__':
 
     args = parse()
-    capp = CApplication(args.path)
+    semdir = os.path.join(args.path,'semantics')
+    if not os.path.isdir(semdir):
+        success = UF.unpack_tar_file(args.path)
+        if not success:
+            print('No file or directory found with semantics')
+            exit(1)
+
+    capp = CApplication(semdir)
     path = capp.getpath()
     
     def resetfile(f):
