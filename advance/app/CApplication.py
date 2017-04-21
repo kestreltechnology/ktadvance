@@ -25,6 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 import os
+import multiprocessing
 
 import advance.util.fileutil as UF
 
@@ -32,6 +33,7 @@ from advance.app.CCompInfo import CCompInfo
 from advance.app.CFile import CFile
 from advance.app.CVarInfo import CVarInfo
 from advance.source.CSrcFile import CSrcFile
+from __builtin__ import file
 
 class CApplication():
     '''Primary access point for source code and analysis results.'''
@@ -71,9 +73,18 @@ class CApplication():
 
     def fileiter(self,f):
         for file in self.getfiles(): f(file)
+        
+    def fileiter_parallel(self, f, processes):
+        Process_pool = multiprocessing.Pool(processes)
+        Process_pool.map(f, self.getfiles())
 
     def filenameiter(self,f):
         for fname in self.filenames.values(): f(fname)
+        
+    def filenameiter_parallel(self, f, processes):
+        Process_pool = multiprocessing.Pool(processes)
+        filenames = [ v for v in self.filenames.values() ]
+        Process_pool.map(f, filenames)
 
     def getexternals(self):
 		result = {}
@@ -125,7 +136,7 @@ class CApplication():
             if not t in results: results[t] = {}
             if not m in results[t]: results[t][m] = 0
             results[t][m] += v
-        def f(file): 
+        def f(file):
             fileresults = file.get_ppo_results()
             for tag in fileresults:
                 for m in fileresults[tag]:

@@ -50,6 +50,10 @@ def parse():
     parser.add_argument('--nofilter',
                             help='disable filtering out files with absolute path',
                             action='store_true')
+    parser.add_argument('--maxprocesses',
+                            help='number of files to process in parallel',
+                            type=int,
+                            default=1)
     args = parser.parse_args()
     return args
 
@@ -113,9 +117,9 @@ if __name__ == '__main__':
         with timing('creating primary proof obligations'):
             am.create_app_primaryproofobligations()
         with timing('generating local invariants'):
-            am.generate_app_localinvariants(['llvis'])
+            am.generate_app_localinvariants(['llvis'], args.maxprocesses)
         with timing('checking proof obligations'):
-            am.check_app_proofobligations()
+            am.check_app_proofobligations(args.maxprocesses)
     except OSError as e:
         print('*' * 80)
         print('OS Error: ' + str(e))

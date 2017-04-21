@@ -27,10 +27,12 @@
 
 
 import subprocess, os, shutil
+from functools import partial
 
+import advance.util.pickling as AUP
 from advance.bin.Config import Config
 
-class AnalysisManager():
+class AnalysisManager(object):
 
     def __init__(self,capp,onefile=False,nofilter=False):
         '''Initialize the analyzer location and target file location'''
@@ -103,14 +105,26 @@ class AnalysisManager():
         def f(cfile):self.create_file_primaryproofobligations(cfile)
         self.capp.filenameiter(f)
 
-    def generate_app_localinvariants(self,domains):
-        def f(cfile):
-            for d in domains:
-                self.generate_file_localinvariants(cfile,d)
-        self.capp.filenameiter(f)
+    def _generate_app_localinvariants(self, domains, cfile):
+        for d in domains:
+            self.generate_file_localinvariants(cfile, d)
 
-    def check_app_proofobligations(self):
-        def f(cfile):self.check_file_proofobligations(cfile)
-        self.capp.filenameiter(f)
+    def generate_app_localinvariants(self,domains,processes=1):
+        gen = partial(self._generate_app_localinvariants, domains)
+        if processes > 1:
+            AUP.pickling_setup()
+            self.capp.filenameiter_parallel(gen, processes)
+        else:
+            self.capp.filenameiter(gen)
+
+    def _check_app_proofobligations(self, cfile):
+        self.check_file_proofobligations(cfile)
+
+    def check_app_proofobligations(self, processes=1):
+        if processes > 1:
+            AUP.pickling_setup()
+            self.capp.filenameiter_parallel(self._check_app_proofobligations, processes)
+        else:
+            self.capp.filenameiter(self._check_app_proofobligations)
             
             
