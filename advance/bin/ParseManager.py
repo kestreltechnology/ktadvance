@@ -99,8 +99,9 @@ class ParseManager():
             tgtcfilename = os.path.join(self.tgtspath,cfilename)
             tgtifilename = os.path.join(self.tgtspath,ifilename)
             os.chdir(self.cpath)
-            shutil.copy(cfilename,tgtcfilename)
-            shutil.copy(ifilename,tgtifilename)
+            if cfilename != tgtcfilename:
+                shutil.copy(cfilename,tgtcfilename)
+                shutil.copy(ifilename,tgtifilename)
         return ifilename
 
     def getfilelength(self,fname):
@@ -154,8 +155,9 @@ class ParseManager():
                 if not os.path.isdir(tgtcdir):
                     os.makedirs(tgtcdir)
                 os.chdir(self.cpath)
-                shutil.copy(cfilename,tgtcfilename)
-                shutil.copy(ifilename,tgtifilename)
+                if cfilename != tgtcfilename:
+                    shutil.copy(cfilename,tgtcfilename)
+                    shutil.copy(ifilename,tgtifilename)
             return (cfilename,ifilename)
         else:
             print('\nFilename not recognized: ' + cfilename)
