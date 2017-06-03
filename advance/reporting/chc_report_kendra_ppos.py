@@ -58,5 +58,9 @@ if __name__ == '__main__':
     def f(cfun):
         d = ProofObligationDisplay(cfile,cfun);
         print(d.showppos())
+        print(d.showspos())
+        print(cfun.getapi())
     cfapp.fniter(f)
+
+
 

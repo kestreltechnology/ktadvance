@@ -31,30 +31,67 @@ class ProofObligationDisplay():
         self.cfile = cfile
         self.cfunction = cfunction
         self.fline = cfunction.getlocation().getline()
+        self.cline = self.fline
 
     def getsourceline(self,line):
         return self.cfile.getsourceline(line).strip()
 
     def showppos(self):
         lines = []
-        def fpo(p,ev):
+        lines.append('Primary proof obligations for ' + self.cfunction.getname())
+        def fpo(p):
+            ev = p.getevidence()
             line = p.getlocation().getline()
-            if line >= self.fline:
+            if line >= self.cline:
                 lines.append('-' * 80)
-                for n in range(self.fline,line+1):
+                for n in range(self.cline,line+1):
                     lines.append(self.getsourceline(n))
                 lines.append('-' * 80)
-            self.fline = line + 1
+            self.cline = line + 1
             delegated = ''
             if ev is None:
-                lines.append('    ' + str(p))
+                lines.append('<?> ' + str(p))
                 lines.append((' ' * 18) + '--')
             else:
                 prefix = ev.getdisplayprefix()
                 if ev.isdelegated(): delegated = '--' + ev.getassumptiontype() + '--'
                 lines.append(prefix + ' ' + str(p) + delegated)
                 lines.append((' ' * 18) + ev.getevidence())
-        self.cfunction.getproofs().iterpposev(fpo)
+        self.cfunction.getproofs().iterppos(fpo)
+        lines.append(' ')
         return '\n'.join(lines)
-                                 
-        
+
+    def showapi(self):
+        lines = []
+        lines.append('Function api for ' + self.cfunction.getname())
+        capi = self.cfunction.getapi()
+        def f(a): lines.append(str(a))
+        capi.apiassumptioniter(f)
+        lines.append(' ')
+        return '\n'.join(lines)
+
+    def showspos(self):
+        lines = []
+        lines.append('Secondary proof obligations for ' + self.cfunction.getname())
+        self.cline = self.fline
+        def fpo(p):
+            ev = p.getevidence()
+            line = p.getlocation().getline()
+            if line >= self.cline:
+                lines.append('-' * 80)
+                for n in range(self.fline,line+1):
+                    lines.append(self.getsourceline(n))
+                lines.append('-' * 80)
+            self.cline = line + 1
+            delegated = ''
+            if ev is None:
+                lines.append('<?> ' + str(p))
+                lines.append((' ' * 18) + '--')
+            else:
+                prefix = ev.getdisplayprefix()
+                if ev.isdelegated(): delegated = '--' + ev.getassumptiontype() + '--'
+                lines.append(prefix + ' ' + str(p) + delegated)
+                lines.append((' ' * 18) + ev.getevidence())
+        self.cfunction.getproofs().iterspos(fpo)
+        lines.append(' ')
+        return '\n'.join(lines)
