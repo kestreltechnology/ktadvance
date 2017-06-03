@@ -25,25 +25,45 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CTType import CTType
+import xml.etree.ElementTree as ET
+
+import advance.app.CTTypeExp as TX
+
 from advance.proof.CPOPredicate import CPOPredicate
 
 class CPOPredicatePtrUpperBoundDeref(CPOPredicate):
 
-    def __init__(self,cfun,xnode):
-        CPOPredicate.__init__(self,cfun,xnode)
+    def __init__(self,ctxt,xnode,subst={}):
+        CPOPredicate.__init__(self,ctxt,xnode,subst)
 
     def getop(self): return self.xnode.get('op')
 
-    def gettargettype(self): return CTType(self.cfile,self.xnode.find('typ'))
+    def gettargettype(self): return TX.gettype(self.ctxt,self.xnode.find('typ'))
 
-    def getexp1(self): return self.xnode.find('exp1').get('xstr')
+    def getexp1(self): return TX.getexp(self.ctxt,self.xnode.find('exp1'),self.subst)
 
-    def getexp2(self): return self.xnode.find('exp2').get('xstr')
+    def getexp2(self): return TX.getexp(self.ctxt,self.xnode.find('exp2'),self.subst)
+
+    def writexml(self,cnode):
+        CPOPredicate.writexml(self,cnode)
+        tnode = ET.Element('typ')
+        e1node = ET.Element('exp1')
+        e2node = ET.Element('exp2')
+        self.gettargettype().writexml(tnode)
+        self.getexp1().writexml(e1node)
+        self.getexp2().writexml(e2node)
+        cnode.extend([tnode, e1node, e2node])
+        cnode.set('op',self.getop())
+
+    def hashstr(self):
+        return '_'.join([ self.hashtag(), self.getop(),
+                              'E1:' + self.getexp1().hashstr(),
+                              'E2:' + self.getexp2().hashstr(),
+                              'T:' + self.gettargettype().hashstr() ])
 
     def __str__(self):
         return ('ptr-upper-bound-deref(op:' + self.getop() + 
-                ', exp1:' + self.getexp1() +
-                ', exp2:' + self.getexp2() +
+                ', exp1:' + str(self.getexp1()) +
+                ', exp2:' + str(self.getexp2()) +
                 ', tgttype:' + str(self.gettargettype()) + ')')
 

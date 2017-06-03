@@ -25,17 +25,33 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import xml.etree.ElementTree as ET
+
+import advance.app.CTTypeExp as TX
+
 from advance.proof.CPOPredicate import CPOPredicate
 
 class CPOPredicateIndexUpperBound(CPOPredicate):
 
-    def __init__(self,cfun,xnode):
-        CPOPredicate.__init__(self,cfun,xnode)
+    def __init__(self,ctxt,xnode,subst={}):
+        CPOPredicate.__init__(self,ctxt,xnode,subst)
 
-    def getexp(self): return self.xnode.find('exp').get('xstr')
+    def getexp(self): return TX.getexp(self.ctxt,self.xnode.find('exp'),self.subst)
 
-    def getlength(self): return self.xnode.find('len-exp').get('xstr')
+    def getlength(self): return TX.getexp(self.ctxt,self.xnode.find('len-exp'),self.subst)
+
+    def writexml(self,cnode):
+        CPOPredicate.writexml(self,cnode)
+        enode = ET.Element('exp')
+        lnode = ET.Element('len-exp')
+        self.getexp().writexml(enode)
+        self.getlength().writexml(lnode)
+        cnode.extend( [enode, lnode] )
+
+    def hashstr(self):
+        return '_'.join([self.hashtag(), 'E:' + self.getexp().hashstr(),
+                             'L:' + self.getlength().hashstr() ])
 
     def __str__(self): 
-        return ('index-upper-bound(' + self.getexp() + 
+        return ('index-upper-bound(' + str(self.getexp()) + 
                 ', bound:' + str(self.getlength()) + ')')

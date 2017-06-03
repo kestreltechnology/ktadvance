@@ -25,18 +25,18 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CTType import CLval
+import advance.app.CTTypeExp as TX
 
 from advance.proof.CPOPredicate import CPOPredicate
 
 class CPOPredicateInitialized(CPOPredicate):
 
-    def __init__(self,cfun,xnode):
-        CPOPredicate.__init__(self,cfun,xnode)
+    def __init__(self,ctxt,xnode):
+        CPOPredicate.__init__(self,ctxt,xnode)
 
     def getlval(self):
         if self.xnode.find('lval') is None:
             return '?????'
-        return CLval(self.cfile,self.xnode.find('lval'))
+        return TX.CLval(self.ctxt,self.xnode.find('lval'))
 
     def __str__(self): return ('initialized(' + str(self.getlval()) + ')')

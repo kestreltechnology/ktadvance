@@ -25,15 +25,16 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CTType import CTType
+import advance.app.CTTypeExp as TX
+
 from advance.proof.CPOPredicate import CPOPredicate
 
 class CPOPredicateUpperBound(CPOPredicate):
 
-    def __init__(self,cfun,xnode):
-        CPOPredicate.__init__(self,cfun,xnode)
+    def __init__(self,ctxt,xnode,subst={}):
+        CPOPredicate.__init__(self,ctxt,xnode,subst)
 
-    def getexp(self): return self.xnode.find('exp').get('xstr')
+    def getexp(self): return TX.getexp(self.ctxt,self.xnode.find('exp'),self.subst)
 
     def __str__(self):
         return ('upper-bound(' + str(self.getexp()) + ')')

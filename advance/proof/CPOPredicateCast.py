@@ -25,21 +25,31 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CTType import CTType
+import advance.app.CTTypeExp as TX
+
 from advance.proof.CPOPredicate import CPOPredicate
 
 class CPOPredicateCast(CPOPredicate):
 
-    def __init__(self,cfun,xnode):
-        CPOPredicate.__init__(self,cfun,xnode)
+    def __init__(self,ctxt,xnode,subst={}):
+        CPOPredicate.__init__(self,ctxt,xnode,subst)
 
     def getfromtype(self): 
-        return CTType(self.cfile,self.xnode.find('tfrom'))
+        return TX.gettype(self.ctxt,self.xnode.find('tfrom'))
 
     def gettotype(self):
-        return CTType(self.cfile,self.xnode.find('tto'))
+        return TX.gettype(self.ctxt,self.xnode.find('tto'))
+
+    def getexp(self):
+        return TX.getexp(self.ctxt,self.xnode.find('exp'),self.subst)
+
+    def hashstr(self):
+        return '_'.join([self.gethashtag(),
+                             self.getfromtype().hashstr(),
+                             self.getexp().hashstr(),
+                             self.gettotype().hashstr() ])
 
     def __str__(self): 
-        return ('cast(from:' + str(self.getfromtype()) + 
+        return ('cast(' + str(self.getexp()) + ', from:' + str(self.getfromtype()) + 
                 ',to:' + str(self.gettotype()) + ')')
     

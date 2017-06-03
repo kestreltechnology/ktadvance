@@ -25,17 +25,18 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import advance.app.CTTypeExp as TX
+
 from advance.proof.CPOPredicate import CPOPredicate
 
 class CPOPredicateInitializedRange(CPOPredicate):
 
-    def __init__(self,cfun,xnode):
-        self.cfun = cfun
-        self.xnode = xnode
+    def __init__(self,ctxt,xnode):
+        CPOPredicate.__init__(self,ctxt,xnode)
 
-    def getbaseexp(self): return self.xnode.find('base-exp').get('xstr')
+    def getbaseexp(self): return TX.getexp(self.ctxt,self.xnode.find('base-exp'))
 
-    def getlenexp(self): return self.xnode.find('len-exp').get('xstr')
+    def getlenexp(self): return TX.getexp(self.ctxt,self.xnode.find('len-exp'))
 
     def __str__(self):
         return ('initialized-range(' + str(self.getbaseexp()) + ',' +

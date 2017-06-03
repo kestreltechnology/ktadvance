@@ -25,21 +25,22 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CTType import CTType
+import advance.app.CTTypeExp as TX
+
 from advance.proof.CPOPredicate import CPOPredicate
 
 class CPOPredicatePtrUpperBound(CPOPredicate):
 
-    def __init__(self,cfun,xnode):
-        CPOPredicate.__init__(self,cfun,xnode)
+    def __init__(self,ctxt,xnode,subst={}):
+        CPOPredicate.__init__(self,ctxt,xnode,subst)
 
     def getop(self): return self.xnode.get('op')
 
-    def gettargettype(self): return CTType(self.cfile,self.xnode.find('typ'))
+    def gettargettype(self): return TX.gettype(self.ctxt,self.xnode.find('typ'))
 
-    def getexp1(self): return self.xnode.find('exp1').get('xstr')
+    def getexp1(self): return TX.getexp(self.ctxt,self.xnode.find('exp1'),self.subst)
 
-    def getexp2(self): return self.xnode.find('exp2').get('xstr')
+    def getexp2(self): return TX.getexp(self.ctxt,self.xnode.find('exp2'),self.subst)
 
     def __str__(self):
         return ('ptr-upper-bound(op:' + self.getop() + 

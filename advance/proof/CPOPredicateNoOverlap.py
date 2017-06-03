@@ -25,17 +25,18 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import advance.app.CTTypeExp as TX
+
 from advance.proof.CPOPredicate import CPOPredicate
 
 class CPOPredicateNoOverlap(CPOPredicate):
 
-    def __init__(self,cfun,xnode):
-        self.cfun = cfun
-        self.xnode = xnode
+    def __init__(self,ctxt,xnode,subst={}):
+        CPOPredicate.__init__(self,ctxt,xnode,subst)
 
-    def getexp1(self): return self.xnode.find('exp1').get('xstr')
+    def getexp1(self): return TX.getexp(self.ctxt,self.xnode.find('exp1'),self.subst)
 
-    def getexp2(self): return self.xnode.find('exp2').get('xstr')
+    def getexp2(self): return TX.getexp(self.ctxt,self.xnode.find('exp2'),self.subst)
 
     def __str__(self):
         return ('no-overlap(' + str(self.getexp1()) + ',' + str(self.getexp2()) + ')')

@@ -25,14 +25,27 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import xml.etree.ElementTree as ET
+
+import advance.app.CTTypeExp as TX
 from advance.proof.CPOPredicate import CPOPredicate
+
 
 class CPOPredicateNotNull(CPOPredicate):
 
-    def __init__(self,cfun,xnode):
-        CPOPredicate.__init__(self,cfun,xnode)
+    def __init__(self,ctxt,xnode,subst={}):
+        CPOPredicate.__init__(self,ctxt,xnode,subst)
 
-    def getexp(self): return self.xnode.find('exp').get('xstr')
+    def getexp(self): return TX.getexp(self.ctxt,self.xnode.find('exp'),self.subst)
+
+    def writexml(self,cnode):
+        CPOPredicate.writexml(self,cnode)
+        enode = ET.Element('exp')
+        self.getexp().writexml(enode)
+        cnode.append(enode)
+
+    def hashstr(self):
+        return '_'.join([self.hashtag(), 'E:' + self.getexp().hashstr()])
 
     def __str__(self):
         return ('not-null(' + str(self.getexp()) + ')')
