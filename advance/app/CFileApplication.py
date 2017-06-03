@@ -50,11 +50,20 @@ class CFileApplication():
 
     def fniter(self,f): self.cfile.fniter(f)
 
+    def getfunctionbyindex(self,index):
+        if self.cfile.hasfunctionbyindex(index):
+            return self.cfile.getfunctionbyindex(index)
+        else:
+            print('No function found with index ' + str(index) + ' in file ' +
+                      self.getcfile().getfilename())
+
     def getpath(self): return self.path
 
     def get_ppo_results(self): return self.cfile.get_ppo_results()
 
     def get_ppos(self): return self.cfile.get_ppos()
+
+    def get_spos(self): return self.cfile.get_spos()
 
     def _initialize(self):
         cfile = UF.get_cfile_xnode(self.path,self.fname)
