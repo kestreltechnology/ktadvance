@@ -53,6 +53,11 @@ class TestCFileRef():
 
     def getdomains(self): return self.r['domains']
 
+    def hasspos(self):
+        for f in self.getfunctions():
+            if f.hasspos(): return True
+        else: return False
+
     def _initialize(self):
         for f in self.r['functions']:
             self.functions[f] = TestCFunctionRef(self,f,self.r['functions'][f])

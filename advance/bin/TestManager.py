@@ -49,7 +49,19 @@ class FunctionPPOError(Exception):
     def __str__(self):
         return self.msg
 
+class FunctionSPOError(Exception):
+    def __init__(self,msg):
+        self.msg = msg
+    def __str__(self):
+        return self.msg
+
 class FunctionPEVError(Exception):
+    def __init__(self,msg):
+        self.msg = msg
+    def __str__(self):
+        return self.msg
+
+class FunctionSEVError(Exception):
     def __init__(self,msg):
         self.msg = msg
     def __str__(self):
@@ -162,10 +174,24 @@ class TestManager():
             result.append(d)
         self.testsetref.setppos(cfilename,fname,result)
 
+    def createreferencespos(self,cfilename,fname,spos):
+        result = []
+        if len(spos) > 0:
+            for spo in spos:
+                d = {}
+                d['line'] = spo.getline()
+                d['cfgctxt'] = spo.getcfgcontextstring()
+                d['hashstr'] = spo.hashstr()
+                d['tgtstatus'] = 'unknown'
+                d['status'] = 'unknown'
+                result.append(d)
+            self.testsetref.setspos(cfilename,fname,result)
+
     def testppos(self):
         if not os.path.isfile(self.config.canalyzer):
             raise AnalyzerMissingError(self.config.canalyzer)
         self.testresults.set_ppos()
+        saved = False
         try:
             for cfile in self.getcfiles():
                 cfilename = cfile.getname()
@@ -183,6 +209,7 @@ class TestManager():
                             print('Ppos not created for ' + fname + ' (delete first)')
                         else:
                             self.createreferenceppos(cfilename,fname,ppos[fname])
+                            saved = True
                     else:
                         refppos = cfun.getppos()
                         funppos = ppos[fname]
@@ -196,6 +223,75 @@ class TestManager():
         except FunctionPPOError as detail:
             self.printtestresults()
             print('Function PPO error: ' + str(detail))
+            exit()
+        if self.saveref and saved:
+            self.testsetref.save()
+            exit()
+
+    def checkspos(self,cfilename,cfun,spos,refspos):
+        d = {}
+        for spo in spos:
+            context = spo.getcfgcontextstring()
+            if not context in d: d[context] = []
+            d[context].append(spo.hashstr())
+        for spo in refspos:
+            p = spo.gethashstr()
+            context = spo.getcontext()
+            if not context in d:
+                self.testresults.add_missingspo(cfilename,cfun,context,p)
+                for c in d:
+                    print(str(c))
+                raise FunctionSPOError(cfilename + ':' + cfun + ':' + ' Missing spo: ' + str(context))
+            else:
+                if not p in d[context]:
+                    self.testresults.add_missingspo(cfilename,cfun,context,p)
+                    for spo in spos: print(spo.hashstr())
+                    raise FunctionSPOError(
+                        cfilename + ':' + cfun + ':' + str(context) + ':' + p)
+
+    def testspos(self,delaytest=False):
+        try:
+            for cfile in self.getcfiles():
+                self.testresults.set_spos()
+                cfilename = cfile.getname()
+                cfilefilename = UF.get_cfile_filename(self.tgtxpath,cfilename)
+                if not os.path.isfile(cfilefilename):
+                    raise XmlFileNotFoundError(xfilefilename)
+                capp = CFileApplication(self.sempath,cfilename)
+                def f(fn):
+                    fn.updatespos()
+                    fn.requestpostconditions()
+                capp.fniter(f)
+                def g(fn): fn.savespos()
+                capp.fniter(g)
+                spos = capp.get_spos()
+                if delaytest: continue
+                for cfun in cfile.getfunctions():
+                    fname = cfun.getname()
+                    if self.saveref:
+                        if cfun.hasspos():
+                            print('Spos not created for ' + fname + ' in ' + cfilename + ' (delete first)')
+                        else:
+                            self.createreferencespos(cfilename,fname,spos[fname])
+                    else:
+                        refspos = cfun.getspos()
+                        funspos = spos[fname]
+                        if funspos is None and len(refspos) == 0:
+                            self.testresults.add_spocountsuccess(cfilename,fname)
+                            
+                        elif len(refspos) == len(funspos):
+                            self.testresults.add_spocountsuccess(cfilename,fname)
+                            self.checkspos(cfilename,fname,funspos,refspos)
+                        else:
+                            self.testresults.add_spocounterror(
+                                cfilename,fname,len(funspos),len(refspos))
+                            raise FunctionSPOError(cfilename + ':' + fname)
+        except FunctionSPOError as detail:
+            self.printtestresults()
+            print('')
+            print('*' * 80)
+            print('Function SPO error: ' + str(detail))
+            print('*' * 80)
             exit()
         if self.saveref:
             self.testsetref.save()
@@ -247,6 +343,53 @@ class TestManager():
                 funppos = ppos[fname]
                 refppos = cfun.getppos()
                 self.checkpevs(cfilename,cfun,funppos,refppos)
+
+    def checksevs(self,cfilename,cfun,funspos,refspos):
+        d = {}
+        fname = cfun.getname()
+        for spo in funspos:
+            context = spo.getcfgcontextstring()
+            if not context in d: d[context] = {}
+            p = spo.hashstr()
+            if p in d[context]:
+                raise FunctionSEVError(
+                    cfilename + ':' + fname + ':' + str(context) + ': ' +
+                    'multiple instances of ' + p)
+            else:
+                d[context][p] = spo.getstatus()
+        for spo in refspos:
+            context = spo.getcontext()
+            p = spo.gethashstr()
+            if not context in d:
+                raise FunctionSEVError(
+                    cfilename + ':' + fname + ':' + str(context) + ': missing')
+            else:
+                if spo.getstatus() != d[context][p]:
+                    self.testresults.add_sevdiscrepancy(
+                        cfilename,cfun,spo,d[context][p])
+                    
+    def testsevs(self,delaytest=False):
+        self.testresults.set_sevs()
+        for cfile in self.getcfiles():
+            if cfile.hasspos():
+                cfilename = cfile.getname()
+                cfilefilename = UF.get_cfile_filename(self.tgtxpath,cfilename)
+                if not os.path.isfile(cfilefilename):
+                    raise XmlFileNotFoundError(cfilefilename)
+                capp = CFileApplication(self.sempath,cfilename)
+                if cfile.hasdomains():
+                    for d in cfile.getdomains():
+                        am = AnalysisManager(capp,onefile=True)
+                        am.generate_file_localinvariants(cfilename,d)
+                        am.check_file_proofobligations(cfilename)
+                spos = capp.get_spos()
+                if delaytest: continue
+                for cfun in cfile.getfunctions():
+                    fname = cfun.getname()
+                    funspos = spos[fname]
+                    refspos = cfun.getspos()
+                    self.checksevs(cfilename,cfun,funspos,refspos)
+                    
 
     def getcfilenames(self): return self.testsetref.getcfilenames()
 

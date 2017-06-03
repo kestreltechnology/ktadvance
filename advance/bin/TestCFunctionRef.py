@@ -26,6 +26,7 @@
 # ------------------------------------------------------------------------------
 
 from advance.bin.TestPPORef import TestPPORef
+from advance.bin.TestSPORef import TestSPORef
 
 class TestCFunctionRef():
 
@@ -34,6 +35,7 @@ class TestCFunctionRef():
         self.name = name
         self.r = r
         self.ppos = {}
+        self.spos = {}
         self._initialize()
 
     def getname(self): return self.name
@@ -44,6 +46,13 @@ class TestCFunctionRef():
         return result
 
     def hasppos(self): return len(self.ppos) > 0
+
+    def getspos(self):
+        result = []
+        for l in self.spos: result.extend(self.spos[l])
+        return result
+
+    def hasspos(self): return len(self.spos) > 0
 
     def hasmultiple(self,line,pred):
         if line in self.ppos:
@@ -57,4 +66,10 @@ class TestCFunctionRef():
                 line = ppo.getline()
                 if not line in self.ppos: self.ppos[line] = []
                 self.ppos[line].append(ppo)
+            if 'spos' in self.r:
+                for s in self.r['spos']:
+                    spo = TestSPORef(self,s)
+                    line = spo.getline()
+                    if not line in self.spos: self.spos[line] = []
+                    self.spos[line].append(spo)
 

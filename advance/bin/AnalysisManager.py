@@ -64,6 +64,11 @@ class AnalysisManager(object):
             print(args)
             exit(1)
 
+    def create_file_secondaryproofobligations(self,cfile):
+        print('Creating secondary proof obligations for ' + cfile.getfilename())
+        def createspos(fn):fnupdate.spos()
+        cfile.fniter(createspos)
+
     def generate_file_localinvariants(self,cfilename,domains):
         try:
             print('Generating invariants for ' + cfilename)

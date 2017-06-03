@@ -51,6 +51,9 @@ class TestSetRef():
     def setppos(self,cfilename,cfun,ppos):
         self.r['cfiles'][cfilename]['functions'][cfun]['ppos'] = ppos
 
+    def setspos(self,cfilename,cfun,spos):
+        self.r['cfiles'][cfilename]['functions'][cfun]['spos'] = spos
+
     def hascharacteristics(self): return 'characteristics' in self.r
 
     def getcharacteristics(self):

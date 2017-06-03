@@ -79,13 +79,13 @@ if __name__ == '__main__':
     testmanager = TestManager(cpath,cpath,testname,saveref=args.saveref)
     testmanager.clean()
     try:
-        if testmanager.testparser(savesemantics=args.savesemantics):
+        if testmanager.testparser(savesemantics=args.savesemantics) or UF.unpack_tar_file(cpath):
             testmanager.testppos()
             testmanager.testpevs()
-            testmanager.printtestresults()
-        elif UF.unpack_tar_file(cpath):
-            testmanager.testppos()
-            testmanager.testpevs()
+            testmanager.testspos(delaytest=True)
+            testmanager.testsevs(delaytest=True)
+            testmanager.testspos()
+            testmanager.testsevs()
             testmanager.printtestresults()
         else:
             print(
