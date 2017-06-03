@@ -25,6 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+from advance.app.CContext import makecontext
 from advance.app.CContext import CContext
 from advance.app.CLocation import CLocation
 
@@ -40,7 +41,7 @@ class CFunctionPPO():
         self.xnode = xnode
         self.cfun = self.cppos.cproofs.cfun
 
-    def getid(self): return int(self.xnode.get('id'))
+    def getid(self): return self.xnode.get('id')
 
     def getorigin(self): return self.xnode.get('origin')
 
@@ -53,10 +54,10 @@ class CFunctionPPO():
 
     def getpredicate(self): 
         pnode = self.xnode.find('predicate')
-        return P.getpredicate(self.cfun,pnode)
+        return P.getpredicate(self.getcontext(),pnode)
 
     def getcontext(self):
-        return CContext(self.cfun,self.xnode.find('context'))
+        return makecontext(self.cfun,self.xnode.find('context'))
 
     def getcontextstrings(self): return self.getcontext().contextstrings()
 

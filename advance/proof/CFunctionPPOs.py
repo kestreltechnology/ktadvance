@@ -43,7 +43,8 @@ class CFunctionPPOs():
         if id in self.ppos: return self.ppos[id]
 
     def iter(self,f): 
-        for ppo in sorted(self.ppos,key=lambda(p):(self.ppos[p].getlocation().getline(),self.ppos[p].getid())): 
+        for ppo in sorted(self.ppos,key=lambda(p):(self.ppos[p].getlocation().getline(),
+                                                       int(self.ppos[p].getid()))): 
             f(self.ppos[ppo])
 
     def get_ppo_methods(self):
@@ -85,4 +86,4 @@ class CFunctionPPOs():
 
     def _initialize(self):
         for p in self.xnode.find('primary-proof-obligations').findall('proof-obligation'):
-            self.ppos[int(p.get('id'))] = CFunctionPPO(self,p)
+            self.ppos[p.get('id')] = CFunctionPPO(self,p)
