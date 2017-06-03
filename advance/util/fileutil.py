@@ -30,6 +30,8 @@ import subprocess
 import shutil
 import xml.etree.ElementTree as ET
 
+import advance.util.xmlutil as UX
+
 from advance.bin.Config import Config
 
 def get_xnode(filename,rootnode,desc,show=True):
@@ -129,8 +131,23 @@ def get_pev_xnode(path,cfilename,fname):
 def get_spo_filename(path,cfilename,fname):
     return (get_cfun_basename(path,cfilename,fname) + '_spo.xml')
 
+def get_spo_xnode(path,cfilename,fname):
+    filename = get_spo_filename(path,cfilename,fname)
+    return get_xnode(filename,'function','Secondary proof obligations file')
+
 def get_sev_filename(path,cfilename,fname):
     return (get_cfun_basename(path,cfilename,fname) + '_sev.xml')
+
+def get_sev_xnode(path,cfilename,fname):
+    filename = get_sev_filename(path,cfilename,fname)
+    return get_xnode(filename,'function','Secondary evidence file')
+
+def save_spo_file(path,cfilename,fname,cnode):
+    filename = get_spo_filename(path,cfilename,fname)
+    header = UX.get_xml_header(filename,'spos')
+    header.append(cnode)
+    with open(filename,'w') as fp:
+        fp.write(UX.doc_to_pretty(ET.ElementTree(header)))
 
 # --------------------------------------------------------------- source code --
 
@@ -171,7 +188,15 @@ def get_kendra_cpath(cfilename):
             return testpath
         else:
             return get_kendra_testpath_byid(testid - 3)
-            
+
+# ------------------------------------------------------------ juliet tests ----
+
+def get_juliet_path():
+    sardpath = os.path.join(Config().testdir,'sard')
+    return os.path.abspath(os.path.join(sardpath,'juliet_v1.2'))
+
+def get_juliet_testpath(testname):
+    return os.path.join(get_juliet_path(),testname)
 
 # ------------------------------------------------------------ unzip tar file --
 
