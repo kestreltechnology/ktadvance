@@ -25,21 +25,125 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CCfgContext import CCfgContext
-from advance.app.CExpContext import CExpContext
+import xml.etree.ElementTree as ET
+
+def makecontext(cfun,xnode):
+    cfgctxt = []
+    expctxt = []
+    for node in xnode.find('cfg-context').findall('node'):
+        if 'num' in node.attrib:
+            cfgctxt.append((node.get('name'), [ int(node.get('num')) ]))
+        else:
+            cfgctxt.append((node.get('name'),[]))
+    for node in xnode.find('exp-context').findall('node'):
+        if 'num' in node.attrib:
+            expctxt.append((node.get('name'), [ int(node.get('num')) ]))
+        else:
+            expctxt.append((node.get('name'), []))
+    return CContext(cfun,cfg=cfgctxt,exp=expctxt)
+
 
 class CContext():
     '''Represents the cfg and expression context for a proof obligation'''
 
-    def __init__(self,cfun,xnode):
+    def __init__(self,cfun,cfg=[],exp=[]):
         self.cfun = cfun
-        self.xnode = xnode
-        self.cfgcontext = CCfgContext(self.cfun,self.xnode.find('cfg-context'))
-        self.expcontext = CExpContext(self.cfgcontext,self.xnode.find('exp-context'))
+        self.cfgctxt = cfg
+        self.expctxt = exp
 
-    def getcfgcontext(self): return self.cfgcontext
+    def getcfgcontext(self): return self.cfgctxt
 
-    def getexpcontext(self): return self.expcontext
+    def getexpcontext(self): return self.expctxt
+
+    def getcfgcontextstring(self): 
+        def nstr((name,ixs)):
+            if len(ixs) == 0: return name
+            return name + ':' + ','.join(str(i) for i in ixs)
+        def ctxtstr(l):
+            return '_'.join([ nstr(x) for x in l ])
+        return ctxtstr(self.cfgctxt)
+
+    def getfunction(self): return self.cfun
+
+    def getfile(self): return self.cfun.getfile()
+
+    def getglobalkey(self,localkey): return self.getfile().getglobalkey(localkey)
+
+    def getstring(self,index): return self.getfile().getstring(index)
+
+    # ----------------------------------------------------------- cfg constructs --
+
+    def addstmt(self,n): return self._addcn('stmt',n)
+
+    def addinstr(self,n): return self._addcn('instr',n)
+
+    def addifexpr(self): return self._addc('if-expr')
+
+    def addifthen(self): return self._addc('if-then')
+
+    def addifelse(self): return self._addc('if-else')
+
+    def addloop(self): return self._addc('loop')
+
+    def addbreak(self): return self._addc('break')
+
+    def addcontinue(self): return self._addc('continue')
+
+    def addreturn(self): return self._addc('return')
+
+    def addgoto(self): return self._addc('goto')
+
+    def addswitch(self): return self._addc('switch')
+
+    def addswitchexpr(self): return self._addc('switch-expr')
+
+    # ------------------------------------------------------------ exp constructs --
+
+    def addarg(self,n): return self._adden('arg',n)
+
+    def writexml(self,cnode):
+        gnode = ET.Element('cfg-context')
+        enode = ET.Element('exp-context')
+        for (name,l) in self.cfgctxt:
+            n = ET.Element('node')
+            n.set('name',name)
+            if len(l) > 0:
+                n.set('num',str(l[0]))
+            gnode.append(n)
+        for (name,l) in self.expctxt:
+            n = ET.Element('node')
+            n.set('name',name)
+            if len(l) > 0:
+                n.set('num',str(l[0]))
+            enode.append(n)
+        cnode.extend([gnode, enode])
+
+
+    def _addc(self,name):
+        cctxt = self.cfgctxt[:]
+        cctxt.append((name,[]))
+        return CContext(self.cfun,cctxt,self.expctxt)
+
+    def _addcn(self,name,n):
+        cctxt = self.cfgctxt[:]
+        cctxt.append((name,[n]))
+        return CContext(self.cfun,cctxt,self.expctxt)
+
+    def _adde(self,name):
+        ectxt = self.expctxt[:]
+        ectxt.append((name,[]))
+        return CContext(self.cfun,self.cfgctxt,ectxt)
+
+    def _adden(self,name,n):
+        ectxt = self.expctxt[:]
+        ectxt.append((name,[n]))
+        return CContext(self.cfun,self.cfgctxt,ectxt)
 
     def contextstrings(self):
-        return (self.getcfgcontext().contextstring(), self.getexpcontext().contextstring())
+        def nstr((name,ixs)):
+            if len(ixs) == 0: return name
+            return name + ':' + ','.join(str(i) for i in ixs)
+        def ctxtstr(l):
+            return '_'.join([ nstr(x) for x in l ])
+        return (ctxtstr(self.cfgctxt),ctxtstr(self.expctxt))
+
