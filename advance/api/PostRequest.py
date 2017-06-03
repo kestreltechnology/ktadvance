@@ -28,7 +28,7 @@
 from advance.app.CContext import CContext
 import advance.proof.CPOUtil as P
 
-class ApiAssumption():
+class PostRequest():
 
     def __init__(self,capi,xnode):
         self.capi = capi
@@ -45,6 +45,9 @@ class ApiAssumption():
         ctxt = CContext(self.cfun,None)
         return P.getpredicate(ctxt,self.xnode.find('predicate'))
 
+    def getfunctionindex(self):
+        return int(self.xnode.get('fvid'))
+
     def getdependentpos(self): return self.primarypos
 
     def _initialize(self):
@@ -52,11 +55,5 @@ class ApiAssumption():
             self.primarypos.append(x.get('id'))
 
     def __str__(self):
-        return (str(self.getpredicate()) + "\n    --Dependent ppo's: [" +
-                ', '.join(str(i) for i in self.getdependentpos()) + ']\n')
-
-    
-
-    
-    
-        
+        return (str(self.getpredicate()) + "\n      --Dependent ppo's: [" +
+                    ', '.join(str(i) for i in self.getdependentpos()) + ']\n')
