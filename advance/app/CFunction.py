@@ -40,11 +40,14 @@ class CFunction():
         self.xnode = xnode
         self.formals = {}                            # vid -> CVarInfo
         self.locals = {}                             # vid -> CVarInfo
+        self.body = CFunctionBody(self,self.xnode.find('sbody'))
         self.proofs = CFunctionProofs(self)          # CFunctionProofs object
         self.api = CFunctionApi(self)                # CFunctionApi object
         self._initialize()
 
     def iterppos(self,f): self.proofs.iterppos(f)
+
+    def getfile(self): return self.cfile
 
     def getname(self):
         return self.xnode.find('svar').get('vname')
@@ -63,11 +66,30 @@ class CFunction():
 
     def getlocals(self): return self.locals.values()
 
-    def getbody(self): return CFunctionBody(self,self.xnode.find('sbody'))
+    def getbody(self): return self.body
+
+    def getstmtcount(self): return self.body.getstmtcount()
+
+    def getinstrcount(self): return self.body.getinstrcount()
+
+    def getcallinstrs(self): return self.body.getcallinstrs()
 
     def getproofs(self): return self.proofs
 
+    def updatespos(self): self.proofs.updatespos()
+
+    def acceptpostrequest(self,rv,fvid): self.proofs.addreturnsiteobligation(rv,fvid)
+
+    def requestpostconditions(self):
+        for r in self.getapi().getpostrequests():
+            tgtfun = self.cfile.getfunctionbyindex(r.getfunctionindex())
+            tgtfun.acceptpostrequest(r,self.getid())
+
+    def savespos(self): self.proofs.savespos()
+
     def get_ppos(self): return self.proofs.get_ppos()
+
+    def get_spos(self): return self.proofs.get_spos()
 
     def get_ppo_methods(self): return self.proofs.get_ppo_methods()
 
@@ -76,6 +98,8 @@ class CFunction():
     def get_open_ppos(self): return self.proofs.get_open_ppos()
 
     def getviolations(self): return self.proofs.getviolations()
+
+    def getdelegated(self): return self.proofs.getdelegated()
 
     def _initialize(self):
         for v in self.xnode.find('sformals').findall('varinfo'):
