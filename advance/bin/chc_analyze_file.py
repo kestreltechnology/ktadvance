@@ -49,6 +49,7 @@ def parse():
     parser = argparse.ArgumentParser(usage=usage,description=description)
     parser.add_argument('path',help='directory that holds the semantics directory for the c file')
     parser.add_argument('cfile',help='c filename')
+    parser.add_argument('--continueanalysis',help='continue with existing results',action='store_true')
     args = parser.parse_args()
     return args
 
@@ -98,8 +99,9 @@ if __name__ == '__main__':
     
     am = AnalysisManager(capp,onefile=True)
 
-    with timing('creating primary proof obligations'):
-        am.create_file_primaryproofobligations(cfilename)
+    if not args.continueanalysis:
+        with timing('creating primary proof obligations'):
+            am.create_file_primaryproofobligations(cfilename)
     with timing('generating local invariants'):
         am.generate_file_localinvariants(cfilename,'llvis')
     with timing('checking proof obligations'):
