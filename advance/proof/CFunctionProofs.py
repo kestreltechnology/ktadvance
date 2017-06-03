@@ -25,10 +25,38 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import xml.etree.ElementTree as ET
+
 from advance.proof.CFunctionPPOs import CFunctionPPOs
 from advance.proof.CFunctionPEVs import CFunctionPEVs
 
+from advance.proof.CFunctionSPOs import CFunctionSPOs
+from advance.proof.CFunctionSEVs import CFunctionSEVs
+
 import advance.util.fileutil as UF
+
+'''
+CFunctionProofs is the root of a data structure that provides access to
+all proof obligations and associated evidence. Relationships between
+proof obligation and evidence are established through the CFunctionProofs
+object.
+
+- CFunctionProofs
+  - ppos: CFunctionPPOs
+          - id -> CFunctionPPO
+
+  - pevs: CFunctionPEVs
+          - id -> CFunctionPEV
+
+  - spos: CFunctionSPOs
+          - callsitespos: context -> CFunctionCallsiteSPOs
+                                     - id -> CFunctionCallsiteSPO
+          - returnsitespos: context -> CFunctionReturnsiteSPOs
+                                       id -> CFunctionReturnsiteSPO
+
+  - sevs: CFunctionSEVs
+          - id -> CFunctionSEV
+'''
 
 class CFunctionProofs():
 
@@ -41,9 +69,41 @@ class CFunctionProofs():
         self.pevs = None           # CFunctionPEVs
         self.sevs = None           # CFunctionSEVs
 
+    def getfunction(self): return self.cfun
+
+    def addreturnsiteobligation(self,rv,fvid):
+        self._getspos()
+        self.spos.addreturnsiteobligation(rv,fvid)
+
+    def updatespos(self):
+        self._getspos()
+        self.spos.update()
+
+    def savespos(self):
+        cnode = ET.Element('function')
+        cnode.set('name',self.getfunction().getname())
+        self.spos.writexml(cnode)
+        self._savespos(cnode)
+
+    def getppo(self,id):
+        self._getppos()
+        return self.ppos.getppo(id)
+
+    def getspo(self,id):
+        self._getspos()
+        return self.spos.getspo(id)
+
     def iterppos(self,f): 
         self._getppos()
         self.ppos.iter(f)
+
+    def iterspos(self,f):
+        self._getspos()
+        self.spos.iter(f)
+
+    def iterpevs(self,f):
+        self._getpevs()
+        self.pevs.iter(f)
 
     def get_ppos(self):
         result = []
@@ -51,21 +111,27 @@ class CFunctionProofs():
         self.iterppos(f)
         return result
 
-    def iterpposev(self,f):
-        self._getppos()
-        self._getpevs()
-        def fpo(p):
-            pev = self.get_ppo_evidence(p.getid())
-            f(p,pev)
-        self.iterppos(fpo)
+    def get_spos(self):
+        result = []
+        def f(spo): result.append(spo)
+        self.iterspos(f)
+        return result
 
     def is_ppo_discharged(self,ppoid):
         self._getpevs() 
         return self.pevs.is_discharged(ppoid)
 
+    def is_spo_discharged(self,spoid):
+        self._getsevs()
+        return self.sevs.is_discharged(spoid)
+
     def get_ppo_evidence(self,ppoid): 
         self._getpevs()
         return self.pevs.get_evidence(ppoid)
+
+    def get_spo_evidence(self,spoid):
+        self._getsevs()
+        return self.sevs.get_evidence(spoid)
 
     def get_ppo_methods(self):
         self._getppos()
@@ -83,11 +149,17 @@ class CFunctionProofs():
         return result
 
     def getviolations(self):
-        result = {}
-        def f(ppo,pev):
-            if not pev is None:
-                if pev.isviolation(): result[ppo.getid()] = pev
-        self.iterpposev(f)
+        result = []
+        def f(pev):
+            if pev.isviolation(): result.append(pev)
+        self.iterpevs(f)
+        return result
+
+    def getdelegated(self):
+        result = []
+        def f(pev):
+            if pev.isdelegated(): result.append(pev)
+        self.iterpevs(f)
         return result
 
     def _getppos(self):
@@ -97,7 +169,20 @@ class CFunctionProofs():
             if not xnode is None:
                 self.ppos = CFunctionPPOs(self,xnode)
             else:
-                print('Unable to load ' + self.cfun.getname())
+                print('Unable to load ppos for ' + self.cfun.getname())
+
+    def _getspos(self):
+        if self.spos is None:
+            xnode = UF.get_spo_xnode(self.capp.path,self.cfile.getfilename(),
+                                         self.cfun.getname())
+            if not xnode is None:
+                self.spos = CFunctionSPOs(self,xnode)
+            else:
+                print('Unable to load spos for ' + self.cfun.getname())
+
+    def _savespos(self,cnode):
+        UF.save_spo_file(self.capp.path,self.cfile.getfilename(),
+                             self.cfun.getname(),cnode)
 
     def _getpevs(self):
         if self.pevs is None:
@@ -106,7 +191,16 @@ class CFunctionProofs():
             if not xnode is None:
                 self.pevs = CFunctionPEVs(self,xnode)
             else:
-                print('Unable to load ' + self.cfun.getname())
+                print('Unable to load pevs for' + self.cfun.getname())
+
+    def _getsevs(self):
+        if self.sevs is None:
+            xnode = UF.get_sev_xnode(self.capp.path,self.cfile.getfilename(),
+                                         self.cfun.getname())
+            if not xnode is None:
+                self.sevs = CFunctionSEVs(self,xnode)
+            else:
+                print('Unable to load sevs for ' + self.cfun.getname())
         
         
         
