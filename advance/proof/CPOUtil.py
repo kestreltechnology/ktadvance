@@ -44,42 +44,41 @@ from advance.proof.CPOPredicateLowerBound import CPOPredicateLowerBound
 from advance.proof.CPOPredicateUpperBound import CPOPredicateUpperBound
 from advance.proof.CPOPredicateNoOverlap import CPOPredicateNoOverlap
 
-
-def getpredicate(cfun,pnode):
+def getpredicate(ctxt,pnode,subst={}):
     tag = pnode.get('tag')
     if tag == 'cast':
-        return CPOPredicateCast(cfun,pnode)
+        return CPOPredicateCast(ctxt,pnode,subst)
     if tag == 'index-lower-bound':
-        return CPOPredicateIndexLowerBound(cfun,pnode)
+        return CPOPredicateIndexLowerBound(ctxt,pnode,subst)
     if tag == 'index-upper-bound':
-        return CPOPredicateIndexUpperBound(cfun,pnode)
+        return CPOPredicateIndexUpperBound(ctxt,pnode,subst)
     if tag == 'initialized':
-        return CPOPredicateInitialized(cfun,pnode)
+        return CPOPredicateInitialized(ctxt,pnode)
     if tag == 'initialized-range':
-        return CPOPredicateInitializedRange(cfun,pnode)
+        return CPOPredicateInitializedRange(ctxt,pnode)
     if tag == 'not-null':
-        return CPOPredicateNotNull(cfun,pnode)
+        return CPOPredicateNotNull(ctxt,pnode,subst)
     if tag == 'pointer-cast':
-        return CPOPredicatePointerCast(cfun,pnode)
+        return CPOPredicatePointerCast(ctxt,pnode,subst)
     if tag =='valid-mem':
-        return CPOPredicateValidMem(cfun,pnode)
+        return CPOPredicateValidMem(ctxt,pnode,subst)
     if tag =='width-overflow':
-        return CPOPredicateWidthOverflow(cfun,pnode)
+        return CPOPredicateWidthOverflow(ctxt,pnode,subst)
     if tag == 'ptr-lower-bound':
-        return CPOPredicatePtrLowerBound(cfun,pnode)
+        return CPOPredicatePtrLowerBound(ctxt,pnode,subst)
     if tag == 'ptr-upper-bound':
-        return CPOPredicatePtrUpperBound(cfun,pnode)
+        return CPOPredicatePtrUpperBound(ctxt,pnode,subst)
     if tag == 'ptr-upper-bound-deref':
-        return CPOPredicatePtrUpperBoundDeref(cfun,pnode)
+        return CPOPredicatePtrUpperBoundDeref(ctxt,pnode,subst)
     if tag == 'non-negative':
-        return CPOPredicateNonNegative(cfun,pnode)
+        return CPOPredicateNonNegative(ctxt,pnode,subst)
     if tag == 'lower-bound':
-        return CPOPredicateLowerBound(cfun,pnode)
+        return CPOPredicateLowerBound(ctxt,pnode,subst)
     if tag == 'upper-bound':
-        return CPOPredicateUpperBound(cfun,pnode)
+        return CPOPredicateUpperBound(ctxt,pnode,subst)
     if tag == 'null-terminated':
-        return CPOPredicateNullTerminated(cfun,pnode)
+        return CPOPredicateNullTerminated(ctxt,pnode,subst)
     if tag == 'no-overlap':
-        return CPOPredicateNoOverlap(cfun,pnode)
+        return CPOPredicateNoOverlap(ctxt,pnode,subst)
     else:
-        return CPOPredicate(cfun,pnode)
+        return CPOPredicate(ctxt,pnode,subst)
