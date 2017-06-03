@@ -73,6 +73,24 @@ class CApplication():
 
     def fileiter(self,f):
         for file in self.getfiles(): f(file)
+
+    def functioniter(self,f):
+        def g(fi): fi.fniter(f)
+        self.fileiter(g)
+
+    def getfunctionbyindex(self,index):
+        for f in self.files:
+            if f.hasfunctionbyindex(index):
+                return f.getfunctionbyindex(index)
+        else:
+            print('No function found with index ' + str(index))
+            exit(1)
+
+    def getcallinstrs(self):
+        result = []
+        def f(fi): result.extend(fi.getcallinstrs())
+        self.fileiter(f)
+        return result
         
     def fileiter_parallel(self, f, processes):
         Process_pool = multiprocessing.Pool(processes)
@@ -156,6 +174,14 @@ class CApplication():
         def f(file):
             violations = file.getviolations()
             if len(violations) > 0: results[file.getfilename()] = violations
+        self.fileiter(f)
+        return results
+
+    def getdelegated(self):
+        results = {}
+        def f(file):
+            delegated = file.getdelegated()
+            if len(delegated) > 0: results[file.getfilename()] = delegated
         self.fileiter(f)
         return results
 
