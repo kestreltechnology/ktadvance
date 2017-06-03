@@ -28,16 +28,24 @@
 import xml.etree.ElementTree as ET
 import datetime, os
 
+replace_lst = [ ('&', "&amp;") , ('<',"&lt;")  , ('>',"&gt;") ,
+                ('"',"&quot;") , ('\'',"&apos;") ]
+
+def sanitize(str):
+    for (c,r) in replace_lst:
+        str = str.replace(c,r)
+    return str
+
 def attributes_to_pretty (attr,indent=0): 
     if len(attr) == 0:
         return ''
     if len(attr) > 4:
         lines = []
         for key in sorted(attr):
-            lines.append(((' ' * (indent + 2)) + key + '="' + str(attr[key]) + '"'))
+            lines.append(((' ' * (indent + 2)) + key + '="' + sanitize(str(attr[key]) + '"')))
         return ('\n' + '\n'.join(lines))
     else:
-        return (' ' + ' '.join(key + '="' + str(attr[key]) + '"' for key in sorted(attr)))
+        return (' ' + ' '.join(key + '="' + sanitize(str(attr[key])) + '"' for key in sorted(attr)))
 
 def element_to_pretty (e,indent=0):
     lines = []
@@ -73,3 +81,4 @@ def get_xml_header(filename,info):
     header.set('time',str(datetime.datetime.now()))
     root.append(header)
     return root
+
