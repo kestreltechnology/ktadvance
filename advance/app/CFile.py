@@ -35,6 +35,7 @@ from advance.app.CGType import CGType
 from advance.app.CGVarDecl import CGVarDecl
 from advance.app.CGVarDef import CGVarDef
 
+from advance.app.CGXrefs import CGXrefs
 from advance.source.CSrcFile import CSrcFile
 
 class CFile():
@@ -54,13 +55,24 @@ class CFile():
         self.gfunctions = {}        # vid -> CGFunction
         self.functions = {}         # vid -> CFunction
         self.functionnames = {}     # functionname -> vid
+        self.strings = {}           # string-index -> (len,string)
+        self.gxrefs = None          # CGXrefs 
         self.sourcefile = None      # CSrcFile
 
     def getindex(self): return self.index
 
-    def getxrefs(self): return self.xrefs
+    def getgxrefs(self):
+        self._initializegxrefs()
+        return self.gxrefs
+
+    def getglobalkey(self,localkey):
+        return self.getgxrefs().getglobalkey(localkey)
 
     def getfilename(self): return self.xnode.get('filename')
+
+    def getstring(self,index):
+        self._initializestrings()
+        if index in self.strings: return self.strings[index]
 
     def getsourceline(self,n):
         self._initializesource()
@@ -147,6 +159,25 @@ class CFile():
             print('Function name ' + fname + ' not found in ' + self.getfilename())
             print('Names: ' + str(self.functionnames.keys()))
 
+    def getfunctionbyindex(self,index):
+        self._initialize_functions()
+        self._initializegxrefs()
+        for vid in self.functions:
+            if self.gxrefs.getglobalvid(vid) == index:
+                return self.functions[vid]
+        else:
+            print('Unable to find function with global vid ' + str(index))
+            exit(1)
+
+    def hasfunctionbyindex(self,index):
+        self._initialize_functions()
+        self._initializegxrefs()
+        for vid in self.functions:
+            if self.gxrefs.getglobalvid(vid) == index:
+                return True
+        else:
+            return False
+
     def getfunctions(self):
         self._initialize_functions()
         return self.functions.values()
@@ -154,10 +185,23 @@ class CFile():
     def fniter(self,f):
         for fn in self.getfunctions(): f(fn)
 
+    def getcallinstrs(self):
+        result = []
+        def f(fn): result.extend(fn.getcallinstrs())
+        self.fniter(f)
+        return result
+
     def get_ppos(self):
         result = {}
         def f(fn):
             result[fn.getname()] = fn.get_ppos()
+        self.fniter(f)
+        return result
+
+    def get_spos(self):
+        result = {}
+        def f(fn):
+            result[fn.getname()] = fn.get_spos()
         self.fniter(f)
         return result
 
@@ -200,6 +244,14 @@ class CFile():
         def f(fn):
             violations = fn.getviolations()
             if len(violations) > 0: results[fn.getname()] = violations
+        self.fniter(f)
+        return results
+
+    def getdelegated(self):
+        results = {}
+        def f(fn):
+            delegated = fn.getdelegated()
+            if len(delegated) > 0: results[fn.getname()] = delegated
         self.fniter(f)
         return results
 
@@ -264,6 +316,17 @@ class CFile():
         for vid in self.gfunctions.keys():
             self._initialize_function(vid)
 
+    def _initializestrings(self):
+        if len(self.strings) == 0:
+            for f in self.xnode.find('string-table').findall('istr'):
+                self.strings[int(f.get('id'))] = f.get('str')
+
     def _initializesource(self):
         if self.sourcefile is None:
             self.sourcefile = self.capp.getsrcfile(self.getfilename())
+
+    def _initializegxrefs(self):
+        if self.gxrefs is None:
+            gxrefsx = UF.get_cxreffile_xnode(self.capp.path,self.getfilename())
+            self.gxrefs = CGXrefs(self,gxrefsx)
+
