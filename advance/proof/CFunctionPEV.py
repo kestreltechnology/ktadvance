@@ -34,26 +34,38 @@ class CFunctionPEV():
         self.xnode = xnode
         self.cfun = self.cpevs.cproofs.cfun
 
-    def getid(self): return int(self.xnode.get('id'))
+    def getid(self): return self.xnode.get('id')
 
-    def getdischargemethod(self): return self.xnode.get('method')
+    def getppo(self): return self.cpevs.getppo(self.getid())
+
+    def getdischargemethod(self): return self.xnode.get('dk')
 
     def getdisplayprefix(self):
         if self.isviolation(): return '<*>'
+        if self.isdelegatedtopost(): return '<?>'
+        if self.isdelegatedtoapi(): return '<A>'
         d = self.getdischargemethod()
-        if d == 'invariants': return 'II '
-        if d == 'check-valid': return 'CV '
+        if d == 'local': return ' L '
+        if d == 'stmt': return ' S '
         return '   '
 
     def getevidence(self):
-        return self.xnode.find('evidence').get('comment')
+        return self.xnode.find('ev').get('txt')
 
     def getassumptiontype(self):
         if self.isdelegated():
-            return self.xnode.find('assumptions').find('uses').get('a-type')
+            apiid = self.xnode.find('aa').find('a').get('api-id')
+            if apiid[0] == 'A': return 'api'
+            if apiid[0] == 'R': return 'post'
 
     def isdelegated(self):
-        return (not self.xnode.find('assumptions') is None)
+        return (not self.xnode.find('aa') is None)
+
+    def isdelegatedtoapi(self):
+        return self.isdelegated() and (self.getassumptiontype() == 'api')
+
+    def isdelegatedtopost(self):
+        return self.isdelegated() and (self.getassumptiontype() == 'post')
 
     def isviolation(self):
         return ('violation' in self.xnode.attrib and
@@ -65,4 +77,5 @@ class CFunctionPEV():
     def getstatus(self):
         if self.issafe(): return 'safe'
         if self.isviolation(): return 'violation'
-        if self.isdelegated(): return 'deferred:api'
+        if self.isdelegatedtoapi(): return 'deferred:api'
+        if self.isdelegatedtopost(): return 'deferred:post'

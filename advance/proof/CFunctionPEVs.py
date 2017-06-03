@@ -37,6 +37,8 @@ class CFunctionPEVs():
         self.pevs = {}                        # ppoid -> CFunctionPEV
         self._initialize()
 
+    def getppo(self,id): return self.cproofs.getppo(id)
+
     def get_evidence(self,id):
         if id in self.pevs: return self.pevs[id]
 
@@ -47,4 +49,4 @@ class CFunctionPEVs():
 
     def _initialize(self):
         for p in self.xnode.find('proof-obligations-discharged').findall('discharged'):
-            self.pevs[int(p.get('id'))] = CFunctionPEV(self,p)
+            self.pevs[p.get('id')] = CFunctionPEV(self,p)
