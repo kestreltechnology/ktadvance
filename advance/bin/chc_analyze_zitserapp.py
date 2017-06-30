@@ -38,15 +38,17 @@ from advance.bin.AnalysisManager import AnalysisManager
 from advance.app.CApplication import CApplication
 
 def parse():
-    usage = ('\nCall with the directory name of one of the subdirectories in\n' +
-                 'tests/sard/zitser\n\n' +
-                 '  Example: python chc_analyze_zitserapp.py id1284\n\n')
-    description = ('Analyzes a benchmark application from the NIST Software Assurance\n' +
-                       'Reference Dataset (SARD). It expects that the application has\n' +
-                       'already been parsed (with chc_parse_zitserapp.py) and that the\n' +
-                       'semantics files are available either in a subdirectory of the\n' +
-                       'test directory called semantics, or in a (gzipped) tar file\n' +
-                       'semantics_linux.tar.gz or semantics_linux.tar.')
+    usage = (
+        '\nCall with the directory name of one of the subdirectories in\n' +
+        'tests/sard/zitser\n\n' +
+        '  Example: python chc_analyze_zitserapp.py id1284\n\n')
+    description = (
+        'Analyzes a benchmark application from the NIST Software Assurance\n' +
+        'Reference Dataset (SARD). It expects that the application has\n' +
+        'already been parsed (with chc_parse_zitserapp.py) and that the\n' +
+        'semantics files are available either in a subdirectory of the\n' +
+        'test directory called semantics, or in a (gzipped) tar file\n' +
+        'semantics_linux.tar.gz or semantics_linux.tar.')
     parser = argparse.ArgumentParser(usage=usage,description=description)
     parser.add_argument('testapp',help='name of the test case (e.g., id1284)')
     parser.add_argument('--deletesemantics',
