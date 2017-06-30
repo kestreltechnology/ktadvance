@@ -31,6 +31,8 @@ import shutil
 
 import advance.util.fileutil as UF
 
+from advance.app.CApplication import CApplication
+
 class FileParseError(Exception):
     def __init__(self,msg):
         self.msg = msg
@@ -72,8 +74,6 @@ class AnalyzerMissingError(Exception):
         self.msg = msg
     def __str__(self):
         return self.msg
-
-from advance.app.CFileApplication import CFileApplication
 
 from advance.bin.AnalysisManager import AnalysisManager
 from advance.bin.Config import Config
@@ -198,10 +198,10 @@ class TestManager():
                 cfilefilename = UF.get_cfile_filename(self.tgtxpath,cfilename)
                 if not os.path.isfile(cfilefilename):
                     raise XmlFileNotFoundError(cfilefilename)
-                capp = CFileApplication(self.sempath,cfilename)
+                capp = CApplication(self.sempath,cfilename=cfilename)
                 am = AnalysisManager(capp,onefile=True)
                 am.create_file_primaryproofobligations(cfilename)
-                ppos = capp.get_ppos()
+                ppos = capp.getsinglefile().get_ppos()
                 for cfun in cfile.getfunctions():
                     fname = cfun.getname()
                     if self.saveref:
@@ -257,20 +257,21 @@ class TestManager():
                 cfilefilename = UF.get_cfile_filename(self.tgtxpath,cfilename)
                 if not os.path.isfile(cfilefilename):
                     raise XmlFileNotFoundError(xfilefilename)
-                capp = CFileApplication(self.sempath,cfilename)
+                cappfile = CApplication(self.sempath,cfilename=cfilename).getsinglefile()
                 def f(fn):
                     fn.updatespos()
                     fn.requestpostconditions()
-                capp.fniter(f)
+                cappfile.fniter(f)
                 def g(fn): fn.savespos()
-                capp.fniter(g)
-                spos = capp.get_spos()
+                cappfile.fniter(g)
+                spos = cappfile.get_spos()
                 if delaytest: continue
                 for cfun in cfile.getfunctions():
                     fname = cfun.getname()
                     if self.saveref:
                         if cfun.hasspos():
-                            print('Spos not created for ' + fname + ' in ' + cfilename + ' (delete first)')
+                            print('Spos not created for ' + fname + ' in ' + cfilename +
+                                      ' (delete first)')
                         else:
                             self.createreferencespos(cfilename,fname,spos[fname])
                     else:
@@ -330,14 +331,14 @@ class TestManager():
             cfilefilename = UF.get_cfile_filename(self.tgtxpath,cfilename)
             if not os.path.isfile(cfilefilename):
                 raise XmlFileNotFoundError(cfilefilename)
-            capp = CFileApplication(self.sempath,cfilename)
+            capp = CApplication(self.sempath,cfilename=cfilename)
             # only generate invariants if required
             if cfile.hasdomains():
                 for d in cfile.getdomains():
                     am = AnalysisManager(capp,onefile=True)
                     am.generate_file_localinvariants(cfilename,d)
                     am.check_file_proofobligations(cfilename)
-            ppos = capp.get_ppos()
+            ppos = capp.getsinglefile().get_ppos()
             for cfun in cfile.getfunctions():
                 fname = cfun.getname()
                 funppos = ppos[fname]
@@ -376,13 +377,14 @@ class TestManager():
                 cfilefilename = UF.get_cfile_filename(self.tgtxpath,cfilename)
                 if not os.path.isfile(cfilefilename):
                     raise XmlFileNotFoundError(cfilefilename)
-                capp = CFileApplication(self.sempath,cfilename)
+                capp = CApplication(self.sempath,cfilename=cfilename)
+                cappfile = capp.getsinglefile()
                 if cfile.hasdomains():
                     for d in cfile.getdomains():
                         am = AnalysisManager(capp,onefile=True)
                         am.generate_file_localinvariants(cfilename,d)
                         am.check_file_proofobligations(cfilename)
-                spos = capp.get_spos()
+                spos = cappfile.get_spos()
                 if delaytest: continue
                 for cfun in cfile.getfunctions():
                     fname = cfun.getname()
