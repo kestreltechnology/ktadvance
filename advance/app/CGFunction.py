@@ -26,8 +26,10 @@
 # ------------------------------------------------------------------------------
 
 from advance.app.CGFunctionArg import CGFunctionArg
-from advance.app.CTType import CTType
 from advance.app.CVarInfo import CVarInfo
+
+import advance.app.CContext as CC
+import advance.app.CTTypeExp as TX
 
 class CGFunction():
     '''Function declaration.'''
@@ -36,7 +38,8 @@ class CGFunction():
         self.cfile = cfile
         self.xnode = xnode
         self.varinfo = CVarInfo(self.cfile,self.xnode.find('svar'))
-        self.returnty = CTType(self.cfile,self.xnode.find('svar').find('vtyp').find('typ'))
+        ctxt = CC.makefilecontext(self.cfile)
+        self.returnty = TX.gettype(ctxt,self.xnode.find('svar').find('vtyp').find('typ'))
         self.args = []
         for a in self.xnode.find('svar').find('vtyp').find('args').findall('arg'):
             self.args.append(CGFunctionArg(self.cfile,a))

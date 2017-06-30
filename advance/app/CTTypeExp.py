@@ -27,10 +27,10 @@
 
 import xml.etree.ElementTree as ET
 
-import advance.app.CExpConst as C
 import advance.app.CExpBase as B
 import advance.app.COffset as O
 import advance.app.CTTypeBase as T
+import advance.app.CExpConst as C
 
 def gettype(ctxt,xnode):
     tag = xnode.get('ttag')
@@ -189,7 +189,7 @@ class CTTypeFunArg():
 class CTTypeFun(T.CTTypeBase):
 
     def __init__(self,ctxt,xnode):
-        T.CTTypeBase.__init__(self,xnode)
+        T.CTTypeBase.__init__(self,ctxt,xnode)
 
     def isfunction(self): return True
 
@@ -245,7 +245,7 @@ class CExpConstant(B.CExpBase):
     def __str__(self): return str(self.getconstant())
         
 
-class CEnumConstant(C.CConstantBase):
+class CEnumConstant(CExpConstant):
 
     def __init__(self,ctxt,xnode):
         C.CConstantBase.__init__(self,ctxt,xnode)

@@ -27,6 +27,12 @@
 
 import xml.etree.ElementTree as ET
 
+def makefilecontext(cfile):
+    return CContext(cfile)
+
+def makefunctioncontext(cfun):
+    return CContext(cfun.cfile, cfun=cfun)
+
 def makecontext(cfun,xnode):
     cfgctxt = []
     expctxt = []
@@ -40,16 +46,22 @@ def makecontext(cfun,xnode):
             expctxt.append((node.get('name'), [ int(node.get('num')) ]))
         else:
             expctxt.append((node.get('name'), []))
-    return CContext(cfun,cfg=cfgctxt,exp=expctxt)
+    return CContext(cfun.cfile,cfun=cfun,cfg=cfgctxt,exp=expctxt)
 
 
 class CContext():
     '''Represents the cfg and expression context for a proof obligation'''
 
-    def __init__(self,cfun,cfg=[],exp=[]):
+    def __init__(self,cfile,cfun=None,cfg=[],exp=[]):
+        self.cfile = cfile
         self.cfun = cfun
         self.cfgctxt = cfg
         self.expctxt = exp
+
+    def isfilecontext(self): return (self.cfun is None)
+
+    def isfunctioncontext(self):
+        return ((not (self.cfun is None)) and len(self.cfg) == 0 and len(self.exp) == 0)
 
     def getcfgcontext(self): return self.cfgctxt
 

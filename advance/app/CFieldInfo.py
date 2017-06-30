@@ -28,8 +28,6 @@
 import xml.etree.ElementTree as ET
 
 from advance.app.CLocation import CLocation
-from advance.app.CTType import CTType
-
 
 class CFieldInfo():
     '''Definition of a struct field.'''

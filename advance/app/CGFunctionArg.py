@@ -25,8 +25,6 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CTType import CTType
-
 class CGFunctionArg():
     '''Function argument.'''
 
@@ -36,4 +34,4 @@ class CGFunctionArg():
 
     def getname(self): return self.xnode.get('aname')
 
-    def gettype(self): return CTType(self.cfile,self.xnode.find('typ'))
+    # def gettype(self): return CTType(self.cfile,self.xnode.find('typ'))

@@ -26,15 +26,18 @@
 # ------------------------------------------------------------------------------
 
 from advance.app.CLocation import CLocation
-from advance.app.CTType import CTType
+
+import advance.app.CContext as CC
+import advance.app.CTTypeExp as TX
 
 class CVarInfo():
     '''Global variable.'''
 
-    def __init__(self,cappfile,xnode,hasglobalid=False):
-        self.cappfile = cappfile       # CApplication / CFile
+    def __init__(self,cfile,xnode,hasglobalid=False):
+        self.cfile = cfile        # CFile
         self.xnode = xnode
-        self.vtype = CTType(self.cappfile,self.xnode.find('vtyp'))
+        ctxt = CC.makefilecontext(self.cfile)
+        self.vtype = TX.gettype(ctxt,self.xnode.find('vtyp'))
         self.location = CLocation(self.xnode.find('vdecl'))
         self.hasglobalid = hasglobalid
 
