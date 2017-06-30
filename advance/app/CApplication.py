@@ -32,19 +32,22 @@ import advance.util.fileutil as UF
 from advance.app.CCompInfo import CCompInfo
 from advance.app.CFile import CFile
 from advance.app.CVarInfo import CVarInfo
+from advance.app.IndexManager import IndexManager
+
 from advance.source.CSrcFile import CSrcFile
 from __builtin__ import file
 
 class CApplication():
     '''Primary access point for source code and analysis results.'''
 
-    def __init__(self,path):
+    def __init__(self,path,cfilename=None):
+        self.singlefile = not (cfilename is None)
         self.path = os.path.join(path,'ktadvance')
         self.srcpath = os.path.join(path,'sourcefiles')
-        self.xnode = UF.get_targetfiles_xnode(self.path)
         self.filenames = {}          # file index -> filename
         self.files = {}              # filename -> CFile
-        self._initialize()
+        self.indexmanager = IndexManager(self.singlefile)
+        self._initialize(cfilename)
 
     def getfilenames(self): return self.filenames.values()
 
@@ -53,6 +56,14 @@ class CApplication():
     def getfiles(self):
 		self._initialize_files()
 		return self.files.values()
+
+    # return file from single-file application
+    def getsinglefile(self):
+        if 0 in self.filenames:
+            return self.files[self.filenames[0]]
+        else:
+            raise Exception('requesting unspecified file from application')
+        
 
     def getfile(self,fname):
         index = self.getfileindex(fname)
@@ -78,10 +89,21 @@ class CApplication():
         def g(fi): fi.fniter(f)
         self.fileiter(g)
 
+    def resolve_vid_function(self,fid,vid):
+        result = self.indexmanager.resolve_vid(fid,vid)
+        if not result is None:
+            tgtfid = result[0]
+            tgtvid = result[1]
+            if tgtfid in self.filenames:
+                filename = self.filenames[tgtfid]
+                self._initialize_file(tgtfid,filename)
+                if not self.files[filename] is None:
+                    return self.files[filename].getfunctionbyindex(vid)
+         
     def getfunctionbyindex(self,index):
         for f in self.files:
-            if f.hasfunctionbyindex(index):
-                return f.getfunctionbyindex(index)
+            if self.files[f].hasfunctionbyindex(index):
+                return self.files[f].getfunctionbyindex(index)
         else:
             print('No function found with index ' + str(index))
             exit(1)
@@ -185,22 +207,34 @@ class CApplication():
         self.fileiter(f)
         return results
 
-    def _initialize(self):
-        for c in self.xnode.findall('c-file'):
-            id = c.get('id')
-            if id is None:
-                print('No id found for ' + c.get('name'))
-            else:
-                self.filenames[int(id)] = c.get('name')
+    def _initialize(self,fname):
+        if fname is None:
+            # read target_files.xml file to retrieve application files
+            tgtxnode = UF.get_targetfiles_xnode(self.path)
+            for c in tgtxnode.findall('c-file'):
+                id = c.get('id')
+                if id is None:
+                    print('No id found for ' + c.get('name'))
+                else:
+                    self.filenames[int(id)] = c.get('name')
+        else:
+            self._initialize_file(0,fname)
+
+        for (fid,fname) in self.filenames.items():
+            self.indexmanager.addfile(self.path,fid,fname)
+            
 
     def _initialize_files(self):
 		for i,f in self.filenames.items(): self._initialize_file(i,f)
 
     def _initialize_file(self,index,fname):
-		if fname in self.files: return
-		cfile = UF.get_cfile_xnode(self.path,fname)
-		if not cfile is None:
-			self.files[fname] = CFile(self,index,cfile)
+        if fname in self.files:
+            return
+
+        cfile = UF.get_cfile_xnode(self.path,fname)
+        if not cfile is None:
+            self.filenames[index] = fname
+            self.files[fname] = CFile(self,index,cfile)
 		
 
         
