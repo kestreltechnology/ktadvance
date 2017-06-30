@@ -47,6 +47,8 @@ class CFunction():
 
     def iterppos(self,f): self.proofs.iterppos(f)
 
+    def getcapp(self): return self.getfile().getcapp()
+
     def getfile(self): return self.cfile
 
     def getname(self):
@@ -82,8 +84,10 @@ class CFunction():
 
     def requestpostconditions(self):
         for r in self.getapi().getpostrequests():
-            tgtfun = self.cfile.getfunctionbyindex(r.getfunctionindex())
-            tgtfun.acceptpostrequest(r,self.getid())
+            tgtfun = self.getcapp().resolve_vid_function(self.cfile.getindex(),r.getfunctionindex())
+            fidtgt = tgtfun.getfile().getindex()
+            vidtgt = self.getcapp().convert_vid(self.cfile.getindex(),self.getid(),fidtgt)
+            tgtfun.acceptpostrequest(r,vidtgt)
 
     def savespos(self): self.proofs.savespos()
 

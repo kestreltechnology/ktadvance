@@ -99,6 +99,9 @@ class CApplication():
                 self._initialize_file(tgtfid,filename)
                 if not self.files[filename] is None:
                     return self.files[filename].getfunctionbyindex(vid)
+
+    def convert_vid(self,fidsrc,vid,fidtgt):
+        return self.indexmanager.convert_vid(fidsrc,vid,fidtgt)
          
     def getfunctionbyindex(self,index):
         for f in self.files:

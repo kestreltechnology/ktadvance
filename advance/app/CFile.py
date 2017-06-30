@@ -61,6 +61,8 @@ class CFile():
 
     def getindex(self): return self.index
 
+    def getcapp(self): return self.capp
+
     def getgxrefs(self):
         self._initializegxrefs()
         return self.gxrefs
