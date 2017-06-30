@@ -65,7 +65,7 @@ class CFunctionReturnsiteSPOs():
         for id in self.spos:
             f(self.spos[id])
 
-    def addspo(self,rv,gvid):
+    def addspo(self,rv,vid):
         print(rv)
         subst = { rv.getfunctionindex(): self.getexp() }
         print(self.getexp())
@@ -75,7 +75,7 @@ class CFunctionReturnsiteSPOs():
         id = self.cspos.idregistry.add('S',h)
         rqid = rv.getid()
         rvspo = CFunctionReturnsiteSPO(self,id,rqid,p)
-        self.spos[(gvid,id)] = rvspo
+        self.spos[(vid,id)] = rvspo
         print(str(self.spos))
 
     def writexml(self,cnode):
@@ -87,10 +87,10 @@ class CFunctionReturnsiteSPOs():
         self.getexp().writexml(enode)
         cnode.extend([ lnode, knode, enode])
         oonode = ET.Element('obligations')
-        for (gvid,spoid) in self.spos:
+        for (vid,spoid) in self.spos:
             onode = ET.Element('obligation')
-            self.spos[(gvid,spoid)].writexml(onode)
-            onode.set('gvid',str(gvid))
+            self.spos[(vid,spoid)].writexml(onode)
+            onode.set('vid',str(vid))
             oonode.append(onode)
         cnode.append(oonode)
 
@@ -99,6 +99,6 @@ class CFunctionReturnsiteSPOs():
             p = obligation.find('predicate')
             pred = P.getpredicate(self.getcontext(),p)
             id = obligation.get('id')
-            gvid = int(obligation.get('gvid'))
+            gvid = int(obligation.get('vid'))
             rqid = obligation.get('rq-id')
             self.spos[(gvid,id)] = CFunctionReturnsiteSPO(self,id,rqid,pred)
