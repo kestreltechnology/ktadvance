@@ -84,31 +84,7 @@ if __name__ == '__main__':
     linker.linkvarinfos()
 
     def savexrefs(f):
-        fidx = f.getindex()
-        cxrefs = linker.getfilecompinfoxrefs(fidx)
-        vxrefs = linker.getfilevarinfoxrefs(fidx)
-        xrefroot = UX.get_xml_header('global-xrefs','global-xrefs')
-        xrefsnode = ET.Element('global-xrefs')
-        xrefroot.append(xrefsnode)
-        cxrefsnode = ET.Element('compinfo-xrefs')
-        vxrefsnode = ET.Element('varinfo-xrefs')
-        xrefsnode.extend([ cxrefsnode, vxrefsnode ])
-        cxrefsnode.set('count',str(len(cxrefs)))
-        vxrefsnode.set('count',str(len(vxrefs)))
-        for ckey in sorted(cxrefs):
-            xref = ET.Element('cxref')
-            xref.set('ckey',str(ckey))
-            xref.set('gckey',str(cxrefs[ckey]))
-            cxrefsnode.append(xref)
-        for vid in sorted(vxrefs):
-            xref = ET.Element('vxref')
-            xref.set('vid',str(vid))
-            xref.set('gvid',str(vxrefs[vid]))
-            vxrefsnode.append(xref)
-        cfilename = f.getfilename()
-        xreffilename = UF.get_cxreffile_filename(capp.getpath(),cfilename)
-        xreffile = open(xreffilename,'w')
-        xreffile.write(UX.doc_to_pretty(ET.ElementTree(xrefroot)))
+        capp.indexmanager.savexrefs(capp.getpath(),f.getfilename(),f.getindex())
 
     capp.fileiter(savexrefs)
     saveglobalcompinfos(capp.getpath(),linker.getglobalcompinfos(),
