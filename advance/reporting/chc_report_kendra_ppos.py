@@ -32,7 +32,7 @@ import advance.util.printutil as UP
 import advance.util.fileutil as UF
 
 from advance.bin.Config import Config
-from advance.app.CFileApplication import CFileApplication
+from advance.app.CApplication import CApplication
 from advance.reporting.ProofObligationDisplay import ProofObligationDisplay
 
 def parse():
@@ -53,14 +53,14 @@ if __name__ == '__main__':
         exit(1)
 
     sempath = os.path.join(cpath,'semantics')
-    cfapp = CFileApplication(sempath,cfilename)
+    cfapp = CApplication(sempath,cfilename)
     cfile = cfapp.getcfile()
     def f(cfun):
         d = ProofObligationDisplay(cfile,cfun);
         print(d.showppos())
         print(d.showspos())
         print(cfun.getapi())
-    cfapp.fniter(f)
+    cfapp.getcfile().fniter(f)
 
 
 
