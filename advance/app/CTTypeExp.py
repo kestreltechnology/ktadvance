@@ -113,7 +113,7 @@ class CTTypePtr(T.CTTypeBase):
     def equal(self,other):
         if T.CTTypeBase.equal(self,other):
             return self.getpointedtotype().expand().equal(
-                other.getpointedtotype().expand().equal())
+                other.getpointedtotype().expand())
         else:
             return False
 

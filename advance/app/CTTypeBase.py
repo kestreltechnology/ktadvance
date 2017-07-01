@@ -70,6 +70,9 @@ class CTTypeBase():
         if t1 is None or t2 is None: return False
         return t1.gettag() == t2.gettag()
 
+    def shallowcompatible(self,other,incompatibles=set([])):
+        return self.equal(other)
+
     def gettypesize(self): return CTTypeSize()
 
     def isvoid(self): return False
@@ -180,13 +183,23 @@ class CTTypeNamed(CTTypeBase):
 
     def expand(self):
         name = self.getname()
-        etype = self.ctxt.getcappfile().getgtype(name)
+        etype = self.ctxt.getfile().getgtype(name)
         if not etype is None:
             return etype.expand()
 
     def equal(self,other):
         if CTTypeBase.equal(self,other):
             return self.expand().equal(other.expand())
+        else:
+            return False
+
+    def shallowcompatible(self,other,incompatibles=set([])):
+        if CTTypeBase.equal(self,other):
+            t1 = self.expand()
+            t2 = self.expand()
+            return t1.shallowcompatible(t2,incompatibles)
+        else:
+            return False
 
     def gettypesize(self):
         t = self.expand()
@@ -213,11 +226,24 @@ class CTTypeComp(CTTypeBase):
     def getglobalkey(self):
         return self.getglobalkey(self.getckey())
 
+    def getcompinfo(self):
+        return self.ctxt.getfile().getcompinfo(self.getckey())
+
     def equal(self,other):
         if CTTypeBase.equal(self,other):
             t = other.expand()
             if self.getfile().getindex() == t.getfile().getindex():
                 self.getckey() == t.getckey()
+
+    def shallowcompatible(self,other,incompatibles=set([])):
+        if CTTypeBase.shallowcompatible(self,other,incompatibles):
+            c1 = self.getcompinfo()
+            c2 = other.getcompinfo()
+            id1 = c1.getid()
+            id2 = c2.getid()
+            if (((id1,id2) in incompatibles) or ((id2,id1) in incompatibles)):
+                return False
+            return c1.isstructurallycompatible(c2)
 
     def gettypesize(self):
         size = CTTypeSize()

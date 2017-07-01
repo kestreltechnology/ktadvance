@@ -25,8 +25,8 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-import advance.app.CTTypeExp
-import advance.app.CContext
+import advance.app.CTTypeExp as TX
+import advance.app.CContext as CC
 
 class CTypeInfo():
     '''Type definition.'''
@@ -39,8 +39,8 @@ class CTypeInfo():
 
     def gettype(self):
         t = self.xnode.find('ttype')
-        ctxt = CContext.makefilecontext(self.cfile)
+        ctxt = CC.makefilecontext(self.cfile)
         if not t is None:
-            return CTTypeExp.gettype(ctxt,t)
+            return TX.gettype(ctxt,t)
         else:
             print('No ttype element found for ' + self.getname())
