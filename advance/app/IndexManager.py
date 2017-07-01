@@ -25,7 +25,10 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import xml.etree.ElementTree as ET
+
 import advance.util.fileutil as UF
+import advance.util.xmlutil as UX
 
 fidvidmax_initial_value = 1000000
 
@@ -87,6 +90,28 @@ class IndexManager():
             if vid in self.vid2gvid[fid]:
                 return self.vid2gvid[fid][vid]
 
+    def get_gckey(self,fid,ckey):
+        if self.issinglefile: return ckey
+        if fid in self.ckey2gckey:
+            if ckey in self.ckey2gckey[fid]:
+                return self.ckey2gckey[fid][ckey]
+
+    def addckey2gckey(self,fid,ckey,gckey):
+        if not fid in self.ckey2gckey:
+            self.ckey2gckey[fid] = {}
+        self.ckey2gckey[fid][ckey] = gckey
+        if not gckey in self.gckey2ckey:
+            self.gckey2ckey[gckey] = {}
+        self.gckey2ckey[gckey][fid] = ckey
+
+    def addvid2gvid(self,fid,vid,gvid):
+        if not fid in self.vid2gvid:
+            self.vid2gvid[fid] = {}
+        self.vid2gvid[fid][vid] = gvid
+        if not gvid in self.gvid2vid:
+            self.gvid2vid[gvid] = {}
+        self.gvid2vid[gvid][fid] = vid
+
     def addfile(self,path,fid,fname):
         xcfile = UF.get_cfile_xnode(path,fname)
         xxreffile = UF.get_cxreffile_xnode(path,fname)
@@ -94,6 +119,33 @@ class IndexManager():
             self._add_xrefs(xxreffile,fid)
         self._add_globaldefinitions(xcfile,fid)
         self.fidvidmax[fid] = fidvidmax_initial_value
+
+    def savexrefs(self,path,fname,fid):
+        xrefroot = UX.get_xml_header('global-xrefs','global-xrefs')
+        xrefsnode = ET.Element('global-xrefs')
+        xrefroot.append(xrefsnode)
+        cxrefsnode = ET.Element('compinfo-xrefs')
+        vxrefsnode = ET.Element('varinfo-xrefs')
+        xrefsnode.extend([ cxrefsnode, vxrefsnode ])
+
+        if fid in self.ckey2gckey:
+            for ckey in sorted(self.ckey2gckey[fid]):
+                xref = ET.Element('cxref')
+                xref.set('ckey',str(ckey))
+                xref.set('gckey',str(self.ckey2gckey[fid][ckey]))
+                cxrefsnode.append(xref)
+        
+        if fid in self.vid2gvid:
+            for vid in sorted(self.vid2gvid[fid]):
+                xref = ET.Element('vxref')
+                xref.set('vid',str(vid))
+                xref.set('gvid',str(self.vid2gvid[fid][vid]))
+                vxrefsnode.append(xref)
+
+        xreffilename = UF.get_cxreffile_filename(path,fname)
+        xreffile = open(xreffilename,'w')
+        xreffile.write(UX.doc_to_pretty(ET.ElementTree(xrefroot)))
+                
 
     def _add_xrefs(self,xnode,fid):
         if not fid in self.ckey2gckey:
