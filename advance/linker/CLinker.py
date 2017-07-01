@@ -110,12 +110,15 @@ class CLinker():
             id = c.getid()
             gckey = self.globalcompinfos[gcomps[id]]
             self.compinfoxrefs[id] = gckey
+            self.capp.indexmanager.addckey2gckey(id[0],id[1],gckey)
 
+        for c in self.compinfos:
+            id = c.getid()
+            gckey = self.globalcompinfos[gcomps[id]]
             if not gckey in self.compinfoinstances:
                 fidx = id[0]
                 xrefs = self.getfilecompinfoxrefs(fidx)
-                self.compinfoinstances[gckey] = CCompInfo(c.cappfile,c.xnode,
-                                                             ckeyxrefs=xrefs)
+                self.compinfoinstances[gckey] = CCompInfo(c.cfile,c.xnode)
                 filename = self.capp.getfilebyindex(id[0]).getfilename()
                 self.sharedinstances[gckey] = [ (filename,c) ]
             else:
@@ -127,7 +130,7 @@ class CLinker():
         for vinfo in self.varinfos:
             name = vinfo.getname()
             if vinfo.getstorage() == 'static': 
-                fileindex = vinfo.cappfile.getindex()
+                fileindex = vinfo.getfile().getindex()
                 name = name + '__file__' + str(fileindex) + '__'
             if not name in globalvarinfos: globalvarinfos[name] = []
             globalvarinfos[name].append(vinfo)
