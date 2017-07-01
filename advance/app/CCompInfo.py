@@ -43,21 +43,21 @@ class CCompInfo():
     with identical observables for all equivalent structs in the application.
     '''
 
-    def __init__(self,cappfile,xnode,ckeyxrefs={}):
-        self.cappfile = cappfile        # CApplication / CFile
+    def __init__(self,cfile,xnode):
+        self.cfile = cfile        # CFile
         self.xnode = xnode
-        self.ckeyxrefs = ckeyxrefs
-        self.fields = {}                # (seqno,name) -> CFieldInfo
+        self.fields = {}        # (seqno,name) -> CFieldInfo
         self.md5hash = ''       # hash of fieldnames to check structural compatibility
         self._initialize()
 
     def _convertkey(self,ckey):
-        if ckey in self.ckeyxrefs: return self.ckeyxrefs[ckey]
-        return ckey
+        return self.cfile.getcapp().get_gckey(self.getfile().getindex(),ckey)
 
-    def getfile(self): return self.cappfile
+    def getfile(self): return self.cfile
 
-    def getkey(self): return self._convertkey(int(self.xnode.get('ckey')))
+    def getkey(self): return int(self.xnode.get('ckey'))
+
+    def getcapp(self): return self.getfile().getcapp()
 
     def isstruct(self):
         if 'cstruct' in self.xnode.attrib:
@@ -65,7 +65,7 @@ class CCompInfo():
         return True
 
     '''The id is a unique combination of file index and comptag (local) key.'''
-    def getid(self): return (self.cappfile.getindex(),self.getkey())
+    def getid(self): return (self.cfile.getindex(),self.getkey())
                                  
     def getname(self): return self.xnode.get('cname')
 

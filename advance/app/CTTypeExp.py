@@ -157,7 +157,7 @@ class CTTypeArray(T.CTTypeBase):
         return False
 
     def writexml(self,cnode):
-        CCTypeBase.writexml(self,cnode)
+        T.CTTypeBase.writexml(self,cnode)
 
     def __str__(self):
         etype = self.getarraybasetype()

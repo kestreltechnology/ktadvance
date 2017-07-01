@@ -29,14 +29,17 @@ import xml.etree.ElementTree as ET
 
 from advance.app.CLocation import CLocation
 
+import advance.app.CContext as CC
+import advance.app.CTTypeExp as TX
+
 class CFieldInfo():
     '''Definition of a struct field.'''
 
     def __init__(self,ccompinfo,xnode):
         self.ccompinfo = ccompinfo
         self.xnode = xnode
-        self.ftype = CTType(self.ccompinfo.cappfile,self.xnode.find('ftyp'),
-                            ckeyxrefs=self.ccompinfo.ckeyxrefs)
+        ctxt = CC.makefilecontext(self.ccompinfo.getfile())
+        self.ftype = TX.gettype(ctxt,self.xnode.find('ftyp'))
         self.location = CLocation(self.xnode.find('floc'))
 
     def getname(self): return self.xnode.get('fname')

@@ -102,6 +102,9 @@ class CApplication():
 
     def convert_vid(self,fidsrc,vid,fidtgt):
         return self.indexmanager.convert_vid(fidsrc,vid,fidtgt)
+
+    def get_gckey(self,fid,ckey):
+        return self.indexmanager.get_gckey(fid,ckey)
          
     def getfunctionbyindex(self,index):
         for f in self.files:

@@ -77,7 +77,7 @@ class CContext():
 
     def getfunction(self): return self.cfun
 
-    def getfile(self): return self.cfun.getfile()
+    def getfile(self): return self.cfile
 
     def getglobalkey(self,localkey): return self.getfile().getglobalkey(localkey)
 

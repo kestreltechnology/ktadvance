@@ -42,11 +42,13 @@ class CVarInfo():
         self.hasglobalid = hasglobalid
 
     '''Globally unique id.'''
-    def getid(self): return (self.cappfile.getindex(),self.getvid())
+    def getid(self): return (self.cfile.getindex(),self.getvid())
 
     def getvid(self): return int(self.xnode.get('vid'))
 
     def getname(self): return self.xnode.get('vname')
+
+    def getfile(self): return self.cfile
 
     def getstorage(self): return self.xnode.get('vstorage','global')
 
