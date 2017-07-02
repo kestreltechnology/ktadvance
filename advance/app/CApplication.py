@@ -63,7 +63,9 @@ class CApplication():
             return self.files[self.filenames[0]]
         else:
             raise Exception('requesting unspecified file from application')
-        
+
+    def getcfile(self):
+        if self.singlefile: return self.getsinglefile()
 
     def getfile(self,fname):
         index = self.getfileindex(fname)

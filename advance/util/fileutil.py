@@ -87,7 +87,7 @@ def get_cxreffile_filename(path,cfilename):
 
 def get_cxreffile_xnode(path,cfilename):
     filename = get_cxreffile_filename(path,cfilename)
-    return get_xnode(filename,'global-xrefs','File with global cross references')
+    return get_xnode(filename,'global-xrefs','File with global cross references',show=False)
 
 # ----------------------------------------------------------------- functions --
 
