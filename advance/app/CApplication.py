@@ -114,7 +114,7 @@ class CApplication():
                 return self.files[f].getfunctionbyindex(index)
         else:
             print('No function found with index ' + str(index))
-            exit(1)
+            # exit(1)
 
     def getcallinstrs(self):
         result = []
