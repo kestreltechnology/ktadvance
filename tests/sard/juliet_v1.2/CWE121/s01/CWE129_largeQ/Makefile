@@ -9,12 +9,12 @@ INCLUDES=-I ../../../testcasesupport
 MAIN=main_linux.c
 MAIN_OBJECT=$(MAIN:.c=.o)
 
-C_SUPPORT_PATH=../../../testcasesupport/
+C_SUPPORT_PATH=
 C_SUPPORT_FILES=$(C_SUPPORT_PATH)io.c $(C_SUPPORT_PATH)std_thread.c
 C_SUPPORT_OBJECTS=io.o std_thread.o
 
 # only grab the .c files without "w32" or "wchar_t" in the name
-C_SOURCES=$(filter-out $(wildcard CWE*w32*.c) $(wildcard CWE*wchar_t*.c),$(wildcard CWE*.c))
+C_SOURCES=$(filter-out $(wildcard CWE*w32*.c) $(wildcard CWE*wchar_t*.c),$(wildcard x*.c))
 C_OBJECTS=$(C_SOURCES:.c=.o)
 
 # only grab the .cpp files without "w32" or "wchar_t" in the name
