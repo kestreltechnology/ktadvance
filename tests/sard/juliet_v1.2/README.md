@@ -71,5 +71,5 @@ To (re)create the semantics_linux.tar.gz file:
 ```
    > python chc_parse_juliet.py [relative-directory-name] --savesemantics
 ```
-    This will create the semantics_linux.tar.gz file, providing all information
-     necessary to perform analysis.
+This will create the semantics_linux.tar.gz file, providing all information
+necessary to perform analysis.
