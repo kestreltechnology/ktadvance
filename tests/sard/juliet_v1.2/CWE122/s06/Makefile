@@ -14,11 +14,11 @@ C_SUPPORT_FILES=$(C_SUPPORT_PATH)io.c $(C_SUPPORT_PATH)std_thread.c
 C_SUPPORT_OBJECTS=io.o std_thread.o
 
 # only grab the .c files without "w32" or "wchar_t" in the name
-C_SOURCES=$(filter-out $(wildcard CWE*w32*.c) $(wildcard CWE*wchar_t*.c),$(wildcard CWE*.c))
+C_SOURCES=$(filter-out $(wildcard x*w32*.c) $(wildcard x*wchar_t*.c),$(wildcard x*.c))
 C_OBJECTS=$(C_SOURCES:.c=.o)
 
 # only grab the .cpp files without "w32" or "wchar_t" in the name
-CPP_SOURCES=$(filter-out $(wildcard CWE*w32*.cpp) $(wildcard CWE*wchar_t*.cpp),$(wildcard CWE*.cpp))
+CPP_SOURCES=$(filter-out $(wildcard x*w32*.cpp) $(wildcard x*wchar_t*.cpp),$(wildcard x*.cpp))
 CPP_OBJECTS=$(CPP_SOURCES:.cpp=.o)
 
 OBJECTS=$(MAIN_OBJECT) $(C_OBJECTS) $(C_SUPPORT_OBJECTS)
