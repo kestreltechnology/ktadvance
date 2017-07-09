@@ -66,8 +66,8 @@ if __name__ == '__main__':
             print('*' * 80)
             exit(1)
 
-        parsemanager = ParseManager(cpath,cpath)
-        testmanager = TestManager(cpath,cpath,testname)
+        #parsemanager = ParseManager(cpath,cpath,verbose=False)
+        testmanager = TestManager(cpath,cpath,testname,verbose=False)
         testmanager.clean()
         try:
             if testmanager.testparser() or UF.unpack_tar_file(cpath):
@@ -77,7 +77,10 @@ if __name__ == '__main__':
                 testmanager.testsevs(delaytest=True)
                 testmanager.testspos()
                 testmanager.testsevs()
-                testmanager.printtestresults()
+                if testmanager.verbose: 
+                    testmanager.printtestresults()
+                else:
+                    testmanager.printtestresultssummary()
             else:
                 print(
                     '\n' + ('*' * 80) + '\nThis test set is not supported on the mac.' +

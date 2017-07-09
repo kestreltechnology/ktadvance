@@ -34,7 +34,7 @@ from advance.bin.Config import Config
 
 class AnalysisManager(object):
 
-    def __init__(self,capp,onefile=False,nofilter=False):
+    def __init__(self,capp,onefile=False,nofilter=False,verbose=True):
         '''Initialize the analyzer location and target file location'''
 
         self.capp = capp                             # CApplication
@@ -44,18 +44,20 @@ class AnalysisManager(object):
         self.canalyzer = self.config.canalyzer
         self.onefile = onefile
         self.nofilter = nofilter
+        self.verbose = verbose
 
     def create_file_primaryproofobligations(self,cfilename):
         try:
-            print('Creating primary proof obligations for ' + cfilename)
+            if self.verbose:print('Creating primary proof obligations for ' + cfilename)
             cmd = [ self.canalyzer, '-summaries', self.chsummaries,
                         '-command', 'primary', '-cfile', cfilename ]
             if self.onefile: cmd.append('-nolinkinfo')
             if self.nofilter: cmd.append('-nofilter')
             cmd.append(self.path)
-            print(str(cmd))
-            result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT)
-            print('\nResult: ' + str(result))
+            if self.verbose: print(str(cmd))
+            result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT) if self.verbose else \
+            subprocess.call(cmd,cwd=self.path,stdout=open(os.devnull, 'w'),stderr=subprocess.STDOUT)
+            if self.verbose: print('\nResult: ' + str(result))
             if result != 0:
                 print('Error in creating primary proof obligations')
                 exit(1)
@@ -65,21 +67,22 @@ class AnalysisManager(object):
             exit(1)
 
     def create_file_secondaryproofobligations(self,cfile):
-        print('Creating secondary proof obligations for ' + cfile.getfilename())
+        if self.verbose: print('Creating secondary proof obligations for ' + cfile.getfilename())
         def createspos(fn):fnupdate.spos()
         cfile.fniter(createspos)
 
     def generate_file_localinvariants(self,cfilename,domains):
         try:
-            print('Generating invariants for ' + cfilename)
+            if self.verbose: print('Generating invariants for ' + cfilename)
             cmd = [ self.canalyzer, '-summaries', self.chsummaries,
                         '-command', 'localinvs', '-cfile', cfilename,
                         '-domains', domains ]
             if self.onefile: cmd.append('-nolinkinfo')
             if self.nofilter: cmd.append('-nofilter')
             cmd.append(self.path)
-            result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT)
-            print('\nResult: ' + str(result))
+            result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT) if self.verbose else \
+            subprocess.call(cmd,cwd=self.path,stdout=open(os.devnull,'w'),stderr=subprocess.STDOUT)
+            if self.verbose: print('\nResult: ' + str(result))
             if result != 0:
                 print('Error in generating invariants')
                 exit(1)
@@ -90,14 +93,15 @@ class AnalysisManager(object):
 
     def check_file_proofobligations(self,cfilename):
         try:
-            print('Checking proof obligations for ' + cfilename)
+            if self.verbose: print('Checking proof obligations for ' + cfilename)
             cmd = [ self.canalyzer, '-summaries', self.chsummaries,
                         '-command', 'check', '-cfile', cfilename ]
             if self.onefile: cmd.append('-nolinkinfo')
             if self.nofilter: cmd.append('-nofilter')
             cmd.append(self.path)
-            result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT)
-            print('\nResult: ' + str(result))
+            result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT) if self.verbose else \
+            subprocess.call(cmd,cwd=self.path,stdout=open(os.devnull,'w'),stderr=subprocess.STDOUT)
+            if self.verbose: print('\nResult: ' + str(result))
             if result != 0:
                 print('Error in checking proof obligations')
                 exit(1)

@@ -110,6 +110,62 @@ class TestResults():
     def add_sevdiscrepancy(self,cfilename,cfun,spo,status):
         self.sevresults[cfilename][cfun.getname()]['discrepancies'].append((spo,status,False))
 
+    def get_summary(self):
+        lines = []
+        header = 'File'.ljust(10) + 'Parsing'.center(15) + 'PPO Gen'.center(15) + \
+        'SPO Gen'.center(15) + 'PPO Results'.center(15) + 'SPO Results'.center(15)
+        lines.append(header)
+        lines.append('-' * 85)
+        for cfile in self.cfiles:
+            cfilename = cfile.getname()
+            cfunctions = cfile.getfunctions()
+            parsingok = ''
+            pposok = 'ok'
+            sposok = ''
+            pevsok = 'ok'
+            sevsok = ''
+            if len(cfunctions) > 0:
+                for cfun in cfunctions:
+                    fname = cfun.getname()
+                    if self.includesparsing:
+                        if self.xfileresults[cfilename]['xffiles'][fname] != 'ok':
+                            parsingok = 'bad'
+                    if self.includesppos:
+                        funresults = self.pporesults[cfilename][fname]
+                        count = funresults['count']
+                        missing = funresults['missingpredicates']
+                        if count != 'ok' or len(missing) > 0:
+                            pposok = 'bad'
+                    if self.includesspos:
+                        funresults = self.sporesults[cfilename][fname]
+                        count = funresults['count']
+                        missing = funresults['missing']
+                        if count != 'ok' or len(missing) > 0 or sposok == 'bad':
+                            sposok = 'bad'
+                        else:
+                            sposok = 'ok'
+                    if self.includespevs:
+                        pevs = self.pevresults[cfilename][fname]['discrepancies']
+                        if len(pevs) != 0 or pevsok == 'bad':
+                            pevsok = 'bad'
+                    if self.includessevs:
+                        sevs = self.sevresults[cfilename][fname]['discrepancies']
+                        if len(sevs) != 0 or sevsok == 'bad':
+                            sevsok = 'bad'
+                        else:
+                            sevsok = 'ok'
+
+            if self.includesparsing:
+                if self.parseresults[cfilename] != 'ok':
+                    parsingok = 'bad'
+                if self.xfileresults[cfilename]['xcfile'] != 'ok':
+                    parsingok = 'bad'
+                if parsingok != 'bad':
+                    parsingok = 'ok'
+
+            lines.append(cfilename.ljust(10) + parsingok.center(15) +  pposok.center(15) + sposok.center(15) + pevsok.center(15) + sevsok.center(15))
+        return '\n'.join(lines)
+
     def __str__(self):
         lines = []
         if self.includesparsing:

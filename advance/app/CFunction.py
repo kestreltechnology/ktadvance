@@ -84,10 +84,12 @@ class CFunction():
 
     def requestpostconditions(self):
         for r in self.getapi().getpostrequests():
-            tgtfun = self.getcapp().resolve_vid_function(self.cfile.getindex(),r.getfunctionindex())
-            fidtgt = tgtfun.getfile().getindex()
-            vidtgt = self.getcapp().convert_vid(self.cfile.getindex(),self.getid(),fidtgt)
-            tgtfun.acceptpostrequest(r,vidtgt)
+            fun = r.getfunctionindex()
+            if fun != None:
+                tgtfun = self.getcapp().resolve_vid_function(self.cfile.getindex(),fun)
+                fidtgt = tgtfun.getfile().getindex()
+                vidtgt = self.getcapp().convert_vid(self.cfile.getindex(),self.getid(),fidtgt)
+                tgtfun.acceptpostrequest(r,vidtgt)
 
     def savespos(self): self.proofs.savespos()
 

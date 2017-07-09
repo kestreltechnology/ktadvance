@@ -50,6 +50,7 @@ def parse():
     parser.add_argument('--saveref',help='save ppo specs',action='store_true')
     parser.add_argument('--savesemantics',help='save tar file with semantics files',
                             action='store_true')
+    parser.add_argument('--verbose',help='print verbose output',action='store_true')
     args = parser.parse_args()
     return args
 
@@ -75,8 +76,8 @@ if __name__ == '__main__':
         print('*' * 80)
         exit(1)
 
-    parsemanager = ParseManager(cpath,cpath)
-    testmanager = TestManager(cpath,cpath,testname,saveref=args.saveref)
+    #parsemanager = ParseManager(cpath,cpath)
+    testmanager = TestManager(cpath,cpath,testname,saveref=args.saveref,verbose=args.verbose)
     testmanager.clean()
     try:
         if testmanager.testparser(savesemantics=args.savesemantics) or UF.unpack_tar_file(cpath):
@@ -86,7 +87,10 @@ if __name__ == '__main__':
             testmanager.testsevs(delaytest=True)
             testmanager.testspos()
             testmanager.testsevs()
-            testmanager.printtestresults()
+            if testmanager.verbose:
+                testmanager.printtestresults()
+            else:
+                testmanager.printtestresultssummary()
         else:
             print(
                 '\n' + ('*' * 80) + '\nThis test set is not supported on the mac.' +
