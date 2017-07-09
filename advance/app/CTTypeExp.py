@@ -143,7 +143,7 @@ class CTTypeArray(T.CTTypeBase):
     def getarraysizeexpr(self):
         xsize = self.xnode.find('exp')
         if not xsize is None:
-            return getexpr(self.ctxt,xsize)
+            return getexp(self.ctxt,xsize)
 
     def equal(self,other):
         if T.CTTypeBase.equal(self,other):
@@ -363,6 +363,17 @@ class CLHostMem(B.CLHostBase):
 
     def getexp(self): return getexp(self.ctxt, self.xnode,subst=self.subst)
 
+    def hashstr(self):
+        return ('hm:' + self.getexp().hashstr())
+
+    def writexml(self,cnode):
+        enode = ET.Element('mem')
+        self.getexp().writexml(enode)
+        cnode.append(enode)
+
+    def __str__(self):
+        return ('(*' + str(self.getexp()) + ')')
+
 
 class CExpSizeOf(B.CExpBase):
 
@@ -371,10 +382,31 @@ class CExpSizeOf(B.CExpBase):
 
     def gettype(self): return gettype(self.ctxt, self.xnode.find('typ'))
 
+    def writexml(self,cnode):
+        B.CExpBase.writexml(self,cnode)
+        tnode = ET.Element('typ')
+        self.gettype().writexml(tnode)
+        cnode.append(tnode)
+
+    def __str__(self):
+        return 'sizeof(' + str(self.gettype()) + ')'
+
 class CExpAddrOf(B.CExpBase):
 
     def __init__(self,ctxt,xnode,subst={}):
         B.CExpBase.__init__(self,ctxt,xnode,subst)
+
+    def getlval(self):
+        return CLval(self.ctxt,self.xnode.find('lval'),self.subst)
+
+    def writexml(self,cnode):
+        B.CExpBase.writexml(self,cnode)
+        lnode = ET.Element('lval')
+        self.getlval().writexml(lnode)
+        cnode.append(lnode)
+
+    def __str__(self):
+        return ('&' + str(self.getlval()))
 
 class CExpStartOf(B.CExpBase):
 
@@ -403,6 +435,9 @@ class CExpSizeOfE(B.CExpBase):
         B.CExpBase.__init__(self,ctxt,xnode,subst)
 
     def getexp(self): return getexp(self.ctxt, self.xnode.find('exp'),self.subst)
+
+    def __str__(self):
+        return ('sizeE(' + str(self.getexp()) + ')')
 
 class CExpSizeOfStr(B.CExpBase):
 
@@ -442,6 +477,28 @@ class CExpBinOp(B.CExpBase):
 
     def __init__(self,ctxt,xnode,subst={}):
         B.CExpBase.__init__(self,ctxt,xnode,subst)
+
+    def getexp1(self): return getexp(self.ctxt,self.xnode.find('exp1'),self.subst)
+
+    def getexp2(self): return getexp(self.ctxt,self.xnode.find('exp2'),self.subst)
+
+    def gettype(self): return gettype(self.ctxt,self.xnode.find('typ'))
+
+    def getbinop(self): return self.xnode.get('binop')
+
+    def writexml(self,cnode):
+        B.CExpBase.writexml(self,cnode)
+        tnode = ET.Element('typ')
+        e1node = ET.Element('exp1')
+        e2node = ET.Element('exp2')
+        self.gettype().writexml(tnode)
+        self.getexp1().writexml(e1node)
+        self.getexp2().writexml(e2node)
+        cnode.extend( [ tnode, e1node, e2node ])
+        cnode.set('binop',self.getbinop())
+
+    def __str__(self):
+        return '(' + str(self.getexp1()) + ' ' + self.getbinop() + ' ' + str(self.getexp2()) + ')'
 
 class CExpCnApp(B.CExpBase):
 
