@@ -34,7 +34,7 @@ from contextlib import contextmanager
 import advance.util.fileutil as UF
 
 from advance.bin.Config import Config
-from advance.app.CFileApplication import CFileApplication
+from advance.app.CApplication import CApplication
 from advance.bin.AnalysisManager import AnalysisManager
 
 def parse():
@@ -50,6 +50,8 @@ def parse():
     parser.add_argument('path',help='directory that holds the semantics directory for the c file')
     parser.add_argument('cfile',help='c filename')
     parser.add_argument('--continueanalysis',help='continue with existing results',action='store_true')
+    parser.add_argument('--wordsize',help='wordsize of target platform (e.g. 32 or 64)',
+                            type=int,default=0)
     args = parser.parse_args()
     return args
 
@@ -86,7 +88,7 @@ if __name__ == '__main__':
             print('*' * 80)
             exit(1)
 
-    capp = CFileApplication(semdir,cfilename)
+    capp = CApplication(semdir,cfilename)
     ktadvpath = capp.getpath()
     xfilename = UF.get_cfile_filename(ktadvpath,cfilename)
     if not os.path.isfile(xfilename):
@@ -97,7 +99,7 @@ if __name__ == '__main__':
         print('*' * 80)
         exit(1)
     
-    am = AnalysisManager(capp,onefile=True)
+    am = AnalysisManager(capp,onefile=True,wordsize=int(args.wordsize))
 
     if not args.continueanalysis:
         with timing('creating primary proof obligations'):
