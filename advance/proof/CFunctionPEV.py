@@ -41,9 +41,11 @@ class CFunctionPEV():
     def getdischargemethod(self): return self.xnode.get('dk')
 
     def getdisplayprefix(self):
+        if self.isdeadcode(): return '<D>'
         if self.isviolation(): return '<*>'
         if self.isdelegatedtopost(): return '<?>'
         if self.isdelegatedtoapi(): return '<A>'
+        if self.isdelegatedtoglobal(): return '<G>'
         d = self.getdischargemethod()
         if d == 'local': return ' L '
         if d == 'stmt': return ' S '
@@ -57,6 +59,14 @@ class CFunctionPEV():
             apiid = self.xnode.find('aa').find('a').get('api-id')
             if apiid[0] == 'A': return 'api'
             if apiid[0] == 'R': return 'post'
+            if apiid[0] == 'G': return 'global'
+
+    def getapiassumptionid(self):
+        if self.isdelegatedtoapi():
+            return self.xnode.find('aa').find('a').get('api-id')
+
+    def isdeadcode(self):
+        return self.getdischargemethod() == 'deadcode'
 
     def isdelegated(self):
         return (not self.xnode.find('aa') is None)
@@ -66,6 +76,9 @@ class CFunctionPEV():
 
     def isdelegatedtopost(self):
         return self.isdelegated() and (self.getassumptiontype() == 'post')
+
+    def isdelegatedtoglobal(self):
+        return self.isdelegated() and (self.getassumptiontype() == 'global')
 
     def isviolation(self):
         return ('violation' in self.xnode.attrib and
@@ -79,3 +92,6 @@ class CFunctionPEV():
         if self.isviolation(): return 'violation'
         if self.isdelegatedtoapi(): return 'deferred:api'
         if self.isdelegatedtopost(): return 'deferred:post'
+
+    def __str__(self):
+        return (str(self.getppo()) + ': ' + self.getevidence())
