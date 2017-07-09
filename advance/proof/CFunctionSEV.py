@@ -43,6 +43,7 @@ class CFunctionSEV():
         if self.isviolation(): return '<*>'
         if self.isdelegatedtopost(): return '<?>'
         if self.isdelegatedtoapi(): return '<A>'
+        if self.isdelegatedtoglobal(): return '<G>'
         d = self.getdischargemethod()
         if d == 'local': return ' L '
         if d == 'stmt': return ' S '
@@ -56,6 +57,8 @@ class CFunctionSEV():
             apiid = self.xnode.find('aa').find('a').get('api-id')
             if apiid[0] == 'A': return 'api'
             if apiid[0] == 'R': return 'post'
+            if apiid[0] == 'G': return 'global'
+            return apiid
 
     def isdelegated(self):
         return (not self.xnode.find('aa') is None)
@@ -65,6 +68,9 @@ class CFunctionSEV():
 
     def isdelegatedtopost(self):
         return self.isdelegated() and (self.getassumptiontype() == 'post')
+
+    def isdelegatedtoglobal(self):
+        return self.isdelegated() and (self.getassumptiontype() == 'global')
 
     def isviolation(self):
         return ('violation' in self.xnode.attrib and
