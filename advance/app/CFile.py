@@ -158,9 +158,9 @@ class CFile():
         if index in self.functions:
             return self.functions[index]
         else:
-            print('Unable to find function with vid ' + str(index))
-            exit(1)
-
+            print 'Unable to find function with global vid ' + str(index)
+            #raise FunctionMissingError('Unable to find function with global vid ' + str(index))
+            
     def hasfunctionbyindex(self,index):
         self._initialize_functions()
         return index in self.functions

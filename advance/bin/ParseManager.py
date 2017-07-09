@@ -38,7 +38,7 @@ import advance.util.xmlutil as UX
 class ParseManager():
     '''Utility functions to support preprocessing and parsing source code.'''
 
-    def __init__(self,cpath,tgtpath,nofilter=False,posix=False):
+    def __init__(self,cpath,tgtpath,nofilter=False,posix=False,verbose=True):
         '''Initialize paths to code, results, and parser executable.
 
         Args:
@@ -56,6 +56,7 @@ class ParseManager():
         self.tgtxpath = os.path.join(self.sempath,'ktadvance')
         self.tgtspath = os.path.join(self.sempath,'sourcefiles')   # for .c and .i files
         self.config = Config()
+        self.verbose = verbose
 
     def getsempath(self): return self.sempath
 
@@ -69,9 +70,9 @@ class ParseManager():
         if os.path.isfile(tarfilename): os.remove(tarfilename)
         if os.path.isfile(tarfilename + '.gz'): os.remove(tarfilename + '.gz')
         tarcmd = [ 'tar', '-cf' , tarfilename , 'semantics']
-        subprocess.call(tarcmd,cwd=self.cpath,stderr=subprocess.STDOUT)
+        subprocess.call(tarcmd,cwd=self.cpath,stderr=subprocess.STDOUT) if self.verbose else subprocess.call(tarcmd,cwd=self.cpath,stdout=open(os.devnull,'w'), stderr=subprocess.STDOUT)
         gzipcmd = [ 'gzip', tarfilename ]
-        subprocess.call(gzipcmd,cwd=self.cpath,stderr=subprocess.STDOUT)
+        subprocess.call(gzipcmd,cwd=self.cpath,stderr=subprocess.STDOUT) if self.verbose else subprocess.call(tarcmd,cwd=self.cpath,stdout=open(os.devnull,'w'), stderr=subprocess.STDOUT)
 
     def preprocess_file_withgcc(self,cfilename,copyfiles=True):
         '''Invoke gcc preprocessor on c source file.
@@ -92,9 +93,9 @@ class ParseManager():
         cmd = [ 'gcc', '-fno-inline', '-fno-builtin', '-E', '-g',
                 '-o', ifilename, cfilename ]
         if mac: cmd = cmd[:1] + macoptions + cmd[1:]
-        print('Preprocess file: ' + str(cmd))
-        p = subprocess.call(cmd,cwd=self.cpath,stderr=subprocess.STDOUT)
-        print('Result: ' + str(p))
+        if self.verbose: print('Preprocess file: ' + str(cmd))
+        p = subprocess.call(cmd,cwd=self.cpath,stderr=subprocess.STDOUT) if self.verbose else subprocess.call(cmd,cwd=self.cpath,stdout=open(os.devnull,'w'),stderr=subprocess.STDOUT)
+        if self.verbose: print('Result: ' + str(p))
         if copyfiles:
             tgtcfilename = os.path.join(self.tgtspath,cfilename)
             tgtifilename = os.path.join(self.tgtspath,ifilename)
@@ -116,9 +117,9 @@ class ParseManager():
             return filename
         
     def preprocess(self,ccommand,copyfiles=True):
-        print('\n\n' + ('=' * 80))
-        print('***** ' + ccommand['file'] + ' *****')
-        print('=' * 80)
+        if self.verbose: print('\n\n' + ('=' * 80))
+        if self.verbose: print('***** ' + ccommand['file'] + ' *****')
+        if self.verbose: print('=' * 80)
         for p in ccommand:
             print(p + ': ' + ccommand[p])
         command = shlex.split(ccommand['command'],self.posix)
@@ -142,12 +143,12 @@ class ParseManager():
             ecommand.append('-fno-inline')
             ecommand.append('-fno-builtin')
             ecommand.append('-fno-asm')
-            print('\nIssue command: ' + str(ecommand) + '\n')
-            p = subprocess.call(ecommand,cwd=ccommand['directory'],stderr=subprocess.STDOUT)
-            print('result: ' + str(p))
-            print('\nIssue original command: ' + str(command) + '\n')
-            p = subprocess.call(command,cwd=ccommand['directory'],stderr=subprocess.STDOUT)
-            print('result: ' + str(p))
+            if self.verbose: print('\nIssue command: ' + str(ecommand) + '\n')
+            p = subprocess.call(ecommand,cwd=ccommand['directory'],stderr=subprocess.STDOUT) if self.verbose else subprocess.call(ecommand,cwd=ccommand['directory'],stdout=open(os.devnull, 'w'),stderr=subprocess.STDOUT)
+            if self.verbose: print('result: ' + str(p))
+            if self.verbose: print('\nIssue original command: ' + str(command) + '\n')
+            p = subprocess.call(command,cwd=ccommand['directory'],stderr=subprocess.STDOUT) if self.verbose else subprocess.call(command,cwd=ccommand['directory'],stdout=open(os.devnull, 'w'),stderr=subprocess.STDOUT)
+            if self.verbose: print('result: ' + str(p))
             if copyfiles:
                 tgtcfilename = os.path.join(self.tgtspath,self.normalizefilename(cfilename))
                 tgtifilename = os.path.join(self.tgtspath,self.normalizefilename(ifilename))
@@ -175,19 +176,19 @@ class ParseManager():
             command.append(ifilename)
             cfilelen = self.getfilelength(cfilename)
             cfiles[cfilename] = cfilelen
-            print('\nRun the parser: ' + str(command) + '\n')
-            subprocess.call(command)
-            print('\n' + ('-' * 80) + '\n\n')
+            if self.verbose : print('\nRun the parser: ' + str(command) + '\n')
+            subprocess.call(command) if self.verbose else subprocess.call(command,stdout=open(os.devnull,'w'))
+            if self.verbose: print('\n' + ('-' * 80) + '\n\n')
         tgtroot = UX.get_xml_header('target_files','c-files')
         cfilesnode = ET.Element('c-files')
         tgtroot.append(cfilesnode)
-        print('\n\nCollect c files')
+        if self.verbose:print('\n\nCollect c files')
         cfilesnode.set('count',str(len(cfiles)))
         counter = 1
         for n in cfiles:
             n = os.path.abspath(n)
             name = self.normalizefilename(n)
-            print('   Add ' + name + ' (' + str(cfiles[n]) + ' lines)')
+            if self.verbose:print('   Add ' + name + ' (' + str(cfiles[n]) + ' lines)')
             cfile = ET.Element('c-file')
             cfile.set('name',name)
             cfile.set('id',str(counter))
@@ -197,7 +198,7 @@ class ParseManager():
         tgtfile = open(tgtfilename,'w')
         tgtfile.write(UX.doc_to_pretty(ET.ElementTree(tgtroot)))
         linecount = sum(cfiles[n] for n in cfiles)
-        print('\nTotal ' + str(len(cfiles)) + ' files (' + str(linecount) + ' lines)')
+        if self.verbose: print('\nTotal ' + str(len(cfiles)) + ' files (' + str(linecount) + ' lines)')
         os.chdir(self.cpath)
         shutil.copy('compile_commands.json',self.tgtspath)
         
@@ -214,8 +215,8 @@ class ParseManager():
         ifilename = os.path.join(self.cpath,ifilename)
         cmd = [ self.config.cparser, '-projectpath', self.cpath,
                 '-targetdirectory', self.tgtxpath, ifilename ]
-        print('Parse file: ' + str(cmd))
-        p = subprocess.call(cmd,stderr=subprocess.STDOUT)
+        if self.verbose: print('Parse file: ' + str(cmd))
+        p = subprocess.call(cmd,stderr=subprocess.STDOUT) if self.verbose else subprocess.call(cmd,stdout=open(os.devnull,'w'),stderr=subprocess.STDOUT)
         return p
         
 
