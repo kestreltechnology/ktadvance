@@ -60,6 +60,8 @@ class CExpBase():
 
     def equal(self,other): return self.gettag() == other.gettag()
 
+    def equalvalue(self,other): return False
+
     def isconstantstring(self): return False
 
     def isconstantvalue(self): return False
