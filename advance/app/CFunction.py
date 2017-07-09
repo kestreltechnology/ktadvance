@@ -47,6 +47,8 @@ class CFunction():
 
     def iterppos(self,f): self.proofs.iterppos(f)
 
+    def itercallsites(self,f): self.proofs.itercallsites(f)
+
     def getcapp(self): return self.getfile().getcapp()
 
     def getfile(self): return self.cfile
@@ -77,6 +79,8 @@ class CFunction():
     def getcallinstrs(self): return self.body.getcallinstrs()
 
     def getproofs(self): return self.proofs
+
+    def getcallsitespos(self): return self.proofs.getspos
 
     def updatespos(self): self.proofs.updatespos()
 
