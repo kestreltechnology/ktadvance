@@ -27,37 +27,51 @@
 
 import advance.util.printutil as UP
 
+dischargemethods = [ 'deadcode', 'stmt', 'local', 'api', 'post', 'open' ]
+
 class ProofObligationResults():
 
     def __init__(self,results):
         self.results = results      # tag -> method -> count
+        self.taglen = 24
 
     def report(self):
-        taglen = 24
         lines = []
         def sz(s):
             l = len(s)
             if l > 5:return l
             return 6
         methods = self._getmethods()
-        lines.append((' ' * taglen) + '  '.join(UP.rjust(m,sz(m)) for m in methods) + 
-                     '     ' + 'total')
+        lines.append(self.getheaderline(self.taglen))
         lines.append('-' * 80)
         for tag in sorted(self.results):
             linetotal = sum(self._getcount(tag,m) for m in methods)
             line = '  '.join(UP.rjust(str(self._getcount(tag,m)),sz(m)) for m in methods)
-            lines.append(UP.ljust(tag,taglen) + line + '  ' + UP.rjust(str(linetotal),8))
+            lines.append(UP.ljust(tag,self.taglen) + line + '  ' + UP.rjust(str(linetotal),8))
         lines.append('-' * 80)
         mtotal = '  '.join(UP.rjust(str(sum(self._getcount(tag,m) 
                                             for tag in self.results)),sz(m))
                                             for m in methods)
         total = sum(sum(self._getcount(tag,m) for m in self.results[tag]) for tag in self.results)
-        mperc = '  '.join(UP.rjust('{:6.2f}'.format(float(sum(self._getcount(tag,m)
-                                                     for tag in self.results)/float(total))),sz(m))
-                              for m in methods)
-        lines.append(UP.ljust('total',taglen) + mtotal + '  ' + UP.rjust(str(total),8))
-        lines.append(UP.ljust('perc',taglen) + mperc)
+        mperc = '  '.join(UP.rjust('{:6.1f}'.format(float(sum(self._getcount(tag,m) for tag in self.results)/float(total)) * 100.0),sz(m)) for m in methods)
+        lines.append(UP.ljust('total',self.taglen) + mtotal + '  ' + UP.rjust(str(total),8))
+        lines.append(UP.ljust('percentage',self.taglen) + mperc)
+        lines.append('-' * 80)
         return '\n'.join(lines)
+
+    def getheaderline(self,prefixlen):
+        return ((' ' * prefixlen) + '  '.join(m.rjust(6) for m in self._getmethods()) +
+                    '  ' + 'total'.rjust(8))
+
+    def summarytotalline(self):
+        methods = self._getmethods()
+        total = sum(sum(self._getcount(tag,m) for m in self.results[tag]) for tag in self.results)
+        mtotal = '  '.join(UP.rjust(str(sum(self._getcount(tag,m) 
+                                            for tag in self.results)),6)
+                                            for m in methods)
+        mtotal += '  ' + UP.rjust(str(total),8)
+        return mtotal
+
 
     def _getcount(self,tag,m):
         if tag in self.results:
@@ -65,11 +79,6 @@ class ProofObligationResults():
                 return self.results[tag][m]
         return 0
 
-    def _getmethods(self):
-        methods = []
-        for tag in self.results:
-            for m in self.results[tag]:
-                if not m in methods: methods.append(m)
-        return methods
+    def _getmethods(self): return dischargemethods
 
             
