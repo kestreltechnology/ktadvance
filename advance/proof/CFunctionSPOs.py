@@ -66,6 +66,10 @@ class CFunctionSPOs():
             print('No spo found with id ' + str(id))
             exit(1)
 
+    def itercallsites(self,f):
+        for cs in sorted(self.callsitespos.values(),key=lambda(p):(p.getline())):
+            f(cs)
+
     def iter(self,f):
         for cs in sorted(self.callsitespos.values(),key=lambda(p):(p.getline())):
             cs.iter(f)
