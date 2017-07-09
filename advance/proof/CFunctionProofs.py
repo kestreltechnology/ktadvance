@@ -105,6 +105,10 @@ class CFunctionProofs():
         self._getpevs()
         self.pevs.iter(f)
 
+    def itercallsites(self,f):
+        self._getspos()
+        self.spos.itercallsites(f)
+
     def get_ppos(self):
         result = []
         def f(ppo): result.append(ppo)
