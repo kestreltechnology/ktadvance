@@ -47,6 +47,8 @@ class CApplication():
         self.filenames = {}          # file index -> filename
         self.files = {}              # filename -> CFile
         self.indexmanager = IndexManager(self.singlefile)
+        self.callgraph = {}     # (fid,vid) -> (callsitespos, (tgtfid,tgtvid))
+        self.revcallgraph = {}  # (tgtfid,tgtvid) -> ((fid,vid),callsitespos)
         self._initialize(cfilename)
 
     def getfilenames(self): return self.filenames.values()
@@ -84,6 +86,13 @@ class CApplication():
     def getsrcfile(self,fname):
         return CSrcFile(self,os.path.join(self.srcpath,fname))
 
+    '''return a list of ((fid,vid),callsitespos). '''
+    def getcallsites(self,fid,vid):
+        self._initializecallgraphs()
+        if (fid,vid) in self.revcallgraph:
+            return self.revcallgraph[(fid,vid)]
+        return []
+
     def fileiter(self,f):
         for file in self.getfiles(): f(file)
 
@@ -100,7 +109,7 @@ class CApplication():
                 filename = self.filenames[tgtfid]
                 self._initialize_file(tgtfid,filename)
                 if not self.files[filename] is None:
-                    return self.files[filename].getfunctionbyindex(vid)
+                    return self.files[filename].getfunctionbyindex(tgtvid)
 
     def convert_vid(self,fidsrc,vid,fidtgt):
         return self.indexmanager.convert_vid(fidsrc,vid,fidtgt)
@@ -178,13 +187,14 @@ class CApplication():
         self.fileiter(f)
         return results
 
-    def get_ppo_results(self):
+    def get_ppo_results(self,filefilterout=[]):
         results = {}
         def add(t,m,v):
             if not t in results: results[t] = {}
             if not m in results[t]: results[t][m] = 0
             results[t][m] += v
         def f(file):
+            if file.getfilename() in filefilterout: return
             fileresults = file.get_ppo_results()
             for tag in fileresults:
                 for m in fileresults[tag]:
@@ -220,7 +230,7 @@ class CApplication():
             # read target_files.xml file to retrieve application files
             tgtxnode = UF.get_targetfiles_xnode(self.path)
             for c in tgtxnode.findall('c-file'):
-                id = c.get('id')
+                id = int(c.get('id'))
                 if id is None:
                     print('No id found for ' + c.get('name'))
                 else:
@@ -243,6 +253,25 @@ class CApplication():
         if not cfile is None:
             self.filenames[index] = fname
             self.files[fname] = CFile(self,index,cfile)
+
+    def _initializecallgraphs(self):
+        if len(self.callgraph) > 0: return
+        def collectcallers(fn):
+            fid = fn.getfile().getindex()
+            vid = fn.getid()
+            def g(cs):
+                fundef = self.indexmanager.resolve_vid(fid,cs.getcalleeid())
+                if not fundef is None:
+                    if not (fid,vid) in self.callgraph:
+                        self.callgraph[(fid,vid)] = []
+                    self.callgraph[(fid,vid)].append((cs,fundef))
+            fn.itercallsites(g)
+        self.functioniter(collectcallers)
+
+        for s in self.callgraph:
+            for (cs,t) in self.callgraph[s]:
+                if not t in self.revcallgraph: self.revcallgraph[t] = []
+                self.revcallgraph[t].append((s,cs))
 		
 
         
