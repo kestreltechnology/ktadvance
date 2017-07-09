@@ -50,6 +50,8 @@ class CFunctionCallsiteSPOs():
         self.args = []
         self._initialize()
 
+    def getcalleeid(self): return self.calleeid
+
     def getlocation(self): return self.location
 
     def getline(self): return self.location.getline()
@@ -61,7 +63,8 @@ class CFunctionCallsiteSPOs():
     def getargs(self): return self.args
 
     def update(self):
-        calleefun = self.cfun.cfile.capp.getfunctionbyindex(self.calleeid)
+        cfile = self.cfun.cfile
+        calleefun = self.cfun.cfile.capp.resolve_vid_function(cfile.getindex(),self.calleeid)
         if calleefun is None:
             print('*' * 80)
             print('No semantics available for external function ' + self.callee)
@@ -126,4 +129,5 @@ class CFunctionCallsiteSPOs():
             apiid = obligation.get('api-id')
             self.spos[apiid] = CFunctionCallsiteSPO(self,id,apiid,pred)
         for a in self.xnode.find('args').findall('arg'):
-            self.args.append(TX.getexp(self.getcontext(),a))
+            arg = TX.getexp(self.getcontext(),a)
+            self.args.append(arg)
