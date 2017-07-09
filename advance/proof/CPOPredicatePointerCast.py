@@ -25,6 +25,8 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import xml.etree.ElementTree as ET
+
 import advance.app.CTTypeExp as TX
 
 from advance.proof.CPOPredicate import CPOPredicate
@@ -42,6 +44,17 @@ class CPOPredicatePointerCast(CPOPredicate):
 
     def getexp(self):
         return TX.getexp(self.ctxt,self.xnode.find('exp'),self.subst)
+
+    def writexml(self,cnode):
+        CPOPredicate.writexml(self,cnode)
+        fnode = ET.Element('tfrom')
+        tnode = ET.Element('tto')
+        enode = ET.Element('exp')
+        self.getfromtype().writexml(fnode)
+        self.gettotype().writexml(tnode)
+        self.getexp().writexml(enode)
+        cnode.extend([ fnode, tnode, enode ])
+
 
     def __str__(self): 
         return ('pointer-cast(' + str(self.getexp()) + ', from:' + str(self.getfromtype()) + 
