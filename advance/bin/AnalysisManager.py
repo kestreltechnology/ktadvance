@@ -34,7 +34,7 @@ from advance.bin.Config import Config
 
 class AnalysisManager(object):
 
-    def __init__(self,capp,onefile=False,nofilter=False):
+    def __init__(self,capp,onefile=False,nofilter=False,wordsize=0,unreachability=False):
         '''Initialize the analyzer location and target file location'''
 
         self.capp = capp                             # CApplication
@@ -44,6 +44,8 @@ class AnalysisManager(object):
         self.canalyzer = self.config.canalyzer
         self.onefile = onefile
         self.nofilter = nofilter
+        self.wordsize = wordsize
+        self.unreachability = unreachability # use unreachability as justification for discharge
 
     def create_file_primaryproofobligations(self,cfilename):
         try:
@@ -52,6 +54,7 @@ class AnalysisManager(object):
                         '-command', 'primary', '-cfile', cfilename ]
             if self.onefile: cmd.append('-nolinkinfo')
             if self.nofilter: cmd.append('-nofilter')
+            if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
             cmd.append(self.path)
             print(str(cmd))
             result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT)
@@ -77,6 +80,7 @@ class AnalysisManager(object):
                         '-domains', domains ]
             if self.onefile: cmd.append('-nolinkinfo')
             if self.nofilter: cmd.append('-nofilter')
+            if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
             cmd.append(self.path)
             result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT)
             print('\nResult: ' + str(result))
@@ -95,6 +99,8 @@ class AnalysisManager(object):
                         '-command', 'check', '-cfile', cfilename ]
             if self.onefile: cmd.append('-nolinkinfo')
             if self.nofilter: cmd.append('-nofilter')
+            if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
+            if self.unreachability: cmd.append('-unreachability')
             cmd.append(self.path)
             result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT)
             print('\nResult: ' + str(result))
