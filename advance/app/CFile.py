@@ -56,19 +56,11 @@ class CFile():
         self.functions = {}         # vid -> CFunction
         self.functionnames = {}     # functionname -> vid
         self.strings = {}           # string-index -> (len,string)
-        self.gxrefs = None          # CGXrefs 
         self.sourcefile = None      # CSrcFile
 
     def getindex(self): return self.index
 
     def getcapp(self): return self.capp
-
-    def getgxrefs(self):
-        self._initializegxrefs()
-        return self.gxrefs
-
-    def getglobalkey(self,localkey):
-        return self.getgxrefs().getglobalkey(localkey)
 
     def getfilename(self): return self.xnode.get('filename')
 
@@ -163,22 +155,15 @@ class CFile():
 
     def getfunctionbyindex(self,index):
         self._initialize_functions()
-        self._initializegxrefs()
-        for vid in self.functions:
-            if self.gxrefs.getglobalvid(vid) == index:
-                return self.functions[vid]
+        if index in self.functions:
+            return self.functions[index]
         else:
-            print('Unable to find function with global vid ' + str(index))
-            exit(1)
-
+            print 'Unable to find function with global vid ' + str(index)
+            #raise FunctionMissingError('Unable to find function with global vid ' + str(index))
+            
     def hasfunctionbyindex(self,index):
         self._initialize_functions()
-        self._initializegxrefs()
-        for vid in self.functions:
-            if self.gxrefs.getglobalvid(vid) == index:
-                return True
-        else:
-            return False
+        return index in self.functions
 
     def getfunctions(self):
         self._initialize_functions()
@@ -198,6 +183,21 @@ class CFile():
         def f(fn):
             result[fn.getname()] = fn.get_ppos()
         self.fniter(f)
+        return result
+
+    def get_line_ppos(self):
+        result = {}
+        fnppos = self.get_ppos()
+        for fn in fnppos:
+            for ppo in fnppos[fn]:
+                line = ppo.getline()
+                pred = ppo.getpredicatetag()
+                if not line in result: result[line] = {}
+                if not pred in result[line]:
+                    result[line][pred] = {}
+                    result[line][pred]['function'] = fn
+                    result[line][pred]['ppos'] = []
+                result[line][pred]['ppos'].append(ppo)
         return result
 
     def get_spos(self):
@@ -326,9 +326,4 @@ class CFile():
     def _initializesource(self):
         if self.sourcefile is None:
             self.sourcefile = self.capp.getsrcfile(self.getfilename())
-
-    def _initializegxrefs(self):
-        if self.gxrefs is None:
-            gxrefsx = UF.get_cxreffile_xnode(self.capp.path,self.getfilename())
-            self.gxrefs = CGXrefs(self,gxrefsx)
 

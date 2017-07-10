@@ -92,13 +92,14 @@ class TestManager():
                  overwrites the json file with the result
     '''
 
-    def __init__(self,cpath,tgtpath,testname,saveref=False):
+    def __init__(self,cpath,tgtpath,testname,saveref=False,verbose=True):
         self.cpath = cpath
         self.tgtpath = tgtpath
         self.saveref = saveref
         self.config = Config()
         self.ismac = self.config.platform == 'mac'
-        self.parsemanager = ParseManager(self.cpath,self.tgtpath)
+        self.verbose = verbose
+        self.parsemanager = ParseManager(self.cpath,self.tgtpath,verbose=self.verbose)
         self.sempath = self.parsemanager.getsempath()
         self.tgtxpath = self.parsemanager.gettgtxpath()
         self.tgtspath = self.parsemanager.gettgtspath()
@@ -109,6 +110,8 @@ class TestManager():
     def gettestresults(self): return self.testresults
 
     def printtestresults(self): print(str(self.testresults))
+
+    def printtestresultssummary(self): print(str(self.testresults.get_summary()))
  
     def testparser(self,savesemantics=False):
         if self.ismac and self.testsetref.islinuxonly():
@@ -116,7 +119,7 @@ class TestManager():
         self.testresults.set_parsing()
         self.clean()
         self.parsemanager.initializepaths()
-        print('\nParsing files\n' + ('-' * 80))
+        if self.verbose: print('\nParsing files\n' + ('-' * 80))
         for cfile in self.getcfiles():
             cfilename = cfile.getname()
             ifilename = self.parsemanager.preprocess_file_withgcc(cfilename,copyfiles=True)
@@ -152,7 +155,7 @@ class TestManager():
             if not context in d:
                 self.testresults.add_missingppo(cfilename,cfun,context,p)
                 for c in d:
-                    print(str(c))
+                    if self.verbose: print(str(c))
                 raise FunctionPPOError(cfilename + ':' + cfun + ':' + ' Missing ppo: ' + str(context))
             else:
                 if not p in d[context]:
@@ -199,7 +202,7 @@ class TestManager():
                 if not os.path.isfile(cfilefilename):
                     raise XmlFileNotFoundError(cfilefilename)
                 capp = CApplication(self.sempath,cfilename=cfilename)
-                am = AnalysisManager(capp,onefile=True)
+                am = AnalysisManager(capp,onefile=True,verbose=self.verbose)
                 am.create_file_primaryproofobligations(cfilename)
                 ppos = capp.getsinglefile().get_ppos()
                 for cfun in cfile.getfunctions():
@@ -240,7 +243,7 @@ class TestManager():
             if not context in d:
                 self.testresults.add_missingspo(cfilename,cfun,context,p)
                 for c in d:
-                    print(str(c))
+                    if self.verbose: print(str(c))
                 raise FunctionSPOError(cfilename + ':' + cfun + ':' + ' Missing spo: ' + str(context))
             else:
                 if not p in d[context]:
@@ -335,7 +338,7 @@ class TestManager():
             # only generate invariants if required
             if cfile.hasdomains():
                 for d in cfile.getdomains():
-                    am = AnalysisManager(capp,onefile=True)
+                    am = AnalysisManager(capp,onefile=True,verbose=self.verbose)
                     am.generate_file_localinvariants(cfilename,d)
                     am.check_file_proofobligations(cfilename)
             ppos = capp.getsinglefile().get_ppos()
@@ -381,7 +384,7 @@ class TestManager():
                 cappfile = capp.getsinglefile()
                 if cfile.hasdomains():
                     for d in cfile.getdomains():
-                        am = AnalysisManager(capp,onefile=True)
+                        am = AnalysisManager(capp,onefile=True,verbose=self.verbose)
                         am.generate_file_localinvariants(cfilename,d)
                         am.check_file_proofobligations(cfilename)
                 spos = cappfile.get_spos()
@@ -403,10 +406,10 @@ class TestManager():
         for cfilename in self.getcfilenames():
             cfilename = os.path.join(self.cpath,cfilename)[:-2] + '.i'
             if os.path.isfile(cfilename):
-                print('Removing ' + cfilename)
+                if self.verbose: print('Removing ' + cfilename)
                 os.remove(cfilename)
         if os.path.isdir(self.sempath):
-            print('Removing ' + self.sempath)
+            if self.verbose: print('Removing ' + self.sempath)
             shutil.rmtree(self.sempath)
 
     def xcfile_exists(self,cfilename):

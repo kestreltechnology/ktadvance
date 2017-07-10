@@ -25,38 +25,44 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-import xml.etree.ElementTree as ET
+import argparse
+import os
 
-import advance.app.CTTypeExp as TX
+import advance.util.printutil as UP
+import advance.util.fileutil as UF
 
-from advance.proof.CPOPredicate import CPOPredicate
+from advance.bin.Config import Config
+from advance.app.CApplication import CApplication
+from advance.reporting.ProofObligationDisplay import ProofObligationDisplay
+from advance.reporting.ProofObligationResults import ProofObligationResults
 
-class CPOPredicatePointerCast(CPOPredicate):
+def parse():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('juliettest',help='relative path to juliet test')
+    parser.add_argument('cfilename',help='name of juliet c file (.e.g., id115.c)')
+    args = parser.parse_args()
+    return args
 
-    def __init__(self,ctxt,xnode,subst):
-        CPOPredicate.__init__(self,ctxt,xnode,subst)
+if __name__ == '__main__':
 
-    def getfromtype(self): 
-        return TX.gettype(self.ctxt,self.xnode.find('tfrom'))
+    args = parse()
+    cfilename = args.cfilename
+    cpath = UF.get_juliet_testpath(args.juliettest)
+    if cpath is None:
+        print('*' * 80)
+        print('Unable to find the test set for file ' + cfilename)
+        print('*' * 80)
+        exit(1)
 
-    def gettotype(self):
-        return TX.gettype(self.ctxt,self.xnode.find('tto'))
+    sempath = os.path.join(cpath,'semantics')
+    cfapp = CApplication(sempath,cfilename)
+    cfile = cfapp.getcfile()
+    def f(cfun):
+        d = ProofObligationDisplay(cfile,cfun);
+        print(d.showppos())
+        print(d.showspos())
+        print(cfun.getapi())
+    cfapp.getcfile().fniter(f)
 
-    def getexp(self):
-        return TX.getexp(self.ctxt,self.xnode.find('exp'),self.subst)
-
-    def writexml(self,cnode):
-        CPOPredicate.writexml(self,cnode)
-        fnode = ET.Element('tfrom')
-        tnode = ET.Element('tto')
-        enode = ET.Element('exp')
-        self.getfromtype().writexml(fnode)
-        self.gettotype().writexml(tnode)
-        self.getexp().writexml(enode)
-        cnode.extend([ fnode, tnode, enode ])
-
-
-    def __str__(self): 
-        return ('pointer-cast(' + str(self.getexp()) + ', from:' + str(self.getfromtype()) + 
-                ',to:' + str(self.gettotype()) + ')')
-    
+    print('\n\nSummary of proof obligations:')
+    print(ProofObligationResults(cfile.get_ppo_results()).report())

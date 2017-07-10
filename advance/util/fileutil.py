@@ -28,6 +28,7 @@
 import os
 import subprocess
 import shutil
+import json
 import xml.etree.ElementTree as ET
 
 import advance.util.xmlutil as UX
@@ -197,6 +198,12 @@ def get_juliet_path():
 
 def get_juliet_testpath(testname):
     return os.path.join(get_juliet_path(),testname)
+
+def get_juliet_reference(testname):
+    path = get_juliet_testpath(testname)
+    with open(os.path.join(path,'tests.json'),'r') as fp:
+        d = json.load(fp)
+    return d
 
 # ------------------------------------------------------------ unzip tar file --
 

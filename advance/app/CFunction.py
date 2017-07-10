@@ -47,6 +47,8 @@ class CFunction():
 
     def iterppos(self,f): self.proofs.iterppos(f)
 
+    def itercallsites(self,f): self.proofs.itercallsites(f)
+
     def getcapp(self): return self.getfile().getcapp()
 
     def getfile(self): return self.cfile
@@ -78,16 +80,20 @@ class CFunction():
 
     def getproofs(self): return self.proofs
 
+    def getcallsitespos(self): return self.proofs.getspos
+
     def updatespos(self): self.proofs.updatespos()
 
     def acceptpostrequest(self,rv,fvid): self.proofs.addreturnsiteobligation(rv,fvid)
 
     def requestpostconditions(self):
         for r in self.getapi().getpostrequests():
-            tgtfun = self.getcapp().resolve_vid_function(self.cfile.getindex(),r.getfunctionindex())
-            fidtgt = tgtfun.getfile().getindex()
-            vidtgt = self.getcapp().convert_vid(self.cfile.getindex(),self.getid(),fidtgt)
-            tgtfun.acceptpostrequest(r,vidtgt)
+            fun = r.getfunctionindex()
+            if fun != None:
+                tgtfun = self.getcapp().resolve_vid_function(self.cfile.getindex(),fun)
+                fidtgt = tgtfun.getfile().getindex()
+                vidtgt = self.getcapp().convert_vid(self.cfile.getindex(),self.getid(),fidtgt)
+                tgtfun.acceptpostrequest(r,vidtgt)
 
     def savespos(self): self.proofs.savespos()
 

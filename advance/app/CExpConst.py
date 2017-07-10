@@ -74,6 +74,8 @@ class CIntegerConstant(CConstantBase):
             return self.getintvalue() == other.getintvalue()
         return False
 
+    def equalvalue(self,other): return self.equal(other)
+
     def isconstantvalue(self): return True
 
     def writexml(self,cnode):
@@ -108,6 +110,10 @@ class CStringConstant(CConstantBase):
     def hashstr(self):
         return ':'.join([ self.hashtag() , str(self.getstringindex()) ])
 
+    def writexml(self,cnode):
+        CConstantBase.writexml(self,cnode)
+        cnode.set('strIndex',str(self.getstringindex()))
+
     def __str__(self):
         strlen = len(self.getstringvalue())
         if strlen > 20:
@@ -120,6 +126,18 @@ class CWStringConstant(CConstantBase):
 
     def __init__(self,ctxt,xnode):
         CConstantBase.__init__(self,ctxt,xnode)
+
+    def getwlist(self):
+        return [ int(x.get('intValue')) for x in self.xnode.find('wlist').findall('int') ]
+
+    def writexml(self,cnode):
+        CConstantBase.writexml(self,cnode)
+        wnode = ET.Element('wlist')
+        for i in self.getwlist():
+            inode = ET.Element('int')
+            inode.set('intValue',str(i))
+            wnode.append(inode)
+        cnode.append(wnode)
 
 
 class CChrConstant(CConstantBase):

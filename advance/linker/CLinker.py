@@ -27,10 +27,16 @@
 
 import itertools
 
+import xml.etree.ElementTree as ET
+
+
 from advance.linker.CompCompatibility import CompCompatibility
 from advance.app.CCompInfo import CCompInfo
 
 from advance.util.UnionFind import UnionFind
+
+import advance.util.fileutil as UF
+import advance.util.xmlutil as UX
 
 '''
 Starting point: a list of (fileindex,compinfo key) pairs that identify the
@@ -138,8 +144,39 @@ class CLinker():
         gvid = 1
         for name in sorted(globalvarinfos):
             for vinfo in globalvarinfos[name]:
-               self.varinfoxrefs[vinfo.getid()] = gvid
+                id = vinfo.getid()
+                self.varinfoxrefs[id] = gvid
+                self.capp.indexmanager.addvid2gvid(id[0],id[1],gvid)
             gvid += 1
+
+    def saveglobalcompinfos(self):
+        path = self.capp.getpath()
+        compinfos = self.getglobalcompinfos()
+        sharedinstances = self.getsharedinstances()
+        xroot = UX.get_xml_header('globals','globals')
+        xnode = ET.Element('globals')
+        xroot.append(xnode)
+        cxnode = ET.Element('global-compinfos')
+        xnode.extend([ cxnode ])
+        for gckey in sorted(compinfos):
+            cnode = ET.Element('gcompinfo')
+            ffnode = ET.Element('shared-instances')
+            cnode.append(ffnode)
+            for (fname,compinfo) in sorted(sharedinstances[gckey]):
+                fnode = ET.Element('fstruct')
+                fnode.set('filename',fname)
+                fnode.set('ckey',str(compinfo.getkey()))
+                fnode.set('cname',compinfo.getname())
+                if not compinfo.isstruct():
+                    fnode.set('cstruct','false')
+                ffnode.append(fnode)
+            cnode.set('gckey',str(gckey))
+            compinfos[gckey].writexml(cnode)
+            cxnode.append(cnode)
+        filename = UF.get_globaldefinitions_filename(path)
+        with open(filename,'w') as fp:
+            fp.write(UX.doc_to_pretty(ET.ElementTree(xroot)))
+
 
     def _checkcompinfopairs(self):
         self.possiblycompatiblestructs = []

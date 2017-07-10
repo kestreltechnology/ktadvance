@@ -65,6 +65,18 @@ class IndexManager():
                         if tgtfid in self.gvid2vid[gvid]:
                             return (tgtfid,self.gvid2vid[gvid][tgtfid])
 
+    '''return a list of (fid,vid) pairs that refer to the same variable.'''
+    def get_vid_references(self,srcfid,srcvid):
+        result = []
+        if self.issinglefile: return result
+        if srcfid in self.vid2gvid:
+            if srcvid in self.vid2gvid[srcfid]:
+                gvid = self.vid2gvid[srcfid][srcvid]
+                for fid in self.gvid2vid[gvid]:
+                    if fid == srcfid: continue
+                    result.append((fid,self.gvid2vid[gvid][fid]))
+        return result
+
     '''return the vid in the file with index fidtgt for the variable vid in fidsrc.
 
     If the target file does not map the gvid then create a new vid in this file to
@@ -80,7 +92,7 @@ class IndexManager():
                     return self.gvid2vid[gvid][fidtgt]
                 else:
                     self.gvid2vid[gvid][fidtgt] = self.fidvidmax[fidtgt]
-                    self.fixvidmax[fidtgt] += 1
+                    self.fidvidmax[fidtgt] += 1
                     return self.gvid2vid[gvid][fidtgt]
 
     '''return the gvid of the vid in the file with index fid.'''
@@ -177,6 +189,14 @@ class IndexManager():
         xvardefs = xnode.find('global-var-definitions')
         for xvardef in xvardefs.findall('gvar'):
             vid = int(xvardef.find('varinfo').get('vid'))
+            gvid = self.get_gvid(fid,vid)
+            if not gvid is None:
+                self.gviddefs[gvid] = fid
+
+        xfunctions = xnode.find('functions')
+        for xgfun in xfunctions.findall('gfun'):
+            xvarinfo = xgfun.find('svar')
+            vid = int(xvarinfo.get('vid'))
             gvid = self.get_gvid(fid,vid)
             if not gvid is None:
                 self.gviddefs[gvid] = fid

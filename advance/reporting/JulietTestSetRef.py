@@ -25,38 +25,45 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-import xml.etree.ElementTree as ET
+from advance.reporting.JulietTestRef import JulietTestRef
 
-import advance.app.CTTypeExp as TX
+class JulietTestSetRef():
 
-from advance.proof.CPOPredicate import CPOPredicate
+    def __init__(self,d):
+        self.d = d
+        self.tests = {}
+        self.macros = {}
+        self._initialize()
 
-class CPOPredicatePointerCast(CPOPredicate):
+    def expand(self,m):
+        if m.startswith('PPO'):
+            if m in self.macros:
+                return self.macros[m]
+            else:
+                return m
+        if m.startswith('PS'):
+            if m in self.macros:
+                lst = self.macros[m]
+                return [ self.expand(x) for x in lst ]
+            else:
+                return m
+        return m
 
-    def __init__(self,ctxt,xnode,subst):
-        CPOPredicate.__init__(self,ctxt,xnode,subst)
+    def gettests(self): return self.tests.items()
 
-    def getfromtype(self): 
-        return TX.gettype(self.ctxt,self.xnode.find('tfrom'))
+    def iter(self,f):
+        for (t,test) in self.gettests():
+            f(t,test)
 
-    def gettotype(self):
-        return TX.gettype(self.ctxt,self.xnode.find('tto'))
+    def __str__(self):
+        lines = []
+        for test in sorted(self.tests):
+            lines.append('\nTest ' + test)
+            lines.append(str(self.tests[test]))
+        return '\n'.join(lines)
 
-    def getexp(self):
-        return TX.getexp(self.ctxt,self.xnode.find('exp'),self.subst)
-
-    def writexml(self,cnode):
-        CPOPredicate.writexml(self,cnode)
-        fnode = ET.Element('tfrom')
-        tnode = ET.Element('tto')
-        enode = ET.Element('exp')
-        self.getfromtype().writexml(fnode)
-        self.gettotype().writexml(tnode)
-        self.getexp().writexml(enode)
-        cnode.extend([ fnode, tnode, enode ])
-
-
-    def __str__(self): 
-        return ('pointer-cast(' + str(self.getexp()) + ', from:' + str(self.getfromtype()) + 
-                ',to:' + str(self.gettotype()) + ')')
-    
+    def _initialize(self):
+        for m in self.d['macros']:
+            self.macros[m] = self.d['macros'][m]
+        for test in self.d['tests']:
+            self.tests[test] = JulietTestRef(self,self.d['tests'][test])

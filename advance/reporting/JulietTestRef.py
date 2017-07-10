@@ -25,38 +25,32 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-import xml.etree.ElementTree as ET
+from advance.reporting.JulietTestFileRef import JulietTestFileRef
 
-import advance.app.CTTypeExp as TX
+class JulietTestRef():
 
-from advance.proof.CPOPredicate import CPOPredicate
+    def __init__(self,testsetref,d):
+        self.testsetref = testsetref
+        self.d = d
+        self.cfiles = {}
+        self._initialize()
 
-class CPOPredicatePointerCast(CPOPredicate):
+    def expand(self,m): return self.testsetref.expand(m)
 
-    def __init__(self,ctxt,xnode,subst):
-        CPOPredicate.__init__(self,ctxt,xnode,subst)
+    def getcfiles(self): return self.cfiles.items()
 
-    def getfromtype(self): 
-        return TX.gettype(self.ctxt,self.xnode.find('tfrom'))
+    '''f: (filename,juliettestfile) -> unit. '''
+    def iter(self,f):
+        for (filename,cfile) in self.getcfiles():
+            f(filename,cfile)
 
-    def gettotype(self):
-        return TX.gettype(self.ctxt,self.xnode.find('tto'))
+    def __str__(self):
+        lines = []
+        for f in self.cfiles:
+            lines.append(f)
+            lines.append(str(self.cfiles[f]))
+        return '\n'.join(lines)
 
-    def getexp(self):
-        return TX.getexp(self.ctxt,self.xnode.find('exp'),self.subst)
-
-    def writexml(self,cnode):
-        CPOPredicate.writexml(self,cnode)
-        fnode = ET.Element('tfrom')
-        tnode = ET.Element('tto')
-        enode = ET.Element('exp')
-        self.getfromtype().writexml(fnode)
-        self.gettotype().writexml(tnode)
-        self.getexp().writexml(enode)
-        cnode.extend([ fnode, tnode, enode ])
-
-
-    def __str__(self): 
-        return ('pointer-cast(' + str(self.getexp()) + ', from:' + str(self.getfromtype()) + 
-                ',to:' + str(self.gettotype()) + ')')
-    
+    def _initialize(self):
+        for f in self.d['cfiles']:
+            self.cfiles[f] = JulietTestFileRef(self,self.d['cfiles'][f])

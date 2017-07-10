@@ -85,7 +85,6 @@ if __name__ == '__main__':
 
     def savexrefs(f):
         capp.indexmanager.savexrefs(capp.getpath(),f.getfilename(),f.getindex())
-
     capp.fileiter(savexrefs)
-    saveglobalcompinfos(capp.getpath(),linker.getglobalcompinfos(),
-                        linker.getsharedinstances())
+
+    linker.saveglobalcompinfos()
