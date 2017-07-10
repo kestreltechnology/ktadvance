@@ -9,7 +9,7 @@ INCLUDES=-I ../../../testcasesupport
 MAIN=main_linux.c
 MAIN_OBJECT=$(MAIN:.c=.o)
 
-C_SUPPORT_PATH=../../../testcasesupport/
+C_SUPPORT_PATH=
 C_SUPPORT_FILES=$(C_SUPPORT_PATH)io.c $(C_SUPPORT_PATH)std_thread.c
 C_SUPPORT_OBJECTS=io.o std_thread.o
 
