@@ -25,6 +25,8 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import xml.etree.ElementTree as ET
+
 import advance.app.CTTypeExp as TX
 
 from advance.proof.CPOPredicate import CPOPredicate
@@ -43,8 +45,18 @@ class CPOPredicateCast(CPOPredicate):
     def getexp(self):
         return TX.getexp(self.ctxt,self.xnode.find('exp'),self.subst)
 
+    def writexml(self,cnode):
+        CPOPredicate.writexml(self,cnode)
+        t1node = ET.Element('tfrom')
+        t2node = ET.Element('tto')
+        enode = ET.Element('exp')
+        self.getfromtype().writexml(t1node)
+        self.gettotype().writexml(t2node)
+        self.getexp().writexml(enode)
+        cnode.extend([ t1node, t2node, enode ])
+
     def hashstr(self):
-        return '_'.join([self.gethashtag(),
+        return '_'.join([self.hashtag(),
                              self.getfromtype().hashstr(),
                              self.getexp().hashstr(),
                              self.gettotype().hashstr() ])
