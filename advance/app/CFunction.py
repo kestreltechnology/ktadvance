@@ -88,9 +88,12 @@ class CFunction():
 
     def requestpostconditions(self):
         for r in self.getapi().getpostrequests():
-            fun = r.getfunctionindex()
-            if fun != None:
-                tgtfun = self.getcapp().resolve_vid_function(self.cfile.getindex(),fun)
+            tgtfid = r.getfunctionindex()
+            tgtfun = self.getcapp().resolve_vid_function(self.cfile.getindex(),tgtfid)
+            if tgtfun is None:
+                print('No function found to register post request in function ' +
+                          self.cfile.getfilename() + ':' + self.getname())
+            else:
                 fidtgt = tgtfun.getfile().getindex()
                 vidtgt = self.getcapp().convert_vid(self.cfile.getindex(),self.getid(),fidtgt)
                 tgtfun.acceptpostrequest(r,vidtgt)
