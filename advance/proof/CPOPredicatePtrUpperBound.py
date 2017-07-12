@@ -44,6 +44,9 @@ class CPOPredicatePtrUpperBound(CPOPredicate):
 
     def getexp2(self): return TX.getexp(self.ctxt,self.xnode.find('exp2'),self.subst)
 
+    def hasvariable(self,vname):
+        return (self.getexp1().hasvariable(vname) or self.getexp2().hasvariable(vname))
+
     def writexml(self,cnode):
         CPOPredicate.writexml(self,cnode)
         e1node = ET.Element('exp1')

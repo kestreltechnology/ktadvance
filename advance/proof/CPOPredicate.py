@@ -64,6 +64,8 @@ class CPOPredicate():
 
     def writexml(self,cnode): cnode.set('tag',self.gettag())
 
+    def hasvariable(self,vname): return False
+
     def hashstr(self): return self.hashtag()
 
     def hashtag(self):

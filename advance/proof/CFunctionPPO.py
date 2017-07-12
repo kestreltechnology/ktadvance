@@ -56,6 +56,8 @@ class CFunctionPPO():
         pnode = self.xnode.find('predicate')
         return P.getpredicate(self.getcontext(),pnode)
 
+    def hasvariable(self,vname): return self.getpredicate().hasvariable(vname)
+
     def getcontext(self):
         return makecontext(self.cfun,self.xnode.find('context'))
 
