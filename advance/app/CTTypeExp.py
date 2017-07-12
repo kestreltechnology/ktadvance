@@ -271,6 +271,8 @@ class CExpLval(B.CExpBase):
 
     def getvarid(self): return self.getlval().getvarid()
 
+    def hasvariable(self,vname): return self.getlval().hasvariable(vname)
+
     def writexml(self,cnode):
         B.CExpBase.writexml(self,cnode)
         lnode = ET.Element('lval')
@@ -302,6 +304,11 @@ class CLval():
     def isvarid(self,id): return self.getlhost().isvarid(id)
 
     def getvarid(self): return self.getlhost().getvarvid()
+
+    def hasvariable(self,vname):
+        if self.isvar():
+            return self.getlhost().getvarname() == vname
+        return False
 
     def writexml(self,cnode):
         hnode = ET.Element('lhost')
@@ -464,6 +471,8 @@ class CExpCastE(B.CExpBase):
     def gettype(self): return gettype(self.ctxt,self.xnode.find('typ'))
 
     def isconstantstring(self): return self.getexp().isconstantstring()
+
+    def hasvariable(self,vname): return self.getexp().hasvariable(vname)
 
     def writexml(self,cnode):
         B.CExpBase.writexml(self,cnode)

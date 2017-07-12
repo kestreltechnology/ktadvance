@@ -66,6 +66,8 @@ class CExpBase():
 
     def isconstantvalue(self): return False
 
+    def hasvariable(self,vname): return False
+
     def writexml(self,cnode):
         cnode.set('etag',self.gettag())
         if 'xstr' in self.xnode.attrib:
