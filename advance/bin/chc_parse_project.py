@@ -46,6 +46,8 @@ def parse():
                         action='store_true')
     parser.add_argument('--nofilter',help='do not filter out files with absolute filenames',
                         action='store_true')
+    parser.add_argument('--removesemantics',help='remove semantics directory if present',
+                        action='store_true')
     args = parser.parse_args()
     return args
 
@@ -66,14 +68,26 @@ if __name__ == '__main__':
         print('*' * 80)
         exit(1)
 
+    doclean = True
+
     makefilename = os.path.join(cpath,'Makefile')
     if not os.path.isfile(makefilename):
-        print('*' * 80)
-        print('Project directory does not contain a Makefile')
-        print('Expected to find the file')
-        print('   ' + makefilename)
-        print('*' * 80)
-        exit(1)
+        configurefilename = os.path.join(cpath,'configure')
+        if os.path.isfile(configurefilename):
+            p = subprocess.call(configurefilename, cwd=cpath,stderr=subprocess.STDOUT)
+            if p != 0:
+                print('*' * 80)
+                print('Error in running configure script')
+                print('*' * 80)
+                exit(1)
+            else: doclean = False
+        else:
+            print('*' * 80)
+            print('Project directory does not contain a Makefile')
+            print('Expected to find the file')
+            print('   ' + makefilename)
+            print('*' * 80)
+            exit(1)
 
     if args.targetdir:
         tgtpath = os.path.abspath(args.targetdir)
@@ -90,21 +104,25 @@ if __name__ == '__main__':
     if args.savesemantics:
         semdir = os.path.join(tgtpath,'semantics')
         if os.path.isdir(semdir):
-            print('*' * 80)
-            print('Please remove semantics directory, so a clean version will be saved.')
-            print('*' * 80)
-            exit(1)
+            if args.removesemantics:
+                shutil.rmtree(semdir)
+            else:
+                print('*' * 80)
+                print('Please remove semantics directory, so a clean version will be saved.')
+                print('*' * 80)
+                exit(1)
 
     parsemanager = ParseManager(cpath,tgtpath,nofilter=args.nofilter)
     parsemanager.initializepaths()
 
-    cleancmd = [ 'make', 'clean' ]
-    p = subprocess.call(cleancmd, cwd=cpath,stderr=subprocess.STDOUT)
-    if p != 0:
-        print('*' * 80)
-        print('Error in running make clean.')
-        print('*' * 80)
-        exit(1)
+    if doclean:
+        cleancmd = [ 'make', 'clean' ]
+        p = subprocess.call(cleancmd, cwd=cpath,stderr=subprocess.STDOUT)
+        if p != 0:
+            print('*' * 80)
+            print('Error in running make clean.')
+            print('*' * 80)
+            exit(1)
 
     bearcmd = [ 'bear', 'make' ]
     p = subprocess.call(bearcmd, cwd=cpath,stderr=subprocess.STDOUT)
