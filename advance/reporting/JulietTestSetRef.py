@@ -66,4 +66,4 @@ class JulietTestSetRef():
         for m in self.d['macros']:
             self.macros[m] = self.d['macros'][m]
         for test in self.d['tests']:
-            self.tests[test] = JulietTestRef(self,self.d['tests'][test])
+            self.tests[test] = JulietTestRef(self,test,self.d['tests'][test])

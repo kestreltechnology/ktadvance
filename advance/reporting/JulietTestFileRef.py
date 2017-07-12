@@ -37,6 +37,8 @@ class JulietTestFileRef():
         self.spo_safecontrols = {}
         self._initialize()
 
+    def gettest(self): return self.testref.gettest()
+
     def expand(self,m): return self.testref.expand(m)
 
     def getviolations(self):
@@ -98,7 +100,13 @@ class JulietPpo():
         self.line = line
         self.predicate = d['P']
         self.expctxt = None
+        self.cfgctxt = None
+        self.variablename = None
         if 'E' in d: self.expctxt = d['E']
+        if 'C' in d: self.cfgctxt = d['C']
+        if 'V' in d: self.variablename = d['V']
+
+    def gettest(self): return self.testfileref.gettest()
 
     def getpredicate(self): return self.predicate
 
@@ -106,7 +114,15 @@ class JulietPpo():
 
     def getexpctxt(self): return self.expctxt
 
+    def getcfgctxt(self): return self.cfgctxt
+
+    def getvariablenames(self): return self.variablename
+
     def hasexpctxt(self): return not (self.expctxt is None)
+
+    def hascfgctxt(self): return not (self.cfgctxt is None)
+
+    def hasvariablenames(self): return not (self.variablename is None)
 
     def __str__(self):
         ctxt = ''

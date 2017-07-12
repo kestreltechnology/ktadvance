@@ -29,11 +29,14 @@ from advance.reporting.JulietTestFileRef import JulietTestFileRef
 
 class JulietTestRef():
 
-    def __init__(self,testsetref,d):
+    def __init__(self,testsetref,test,d):
         self.testsetref = testsetref
+        self.test = test
         self.d = d
         self.cfiles = {}
         self._initialize()
+
+    def gettest(self): return self.test
 
     def expand(self,m): return self.testsetref.expand(m)
 
