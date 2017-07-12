@@ -42,7 +42,7 @@ class ApiAssumption():
     def getpredicatenode(self): return self.xnode.find('predicate')
 
     def getpredicate(self):
-        ctxt = CContext(self.cfun,None)
+        ctxt = CContext(self.cfun.cfile,self.cfun,None)
         return P.getpredicate(ctxt,self.xnode.find('predicate'))
 
     def getdependentpos(self): return self.primarypos
