@@ -436,6 +436,15 @@ class CExpSizeOfE(B.CExpBase):
 
     def getexp(self): return getexp(self.ctxt, self.xnode.find('exp'),self.subst)
 
+    def writexml(self,cnode):
+        B.CExpBase.writexml(self,cnode)
+        enode = ET.Element('exp')
+        self.getexp().writexml(enode)
+        cnode.append(enode)
+
+    def hashstr(self):
+        return ':'.join([ self.hashtag(), self.getexp().hashstr() ])
+
     def __str__(self):
         return ('sizeE(' + str(self.getexp()) + ')')
 

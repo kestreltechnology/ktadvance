@@ -26,6 +26,7 @@
 # ------------------------------------------------------------------------------
 
 from advance.proof.CPOPredicate import CPOPredicate
+from advance.proof.CPOPredicateAllocationBase import CPOPredicateAllocationBase
 from advance.proof.CPOPredicateCast import CPOPredicateCast
 from advance.proof.CPOPredicateIndexLowerBound import CPOPredicateIndexLowerBound
 from advance.proof.CPOPredicateIndexUpperBound import CPOPredicateIndexUpperBound
@@ -46,6 +47,8 @@ from advance.proof.CPOPredicateNoOverlap import CPOPredicateNoOverlap
 
 def getpredicate(ctxt,pnode,subst={}):
     tag = pnode.get('tag')
+    if tag == 'allocation-base':
+        return CPOPredicateAllocationBase(ctxt,pnode,subst)
     if tag == 'cast':
         return CPOPredicateCast(ctxt,pnode,subst)
     if tag == 'index-lower-bound':

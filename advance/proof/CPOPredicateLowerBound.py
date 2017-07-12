@@ -25,6 +25,8 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import xml.etree.ElementTree as ET
+
 import advance.app.CTTypeExp as TX
 
 from advance.proof.CPOPredicate import CPOPredicate
@@ -35,6 +37,16 @@ class CPOPredicateLowerBound(CPOPredicate):
         CPOPredicate.__init__(self,ctxt,xnode,subst)
 
     def getexp(self): return TX.getexp(self.ctxt,self.xnode.find('exp'),self.subst)
+
+    def gettyp(self): return TX.gettype(self.ctxt,self.xnode.find('typ'))
+
+    def writexml(self,cnode):
+        CPOPredicate.writexml(self,cnode)
+        enode = ET.Element('exp')
+        tnode = ET.Element('typ')
+        self.getexp().writexml(enode)
+        self.gettyp().writexml(tnode)
+        cnode.extend([ enode, tnode ])
 
     def __str__(self):
         return ('lower-bound(' + str(self.getexp()) + ')')

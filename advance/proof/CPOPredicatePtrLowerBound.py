@@ -42,6 +42,22 @@ class CPOPredicatePtrLowerBound(CPOPredicate):
 
     def getexp2(self): return TX.getexp(self.ctxt,self.xnode.find('exp2'),self.subst)
 
+    def writexml(self,cnode):
+        CPOPredicate.writexml(self,cnode)
+        e1node = ET.Element('exp1')
+        e2node = ET.Element('exp2')
+        tnode = ET.Element('typ')
+        self.getexp1().writexml(e1node)
+        self.getexp2().writexml(e2node)
+        self.gettargettype().writexml(tynode)
+        cnode.extend([ e1node, e2node, tnode ])
+        cnode.set('op',self.getop())
+
+    def hashstr(self):
+        return '_'.join([ self.hashtag(), self.getop(),
+                              'E1:' + self.getexp1().hashstr(),
+                              'E2:' + self.getexp2().hashstr(),
+                              'T:' + self.gettargettype().hashstr() ])
     def __str__(self):
         return ('ptr-lower-bound(op:' + self.getop() + 
                 ', exp1:' + str(self.getexp1()) +
