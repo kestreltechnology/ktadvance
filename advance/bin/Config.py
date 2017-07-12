@@ -31,9 +31,8 @@ class Config():
 
     def __init__(self):
         '''user-specific settings'''
-        # self.platform = 'mac'
-        self.platform = 'linux'
-        self.canalyzerhome = '/home/username'
+        self.platform = 'mac'
+        # self.platform = 'linux'
 
         '''general settings'''
         self.bindir = os.path.dirname(os.path.abspath(__file__))   # advance/bin
@@ -43,9 +42,10 @@ class Config():
         summariesdir = os.path.join(self.rootdir,'summaries')
         self.summaries = os.path.join(summariesdir,'cchsummaries.jar')
         self.cparser = os.path.join(self.bindir,'parseFile_linux')
+        self.canalyzer = os.path.join(self.bindir,'ktadvance_linux')
         if self.platform == 'mac':
             self.cparser = os.path.join(self.bindir,'parseFile_mac')
-        self.canalyzer = os.path.join(self.canalyzerhome,'canalyzer')
+            self.canalyzer = os.path.join(self.bindir,'ktadvance_mac')
 
 
         
