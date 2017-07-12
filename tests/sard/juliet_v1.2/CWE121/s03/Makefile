@@ -2,12 +2,12 @@ CC=gcc
 CPP=g++
 DEBUG=-g
 CFLAGS=-c
-LFLAGS=-lpthread
+LFLAGS=-pthread
 
 INCLUDES=-I ../../../testcasesupport
 
-MAIN=main_linux.cpp
-MAIN_OBJECT=$(MAIN:.cpp=.o)
+MAIN=main_linux.c
+MAIN_OBJECT=$(MAIN:.c=.o)
 
 C_SUPPORT_PATH=
 C_SUPPORT_FILES=$(C_SUPPORT_PATH)io.c $(C_SUPPORT_PATH)std_thread.c
