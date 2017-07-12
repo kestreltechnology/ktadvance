@@ -199,9 +199,20 @@ def get_juliet_path():
 def get_juliet_testpath(testname):
     return os.path.join(get_juliet_path(),testname)
 
+def save_juliet_test_summary(testname,d):
+    path = get_juliet_testpath(testname)
+    with open(os.path.join(path,'summaryresults.json'),'w') as fp:
+        json.dump(d,fp)
+
+def read_juliet_test_summary(testname):
+    path = get_juliet_testpath(testname)
+    with open(os.path.join(path,'summaryresults.json')) as fp:
+        d = json.load(fp)
+    return d
+
 def get_juliet_reference(testname):
     path = get_juliet_testpath(testname)
-    with open(os.path.join(path,'tests.json'),'r') as fp:
+    with open(os.path.join(path,'scorekey.json'),'r') as fp:
         d = json.load(fp)
     return d
 
