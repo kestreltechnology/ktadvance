@@ -1,4 +1,5 @@
-# ktadvance
+# KT Advance
+### C Source Code Analyzer for Memory Safety
 
 The software in this repository is restricted to those explicitly
 given access by Kestrel Technology.
