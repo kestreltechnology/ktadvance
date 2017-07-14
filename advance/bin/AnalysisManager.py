@@ -34,7 +34,9 @@ from advance.bin.Config import Config
 
 class AnalysisManager(object):
 
-    def __init__(self,capp,onefile=False,nofilter=False,wordsize=0,unreachability=False,verbose=True):
+    def __init__(self,capp,onefile=False,nofilter=False,wordsize=0,unreachability=False,
+                     thirdpartysummaries=[],
+                     verbose=True):
         '''Initialize the analyzer location and target file location'''
 
         self.capp = capp                             # CApplication
@@ -45,6 +47,7 @@ class AnalysisManager(object):
         self.onefile = onefile
         self.nofilter = nofilter
         self.wordsize = wordsize
+        self.thirdpartysummaries = thirdpartysummaries
         self.unreachability = unreachability # use unreachability as justification for discharge
         self.verbose = verbose
 
@@ -53,6 +56,8 @@ class AnalysisManager(object):
             if self.verbose:print('Creating primary proof obligations for ' + cfilename)
             cmd = [ self.canalyzer, '-summaries', self.chsummaries,
                         '-command', 'primary', '-cfile', cfilename ]
+            for s in self.thirdpartysummaries:
+                cmd.extend(['-summaries',s])
             if self.onefile: cmd.append('-nolinkinfo')
             if self.nofilter: cmd.append('-nofilter')
             if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
@@ -80,6 +85,8 @@ class AnalysisManager(object):
             cmd = [ self.canalyzer, '-summaries', self.chsummaries,
                         '-command', 'localinvs', '-cfile', cfilename,
                         '-domains', domains ]
+            for s in self.thirdpartysummaries:
+                cmd.extend(['-summaries',s])
             if self.onefile: cmd.append('-nolinkinfo')
             if self.nofilter: cmd.append('-nofilter')
             if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
@@ -100,6 +107,8 @@ class AnalysisManager(object):
             if self.verbose: print('Checking proof obligations for ' + cfilename)
             cmd = [ self.canalyzer, '-summaries', self.chsummaries,
                         '-command', 'check', '-cfile', cfilename ]
+            for s in self.thirdpartysummaries:
+                cmd.extend(['-summaries',s])
             if self.onefile: cmd.append('-nolinkinfo')
             if self.nofilter: cmd.append('-nofilter')
             if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
