@@ -28,6 +28,7 @@
 from advance.proof.CPOPredicate import CPOPredicate
 from advance.proof.CPOPredicateAllocationBase import CPOPredicateAllocationBase
 from advance.proof.CPOPredicateCast import CPOPredicateCast
+from advance.proof.CPOPredicateGlobalMem import CPOPredicateGlobalMem
 from advance.proof.CPOPredicateIndexLowerBound import CPOPredicateIndexLowerBound
 from advance.proof.CPOPredicateIndexUpperBound import CPOPredicateIndexUpperBound
 from advance.proof.CPOPredicateInitialized import CPOPredicateInitialized
@@ -83,5 +84,7 @@ def getpredicate(ctxt,pnode,subst={}):
         return CPOPredicateNullTerminated(ctxt,pnode,subst)
     if tag == 'no-overlap':
         return CPOPredicateNoOverlap(ctxt,pnode,subst)
+    if tag == 'global-mem':
+        return CPOPredicateGlobalMem(ctxt,pnode,subst)
     else:
         return CPOPredicate(ctxt,pnode,subst)
