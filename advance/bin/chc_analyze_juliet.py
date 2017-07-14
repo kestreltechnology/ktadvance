@@ -103,7 +103,8 @@ if __name__ == '__main__':
 
     capp = CApplication(semdir)
 
-    am = AnalysisManager(capp,wordsize=64,unreachability=True)
+    am = AnalysisManager(capp,wordsize=64,unreachability=True,
+                             thirdpartysummaries=[UF.get_juliet_summaries()])
 
     try:
         with timing('creating primary proof obligations'):
