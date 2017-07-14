@@ -25,6 +25,8 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import xml.etree.ElementTree as ET
+
 import advance.app.CTTypeExp as TX
 
 from advance.proof.CPOPredicate import CPOPredicate
@@ -37,6 +39,17 @@ class CPOPredicateInitializedRange(CPOPredicate):
     def getbaseexp(self): return TX.getexp(self.ctxt,self.xnode.find('base-exp'))
 
     def getlenexp(self): return TX.getexp(self.ctxt,self.xnode.find('len-exp'))
+
+    def hasvariable(self,vname):
+        return (self.getbaseexp().hasvariable(vname) or self.getlenexp().hasvariable(vname))
+
+    def writexml(self,cnode):
+        CPOPredicate.writexml(self,cnode)
+        enode = ET.Element('base-exp')
+        lnode = ET.Element('len-exp')
+        self.getbaseexp().writexml(enode)
+        self.getlenexp().writexml(lnode)
+        cnode.extend([ enode, lnode ])
 
     def __str__(self):
         return ('initialized-range(' + str(self.getbaseexp()) + ',' +
