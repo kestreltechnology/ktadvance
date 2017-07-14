@@ -37,15 +37,21 @@ from advance.bin.TestManager import TestManager
 from advance.bin.TestManager import FileParseError
 from advance.bin.TestManager import AnalyzerMissingError
 
+def parse():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--verbose',help='print verbose output', action='store_true')
+    args = parser.parse_args()
+    return args
 
 if __name__ == '__main__':
+    args = parse()
 
     for id in range(115,323,4):
 
         # currently broken:
-        if id == 163: continue
-        if id == 283: continue
-        if id == 315: continue
+        #if id == 163: continue
+        #if id == 283: continue
+        #if id == 315: continue
             
         testname = 'id' + str(id) + 'Q'
         cpath = UF.get_kendra_testpath(testname)
@@ -67,7 +73,7 @@ if __name__ == '__main__':
             exit(1)
 
         #parsemanager = ParseManager(cpath,cpath,verbose=False)
-        testmanager = TestManager(cpath,cpath,testname,verbose=False)
+        testmanager = TestManager(cpath,cpath,testname,verbose=args.verbose)
         testmanager.clean()
         try:
             if testmanager.testparser() or UF.unpack_tar_file(cpath):
