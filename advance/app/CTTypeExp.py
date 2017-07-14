@@ -523,6 +523,29 @@ class CExpCnApp(B.CExpBase):
     def __init__(self,ctxt,xnode,subst={}):
         B.CExpBase.__init__(self,ctxt,xnode,subst)
 
+    def getcn(self): return self.xnode.get('cn')
+
+    def gettype(self): return gettype(self.ctxt,self.xnode.find('typ'))
+
+    def getargs(self):
+        args = self.xnode.findall('arg')
+        return [ getexp(self.ctxt,x,self.subst) for x in args ]
+
+    def writexml(self,cnode):
+        B.CExpBase.writexml(self,cnode)
+        tnode = ET.Element('typ')
+        self.gettype().writexml(tnode)
+        cnode.append(tnode)
+        cnode.set('cn',self.getcn())
+        for a in self.getargs():
+            enode = ET.Element('arg')
+            a.writexml(enode)
+            cnode.append(enode)
+
+    def __str__(self):
+        return (self.getcn() + '(' + ','.join([str(a) for a in self.getargs() ]) + ')')
+
+
 class CExpFnApp(B.CExpBase):
 
     def __init__(self,ctxt,xnode,subst={}):
