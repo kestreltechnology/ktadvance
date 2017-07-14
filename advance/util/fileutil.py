@@ -196,6 +196,12 @@ def get_juliet_path():
     sardpath = os.path.join(Config().testdir,'sard')
     return os.path.abspath(os.path.join(sardpath,'juliet_v1.2'))
 
+def get_juliet_summaries():
+    path = get_juliet_path()
+    summarypath = os.path.join(path,'testcasesupport')
+    summarypath = os.path.join(summarypath,'julietsummaries')
+    return os.path.join(summarypath,'julietsummaries.jar')
+
 def get_juliet_testpath(testname):
     return os.path.join(get_juliet_path(),testname)
 
