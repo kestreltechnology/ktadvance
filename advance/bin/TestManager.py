@@ -296,7 +296,7 @@ class TestManager():
             print('*' * 80)
             print('Function SPO error: ' + str(detail))
             print('*' * 80)
-            exit()
+            #exit()
         if self.saveref:
             self.testsetref.save()
             exit()

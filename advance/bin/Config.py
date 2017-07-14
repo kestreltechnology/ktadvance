@@ -31,8 +31,10 @@ class Config():
 
     def __init__(self):
         '''user-specific settings'''
-        self.platform = 'mac'
-        # self.platform = 'linux'
+        if os.uname()[0] == 'Linux':
+            self.platform = 'linux'
+        elif os.uname()[0] == 'Darwin':
+            self.platform = 'mac'
 
         '''general settings'''
         self.bindir = os.path.dirname(os.path.abspath(__file__))   # advance/bin
