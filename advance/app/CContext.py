@@ -48,6 +48,15 @@ def makecontext(cfun,xnode):
             expctxt.append((node.get('name'), []))
     return CContext(cfun.cfile,cfun=cfun,cfg=cfgctxt,exp=expctxt)
 
+def makecfgcontext(cfun,xnode):
+    cfgctxt = []
+    for node in xnode.findall('node'):
+        if 'num' in node.attrib:
+            cfgctxt.append((node.get('name'), [ int(node.get('num')) ]))
+        else:
+            cfgctxt.append((node.get('name'),[]))
+    return CContext(cfun.cfile,cfun=cfun,cfg=cfgctxt)
+
 
 class CContext():
     '''Represents the cfg and expression context for a proof obligation'''
