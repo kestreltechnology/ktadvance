@@ -115,6 +115,10 @@ def get_api_xnode(path,cfilename,fname):
 def get_invs_filename(path,cfilename,fname):
     return (get_cfun_basename(path,cfilename,fname) + '_invs.xml')
 
+def get_invs_xnode(path,cfilename,fname):
+    filename = get_invs_filename(path,cfilename,fname)
+    return get_xnode(filename,'function','Function invariants')
+
 def get_ppo_filename(path,cfilename,fname):
     return (get_cfun_basename(path,cfilename,fname) + '_ppo.xml')
 
