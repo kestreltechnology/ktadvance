@@ -46,7 +46,13 @@ tests = [
     'CWE121/s02/CWE193_char_alloca_ncpyQ',
     'CWE121/s02/CWE193_char_declare_loopQ',
     'CWE121/s03/CWE805_char_declare_memcpyQ',
-    'CWE122/s01/char_type_overrun_memcpyQ'
+    'CWE122/s01/char_type_overrun_memcpyQ',
+    'CWE124/s01/CWE839_fgetsQ',
+    'CWE126/s01/char_declare_memcpyQ',
+    'CWE126/s01/CWE170_char_loopQ',
+    'CWE126/s01/CWE170_char_memcpyQ',
+    'CWE126/s01/CWE170_char_strncpyQ',
+    'CWE190/s01/char_fscanf_addQ'
     ]
 
 if __name__ == '__main__':
