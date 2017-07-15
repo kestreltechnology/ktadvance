@@ -58,6 +58,9 @@ class CFunctionPPO():
 
     def hasvariable(self,vname): return self.getpredicate().hasvariable(vname)
 
+    def hastargettype(self,targettype):
+        return self.getpredicate().hastargettype(targettype)
+
     def getcontext(self):
         return makecontext(self.cfun,self.xnode.find('context'))
 

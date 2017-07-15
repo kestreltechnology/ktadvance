@@ -66,6 +66,8 @@ class CPOPredicate():
 
     def hasvariable(self,vname): return False
 
+    def hastargettype(self,targettype): return False
+
     def hashstr(self): return self.hashtag()
 
     def hashtag(self):

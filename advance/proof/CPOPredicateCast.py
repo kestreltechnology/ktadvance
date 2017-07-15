@@ -45,6 +45,9 @@ class CPOPredicateCast(CPOPredicate):
     def getexp(self):
         return TX.getexp(self.ctxt,self.xnode.find('exp'),self.subst)
 
+    def hastargettype(self,targettype):
+        return (str(self.gettotype()) == targettype)
+
     def writexml(self,cnode):
         CPOPredicate.writexml(self,cnode)
         t1node = ET.Element('tfrom')
