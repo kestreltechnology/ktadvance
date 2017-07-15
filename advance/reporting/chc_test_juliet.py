@@ -53,7 +53,9 @@ def keymatches(tppo,ppo):
             if ((not tppo.hasvariablenames()) or
                     (tppo.hasvariablenames() and
                          any([ ppo.hasvariable(vname) for vname in tppo.getvariablenames()]))):
-                return True
+                if ((not tppo.hastargettype()) or
+                        (tppo.hastargettype() and ppo.hastargettype(tppo.gettargettype()))):
+                    return True
     return False
 
 violationcategories = [ 'reported', 'found-safe', 'found-deferred', 'unknown', 'other' ]
