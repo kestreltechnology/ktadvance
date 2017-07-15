@@ -32,6 +32,17 @@ import advance.app.COffset as O
 import advance.app.CTTypeBase as T
 import advance.app.CExpConst as C
 
+operatorstrings = {
+    "plusa": "+",
+    "minusa": "-"
+    }
+
+def getoperatorstring(op):
+    if op in operatorstrings:
+        return operatorstrings[op]
+    else:
+        return op
+
 def gettype(ctxt,xnode):
     tag = xnode.get('ttag')
     if tag == 'tvoid': return T.CTTypeVoid(ctxt,xnode)
@@ -516,7 +527,8 @@ class CExpBinOp(B.CExpBase):
         cnode.set('binop',self.getbinop())
 
     def __str__(self):
-        return '(' + str(self.getexp1()) + ' ' + self.getbinop() + ' ' + str(self.getexp2()) + ')'
+        return ('(' + str(self.getexp1()) + ' ' +
+            getoperatorstring(self.getbinop()) + ' ' + str(self.getexp2()) + ')')
 
 class CExpCnApp(B.CExpBase):
 
