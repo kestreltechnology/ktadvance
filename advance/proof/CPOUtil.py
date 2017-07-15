@@ -33,6 +33,7 @@ from advance.proof.CPOPredicateIndexLowerBound import CPOPredicateIndexLowerBoun
 from advance.proof.CPOPredicateIndexUpperBound import CPOPredicateIndexUpperBound
 from advance.proof.CPOPredicateInitialized import CPOPredicateInitialized
 from advance.proof.CPOPredicateInitializedRange import CPOPredicateInitializedRange
+from advance.proof.CPOPredicateIntOverflow import CPOPredicateIntOverflow
 from advance.proof.CPOPredicateNotNull import CPOPredicateNotNull
 from advance.proof.CPOPredicateNonNegative import CPOPredicateNonNegative
 from advance.proof.CPOPredicateNullTerminated import CPOPredicateNullTerminated
@@ -60,6 +61,8 @@ def getpredicate(ctxt,pnode,subst={}):
         return CPOPredicateInitialized(ctxt,pnode)
     if tag == 'initialized-range':
         return CPOPredicateInitializedRange(ctxt,pnode)
+    if tag == 'int-overflow':
+        return CPOPredicateIntOverflow(ctxt,pnode,subst)
     if tag == 'not-null':
         return CPOPredicateNotNull(ctxt,pnode,subst)
     if tag == 'pointer-cast':
