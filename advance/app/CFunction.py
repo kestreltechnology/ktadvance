@@ -25,9 +25,12 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import advance.util.fileutil as UF
 from advance.app.CLocation import CLocation
 from advance.app.CFunctionBody import CFunctionBody
 from advance.app.CVarInfo import CVarInfo
+
+from advance.invariants.CFunctionInvariants import CFunctionInvariants
 
 from advance.api.CFunctionApi import CFunctionApi
 from advance.proof.CFunctionProofs import CFunctionProofs
@@ -43,9 +46,12 @@ class CFunction():
         self.body = CFunctionBody(self,self.xnode.find('sbody'))
         self.proofs = CFunctionProofs(self)          # CFunctionProofs object
         self.api = CFunctionApi(self)                # CFunctionApi object
+        self.invariants = None                       # CFunctionInvariants object
         self._initialize()
 
     def iterppos(self,f): self.proofs.iterppos(f)
+
+    def getppo(self,index): return self.proofs.getppo(index)
 
     def itercallsites(self,f): self.proofs.itercallsites(f)
 
@@ -77,6 +83,10 @@ class CFunction():
     def getinstrcount(self): return self.body.getinstrcount()
 
     def getcallinstrs(self): return self.body.getcallinstrs()
+
+    def getinvariants(self):
+        self._readinvariants()
+        return self.invariants
 
     def getproofs(self): return self.proofs
 
@@ -122,4 +132,9 @@ class CFunction():
             vid = int(v.get('vid'))
             self.locals[vid] = CVarInfo(self.cfile,v)
         self.proofs = CFunctionProofs(self)
+
+    def _readinvariants(self):
+        if not self.invariants is None: return
+        xinvs = UF.get_invs_xnode(self.cfile.getcapp().getpath(),self.cfile.getfilename(),self.getname())
+        self.invariants = CFunctionInvariants(self,xinvs)
 
