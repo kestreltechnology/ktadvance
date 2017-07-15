@@ -33,6 +33,16 @@ FAR Supplement: 252.227-7013
 * **Other Dependencies**: The analyzer and the python scripts make use of jar files, which require a
   working Java installation.
   
+
+### Organization
+
+This repository is organized as follows:
+* **advance**: python scripts and programs to run the analysis and view the results; each subdirectory
+  has a README file that describes the role and functionality of these programs.
+* **tests***: regression tests and other test cases, several of which have been pre-parsed, which are
+  provided to illustrate the use and functionality of the analyzer; each subdirectory has a README
+  file that describes the origin and structure of the test cases in that directory.
+  
   
 ### General Use Guidelines
 
