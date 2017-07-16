@@ -43,7 +43,7 @@ class Config():
         self.testdir = os.path.join(self.topdir,'tests')
         summariesdir = os.path.join(self.rootdir,'summaries')
         self.summaries = os.path.join(summariesdir,'cchsummaries.jar')
-        self.binariesdir = os.path.join(bindir,'binaries')
+        self.binariesdir = os.path.join(self.bindir,'binaries')
         self.cparser = os.path.join(self.binariesdir,'parseFile_linux')
         self.canalyzer = os.path.join(self.binariesdir,'ktadvance_linux')
         if self.platform == 'mac':
