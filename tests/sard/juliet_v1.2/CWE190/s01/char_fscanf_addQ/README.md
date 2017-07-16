@@ -26,7 +26,8 @@ however, no integer overflow. According to the C standard
 ### Reference
 
 **C Standard, 6.3.1.3, paragraph 3**:
-1 .When a value with integer type is converted to another integer type other than _Bool,
+
+1. When a value with integer type is converted to another integer type other than _Bool,
    if the value can be represented by the new type, it is unchanged.
 2. Otherwise, if the new type is unsigned, the value is converted by repeatedly adding
    or subtracting one more than the maximum value that can be represented in the new
@@ -39,6 +40,7 @@ however, no integer overflow. According to the C standard
 **GNU C Compiler: implementation-defined behavior**:
 *The result of, or the signal raised by, converting an integer to a signed integer type when the value cannot be represented in an object of that type (C90 6.2.1.2, C99 and C11 6.3.1.3).*
 ```
-For conversion to a type of width N, the value is reduced modulo 2^N to be within range of the type; no signal is raised.
+For conversion to a type of width N, the value is reduced modulo 2^N to be
+within range of the type; no signal is raised.
 ```
 [https://gcc.gnu.org/onlinedocs/gcc/Integers-implementation.html#Integers-implementation]
