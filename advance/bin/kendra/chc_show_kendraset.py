@@ -30,7 +30,7 @@ import json
 import os
 
 from advance.bin.Config import Config
-from advance.bin.TestSetRef import TestSetRef
+from advance.bin.kendra.TestSetRef import TestSetRef
 
 def parse():
     usage = ('\nCall with the directory name of one of the subdirectories in\n' +

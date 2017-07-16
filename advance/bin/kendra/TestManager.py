@@ -78,8 +78,8 @@ class AnalyzerMissingError(Exception):
 from advance.bin.AnalysisManager import AnalysisManager
 from advance.bin.Config import Config
 from advance.bin.ParseManager import ParseManager
-from advance.bin.TestResults import TestResults
-from advance.bin.TestSetRef import TestSetRef
+from advance.bin.kendra.TestResults import TestResults
+from advance.bin.kendra.TestSetRef import TestSetRef
 
 class TestManager():
     '''Provides utility functions to support regression and platform tests.

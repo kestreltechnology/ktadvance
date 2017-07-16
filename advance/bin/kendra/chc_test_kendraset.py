@@ -33,9 +33,9 @@ import advance.util.fileutil as UF
 
 from advance.bin.Config import Config
 from advance.bin.ParseManager import ParseManager
-from advance.bin.TestManager import TestManager
-from advance.bin.TestManager import FileParseError
-from advance.bin.TestManager import AnalyzerMissingError
+from advance.bin.kendra.TestManager import TestManager
+from advance.bin.kendra.TestManager import FileParseError
+from advance.bin.kendra.TestManager import AnalyzerMissingError
 
 def parse():
     usage = (

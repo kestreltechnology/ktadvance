@@ -27,7 +27,7 @@
 
 import json
 
-from advance.bin.TestCFileRef import TestCFileRef
+from advance.bin.kendra.TestCFileRef import TestCFileRef
 
 class TestSetRef():
     '''Provides access to the reference results of a set of C files.'''

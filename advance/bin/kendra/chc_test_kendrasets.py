@@ -33,9 +33,9 @@ import advance.util.fileutil as UF
 
 from advance.bin.Config import Config
 from advance.bin.ParseManager import ParseManager
-from advance.bin.TestManager import TestManager
-from advance.bin.TestManager import FileParseError
-from advance.bin.TestManager import AnalyzerMissingError
+from advance.bin.kendra.TestManager import TestManager
+from advance.bin.kendra.TestManager import FileParseError
+from advance.bin.kendra.TestManager import AnalyzerMissingError
 
 def parse():
     parser = argparse.ArgumentParser()
@@ -46,7 +46,7 @@ def parse():
 if __name__ == '__main__':
     args = parse()
 
-    for id in range(115,323,4):
+    for id in range(115,399,4):
 
         # currently broken:
         #if id == 163: continue

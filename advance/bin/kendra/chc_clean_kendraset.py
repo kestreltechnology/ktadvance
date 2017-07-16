@@ -29,7 +29,7 @@ import argparse
 import os
 
 from advance.bin.Config import Config
-from advance.bin.TestManager import TestManager
+from advance.bin.kendra.TestManager import TestManager
 
 def parse():
     parser = argparse.ArgumentParser()
