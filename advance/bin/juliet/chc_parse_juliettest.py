@@ -34,16 +34,16 @@ import shutil
 
 from advance.bin.Config import Config
 from advance.bin.ParseManager import ParseManager
-from advance.bin.TestManager import TestManager
-from advance.bin.TestManager import FileParseError
+
+import advance.util.fileutil as UF
 
 def parse():
     usage = (
         '\nCall with the directory name of one of the subdirectories in\n' +
         'tests/sard/juliet_v1.2\n\n' +
-        '  Example: python chc_parse_juliettest CWE121/s01/CWE129_largeQ\n\n' +
+        '  Example: python chc_parse_juliettest.py CWE121/s01/CWE129_largeQ\n\n' +
         'Use the option --savesemantics to save the semantics directory in\n' +
-        'a gzipped tar file for potential analysis on a different platform\n')
+        'a gzipped tar file for later analysis (potentially on a different platform)\n')
     description = (
         'Parses a group of tests from the NSA/CAS Juliet Test Suite v1.2\n'
         'and produces xml files that hold the\n' +
@@ -51,7 +51,9 @@ def parse():
         'It uses the command-line utility bear to extract the compilation\n' +
         'commands from the Makefile.')
     parser = argparse.ArgumentParser(usage=usage,description=description)
-    parser.add_argument('testapp',help='path to the test case (relative to juliet_v1.2) (e.g., CWE121/s01/CWE129_largeQ)')
+    parser.add_argument('path',
+                            help='path to the test case (relative to juliet_v1.2)' +
+                            ' (e.g., CWE121/s01/CWE129_largeQ)')
     parser.add_argument('--savesemantics',
                             help='create gzipped tar file with semantics files',
                             action='store_true')
@@ -61,10 +63,7 @@ def parse():
 if __name__ == '__main__':
 
     args = parse()
-    config = Config()
-    sardpath = os.path.join(config.testdir,'sard')
-    julietpath = os.path.join(sardpath,'juliet_v1.2')
-    testpath = os.path.join(julietpath,args.testapp)
+    testpath = UF.get_juliet_testpath(args.path)
     cpath = os.path.abspath(testpath)
     print(cpath)
     

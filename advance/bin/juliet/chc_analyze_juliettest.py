@@ -39,8 +39,18 @@ from advance.bin.Config import Config
 from advance.linker.CLinker import CLinker
 
 def parse():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('appname',
+    usage = (
+        '\nCall with the directory name of one of the subdirectories in\n' +
+        'tests/sard/juliet_v1.2\n\n' +
+        '  Example: python chc_analyze_juliettest.py CWE121/s01/CWE129_largeQ\n\n' +
+        'Use the option --deletesemantics to start fresh from the application\n' +
+        'semantics, deleting previous analysis results\n')
+    description = (
+        'Analyzes a group of tests from the NSA/CAS Juliet Test Suite v1.2\n' +
+        'and saves the analysis results in xml files in the semantics/ktadvance\n' +
+        'directory.')
+    parser = argparse.ArgumentParser(usage=usage,description=description)
+    parser.add_argument('path',
                             help="path to the test case (relative to juliet_v1.2)" +
                             " (e.g., CWE121/s01/CWE129_largeQ)")
     parser.add_argument('--maxprocesses',
@@ -64,7 +74,7 @@ def timing(activity):
 if __name__ == '__main__':
 
     args = parse()
-    testpath = UF.get_juliet_testpath(args.appname)
+    testpath = UF.get_juliet_testpath(args.path)
     cpath = os.path.abspath(testpath)
     print(cpath)
 

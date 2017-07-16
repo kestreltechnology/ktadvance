@@ -37,7 +37,17 @@ from advance.app.CApplication import CApplication
 from advance.bin.AnalysisManager import AnalysisManager
 
 def parse():
-    parser = argparse.ArgumentParser()
+    usage= (
+        '\nCall with the directory name of one of the subdirectories in\n' +
+        'tests/sard/juliet_v1.2\n\n' +
+        ' Example: python chc_prepare_juliettest.py CWE121/s01/CWE129_largeQ  \\ \n' +
+        '    CWE121_Stack_Based_Buffer_Overflow__CWE129_large_\n\n')
+    description = (
+        'Renames a set of .c files with the given prefix to files with the prefix\n' +
+        'replaced by "x" in preparation for creating the semantics files.\n' +
+        'The name replacement is performed to make the filenames more concise, as ' +
+        'they tend to be repeated in many places.\n')
+    parser = argparse.ArgumentParser(usage=usage,description=description)
     parser.add_argument('path',help='directory that holds the Juliet .c files (relative to juliet)')
     parser.add_argument('prefix',help='prefix to replace')
     args = parser.parse_args()
