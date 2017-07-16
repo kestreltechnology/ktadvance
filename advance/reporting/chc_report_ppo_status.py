@@ -91,4 +91,5 @@ if __name__ == '__main__':
         for fn in sorted(violations[file]):
             print('  ' + fn)
             for id in sorted(violations[file][fn]):
-                print('    ' + str(id) + ': ' + str(violations[file][fn][id].getevidence()))
+                print(str(id))
+                #print('    ' + str(id) + ': ' + str(violations[file][fn][id].getevidence()))
