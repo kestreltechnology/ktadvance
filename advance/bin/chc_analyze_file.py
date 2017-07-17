@@ -50,6 +50,9 @@ def parse():
     parser.add_argument('path',help='directory that holds the semantics directory for the c file')
     parser.add_argument('cfile',help='c filename')
     parser.add_argument('--continueanalysis',help='continue with existing results',action='store_true')
+    parser.add_argument('--deletesemantics',
+                            help='Unpack a fresh version of the semantics files',
+                            action='store_true')
     parser.add_argument('--wordsize',help='wordsize of target platform (e.g. 32 or 64)',
                             type=int,default=0)
     args = parser.parse_args()
@@ -75,16 +78,13 @@ if __name__ == '__main__':
 
     ismac = Config().platform == 'mac'
     semdir = os.path.join(filepath,'semantics')
-    if not os.path.isdir(semdir):
-        success = UF.unpack_tar_file(filepath)
+    if (not os.path.isdir(semdir)) or args.deletesemantics:
+        success = UF.unpack_tar_file(filepath,args.deletesemantics)
         if not success:
             print('*' * 80)
             print('No file or directory found with semantics')
             print('Expected to find a directory ' + semdir)
-            if ismac:
-                print('or a file semantics_mac.tar.gz or semantics_mac.tar in ' + filepath)
-            else:
-                print('or a file semantics_linux.tar.gz or semantics_linux.tar in ' + filepath)
+            print('or a file semantics_linux.tar.gz or semantics_linux.tar in ' + filepath)
             print('*' * 80)
             exit(1)
 
