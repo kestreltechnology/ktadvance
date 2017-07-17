@@ -18,7 +18,7 @@ void CWE190_Integer_Overflow__char_fscanf_add_01_bad()
 
 ### Actual Flaw
 
-The intended flaw is described as an integer-over problem. There is,
+The intended flaw is described as an integer-overflow problem. There is,
 however, no integer overflow. According to the C standard (6.3.1.8),
 the operands in the expression are converted to **int** before
 evaluating the expression (integer promotions are applied) and the
@@ -27,7 +27,8 @@ of **data** is the maximum value of a **char**, adding 1 to that
 value, represented as an **int**, does not result in overflow.
 
 The subsequent conversion back to a **char**, instead, will result
-in a different value, which is implementation-defined (6.3.1.3).
+in a different value, because the mathematical result is not
+representable, which is implementation-defined (6.3.1.3).
 Below, as an example, we show the documentation for the GCC C
 compiler.
 
