@@ -29,6 +29,7 @@
 import subprocess, os, shutil
 from functools import partial
 
+import advance.util.fileutil as UF
 import advance.util.pickling as AUP
 from advance.bin.Config import Config
 
@@ -50,6 +51,13 @@ class AnalysisManager(object):
         self.thirdpartysummaries = thirdpartysummaries
         self.unreachability = unreachability # use unreachability as justification for discharge
         self.verbose = verbose
+
+    def reset(self):
+        def f(fn):
+            for fi in UF.get_results_filenames(self.path,fn.getfile().getfilename(),fn.getname()):
+                if os.path.isfile(fi):
+                    os.remove(fi)
+        self.capp.functioniter(f)
 
     def create_file_primaryproofobligations(self,cfilename):
         try:
