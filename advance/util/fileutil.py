@@ -154,6 +154,16 @@ def save_spo_file(path,cfilename,fname,cnode):
     with open(filename,'w') as fp:
         fp.write(UX.doc_to_pretty(ET.ElementTree(header)))
 
+def get_results_filenames(path,cfilename,fname):
+    result = [
+        get_ppo_filename(path,cfilename,fname),
+        get_spo_filename(path,cfilename,fname),
+        get_pev_filename(path,cfilename,fname),
+        get_sev_filename(path,cfilename,fname),
+        get_api_filename(path,cfilename,fname),
+        get_invs_filename(path,cfilename,fname) ]
+    return result
+
 # --------------------------------------------------------------- source code --
 
 def get_src_filename(path,cfilename):
@@ -226,18 +236,52 @@ def get_juliet_reference(testname):
         d = json.load(fp)
     return d
 
+# ------------------------------------------------------------ svcomp ----------
+
+def get_svcomp_path():
+    return Config().svcompdir
+
+def get_svcomp_testpath(testname):
+    svcomppath = get_svcomp_path()
+    return os.path.join(os.path.join(svcomppath,'c'),testname)
+
+def get_svcomp_srcpath(testname):
+    return get_svcomp_testpath(testname)
+
+def unpack_src_i_tar_file(testname):
+    path = get_svcomp_testpath(testname)
+    os.chdir(path)
+    srctar = testname + '_src_i.tar.gz'
+    if os.path.isfile(srctar):
+        cmd = [ 'tar', 'xfz', srctar ]
+        result = subprocess.call(cmd,cwd=path,stderr=subprocess.STDOUT)
+        if result != 0:
+            print('Error in ' + ' '.join(cmd))
+            return False
+        else:
+            print('Successfully extracted ' + srctar)
+    else:
+        print('File ' + srctar + ' not found')
+        return False
+    return True
+
 # ------------------------------------------------------------ unzip tar file --
 
 def unpack_tar_file(path,deletesemantics=False):
-    os.chdir(path)
-    if os.path.isdir('semantics'):
-        if deletesemantics:
-            print('Removing existing semantics directory')
-            shutil.rmtree('semantics')
-        else:
-            return True
-
     targzfile = 'semantics_linux.tar.gz'
+    os.chdir(path)
+
+    if os.path.isfile(targzfile):
+        if os.path.isdir('semantics'):
+            if deletesemantics:
+                print('Removing existing semantics directory')
+                shutil.rmtree('semantics')
+            else:
+                return True
+    else:
+        print('Not deleting the semantics directory; no gzipped tar file found')
+        return False
+
     if os.path.isfile(targzfile):
         cmd = [ 'tar', 'xfz', targzfile ]
         result = subprocess.call(cmd,cwd=path,stderr=subprocess.STDOUT)
