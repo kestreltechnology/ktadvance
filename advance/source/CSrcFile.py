@@ -25,6 +25,8 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import os
+
 import advance.util.fileutil as UF
 
 class CSrcFile():
@@ -46,8 +48,12 @@ class CSrcFile():
 
     def _initialize(self):
         if len(self.lines) > 0: return
-        n = 1
-        with open(self.fname) as f:
-            for line in f:
-                self.lines[n] = line
-                n += 1
+        if os.path.isfile(self.fname):
+            print('Reading file ' + self.fname)
+            n = 1
+            with open(self.fname) as f:
+                for line in f:
+                    self.lines[n] = line
+                    n += 1
+        else:
+            print('Source file ' + self.fname + ' not found')
