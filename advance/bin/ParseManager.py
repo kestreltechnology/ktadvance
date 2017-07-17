@@ -187,7 +187,7 @@ class ParseManager():
             name = self.normalizefilename(n)
             if self.verbose:print('   Add ' + name + ' (' + str(cfiles[n]) + ' lines)')
             targetfiles.addfile(name)
-        targetfiles.savexml(self.tgtpath)
+        targetfiles.savexml(self.tgtxpath)
         linecount = sum(cfiles[n] for n in cfiles)
         if self.verbose: print('\nTotal ' + str(len(cfiles)) + ' files (' + str(linecount) + ' lines)')
         os.chdir(self.cpath)
@@ -203,7 +203,7 @@ class ParseManager():
                     basename = fname[:-2]
                     cfile = basename + '.c'
                     targetfiles.addfile(self.normalizefilename(cfile))
-        targetfiles.savexmlfile(self.tgtpath)
+        targetfiles.savexmlfile(self.tgtxpath)
 
     def parse_cfiles(self,copyfiles=True):
         os.chdir(self.cpath)
@@ -214,7 +214,7 @@ class ParseManager():
                     ifilename = self.preprocess_file_withgcc(fname,copyfiles)
                     self.parse_ifile(ifilename)
                     targetfiles.addfile(self.normalizefilename(fname))
-        targetfiles.savexmlfile(self.tgtpath)
+        targetfiles.savexmlfile(self.tgtxpath)
 
         
     def parse_ifile(self,ifilename):
