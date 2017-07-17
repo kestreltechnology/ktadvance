@@ -34,7 +34,10 @@ class ProofObligationDisplay():
         self.cline = self.fline
 
     def getsourceline(self,line):
-        return self.cfile.getsourceline(line).strip()
+        srcline = self.cfile.getsourceline(line)
+        if not srcline is None:
+            return self.cfile.getsourceline(line).strip()
+        return '?'
 
     def showppos(self):
         lines = []

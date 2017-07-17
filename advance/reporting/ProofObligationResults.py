@@ -31,9 +31,9 @@ dischargemethods = [ 'deadcode', 'stmt', 'local', 'api', 'post', 'open' ]
 
 class ProofObligationResults():
 
-    def __init__(self,results):
+    def __init__(self,results,taglen=24):
         self.results = results      # tag -> method -> count
-        self.taglen = 24
+        self.taglen = taglen
 
     def report(self):
         lines = []
