@@ -40,10 +40,10 @@ from __builtin__ import file
 class CApplication():
     '''Primary access point for source code and analysis results.'''
 
-    def __init__(self,path,cfilename=None):
+    def __init__(self,path,cfilename=None,srcpath=None):
         self.singlefile = not (cfilename is None)
         self.path = os.path.join(path,'ktadvance')
-        self.srcpath = os.path.join(path,'sourcefiles')
+        self.srcpath = os.path.join(path,'sourcefiles') if srcpath is None else srcpath
         self.filenames = {}          # file index -> filename
         self.files = {}              # filename -> CFile
         self.indexmanager = IndexManager(self.singlefile)
@@ -84,7 +84,8 @@ class CApplication():
             if self.filenames[i] == fname: return i
             
     def getsrcfile(self,fname):
-        return CSrcFile(self,os.path.join(self.srcpath,fname))
+        srcfile = os.path.join(self.srcpath,fname)
+        return CSrcFile(self,srcfile)
 
     '''return a list of ((fid,vid),callsitespos). '''
     def getcallsites(self,fid,vid):
