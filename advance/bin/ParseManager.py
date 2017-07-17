@@ -256,10 +256,10 @@ class TargetFiles():
         tgtroot = UX.get_xml_header('target_files','c-files')
         cfilesnode = ET.Element('c-files')
         tgtroot.append(cfilesnode)
-        for id in sorted(self.files):
+        for name in sorted(self.files):
             xcfile = ET.Element('c-file')
-            xcfile.set('name',self.files[id])
-            xcfile.set('id',str(id))
+            xcfile.set('name',name)
+            xcfile.set('id',str(self.files[name]))
             cfilesnode.append(xcfile)
         tgtfilename = os.path.join(tgtpath,'target_files.xml')
         with open(tgtfilename,'w') as fp:
