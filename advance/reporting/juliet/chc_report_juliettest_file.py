@@ -39,7 +39,7 @@ from advance.reporting.ProofObligationResults import ProofObligationResults
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('juliettest',help='relative path to juliet test')
-    parser.add_argument('cfilename',help='name of juliet c file (.e.g., id115.c)')
+    parser.add_argument('cfilename',help='name of juliet c file (.e.g., x01.c)')
     args = parser.parse_args()
     return args
 

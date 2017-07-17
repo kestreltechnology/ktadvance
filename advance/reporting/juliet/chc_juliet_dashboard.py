@@ -52,7 +52,9 @@ tests = [
     'CWE126/s01/CWE170_char_loopQ',
     'CWE126/s01/CWE170_char_memcpyQ',
     'CWE126/s01/CWE170_char_strncpyQ',
-    'CWE190/s01/char_fscanf_addQ'
+    'CWE127/s02/CWE839_negativeQ',
+    'CWE190/s01/char_fscanf_addQ',
+    'CWE191/s01/char_fscanf_multiplyQ'
     ]
 
 if __name__ == '__main__':
@@ -104,7 +106,7 @@ if __name__ == '__main__':
     perc = float(ppohandled)/float(ppototals) * 100.0
     print('\n\n                  violation      safe-control     total')
     print('-' * 80)
-    print('nppos'.ljust(10) + str(vppototals).rjust(15) + str(sppototals).rjust(15) + str(ppototals).rjust(15))
+    print('ppos'.ljust(10) + str(vppototals).rjust(15) + str(sppototals).rjust(15) + str(ppototals).rjust(15))
     print('handled'.ljust(10) + str(vppohandled).rjust(15) + str(sppohandled).rjust(15) + str(ppohandled).rjust(15))
     print('perc'.ljust(10)  + str('{:.1f}'.format(vperc)).rjust(15) + str('{:.1f}'.format(sperc)).rjust(15) +
               str('{:.1f}'.format(perc)).rjust(15))
