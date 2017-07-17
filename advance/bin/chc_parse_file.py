@@ -49,6 +49,9 @@ def parse():
                             help=('name of directory to save semantics files ' +
                                       '(default is same directory as filename)'),
                                       default=None)
+    parser.add_argument('--savesemantics',
+                            help='create gzipped tar file with semantics files',
+                            action='store-true')
     args = parser.parse_args()
     return args
 
@@ -88,6 +91,15 @@ if __name__ == '__main__':
         print('*' * 80)
         exit(1)
 
+    if args.savesemantics:
+        os.chdir(targetpath)
+        if os.path.isdir('semantics'):
+            print('Removing semantics directory')
+            shutil.rmtree('semantics')
+        if os.path.isfile('semantics_linux.tar.gz'):
+            print('Removing semantics_linux.tar.gz')
+            os.remove('semantics_linux.tar.gz')
+    
     parsemanager = ParseManager(cpath,targetpath)
     parsemanager.initializepaths()
 
@@ -107,3 +119,5 @@ if __name__ == '__main__':
         exit(1)
         
     
+    if args.savesemantics:
+        parsemanager.savesemantics()
