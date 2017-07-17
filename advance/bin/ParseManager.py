@@ -165,6 +165,7 @@ class ParseManager():
 
     def parse_with_ccommands(self,compilecommands,copyfiles=True):
         cfiles = {}
+        targetfiles = TargetFiles()
         for c in compilecommands:
             (cfilename,ifilename) = self.preprocess(c,copyfiles)
             cfilename = os.path.abspath(cfilename)
@@ -179,28 +180,42 @@ class ParseManager():
             if self.verbose : print('\nRun the parser: ' + str(command) + '\n')
             subprocess.call(command) if self.verbose else subprocess.call(command,stdout=open(os.devnull,'w'))
             if self.verbose: print('\n' + ('-' * 80) + '\n\n')
-        tgtroot = UX.get_xml_header('target_files','c-files')
-        cfilesnode = ET.Element('c-files')
-        tgtroot.append(cfilesnode)
         if self.verbose:print('\n\nCollect c files')
         cfilesnode.set('count',str(len(cfiles)))
-        counter = 1
         for n in cfiles:
             n = os.path.abspath(n)
             name = self.normalizefilename(n)
             if self.verbose:print('   Add ' + name + ' (' + str(cfiles[n]) + ' lines)')
-            cfile = ET.Element('c-file')
-            cfile.set('name',name)
-            cfile.set('id',str(counter))
-            counter += 1
-            cfilesnode.append(cfile)
-        tgtfilename = os.path.join(self.tgtxpath,'target_files.xml')
-        tgtfile = open(tgtfilename,'w')
-        tgtfile.write(UX.doc_to_pretty(ET.ElementTree(tgtroot)))
+            targetfiles.addfile(name)
+        targetfiles.savexml(self.tgtpath)
         linecount = sum(cfiles[n] for n in cfiles)
         if self.verbose: print('\nTotal ' + str(len(cfiles)) + ' files (' + str(linecount) + ' lines)')
         os.chdir(self.cpath)
         shutil.copy('compile_commands.json',self.tgtspath)
+
+    def parse_ifiles(self,copyfiles=True):
+        os.chdir(self.cpath)
+        targetfiles = TargetFiles()
+        for d,dnames,fnames in os.walk('./'):
+            for fname in fnames:
+                if fname.endswith('.i'):
+                    self.parse_ifile(fname)
+                    basename = fname[:-2]
+                    cfile = basename + '.c'
+                    targetfiles.addfile(self.normalizefilename(cfile))
+        targetfiles.savexmlfile(self.tgtpath)
+
+    def parse_cfiles(self,copyfiles=True):
+        os.chdir(self.cpath)
+        targetfiles = TargetFiles()
+        for d,dnames,fnames in os.walk('./'):
+            for fname in fnames:
+                if fname.endswith('.c'):
+                    ifilename = self.preprocess_file_withgcc(fname,copyfiles)
+                    self.parse_ifile(ifilename)
+                    targetfiles.addfile(self.normalizefilename(fname))
+        targetfiles.savexmlfile(self.tgtpath)
+
         
     def parse_ifile(self,ifilename):
         '''Invoke kt advance parser frontend on preprocessed source file
@@ -226,3 +241,26 @@ class ParseManager():
         if not os.path.isdir(self.sempath): os.mkdir(self.sempath)
         if not os.path.isdir(self.tgtxpath): os.mkdir(self.tgtxpath)
         if not os.path.isdir(self.tgtspath): os.mkdir(self.tgtspath)
+
+
+
+class TargetFiles():
+
+    def __init__(self):
+        self.files = {}
+
+    def addfile(self,fname):
+        self.files.setdefault(fname,len(self.files))
+
+    def savexmlfile(self,tgtpath):
+        tgtroot = UX.get_xml_header('target_files','c-files')
+        cfilesnode = ET.Element('c-files')
+        tgtroot.append(cfilesnode)
+        for id in sorted(self.files):
+            xcfile = ET.Element('c-file')
+            xcfile.set('name',self.files[id])
+            xcfile.set('id',str(id))
+            cfilesnode.append(xcfile)
+        tgtfilename = os.path.join(tgtpath,'target_files.xml')
+        with open(tgtfilename,'w') as fp:
+            fp.write(UX.doc_to_pretty(ET.ElementTree(tgtroot)))
