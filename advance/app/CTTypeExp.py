@@ -173,7 +173,7 @@ class CTTypeArray(T.CTTypeBase):
     def __str__(self):
         etype = self.getarraybasetype()
         sxpr = self.getarraysizeexpr()
-        if xsize is None:
+        if sxpr is None:
             size  = '?'
         else:
             size = str(sxpr)
@@ -221,10 +221,10 @@ class CTTypeFun(T.CTTypeBase):
 
     def equal(self,other):
         if T.CTTypeBase.equal(self,other):
-           if self.getreturntype().equal(other.getreturntype):
+            if self.getreturntype().equal(other.getreturntype()):
                 args = self.getargs()
                 otherargs = other.getargs()
-                if len(args) == len(otherargs):
+                if args and otherargs and len(args) == len(otherargs):
                     for (arg,otherarg) in zip(args,otherargs):
                         if not arg.equal(otherarg):
                             return False
@@ -232,7 +232,7 @@ class CTTypeFun(T.CTTypeBase):
                         return True
                 else:
                     return False
-           else:
+            else:
                 return False
         else:
             return False

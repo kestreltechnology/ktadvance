@@ -66,7 +66,7 @@ class CTTypeBase():
 
     def equal(self,other):
         t1 = self.expand()
-        t2 = self.expand()
+        t2 = other.expand()
         if t1 is None or t2 is None: return False
         return t1.gettag() == t2.gettag()
 
