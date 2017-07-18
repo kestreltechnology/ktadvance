@@ -38,7 +38,7 @@ import advance.util.xmlutil as UX
 class ParseManager():
     '''Utility functions to support preprocessing and parsing source code.'''
 
-    def __init__(self,cpath,tgtpath,nofilter=False,posix=False,verbose=True):
+    def __init__(self,cpath,tgtpath,nofilter=False,posix=False,verbose=True,tgtplatform='-m64'):
         '''Initialize paths to code, results, and parser executable.
 
         Args:
@@ -57,6 +57,12 @@ class ParseManager():
         self.tgtspath = os.path.join(self.sempath,'sourcefiles')   # for .c and .i files
         self.config = Config()
         self.verbose = verbose
+        self.tgtplatform = tgtplatform     # compile to 32 bit or 64 bit platform (default 64 bit)
+        if not (self.tgtplatform in [ '-m64', '-m32' ]):
+            printf('Warning: invalid target platform: ' + self.tgtplatform +
+                       '. Target platform is set to -m64')
+            self.tgtplatform = '-m64'
+
 
     def getsempath(self): return self.sempath
 
@@ -90,7 +96,7 @@ class ParseManager():
         macoptions = [ '-U___BLOCKS___',
                        '-D_DARWIN_C_SOURCE',
                        '-D_FORTIFY_SOURCE=0' ]
-        cmd = [ 'gcc', '-fno-inline', '-fno-builtin', '-E', '-g',
+        cmd = [ 'gcc', '-fno-inline', '-fno-builtin', '-E', '-g', self.tgtplatform ,
                 '-o', ifilename, cfilename ]
         if mac: cmd = cmd[:1] + macoptions + cmd[1:]
         if self.verbose: print('Preprocess file: ' + str(cmd))
@@ -117,6 +123,29 @@ class ParseManager():
             return filename[len(self.cpath)+1:]
         else:
             return filename
+
+    def hasplatform(self,cmd):
+        return ('-m32' in cmd) or ('-m64' in cmd)
+
+    def getplatformindex(self,cmd):
+        if '-m32' in cmd:
+            return cmd.index('-m32')
+        elif '-m64' in cmd:
+            return cmd.index('-m64')
+        else:
+            return (-1)
+
+    def setplatform(self,cmd):
+        index = self.getplatformindex(cmd)
+        if index >= 0:
+            platform = cmd[index]
+            if platform == self.tgtplatform:
+                return
+            else:
+                cmd[index] = self.tgtplatform
+        else:
+            cmd.append(self.tgtplatform)
+                
         
     def preprocess(self,ccommand,copyfiles=True):
         if self.verbose: print('\n\n' + ('=' * 80))
@@ -145,6 +174,7 @@ class ParseManager():
             ecommand.append('-fno-inline')
             ecommand.append('-fno-builtin')
             ecommand.append('-fno-asm')
+            self.setplatform(ecommand)
             if self.verbose: print('\nIssue command: ' + str(ecommand) + '\n')
             p = subprocess.call(ecommand,cwd=ccommand['directory'],stderr=subprocess.STDOUT) if self.verbose else subprocess.call(ecommand,cwd=ccommand['directory'],stdout=open(os.devnull, 'w'),stderr=subprocess.STDOUT)
             if self.verbose: print('result: ' + str(p))
