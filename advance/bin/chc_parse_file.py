@@ -28,6 +28,7 @@
 import argparse
 import json
 import os
+import shutil
 
 from advance.bin.Config import Config
 from advance.bin.ParseManager import ParseManager
@@ -51,7 +52,7 @@ def parse():
                                       default=None)
     parser.add_argument('--savesemantics',
                             help='create gzipped tar file with semantics files',
-                            action='store-true')
+                            action='store_true')
     args = parser.parse_args()
     return args
 

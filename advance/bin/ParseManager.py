@@ -99,6 +99,8 @@ class ParseManager():
         if copyfiles:
             tgtcfilename = os.path.join(self.tgtspath,cfilename)
             tgtifilename = os.path.join(self.tgtspath,ifilename)
+            if not os.path.isdir(os.path.dirname(tgtcfilename)):
+                os.makedirs(os.path.dirname(tgtcfilename))
             os.chdir(self.cpath)
             if cfilename != tgtcfilename:
                 shutil.copy(cfilename,tgtcfilename)
@@ -196,7 +198,7 @@ class ParseManager():
     def parse_ifiles(self,copyfiles=True):
         os.chdir(self.cpath)
         targetfiles = TargetFiles()
-        for d,dnames,fnames in os.walk('./'):
+        for d,dnames,fnames in os.walk(self.cpath):
             for fname in fnames:
                 if fname.endswith('.i'):
                     self.parse_ifile(fname)
@@ -208,9 +210,11 @@ class ParseManager():
     def parse_cfiles(self,copyfiles=True):
         os.chdir(self.cpath)
         targetfiles = TargetFiles()
-        for d,dnames,fnames in os.walk('./'):
+        for d,dnames,fnames in os.walk(self.cpath):
             for fname in fnames:
                 if fname.endswith('.c'):
+                    fname = self.normalizefilename(os.path.join(d,fname))
+                    if fname.startswith('semantics'): continue
                     ifilename = self.preprocess_file_withgcc(fname,copyfiles)
                     self.parse_ifile(ifilename)
                     targetfiles.addfile(self.normalizefilename(fname))
