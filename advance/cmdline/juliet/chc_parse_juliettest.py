@@ -32,8 +32,8 @@ import os
 import subprocess
 import shutil
 
-from advance.bin.Config import Config
-from advance.bin.ParseManager import ParseManager
+from advance.util.Config import Config
+from advance.cmdline.ParseManager import ParseManager
 
 import advance.util.fileutil as UF
 

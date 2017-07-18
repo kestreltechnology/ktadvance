@@ -34,8 +34,8 @@ from contextlib import contextmanager
 import advance.util.fileutil as UF
 
 from advance.app.CApplication import CApplication
-from advance.bin.AnalysisManager import AnalysisManager
-from advance.bin.Config import Config
+from advance.cmdline.AnalysisManager import AnalysisManager
+from advance.util.Config import Config
 from advance.linker.CLinker import CLinker
 
 def parse():

@@ -25,7 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.reporting.juliet.JulietTestFileRef import JulietTestFileRef
+from advance.cmdline.juliet.JulietTestFileRef import JulietTestFileRef
 
 class JulietTestRef():
 

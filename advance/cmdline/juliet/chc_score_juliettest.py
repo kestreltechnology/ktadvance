@@ -35,7 +35,7 @@ from advance.app.CApplication import CApplication
 from advance.reporting.ProofObligationResults import ProofObligationResults
 from advance.reporting.ProofObligationDisplay import ProofObligationDisplay
 
-from advance.reporting.juliet.JulietTestSetRef import JulietTestSetRef
+from advance.cmdline.juliet.JulietTestSetRef import JulietTestSetRef
 
 def parse():
     parser = argparse.ArgumentParser()
