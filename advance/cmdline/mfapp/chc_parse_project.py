@@ -41,6 +41,8 @@ def parse():
     parser.add_argument('--targetdir',
                             help='directory to save the semantics files (default is the projectdir)',
                             default=None)
+    parser.add_argument('--maketarget',
+                            help='target to be provided in the call to make', default=None)
     parser.add_argument('--savesemantics',help='create gzipped tar file with semantics files',
                         action='store_true')
     parser.add_argument('--nofilter',help='do not filter out files with absolute filenames',
@@ -124,6 +126,7 @@ if __name__ == '__main__':
             exit(1)
 
     bearcmd = [ 'bear', 'make' ]
+    if not args.maketarget is None: bearcmd.append(args.maketarget)
     p = subprocess.call(bearcmd, cwd=cpath,stderr=subprocess.STDOUT)
     if p != 0:
         print('*' * 80)

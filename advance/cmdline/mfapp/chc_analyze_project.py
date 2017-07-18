@@ -58,8 +58,9 @@ def parse():
     return args
 
 def invokelinker(path):
-    cmd = [ 'python', 'chc_link.py', args.path ]
-    result = subprocess.call(cmd,cwd=Config().bindir,stderr=subprocess.STDOUT)
+    cmd = [ 'python', 'chc_link_project.py', path ]
+    thisdir = os.path.join(os.path.join(Config().rootdir,'cmdline'),'mfapp')
+    result = subprocess.call(cmd,cwd=thisdir,stderr=subprocess.STDOUT)
     if result != 0:
         print('Error in linking')
         exit(1)
@@ -93,13 +94,13 @@ if __name__ == '__main__':
         print('*' * 80)
         exit(1)
         
-    semdir = os.path.join(args.path,'semantics')
+    semdir = os.path.join(cpath,'semantics')
     if not os.path.isdir(semdir):
-        success = UF.unpack_tar_file(args.path)
+        success = UF.unpack_tar_file(cpath)
         if not success:
             print('*' * 80)
             print('No semantic files found in directory')
-            print('   ' + args.path)
+            print('   ' + cpath)
             print('*' * 80)
             exit(1)
         else:
@@ -108,7 +109,7 @@ if __name__ == '__main__':
     # check linkinfo
     globaldefs = os.path.join(semdir,os.path.join('ktadvance','globaldefinitions.xml'))
     if not os.path.isfile(globaldefs):
-        invokelinker(args.path)
+        invokelinker(cpath)
     
     capp = CApplication(semdir)
     am = AnalysisManager(capp,nofilter=args.nofilter)
