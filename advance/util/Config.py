@@ -49,5 +49,8 @@ class Config():
         if self.platform == 'mac':
             self.cparser = os.path.join(self.binariesdir,'parseFile_mac')
             self.canalyzer = os.path.join(self.binariesdir,'ktadvance_mac')
+        self.canalyzer = '/Users/henny/repo/CodeHawk/CHC/cchcmdline/canalyzer'
 
+        '''other repositories'''
+        self.svcompdir = os.path.join(self.testdir,'svcomp')
         
