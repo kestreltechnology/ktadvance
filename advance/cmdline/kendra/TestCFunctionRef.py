@@ -25,8 +25,8 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.bin.kendra.TestPPORef import TestPPORef
-from advance.bin.kendra.TestSPORef import TestSPORef
+from advance.cmdline.kendra.TestPPORef import TestPPORef
+from advance.cmdline.kendra.TestSPORef import TestSPORef
 
 class TestCFunctionRef():
 

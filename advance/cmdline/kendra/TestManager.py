@@ -75,11 +75,11 @@ class AnalyzerMissingError(Exception):
     def __str__(self):
         return self.msg
 
-from advance.bin.AnalysisManager import AnalysisManager
-from advance.bin.Config import Config
-from advance.bin.ParseManager import ParseManager
-from advance.bin.kendra.TestResults import TestResults
-from advance.bin.kendra.TestSetRef import TestSetRef
+from advance.cmdline.AnalysisManager import AnalysisManager
+from advance.util.Config import Config
+from advance.cmdline.ParseManager import ParseManager
+from advance.cmdline.kendra.TestResults import TestResults
+from advance.cmdline.kendra.TestSetRef import TestSetRef
 
 class TestManager():
     '''Provides utility functions to support regression and platform tests.

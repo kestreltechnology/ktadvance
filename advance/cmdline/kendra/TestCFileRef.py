@@ -26,7 +26,7 @@
 # ------------------------------------------------------------------------------
 
 
-from advance.bin.kendra.TestCFunctionRef import TestCFunctionRef
+from advance.cmdline.kendra.TestCFunctionRef import TestCFunctionRef
 
 class TestCFileRef():
 

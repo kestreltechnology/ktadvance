@@ -52,7 +52,7 @@ import argparse
 import json
 import os
 
-from advance.bin.Config import Config
+from advance.util.Config import Config
 
 kendra = os.path.join(os.path.join(Config().testdir,'sard'),'kendra')
 testcases = [ (i,'id' + str(i) + 'Q') for i in range(115,394,4) ]

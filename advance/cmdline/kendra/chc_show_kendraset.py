@@ -29,8 +29,8 @@ import argparse
 import json
 import os
 
-from advance.bin.Config import Config
-from advance.bin.kendra.TestSetRef import TestSetRef
+from advance.util.Config import Config
+from advance.cmdline.kendra.TestSetRef import TestSetRef
 
 def parse():
     usage = ('\nCall with the directory name of one of the subdirectories in\n' +

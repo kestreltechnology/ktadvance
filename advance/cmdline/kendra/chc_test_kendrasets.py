@@ -31,11 +31,11 @@ import os
 
 import advance.util.fileutil as UF
 
-from advance.bin.Config import Config
-from advance.bin.ParseManager import ParseManager
-from advance.bin.kendra.TestManager import TestManager
-from advance.bin.kendra.TestManager import FileParseError
-from advance.bin.kendra.TestManager import AnalyzerMissingError
+from advance.util.Config import Config
+from advance.cmdline.ParseManager import ParseManager
+from advance.cmdline.kendra.TestManager import TestManager
+from advance.cmdline.kendra.TestManager import FileParseError
+from advance.cmdline.kendra.TestManager import AnalyzerMissingError
 
 def parse():
     parser = argparse.ArgumentParser()

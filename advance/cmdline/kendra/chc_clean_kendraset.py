@@ -28,8 +28,8 @@
 import argparse
 import os
 
-from advance.bin.Config import Config
-from advance.bin.kendra.TestManager import TestManager
+from advance.util.Config import Config
+from advance.cmdline.kendra.TestManager import TestManager
 
 def parse():
     parser = argparse.ArgumentParser()
