@@ -33,9 +33,9 @@ from contextlib import contextmanager
 
 import advance.util.fileutil as UF
 
-from advance.bin.Config import Config
+from advance.util.Config import Config
 from advance.app.CApplication import CApplication
-from advance.bin.AnalysisManager import AnalysisManager
+from advance.cmdline.AnalysisManager import AnalysisManager
 
 def parse():
     usage = ('\nCall with the name of the directory that holds the semantics directory and\n' +

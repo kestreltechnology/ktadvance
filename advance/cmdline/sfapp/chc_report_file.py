@@ -31,7 +31,7 @@ import os
 import advance.util.printutil as UP
 import advance.util.fileutil as UF
 
-from advance.bin.Config import Config
+from advance.util.Config import Config
 from advance.app.CApplication import CApplication
 from advance.reporting.ProofObligationDisplay import ProofObligationDisplay
 from advance.reporting.ProofObligationResults import ProofObligationResults
