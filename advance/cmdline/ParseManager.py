@@ -213,13 +213,12 @@ class ParseManager():
             subprocess.call(command) if self.verbose else subprocess.call(command,stdout=open(os.devnull,'w'))
             if self.verbose: print('\n' + ('-' * 80) + '\n\n')
         if self.verbose:print('\n\nCollect c files')
-        cfilesnode.set('count',str(len(cfiles)))
         for n in cfiles:
             n = os.path.abspath(n)
             name = self.normalizefilename(n)
             if self.verbose:print('   Add ' + name + ' (' + str(cfiles[n]) + ' lines)')
             targetfiles.addfile(name)
-        targetfiles.savexml(self.tgtxpath)
+        targetfiles.savexmlfile(self.tgtxpath)
         linecount = sum(cfiles[n] for n in cfiles)
         if self.verbose: print('\nTotal ' + str(len(cfiles)) + ' files (' + str(linecount) + ' lines)')
         os.chdir(self.cpath)
@@ -295,6 +294,7 @@ class TargetFiles():
             xcfile.set('name',name)
             xcfile.set('id',str(self.files[name]))
             cfilesnode.append(xcfile)
+        cfilesnode.set('file-count',str(len(self.files)))
         tgtfilename = os.path.join(tgtpath,'target_files.xml')
         with open(tgtfilename,'w') as fp:
             fp.write(UX.doc_to_pretty(ET.ElementTree(tgtroot)))
