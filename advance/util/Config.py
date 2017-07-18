@@ -37,8 +37,9 @@ class Config():
             self.platform = 'mac'
 
         '''general settings'''
-        self.bindir = os.path.dirname(os.path.abspath(__file__))   # advance/bin
-        self.rootdir = os.path.dirname(self.bindir)                # advance
+        self.utildir = os.path.dirname(os.path.abspath(__file__))   # advance/util
+        self.rootdir = os.path.dirname(self.utildir)                # advance
+        self.bindir = os.path.join(self.rootdir,'bin')
         self.topdir = os.path.dirname(self.rootdir)
         self.testdir = os.path.join(self.topdir,'tests')
         summariesdir = os.path.join(self.rootdir,'summaries')
