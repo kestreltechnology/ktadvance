@@ -28,6 +28,9 @@
 from advance.proof.CPOPredicate import CPOPredicate
 from advance.proof.CPOPredicateAllocationBase import CPOPredicateAllocationBase
 from advance.proof.CPOPredicateCast import CPOPredicateCast
+from advance.proof.CPOPredicateCommonBase import CPOPredicateCommonBase
+from advance.proof.CPOPredicateCommonBaseType import CPOPredicateCommonBaseType
+from advance.proof.CPOPredicateFormatString import CPOPredicateFormatString
 from advance.proof.CPOPredicateGlobalMem import CPOPredicateGlobalMem
 from advance.proof.CPOPredicateIndexLowerBound import CPOPredicateIndexLowerBound
 from advance.proof.CPOPredicateIndexUpperBound import CPOPredicateIndexUpperBound
@@ -36,13 +39,17 @@ from advance.proof.CPOPredicateInitializedRange import CPOPredicateInitializedRa
 from advance.proof.CPOPredicateIntOverflow import CPOPredicateIntOverflow
 from advance.proof.CPOPredicateIntUnderflow import CPOPredicateIntUnderflow
 from advance.proof.CPOPredicateNotNull import CPOPredicateNotNull
+from advance.proof.CPOPredicateNotZero import CPOPredicateNotZero
 from advance.proof.CPOPredicateNonNegative import CPOPredicateNonNegative
 from advance.proof.CPOPredicateNullTerminated import CPOPredicateNullTerminated
 from advance.proof.CPOPredicatePointerCast import CPOPredicatePointerCast
 from advance.proof.CPOPredicatePtrLowerBound import CPOPredicatePtrLowerBound
 from advance.proof.CPOPredicatePtrUpperBound import CPOPredicatePtrUpperBound
 from advance.proof.CPOPredicatePtrUpperBoundDeref import CPOPredicatePtrUpperBoundDeref
+from advance.proof.CPOPredicateSignedToUnsignedCast import CPOPredicateSignedToUnsignedCast
+from advance.proof.CPOPredicateUnsignedToSignedCast import CPOPredicateUnsignedToSignedCast
 from advance.proof.CPOPredicateValidMem import CPOPredicateValidMem
+from advance.proof.CPOPredicateValueConstraint import CPOPredicateValueConstraint
 from advance.proof.CPOPredicateWidthOverflow import CPOPredicateWidthOverflow
 from advance.proof.CPOPredicateLowerBound import CPOPredicateLowerBound
 from advance.proof.CPOPredicateUpperBound import CPOPredicateUpperBound
@@ -54,6 +61,12 @@ def getpredicate(ctxt,pnode,subst={}):
         return CPOPredicateAllocationBase(ctxt,pnode,subst)
     if tag == 'cast':
         return CPOPredicateCast(ctxt,pnode,subst)
+    if tag == 'common-base':
+        return CPOPredicateCommonBase(ctxt,pnode,subst)
+    if tag == 'common-base-type':
+        return CPOPredicateCommonBaseType(ctxt,pnode,subst)
+    if tag == 'format-string':
+        return CPOPredicateFormatString(ctxt,pnode,subst)
     if tag == 'index-lower-bound':
         return CPOPredicateIndexLowerBound(ctxt,pnode,subst)
     if tag == 'index-upper-bound':
@@ -68,6 +81,8 @@ def getpredicate(ctxt,pnode,subst={}):
         return CPOPredicateIntUnderflow(ctxt,pnode,subst)
     if tag == 'not-null':
         return CPOPredicateNotNull(ctxt,pnode,subst)
+    if tag == 'not-zero':
+        return CPOPredicateNotZero(ctxt,pnode,subst)
     if tag == 'pointer-cast':
         return CPOPredicatePointerCast(ctxt,pnode,subst)
     if tag =='valid-mem':
@@ -84,8 +99,14 @@ def getpredicate(ctxt,pnode,subst={}):
         return CPOPredicateNonNegative(ctxt,pnode,subst)
     if tag == 'lower-bound':
         return CPOPredicateLowerBound(ctxt,pnode,subst)
+    if tag == 'signed-to-unsigned-cast':
+        return CPOPredicateSignedToUnsignedCast(ctxt,pnode,subst)
+    if tag == 'unsigned-to-signed-cast':
+        return CPOPredicateUnsignedToSignedCast(ctxt,pnode,subst)
     if tag == 'upper-bound':
         return CPOPredicateUpperBound(ctxt,pnode,subst)
+    if tag == 'value-constraint':
+        return CPOPredicateValueConstraint(ctxt,pnode,subst)
     if tag == 'null-terminated':
         return CPOPredicateNullTerminated(ctxt,pnode,subst)
     if tag == 'no-overlap':
