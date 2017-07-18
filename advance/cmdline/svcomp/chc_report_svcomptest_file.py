@@ -31,7 +31,7 @@ import os
 import advance.util.printutil as UP
 import advance.util.fileutil as UF
 
-from advance.bin.Config import Config
+from advance.util.Config import Config
 from advance.app.CApplication import CApplication
 from advance.reporting.ProofObligationDisplay import ProofObligationDisplay
 from advance.reporting.ProofObligationResults import ProofObligationResults
@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
     sempath = os.path.join(testpath,'semantics')
     srcpath = UF.get_svcomp_srcpath(args.svcomptest)
-    cfapp = CApplication(sempath,cfilename,srcpath=srcpath)
+    cfapp = CApplication(sempath,cfilename)
     cfile = cfapp.getcfile()
 
     def f(cfun):
