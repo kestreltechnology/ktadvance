@@ -32,9 +32,16 @@ import advance.app.COffset as O
 import advance.app.CTTypeBase as T
 import advance.app.CExpConst as C
 
+from advance.app.CLocation import CLocation
+
 operatorstrings = {
+    "band": "&",
+    "div": "/",
+    "gt": ">",
+    "minusa": "-",
+    "mult": "*",
     "plusa": "+",
-    "minusa": "-"
+    "shiftrt": ">>"
     }
 
 def getoperatorstring(op):
@@ -106,9 +113,9 @@ def getoffset(ctxt,xnode):
     if xnode[0].tag == 'index': return CIndexOffset(ctxt,xnode)
     return O.COffset(ctxt,xnode)
 
-def getlhost(ctxt,xnode):
+def getlhost(ctxt,xnode,subst={}):
     if xnode[0].tag == 'var': return B.CLHostVar(ctxt,xnode.find('var'))
-    if xnode[0].tag == 'mem': return CLHostMem(ctxt,xnode.find('mem'))
+    if xnode[0].tag == 'mem': return CLHostMem(ctxt,xnode.find('mem'),subst)
 
         
 class CTTypePtr(T.CTTypeBase):
@@ -195,6 +202,12 @@ class CTTypeFunArg():
     def equal(self,other):
         return ((self.getname() == other.getname()) and
                     self.gettype().equal(other.gettype()))
+
+    def writexml(self,cnode):
+        tnode = ET.Element('typ')
+        self.gettype().writexml(tnode)
+        cnode.append(tnode)
+        cnode.set('aname',self.getname())
         
 
 class CTTypeFun(T.CTTypeBase):
@@ -209,12 +222,13 @@ class CTTypeFun(T.CTTypeBase):
 
     def hasargs(self):
         args = self.xnode.find('args')
-        return (not args is None)
+        if args is None: return False
+        return (len(args.findall('arg')) > 0)
 
     def getargs(self):
         args = self.xnode.find('args')
         if not args is None:
-            [ CTTypeFunArg(self.ctxt,a) for a in args.findall('arg') ]
+            return [ CTTypeFunArg(self.ctxt,a) for a in args.findall('arg') ]
             
     def isvararg(self):
         return self.xnode.get("vararg") == "true"
@@ -236,6 +250,20 @@ class CTTypeFun(T.CTTypeBase):
                 return False
         else:
             return False
+
+    def writexml(self,cnode):
+        T.CTTypeBase.writexml(self,cnode)
+        tnode = ET.Element('typ')
+        self.getreturntype().writexml(tnode)
+        cnode.append(tnode)
+        aanode = ET.Element('args')
+        cnode.append(aanode)
+        if self.hasargs():
+            for a in self.getargs():
+                anode = ET.Element('a')
+                a.writexml(anode)
+                aanode.append(anode)
+        cnode.set('vararg',self.xnode.get('vararg'))
 
 
 class CExpConstant(B.CExpBase):
@@ -306,7 +334,7 @@ class CLval():
         self.xnode = xnode
         self.subst = subst
 
-    def getlhost(self): return getlhost(self.ctxt,self.xnode.find('lhost'))
+    def getlhost(self): return getlhost(self.ctxt,self.xnode.find('lhost'),self.subst)
 
     def getoffset(self): return getoffset(self.ctxt,self.xnode.find('offset'))
 
@@ -501,6 +529,24 @@ class CExpUnOp(B.CExpBase):
     def __init__(self,ctxt,xnode,subst={}):
         B.CExpBase.__init__(self,ctxt,xnode,subst)
 
+    def getexp(self): return getexp(self.ctxt,self.xnode.find('exp'),self.subst)
+
+    def gettype(self): return gettype(self.ctxt,self.xnode.find('typ'))
+
+    def getunop(self): return self.xnode.get('unop')
+
+    def writexml(self,cnode):
+        B.CExpBase.writexml(self,cnode)
+        tnode = ET.Element('typ')
+        enode = ET.Element('exp')
+        self.gettype().writexml(tnode)
+        self.getexp().writexml(enode)
+        cnode.extend([ tnode, enode ])
+        cnode.set('unop',self.getunop())
+
+    def __str__(self):
+        return ( '(' + getoperatorstring(self.getunop()) + ' (' + str(self.getexp()) + '))' )
+
 
 class CExpBinOp(B.CExpBase):
 
@@ -579,8 +625,29 @@ class CExpFnApp(B.CExpBase):
             return substx
         return self.getfn()
 
+    def getlocation(self):
+        return CLocation(self.xnode)
+
     def getfn(self):
         return getexp(self.ctxt, self.xnode.find('fn'),self.subst)
+
+    def getargs(self):
+        args = self.xnode.findall('arg')
+        return [ getexp(self.ctxt,x,self.subst) for x in args ]
+
+    def writexml(self,cnode):
+        B.CExpBase.writexml(self,cnode)
+        print(str(cnode.attrib))
+        self.getlocation().writexml(cnode)
+        print(str(cnode.attrib))
+        fnode = ET.Element('fn')
+        self.getexp().writexml(fnode)
+        cnode.append(fnode)
+        for a in self.getargs():
+            enode = ET.Element('arg')
+            a.writexml(enode)
+            cnode.append(enode)
+
 
     def __str__(self): return 'apply ' + str(self.getexp())
 

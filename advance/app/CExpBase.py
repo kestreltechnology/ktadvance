@@ -69,8 +69,8 @@ class CExpBase():
     def hasvariable(self,vname): return False
 
     def writexml(self,cnode):
-        cnode.set('etag',self.gettag())
-        if 'xstr' in self.xnode.attrib:
+        cnode.set('etag',str(self.gettag()))
+        if 'xstr' in self.xnode.attrib and len(self.subst) == 0:
             cnode.set('xstr',self.xnode.get('xstr'))
 
     def hashtag(self):

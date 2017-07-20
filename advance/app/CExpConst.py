@@ -146,7 +146,10 @@ class CChrConstant(CConstantBase):
         CConstantBase.__init__(self,ctxt,xnode)
 
     def getcharvalue(self):
-        return int(self.xnode.get('charValue'))
+        if 'charValue' in self.xnode.attrib:
+            return int(self.xnode.get('charValue'))
+        else:
+            return (-1)
 
     def equal(self,other):
         if CConstantBase.equal(self,other):
@@ -155,8 +158,15 @@ class CChrConstant(CConstantBase):
 
     def isconstantvalue(self): return True
 
+    def writexml(self,cnode):
+        CConstantBase.writexml(self,cnode)
+        set('charValue',str(self.getcharvalue()))
+
     def __str__(self):
-        return ('\'' + chr(self.getcharvalue()) + '\'')
+        if not self.getcharvalue() is None and self.getcharvalue() >= 0:
+            return ('\'' + chr(self.getcharvalue()) + '\'')
+        else:
+            return '----no charvalue found----'
 
 
 class CRealConstant(CConstantBase):
@@ -174,7 +184,12 @@ class CRealConstant(CConstantBase):
             return self.getrealvalue() == other.getrealvalue()
         return False
 
+    def writexml(self,cnode):
+        CConstantBase.writexml(self,cnode)
+        cnode.set('fkind',self.getfkind())
+        cnode.set('floatValue',self.xnode.get('floatValue'))
+
     def __str__(self):
-        return str(self.getrealvalue())
+        return str(self.xnode.get('floatValue'))
         
 
