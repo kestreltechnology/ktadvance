@@ -176,32 +176,19 @@ class CApplication():
     def getfile_ppo_results(self,filename):
         return self.file(filename).get_ppo_results()
 
-    def get_ppo_methods(self):
-        results = {}
-        def add(m,v):
-            if not m in results: results[m] = 0
-            results[m] += v
-        def f(cfile):
-            fileresults = cfile.get_ppo_methods()
-            for m in fileresults:
-                add(m,fileresults[m])
-        self.fileiter(f)
-        return results
+    def get_ppos(self):
+        result = []
+        def f(fn): result.extend(fn.get_ppos())
+        def g(fi): fi.fniter(f)
+        self.fileiter(g)
+        return result
 
-    def get_ppo_results(self,filefilterout=[]):
-        results = {}
-        def add(t,m,v):
-            if not t in results: results[t] = {}
-            if not m in results[t]: results[t][m] = 0
-            results[t][m] += v
-        def f(file):
-            if file.getfilename() in filefilterout: return
-            fileresults = file.get_ppo_results()
-            for tag in fileresults:
-                for m in fileresults[tag]:
-                    add(tag,m,fileresults[tag][m])
-        self.fileiter(f)
-        return results
+    def get_spos(self):
+        result = []
+        def f(fn): result.extend(fn.get_spos())
+        def g(fi): fi.fniter(f)
+        self.fileiter(g)
+        return result
 
     def get_open_ppos(self):
         results = {}
