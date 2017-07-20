@@ -25,42 +25,23 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-import xml.etree.ElementTree as ET
 
-import advance.proof.CPOUtil as P
-import advance.util.printutil as UP
+class CFunctionPOs():
+    '''Superclass of CFunctionPPOs and CFunctionSPOs.'''
 
-from advance.proof.CFunctionPO import CFunctionPO
+    def __init__(self,cproofs):
+        self.cproofs = cproofs
 
-class CFunctionCallsiteSPO(CFunctionPO):
-    '''Represents a secondary proof obligation associated with a call site.'''
+    def getfunction(self):
+        return self.cproofs.getfunction()
 
-    def __init__(self,csspos,spoid,apiid,pred):
-        CFunctionPO.__init__(self,csspos.cspos)
-        self.csspos = csspos               # CFunctionCallsiteSPOs
-        self.spoid = spoid                 # string
-        self.apiid = apiid                 # string
-        self.pred = pred                   # CPOPredicate
+    def getfile(self):
+        return self.getfunction().getfile()
 
-    def getid(self): return self.spoid
+    def is_ppo_discharged(self,id): return self.cproofs.is_ppo_discharged(id)
 
-    def get_api_id(self): return self.apiid
-        
-    def getlocation(self): return self.ccspos.getlocation()
+    def is_spo_discharged(self,id): return self.cproofs.is_spo_discharged(id)
 
-    def getcontext(self): return self.ccspos.getcontext()
+    def get_ppo_evidence(self,id): return self.cproofs.get_ppo_evidence(id)
 
-    def getpredicatetag(self): return self.pred.gettag()
-
-    def hashstr(self): return self.pred.hashstr()
-
-    def getcfgcontextstring(self): return self.getcontext().getcfgcontextstring()
-
-    def getpredicate(self): return self.pred
-
-    def writexml(self,cnode):
-        pnode = ET.Element('predicate')
-        self.getpredicate().writexml(pnode)
-        cnode.set('id',self.getid())
-        cnode.set('api-id',self.get_api_id())
-        cnode.append(pnode)
+    def get_spo_evidence(self,id): return self.cproofs.get_spo_evidence(id)

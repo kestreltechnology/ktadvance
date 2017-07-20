@@ -137,14 +137,6 @@ class CFunctionProofs():
         self._getsevs()
         return self.sevs.get_evidence(spoid)
 
-    def get_ppo_methods(self):
-        self._getppos()
-        return self.ppos.get_ppo_methods()
-
-    def get_ppo_results(self): 
-        self._getppos()
-        return self.ppos.getresults()
-
     def get_open_ppos(self):
         result = {}
         def f(ppo):

@@ -26,15 +26,16 @@
 # ------------------------------------------------------------------------------
 
 from advance.proof.CFunctionPPO import CFunctionPPO
+from advance.proof.CFunctionPOs import CFunctionPOs
 
 import advance.util.printutil as UP
 
-class CFunctionPPOs():
+class CFunctionPPOs(CFunctionPOs):
 
     '''Represents the set of primary proof obligations for a function.'''
 
     def __init__(self,cproofs,xnode):
-        self.cproofs = cproofs
+        CFunctionPOs.__init__(self,cproofs)
         self.xnode = xnode
         self.ppos = {}                   # ppoid -> CFunctionPPO
         self._initialize()
@@ -46,43 +47,6 @@ class CFunctionPPOs():
         for ppo in sorted(self.ppos,key=lambda(p):(self.ppos[p].getlocation().getline(),
                                                        int(self.ppos[p].getid()))): 
             f(self.ppos[ppo])
-
-    def get_ppo_methods(self):
-        '''Return a dictionary of method -> count.'''
-        results = {}
-        def add(m):
-            if not m in results: results[m] = 0
-            results[m] += 1
-        for ppoid in self.ppos:
-            if self.cproofs.is_ppo_discharged(ppoid):
-                pev = self.cproofs.get_ppo_evidence(ppoid)
-                if pev.isdelegated():
-                    add(pev.getassumptiontype())
-                else:
-                    add(pev.getdischargemethod())
-            else:
-                add('open')
-        return results
-
-    def getresults(self):
-        '''Return a dictionary of predicate tag -> method -> count.'''
-        results = {}
-        def add(t,m):
-            if not t in results: results[t] = {}
-            if not m in results[t]: results[t][m] = 0
-            results[t][m] += 1
-        for ppoid in self.ppos:
-            tag = self.ppos[ppoid].getpredicatetag()
-            if self.cproofs.is_ppo_discharged(ppoid):
-                pev = self.cproofs.get_ppo_evidence(ppoid)
-                if pev.isdelegated():
-                    add(tag,pev.getassumptiontype())
-                else:
-                    add(tag,pev.getdischargemethod())
-            else:
-                add(tag,'open')
-        return results
-        
 
     def _initialize(self):
         for p in self.xnode.find('primary-proof-obligations').findall('proof-obligation'):

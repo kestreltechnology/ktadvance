@@ -30,12 +30,14 @@ import xml.etree.ElementTree as ET
 import advance.proof.CPOUtil as P
 import advance.util.printutil as UP
 
-class CFunctionReturnsiteSPO():
+from advance.proof.CFunctionPO import CFunctionPO
+
+class CFunctionReturnsiteSPO(CFunctionPO):
     '''Represents a secondary proof obligation associated with a return site.'''
 
     def __init__(self,crspos,spoid,rqid,pred):
+        CFunctionPO.__init__(self,crspos.cspos)
         self.crspos = crspos      # CFunctionReturnsiteSPOs
-        self.cfun = crspos.cfun
         self.spoid = spoid
         self.rqid = rqid
         self.pred = pred          # CPOPredicate
@@ -45,8 +47,6 @@ class CFunctionReturnsiteSPO():
     def getrequestid(self): return self.rqid
 
     def getlocation(self): return self.crspos.getlocation()
-
-    def getline(self): return self.crspos.getline()
 
     def getcontext(self): return self.crspos.getcontext()
 
@@ -58,26 +58,9 @@ class CFunctionReturnsiteSPO():
 
     def getcfgcontextstring(self): return self.getcontext().getcfgcontextstring()        
 
-    def isdischarged(self):
-        return self.crspos.cproofs.is_spo_discharged(self.getid())
-
-    def getevidence(self):
-        if self.isdischarged():
-            return self.crspos.cproofs.get_spo_evidence(self.getid())
-
-    def getstatus(self):
-        if self.isdischarged():
-            return self.getevidence().getstatus()
-        return 'unknown'
-
     def writexml(self,cnode):
         pnode = ET.Element('predicate')
         self.getpredicate().writexml(pnode)
         cnode.set('id',self.getid())
         cnode.set('rq-id',self.getrequestid())
         cnode.append(pnode)
-
-    def __str__(self):
-        return (str(self.getid()).rjust(4) + '  ' +
-                    str(self.getline()).rjust(5) + '  ' +
-                    str(self.getpredicate()).ljust(20))

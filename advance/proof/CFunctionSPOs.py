@@ -35,18 +35,18 @@ import advance.proof.CPOUtil as P
 from advance.proof.CFunctionCallsiteSPOs import CFunctionCallsiteSPOs
 from advance.proof.CFunctionReturnsiteSPOs import CFunctionReturnsiteSPOs
 
-class CFunctionSPOs():
+from advance.proof.CFunctionPOs import CFunctionPOs
+
+class CFunctionSPOs(CFunctionPOs):
     '''Represents the set of secondary proof obligations for a function.'''
 
     def __init__(self,cproofs,xnode):
-        self.cproofs = cproofs
+        CFunctionPOs.__init__(self,cproofs)
         self.xnode = xnode
         self.callsitespos = {}             # cfg-contextstring -> CFunctionCallsiteSPOs
         self.returnsitespos = {}           # cfg-contextstring -> CFunctionReturnsiteSPOs
         self.idregistry = UI.IDRegistry(self.xnode.find('id-registry'))
         self._initialize()
-
-    def getfunction(self): return self.cproofs.getfunction()
 
     def getspoid(self,k): return self.idregistry.add('S',k)
 

@@ -29,56 +29,33 @@ from advance.app.CContext import makecontext
 from advance.app.CContext import CContext
 from advance.app.CLocation import CLocation
 
+from advance.proof.CFunctionPO import CFunctionPO
+
 import advance.proof.CPOUtil as P
 
-import advance.util.printutil as UP
-
-class CFunctionPPO():
+class CFunctionPPO(CFunctionPO):
     '''Represents a primary proof obligation within a function.'''
 
-    def __init__(self,cppos,xnode):
-        self.cppos = cppos                 # CFunctionPPOs
+    def __init__(self,cpos,xnode):
+        CFunctionPO.__init__(self,cpos)
         self.xnode = xnode
-        self.cfun = self.cppos.cproofs.cfun
+
+    def isppo(self): return True
 
     def getid(self): return self.xnode.get('id')
 
-    def getorigin(self): return self.xnode.get('origin')
-
     def getlocation(self): return CLocation(self.xnode.find('location'))
-
-    def getline(self): return self.getlocation().getline()
 
     def getpredicatetag(self):
         return self.xnode.find('predicate').get('tag')
 
-    def getpredicate(self): 
+    def getpredicate(self):
         pnode = self.xnode.find('predicate')
         return P.getpredicate(self.getcontext(),pnode)
 
-    def hasvariable(self,vname): return self.getpredicate().hasvariable(vname)
-
-    def hastargettype(self,targettype):
-        return self.getpredicate().hastargettype(targettype)
-
     def getcontext(self):
-        return makecontext(self.cfun,self.xnode.find('context'))
+        return makecontext(self.getfunction(),self.xnode.find('context'))
 
-    def getcontextstrings(self): return self.getcontext().contextstrings()
+    def getorigin(self): return self.xnode.get('origin')
 
-    def getstatus(self):
-        if self.isdischarged():
-            return self.getevidence().getstatus()
-        return 'unknown'
 
-    def isdischarged(self):
-        return self.cppos.cproofs.is_ppo_discharged(self.getid())
-
-    def getevidence(self):
-        if self.isdischarged():
-            return self.cppos.cproofs.get_ppo_evidence(self.getid())
-
-    def __str__(self):
-        return (UP.rjust(str(self.getid()),4) + '  ' + 
-                UP.rjust(str(self.getlocation().getline()),5) + '  ' + 
-                UP.ljust(str(self.getpredicate()),20))

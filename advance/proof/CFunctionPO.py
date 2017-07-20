@@ -25,42 +25,54 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-import xml.etree.ElementTree as ET
+from advance.app.CContext import makecontext
+from advance.app.CContext import CContext
+from advance.app.CLocation import CLocation
 
 import advance.proof.CPOUtil as P
-import advance.util.printutil as UP
 
-from advance.proof.CFunctionPO import CFunctionPO
+class CFunctionPO():
+    '''Super class of primary and secondary proof obligations.'''
 
-class CFunctionCallsiteSPO(CFunctionPO):
-    '''Represents a secondary proof obligation associated with a call site.'''
+    def __init__(self,cpos):
+        self.cpos = cpos
 
-    def __init__(self,csspos,spoid,apiid,pred):
-        CFunctionPO.__init__(self,csspos.cspos)
-        self.csspos = csspos               # CFunctionCallsiteSPOs
-        self.spoid = spoid                 # string
-        self.apiid = apiid                 # string
-        self.pred = pred                   # CPOPredicate
+    def isppo(self): return False
 
-    def getid(self): return self.spoid
+    def getfunction(self): return self.cpos.getfunction()
 
-    def get_api_id(self): return self.apiid
+    def getfile(self): return self.cpos.getfile()
+
+    def getline(self): return self.getlocation().getline()
+
+    def hasvariable(self,vname):
+        return self.getpredicate().hasvariable(vname)
+
+    def hastargettype(self,targettype):
+        return self.getpredicate().hastargettype()
+
+    def getcontextstring(self): return self.getcontext().contextstrings()
+
+    def isdischarged(self):
+        if self.isppo():
+            return self.cpos.is_ppo_discharged(self.getid())
+        else:
+            return self.cpos.is_spo_discharged(self.getid())
+
+    def getevidence(self):
+        if self.isdischarged():
+            if self.isppo():
+                return self.cpos.get_ppo_evidence(self.getid())
+            else:
+                return self.cpos.get_spo_evidence(self.getid())
         
-    def getlocation(self): return self.ccspos.getlocation()
+    def getstatus(self):
+        if self.isdischarged():
+            return self.getevidence().getstatus()
+        return 'unknown'
 
-    def getcontext(self): return self.ccspos.getcontext()
-
-    def getpredicatetag(self): return self.pred.gettag()
-
-    def hashstr(self): return self.pred.hashstr()
-
-    def getcfgcontextstring(self): return self.getcontext().getcfgcontextstring()
-
-    def getpredicate(self): return self.pred
-
-    def writexml(self,cnode):
-        pnode = ET.Element('predicate')
-        self.getpredicate().writexml(pnode)
-        cnode.set('id',self.getid())
-        cnode.set('api-id',self.get_api_id())
-        cnode.append(pnode)
+    def __str__(self):
+        return (self.getid().rjust(4) + '  ' + str(self.getline()).rjust(5) + '  ' +
+                    str(self.getpredicate()).ljust(20))
+    
+    

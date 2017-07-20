@@ -45,17 +45,19 @@ class CFunctionReturnsiteSPOs():
     def __init__(self,cspos,xnode):
         self.cspos = cspos
         self.xnode = xnode
-        self.cproofs = self.cspos.cproofs
-        self.cfun = self.cspos.cproofs.cfun
         self.location = CLocation(self.xnode.find('location'))
         self.spos = {}     # (fvid,spo-id) -> CFunctionReturnsiteSPO
         self._initialize()
+
+    def getfunction(self): return self.cspos.getfunction()
+
+    def getfile(self): return self.cspos.getfile()
 
     def getlocation(self): return self.location
 
     def getline(self): return self.location.getline()
 
-    def getcontext(self): return makecontext(self.cfun, self.xnode.find('context'))
+    def getcontext(self): return makecontext(self.getfunction(), self.xnode.find('context'))
 
     def getexp(self): return TX.getexp(self.getcontext(),self.xnode.find('exp'))
 
@@ -66,7 +68,7 @@ class CFunctionReturnsiteSPOs():
             f(self.spos[id])
 
     def addspo(self,rv,vid):
-        print(rv)
+        print(str(rv))
         subst = { rv.getfunctionindex(): self.getexp() }
         print(self.getexp())
         p = P.getpredicate(self.getcontext(),rv.getpredicatenode(),subst)
@@ -76,7 +78,6 @@ class CFunctionReturnsiteSPOs():
         rqid = rv.getid()
         rvspo = CFunctionReturnsiteSPO(self,id,rqid,p)
         self.spos[(vid,id)] = rvspo
-        print(str(self.spos))
 
     def writexml(self,cnode):
         lnode = ET.Element('location')

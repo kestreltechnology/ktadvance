@@ -40,9 +40,7 @@ class CFunctionCallsiteSPOs():
 
     def __init__(self,cspos,xnode):
         self.cspos = cspos
-        self.cproofs = self.cspos.cproofs
         self.xnode = xnode
-        self.cfun = self.cproofs.cfun
         self.location = CLocation(self.xnode.find('location'))
         self.calleeid  = int(self.xnode.get('fvid'))
         self.callee = self.xnode.get('fname')
@@ -50,20 +48,24 @@ class CFunctionCallsiteSPOs():
         self.args = []
         self._initialize()
 
+    def getfunction(self): return self.cspos.getfunction()
+
+    def getfile(self): return self.cspos.getfile()
+
     def getcalleeid(self): return self.calleeid
 
     def getlocation(self): return self.location
 
     def getline(self): return self.location.getline()
 
-    def getcontext(self): return makecontext(self.cfun, self.xnode.find('context'))
+    def getcontext(self): return makecontext(self.getfunction(), self.xnode.find('context'))
 
     def getcfgcontextstring(self): return self.getcontext().getcfgcontextstring()
 
     def getargs(self): return self.args
 
     def update(self):
-        cfile = self.cfun.cfile
+        cfile = self.getfile()
         calleefun = self.cfun.cfile.capp.resolve_vid_function(cfile.getindex(),self.calleeid)
         if calleefun is None:
             print('*' * 80)
@@ -71,8 +73,11 @@ class CFunctionCallsiteSPOs():
             print('*' * 80)
             return
         api = calleefun.getapi()
+        print('Api: ' + str(api))
         pars = api.getparameters()
         subst = {}
+        print('Arguments: ' )
+        for a in self.args: print('      ' + str(a))
         for p in pars:
             (vid,vname) = pars[p]
             subst[vid] = self.args[p-1]
