@@ -204,6 +204,15 @@ def get_kendra_cpath(cfilename):
         else:
             return get_kendra_testpath_byid(testid - 3)
 
+# ------------------------------------------------------------ zitser tests ----
+
+def get_zitser_path():
+    sardpath = os.path.join(Config().testdir,'sard')
+    return os.path.abspath(os.path.join(sardpath,'zitser'))
+
+def get_zitser_testpath(testname):
+    return os.path.join(get_zitser_path(),testname)
+
 # ------------------------------------------------------------ juliet tests ----
 
 def get_juliet_path():
