@@ -55,6 +55,8 @@ def parse():
                             action='store_true')
     parser.add_argument('--wordsize',help='wordsize of target platform (e.g. 32 or 64)',
                             type=int,default=0)
+    parser.add_argument('--analysisrounds',type=int,default=3,
+                            help='number of times to generate secondary proof obligations')
     args = parser.parse_args()
     return args
 
@@ -68,44 +70,57 @@ def timing(activity):
 
 if __name__ == '__main__':
     args = parse()
-    filepath = os.path.abspath(args.path)
-    cfilename = args.cfile
-    if not os.path.isdir(filepath):
-        print('*' * 80)
-        print('Directory ' + filepath + ' not found.')
-        print('*' * 80)
+    cpath = os.path.abspath(args.path)
+
+    if not os.path.isdir(cpath):
+        print(UP.err_msg(['Directory ', '   ' + cpath, '   not found']))
         exit(1)
 
-    ismac = Config().platform == 'mac'
-    semdir = os.path.join(filepath,'semantics')
-    if (not os.path.isdir(semdir)) or args.deletesemantics:
-        success = UF.unpack_tar_file(filepath,args.deletesemantics)
+    if not os.path.isfile(os.path.join(cpath,args.cfile)):
+        print(UP.err_msg(['C File ' + args.cfile + ' not found in directory ',
+                                    '   ' + cpath ]))
+        exit(1)
+
+    sempath = os.path.join(cpath,'semantics')
+    if (not os.path.isdir(sempath)) or args.deletesemantics:
+        success = UF.unpack_tar_file(cpath,args.deletesemantics)
         if not success:
-            print('*' * 80)
-            print('No file or directory found with semantics')
-            print('Expected to find a directory ' + semdir)
-            print('or a file semantics_linux.tar.gz or semantics_linux.tar in ' + filepath)
-            print('*' * 80)
+            print(UP.err_msg(['No file or directory found with semantics',
+                                  '   Expected to find a directory ' + sempath,
+                                  '   or a file semantics_linux.tar.gz in ' + cpath]))
             exit(1)
 
-    capp = CApplication(semdir,cfilename)
+    capp = CApplication(sempath,args.cfile)
     ktadvpath = capp.getpath()
-    xfilename = UF.get_cfile_filename(ktadvpath,cfilename)
+    xfilename = UF.get_cfile_filename(ktadvpath,args.cfile)
+
     if not os.path.isfile(xfilename):
-        print('*' * 80)
-        print('No semantics file found for ' + cfilename)
-        print('Expected to find the file ' + xfilename)
-        print('Please parse the file first with chc_parse_file.py or check the directory name.')
-        print('*' * 80)
+        print(UP.err_msg(['No semantics files found for ' + args.cfile,
+                              '  Expected to find the file ' + xfilename,
+                              '  Please parse the file first with chc_parse_file.py or ' +
+                              'check the directory name' ]))
         exit(1)
     
     am = AnalysisManager(capp,onefile=True,wordsize=int(args.wordsize))
 
-    if not args.continueanalysis:
-        with timing('creating primary proof obligations'):
-            am.create_file_primaryproofobligations(cfilename)
-    with timing('generating local invariants'):
-        am.generate_file_localinvariants(cfilename,'llvis')
-    with timing('checking proof obligations'):
-        am.check_file_proofobligations(cfilename)
+    cfilename = args.cfile
 
+    if not args.continueanalysis:
+        am.create_file_primaryproofobligations(cfilename)
+
+    am.generate_file_localinvariants(cfilename,'llvis')
+    am.check_file_proofobligations(cfilename)
+
+    def f(fn):
+        print(fn.getname())
+        fn.updatespos()
+        fn.requestpostconditions()
+
+    def g(fn): fn.savespos()
+
+    for k in range(args.analysisrounds):
+        capp.getcfile().fniter(f)
+        capp.getcfile().fniter(g)
+
+        am.generate_file_localinvariants(cfilename,'llvis')
+        am.check_file_proofobligations(cfilename)

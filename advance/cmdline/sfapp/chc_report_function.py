@@ -37,8 +37,7 @@ def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('path',help='path to directory that holds the semantics directory')
     parser.add_argument('cfile',help='filename of c file')
-    parser.add_argument('--showcode',help='show proof obligations on code for entire file',
-                            action='store_true')
+    parser.add_argument('cfunction',help='name of function to report on')
     parser.add_argument('--open',help='only show open proof obligations',action='store_true')
     args = parser.parse_args()
     return args
@@ -55,21 +54,25 @@ if __name__ == '__main__':
     if not os.path.isfile(os.path.join(cpath,args.cfile)):
         print(UP.cfile_not_found_err_msg(cpath,args.cfile))
         exit(1)
-
+        
     sempath = os.path.join(args.path, 'semantics')
 
     if not os.path.isdir(sempath):
         print(UP.semantics_not_found_err_msg(cpath))
         exit(1)
-
+        
     cfapp = CApplication(sempath,args.cfile)
     cfile = cfapp.getcfile()
 
-    if args.showcode:
-        if args.open:
-            def pofilter(po):return not po.isdischarged()
-            print(RP.file_code_tostring(cfile,pofilter=pofilter))
-        else:
-            print(RP.file_code_tostring(cfile))
+    if not cfile.hasfunctionbyname(args.cfunction):
+        print(UP.cfunction_not_found_err_sg(cpath,args.cfile,args.cfunction))
+        exit(1)
 
-    print(RP.file_proofobligation_stats_tostring(cfile))
+    cfunction = cfile.getfunctionbyname(args.cfunction)
+
+    if args.open:
+        def pofilter(po):return not po.isdischarged()
+        print(RP.function_code_tostring(cfunction,pofilter=pofilter))
+    else:  
+        print(RP.function_code_tostring(cfunction))
+       
