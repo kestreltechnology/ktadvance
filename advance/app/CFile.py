@@ -64,6 +64,9 @@ class CFile():
 
     def getfilename(self): return self.xnode.get('filename')
 
+    def getmaxfunctionnamelength(self):
+        return max([ len(x) for x in self.functionnames ])
+
     def getstring(self,index):
         self._initializestrings()
         if index in self.strings: return self.strings[index]
@@ -144,6 +147,10 @@ class CFile():
         self._initialize_gfunctions()
         return self.gfunctions[vid]
 
+    def hasfunctionbyname(self,fname):
+        self._initialize_functions()
+        return fname in self.functionnames
+
     def getfunctionbyname(self,fname):
         self._initialize_functions()
         if fname in self.functionnames:
@@ -179,9 +186,8 @@ class CFile():
         return result
 
     def get_ppos(self):
-        result = {}
-        def f(fn):
-            result[fn.getname()] = fn.get_ppos()
+        result = []
+        def f(fn): result.extend(fn.get_ppos())
         self.fniter(f)
         return result
 
@@ -201,9 +207,8 @@ class CFile():
         return result
 
     def get_spos(self):
-        result = {}
-        def f(fn):
-            result[fn.getname()] = fn.get_spos()
+        result = []
+        def f(fn): result.extend(fn.get_spos())
         self.fniter(f)
         return result
 
