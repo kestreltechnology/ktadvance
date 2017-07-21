@@ -73,5 +73,5 @@ if __name__ == '__main__':
         else:
             print(RP.file_code_tostring(cfile))
 
-    print(RP.file_proofobligation_stats_tostring(cfile))
+    print(RP.file_proofobligation_stats_tostring(cfile,extradsmethods=dc))
                       

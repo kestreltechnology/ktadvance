@@ -31,7 +31,7 @@ class JulietTestSetRef():
 
     def __init__(self,d):
         self.d = d
-        self.tests = {}
+        self.tests = {}      # testindex (str) -> JulietTestRef
         self.macros = {}
         self._initialize()
 
