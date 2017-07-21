@@ -61,6 +61,7 @@ def gettype(ctxt,xnode):
     if tag == 'tptr' : return CTTypePtr(ctxt,xnode)
     if tag == 'tarray': return CTTypeArray(ctxt,xnode)
     if tag == 'tfun' : return CTTypeFun(ctxt,xnode)
+    # need logging statement here to record missing tag
     return T.CTTypeBase(ctxt,xnode)
 
 def getconstant(ctxt,xnode):
@@ -71,7 +72,7 @@ def getconstant(ctxt,xnode):
     if ctag == 'cchr': return C.CChrConstant(ctxt,xnode)
     if ctag == 'creal': return C.CRealConstant(ctxt,xnode)
     if ctag == 'cenum': return C.CEnumConstant(ctxt,xnode)
-    print('ctag: ' + ctag)
+    # need logging statement here to record missing ctag
     return C.CConstantBase(ctxt,xnode)
 
 def getexp(ctxt,xnode,subst={}):
@@ -105,6 +106,7 @@ def getexp(ctxt,xnode,subst={}):
         return CExpFnApp(ctxt,xnode,subst)
     if tag == 'fnapp': return CExpFnApp(ctxt,xnode,subst)
     if tag == 'cnapp': return CExpCnApp(ctxt,xnode,subst)
+    # need logging statement here to record missing tag
     return B.CExpBase(ctxt,xnode,subst)
 
 def getoffset(ctxt,xnode):
@@ -637,9 +639,7 @@ class CExpFnApp(B.CExpBase):
 
     def writexml(self,cnode):
         B.CExpBase.writexml(self,cnode)
-        print(str(cnode.attrib))
         self.getlocation().writexml(cnode)
-        print(str(cnode.attrib))
         fnode = ET.Element('fn')
         self.getexp().writexml(fnode)
         cnode.append(fnode)
@@ -647,7 +647,6 @@ class CExpFnApp(B.CExpBase):
             enode = ET.Element('arg')
             a.writexml(enode)
             cnode.append(enode)
-
 
     def __str__(self): return 'apply ' + str(self.getexp())
 
