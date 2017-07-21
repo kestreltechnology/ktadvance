@@ -215,7 +215,7 @@ class TestManager():
                             saved = True
                     else:
                         refppos = cfun.getppos()
-                        funppos = ppos[fname]
+                        funppos = [ ppo for ppo in ppos if ppo.getfunction().getname() == fname ]
                         if len(refppos) == len(funppos):
                             self.testresults.add_ppocountsuccess(cfilename,fname)
                             self.checkppos(cfilename,fname,funppos,refppos)
@@ -279,7 +279,7 @@ class TestManager():
                             self.createreferencespos(cfilename,fname,spos[fname])
                     else:
                         refspos = cfun.getspos()
-                        funspos = spos[fname]
+                        funspos = [ spo for spo in spos if spo.getfunction().getname() == fname ]
                         if funspos is None and len(refspos) == 0:
                             self.testresults.add_spocountsuccess(cfilename,fname)
                             
@@ -344,7 +344,7 @@ class TestManager():
             ppos = capp.getsinglefile().get_ppos()
             for cfun in cfile.getfunctions():
                 fname = cfun.getname()
-                funppos = ppos[fname]
+                funppos = [ ppo for ppo in ppos if ppo.getfunction().getname() == fname ]
                 refppos = cfun.getppos()
                 self.checkpevs(cfilename,cfun,funppos,refppos)
 
@@ -391,7 +391,7 @@ class TestManager():
                 if delaytest: continue
                 for cfun in cfile.getfunctions():
                     fname = cfun.getname()
-                    funspos = spos[fname]
+                    funspos = [ spo for spo in spos if spo.getfunction().getname() == fname ]
                     refspos = cfun.getspos()
                     self.checksevs(cfilename,cfun,funspos,refspos)
                     

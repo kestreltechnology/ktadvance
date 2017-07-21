@@ -28,12 +28,10 @@
 import argparse
 import os
 
-import advance.util.printutil as UP
 import advance.util.fileutil as UF
+import advance.reporting.ProofObligations as RP
 
-from advance.util.Config import Config
 from advance.app.CApplication import CApplication
-from advance.reporting.ProofObligationDisplay import ProofObligationDisplay
 
 def parse():
     parser = argparse.ArgumentParser()
@@ -46,6 +44,7 @@ if __name__ == '__main__':
     args = parse()
     cfilename = args.cfilename
     cpath = UF.get_kendra_cpath(cfilename)
+
     if cpath is None:
         print('*' * 80)
         print('Unable to find the test set for file ' + cfilename)
@@ -55,12 +54,8 @@ if __name__ == '__main__':
     sempath = os.path.join(cpath,'semantics')
     cfapp = CApplication(sempath,cfilename)
     cfile = cfapp.getcfile()
-    def f(cfun):
-        d = ProofObligationDisplay(cfile,cfun);
-        print(d.showppos())
-        print(d.showspos())
-        print(cfun.getapi())
-    cfapp.getcfile().fniter(f)
 
+    print(RP.file_code_tostring(cfile))
+    print(RP.file_proofobligation_stats_tostring(cfile))
 
 

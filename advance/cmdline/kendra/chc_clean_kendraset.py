@@ -28,6 +28,9 @@
 import argparse
 import os
 
+import advance.util.fileutil as UF
+import advance.util.printutil as UP
+
 from advance.util.Config import Config
 from advance.cmdline.kendra.TestManager import TestManager
 
@@ -40,17 +43,11 @@ def parse():
 if __name__ == '__main__':
 
     args = parse()
-    config = Config()
-    sardpath = os.path.join(config.testdir,'sard')
-    testpath = os.path.join(sardpath,'kendra')
     testname = args.testset
-    cpath = os.path.join(os.path.abspath(testpath),testname)
+    cpath = UF.get_kendra_testpath(testname)
+
     if not os.path.isdir(cpath):
-        print('*' * 80)
-        print('Test directory')
-        print('   ' + cpath)
-        print('not found')
-        print('*' * 80)
+        print(UP.cpath_not_found_err_msg(cpath))
         exit(1)
     
     testmanager = TestManager(cpath,cpath,testname)

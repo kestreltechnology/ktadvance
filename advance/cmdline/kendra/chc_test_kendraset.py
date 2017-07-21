@@ -60,11 +60,7 @@ if __name__ == '__main__':
     testname = args.testset
     cpath = UF.get_kendra_testpath(testname)
     if not os.path.isdir(cpath):
-        print('*' * 80)
-        print('Test directory ')
-        print('    ' + cpath)
-        print('not found.')
-        print('*' * 80)
+        print(UP.cpath_not_found_err_msg(cpath))
         exit(1)
 
     testfilename = os.path.join(cpath,testname + '.json')
@@ -76,7 +72,6 @@ if __name__ == '__main__':
         print('*' * 80)
         exit(1)
 
-    #parsemanager = ParseManager(cpath,cpath)
     testmanager = TestManager(cpath,cpath,testname,saveref=args.saveref,verbose=args.verbose)
     testmanager.clean()
     try:
