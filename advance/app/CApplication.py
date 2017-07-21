@@ -53,6 +53,8 @@ class CApplication():
 
     def getfilenames(self): return self.filenames.values()
 
+    def getmaxfilenamelength(self): return max([ len(x) for x in self.getfilenames()])
+
     def getpath(self): return self.path
 
     def getfiles(self):
@@ -173,8 +175,21 @@ class CApplication():
         self.fileiter(f)
         return result
 
-    def getfile_ppo_results(self,filename):
-        return self.file(filename).get_ppo_results()
+    '''Create secondary proof obligations for all call sites and return sites.
+
+    Save spo files only after all secondary proof obligations have been created,
+    as postcondition requests are created for remove functions.
+    Note: this step cannot be parallelized because of the post conditions.
+    '''
+    def updatespos(self):
+        def f(fn):
+            fn.updatespos()
+            fn.requestpostconditions()
+        def g(fn): fn.savespos()
+        def h(cfile): cfile.fniter(f)
+        def k(cfile): cfile.fniter(g)
+        self.fileiter(h)
+        self.fileiter(k)
 
     def get_ppos(self):
         result = []
