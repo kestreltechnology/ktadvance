@@ -31,13 +31,13 @@ import os
 import advance.util.fileutil as UF
 import advance.util.printutil as UP
 
+import advance.reporting.ProofObligations as RP
+
 from advance.app.CApplication import CApplication
-from advance.reporting.ProofObligationResults import ProofObligationResults
-from advance.reporting.ProofObligationDisplay import ProofObligationDisplay
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('juliettest',
+    parser.add_argument('path',
                             help='path to the juliet test case (relative to juliet_v1.2)' +
                             ' (e.g., CWE121/s01/CWE129_largeQ)')
     args = parser.parse_args()
@@ -46,36 +46,22 @@ def parse():
 if __name__ == '__main__':
 
     args = parse()
-    julietpath = UF.get_juliet_testpath(args.juliettest)
-    semdir = os.path.join(julietpath,'semantics')
-    capp = CApplication(semdir)
+    cpath = UF.get_juliet_testpath(args.path)
+
+    if not os.path.isdir(cpath):
+        print(UP.cpath_not_found_err_msg(cpath))
+        exit(1)
+    
+    sempath = os.path.join(cpath,'semantics')
+    if not os.path.isdir(sempath):
+        print(UP.semantics_not_found_err_msg(cpath))
+        exit(1)
+        
+    capp = CApplication(sempath)
 
     filterout = [ 'io', 'main_linux', 'std_thread' ]
+    dc = [ 'deadcode' ]
+    def filefilter(f): return (not f in filterout)
 
-    filelines = {}
+    print(RP.project_proofobligation_stats_tostring(capp,extradsmethods=dc,filefilter=filefilter))
 
-    def resultline(f):
-        if f.getfilename() in filterout: return
-        filelines[f.getfilename()] = ProofObligationResults(f.get_ppo_results()).summarytotalline()
-    capp.fileiter(resultline)
-
-    print('\n\nFile results')
-    print(ProofObligationResults([]).getheaderline(12))
-    print('-' * 80)
-    for f in sorted(filelines):
-        print(f.ljust(10) + '  ' + filelines[f])
-
-    print('\n\nSummary of proof obligations')
-    print(ProofObligationResults(capp.get_ppo_results(filefilterout=filterout)).report())
-
-    print('\n\n' + ('-' * 80))
-    print('Violations:')
-    print('-' * 80)
-    violations = capp.getviolations()
-    for file in sorted(violations):
-        print('\n' + file)
-        for fn in sorted(violations[file]):
-            print('  ' + fn)
-            for id in sorted(violations[file][fn]):
-                print(str(id))
-    

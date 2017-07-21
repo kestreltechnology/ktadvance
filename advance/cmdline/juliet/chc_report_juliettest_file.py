@@ -30,39 +30,48 @@ import os
 
 import advance.util.printutil as UP
 import advance.util.fileutil as UF
+import advance.reporting.ProofObligations as RP
 
 from advance.util.Config import Config
 from advance.app.CApplication import CApplication
-from advance.reporting.ProofObligationDisplay import ProofObligationDisplay
-from advance.reporting.ProofObligationResults import ProofObligationResults
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('juliettest',help='relative path to juliet test')
-    parser.add_argument('cfilename',help='name of juliet c file (.e.g., x01.c)')
+    parser.add_argument('path',
+                            help='path to the juliet test case (relative to juliet_v1.2)' +
+                            ' (e.g., CWE121/s01/CWE129_largeQ)')
+    parser.add_argument('cfile',help='name of juliet c file (.e.g., x01.c)')
+    parser.add_argument('--showcode',help='show proof obligations on code for entire file',
+                            action='store_true')
+    parser.add_argument('--open',help='show only proof obligions on code that are still open',
+                            action='store_true')    
     args = parser.parse_args()
     return args
 
 if __name__ == '__main__':
 
     args = parse()
-    cfilename = args.cfilename
-    cpath = UF.get_juliet_testpath(args.juliettest)
-    if cpath is None:
-        print('*' * 80)
-        print('Unable to find the test set for file ' + cfilename)
-        print('*' * 80)
+    cpath = UF.get_juliet_testpath(args.path)
+
+    if not os.path.isdir(cpath):
+        print(UP.cpath_not_found_err_msg(cpath))
         exit(1)
 
     sempath = os.path.join(cpath,'semantics')
-    cfapp = CApplication(sempath,cfilename)
-    cfile = cfapp.getcfile()
-    def f(cfun):
-        d = ProofObligationDisplay(cfile,cfun);
-        print(d.showppos())
-        print(d.showspos())
-        print(cfun.getapi())
-    cfapp.getcfile().fniter(f)
+    if not os.path.isdir(sempath):
+        print(UP.semantics_not_found_err_msg(cpath))
+        exit(1)
 
-    print('\n\nSummary of proof obligations:')
-    print(ProofObligationResults(cfile.get_ppo_results()).report())
+    cfapp = CApplication(sempath,args.cfile)
+    cfile = cfapp.getcfile()
+
+    dc = [ 'deadcode' ]
+
+    if args.showcode:
+        if args.open:
+            print(RP.file_code_open_tostring(cfile))
+        else:
+            print(RP.file_code_tostring(cfile))
+
+    print(RP.file_proofobligation_stats_tostring(cfile))
+                      

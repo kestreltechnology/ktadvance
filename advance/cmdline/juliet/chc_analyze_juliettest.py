@@ -32,6 +32,7 @@ import time
 from contextlib import contextmanager
 
 import advance.util.fileutil as UF
+import advance.util.printutil as UP
 
 from advance.app.CApplication import CApplication
 from advance.cmdline.AnalysisManager import AnalysisManager
@@ -58,7 +59,10 @@ def parse():
                             type=int, default=1)
     parser.add_argument('--deletesemantics',
                             help='Unpack a fresh version of the semantics files',
-                            action='store_true')
+                            action='store_true'),
+    parser.add_argument('--analysisrounds',
+                            help='Number of times to generate secondary proof obligations',
+                            type=int,default=5)
     args = parser.parse_args()
     return args
 
@@ -76,31 +80,19 @@ if __name__ == '__main__':
     args = parse()
     testpath = UF.get_juliet_testpath(args.path)
     cpath = os.path.abspath(testpath)
-    print(cpath)
 
     if not os.path.isdir(cpath):
-        print('*' * 80)
-        print('Test directory ')
-        print('    ' + cpath)
-        print('not found.')
-        print('*' * 80)
+        print(UP.cpath_not_found_err_msg(cpath))
         exit()
 
-    semdir = os.path.join(testpath,'semantics')
-    if (not os.path.isdir(semdir)) or args.deletesemantics:
+    sempath = os.path.join(testpath,'semantics')
+    if (not os.path.isdir(sempath)) or args.deletesemantics:
         success = UF.unpack_tar_file(testpath,args.deletesemantics)
         if not success:
-            print('*' * 80)
-            print('No file or directory found with semantics')
-            print('Expected to find a directory ' + semdir)
-            if ismac:
-                print('or a file semantics_mac.tar.gz or semantics_mac.tar in ' + filepath)
-            else:
-                print('or a file semantics_linux.tar.gz or semantics_linux.tar in ' + filepath)
-            print('*' * 80)
+            print(UP.semantics_tar_ot_found_err_msg(cpath))
             exit(1)
 
-    capp = CApplication(semdir)
+    capp = CApplication(sempath)
     linker = CLinker(capp)
     linker.linkcompinfos()
     linker.linkvarinfos()
@@ -111,53 +103,22 @@ if __name__ == '__main__':
     
     linker.saveglobalcompinfos()
 
-    capp = CApplication(semdir)
+    # have to reinitialize capp to get linking info properly initialized
+    capp = CApplication(sempath)
 
+    # assume wordsize of 64
+    # use unreachability as a means of proof obligation discharge
     am = AnalysisManager(capp,wordsize=64,unreachability=True,
                              thirdpartysummaries=[UF.get_juliet_summaries()])
 
-    try:
-        with timing('creating primary proof obligations'):
-            am.create_app_primaryproofobligations()
-        with timing('generating local invariants'):
-            am.generate_app_localinvariants(['llvis'], args.maxprocesses)
-            am.generate_app_localinvariants(['llvis'], args.maxprocesses)
-            am.generate_app_localinvariants(['llvis'], args.maxprocesses)
-        with timing('checking proof obligations'):
-            am.check_app_proofobligations(args.maxprocesses)
-    except OSError as e:
-        print('*' * 80)
-        print('OS Error: ' + str(e))
-        print('  Please check the platform setting in Config.py')
-        print('*' * 80)
-        exit(1)
+    am.create_app_primaryproofobligations()
+    am.generate_app_localinvariants(['llvis'], args.maxprocesses)
+    am.generate_app_localinvariants(['llvis'], args.maxprocesses)
+    am.generate_app_localinvariants(['llvis'], args.maxprocesses)
+    am.check_app_proofobligations(args.maxprocesses)
 
-    print('Generating secondary proof obligations')
+    for i in range(args.analysisrounds):
+        capp.updatespos()
 
-    def f(fn):
-        fn.updatespos()
-        fn.requestpostconditions()
-
-    def g(fn): fn.savespos()
-
-    def fi(cfile):
-        cfile.fniter(f)
-        cfile.fniter(g)
-
-    capp.fileiter(fi)
-
-    try:
-        with timing('generating local invariants'):
-            am.generate_app_localinvariants(['llvis'],args.maxprocesses)
-            am.generate_app_localinvariants(['llvis'],args.maxprocesses)
-        with timing('checking proof obligations'):
-            am.check_app_proofobligations(args.maxprocesses)
-    except OSError as e:
-        print('*' * 80)
-        print('OS Error: ' + str(e))
-        print('  Please check the platform setting in Config.py')
-        print('*' * 80)
-        exit(1)
-        
-    
-    
+        am.generate_app_localinvariants(['llvis'], args.maxprocesses)
+        am.check_app_proofobligations()
