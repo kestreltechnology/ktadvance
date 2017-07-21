@@ -27,6 +27,8 @@
 
 import datetime
 
+from advance.util.Config import Config
+
 def ljust(s,l):
     s = str(s)
     if len(s) >= l: return s
@@ -52,5 +54,38 @@ def reportheader(title):
     lines.append('* date       : ' + str(datetime.datetime.now())[:19])
     lines.append('* ' + ('=' * 80))
     return '\n'.join(lines)
+
+def err_msg(lines):
+    result = []
+    result.append('*' * 80)
+    result.extend(lines)
+    result.append('*' * 80)
+    return '\n'.join(result)
+
+def missing_analyzer_err_msg():
+    config = Config()
+    return err_msg(['Analyzer not found at ' + config.canalyzer,
+                        '  Please et analyzer location in Config.py'])
+
+def cpath_not_found_err_msg(cpath):
+    return err_msg(['Directory ', '  ' + cpath, '  not found'])
+
+def cfile_not_found_err_msg(cpath,cfile):
+    return err_msg(['C file ' + cfile + ' not found in directory',
+                        '  ' + cpath])
+
+def cfunction_not_found_err_msg(cpath,cfile,cfunction):
+    return err_msg(['Function ' + cfunction + ' not found in file ' + cfile,
+                        '  in directory ' + cpath ])
+
+def semantics_tar_not_found_err_msg(cpath):
+    return err_msg(['Directory ', '  ' + cpath,
+                        '  does not have a semantics directory or semantics_linux.tar.gz file.',
+                        '  Please parse the application first to produce the semantics files.'])
+
+def semantics_not_found_err_msg(cpath):
+    return err_msg(['No semantics directory found in directory',
+                        '  ' + cpath,
+                        '  Please analyze the application first to produce the analysis results to report.'])
 
     
