@@ -46,9 +46,9 @@ class CFunctionCallsiteSPO(CFunctionPO):
 
     def get_api_id(self): return self.apiid
         
-    def getlocation(self): return self.ccspos.getlocation()
+    def getlocation(self): return self.csspos.getlocation()
 
-    def getcontext(self): return self.ccspos.getcontext()
+    def getcontext(self): return self.csspos.getcontext()
 
     def getpredicatetag(self): return self.pred.gettag()
 

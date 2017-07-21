@@ -51,7 +51,7 @@ class CFunctionPO():
     def hastargettype(self,targettype):
         return self.getpredicate().hastargettype()
 
-    def getcontextstring(self): return self.getcontext().contextstrings()
+    def getcontextstrings(self): return self.getcontext().contextstrings()
 
     def isdischarged(self):
         if self.isppo():

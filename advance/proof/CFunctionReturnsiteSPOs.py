@@ -68,11 +68,8 @@ class CFunctionReturnsiteSPOs():
             f(self.spos[id])
 
     def addspo(self,rv,vid):
-        print(str(rv))
         subst = { rv.getfunctionindex(): self.getexp() }
-        print(self.getexp())
         p = P.getpredicate(self.getcontext(),rv.getpredicatenode(),subst)
-        print(str(p))
         h = p.hashstr()
         id = self.cspos.idregistry.add('S',h)
         rqid = rv.getid()

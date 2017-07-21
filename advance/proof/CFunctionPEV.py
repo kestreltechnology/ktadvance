@@ -59,7 +59,7 @@ class CFunctionPEV():
             apiid = self.xnode.find('aa').find('a').get('api-id')
             if apiid[0] == 'A': return 'api'
             if apiid[0] == 'R': return 'post'
-            if apiid[0] == 'G': return 'global'
+            if apiid[0] == 'G' or apiid[0] == 'g': return 'global' #TODO fix creation of id
 
     def getapiassumptionid(self):
         if self.isdelegatedtoapi():

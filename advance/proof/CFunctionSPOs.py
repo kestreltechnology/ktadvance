@@ -52,7 +52,6 @@ class CFunctionSPOs(CFunctionPOs):
 
     def addreturnsiteobligation(self,rv,fvid):
         for r in self.returnsitespos.values():
-            print(str(r.getline()))
             r.addspo(rv,fvid)
 
     def update(self):

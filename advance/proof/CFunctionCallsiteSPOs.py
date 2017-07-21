@@ -66,18 +66,16 @@ class CFunctionCallsiteSPOs():
 
     def update(self):
         cfile = self.getfile()
-        calleefun = self.cfun.cfile.capp.resolve_vid_function(cfile.getindex(),self.calleeid)
+        calleefun = cfile.capp.resolve_vid_function(cfile.getindex(),self.calleeid)
         if calleefun is None:
+            # TODO: this should be recorded in a logfile
             print('*' * 80)
-            print('No semantics available for external function ' + self.callee)
+            print('Warning: No semantics available for external function ' + self.callee)
             print('*' * 80)
             return
         api = calleefun.getapi()
-        print('Api: ' + str(api))
         pars = api.getparameters()
         subst = {}
-        print('Arguments: ' )
-        for a in self.args: print('      ' + str(a))
         for p in pars:
             (vid,vname) = pars[p]
             subst[vid] = self.args[p-1]
