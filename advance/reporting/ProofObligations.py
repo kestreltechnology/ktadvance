@@ -35,8 +35,8 @@ dischargemethods = [ 'stmt', 'local', 'api', 'post', 'global', 'open' ]
 def get_dsmethods(extra):
     return extra + dischargemethods
 
-def get_dsmethod_header(indent,dsmethods):
-    return ((' ' * indent) + ''.join([dm.rjust(8) for dm in dsmethods]) + 'total'.rjust(8))
+def get_dsmethod_header(indent,dsmethods,header1=''):
+    return (header1.ljust(indent) + ''.join([dm.rjust(8) for dm in dsmethods]) + 'total'.rjust(8))
 
 def classifypo(po,d):
     if po.isdischarged():
@@ -52,11 +52,11 @@ def classifypo(po,d):
     else:
         d['open'] += 1
 
-def get_tag_method_count(pos,filteroutfiles=[],extradsmethods=[]):
+def get_tag_method_count(pos,filefilter=lambda(f):True,extradsmethods=[]):
     result = {}
     dsmethods = get_dsmethods(extradsmethods)
     for po in pos:
-        if po.getfile().getfilename() in filteroutfiles: continue
+        if not filefilter(po.getfile().getfilename()): continue
         tag = po.getpredicatetag()
         if not tag in result:
             result[tag] = {}
@@ -64,39 +64,186 @@ def get_tag_method_count(pos,filteroutfiles=[],extradsmethods=[]):
         classifypo(po,result[tag])
     return result
 
-def get_file_method_count(pos,filteroutfiles=[],extradsmethods=[]):
+def get_file_method_count(pos,filefilter=lambda(f):True,extradsmethods=[]):
     result = {}
     dsmethods = get_dsmethods(extradsmethods)
     for po in pos:
         pofile = po.getfile().getfilename()
-        if pofile in filteroutfiles: continue
+        if not filefilter(pofile): continue
         if not pofile in result:
             result[pofile] = {}
             for dm in dsmethods: result[pofile][dm] = 0
         classifypo(po,result[pofile])
     return result
 
-def tag_method_count_tostring(d,perc=False,extradsmethods=[]):
-    taglen = 25
+def get_function_method_count(pos,extradsmethods=[]):
+    result = {}
+    dsmethods = get_dsmethods(extradsmethods)
+    for po in pos:
+        pofunction = po.getfunction().getname()
+        if not pofunction in result:
+            result[pofunction] = {}
+            for dm in dsmethods: result[pofunction][dm] = 0
+        classifypo(po,result[pofunction])
+    return result
+
+'''Display a dictionary with row-header - discharge method - count.
+
+Arguments:
+d: dictionary (row header -> discharge method -> count
+perc: boolean that indicates whether to print discharge method percentages
+extradsmethods: list of additional column headers (will be prepended)
+rhlen: maximum length of the row header (default 25)
+'''
+def row_method_count_tostring(d,perc=False,extradsmethods=[],rhlen=25,header1=''):
     lines = []
     dsmethods = get_dsmethods(extradsmethods)
-    lines.append(get_dsmethod_header(taglen,dsmethods))
-    lines.append('-' * 80)
+    lines.append(get_dsmethod_header(rhlen,dsmethods,header1=header1))
+    barlen = 56 + rhlen
+    lines.append('-' * barlen)
     for t in sorted(d):
         r = [ d[t][dm] for dm in dsmethods ]
-        lines.append(t.ljust(taglen) + ''.join([str(x).rjust(8) for x in r]) + str(sum(r)).rjust(8))
-    lines.append('-' * 80)
+        lines.append(t.ljust(rhlen) + ''.join([str(x).rjust(8) for x in r]) + str(sum(r)).rjust(8))
+    lines.append('-' * barlen )
 
     totals = {}
     for dm in dsmethods:
         totals[dm] = sum([ d[t][dm] for t in d ])
     totalcount = sum(totals.values())
-    lines.append('total'.ljust(taglen) + ''.join([str(totals[dm]).rjust(8) for dm in dsmethods]) +
+    lines.append('total'.ljust(rhlen) + ''.join([str(totals[dm]).rjust(8) for dm in dsmethods]) +
                      str(totalcount).rjust(8))
     if perc and totalcount > 0:
         scale = float(totalcount)/100.0
-        lines.append('percent'.ljust(taglen) +
+        lines.append('percent'.ljust(rhlen) +
                          ''.join([str('{:.2f}'.format(float(totals[dm])/scale)).rjust(8)
                                       for dm in dsmethods]))
     return '\n'.join(lines)
     
+
+class FunctionDisplay():
+
+    def __init__(self,cfunction):
+        self.cfunction = cfunction
+        self.cfile = self.cfunction.getfile()
+        self.fline = self.cfunction.getlocation().getline()
+        self.currentline = self.fline
+
+    def getsourceline(self,line):
+        srcline = self.cfile.getsourceline(line)
+        if not srcline is None:
+            return self.cfile.getsourceline(line).strip()
+        return '?'
+
+    def pos_on_code_tostring(self,pos,pofilter=lambda(po):True):
+        lines = []
+        for po in sorted(pos,key=lambda(po):po.getline()):
+            if not pofilter(po): continue
+            line = po.getline()
+            if line >= self.currentline:
+                lines.append('-' * 80)
+                for n in range(self.currentline,line+1):
+                    lines.append(self.getsourceline(n))
+                lines.append('-' * 80)
+            self.currentline = line + 1
+            delegated = ''
+            if po.isdischarged():
+                ev = po.getevidence()
+                prefix = ev.getdisplayprefix()
+                if ev.isdelegated(): delegated = '--' + ev.getassumptiontype() + '--'
+                lines.append(prefix + ' ' + str(po) + delegated)
+                lines.append((' ' * 18) + ev.getevidence())
+            else:
+                lines.append('<?> ' + str(po))
+                lines.append((' ' * 18) + '--')
+        self.currentline = self.fline
+        return '\n'.join(lines)
+
+def function_code_tostring(fn,pofilter=lambda(po):True):
+    lines = []
+    fd = FunctionDisplay(fn)
+    ppos = fn.get_ppos()
+    spos = fn.get_spos()
+    lines.append('\nPrimary Proof Obligations for ' + fn.getname())
+    lines.append(fd.pos_on_code_tostring(ppos,pofilter=pofilter))
+    if len(spos) > 0:
+        lines.append('\nSecondary Proof Obligations for ' + fn.getname())
+        lines.append(fd.pos_on_code_tostring(spos,pofilter=pofilter))
+    return '\n'.join(lines)
+
+def function_code_open_tostring(fn):
+    pofilter = lambda(po):not po.isdischarged()
+    return function_code_tostring(fn,pofilter=pofilter)
+    
+def file_code_tostring(cfile,pofilter=lambda(po):True):
+    lines = []
+    def f(fn): lines.append(function_code_tostring(fn,pofilter=pofilter))
+    cfile.fniter(f)
+    return '\n'.join(lines)
+
+def file_code_open_tostring(fn):
+    pofilter = lambda(po):not po.isdischarged()
+    return file_code_tostring(fn,pofilter=pofilter)
+
+def proofobligation_stats_tostring(pporesults,sporesults,rhlen=25,header1='',extradsmethods=[]):
+    lines = []
+    lines.append('\nPrimary Proof Obligations')
+    lines.append(row_method_count_tostring(pporesults,perc=True,rhlen=rhlen,header1=header1))
+    if len(sporesults) > 0:
+        lines.append('\nSecondary Proof Obligations')
+        lines.append(row_method_count_tostring(sporesults,perc=True,rhlen=rhlen,header1=header1))   
+    return '\n'.join(lines)
+
+def project_proofobligation_stats_tostring(capp,filefilter=lambda(f):True,extradsmethods=[]):
+    lines = []
+    ppos = capp.get_ppos()
+    spos = capp.get_spos()
+    pporesults = get_file_method_count(ppos,extradsmethods=extradsmethods,filefilter=filefilter)
+    sporesults = get_file_method_count(spos,extradsmethods=extradsmethods,filefilter=filefilter)
+
+    rhlen = capp.getmaxfilenamelength() + 3
+    lines.append(proofobligation_stats_tostring(pporesults,sporesults,rhlen=rhlen,header1='c files',
+                                                    extradsmethods=extradsmethods))
+
+    tagpporesults = get_tag_method_count(ppos,filefilter=filefilter,extradsmethods=extradsmethods)
+    tagsporesults = get_tag_method_count(spos,filefilter=filefilter,extradsmethods=extradsmethods)
+
+    lines.append('\n\nProof Obligation Statistics')
+    lines.append('~' * 80)
+
+    lines.append(proofobligation_stats_tostring(tagpporesults,tagsporesults,extradsmethods=extradsmethods))
+
+    return '\n'.join(lines)
+    
+    
+def file_proofobligation_stats_tostring(cfile,extradsmethods=[]):
+    lines = []
+    ppos = cfile.get_ppos()
+    spos = cfile.get_spos()
+    pporesults = get_function_method_count(ppos,extradsmethods=extradsmethods)
+    sporesults = get_function_method_count(spos,extradsmethods=extradsmethods)
+
+    rhlen = cfile.getmaxfunctionnamelength() + 3
+    lines.append(proofobligation_stats_tostring(pporesults,sporesults,rhlen=rhlen,header1='functions'))
+
+    tagpporesults = get_tag_method_count(ppos,extradsmethods=extradsmethods)
+    tagsporesults = get_tag_method_count(spos,extradsmethods=extradsmethods)
+
+    lines.append('\n\nProof Obligation Statistics for file ' + cfile.getfilename())
+    lines.append('~' * 80)
+
+    lines.append(proofobligation_stats_tostring(tagpporesults,tagsporesults))
+    
+    return '\n'.join(lines)
+
+def function_proofobligation_stats_tostring(cfunction,extradsmethods=[]):
+    lines = []
+    ppos = cfunction.get_ppos()
+    spos = cfunction.get_spos()
+    tagpporesults = get_tag_method_count(ppos,extradsmethods=extradsmethods)
+    tagsporesults = get_tag_method_count(spos,extradsmethods=extradsmethods)
+
+    lines.append('\n\nProof Obligation Statistics for function ' + cfunction.getname())
+    lines.append('~' * 80)
+
+    lines.append(proofobligation_stats_tostring(tagpporesults,tagsporesults))
+    return '\n'.join(lines)
