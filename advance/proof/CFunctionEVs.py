@@ -25,28 +25,55 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.proof.CFunctionPEV import CFunctionPEV
+from advance.proof.CFunctionEV import CFunctionPEV
+from advance.proof.CFunctionEV import CFunctionSEV
 
-class CFunctionPEVs():
+class CFunctionEVs():
+    '''Superclass of CFunctionPEVs and CFunctionSEVs.'''
+
+    def __init__(self,cproofs):
+        self.cproofs = cproofs
+        self.evs = {}         # poid -> CFunctionPEV / CFunctionSEV
+
+    def getfunction(self): return self.cproofs.getfunction()
+
+    def getfile(self): return self.cproofs.getfile()
+
+    def getevidence(self,id):
+        if id in self.evs: return self.evs[id]
+
+    def isdischarged(self,id): return id in self.evs
+
+    def iter(self,f):
+        for ev in self.evs: f(self.evs[ev])
+
+
+class CFunctionPEVs(CFunctionEVs):
 
     '''Represents the set of primary proof obligation evidence for a function.'''
 
     def __init__(self,cproofs,xnode):
-        self.cproofs = cproofs
+        CFunctionEVs.__init__(self,cproofs)
         self.xnode = xnode
-        self.pevs = {}                        # ppoid -> CFunctionPEV
         self._initialize()
 
     def getppo(self,id): return self.cproofs.getppo(id)
 
-    def get_evidence(self,id):
-        if id in self.pevs: return self.pevs[id]
+    def _initialize(self):
+        for p in self.xnode.find('proof-obligations-discharged').findall('discharged'):
+            self.evs[p.get('id')] = CFunctionPEV(self,p)
 
-    def is_discharged(self,id): return (id in self.pevs)
 
-    def iter(self,f):
-        for pev in self.pevs: f(self.pevs[pev])
+class CFunctionSEVs(CFunctionEVs):
+    '''Represents the set of secondary proof obligation evidence for a function.'''
+
+    def __init__(self,cproofs,xnode):
+        CFunctionEVs.__init__(self,cproofs)
+        self.xnode = xnode
+        self._initialize()
+
+    def getspo(self,id): return self.cproofs.getspo(id)
 
     def _initialize(self):
         for p in self.xnode.find('proof-obligations-discharged').findall('discharged'):
-            self.pevs[p.get('id')] = CFunctionPEV(self,p)
+            self.evs[p.get('id')] = CFunctionSEV(self,p)

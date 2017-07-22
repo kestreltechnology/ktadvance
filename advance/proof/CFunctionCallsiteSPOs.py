@@ -76,9 +76,16 @@ class CFunctionCallsiteSPOs():
         api = calleefun.getapi()
         pars = api.getparameters()
         subst = {}
-        for p in pars:
-            (vid,vname) = pars[p]
-            subst[vid] = self.args[p-1]
+        if len(pars) == len(self.args):
+            for p in pars:
+                (vid,vname) = pars[p]
+                subst[vid] = self.args[p-1]
+        else:
+            print('*' * 80)
+            print('Warning: Number of arguments (' + str(len(self.args)) +
+                      ') is not the same as the number of parameters (' + str(len(pars)) +
+                      ') in call site spos in function ' + self.getfunction().getname() +
+                      ' in file ' + cfile.getfilename())
         for a in api.getapiassumptions():
             p = P.getpredicate(self.getcontext,a.getpredicatenode(),subst=subst)
             apiid = a.getid()

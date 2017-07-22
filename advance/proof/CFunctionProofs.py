@@ -28,10 +28,10 @@
 import xml.etree.ElementTree as ET
 
 from advance.proof.CFunctionPPOs import CFunctionPPOs
-from advance.proof.CFunctionPEVs import CFunctionPEVs
+from advance.proof.CFunctionEVs import CFunctionPEVs
 
 from advance.proof.CFunctionSPOs import CFunctionSPOs
-from advance.proof.CFunctionSEVs import CFunctionSEVs
+from advance.proof.CFunctionEVs import CFunctionSEVs
 
 import advance.util.fileutil as UF
 
@@ -70,6 +70,8 @@ class CFunctionProofs():
         self.sevs = None           # CFunctionSEVs
 
     def getfunction(self): return self.cfun
+
+    def getfile(self): return self.cfun.getfile()
 
     def addreturnsiteobligation(self,rv,fvid):
         self._getspos()
@@ -123,19 +125,19 @@ class CFunctionProofs():
 
     def is_ppo_discharged(self,ppoid):
         self._getpevs() 
-        return self.pevs.is_discharged(ppoid)
+        return self.pevs.isdischarged(ppoid)
 
     def is_spo_discharged(self,spoid):
         self._getsevs()
-        return self.sevs.is_discharged(spoid)
+        return self.sevs.isdischarged(spoid)
 
     def get_ppo_evidence(self,ppoid): 
         self._getpevs()
-        return self.pevs.get_evidence(ppoid)
+        return self.pevs.getevidence(ppoid)
 
     def get_spo_evidence(self,spoid):
         self._getsevs()
-        return self.sevs.get_evidence(spoid)
+        return self.sevs.getevidence(spoid)
 
     def get_open_ppos(self):
         result = {}
