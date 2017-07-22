@@ -32,6 +32,7 @@ import time
 from contextlib import contextmanager
 
 import advance.util.fileutil as UF
+import advance.util.printutil as UP
 
 from advance.app.CApplication import CApplication
 from advance.cmdline.AnalysisManager import AnalysisManager
@@ -51,6 +52,9 @@ def parse():
     parser.add_argument('--maxprocesses',
                             help='number of files to process in parallel',
                             type=int, default=1)
+    parser.add_argument('--analysisrounds',
+                            help='number of times to generate secondary proof obligations',
+                            type=int,default=5)
     args = parser.parse_args()
     return args
 
@@ -66,31 +70,25 @@ def timing(activity):
 if __name__ == '__main__':
 
     args = parse()
-    testpath = UF.get_svcomp_testpath(args.path)
+    cpath = UF.get_svcomp_testpath(args.path)
+    config = Config()
 
-    if not os.path.isdir(testpath):
-        print('*' * 80)
-        print('Test directory ')
-        print('    ' + testpath)
-        print('not found.')
-        print('*' * 80)
-        exit()
+    if not os.path.isfile(config.canalyzer):
+        print(UP.missing_analyzer_err_msg())
+        exit(1)
+
+    if not os.path.isdir(cpath):
+        print(UP.cpath_not_found_err_msg(cpath))
+        exit(1)
         
-    semdir = os.path.join(testpath,'semantics')
-    if (not os.path.isdir(semdir)) or args.deletesemantics:
-        success = UF.unpack_tar_file(testpath,args.deletesemantics)
+    sempath = os.path.join(cpath,'semantics')
+    if (not os.path.isdir(sempath)) or args.deletesemantics:
+        success = UF.unpack_tar_file(cpath,args.deletesemantics)
         if not success:
-            print('*' * 80)
-            print('No file or directory found with semantics')
-            print('Expected to find a directory ' + semdir)
-            if ismac:
-                print('or a file semantics_mac.tar.gz or semantics_mac.tar in ' + filepath)
-            else:
-                print('or a file semantics_linux.tar.gz or semantics_linux.tar in ' + filepath)
-            print('*' * 80)
+            print(UP.semantics_tar_not_found_err_msg(cpath))
             exit(1)
 
-    capp = CApplication(semdir)
+    capp = CApplication(sempath)
     linker = CLinker(capp)
     linker.linkcompinfos()
     linker.linkvarinfos()
@@ -101,25 +99,23 @@ if __name__ == '__main__':
     
     linker.saveglobalcompinfos()
 
-    capp = CApplication(semdir)
+    capp = CApplication(sempath)
     am = AnalysisManager(capp,wordsize=32)
 
     if args.resetsemantics:
         am.reset()
 
-    try:
-        with timing('creating primary proof obligations'):
-            am.create_app_primaryproofobligations()
-        with timing('generating local invariants'):
-            am.generate_app_localinvariants(['llvis'], args.maxprocesses)
-            am.generate_app_localinvariants(['llvis'], args.maxprocesses)
-            am.generate_app_localinvariants(['llvis'], args.maxprocesses)
-        with timing('checking proof obligations'):
-            am.check_app_proofobligations(args.maxprocesses)
-    except OSError as e:
-        print('*' * 80)
-        print('OS Error: ' + str(e))
-        print('  Please check the platform setting in Config.py')
-        print('*' * 80)
-        exit(1)
-   
+    capp = CApplication(sempath)
+    am = AnalysisManager(capp)
+
+    am.create_app_primaryproofobligations()
+    am.generate_app_localinvariants(['llvis'])
+    am.generate_app_localinvariants(['llvis'])
+    am.check_app_proofobligations()
+
+    for i in range(args.analysisrounds):
+        capp.updatespos()
+
+        am.generate_app_localinvariants(['llvis'])
+        am.check_app_proofobligations()
+

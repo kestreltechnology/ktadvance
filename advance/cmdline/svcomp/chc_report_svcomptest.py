@@ -30,10 +30,9 @@ import os
 
 import advance.util.fileutil as UF
 import advance.util.printutil as UP
+import advance.reporting.ProofObligations as RP
 
 from advance.app.CApplication import CApplication
-from advance.reporting.ProofObligationResults import ProofObligationResults
-from advance.reporting.ProofObligationDisplay import ProofObligationDisplay
 
 def parse():
     parser = argparse.ArgumentParser()
@@ -45,7 +44,22 @@ def parse():
 if __name__ == '__main__':
 
     args = parse()
-    testpath = UF.get_svcomp_testpath(args.path)
+    cpath = UF.get_svcomp_testpath(args.path)
+
+    if not os.path.isdir(cpath):
+        print(UP.cpath_not_found_err_msg(cpath))
+        exit(1)
+
+    sempath = os.path.join(cpath,'semantics')
+
+    if not os.path.isdir(sempath):
+        print(UP.semantics_not_found_err_msg(cpath))
+        exit(1)
+   
+    capp = CApplication(sempath)
+    print(RP.project_proofobligation_stats_tostring(capp))
+
+    '''
     semdir = os.path.join(testpath,'semantics')
     capp = CApplication(semdir)
 
@@ -74,3 +88,4 @@ if __name__ == '__main__':
             print('  ' + fn)
             for id in sorted(violations[file][fn]):
                 print(str(id))
+    '''

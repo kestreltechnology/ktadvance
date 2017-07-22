@@ -30,42 +30,45 @@ import os
 
 import advance.util.printutil as UP
 import advance.util.fileutil as UF
+import advance.reporting.ProofObligations as RP
 
-from advance.util.Config import Config
 from advance.app.CApplication import CApplication
-from advance.reporting.ProofObligationDisplay import ProofObligationDisplay
-from advance.reporting.ProofObligationResults import ProofObligationResults
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('svcomptest',help='relative path to the set of svcomp programs')
-    parser.add_argument('cfilename',help='name of svcomp program (e.g., test-0232_false-valid-free.c')
+    parser.add_argument('path',help='name of an svcomp test, e.g., array-memsafety')
+    parser.add_argument('cfile',help='name of svcomp program, ' +
+                            'e.g., add_last_unsafe_false-valid-deref.c')
+    parser.add_argument('--showcode',help='show proof obligations for entire file',
+                            action='store_true')
+    parser.add_argument('--open',help='show only proof obligations on code that are still open',
+                            action='store_true')
     args = parser.parse_args()
     return args
 
 if __name__ == '__main__':
 
     args = parse()
-    cfilename = args.cfilename
-    testpath = UF.get_svcomp_testpath(args.svcomptest)
-    if testpath is None:
-        print('*' * 80)
-        print('Unable to find the test set for file ' + cfilename)
-        print('*' * 80)
+
+    cpath = UF.get_svcomp_testpath(args.path)
+    
+    if not os.path.isdir(cpath):
+        print(UP.cpath_not_found_err_msg(cpath))
         exit(1)
 
-    sempath = os.path.join(testpath,'semantics')
-    srcpath = UF.get_svcomp_srcpath(args.svcomptest)
-    cfapp = CApplication(sempath,cfilename)
+    sempath = os.path.join(cpath,'semantics')
+    if not os.path.isdir(sempath):
+        print(UP.semantics_not_found_err_msg(cpath))
+        exit(1)
+        
+    cfapp = CApplication(sempath,args.cfile)
     cfile = cfapp.getcfile()
 
-    def f(cfun):
-        d = ProofObligationDisplay(cfile,cfun);
-        print(d.showppos())
-        print(d.showspos())
-        print(cfun.getapi())
-    cfapp.getcfile().fniter(f)
+    if args.showcode:
+        if args.open:
+            print(RP.file_code_open_tostring(cfile))
+        else:
+            print(RP.file_code_tostring(cfile))
 
-    print('\n\nSummary of proof obligations:')
-    print(ProofObligationResults(cfile.get_ppo_results()).report())
+    print(RP.file_proofobligation_stats_tostring(cfile))
 
