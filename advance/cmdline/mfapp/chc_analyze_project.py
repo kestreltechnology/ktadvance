@@ -54,6 +54,9 @@ def parse():
                             help='number of files to process in parallel',
                             type=int,
                             default=1)
+    parser.add_argument('--deletesemantics',
+                            help='Unpack a fresh version of the semantics files',
+                            action='store_true')
     args = parser.parse_args()
     return args
 
@@ -95,8 +98,8 @@ if __name__ == '__main__':
         exit(1)
         
     semdir = os.path.join(cpath,'semantics')
-    if not os.path.isdir(semdir):
-        success = UF.unpack_tar_file(cpath)
+    if (not os.path.isdir(semdir)) or args.deletesemantics:
+        success = UF.unpack_tar_file(cpath,args.deletesemantics)
         if not success:
             print('*' * 80)
             print('No semantic files found in directory')
