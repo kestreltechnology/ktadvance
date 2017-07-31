@@ -33,7 +33,7 @@ import xml.etree.ElementTree as ET
 
 import advance.util.xmlutil as UX
 
-from advance.bin.Config import Config
+from advance.util.Config import Config
 
 def get_xnode(filename,rootnode,desc,show=True):
     if os.path.isfile(filename):
