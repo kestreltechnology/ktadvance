@@ -74,7 +74,7 @@ def getpredicate(ctxt,pnode,subst={}):
     if tag == 'initialized':
         return CPOPredicateInitialized(ctxt,pnode)
     if tag == 'initialized-range':
-        return CPOPredicateInitializedRange(ctxt,pnode)
+        return CPOPredicateInitializedRange(ctxt,pnode,subst)
     if tag == 'int-overflow':
         return CPOPredicateIntOverflow(ctxt,pnode,subst)
     if tag == 'int-underflow':

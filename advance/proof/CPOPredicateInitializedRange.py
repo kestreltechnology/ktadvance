@@ -33,12 +33,12 @@ from advance.proof.CPOPredicate import CPOPredicate
 
 class CPOPredicateInitializedRange(CPOPredicate):
 
-    def __init__(self,ctxt,xnode):
-        CPOPredicate.__init__(self,ctxt,xnode)
+    def __init__(self,ctxt,xnode,subst={}):
+        CPOPredicate.__init__(self,ctxt,xnode,subst)
 
-    def getbaseexp(self): return TX.getexp(self.ctxt,self.xnode.find('base-exp'))
+    def getbaseexp(self): return TX.getexp(self.ctxt,self.xnode.find('base-exp'),self.subst)
 
-    def getlenexp(self): return TX.getexp(self.ctxt,self.xnode.find('len-exp'))
+    def getlenexp(self): return TX.getexp(self.ctxt,self.xnode.find('len-exp'),self.subst)
 
     def hasvariable(self,vname):
         return (self.getbaseexp().hasvariable(vname) or self.getlenexp().hasvariable(vname))
@@ -50,6 +50,12 @@ class CPOPredicateInitializedRange(CPOPredicate):
         self.getbaseexp().writexml(enode)
         self.getlenexp().writexml(lnode)
         cnode.extend([ enode, lnode ])
+
+    def hashstr(self):
+        return '_'.join([ self.hashtag(),
+                              'E:' + self.getbaseexp().hashstr(),
+                              'L:' + self.getlenexp().hashstr() ])
+
 
     def __str__(self):
         return ('initialized-range(' + str(self.getbaseexp()) + ',' +
