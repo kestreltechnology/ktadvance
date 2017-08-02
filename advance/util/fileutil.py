@@ -241,9 +241,11 @@ def read_juliet_test_summary(testname):
 
 def get_juliet_reference(testname):
     path = get_juliet_testpath(testname)
-    with open(os.path.join(path,'scorekey.json'),'r') as fp:
-        d = json.load(fp)
-    return d
+    scorekey = os.path.join(path,'scorekey.json')
+    if os.path.isfile(scorekey):
+        with open(scorekey,'r') as fp:
+            d = json.load(fp)
+        return d
 
 # ------------------------------------------------------------ svcomp ----------
 
