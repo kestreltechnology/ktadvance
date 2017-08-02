@@ -25,6 +25,8 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import xml.etree.ElementTree as ET
+
 import advance.app.CTTypeExp as TX
 
 from advance.proof.CPOPredicate import CPOPredicate
@@ -37,6 +39,19 @@ class CPOPredicateNoOverlap(CPOPredicate):
     def getexp1(self): return TX.getexp(self.ctxt,self.xnode.find('exp1'),self.subst)
 
     def getexp2(self): return TX.getexp(self.ctxt,self.xnode.find('exp2'),self.subst)
+
+    def writexml(self,cnode):
+        CPOPredicate.writexml(self,cnode)
+        e1node = ET.Element('exp1')
+        e2node = ET.Element('exp2')
+        self.getexp1().writexml(e1node)
+        self.getexp2().writexml(e2node)
+        cnode.extend([ e1node, e2node ])
+
+    def hashstr(self):
+        return '_'.join([self.hashtag(),
+                             'E1:' + self.getexp1().hashstr(),
+                             'E2:' + self.getexp2().hashstr() ])
 
     def __str__(self):
         return ('no-overlap(' + str(self.getexp1()) + ',' + str(self.getexp2()) + ')')
