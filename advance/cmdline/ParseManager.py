@@ -31,7 +31,7 @@ import shlex
 import shutil
 import xml.etree.ElementTree as ET
 
-from advance.bin.Config import Config
+from advance.util.Config import Config
 
 import advance.util.xmlutil as UX
 

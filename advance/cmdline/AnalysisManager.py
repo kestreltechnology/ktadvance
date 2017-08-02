@@ -31,7 +31,7 @@ from functools import partial
 
 import advance.util.fileutil as UF
 import advance.util.pickling as AUP
-from advance.bin.Config import Config
+from advance.util.Config import Config
 
 class AnalysisManager(object):
 
