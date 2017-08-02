@@ -36,6 +36,7 @@ import advance.util.printutil as UP
 from advance.util.Config import Config
 from advance.app.CApplication import CApplication
 from advance.cmdline.AnalysisManager import AnalysisManager
+from advance.linker.CLinker import CLinker
 
 def parse():
     usage = ('\nCall with the name of one of the sard/zitser projects, e.g., id1284')
@@ -53,13 +54,8 @@ def parse():
     args = parser.parse_args()
     return args
 
-def invokelinker(path):
-    cmd = [ 'python', 'chc_link_project.py', path ]
-    thisdir = os.path.join(os.path.join(Config().rootdir,'cmdline'),'zitser')
-    result = subprocess.call(cmd,cwd=thisdir,stderr=subprocess.STDOUT)
-    if result != 0:
-        print('Error in linking')
-        exit(1)
+def savexrefs(f):
+    capp.indexmanager.savexrefs(capp.getpath(),f.getfilename(),f.getindex())
 
 if __name__ == '__main__':
     
@@ -75,23 +71,30 @@ if __name__ == '__main__':
         print(UP.cpath_not_found_err_msg(cpath))
         exit(1)
         
-    semdir = os.path.join(cpath,'semantics')
-    if (not os.path.isdir(semdir)) or args.deletesemantics:
+    sempath = os.path.join(cpath,'semantics')
+    if (not os.path.isdir(sempath)) or args.deletesemantics:
         success = UF.unpack_tar_file(cpath,args.deletesemantics)
         if not success:
             print(UP.semantics_tar_not_found_err_msg(cpath))
             exit(1)
 
+    capp = CApplication(sempath)
+
     # check linkinfo
-    globaldefs = os.path.join(semdir,os.path.join('ktadvance','globaldefinitions.xml'))
+    globaldefs = os.path.join(sempath,os.path.join('ktadvance','globaldefinitions.xml'))
     if not os.path.isfile(globaldefs):
-        invokelinker(cpath)
-   
-    capp = CApplication(semdir)
+        linker = CLinker(capp)
+        linker.linkcompinfos()
+        linker.linkvarinfos()
+        capp.fileiter(savexrefs)
+
+    # have to reinitialized capp to get linking info properly initialized
+    capp = CApplication(sempath)
     am = AnalysisManager(capp)
 
     am.create_app_primaryproofobligations()
-    am.generate_app_localinvariants(['llvis'])
+    for i in range(3):
+        am.generate_app_localinvariants(['llvis'])
     am.check_app_proofobligations()
 
     for i in range(args.analysisrounds):
