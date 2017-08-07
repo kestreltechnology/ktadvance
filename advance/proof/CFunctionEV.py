@@ -103,6 +103,9 @@ class CFunctionPEV(CFunctionEV):
 
     def getppo(self): return self.cevs.getppo(self.getid())
 
+    def getpredicatetag(self): return self.getppo().getpredicatetag()
+
+    def getline(self): return self.getppo().getline()
 
     def __str__(self):
         return (str(self.getppo()) + ': ' + self.getevidence())
