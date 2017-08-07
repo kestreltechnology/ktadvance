@@ -148,20 +148,20 @@ class CFunctionProofs():
         return self.sevs.getevidence(spoid)
 
     def get_open_ppos(self):
-        result = {}
+        result = []
         def f(ppo):
-            if not ppo.isdischarged(): result[ppo.getid()] = ppo
+            if not ppo.isdischarged(): result.append(ppo)
         self.iterppos(f)
         return result
 
-    def getviolations(self):
+    def get_violations(self):
         result = []
         def f(pev):
             if pev.isviolation(): result.append(pev)
         self.iterpevs(f)
         return result
 
-    def getdelegated(self):
+    def get_delegated(self):
         result = []
         def f(pev):
             if pev.isdelegated(): result.append(pev)
