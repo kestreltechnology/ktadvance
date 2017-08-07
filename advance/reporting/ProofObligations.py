@@ -52,6 +52,13 @@ def classifypo(po,d):
     else:
         d['open'] += 1
 
+def get_method_count(pos,filefilter=lambda(f):True,extradsmethods=[]):
+    result = {}
+    for dm in get_dsmethods(extradsmethods): result[dm] = 0
+    for po in pos:
+        classifypo(po,result)
+    return result
+
 def get_tag_method_count(pos,filefilter=lambda(f):True,extradsmethods=[]):
     result = {}
     dsmethods = get_dsmethods(extradsmethods)
@@ -172,6 +179,10 @@ def function_code_tostring(fn,pofilter=lambda(po):True):
 
 def function_code_open_tostring(fn):
     pofilter = lambda(po):not po.isdischarged()
+    return function_code_tostring(fn,pofilter=pofilter)
+
+def function_code_violation_tostring(fn):
+    pofilter = lambda(po):po.isviolated()
     return function_code_tostring(fn,pofilter=pofilter)
     
 def file_code_tostring(cfile,pofilter=lambda(po):True):
