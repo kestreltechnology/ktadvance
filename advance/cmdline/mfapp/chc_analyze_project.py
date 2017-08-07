@@ -26,6 +26,7 @@
 # ------------------------------------------------------------------------------
 
 import argparse
+import logging
 import time
 import os
 import subprocess
@@ -37,6 +38,7 @@ import advance.util.fileutil as UF
 from advance.util.Config import Config
 from advance.app.CApplication import CApplication
 from advance.cmdline.AnalysisManager import AnalysisManager
+from advance.linker.CLinker import CLinker
 
 def parse():
     usage = ('\nCall with the directory that holds the semantics files\n\n' +
@@ -57,16 +59,11 @@ def parse():
     parser.add_argument('--deletesemantics',
                             help='Unpack a fresh version of the semantics files',
                             action='store_true')
+    parser.add_argument('--analysisrounds',
+                            help='Number of times to create secondary proof obligations',
+                            type=int, default=5)
     args = parser.parse_args()
     return args
-
-def invokelinker(path):
-    cmd = [ 'python', 'chc_link_project.py', path ]
-    thisdir = os.path.join(os.path.join(Config().rootdir,'cmdline'),'mfapp')
-    result = subprocess.call(cmd,cwd=thisdir,stderr=subprocess.STDOUT)
-    if result != 0:
-        print('Error in linking')
-        exit(1)
 
 @contextmanager
 def timing(activity):
@@ -76,58 +73,55 @@ def timing(activity):
           '\nCompleted ' + activity + ' in ' + str(time.time() - t0) + ' secs' +
           '\n' + ('=' * 80))
 
+def savexrefs(f):
+    capp.indexmanager.savexrefs(capp.getpath(),f.getfilename(),f.getindex())
+
 if __name__ == '__main__':
+
+    logging.basicConfig(filename='ktadvance_project.log',level=logging.INFO)
     
     args = parse()
     cpath = os.path.abspath(args.path)
     config = Config()
-    
+
     if not os.path.isfile(config.canalyzer):
-        print('*' * 80)
-        print('Analyzer not found at ' + config.canalyzer)
-        print('  Please set analyzer location in Config.py')
-        print('*' * 80)
+        print(UP.missing_analyzer_err_msg())
         exit(1)
 
     if not os.path.isdir(cpath):
-        print('*' * 80)
-        print('Target directory ')
-        print('   ' + cpath)
-        print('   not found.')
-        print('*' * 80)
+        print(UP.cpath_not_found_err_msg(cpath))
         exit(1)
         
-    semdir = os.path.join(cpath,'semantics')
-    if (not os.path.isdir(semdir)) or args.deletesemantics:
+    sempath = os.path.join(cpath,'semantics')
+    if (not os.path.isdir(sempath)) or args.deletesemantics:
         success = UF.unpack_tar_file(cpath,args.deletesemantics)
         if not success:
-            print('*' * 80)
-            print('No semantic files found in directory')
-            print('   ' + cpath)
-            print('*' * 80)
+            print(UP.semantics_tar_not_found_err_msg(cpath))
             exit(1)
-        else:
-            invokelinker(args.path)
+
+    capp = CApplication(sempath)
 
     # check linkinfo
-    globaldefs = os.path.join(semdir,os.path.join('ktadvance','globaldefinitions.xml'))
+    globaldefs = os.path.join(sempath,os.path.join('ktadvance','globaldefinitions.xml'))
     if not os.path.isfile(globaldefs):
-        invokelinker(cpath)
-    
-    capp = CApplication(semdir)
+        linker = CLinker(capp)
+        linker.linkcompinfos()
+        linker.linkvarinfos()
+        capp.fileiter(savexrefs)
+
+        linker.saveglobalcompinfos()
+        
+    # have to reinitialized capp to get linking info properly initialized
+    capp = CApplication(sempath)
     am = AnalysisManager(capp,nofilter=args.nofilter)
 
-    try:
-        with timing('creating primary proof obligations'):
-            am.create_app_primaryproofobligations()
-        with timing('generating local invariants'):
-            am.generate_app_localinvariants(['llvis'], args.maxprocesses)
-        with timing('checking proof obligations'):
-            am.check_app_proofobligations(args.maxprocesses)
-    except OSError as e:
-        print('*' * 80)
-        print('OS Error: ' + str(e))
-        print('   Please check the platform setting in Config.py')
-        print('*' * 80)
-        exit(1)
+    am.create_app_primaryproofobligations()
+    for i in range(3):
+        am.generate_app_localinvariants(['llvis'])
+    am.check_app_proofobligations()
 
+    for i in range(args.analysisrounds):
+        capp.updatespos()
+
+        am.generate_app_localinvariants(['llvis'])
+        am.check_app_proofobligations()
