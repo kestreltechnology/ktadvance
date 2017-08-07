@@ -206,27 +206,25 @@ class CApplication():
         return result
 
     def get_open_ppos(self):
-        results = {}
-        def f(cfile):
-            results[cfile.getfilename()] = cfile.get_open_ppos()
-        self.fileiter(f)
-        return results
+        result = []
+        def f(fn): result.extend(fn.get_open_ppos())
+        def g(fi): fi.fniter(f)
+        self.fileiter(g)
+        return result
 
-    def getviolations(self):
-        results = {}
-        def f(file):
-            violations = file.getviolations()
-            if len(violations) > 0: results[file.getfilename()] = violations
-        self.fileiter(f)
-        return results
+    def get_violations(self):
+        result = []
+        def f(fn): result.extend(fn.get_violations())
+        def g(fi): fi.fniter(f)
+        self.fileiter(g)
+        return result
 
-    def getdelegated(self):
-        results = {}
-        def f(file):
-            delegated = file.getdelegated()
-            if len(delegated) > 0: results[file.getfilename()] = delegated
-        self.fileiter(f)
-        return results
+    def get_delegated(self):
+        result = []
+        def f(fn): result.extend(fn.get_delegated())
+        def g(fi): fi.fniter(f)
+        self.fileiter(g)
+        return result
 
     def _initialize(self,fname):
         if fname is None:

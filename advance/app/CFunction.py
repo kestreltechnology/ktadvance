@@ -116,9 +116,9 @@ class CFunction():
 
     def get_open_ppos(self): return self.proofs.get_open_ppos()
 
-    def getviolations(self): return self.proofs.getviolations()
+    def get_violations(self): return self.proofs.get_violations()
 
-    def getdelegated(self): return self.proofs.getdelegated()
+    def get_delegated(self): return self.proofs.get_delegated()
 
     def _initialize(self):
         for v in self.xnode.find('sformals').findall('varinfo'):

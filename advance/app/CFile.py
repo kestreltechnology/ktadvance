@@ -213,26 +213,20 @@ class CFile():
         return result
 
     def get_open_ppos(self):
-        results = {}
-        def f(fn):
-            openppos = fn.get_open_ppos()
-            results[fn.getname()] = openppos
+        result = []
+        def f(fn): result.extend(fn.get_open_ppos())
         self.fniter(f)
         return results
 
-    def getviolations(self):
-        results = {}
-        def f(fn):
-            violations = fn.getviolations()
-            if len(violations) > 0: results[fn.getname()] = violations
+    def get_violations(self):
+        result = []
+        def f(fn): result.extend(fn.get_violations())
         self.fniter(f)
         return results
 
-    def getdelegated(self):
-        results = {}
-        def f(fn):
-            delegated = fn.getdelegated()
-            if len(delegated) > 0: results[fn.getname()] = delegated
+    def get_delegated(self):
+        result = []
+        def f(fn): result.extend(fn.get_delegated())
         self.fniter(f)
         return results
 
