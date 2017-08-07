@@ -38,7 +38,7 @@ import advance.util.xmlutil as UX
 class ParseManager():
     '''Utility functions to support preprocessing and parsing source code.'''
 
-    def __init__(self,cpath,tgtpath,nofilter=False,posix=False,verbose=True,tgtplatform='-m64'):
+    def __init__(self,cpath,tgtpath,filter=False,posix=False,verbose=True,tgtplatform='-m64'):
         '''Initialize paths to code, results, and parser executable.
 
         Args:
@@ -50,7 +50,7 @@ class ParseManager():
         '''
         self.cpath = cpath
         self.tgtpath = tgtpath
-        self.nofilter = nofilter
+        self.filter = filter
         self.posix = posix
         self.sempath = os.path.join(self.tgtpath,'semantics')
         self.tgtxpath = os.path.join(self.sempath,'ktadvance')
@@ -204,7 +204,7 @@ class ParseManager():
             ifilename = os.path.abspath(ifilename)
             command = [ self.config.cparser, '-projectpath', self.cpath,
                             '-targetdirectory', self.tgtxpath ]
-            if self.nofilter:
+            if not self.filter:
                 command.append('-nofilter')
             command.append(ifilename)
             cfilelen = self.getfilelength(cfilename)
