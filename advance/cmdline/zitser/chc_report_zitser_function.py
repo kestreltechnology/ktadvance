@@ -41,6 +41,8 @@ def parse():
     parser.add_argument('cfile',help='name of c file that is part of the test')
     parser.add_argument('cfunction',help='name of function in c file')
     parser.add_argument('--open',help='only show open proof obligations',action='store_true')
+    parser.add_argument('--violations',help='only show proof obligations that are violated',
+                            action='store_true')
     args = parser.parse_args()
     return args
 
@@ -74,6 +76,8 @@ if __name__ == '__main__':
 
     if args.open:
         print(RP.function_code_open_tostring(cfunction))
+    elif args.violations:
+        print(RP.function_code_violation_tostring(cfunction))
     else:
         print(RP.function_code_tostring(cfunction))
 
