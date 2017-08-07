@@ -165,6 +165,10 @@ class CTTypeArray(T.CTTypeBase):
         if not xsize is None:
             return getexp(self.ctxt,xsize)
 
+    def hasarraysizeexpr(self):
+        xsize = self.xnode.find('exp')
+        return not (xsize is None)
+
     def equal(self,other):
         if T.CTTypeBase.equal(self,other):
             t1 = self.getarraybasetype().expand()
@@ -178,6 +182,14 @@ class CTTypeArray(T.CTTypeBase):
 
     def writexml(self,cnode):
         T.CTTypeBase.writexml(self,cnode)
+        tnode = ET.Element('typ')
+        self.getarraybasetype().writexml(tnode)
+        cnode.append(tnode)
+        if self.hasarraysizeexpr():
+            enode = ET.Element('exp')
+            self.getarraysizeexpr().writexml(enode)
+            cnode.append(enode)
+
 
     def __str__(self):
         etype = self.getarraybasetype()
@@ -635,7 +647,7 @@ class CExpFnApp(B.CExpBase):
 
     def getargs(self):
         args = self.xnode.findall('arg')
-        return [ getexp(self.ctxt,x,self.subst) for x in args ]
+        return [ getexp(self.ctxt,x,self.subst) for x in args if 'etag' in x.attrib ]
 
     def writexml(self,cnode):
         B.CExpBase.writexml(self,cnode)
