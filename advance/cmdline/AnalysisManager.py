@@ -53,11 +53,26 @@ class AnalysisManager(object):
         self.verbose = verbose
 
     def reset(self):
-        def f(fn):
-            for fi in UF.get_results_filenames(self.path,fn.getfile().getfilename(),fn.getname()):
-                if os.path.isfile(fi):
-                    os.remove(fi)
-        self.capp.functioniter(f)
+        def g(fi):
+            cfiledir = UF.get_cfile_directory(self.path,fi.getfilename())
+            if os.path.isdir(cfiledir):
+                for f in os.listdir(cfiledir):
+                    if (len(f) > 10
+                            and (f[-8:-4] in [ '_api', '_ppo', '_spo', '_pev', '_sev' ]
+                                     or f[-9:-4] in [ '_invs' ])):
+                        os.remove(os.path.join(cfiledir,f))
+        self.capp.fileiter(g)
+
+    def reset_logfiles(self):
+        def g(fi):
+            logfiledir = UF.get_cfile_logfiles_directory(self.path,fi.getfilename())
+            if os.path.isdir(logfiledir):
+                for f in os.listdir(logfiledir):
+                    if (f.endswith('chlog')
+                            or f.endswith('infolog')
+                            or f.endswith('errorlog')):
+                        os.remove(os.path.join(logfiledir,f))
+        self.capp.fileiter(g)
 
     def create_file_primaryproofobligations(self,cfilename):
         try:
