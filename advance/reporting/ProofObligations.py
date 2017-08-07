@@ -39,6 +39,12 @@ def get_dsmethod_header(indent,dsmethods,header1=''):
     return (header1.ljust(indent) + ''.join([dm.rjust(8) for dm in dsmethods]) + 'total'.rjust(8))
 
 def classifypo(po,d):
+    '''Classify proof obligation with respect to discharge method and update dictionary.
+
+    Args:
+      po: proof obligation (CFunctionPO)
+      d: dictionary, with discharge methods initialized (is updated)
+    '''
     if po.isdischarged():
         pev = po.getevidence()
         if pev.isdelegatedtoapi():
@@ -53,6 +59,15 @@ def classifypo(po,d):
         d['open'] += 1
 
 def get_method_count(pos,filefilter=lambda(f):True,extradsmethods=[]):
+    '''Create dicharge method count dictionary from proof obligation list.
+
+    Args:
+      pos: flat list of proof obligations (primary or secondary)
+      filefilter: predicate that specifies which c files to include
+      extradsmethods: additional discharge methods to include in classification
+    Returns:
+      dictionary that organizes proof obligations by discharge method
+    '''
     result = {}
     for dm in get_dsmethods(extradsmethods): result[dm] = 0
     for po in pos:
@@ -60,6 +75,15 @@ def get_method_count(pos,filefilter=lambda(f):True,extradsmethods=[]):
     return result
 
 def get_tag_method_count(pos,filefilter=lambda(f):True,extradsmethods=[]):
+    '''Create predicate tag, discharge method count dictionary.
+
+    Args:
+      pos: flat list of proof obligations (primary or secondary)
+      filefilter: predicate that specifies which c files to include
+      extradsmethods: additional discharge methods to include in classification
+    Returns:
+      dictionary that organizes proof obligations by predicate and discharge method
+    '''
     result = {}
     dsmethods = get_dsmethods(extradsmethods)
     for po in pos:
@@ -72,6 +96,15 @@ def get_tag_method_count(pos,filefilter=lambda(f):True,extradsmethods=[]):
     return result
 
 def get_file_method_count(pos,filefilter=lambda(f):True,extradsmethods=[]):
+    '''Create file, discharge method count dictionary from proof obligation list.
+
+    Args:
+      pos: flat list of proof obligations (primary or secondary)
+      filefilter: predicate that specifies which c files to include
+      extradsmethods: additional discharge methods to include in classification
+    Returns:
+      dictionary that organizes proof obligations by file and discharge method
+    '''
     result = {}
     dsmethods = get_dsmethods(extradsmethods)
     for po in pos:
@@ -84,6 +117,15 @@ def get_file_method_count(pos,filefilter=lambda(f):True,extradsmethods=[]):
     return result
 
 def get_function_method_count(pos,extradsmethods=[]):
+    '''Create function, discharge method count dictionary from proof obligation list.
+
+    Args:
+      pos: flat list of proof obligations (primary or secondary)
+      filefilter: predicate that specifies which c files to include
+      extradsmethods: additional discharge methods to include in classification
+    Returns:
+      dictionary that organizes proof obligations by function and discharge method
+    '''
     result = {}
     dsmethods = get_dsmethods(extradsmethods)
     for po in pos:
@@ -94,15 +136,17 @@ def get_function_method_count(pos,extradsmethods=[]):
         classifypo(po,result[pofunction])
     return result
 
-'''Display a dictionary with row-header - discharge method - count.
-
-Arguments:
-d: dictionary (row header -> discharge method -> count
-perc: boolean that indicates whether to print discharge method percentages
-extradsmethods: list of additional column headers (will be prepended)
-rhlen: maximum length of the row header (default 25)
-'''
 def row_method_count_tostring(d,perc=False,extradsmethods=[],rhlen=25,header1=''):
+    '''Display a dictionary with row-header - discharge method - count.
+
+    Args:
+      d: dictionary (row header -> discharge method -> count
+      perc: boolean that indicates whether to print discharge method percentages
+      extradsmethods: list of additional column headers (will be prepended)
+      rhlen: maximum length of the row header (default 25)
+    Returns:
+      table of discharge method counts represented as a string
+'''
     lines = []
     dsmethods = get_dsmethods(extradsmethods)
     lines.append(get_dsmethod_header(rhlen,dsmethods,header1=header1))
@@ -221,7 +265,8 @@ def project_proofobligation_stats_tostring(capp,filefilter=lambda(f):True,extrad
     lines.append('\n\nProof Obligation Statistics')
     lines.append('~' * 80)
 
-    lines.append(proofobligation_stats_tostring(tagpporesults,tagsporesults,extradsmethods=extradsmethods))
+    lines.append(proofobligation_stats_tostring(tagpporesults,tagsporesults,
+                                                    extradsmethods=extradsmethods))
 
     return '\n'.join(lines)
     
@@ -234,7 +279,8 @@ def file_proofobligation_stats_tostring(cfile,extradsmethods=[]):
     sporesults = get_function_method_count(spos,extradsmethods=extradsmethods)
 
     rhlen = cfile.getmaxfunctionnamelength() + 3
-    lines.append(proofobligation_stats_tostring(pporesults,sporesults,rhlen=rhlen,header1='functions'))
+    lines.append(proofobligation_stats_tostring(pporesults,sporesults,rhlen=rhlen,
+                                                    header1='functions'))
 
     tagpporesults = get_tag_method_count(ppos,extradsmethods=extradsmethods)
     tagsporesults = get_tag_method_count(spos,extradsmethods=extradsmethods)
@@ -257,4 +303,55 @@ def function_proofobligation_stats_tostring(cfunction,extradsmethods=[]):
     lines.append('~' * 80)
 
     lines.append(proofobligation_stats_tostring(tagpporesults,tagsporesults))
+    return '\n'.join(lines)
+
+
+def make_po_tag_dict(pos,pofilter=lambda(po):True):
+    '''Create a predicate tag dictionary from a a list of proof obligations.
+
+    Args:
+      pos: list of proof obligations (primary or secondary)
+      pofilter: predicate that specifies which proof obligations to include
+    Returns:
+      dictionary that organizes the proof obligations by predicate tag
+    '''
+    result = {}
+    for po in pos:
+        if pofilter(po):
+            tag = po.getpredicatetag()
+            if not tag in result: result[tag] = []
+            result[tag].append(po)
+    return result
+
+def make_po_file_function_dict(pos,filefilter=lambda(f):True):
+    '''Create a file, function dictionary from a list of proof obligations.
+
+    Args:
+      pos: list of proof obligations (primary or secondary)
+      filefilter: predicate that specifies which c files to include
+    Returns:
+      dictionary that organizes the proof obligations by c file
+    '''
+    result = {}
+    for po in pos:
+        cfile = po.getfile().getfilename()
+        if filefilter(cfile):
+            if not cfile in result: result[cfile] = {}
+            cfun = po.getfunction().getname()
+            if not cfun in result[cfile]: result[cfile][cfun] = []
+            result[cfile][cfun].append(po)
+    return result
+        
+def tag_file_function_pos_tostring(pos,filefilter=lambda(f):True,pofilter=lambda(po):True):
+    lines = []
+    tagdict = make_po_tag_dict(pos,pofilter=pofilter)
+    for tag in sorted(tagdict):
+        fundict = make_po_file_function_dict(tagdict[tag],filefilter=filefilter)
+        lines.append('\n' + tag + '\n' + ('-' * 80))
+        for f in sorted(fundict):
+            lines.append('  File: ' + f)
+            for ff in sorted(fundict[f]):
+                lines.append('    Function: ' + ff)
+                for po in sorted(fundict[f][ff],key=lambda(po):po.getline()):
+                    lines.append((' ' * 6) + str(po))
     return '\n'.join(lines)
