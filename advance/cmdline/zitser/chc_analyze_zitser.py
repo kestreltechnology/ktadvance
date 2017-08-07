@@ -60,10 +60,7 @@ def savexrefs(f):
 
 if __name__ == '__main__':
 
-
     logging.basicConfig(filename='zitser.log',level=logging.INFO)
-
-    logging.info('Program started')
 
     args = parse()
     cpath = UF.get_zitser_testpath(args.path)
@@ -94,7 +91,7 @@ if __name__ == '__main__':
         linker.linkvarinfos()
         capp.fileiter(savexrefs)
 
-    linker.saveglobalcompinfos()
+        linker.saveglobalcompinfos()
 
     # have to reinitialized capp to get linking info properly initialized
     capp = CApplication(sempath)
