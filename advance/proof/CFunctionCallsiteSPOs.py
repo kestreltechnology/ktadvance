@@ -24,6 +24,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # ------------------------------------------------------------------------------
+
+import logging
+
 import xml.etree.ElementTree as ET
 
 import advance.util.xmlutil as UX
@@ -68,10 +71,12 @@ class CFunctionCallsiteSPOs():
         cfile = self.getfile()
         calleefun = cfile.capp.resolve_vid_function(cfile.getindex(),self.calleeid)
         if calleefun is None:
+            logging.warning('Missing external function in ' + self.getfile().getfilename() + ' - ' +
+                                self.getfunction().getname() + ': ' + self.callee)
             # TODO: this should be recorded in a logfile
-            print('*' * 80)
-            print('Warning: No semantics available for external function ' + self.callee)
-            print('*' * 80)
+            # print('*' * 80)
+            # print('Warning: No semantics available for external function ' + self.callee)
+            # print('*' * 80)
             return
         api = calleefun.getapi()
         pars = api.getparameters()
