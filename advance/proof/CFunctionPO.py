@@ -59,6 +59,12 @@ class CFunctionPO():
         else:
             return self.cpos.is_spo_discharged(self.getid())
 
+    def isviolated(self):
+        if self.isppo():
+            return self.cpos.is_ppo_violated(self.getid())
+        else:
+            return self.cpos.is_spo_violated(self.getid())
+
     def getevidence(self):
         if self.isdischarged():
             if self.isppo():

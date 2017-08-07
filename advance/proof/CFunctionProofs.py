@@ -127,9 +127,17 @@ class CFunctionProofs():
         self._getpevs() 
         return self.pevs.isdischarged(ppoid)
 
+    def is_ppo_violated(self,ppoid):
+        self._getpevs()
+        return self.pevs.isviolation(ppoid)
+
     def is_spo_discharged(self,spoid):
         self._getsevs()
         return self.sevs.isdischarged(spoid)
+
+    def is_spo_violated(self,spoid):
+        self._getsevs()
+        return self.sevs.isviolation(spoid)
 
     def get_ppo_evidence(self,ppoid): 
         self._getpevs()

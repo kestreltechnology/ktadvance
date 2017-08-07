@@ -98,10 +98,10 @@ class CFunctionEV():
 class CFunctionPEV(CFunctionEV):
     '''Represents the evidence for a primary proof obligation discharged.'''
 
-    def __init__(self,cpevs,xnode):
-        CFunctionEV.__init__(self,cpevs,xnode)
+    def __init__(self,cevs,xnode):
+        CFunctionEV.__init__(self,cevs,xnode)
 
-    def getppo(self): return self.cpevs.getppo(self.getid())
+    def getppo(self): return self.cevs.getppo(self.getid())
 
 
     def __str__(self):
@@ -115,7 +115,7 @@ class CFunctionSEV(CFunctionEV):
     def __init__(self,csevs,xnode):
         CFunctionEV.__init__(self,csevs,xnode)
 
-    def getspo(self): return self.csevs.getspo(self.getid())
+    def getspo(self): return self.cevs.getspo(self.getid())
 
     def __str__(self):
         return (str(self.getspo()) + ': ' + self.getevidence())

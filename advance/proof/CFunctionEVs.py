@@ -44,6 +44,9 @@ class CFunctionEVs():
 
     def isdischarged(self,id): return id in self.evs
 
+    def isviolation(self,id):
+        return id in self.evs and self.evs[id].isviolation()
+
     def iter(self,f):
         for ev in self.evs: f(self.evs[ev])
 

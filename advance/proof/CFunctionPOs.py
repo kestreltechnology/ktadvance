@@ -42,6 +42,10 @@ class CFunctionPOs():
 
     def is_spo_discharged(self,id): return self.cproofs.is_spo_discharged(id)
 
+    def is_ppo_violated(self,id): return self.cproofs.is_ppo_violated(id)
+
+    def is_spo_violated(self,id): return self.cproofs.is_spo_violated(id)
+
     def get_ppo_evidence(self,id): return self.cproofs.get_ppo_evidence(id)
 
     def get_spo_evidence(self,id): return self.cproofs.get_spo_evidence(id)

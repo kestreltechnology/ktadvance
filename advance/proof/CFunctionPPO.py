@@ -53,6 +53,8 @@ class CFunctionPPO(CFunctionPO):
         pnode = self.xnode.find('predicate')
         return P.getpredicate(self.getcontext(),pnode)
 
+    def isdischarged(self): return self.cpos.is_ppo_discharged(self.getid())
+
     def getcontext(self):
         return makecontext(self.getfunction(),self.xnode.find('context'))
 

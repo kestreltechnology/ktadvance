@@ -25,6 +25,8 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import xml.etree.ElementTree as ET
+
 import advance.app.CTTypeExp as TX
 
 from advance.proof.CPOPredicate import CPOPredicate
@@ -38,5 +40,14 @@ class CPOPredicateInitialized(CPOPredicate):
         if self.xnode.find('lval') is None:
             return '?????'
         return TX.CLval(self.ctxt,self.xnode.find('lval'))
+
+    def writexml(self,cnode):
+        CPOPredicate.writexml(self,cnode)
+        lnode = ET.Element('lval')
+        self.getlval().writexml(lnode)
+        cnode.append(lnode)
+
+    def hashstr(self):
+        return '_'.join([self.hashtag(),'L:' + self.getlval().hashstr() ])
 
     def __str__(self): return ('initialized(' + str(self.getlval()) + ')')
