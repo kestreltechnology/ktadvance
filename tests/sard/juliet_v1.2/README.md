@@ -28,16 +28,22 @@ Set the PYTHONPATH:
 ```
 or adapt for different location of the ktadvance directory.
 
-To run the analysis of a Juliet Test Case:
+To list the Juliet test cases currently provided in the tests
+directory:
 ```
-> cd ktadvance/advance/bin/juliet
+> cd ktadvance/advance/cmdline/juliet
+> python chc_list_juliettests.py
+```
+
+To run the analysis of a Juliet Test Case select one of paths listed
+in the output of chc_list_juliettests and run (for example):
+```
 > python chc_analyze_juliet.py CWE121/s01/CWE129_randQ
 ```
 This will create a semantics directory in the juliet_v1.2/CWE121/s01/CWE129_randQ
 directory with all analysis results. These results can then be queried by python
 reporting scripts:
 ```
-> cd ../reporting/juliet
 > python chc_report_juliettest.py CWE121/s01/CWE129_randQ
 ```
 to see a summary of the results for all flow variants in the test case, or
@@ -100,7 +106,7 @@ To create a new test case:
 
 To (re)create the semantics_linux.tar.gz file:
 - extract [functionalvariant-name]_src.tar.gz
-- (from advance/bin) run
+- (from advance/cmdline/juliet) run
 ```
 > python chc_prepare_juliettest.py [relative-directory-name]
 ```
@@ -111,7 +117,7 @@ To (re)create the semantics_linux.tar.gz file:
    > cp ../../../std_thread.c .
    > cp ../../../Makefile_ctests Makefile
 ```
-- (from advance/bin/juliet), on a **linux platform**, run
+- (from advance/cmdline/juliet), on a **linux platform**, run
 ```
    > python chc_parse_juliettest.py [relative-directory-name] --savesemantics
 ```
