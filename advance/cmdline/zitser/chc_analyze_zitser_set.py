@@ -26,7 +26,7 @@
 import os
 import subprocess
 
-testcases = [ 'id' + str(x) for x in range(1284,1311) ]
+testcases = [ 'id' + str(x) for x in range(1283,1311) ]
 
 if __name__ == '__main__':
 
