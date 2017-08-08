@@ -22,9 +22,14 @@ Set the PYTHONPATH:
 ```
 or adapt for different location of the ktadvance directory.
 
+To see a list of the test sets currently provided:
+```
+> cd ktadvance/advance/cmdline/kendra
+> python chc_list_kendratests.py
+```
 To run the analysis of a test set:
 ```
-> cd ktadvance/advance/bin
+> cd ktadvance/advance/cmdline/kendra
 > python chc_test_kendra_set.py id115Q
 ```
 or to run the analysis of all test sets:
@@ -34,16 +39,15 @@ or to run the analysis of all test sets:
 To see the proof obligations and analysis results of a particular
 test:
 ```
-> cd ../reporting
-> python chc_report_kendra_ppos.py id115.c
+> python chc_report_kendratest_file.py id115.c
 ```
 or, to see a summary of the results for all tests:
 ```
-> python chc_dashboard_kendra.py
+> python chc_kendra_dashboard.py
 ```
 or, to see the predicates of proof obligations involved in the
 targeted violation:
 ```
-> python chc_dashboard_kendra.py --predicates
+> python chc_kendra_dashboard.py --predicates
 ```
 
