@@ -81,7 +81,7 @@ number is the line number in the file.
 
 To see a summary for all zitser test cases:
 ```
-python chc_zitser_dashboard.py
+> python chc_zitser_dashboard.py
 ```
 which, at the time of writing this, outputs:
 ```
