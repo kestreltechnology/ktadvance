@@ -30,6 +30,7 @@ import json
 import os
 
 import advance.util.fileutil as UF
+import advance.util.printutil as UP
 
 from advance.util.Config import Config
 from advance.cmdline.ParseManager import ParseManager
