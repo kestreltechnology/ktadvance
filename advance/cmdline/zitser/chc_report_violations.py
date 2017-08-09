@@ -66,9 +66,9 @@ if __name__ == '__main__':
     def v(f):
         global opencount
         global violationcount
-        if len(f.getviolations()) > 0:
+        if len(f.get_violations()) > 0:
             fns.append(f)
-            violationcount += len(f.getviolations())
+            violationcount += len(f.get_violations())
         opencount += len(f.get_open_ppos())
     capp.functioniter(v)
 
