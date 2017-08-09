@@ -176,7 +176,10 @@ class CTTypeArray(T.CTTypeBase):
             if t1.equal(t2):
                 size1 = self.getarraysizeexpr()
                 size2 = self.getarraysizeexpr()
-                return size1.equalvalue(size2)
+                if size1 and size2:
+                    return size1.equalvalue(size2)
+                else:
+                    return False
             return False
         return False
 
@@ -512,6 +515,18 @@ class CExpSizeOfStr(B.CExpBase):
 
     def __init__(self,ctxt,xnode):
         B.CExpBase.__init__(self,ctxt,xnode)
+
+    def getstringindex(self,cnode): return int(self.xnode.get('strIndex'))
+
+    def writexml(self,cnode):
+        B.CExpBase.writexml(self,cnode)
+        cnode.set('strIndex',str(self.getstringindex()))
+
+    def hashstr(self):
+        return ':'.join([self.hashtag(), str(self.getstringindex()) ])
+
+    def __str__(self):
+        return ('sizeStr(' + str(self.getstringindex()) + ')')
 
 
 class CExpCastE(B.CExpBase):
