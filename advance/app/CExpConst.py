@@ -160,7 +160,7 @@ class CChrConstant(CConstantBase):
 
     def writexml(self,cnode):
         CConstantBase.writexml(self,cnode)
-        set('charValue',str(self.getcharvalue()))
+        cnode.set('charValue',str(self.getcharvalue()))
 
     def __str__(self):
         if not self.getcharvalue() is None and self.getcharvalue() >= 0:
