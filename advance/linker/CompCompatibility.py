@@ -67,8 +67,8 @@ class CompCompatibility():
     def _forall_shallowcompatiblefieldtype(self,incompatibles=set([])):
         fieldpairs = zip(sorted(self.comp1.getfields()),sorted(self.comp2.getfields()))
         for ((_,finfo1),(_,finfo2)) in fieldpairs:
-            t1 = finfo1.gettype()
-            t2 = finfo2.gettype()
+            t1 = finfo1.gettype().expand()
+            t2 = finfo2.gettype().expand()
             if not t1.shallowcompatible(t2,incompatibles): return False
         return True
 

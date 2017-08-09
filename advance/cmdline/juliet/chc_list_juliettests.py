@@ -1,3 +1,5 @@
+# ------------------------------------------------------------------------------
+# Access to the C Analyzer Analysis Results
 # Author: Henny Sipma
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
@@ -24,18 +26,31 @@
 # ------------------------------------------------------------------------------
 
 import os
-import subprocess
 
-testcases = [ 'id' + str(x) for x in range(1283,1311) ]
+import advance.util.fileutil as UF
 
 if __name__ == '__main__':
 
-    for testcase in testcases:
-        cmd = [ 'python' , 'chc_analyze_zitser.py', testcase, '--deletesemantics' ]
-        result = subprocess.call(cmd,stderr=subprocess.STDOUT)
-        if result != 0:
-            print('Error in testcase ' + testcase)
-            break
-    else:
-        print('\n\n' + ('=' * 80) + '\nAll Zitser test cases ran successfully.')
-        print(('=' * 80) + '\n')
+    path = UF.get_juliet_path()
+
+    result = []
+
+    if os.path.isdir(path):
+        for d1 in os.listdir(path):
+            if d1.startswith('CWE'):
+                fd1 = os.path.join(path,d1)
+                for d2 in os.listdir(fd1):
+                    fd2 = os.path.join(fd1,d2)
+                    if os.path.isdir(fd2):
+                        if d2.startswith('s'):
+                            for d3 in os.listdir(fd2):
+                                fd3 = os.path.join(fd2,d3)
+                                if os.path.isdir(fd3):
+                                    result.append(os.path.join(os.path.join(d1,d2),d3))
+                        else:
+                            result.append(os.path.join(d1,d2))
+
+    print('Juliet test sets currently provided (' + str(len(result)) + '):')
+    print('~' * 50)
+    for d in sorted(result):
+        print('  ' + d)

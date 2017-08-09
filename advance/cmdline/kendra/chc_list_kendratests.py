@@ -1,3 +1,5 @@
+# ------------------------------------------------------------------------------
+# Access to the C Analyzer Analysis Results
 # Author: Henny Sipma
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
@@ -24,18 +26,21 @@
 # ------------------------------------------------------------------------------
 
 import os
-import subprocess
 
-testcases = [ 'id' + str(x) for x in range(1283,1311) ]
+import advance.util.fileutil as UF
 
 if __name__ == '__main__':
 
-    for testcase in testcases:
-        cmd = [ 'python' , 'chc_analyze_zitser.py', testcase, '--deletesemantics' ]
-        result = subprocess.call(cmd,stderr=subprocess.STDOUT)
-        if result != 0:
-            print('Error in testcase ' + testcase)
-            break
-    else:
-        print('\n\n' + ('=' * 80) + '\nAll Zitser test cases ran successfully.')
-        print(('=' * 80) + '\n')
+    path = UF.get_kendra_path()
+
+    result = []
+
+    if os.path.isdir(path):
+        for d1 in os.listdir(path):
+            if d1.startswith('id'):
+                result.append(d1)
+
+    print('Kendra test sets currently provided (' + str(len(result)) + '):')
+    print('~' * 80)
+    for d in sorted(result):
+        print('  ' + d)

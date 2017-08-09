@@ -36,10 +36,10 @@ import advance.reporting.ProofObligations as RP
 from advance.app.CApplication import CApplication
 
 def parse():
-    usage = ('\nCall with the name of one of the sard/zitser projects, e.g., id1284')
-    description = ('Reports the analysis results for a zitser project')
+    usage = ('\nCall with the directory name that contains the semantics directory of a project')
+    description = ('Reports the analysis results for a project that has been analyzed')
     parser = argparse.ArgumentParser(usage=usage,description=description)
-    parser.add_argument('path',help='name of one of the zitser projects (e.g., id1284)')
+    parser.add_argument('path',help='name of one of the directory that holds the semantics directory')
     args = parser.parse_args()
     return args
 
@@ -47,7 +47,7 @@ def parse():
 if __name__ == '__main__':
 
     args = parse()
-    cpath = UF.get_zitser_testpath(args.path)
+    cpath = args.path
 
     if not os.path.isdir(cpath):
         print(UP.cpath_not_found_err_msg(cpath))
@@ -73,7 +73,7 @@ if __name__ == '__main__':
     capp.functioniter(v)
 
     print('~' * 80)
-    print('Violation report for zitser application ' + args.path)
+    print('Violation report for application ' + args.path)
     print('  - universal violations  : ' + str(violationcount))
     print('  - open proof obligations: ' + str(opencount))
     print('~' * 80)

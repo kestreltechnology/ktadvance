@@ -26,26 +26,18 @@
 # ------------------------------------------------------------------------------
 
 import os
-import logging
-
-logging.basicConfig(filename='zitser.log',level=logging.WARNING)
-
-logging.info('Program started')
 
 import advance.util.fileutil as UF
 import advance.reporting.ProofObligations as RP
 
 from advance.app.CApplication import CApplication
 
-testcases = [ 'id' + str(i) for i in range(1284,1311) ]
+testcases = [ 'id' + str(i) for i in range(1283,1311) ]
 
 if __name__ == '__main__':
     
     missing = []
-    logging.basicConfig(filename='zitser.log',level=logging.INFO)
 
-    logging.info('Program started')
-    
     print('~' * 80)
     print('Zitser test cases: ' + testcases[0] + ' - ' + testcases[-1])
     print('~' * 80)
