@@ -48,6 +48,7 @@ cprogram1.c:8: Warning: Body of function main falls-through. Adding a return sta
 (Output is shown for MacOSX; it will look somewhat different on Linux).
 
 Analyze the program:
+```
 > python chc_analyze_file.py ~/ cprogram1.c
 
 Creating primary proof obligations for cprogram1.c
