@@ -34,6 +34,7 @@ import subprocess
 from contextlib import contextmanager
 
 import advance.util.fileutil as UF
+import advance.util.printutil as UP
 
 from advance.util.Config import Config
 from advance.app.CApplication import CApplication
