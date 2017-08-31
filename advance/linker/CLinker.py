@@ -97,13 +97,11 @@ class CLinker():
             pcount = len(self.possiblycompatiblestructs)
             print('Found ' + str(pcount) + ' compatible combinations')
 
-        print str(len(self.compinfos))
-
         gcomps = UnionFind()
         
         for c in self.compinfos: 
             gcomps[ c.getid() ]
-            #print str(c.getname())
+
         for (c1,c2) in self.possiblycompatiblestructs: gcomps.union(c1,c2)
 
         eqclasses = set([])
@@ -120,7 +118,6 @@ class CLinker():
         for c in self.compinfos:
             id = c.getid()
             gckey = self.globalcompinfos[gcomps[id]]
-            #print gckey
             self.compinfoxrefs[id] = gckey
             self.capp.indexmanager.addckey2gckey(id[0],id[1],gckey)
 
@@ -136,14 +133,6 @@ class CLinker():
             else:
                 filename = self.capp.getfilebyindex(id[0]).getfilename()
                 self.sharedinstances[gckey].append((filename,c))
-
-        templist = []
-        for c in self.compinfoinstances:
-            templist.append( self.compinfoinstances[c] )
-        templist = sorted(templist, key=lambda(c):c.getname())
-        for tempelem in templist:
-            print str(tempelem.getname()) + ' ' + str(tempelem.getid()) + ' ' + str(tempelem.getfile().getfilename())
-        
 
     def linkvarinfos(self): 
         globalvarinfos = {}       
@@ -196,8 +185,6 @@ class CLinker():
         self.possiblycompatiblestructs = []
         compinfos = sorted(self.compinfos,key=lambda(c):c.getid())
         print('Checking all combinations of ' + str(len(compinfos)) + ' struct definitions')
-        teststrings = ["src/fe-common/core/fe-channels", "src/irc/core/servers-redirect"]
-
         for (c1,c2) in itertools.combinations(compinfos,2):
             if c1.getid() == c2.getid(): continue
             pair = (c1.getid(),c2.getid())
@@ -207,8 +194,4 @@ class CLinker():
                 if cc.are_shallow_compatible(self.notcompatiblestructs):
                     self.possiblycompatiblestructs.append(pair)
                 else:
-                    if c1.getname() == c2.getname():
-                        print "Incompatible : " + str(c1.getfile().getfilename()) + ' ' + str(c2.getfile().getfilename()) + ' ' + str(c1.getname()) + " " + str(cc)
-                        cc.are_shallow_compatible(self.notcompatiblestructs,verbose=True)
-                        print "\n"
                     self.notcompatiblestructs.add(pair)

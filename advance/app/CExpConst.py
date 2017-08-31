@@ -74,7 +74,8 @@ class CIntegerConstant(CConstantBase):
             return self.getintvalue() == other.getintvalue()
         return False
 
-    def equalvalue(self,other): return self.equal(other)
+    def equalvalue(self,other):
+        return self.equal(other)
 
     def isconstantvalue(self): return True
 

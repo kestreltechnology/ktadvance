@@ -77,7 +77,8 @@ def getconstant(ctxt,xnode):
 
 def getexp(ctxt,xnode,subst={}):
     tag = xnode.get('etag')
-    if tag == 'const': return CExpConstant(ctxt,xnode)
+    if tag == 'const':
+        return CExpConstant(ctxt,xnode)
     if tag == 'lval' :
         e = CExpLval(ctxt,xnode)
         if e.isvar():
@@ -137,6 +138,13 @@ class CTTypePtr(T.CTTypeBase):
         else:
             return False
 
+    def shallowcompatible(self,other,incompatibles=set([])):
+        if T.CTTypeBase.equal(self,other):
+            return self.getpointedtotype().expand().shallowcompatible(
+                other.getpointedtotype().expand(), incompatibles)
+        else:
+            return False
+
     def gettypesize(self):
         return CTTypeSize().add('ptr')
 
@@ -183,6 +191,20 @@ class CTTypeArray(T.CTTypeBase):
             return False
         return False
 
+    def shallowcompatible(self,other,incompatibles=([])):
+        if T.CTTypeBase.equal(self,other):
+            t1 = self.getarraybasetype().expand()
+            t2 = self.getarraybasetype().expand()
+            if t1.shallowcompatible(t2, incompatibles):
+                size1 = self.getarraysizeexpr()
+                size2 = self.getarraysizeexpr()
+                if size1 and size2:
+                    return size1.equalvalue(size2)
+                else:
+                    return False
+            return False
+        return False
+
     def writexml(self,cnode):
         T.CTTypeBase.writexml(self,cnode)
         tnode = ET.Element('typ')
@@ -219,6 +241,10 @@ class CTTypeFunArg():
     def equal(self,other):
         return ((self.getname() == other.getname()) and
                     self.gettype().equal(other.gettype()))
+
+    def shallowcompatible(self,other,incompatibles=([])):
+        return ((self.getname() == other.getname()) and
+                    self.gettype().shallowcompatible(other.gettype(), incompatibles))
 
     def writexml(self,cnode):
         tnode = ET.Element('typ')
@@ -262,12 +288,30 @@ class CTTypeFun(T.CTTypeBase):
                     else:
                         return True
                 else:
-                    return False
+                    return not (args or otherargs)
             else:
                 return False
         else:
             return False
 
+    def shallowcompatible(self,other,incompatible=([])):
+        if T.CTTypeBase.equal(self,other):
+            if self.getreturntype().shallowcompatible(other.getreturntype(), incompatible):
+                args = self.getargs()
+                otherargs = other.getargs()
+                if args and otherargs and len(args) == len(otherargs):
+                    for (arg,otherarg) in zip(args,otherargs):
+                        if not arg.shallowcompatible(otherarg, incompatible):
+                            return False
+                    else:
+                        return True
+                else:
+                    return not (args or otherargs)
+            else:
+                return False
+        else:
+            return False
+    
     def writexml(self,cnode):
         T.CTTypeBase.writexml(self,cnode)
         tnode = ET.Element('typ')
@@ -288,13 +332,20 @@ class CExpConstant(B.CExpBase):
     def __init__(self,ctxt,xnode):
         B.CExpBase.__init__(self,ctxt,xnode)
 
-    def getconstant(self): return getconstant(self.ctxt,self.xnode.find('constant'))
+    def getconstant(self): 
+        return getconstant(self.ctxt,self.xnode.find('constant'))
 
     def writexml(self,cnode):
         B.CExpBase.writexml(self,cnode)
         knode = ET.Element('constant')
         self.getconstant().writexml(knode)
         cnode.append(knode)
+
+    def equalvalue(self, other):
+        if B.CExpBase.equal(self, other):
+            return self.getconstant().equalvalue(other.getconstant())
+        else:
+            return False    
 
     def hashstr(self): return(self.hashtag() + ':' + self.getconstant().hashstr())
 
@@ -505,6 +556,15 @@ class CExpSizeOfE(B.CExpBase):
         self.getexp().writexml(enode)
         cnode.append(enode)
 
+    def equalvalue(self, other):
+        self.equal(other)
+
+    def equal(self, other):
+        if B.CExpBase(self, other):
+            return self.getexp().equal(other.getexp())
+        else:
+            False
+
     def hashstr(self):
         return ':'.join([ self.hashtag(), self.getexp().hashstr() ])
 
@@ -516,7 +576,7 @@ class CExpSizeOfStr(B.CExpBase):
     def __init__(self,ctxt,xnode):
         B.CExpBase.__init__(self,ctxt,xnode)
 
-    def getstringindex(self,cnode): return int(self.xnode.get('strIndex'))
+    def getstringindex(self): return int(self.xnode.get('strIndex'))
 
     def writexml(self,cnode):
         B.CExpBase.writexml(self,cnode)
@@ -564,6 +624,15 @@ class CExpUnOp(B.CExpBase):
 
     def getunop(self): return self.xnode.get('unop')
 
+    def equalvalue(self, other):
+        return self.equal(other)
+
+    def equal(self, other):
+        if B.CExpBase.equal(self, other):
+            return self.getexp().equal(other.getexp()) and self.getunop() == other.getunop()
+        else:
+            return False
+
     def writexml(self,cnode):
         B.CExpBase.writexml(self,cnode)
         tnode = ET.Element('typ')
@@ -589,6 +658,16 @@ class CExpBinOp(B.CExpBase):
     def gettype(self): return gettype(self.ctxt,self.xnode.find('typ'))
 
     def getbinop(self): return self.xnode.get('binop')
+
+    def equalvalue(self, other):
+        return self.equal(other)
+
+    def equal(self, other):
+        if B.CExpBase.equal(self, other):
+            return self.getexp1().equal(other.getexp1()) and self.getexp2().equal(other.getexp2()) \
+                and self.getbinop() == other.getbinop()
+        else:
+            return False
 
     def writexml(self,cnode):
         B.CExpBase.writexml(self,cnode)
