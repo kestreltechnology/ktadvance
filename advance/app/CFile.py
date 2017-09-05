@@ -216,19 +216,19 @@ class CFile():
         result = []
         def f(fn): result.extend(fn.get_open_ppos())
         self.fniter(f)
-        return results
+        return result
 
     def get_violations(self):
         result = []
         def f(fn): result.extend(fn.get_violations())
         self.fniter(f)
-        return results
+        return result
 
     def get_delegated(self):
         result = []
         def f(fn): result.extend(fn.get_delegated())
         self.fniter(f)
-        return results
+        return result
 
     def _initialize_gtypes(self):
         if len(self.gtypes) > 0: return
