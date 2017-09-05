@@ -520,13 +520,13 @@ class CExpSizeOfStr(B.CExpBase):
 
     def writexml(self,cnode):
         B.CExpBase.writexml(self,cnode)
-        cnode.set('strIndex',str(self.getstringindex()))
+        cnode.set('strIndex',str(self.getstringindex(cnode)))
 
     def hashstr(self):
         return ':'.join([self.hashtag(), str(self.getstringindex()) ])
 
     def __str__(self):
-        return ('sizeStr(' + str(self.getstringindex()) + ')')
+        return ('sizeStr(' + str(self.getstringindex(cnode)) + ')')
 
 
 class CExpCastE(B.CExpBase):
