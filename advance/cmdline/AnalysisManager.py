@@ -36,7 +36,7 @@ from advance.invariants.CGlobalInvariants import CGlobalInvariants
 
 class AnalysisManager(object):
 
-    def __init__(self,capp,onefile=False,nofilter=False,wordsize=0,unreachability=False,
+    def __init__(self,capp,onefile=False,filter=False,wordsize=0,unreachability=False,
                      thirdpartysummaries=[],
                      verbose=True):
         '''Initialize the analyzer location and target file location'''
@@ -47,7 +47,7 @@ class AnalysisManager(object):
         self.path = self.capp.path
         self.canalyzer = self.config.canalyzer
         self.onefile = onefile
-        self.nofilter = nofilter
+        self.filter = filter
         self.wordsize = wordsize
         self.thirdpartysummaries = thirdpartysummaries
         self.unreachability = unreachability # use unreachability as justification for discharge
@@ -82,8 +82,9 @@ class AnalysisManager(object):
                         '-command', 'primary', '-cfile', cfilename ]
             for s in self.thirdpartysummaries:
                 cmd.extend(['-summaries',s])
+
             if self.nofilter: cmd.append('-nofilter')
-            if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
+           if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
             cmd.append(self.path)
             if self.verbose:
                 print(str(cmd))

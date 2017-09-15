@@ -50,8 +50,8 @@ def parse():
     parser = argparse.ArgumentParser(usage=usage,description=description)
     parser.add_argument('path',
                             help='directory that holds the semantics directory (or tar.gz file)')
-    parser.add_argument('--nofilter',
-                            help='disable filtering out files with absolute path',
+    parser.add_argument('--filter',
+                            help='filter out files with absolute path',
                             action='store_true')
     parser.add_argument('--maxprocesses',
                             help='number of files to process in parallel',
@@ -113,11 +113,7 @@ if __name__ == '__main__':
         
     # have to reinitialize capp to get linking info properly initialized
     capp = CApplication(sempath)
-    print(str(capp.declarations.getstats()))
-    print(capp.getlinecounts())
-    
-    '''
-    am = AnalysisManager(capp,nofilter=args.nofilter)
+    am = AnalysisManager(capp,filter=args.filter)
 
     am.create_app_primaryproofobligations()
     for i in range(3):
