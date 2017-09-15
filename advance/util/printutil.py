@@ -26,6 +26,7 @@
 # ------------------------------------------------------------------------------
 
 import datetime
+import time
 
 from advance.util.Config import Config
 
@@ -46,6 +47,11 @@ def cjust(s,l):
     prelen = (l - length) / 2
     suflen = l - (length + prelen)
     return ((' ' * prelen) + s + (' ' * suflen))
+
+def chtime(t):
+    if t == 0:
+        return '0'
+    return time.strftime('%Y-%m-%d %H:%m',time.localtime(t))
 
 def reportheader(title):
     lines = []
