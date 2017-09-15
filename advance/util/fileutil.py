@@ -56,8 +56,18 @@ def get_targetfiles_xnode(path):
     filename = get_targetfiles_filename(path)
     return get_xnode(filename,'c-files','File that holds the names of source files')
 
-def get_globaldefinitions_filename(path):
+def get_global_definitions_filename(path):
     return os.path.join(path,'globaldefinitions.xml')
+
+def get_global_declarations_xnode(path):
+    filename = get_global_definitions_filename(path)
+    return get_xnode(filename,'globals','Global type dictionary file',show=False)
+
+def get_global_dictionary_xnode(path):
+    filename = get_global_definitions_filename(path)
+    gnode = get_xnode(filename,'globals','Global type declarations file',show=False)
+    if not gnode is None:
+        return gnode.find('dictionary')
         
 # ------------------------------------------------------------------- files ----
 
@@ -68,6 +78,34 @@ def get_cfilenamebase(cfilename):
 def get_cfile_filename(path,cfilename):
     cfilename = get_cfilenamebase(cfilename)
     return os.path.join(path,cfilename + '_cfile.xml')
+
+def get_cfile_xnode(path,cfilename):
+    filename = get_cfile_filename(path,cfilename)
+    return get_xnode(filename,'c-file','C source file')
+
+def get_cfile_dictionaryname(path,cfilename):
+    cfilename = get_cfilenamebase(cfilename)
+    return os.path.join(path,cfilename + '_dictionary.xml')
+
+def get_cfile_dictionary_xnode(path,cfilename):
+    filename = get_cfile_dictionaryname(path,cfilename)
+    return get_xnode(filename,'cfile','C dictionary file')
+
+def get_cfile_podictionaryname(path,cfilename):
+    cfilename = get_cfilenamebase(cfilename)
+    return os.path.join(path,cfilename + '_podictionary.xml')
+
+def get_cfile_podictionary_xnode(path,cfilename):
+    filename = get_cfile_podictionaryname(path,cfilename)
+    return get_xnode(filename,'po-dictionary','PO predicate dictionary file')
+
+def get_cfile_contexttablename(path,cfilename):
+    cfilename = get_cfilenamebase(cfilename)
+    return os.path.join(path,cfilename + '_contexts.xml')
+
+def get_cfile_contexttable_xnode(path,cfilename):
+    filename = get_cfile_contexttablename(path,cfilename)
+    return get_xnode(filename,'c-contexts','C contexts file',show=False)
 
 def get_cfile_directory(path,cfilename):
     return os.path.join(path,get_cfilenamebase(cfilename))
@@ -82,13 +120,18 @@ def get_cfile_xnode(path,cfilename):
 
 def get_cxreffile_filename(path,cfilename):
     if cfilename.endswith('.c'):
-        return os.path.join(path,cfilename[:-2] + '_gxrefs.xml')
-    else:
-        return os.path.join(path,cfilename + '_gxrefs.xml')
+        cfilename = cfilename[:-2]
+    return os.path.join(path,cfilename + '_gxrefs.xml')
 
 def get_cxreffile_xnode(path,cfilename):
     filename = get_cxreffile_filename(path,cfilename)
     return get_xnode(filename,'global-xrefs','File with global cross references',show=False)
+
+def get_global_invs_filename(path,cfilename,objectname):
+    if cfilename.endswith('.c'):
+        cfilename = cfilename[:-2]
+    objectname = '' if objectname == 'all' else '_' + objectname 
+    return os.path.join(path,cfilename + objectname + '_ginvs.xml')
 
 # ----------------------------------------------------------------- functions --
 
@@ -111,6 +154,13 @@ def get_api_filename(path,cfilename,fname):
 def get_api_xnode(path,cfilename,fname):
     filename = get_api_filename(path,cfilename,fname)
     return get_xnode(filename,'function','Function api file')
+
+def get_vars_filename(path,cfilename,fname):
+    return (get_cfun_basename(path,cfilename,fname) + '_vars.xml')
+
+def get_vars_xnode(path,cfilename,fname):
+    filename = get_vars_filename(path,cfilename,fname)
+    return get_xnode(filename,'function','Function variable dictionary')
 
 def get_invs_filename(path,cfilename,fname):
     return (get_cfun_basename(path,cfilename,fname) + '_invs.xml')
