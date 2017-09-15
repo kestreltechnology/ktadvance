@@ -45,10 +45,13 @@ class CConstantBase():
         self.xnode = xnode
         self.ctxt = ctxt
 
+
     def gettag(self): return self.xnode.get('ctag')
 
     def equal(self,other):
         return self.gettag() == other.gettag()
+
+    def isconstantvalue(self): return False
 
     def writexml(self,cnode):
         cnode.set('ctag',self.gettag())
@@ -77,6 +80,8 @@ class CIntegerConstant(CConstantBase):
     def equalvalue(self,other): return self.equal(other)
 
     def isconstantvalue(self): return True
+
+    def getconstantvalue(self): return self.getintvalue()
 
     def writexml(self,cnode):
         CConstantBase.writexml(self,cnode)
@@ -157,6 +162,8 @@ class CChrConstant(CConstantBase):
         return False
 
     def isconstantvalue(self): return True
+
+    def getconstantvalue(self): return self.getcharvalue()
 
     def writexml(self,cnode):
         CConstantBase.writexml(self,cnode)
