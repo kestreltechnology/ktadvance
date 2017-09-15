@@ -25,38 +25,17 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CContext import CContext
-import advance.proof.CPOUtil as P
-
 class ApiAssumption():
 
-    def __init__(self,capi,xnode):
+    def __init__(self,capi,id,predicate):
+        self.id = id
         self.capi = capi
         self.cfun = self.capi.cfun
-        self.xnode = xnode
+        self.predicate = predicate
         self.primarypos = []
-        self._initialize()
 
-    def getid(self): return self.xnode.get('id')
-
-    def getpredicatenode(self): return self.xnode.find('predicate')
-
-    def getpredicate(self):
-        ctxt = CContext(self.cfun.cfile,self.cfun,None)
-        return P.getpredicate(ctxt,self.xnode.find('predicate'))
-
-    def getdependentpos(self): return self.primarypos
-
-    def _initialize(self):
-        for x in self.xnode.find('dependent-primary-proof-obligations').findall('po'):
-            self.primarypos.append(x.get('id'))
+    def get_dependent_pos(self): return self.primarypos
 
     def __str__(self):
-        return (str(self.getpredicate()) + "\n    --Dependent ppo's: [" +
-                ', '.join(str(i) for i in self.getdependentpos()) + ']\n')
-
-    
-
-    
-    
-        
+        return (str(self.predicate) + "\n    --Dependent ppo's: [" +
+                ', '.join(str(i) for i in self.primarypos) + ']\n')

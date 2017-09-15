@@ -27,6 +27,7 @@
 
 from advance.api.ApiAssumption import ApiAssumption
 from advance.api.FieldAssignment import FieldAssignment
+from advance.api.CGlobalAssignment import CGlobalAssignment
 from advance.api.PostRequest import PostRequest
 
 import advance.util.fileutil as UF
@@ -40,55 +41,58 @@ class CFunctionApi():
         self.xnode = None
         self.parameters = {}              # nr -> (vid,vname)
         self.apiassumptions = {}          # id -> ApiAssumption
-        self.postrequests = {}           # id -> PostRequest
+        self.postrequests = {}            # id -> PostRequest
         self.dsassumptions = {}
-        self.globalassumtpions = {}
-        self.globalassignments = {}
+        self.globalassumptions = {}
+        self.globalassignments = []       # CGlobalAssignment list
         self.fieldassignments = {}        # nr -> FieldAssignment
-        self._initialize()
+        self.initialize()
 
-    def getapiassumptions(self): return self.apiassumptions.values()
+    def get_api_assumptions(self): return self.apiassumptions.values()
 
-    def getpostrequests(self): return self.postrequests.values()
+    def get_global_assignments(self):
+        self._get_global_assignments()
+        return self.globalassignments
 
-    def getparameters(self): return self.parameters
+    def get_parameters(self): return self.cfun.ftype.get_args().get_args()
 
-    def apiassumptioniter(self,f):
-        for a in self.getapiassumptions(): f(a)
+    def get_formal_vids(self):
+        return [ self.cfun.get_formal_vid(p.get_name()) for p in self.get_parameters() ]
+
+    def iter_api_assumptions(self,f):
+        for a in self.get_api_assumptions(): f(a)
 
     def __str__(self):
         lines = []
-        lines.append('Api for ' + self.cfun.getname())
+        lines.append('Api for ' + self.cfun.name)
         lines.append('-' * 80)
         lines.append('parameters')
-        for n in self.parameters:
-            lines.append('  ' + str(n).rjust(2) + '  ' + str(self.parameters[n][1]))
+        for n in self.get_parameters():
+            lines.append('  ' + str(n).rjust(2))
+        lines.append('formal vids')
+        for n in self.get_formal_vids():
+            lines.append('  ' + str(n))
         if len(self.apiassumptions) > 0:
             lines.append(' ')
             lines.append('--api assumptions')
-            for a in self.getapiassumptions(): lines.append('   ' + str(a))
-        if len(self.postrequests) > 0:
-            lines.append(' ')
-            lines.append('--post requests')
-            for a in self.getpostrequests(): lines.append('   ' + str(a))
+            for a in self.get_api_assumptions():
+                lines.append('   ' + str(a))
         return '\n'.join(lines)
 
-    def _initialize(self):
-        path = self.capp.getpath()
-        xnode = UF.get_api_xnode(path,self.cfile.getfilename(),
-                                 self.cfun.getname())
+    def initialize(self):
+        path = self.capp.path
+        xnode = UF.get_api_xnode(path,self.cfile.name,self.cfun.name)
         if xnode is None:
-            print('Unable to load api file for ' + self.cfun.getname())
+            print('Unable to load api file for ' + self.cfun.name)
             return
         self.xnode = xnode
-        for p in self.xnode.find('parameters').findall('param'):
-            self.parameters[int(p.get('index'))] = (int(p.get('formal-vid'),),p.get('vname'))
-        for x in self.xnode.find('api-assumptions').findall('api-assumption'):
-            id = x.get('id')
-            self.apiassumptions[id] = ApiAssumption(self,x)
-        for x in self.xnode.find('post-requests').findall('post-request'):
-            id = x.get('id')
-            self.postrequests[id] = PostRequest(self,x)
-        for x in self.xnode.find('field-assignments').findall('field-assignment'):
-            id = x.get('id')
-            self.fieldassignments[id] = FieldAssignment(self.cfun,x)
+        for x in self.xnode.find('api').find('api-assumptions').findall('aa'):
+            predicate = self.cfile.podictionary.read_xml_predicate(x)
+            id = int(x.get('ipr'))
+            self.apiassumptions[id] = ApiAssumption(self,id,predicate)
+
+    def _get_global_assignments(self):
+        if len(self.globalassignments) > 0: return
+
+        for gnode in self.xnode.find('global-assignments').findall('global-assignment'):
+            self.globalassignments.append(CGlobalAssignment(self,gnode))
