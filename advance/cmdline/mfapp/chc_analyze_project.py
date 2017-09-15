@@ -75,7 +75,7 @@ def timing(activity):
           '\n' + ('=' * 80))
 
 def savexrefs(f):
-    capp.indexmanager.savexrefs(capp.getpath(),f.getfilename(),f.getindex())
+    capp.indexmanager.savexrefs(capp.path,f.name,f.index)
 
 if __name__ == '__main__':
 
@@ -100,11 +100,10 @@ if __name__ == '__main__':
             print(UP.semantics_tar_not_found_err_msg(cpath))
             exit(1)
 
-    capp = CApplication(sempath)
-
     # check linkinfo
     globaldefs = os.path.join(sempath,os.path.join('ktadvance','globaldefinitions.xml'))
     if not os.path.isfile(globaldefs):
+        capp = CApplication(sempath)
         linker = CLinker(capp)
         linker.linkcompinfos()
         linker.linkvarinfos()
@@ -112,8 +111,12 @@ if __name__ == '__main__':
 
         linker.saveglobalcompinfos()
         
-    # have to reinitialized capp to get linking info properly initialized
+    # have to reinitialize capp to get linking info properly initialized
     capp = CApplication(sempath)
+    print(str(capp.declarations.getstats()))
+    print(capp.getlinecounts())
+    
+    '''
     am = AnalysisManager(capp,nofilter=args.nofilter)
 
     am.create_app_primaryproofobligations()
@@ -126,3 +129,4 @@ if __name__ == '__main__':
 
         am.generate_app_localinvariants(['llvis'])
         am.check_app_proofobligations()
+    '''
