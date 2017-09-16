@@ -52,6 +52,9 @@ def parse():
     parser.add_argument('--analysisrounds',
                             help='Number of times to create secondary proof obligations',
                             type=int, default=5)
+    parser.add_argument('--wordsize',
+                        help='wordsize of target platform (e.g., 32 or 64)',
+                        type=int, default=0)
     args = parser.parse_args()
     return args
 
@@ -95,7 +98,7 @@ if __name__ == '__main__':
 
     # have to reinitialized capp to get linking info properly initialized
     capp = CApplication(sempath)
-    am = AnalysisManager(capp)
+    am = AnalysisManager(capp,wordsize=args.wordsize)
 
     am.create_app_primaryproofobligations()
     for i in range(3):
