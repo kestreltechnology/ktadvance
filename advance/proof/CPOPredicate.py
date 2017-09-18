@@ -25,54 +25,754 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-import xml.etree.ElementTree as ET
+import advance.app.CDictionaryRecord as CD
+import advance.app.CExp as CX
 
-tagtable = {
-    'allocation-base': 'AB',
-    'cast': 'CC',
-    'index-lower-bound': 'XL',
-    'index-upper-bound': 'XU',
-    'initialized': 'IV',
-    'initialized-range': 'IR',
-    'not-null': 'NN',
-    'pointer-cast': 'PC',
-    'valid-mem': 'VM',
-    'width-overflow': 'WO',
-    'ptr-lower-bound': 'PL',
-    'ptr-upper-bound': 'PU',
-    'ptr-upper-bound-deref': 'PX',
-    'non-negative': 'ZP',
-    'lower-bound': 'LB',
-    'upper-bound': 'UB',
-    'no-overlap': 'NO'
-    }
+po_predicate_names = {
+    'nn': 'not-null',
+    'null': 'null',
+    'vm': 'valid-mem',
+    'gm': 'global-mem',
+    'ab': 'allocation-base',
+    'tao': 'type-at-offset',
+    'lb': 'lower-bound',
+    'ub': 'upper-bound',
+    'ilb': 'index-lower-bound',
+    'iub': 'index-upper-bound',
+    'i': 'initialized',
+    'ir': 'initialized-range',
+    'c': 'cast',
+    'pc': 'pointer-cast',
+    'csu': 'signed-to-unsigned-cast',
+    'cus': 'unsigned-to-signed-cast',
+    'z': 'not-zero',
+    'nt': 'null-terminated',
+    'nneg': 'non-negative',
+    'iu': 'integer-underflow',
+    'io': 'integer-overflow',
+    'w': 'width-overflow',
+    'plb': 'ptr-lower-bound',
+    'pub': 'ptr-upper-bound',
+    'pubd': 'ptr-upper-bound-deref',
+    'cb': 'common-base',
+    'ft': 'format-string',
+    'no': 'no-overlap',
+    'vc': 'value-constraint',
+    'pre': 'precondition' }
 
-class CPOPredicate():
 
-    def __init__(self,ctxt,xnode,subst={}):
-        self.ctxt = ctxt
-        self.xnode = xnode
-        self.subst = subst
+class CPOPredicate(CD.CDictionaryRecord):
 
-    def getfunction(self): return self.ctxt.getfunction()
+    def __init__(self,cd,index,tags,args):
+        CD.CDictionaryRecord.__init__(self,cd,index,tags,args)
 
-    def getfile(self): return self.ctxt.getfile()
+    def get_tag(self): return po_predicate_names[self.tags[0]]
 
-    def gettag(self): return self.xnode.get('tag')
+    def is_not_null(self): return False
+    def is_null(self): return False
+    def is_valid_mem(self): return False
+    def is_global_mem(self): return False
+    def is_allocation_base(self): return False
+    def is_type_at_offset(self): return False
+    def is_lower_bound(self): return False
+    def is_upper_bound(self): return False
+    def is_index_lower_bound(self): return False
+    def is_index_upper_bound(self): return False
+    def is_initialized(self): return False
+    def is_initialized_range(self): return False
+    def is_cast(self): return False
+    def is_pointer_cast(self): return False
+    def is_signed_to_unsigned_cast(self): return False
+    def is_unsigned_to_signed_cast(self): return False
+    def is_not_zero(self): return False
+    def is_non_negative(self): return False
+    def is_null_terminated(self): return False
+    def is_int_underflow(self): return False
+    def is_int_overflow(self): return False
+    def is_width_overflow(self): return False
+    def is_ptr_lower_bound(self): return False
+    def is_ptr_upper_bound(self): return False
+    def is_ptr_upper_bound_deref(self): return False
 
-    def getpars(self): return []
+    def __str__(self): return 'po-predicate ' + self.tags[0]
 
-    def writexml(self,cnode): cnode.set('tag',self.gettag())
 
-    def hasvariable(self,vname): return False
+class CPONotNull(CPOPredicate):
+    '''
+    tags:
+       0: 'nn'
 
-    def hastargettype(self,targettype): return False
+    args:
+        0: exp
+    '''
 
-    def hashstr(self): return self.hashtag()
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
 
-    def hashtag(self):
-        if self.gettag() in tagtable: return tagtable[self.gettag()]
-        return self.gettag()
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
 
-    def __str__(self): return (self.gettag() + ' -- data -- ')
+    def is_not_null(self): return True
+
+    def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
+
+
+class CPONull(CPOPredicate):
+    '''
+    tags:
+       0: 'null'
+
+    args:
+       0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index.tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def is_null(self): return True
+
+    def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
+
+
+
+class CPOValidMem(CPOPredicate):
+    '''
+    tags:
+        0: 'vm'
+
+    args:
+        0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def is_valid_mem(self): return True
+
+    def __str__(self): return self.get_tag() +'(' + str(self.get_exp()) + ')'
+
+
+
+class CPOGlobalMem(CPOPredicate):
+    '''
+    tags:
+        0: 'gm'
+
+    args:
+        0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def is_global_mem(self): return True
+
+    def __str__(self):return self.get_tag() + '(' + str(self.get_exp()) + ')'
+
+
+
+class CPOAllocationBase(CPOPredicate):
+    '''
+    tags:
+        0: 'ab'
+
+    args:
+        0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def is_allocation_base(self): return True
+
+    def __str__(self):return self.get_tag() + '(' + str(self.get_exp()) + ')'
+
+
+
+
+class CPOTypeAtOffset(CPOPredicate):
+    '''
+    tags:
+        0: 'tao'
+
+    args:
+        0: typ
+        1: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_type(self): return self.cd.dictionary.get_typ(self.args[0])
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def is_type_at_offset(self): return True
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_type()) + ','
+            + str(self.get_exp()) + ')')
+
+
+
+class CPOLowerBound(CPOPredicate):
+    '''
+    tags:
+        0: 'lb'
+
+    args:
+        0: typ
+        1: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_type(self): return self.cd.dictionary.get_typ(self.args[0])
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def is_lower_bound(self): return True
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_type()) + ','
+            + str(self.get_exp()) + ')')
+
+
+
+class CPOUpperBound(CPOPredicate):
+    '''
+    tags:
+        0: 'ub'
+
+    args:
+        0: typ
+        1: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_type(self): return self.cd.dictionary.get_typ(self.args[0])
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def is_upper_bound(self): return True
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_type()) + ','
+            + str(self.get_exp()) + ')')
+
+
+        
+class CPOIndexLowerBound(CPOPredicate):
+    '''
+    tags:
+        0: 'ilb'
+
+    args:
+        0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def is_index_lower_bound(self): return True
+
+    def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
+
+
+
+class CPOIndexUpperBound(CPOPredicate):
+    '''
+    tags:
+        0: 'iub'
+
+    args:
+        0: index-exp
+        1: upperbound exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_bound(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def is_index_upper_bound(self): return True
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp())
+                    + ',bound:' + str(self.getbound()) + ')')
+
+
+
+class CPOInitialized(CPOPredicate):
+    '''
+    tags:
+       0: 'i'
+
+    args:
+        0: lval
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_lval(self): return self.cd.dictionary.get_lval(self.args[0])
+
+    def is_initialized(self): return True
+
+    def __str__(self): return self.get_tag() + '(' + str(self.get_lval()) + ')'
+
+
+
+class CPOInitializedRange(CPOPredicate):
+    '''
+    tags:
+        0: 'ir'
+
+    args:
+        0: exp (pointer to start of address range)
+        1: len-exp (number of bytes that should be initialized)
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_length(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def is_initialized_range(self): return True
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp())
+                    + ',len:' + str(self.get_length()) + ')')
+
+
+
+class CPOCast(CPOPredicate):
+    '''
+    tags:
+        0: 'c'
+
+    args:
+        0: typ (tfrom, current)
+        1: typ (tto, target)
+        2: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[2])
+
+    def get_from_type(self): return self.cd.dictionary.get_typ(self.args[0])
+
+    def get_tgt_type(self): return self.cd.dictionary.get_typ(self.args[1])
+
+    def is_cast(self): return True
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp()) + ',from:'
+                    + str(self.get_from_type())
+                    + ',to:' + str(self.get_tgt_type()) + ')')
+
+
+
+class CPOPointerCast(CPOPredicate):
+    '''
+    tags:
+        0: 'pc'
+
+    args:
+        0: typ (tfrom, current)
+        1: typ (tto, target)
+        2: exp  (pointed-to expression)
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[2])
+
+    def get_from_type(self): return self.cd.dictionary.get_typ(self.args[0])
+
+    def get_tgt_type(self): return self.cd.dictionary.get_typ(self.args[1])
+
+    def is_pointer_cast(self): return True
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp()) + ',from:'
+                    + str(self.get_from_type())
+                    + ',to:' + str(self.get_tgt_type()) + ')')
+
+
+
+class CPOSignedToUnsignedCast(CPOPredicate):
+    '''
+    tags:
+        0: 'csu'
+        1: from ikind
+        2: tgt ikind
+
+    args:
+        0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_from_kind(self): return self.tags[1]
+
+    def get_tgt_kind(self): return self.tags[2]
+
+    def is_signed_to_unsigned_cast(self): return True
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp())
+                    + ',from:' + self.get_from_kind()
+                    + ',to:' + self.get_tgt_kind() + ')')
+
+
+
+class CPOUnsignedToSignedCast(CPOPredicate):
+    '''
+    tags:
+        0: 'cus'
+        1: from ikind
+        2: tgt ikind
+
+    args:
+        0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_from_ikind(self): return self.tags[1]
+
+    def get_tgt_ikind(self): return self.tags[2]
+
+    def is_unsigned_to_signed_cast(self): return True
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp())
+                    + ',from:' + self.get_from_kind()
+                    + ',to:' + self.get_tgt_kind() + ')')
+
+
+
+class CPONotZero(CPOPredicate):
+    '''
+    tags:
+        0: 'z'
+
+    args:
+        0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def is_not_zero(self): return True
+
+    def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
+
+
+
+class CPONonNegative(CPOPredicate):
+    '''
+    tags:
+        0: 'nneg'
+
+    args:
+        0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def is_non_negative(self): return True
+
+    def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
+
+
+
+class CPONullTerminated(CPOPredicate):
+    '''
+    tags:
+        0: 'nt'
+
+    args:
+        0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def is_null_terminated(self): return True
+
+    def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
+
+
+
+class CPOIntUnderflow(CPOPredicate):
+    '''
+    tags:
+        0: 'iu'
+        1: binop
+        2: ikind
+
+    args:
+        0: exp1
+        1: exp2
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_binop(self): return self.tags[1]
+
+    def get_ikind(self): return self.tags[2]
+
+    def get_exp1(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_exp2(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def is_int_underflow(self): return True
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp1())
+                    + ',' + str(self.get_exp2())
+                    + ',op:' + self.get_binop()
+                    + ',ikind:' + self.get_ikind() + ')')
+
+
+
+class CPOIntOverflow(CPOPredicate):
+    '''
+    tags:
+        0: 'io'
+        1: binop
+        2: ikind
+
+    args:
+        0: exp1
+        1: exp2
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_binop(self): return self.tags[1]
+
+    def get_ikind(self): return self.tags[2]
+
+    def get_exp1(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_exp2(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def is_int_overflow(self): return True
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp1())
+                    + ',' + str(self.get_exp2())
+                    + ',op:' + self.get_binop()
+                    + ',ikind:' + self.get_ikind() + ')')
+
+
+class CPOWidthOverflow(CPOPredicate):
+    '''
+    tags:
+        0: 'w'
+        1: ikind
+
+    args:
+        0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_ikind(self): return self.tags[1]
+
+    def is_width_overflow(self): return True
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp()) + ',kind:'
+                    + self.get_ikind() + ')')
+
+
+
+class CPOPtrLowerBound(CPOPredicate):
+    '''
+    tags:
+        0: 'plb'
+        1: binop
+
+    args:
+        0: typ
+        1: exp1
+        2: exp2
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_type(self): return self.cd.dictionary.get_typ(self.args[0])
+
+    def get_exp1(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def get_exp2(self): return self.cd.dictionary.get_exp(self.args[2])
+
+    def get_binop(self): return self.tags[1]
+
+    def is_ptr_lower_bound(self): return True
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp1()) + ','
+                    + str(self.get_exp2()) + ',op:' + self.get_binop()
+                    + ',typ:' + str(self.get_type()) + ')' )
+
+
     
+class CPOPtrUpperBound(CPOPredicate):
+    '''
+    tags:
+        0: 'pl=ub'
+        1: binop
+
+    args:
+        0: typ
+        1: exp1
+        2: exp2
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_type(self): return self.cd.dictionary.get_typ(self.args[0])
+
+    def get_exp1(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def get_exp2(self): return self.cd.dictionary.get_exp(self.args[2])
+
+    def get_binop(self): return self.tags[1]
+
+    def is_ptr_upper_bound(self): return True
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp1()) + ','
+                    + str(self.get_exp2()) + ',op:' + self.get_binop()
+                    + ',typ:' + str(self.get_type()) + ')' )
+
+
+
+class CPOPtrUpperBoundDeref(CPOPredicate):
+    '''
+    tags:
+        0: 'pubd'
+        1: binop
+
+    args:
+        0: typ
+        1: exp1
+        2: exp2
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_type(self): return self.cd.dictionary.get_typ(self.args[0])
+
+    def get_exp1(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def get_exp2(self): return self.cd.dictionary.get_exp(self.args[2])
+
+    def get_binop(self): return self.tags[1]
+
+    def is_ptr_upper_bound_deref(self): return True
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp1()) + ','
+                    + str(self.get_exp2()) + ',op:' + self.get_binop()
+                    + ',typ:' + str(self.get_type()) + ')' )
+
+ 
+    
+class CPOCommonBase(CPOPredicate):
+    '''
+    tags:
+        0: 'cb'
+
+    args:
+        0: exp1
+        1: exp2
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp1(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_exp2(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp1()) + ','
+                    + str(self.get_exp2()) + ')')
+
+
+
+class CPOFormatString(CPOPredicate):
+    '''
+    tags:
+        0: 'ft'
+    
+    args:
+        0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
+
+
+
+class CPONoOverlap(CPOPredicate):
+    '''
+    tags:
+        0: 'no'
+
+    args:
+        0: exp1
+        1: exp2
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp1(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_exp2(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp1()) + ','
+                    + str(self.get_exp2()) + ')')
+
+
+
+class CPOValueConstraint(CPOPredicate):
+    '''
+    tags:
+        0: 'vc'
+
+    args:
+        0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
+
