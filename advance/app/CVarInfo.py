@@ -25,38 +25,52 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CLocation import CLocation
+import advance.app.CDictionaryRecord as CD
 
-import advance.app.CContext as CC
-import advance.app.CTTypeExp as TX
+class CVarInfo(CD.CDeclarationsRecord):
+    '''Global variable.
 
-class CVarInfo():
-    '''Global variable.'''
+    tags:
+        0: vname
+        1: vstorage     ('?' for global variable)
 
-    def __init__(self,cfile,xnode,hasglobalid=False):
-        self.cfile = cfile        # CFile
-        self.xnode = xnode
-        ctxt = CC.makefilecontext(self.cfile)
-        self.vtype = TX.gettype(ctxt,self.xnode.find('vtyp'))
-        self.location = CLocation(self.xnode.find('vdecl'))
-        self.hasglobalid = hasglobalid
+    args:
+        0: vid          (-1 for global variable)
+        1: vtype
+        2: vattr        (-1 for global variable) (TODO: add global attributes)
+        3: vglob
+        4: vinline
+        5: vdecl        (-1 for global variable) (TODO: add global locations)
+        6: vaddrof
+        7: vinit        (optional)
+    '''
 
-    '''Globally unique id.'''
-    def getid(self): return (self.cfile.getindex(),self.getvid())
+    def __init__(self,cdecls,index,tags,args):
+        CD.CDeclarationsRecord.__init__(self,cdecls,index,tags,args)
+        self.vname = tags[0]
+        self.vtype = self.get_dictionary().get_typ(args[1])
+        self.vglob = args[3] == 1
+        self.vinline = args[4] == 1
+        self.vdecl = self.decls.get_location(self.args[5]) if not (self.args[5] == -1) else None
+        self.vaddrof = args[6] == 1
+        self.vinit = self.decls.get_initinfo(self.args[7]) if len(self.args) == 8 else None
 
-    def getvid(self): return int(self.xnode.get('vid'))
+    def get_vid(self):
+        vid = int(self.args[0])
+        return (vid if vid >= 0 else self.index)
 
-    def getname(self): return self.xnode.get('vname')
+    def get_vstorage(self):
+        if len(self.tags) > 1:
+            return self.tags[1]
+        vid = self.get_vid()
+        if vid in self.decls.varinfo_storage_classes:
+            return self.decls.varinfo_storage_classes[vid]
+        return 'n'
 
-    def getfile(self): return self.cfile
+    def get_initializer(self): return self.vinit
 
-    def getstorage(self): return self.xnode.get('vstorage','global')
+    def has_initializer(self): return not self.vinit is None
 
-    def gettype(self): return self.vtype
+    def get_line(self):return self.vdecl.get_line()
 
-    def getlocation(self): return self.location
-
-    def getline(self):return self.location.getline()
-
-    def __str__(self):
-        return self.getname()
+    def __str__(self): return self.vname + ':' + str(self.vtype) + '  ' + str(self.vdecl)

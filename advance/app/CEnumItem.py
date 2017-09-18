@@ -25,15 +25,14 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import advance.app.CDictionaryRecord as CD
 
-class CEnumItem():
+class CEnumItem(CD.CDeclarationsRecord):
 
-    def __init__(self,enuminfo,xnode):
-        self.enuminfo = enuminfo               # CApplication / CFile
-        self.xnode = xnode
-        self.name = self.xnode.get('eitemname')
-        self.value = self.xnode.find('exp').find('constant').get('intValue')
+    def __init__(self,decls,index,tags,args):
+        CD.CDeclarationsRecord.__init__(self,decls,index,tags,args)
+        self.name = self.tags[0]
+        self.exp = self.getdictionary().getexp(self.args[0])
+        self.loc = self.decls.getlocation(self.args[1])
 
-    def getname(self): return self.name
-
-    def getvalue(self): return self.value
+    def __str__(self): return self.name + ':' + str(self.exp)
