@@ -25,19 +25,15 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CVarInfo import CVarInfo
-from advance.app.CLocation import CLocation
 
 class CGVarDef():
     '''Global variable definition.'''
 
-    def __init__(self,cfile,xnode):
-        self.cfile = cfile
-        self.xnode = xnode
-        self.varinfo = CVarInfo(self.cfile,self.xnode.find('varinfo'))
-        self.location = CLocation(self.xnode.find('loc'))
+    def __init__(self,varinfo,location,initializer=None):
+        self.varinfo = varinfo
+        self.location = location
+        self.initializer = initializer
 
-    def getvarinfo(self): return self.varinfo
+    def __str__(self): return str(self.varinfo)
 
-    def getlocation(self): return self.location
                                 

@@ -31,12 +31,8 @@ from advance.app.CLocation import CLocation
 class CGType():
     '''A type definition that associates a name with a type.'''
 
-    def __init__(self,cfile,xnode):
-        self.cfile = cfile
-        self.xnode = xnode
-        self.typeinfo = CTypeInfo(self.cfile, self.xnode.find('typeinfo'))
-        self.location = CLocation(self.xnode.find('loc'))
+    def __init__(self,typeinfo,location):
+        self.typeinfo = typeinfo
+        self.location = location
 
-    def gettypeinfo(self): return self.typeinfo
-
-    def getlocation(self): return self.location
+    def __str__(self): return str(self.typeinfo)

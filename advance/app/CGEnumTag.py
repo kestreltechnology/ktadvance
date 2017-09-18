@@ -31,14 +31,8 @@ from advance.app.CLocation import CLocation
 class CGEnumTag():
     '''File-level definition of an enum.'''
 
-    def __init__(self,cfile,xnode):
-        self.cfile = cfile
-        self.xnode = xnode
-        self.enuminfo = CEnumInfo(self.cfile,self.xnode.find('enuminfo'))
-        self.location = CLocation(self.xnode.find('loc'))
+    def __init__(self,enuminfo,location):
+        self.enuminfo = enuminfo
+        self.location = location
 
-    def getenuminfo(self): return self.enuminfo
-
-    def getlocation(self): return self.location
-
-    def __str__(self): return str(self.getenuminfo())
+    def __str__(self): return str(self.enuminfo)

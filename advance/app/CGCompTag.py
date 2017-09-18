@@ -25,20 +25,18 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CCompInfo import CCompInfo
-from advance.app.CLocation import CLocation
 
 class CGCompTag():
     '''File-level definition of a struct.'''
 
-    def __init__(self,cfile,xnode):
-        self.cfile = cfile
-        self.xnode = xnode
-        self.compinfo = CCompInfo(self.cfile,self.xnode.find('compinfo'))
-        self.location = CLocation(self.xnode.find('loc'))
+    def __init__(self,compinfo,location):
+        self.compinfo = compinfo
+        self.location = location
 
-    def getcompinfo(self): return self.compinfo
+    def get_struct(self): return self.compinfo
 
-    def getlocation(self): return self.location
+    def get_name(self): return self.compinfo.get_name()
 
-    def __str__(self): return str(self.getcompinfo())
+    def is_struct(self): return self.compinfo.is_struct
+
+    def __str__(self): return str(self.compinfo)
