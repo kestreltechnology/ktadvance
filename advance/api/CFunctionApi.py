@@ -64,19 +64,16 @@ class CFunctionApi():
 
     def __str__(self):
         lines = []
-        lines.append('Api for ' + self.cfun.name)
-        lines.append('-' * 80)
-        lines.append('parameters')
+        lines.append('Api:')
+        lines.append('  parameters:')
         for n in self.get_parameters():
-            lines.append('  ' + str(n).rjust(2))
-        lines.append('formal vids')
-        for n in self.get_formal_vids():
-            lines.append('  ' + str(n))
+            lines.append('    ' + str(n).rjust(2))
         if len(self.apiassumptions) > 0:
-            lines.append(' ')
-            lines.append('--api assumptions')
+            lines.append('\n  api assumptions')
             for a in self.get_api_assumptions():
                 lines.append('   ' + str(a))
+        else:
+            lines.append('\n  --no assumptions')
         return '\n'.join(lines)
 
     def initialize(self):
@@ -89,7 +86,9 @@ class CFunctionApi():
         for x in self.xnode.find('api').find('api-assumptions').findall('aa'):
             predicate = self.cfile.podictionary.read_xml_predicate(x)
             id = int(x.get('ipr'))
-            self.apiassumptions[id] = ApiAssumption(self,id,predicate)
+            ppos = [ int(i) for i in x.get('ppos').split(',') ] if 'ppos' in x.attrib else []
+            spos = [ int(i) for i in x.get('spos').split(',') ] if 'spos' in x.attrib else []
+            self.apiassumptions[id] = ApiAssumption(self,id,predicate,ppos,spos)
 
     def _get_global_assignments(self):
         if len(self.globalassignments) > 0: return

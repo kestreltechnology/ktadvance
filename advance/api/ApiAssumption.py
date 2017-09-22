@@ -27,15 +27,21 @@
 
 class ApiAssumption():
 
-    def __init__(self,capi,id,predicate):
+    def __init__(self,capi,id,predicate,ppos,spos):
         self.id = id
         self.capi = capi
         self.cfun = self.capi.cfun
         self.predicate = predicate
-        self.primarypos = []
+        self.ppos = ppos
+        self.spos = spos
 
     def get_dependent_pos(self): return self.primarypos
 
     def __str__(self):
-        return (str(self.predicate) + "\n    --Dependent ppo's: [" +
-                ', '.join(str(i) for i in self.primarypos) + ']\n')
+        strppos = ''
+        strspos = ''
+        if len(self.ppos) > 0:
+            strppos = "\n      --Dependent ppo's: [" + ','.join(str(i) for i in self.ppos) + ']'
+        if len(self.spos) > 0:
+            strspos = "\n      --Dependent spo's: [" + ','.join(str(i) for i in self.spos) + ']'
+        return (str(self.id) + '  ' + str(self.predicate) + strppos + strspos)
