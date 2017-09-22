@@ -53,7 +53,7 @@ if __name__ == '__main__':
 
     sempath = os.path.join(cpath,'semantics')
     cfapp = CApplication(sempath,cfilename)
-    cfile = cfapp.getcfile()
+    cfile = cfapp.get_cfile()
 
     print(RP.file_code_tostring(cfile))
     print(RP.file_proofobligation_stats_tostring(cfile))
