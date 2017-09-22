@@ -42,7 +42,8 @@ class CVarInfo(CD.CDeclarationsRecord):
         4: vinline
         5: vdecl        (-1 for global variable) (TODO: add global locations)
         6: vaddrof
-        7: vinit        (optional)
+        7: vparam
+        8: vinit        (optional)
     '''
 
     def __init__(self,cdecls,index,tags,args):
@@ -53,7 +54,8 @@ class CVarInfo(CD.CDeclarationsRecord):
         self.vinline = args[4] == 1
         self.vdecl = self.decls.get_location(self.args[5]) if not (self.args[5] == -1) else None
         self.vaddrof = args[6] == 1
-        self.vinit = self.decls.get_initinfo(self.args[7]) if len(self.args) == 8 else None
+        self.vparam = args[7] == 1
+        self.vinit = self.decls.get_initinfo(self.args[8]) if len(self.args) == 9 else None
 
     def get_vid(self):
         vid = int(self.args[0])
