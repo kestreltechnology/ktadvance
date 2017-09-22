@@ -51,6 +51,8 @@ class CXNumerical(XDictionaryRecord):
 
     def get_value(self): return int(self.tags[0])
 
+    def equals(self,other): return (self.get_value() == other.get_value())
+
     def __str__(self): return self.tags[0]
 
 
@@ -81,7 +83,9 @@ class CXVariable(XDictionaryRecord):
     def __init__(self,xd,index,tags,args):
         XDictionaryRecord.__init__(self,xd,index,tags,args)
 
-    def get_name(self): return self.xd.get_symbol(int(self.args[0]))
+    def get_name(self): return self.xd.get_symbol(int(self.args[0])).get_name()
+
+    def get_seqnr(self): return self.xd.get_symbol(int(self.args[0])).get_seqnr()
 
     def get_type(self): return self.tags[0]
 
@@ -110,7 +114,7 @@ class CXCSymSet(CXXCstBase):
 
     def is_symset(self): return True
 
-    def get_symbols(self): return [ xd.get_symbol(int(i)) for i in self.args ]
+    def get_symbols(self): return [ self.xd.get_symbol(int(i)) for i in self.args ]
 
     def __str__(self): return '[' + ','.join([str(x) for x in self.get_symbols()]) + ']'
 
@@ -122,7 +126,7 @@ class CXIntConst(CXXCstBase):
 
     def is_intconst(self): return True
 
-    def get_constant(self): return xd.get_numerical(int(self.args[0]))
+    def get_constant(self): return self.xd.get_numerical(int(self.args[0]))
 
     def __str__(self): return str(self.get_constant())
 
@@ -209,12 +213,12 @@ class CXOp(CXXprBase):
 
     def is_op(self): return True
 
-    def get_op(self): return tags[1]
+    def get_op(self): return self.tags[1]
 
     def get_args(self): return [ self.xd.get_xpr(int(i)) for i in self.args ]
 
     def __str__(self):
-        return '(' + self.getop() + ',' + ','.join([str(x) for x in self.get_args() ]) + ')'
+        return '(' + self.get_op() + ',' + ','.join([str(x) for x in self.get_args() ]) + ')'
 
 class CXAttr(CXXprBase):
 
