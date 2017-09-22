@@ -97,7 +97,7 @@ def get_cfile_podictionaryname(path,cfilename):
 
 def get_cfile_podictionary_xnode(path,cfilename):
     filename = get_cfile_podictionaryname(path,cfilename)
-    return get_xnode(filename,'po-dictionary','PO predicate dictionary file')
+    return get_xnode(filename,'po-dictionary','PO predicate dictionary file',show=False)
 
 def get_cfile_contexttablename(path,cfilename):
     cfilename = get_cfilenamebase(cfilename)
@@ -160,14 +160,14 @@ def get_vars_filename(path,cfilename,fname):
 
 def get_vars_xnode(path,cfilename,fname):
     filename = get_vars_filename(path,cfilename,fname)
-    return get_xnode(filename,'function','Function variable dictionary')
+    return get_xnode(filename,'function','Function variable dictionary',show=False)
 
 def get_invs_filename(path,cfilename,fname):
     return (get_cfun_basename(path,cfilename,fname) + '_invs.xml')
 
 def get_invs_xnode(path,cfilename,fname):
     filename = get_invs_filename(path,cfilename,fname)
-    return get_xnode(filename,'function','Function invariants')
+    return get_xnode(filename,'function','Function invariants',show=False)
 
 def get_ppo_filename(path,cfilename,fname):
     return (get_cfun_basename(path,cfilename,fname) + '_ppo.xml')
@@ -176,26 +176,12 @@ def get_ppo_xnode(path,cfilename,fname):
     filename = get_ppo_filename(path,cfilename,fname)
     return get_xnode(filename,'function','Primary proof obligations file')
 
-def get_pev_filename(path,cfilename,fname):
-    return (get_cfun_basename(path,cfilename,fname) + '_pev.xml')
-
-def get_pev_xnode(path,cfilename,fname):
-    filename = get_pev_filename(path,cfilename,fname)
-    return get_xnode(filename,'function','Primary evidence file')
-
 def get_spo_filename(path,cfilename,fname):
     return (get_cfun_basename(path,cfilename,fname) + '_spo.xml')
 
 def get_spo_xnode(path,cfilename,fname):
     filename = get_spo_filename(path,cfilename,fname)
-    return get_xnode(filename,'function','Secondary proof obligations file')
-
-def get_sev_filename(path,cfilename,fname):
-    return (get_cfun_basename(path,cfilename,fname) + '_sev.xml')
-
-def get_sev_xnode(path,cfilename,fname):
-    filename = get_sev_filename(path,cfilename,fname)
-    return get_xnode(filename,'function','Secondary evidence file')
+    return get_xnode(filename,'function','Secondary proof obligations file',show=False)
 
 def save_spo_file(path,cfilename,fname,cnode):
     filename = get_spo_filename(path,cfilename,fname)
