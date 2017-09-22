@@ -32,6 +32,7 @@ class VDictionaryRecord():
         self.vd = vd
         self.xd = vd.xd
         self.cdecls = vd.fdecls.cfun.cfile.declarations
+        self.cd = self.cdecls.dictionary
         self.index = index
         self.tags = tags
         self.args = args
@@ -167,7 +168,7 @@ class MemoryBaseUninterpreted(MemoryBase):
 
     def get_name(self): return self.tags[1]
 
-    def __str__(self): return 'uninterpreted_memory_base_' + self.getname()
+    def __str__(self): return 'uninterpreted_memory_base_' + self.get_name()
 
 
 class MemoryReferenceData(VDictionaryRecord):
@@ -175,14 +176,14 @@ class MemoryReferenceData(VDictionaryRecord):
     def __init__(self,vd,index,tags,args):
         VDictionaryRecord.__init__(self,vd,index,tags,args)
 
-    def getbase(self): return self.vd.get_memory_base (int(self.args[0]))
+    def get_base(self): return self.vd.get_memory_base (int(self.args[0]))
 
     def get_offset(self): return self.cd.get_offset(int(self.args[1]))
 
     def get_type(self): return self.cd.get_typ(int(self.args[2]))
 
     def __str__(self):
-        return (str(self.getbase()) + str(self.getoffset()))
+        return (str(self.get_base()) + str(self.get_offset()))
 
 class ConstantValueVariable(VDictionaryRecord):
 
@@ -198,7 +199,7 @@ class ConstantValueVariable(VDictionaryRecord):
     def __str__(self): return 'cvv ' + self.tags[0]
 
 class CVVInitialValue(ConstantValueVariable):
-
+ 
     def __init__(self,vd,index,tags,args):
         ConstantValueVariable.__init__(self,vd,index,tags,args)
 
@@ -209,6 +210,8 @@ class CVVInitialValue(ConstantValueVariable):
     def get_type(self): return self.cd.get_typ(int(self.args[1]))
 
     def __str__(self): return str(self.get_variable()) + '_init'
+
+
 
 class CVVFunctionReturnValue(ConstantValueVariable):
 
@@ -221,12 +224,21 @@ class CVVFunctionReturnValue(ConstantValueVariable):
 
     def get_callee(self): return self.xd.get_xpr(int(self.args[1]))
 
-    def get_args(self): return [ self.xd.get_xpr(int(a)) for a in self.args[2:] ]
+    def get_args(self):
+        result = []
+        for a in self.args[2:]:
+            if int(a) == -1:
+                result.append(None)
+            else:
+                result.append(self.xd.get_xpr(int(a)))
+        return result
 
     def __str__(self):
         return (str(self.get_callee()) + '('
                     + ','.join([ str(a) for a in self.get_args() ])
                     + ')')
+
+
 
 class CVVSideEffectValue(ConstantValueVariable):
 
@@ -243,12 +255,21 @@ class CVVSideEffectValue(ConstantValueVariable):
 
     def get_type(self): return self.cd.get_typ(int(self.args[3]))
 
-    def get_args(self): return [ self.xd.get_xpr(int(a)) for a in self.args[3:] ]
+    def get_args(self):
+        result = []
+        for a in self.args[3:]:
+            if int(a) == -1:
+                result.append(None)
+            else:
+                result.append(self.xd.get_xpr(int(a)))
+        return result
 
     def __str__(self):
         return (str(self.get_callee()) + '('
                     + ','.join([ str(a) for a in self.get_args() ])
                     + ')')
+
+
 
 class CVVSymbolicValue(ConstantValueVariable):
 
@@ -264,6 +285,7 @@ class CVVSymbolicValue(ConstantValueVariable):
     def __string__(self): return str(self.get_xpr())
 
 
+
 class CVVMemoryAddress(ConstantValueVariable):
 
     def __init__(self,vd,index,tags,args):
@@ -274,6 +296,8 @@ class CVVMemoryAddress(ConstantValueVariable):
     def get_memory_region_id(self): return int(self.args[0])
 
     def __str__(self): return 'address-of(' + str(self.get_memory_region_id())
+
+
 
 
 class CVariableDenotation(VDictionaryRecord):
@@ -299,9 +323,9 @@ class LocalVariable(CVariableDenotation):
 
     def is_local_variable(self): return True
 
-    def get_varinfo(self): self.vd.get_varinfo(int(self.args[0]))
+    def get_varinfo(self): return self.vd.fdecls.get_varinfo(int(self.args[0]))
 
-    def __str__(self): return str(self.get_varinfo())
+    def __str__(self): return 'lv:' + str(self.get_varinfo())
 
 class GlobalVariable(CVariableDenotation):
 
@@ -310,9 +334,9 @@ class GlobalVariable(CVariableDenotation):
 
     def is_global_variable(self): return True
 
-    def get_varinfo(self): self.vd.get_varinfo(int(self.args[0]))
+    def get_varinfo(self): return self.vd.fdecls.get_varinfo(int(self.args[0]))
 
-    def __str__(self): return str(self.get_varinfo())
+    def __str__(self): return 'gv:' + str(self.get_varinfo())
 
 class MemoryVariable(CVariableDenotation):
 
@@ -361,11 +385,15 @@ class CheckVariable(CVariableDenotation):
 
     def get_po_expnr_ids(self): return zip(self.args[1::2],self.args[2::2])
 
+    def get_po_ids(self): return [ x for (x,_) in self.get_po_expnr_ids() ]
+
     def get_type(self): return self.cd.get_typ(int(self.args[0]))
 
     def __str__(self):
         return ('check('
-                    + ';'.join([ (str(x[0]) + ',' + str(x[1])) for x in self.get_po_expnr_ids() ]))
+                    + ';'.join([ (str(x[0]) + ','
+                                      + str(x[1])) for x in self.get_po_expnr_ids() ])
+                    + ')')
 
 class AuxiliaryVariable(CVariableDenotation):
 
