@@ -49,14 +49,17 @@ def parse():
     parser.add_argument('--deletesemantics',
                             help='Unpack a fresh version of the semantics files',
                             action='store_true')
+    parser.add_argument('--verbose',
+                            help='Print all output from analyzer to console',
+                            action='store_true')
     parser.add_argument('--analysisrounds',
                             help='Number of times to create secondary proof obligations',
                             type=int, default=5)
     args = parser.parse_args()
     return args
 
-def savexrefs(f):
-    capp.indexmanager.savexrefs(capp.getpath(),f.getfilename(),f.getindex())
+def save_xrefs(f):
+    capp.indexmanager.save_xrefs(capp.path,f.name,f.index)
 
 if __name__ == '__main__':
 
@@ -87,25 +90,43 @@ if __name__ == '__main__':
     globaldefs = os.path.join(sempath,os.path.join('ktadvance','globaldefinitions.xml'))
     if not os.path.isfile(globaldefs):
         linker = CLinker(capp)
-        linker.linkcompinfos()
-        linker.linkvarinfos()
-        capp.fileiter(savexrefs)
+        linker.link_compinfos()
+        linker.link_varinfos()
+        capp.iter_files(save_xrefs)
 
-        linker.saveglobalcompinfos()
+        linker.save_global_compinfos()
 
     # have to reinitialized capp to get linking info properly initialized
     capp = CApplication(sempath)
-    am = AnalysisManager(capp)
+    print(str(capp.declarations.get_stats()))
 
-    am.create_app_primaryproofobligations()
+    filecounts = {}
+    def f(cfile):
+        decls = cfile.declarations
+        filecounts[cfile.name] = (decls.get_max_line(),decls.get_code_line_count())
+    capp.iter_files(f)
+    for name in sorted(filecounts):
+        (maxline,count) = filecounts[name]
+        print(name.ljust(25) + str(maxline).rjust(10) + str(count).rjust(10))
+    
+    
+    am = AnalysisManager(capp,verbose=args.verbose)
+
+    am.create_app_primary_proofobligations()
+    capp.iter_files(lambda(f):f.reinitialize_tables())
+
+    def g(ppo): print(str(ppo))
+    def f(cfun): cfun.iter_ppos(g)
+    capp.iter_functions(f)
+    
     for i in range(3):
-        am.generate_app_localinvariants(['llvis'])
-    am.check_app_proofobligations()
-
+        am.generate_app_local_invariants(['llvis'])
+        am.check_app_proofobligations()
+    '''
     for i in range(args.analysisrounds):
         capp.updatespos()
 
         am.generate_app_localinvariants(['llvis'])
         am.check_app_proofobligations()
-
+    '''
         
