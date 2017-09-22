@@ -381,10 +381,21 @@ class CExpFnApp(CExpBase):
     def __init__(self,cd,index,tags,args):
         CExpBase.__init__(self,cd,index,tags,args)
 
+
+
 class CExpCnApp(CExpBase):
 
     def __init__(self,cd,index,tags,args):
         CExpBase.__init__(self,cd,index,tags,args)
+
+    def get_name(self): return self.tags[1]
+
+    def get_type(self): return self.cd.get_typ(int(self.args[0]))
+
+    def get_args(self): return [ self.cd.get_exp(int(i)) for i in self.args[1:] ]
+
+    def __str__(self):
+        return self.get_name() + '(' + ','.join([str(a) for a in self.get_args()]) + ')'
         
 
 
