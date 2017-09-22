@@ -39,37 +39,37 @@ class TestSetRef():
         self.cfiles = {}
         self._initialize()
 
-    def getcfilenames(self): return sorted(self.cfiles.keys())
+    def get_cfilenames(self): return sorted(self.cfiles.keys())
 
-    def getcfiles(self):
-        return sorted(self.cfiles.values(),key=lambda(f):f.getname())
+    def get_cfiles(self):
+        return sorted(self.cfiles.values(),key=lambda(f):f.name)
 
-    def getcfile(self,cfilename):
+    def get_cfile(self,cfilename):
         if cfilename in self.cfiles:
             return self.cfiles[cfilename]
 
-    def setppos(self,cfilename,cfun,ppos):
+    def set_ppos(self,cfilename,cfun,ppos):
         self.r['cfiles'][cfilename]['functions'][cfun]['ppos'] = ppos
 
-    def setspos(self,cfilename,cfun,spos):
+    def set_spos(self,cfilename,cfun,spos):
         self.r['cfiles'][cfilename]['functions'][cfun]['spos'] = spos
 
-    def hascharacteristics(self): return 'characteristics' in self.r
+    def has_characteristics(self): return 'characteristics' in self.r
 
-    def getcharacteristics(self):
+    def get_characteristics(self):
         if 'characteristics' in self.r:
             return self.r['characteristics']
 
-    def hasrestrictions(self): return 'restrictions' in self.r
+    def has_restrictions(self): return 'restrictions' in self.r
 
-    def getrestrictions(self):
+    def get_restrictions(self):
         if 'restrictions' in self.r:
             return self.r['restrictions']
         else:
             return []
 
-    def islinuxonly(self):
-        return 'linux-only' in self.getrestrictions()
+    def is_linux_only(self):
+        return 'linux-only' in self.get_restrictions()
 
     def save(self):
         with open(self.specfilename,'w') as fp:
@@ -77,22 +77,22 @@ class TestSetRef():
 
     def __str__(self):
         lines = []
-        for cfile in self.getcfiles():
-            lines.append(cfile.getname())
-            for cfun in cfile.getfunctions():
-                lines.append('  ' + cfun.getname())
+        for cfile in self.get_cfiles():
+            lines.append(cfile.name)
+            for cfun in cfile.get_functions():
+                lines.append('  ' + cfun.name)
                 if cfun.hasppos():
-                    for ppo in sorted(cfun.getppos(),key=lambda(p):p.getline()):
-                        hasmultiple = cfun.hasmultiple(ppo.getline(),ppo.getpredicate())
-                        ctxt = ppo.getcontextstring() if hasmultiple else ''
-                        status = ppo.getstatus().ljust(12)
-                        if ppo.getstatus() == ppo.gettgtstatus():
+                    for ppo in sorted(cfun.get_ppos(),key=lambda(p):p.get_line()):
+                        hasmultiple = cfun.has_multiple(ppo.get_line(),ppo.get_predicate())
+                        ctxt = ppo.get_context_string() if hasmultiple else ''
+                        status = ppo.get_status().ljust(12)
+                        if ppo.get_status() == ppo.get_tgt_status():
                             tgtstatus = ''
                         else:
-                            tgtstatus = '(' + ppo.gettgtstatus() + ')'
+                            tgtstatus = '(' + ppo.get_tgt_status() + ')'
                         lines.append(
-                            '    ' + str(ppo.getline()).rjust(4) + '  ' +
-                            ppo.getpredicate().ljust(22) +
+                            '    ' + str(ppo.get_line()).rjust(4) + '  ' +
+                            ppo.get_predicate().ljust(22) +
                             ' ' + status + ' ' + ctxt.ljust(40) + tgtstatus)
         return '\n'.join(lines)
 

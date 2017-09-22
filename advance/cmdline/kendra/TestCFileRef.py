@@ -37,25 +37,23 @@ class TestCFileRef():
         self.functions = {}
         self._initialize()
 
-    def getname(self): return self.name
+    def get_functionnames(self): return sorted(self.functions.keys())
 
-    def getfunctionnames(self): return sorted(self.functions.keys())
+    def get_functions(self):
+        return sorted(self.functions.values(),key=lambda(f):f.name)
 
-    def getfunctions(self):
-        return sorted(self.functions.values(),key=lambda(f):f.getname())
-
-    def getfunction(self,fname):
+    def get_function(self,fname):
         if fname in self.functions:
             return self.functions[fname]
 
-    def hasdomains(self):
+    def has_domains(self):
         return 'domains' in self.r and len(self.r['domains']) > 0
 
-    def getdomains(self): return self.r['domains']
+    def get_domains(self): return self.r['domains']
 
-    def hasspos(self):
-        for f in self.getfunctions():
-            if f.hasspos(): return True
+    def has_spos(self):
+        for f in self.get_functions():
+            if f.has_spos(): return True
         else: return False
 
     def _initialize(self):
