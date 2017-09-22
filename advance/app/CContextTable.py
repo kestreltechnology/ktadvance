@@ -69,6 +69,11 @@ class CfgContext(CContextBaseRep):
     def get_nodes(self):
         return [ self.ctxttable.get_node(x) for x in self.args ]
 
+    def get_rev_repr(self):
+        revnodes = self.get_nodes()[:]
+        revnodes.reverse()
+        return '_'.join([str(x) for x in revnodes])
+
     def __str__(self):
         return '_'.join([str(x) for x in self.get_nodes()])
         
@@ -124,9 +129,33 @@ class CContextTable():
 
     def get_exp_context(self,id): return self.exptable.retrieve(id)
 
+    def index_node(self,cnode):
+        def f(index,key): return CContextNode(self,index,cnode.tags,cnode.args)
+        return self.nodetable.add(IT.get_key(cnode.tags,cnode.args),f)
+
+    def index_exp_context(self,expcontext):
+        args = [ self.index_node(x) for x in expcontext.get_nodes() ]
+        def f(index,key): return CExpContext(self,index,[],args)
+        return self.exptable.add(IT.get_key([],args),f)
+
+    def index_empty_exp_context(self):
+        def f(index,key): return CExpContext(self,index,[],[])
+        return self.exptable.add(IT.get_key([],[]),f)
+
+    def index_cfg_context(self,cfgcontext):
+        args = [ self.index_node(x) for x in cfgcontext.get_nodes() ]
+        def f(index,key): return CCfgContext(self,index,[],args)
+        return self.cfgtable.add(IT.get_key([],args),f)
+
     def index_context(self,context):
-        args = [ self.index_cfgcontext(context.get_cfgcontext),
-                     self.index_expcontext(context.get_expcontext) ]
+        args = [ self.index_cfg_context(context.get_cfg_context()),
+                     self.index_exp_context(context.get_exp_context()) ]
+        def f(index,key): return CProgramContext(self,index,[],args)
+        return self.contexttable.add(IT.get_key([],args),f)
+
+    def index_cfg_projection(self,context):
+        args = [ self.index_cfg_context(context.get_cfg_context()),
+                     self.index_empty_exp_context() ]
         def f(index,key): return CProgramContext(self,index,[],args)
         return self.contexttable.add(IT.get_key([],args),f)
 
@@ -140,6 +169,8 @@ class CContextTable():
 
     def __str__(self):
         lines = []
+        for v in self.contexttable.values():
+            lines.append(str(v))
         lines.append('Nodes:        ' + str(self.nodetable.size()))
         lines.append('Cfg contexts: ' + str(self.cfgtable.size()))
         lines.append('Exp contexts: ' + str(self.exptable.size()))
