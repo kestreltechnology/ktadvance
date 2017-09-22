@@ -38,16 +38,16 @@ class CFunDeclarations():
         self.cfun = cfun
         self.varinfos = {}                # vid -> CVarInfo
         self.dictionary = cfun.cfile.declarations.dictionary
-        self.formal_table = IT.IndexedTable('formal-table')
-        self.local_table = IT.IndexedTable('local-table')
+        self.local_varinfo_table = IT.IndexedTable('local-varinfo-table')
         self.tables = [
-            (self.formal_table,self._read_xml_formal_table),
-            (self.local_table,self._read_xml_local_table) ]
+            (self.local_varinfo_table,self._read_xml_local_varinfo_table) ]
         self.initialize(xnode)
 
-    def get_formals(self): return self.formal_table.values()
+    def get_formals(self):
+        return [ x for x in self.local_varinfo_table.values() if x.vparam ]
 
-    def get_locals(self): return self.local_table.values()
+    def get_locals(self):
+        return [ x for x in self.local_varinfo_table.values() if not x.vparam ]
 
     def get_varinfo(self,vid):
         if vid in self.varinfos:
@@ -71,21 +71,12 @@ class CFunDeclarations():
         for (t,f) in self.tables:
             t.reset()
             f(xnode.find(t.name))
-        for v in self.get_formals():
-            self.varinfos[v.get_vid()] = v
-        for v in self.get_locals():
+        for v in self.local_varinfo_table.values():
             self.varinfos[v.get_vid()] = v
 
-    def _read_xml_formal_table(self,xnode):
+    def _read_xml_local_varinfo_table(self,xnode):
         def get_value(node):
             rep = IT.get_rep(node)
             args = (self,) + rep
             return CVarInfo(*args)
-        self.formal_table.read_xml(xnode,'n',get_value)
-
-    def _read_xml_local_table(self,xnode):
-        def get_value(node):
-            rep = IT.get_rep(node)
-            args = (self,) + rep
-            return CVarInfo(*args)
-        self.local_table.read_xml(xnode,'n',get_value)
+        self.local_varinfo_table.read_xml(xnode,'n',get_value)
