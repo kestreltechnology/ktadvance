@@ -38,10 +38,10 @@ class CSrcFile():
         self.lines = {}
         if not self.fname.endswith('.c'): self.fname = fname + '.c'
 
-    def getlinecount(self):
+    def get_line_count(self):
         return sum(1 for line in open(self.fname))
 
-    def getline(self,n):
+    def get_line(self,n):
         self._initialize()
         if n <= len(self.lines):
             return (str(n) + '  ' + self.lines[n])
