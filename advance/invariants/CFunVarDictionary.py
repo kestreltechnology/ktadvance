@@ -36,7 +36,7 @@ import advance.invariants.CVar as CV
 
 from advance.invariants.CFunXprDictionary import CFunXprDictionary
 
-memoyr_base_constructors = {
+memory_base_constructors = {
     'null':lambda(x):CV.MemoryBaseNull(*x),
     'str':lambda(x):CV.MemoryBaseStringLiteral(*x),
     'sa':lambda(x):CV.MemoryBaseStackAddress(*x),
@@ -73,14 +73,12 @@ class CFunVarDictionary ():
         self.fdecls = fdecls
         self.cfun = self.fdecls.cfun
         self.xd = CFunXprDictionary()
-        self.varinfo_table = IT.IndexedTable('varinfo-table')
         self.allocated_region_data_table = IT.IndexedTable('allocated-region-data-table')
         self.memory_base_table = IT.IndexedTable('memory-base-table')
         self.memory_reference_data_table = IT.IndexedTable('memory-reference-data-table')
         self.constant_value_variable_table = IT.IndexedTable('constant-value-variable-table')
         self.c_variable_denotation_table = IT.IndexedTable('c-variable-denotation-table')
         self.tables = [
-            (self.varinfo_table,self._read_xml_varinfo_table),
             (self.allocated_region_data_table,self._read_xml_allocated_region_data_table),
             (self.memory_base_table,self._read_xml_memory_base_table),
             (self.memory_reference_data_table,self._read_xml_memory_reference_data_table),
@@ -89,12 +87,11 @@ class CFunVarDictionary ():
 
     # -------------------- Retrieve items from dictionary tables ---------------
 
-    def get_varinfo(self,ix): return self.varinfo_table.retrieve(ix)
-
     def get_allocated_region_data(self,ix):
         return self.allocated_region_data_table.retrieve(ix)
 
-    def get_memory_base(self,id): return self.memory_base_table.retrieve(ix)
+    def get_memory_base(self,ix):
+        return self.memory_base_table.retrieve(ix)
 
     def get_memory_reference_data(self,ix):
         return self.memory_reference_data_table.retrieve(ix)
@@ -140,13 +137,6 @@ class CFunVarDictionary ():
 
     # ----------------------- Internal -----------------------------------------
 
-    def _read_xml_varinfo_table(self,txnode):             # TBC: representation
-        def get_value(node):
-            rep = IT.get_rep(node)
-            vid = int(rep[2][0])
-            return self.fdecls.get_varinfo(vid)
-        self.varinfo_table.read_xml(txnode,'n',get_value)
-
     def _read_xml_allocated_region_data_table(self,txnode):
         def get_value(node):
             rep = IT.get_rep(node)
@@ -166,7 +156,7 @@ class CFunVarDictionary ():
         def get_value(node):
             rep = IT.get_rep(node)
             args = (self,) + rep
-            return MemoryReferenceData(*args)
+            return CV.MemoryReferenceData(*args)
         self.memory_reference_data_table.read_xml(txnode,'n',get_value)
 
     def _read_xml_constant_value_variable_table(self,txnode):
