@@ -27,8 +27,16 @@
 
 from advance.proof.CFunctionPPO import CFunctionPPO
 from advance.proof.CFunctionPOs import CFunctionPOs
+from advance.proof.CFunctionPO import CProofDependencies
 
 import advance.util.printutil as UP
+
+po_status = {
+    'g': 'safe',
+    'o': 'open',
+    'r': 'violation',
+    'x': 'dead-code'
+    }
 
 class CFunctionPPOs(CFunctionPOs):
 
@@ -40,14 +48,36 @@ class CFunctionPPOs(CFunctionPOs):
         self.ppos = {}                   # ppoid -> CFunctionPPO
         self._initialize()
 
-    def getppo(self,id):
+    def get_ppo(self,id):
         if id in self.ppos: return self.ppos[id]
 
     def iter(self,f): 
-        for ppo in sorted(self.ppos,key=lambda(p):(self.ppos[p].getlocation().getline(),
-                                                       int(self.ppos[p].getid()))): 
+        for ppo in sorted(self.ppos,key=lambda(p):(self.ppos[p].location.get_line(),
+                                                       int(self.ppos[p].id))): 
             f(self.ppos[ppo])
 
+    def __str__(self):
+        lines = []
+        def f(ppo): lines.append(str(ppo))
+        self.iter(f)
+        return '\n'.join(lines)
+
     def _initialize(self):
-        for p in self.xnode.find('primary-proof-obligations').findall('proof-obligation'):
-            self.ppos[p.get('id')] = CFunctionPPO(self,p)
+        for p in self.xnode.find('ppos').findall('ppo'):
+            id = int(p.get('id'))
+            ppotype = self.cfun.podictionary.read_xml_ppo_type(p)
+            deps = None
+            status = po_status[p.get('s','o')]
+            if 'deps' in p.attrib:
+                level = p.get('deps')
+                if level == 'a':
+                    ids = [int(x) for x in p.get('ids').split(',') ]
+                    invs = [ int(x) for x in p.get('invs').split(',') ]
+                    deps = CProofDependencies(self,level,ids,invs)
+                else:
+                    deps = CProofDependencies(self,level)
+            expl = None
+            enode = p.find('e')
+            if not enode is None:
+                expl = enode.get('txt')
+            self.ppos[id] = CFunctionPPO(self,id,ppotype,status,deps,expl)
