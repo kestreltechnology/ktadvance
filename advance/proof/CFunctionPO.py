@@ -25,60 +25,99 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CContext import makecontext
-from advance.app.CContext import CContext
-from advance.app.CLocation import CLocation
+po_status = {
+    'g': 'safe',
+    'o': 'open',
+    'r': 'violation',
+    'x': 'dead-code'
+    }
 
-import advance.proof.CPOUtil as P
+class CProofDependencies():
+    '''Extent of dependency of a closed proof obligation.
+
+    levels:
+       's': dependent on statement itself only
+       'f': dependent on function context
+       'a': dependent on other functions in the application
+       'x': dead code
+
+    ids: list of api assumption id's on which the proof is dependent
+
+    invs: list of invariants indices used to establish dependencies or
+             validity
+    '''
+    def __init__(self,cpos,level,ids=[],invs=[]):
+        self.cpos = cpos
+        self.level = level
+        self.ids = ids
+        self.invs = invs
+
+    def is_stmt(self): return self.level == 's'
+
+    def is_local(self): return self.level == 's' or self.level == 'f'
+
+    def has_external_dependencies(self): return self.level == 'a'
+
+    def is_deadcode(self): return self.level == 'x'
+
+    def __str__(self): return self.level
+
 
 class CFunctionPO():
-    '''Super class of primary and secondary proof obligations.'''
+    '''Super class of primary and supporting proof obligations.'''
 
-    def __init__(self,cpos):
-        self.cpos = cpos
+    def __init__(self,cpos,potype,status='open',deps=None,expl=None):
+        self.cpos = cpos                # CFunctionPOs
+        self.cfun = cpos.cfun
+        self.cfile = cpos.cfile
+        self.potype = potype
+        self.id = self.potype.index
+        self.pod = self.potype.pod
+        self.context = self.potype.get_context()
+        self.cfg_context_string = self.context.get_cfg_context_string()
+        self.predicate = self.potype.get_predicate()
+        self.predicatetag = self.predicate.get_tag()
+        self.status = status
+        self.location = self.potype.get_location()
+        self.dependencies = deps
+        self.explanation = expl
 
-    def isppo(self): return False
+    def is_ppo(self): return False
+    def is_spo(self): return False
 
-    def getfunction(self): return self.cpos.getfunction()
+    def get_line(self): return self.location.get_line()
 
-    def getfile(self): return self.cpos.getfile()
+    def has_variable(self,vname): return self.predicate.has_variable(vname)
 
-    def getline(self): return self.getlocation().getline()
+    def has_target_type(self,targettype): return self.predicate.has_target_type()
 
-    def hasvariable(self,vname):
-        return self.getpredicate().hasvariable(vname)
+    def get_context_strings(self): return str(self.context)
 
-    def hastargettype(self,targettype):
-        return self.getpredicate().hastargettype()
-
-    def getcontextstrings(self): return self.getcontext().contextstrings()
-
-    def isdischarged(self):
-        if self.isppo():
-            return self.cpos.is_ppo_discharged(self.getid())
-        else:
-            return self.cpos.is_spo_discharged(self.getid())
-
-    def isviolated(self):
-        if self.isppo():
-            return self.cpos.is_ppo_violated(self.getid())
-        else:
-            return self.cpos.is_spo_violated(self.getid())
-
-    def getevidence(self):
-        if self.isdischarged():
-            if self.isppo():
-                return self.cpos.get_ppo_evidence(self.getid())
-            else:
-                return self.cpos.get_spo_evidence(self.getid())
+    def is_open(self): return self.status == 'open'
         
-    def getstatus(self):
-        if self.isdischarged():
-            return self.getevidence().getstatus()
-        return 'unknown'
+    def is_closed(self): return (not self.is_open())
+
+    def is_violated(self): return (self.status == 'violation')
+
+    def is_safe(self): return (self.status == 'safe')
+
+    def is_deadcode(self): return (self.status == 'dead-code')
+
+    def is_delegated(self):
+        if self.is_safe and not self.dependencies is None:
+            return self.dependencies.has_external_dependencies()
+        return False
+
+    def has_explanation(self): return (not self.explanation is None)
+
+    def get_display_prefix(self):
+        if self.is_violated(): return '<*>'
+        if self.is_open(): return '<?>'
+        if self.is_deadcode(): return '<X>'
+        if self.dependencies.is_stmt(): return '<S>'
+        if self.dependencies.is_local(): return '<L>'
+        return '<A>'
 
     def __str__(self):
-        return (self.getid().rjust(4) + '  ' + str(self.getline()).rjust(5) + '  ' +
-                    str(self.getpredicate()).ljust(20))
-    
-    
+        return (str(self.id).rjust(4) + '  ' + str(self.get_line()).rjust(5) + '  ' +
+                    str(self.predicate).ljust(20) + ' (' + self.status + ')')
