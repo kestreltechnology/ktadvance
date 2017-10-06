@@ -48,8 +48,8 @@ po_predicate_names = {
     'z': 'not-zero',
     'nt': 'null-terminated',
     'nneg': 'non-negative',
-    'iu': 'integer-underflow',
-    'io': 'integer-overflow',
+    'iu': 'int-underflow',
+    'io': 'int-overflow',
     'w': 'width-overflow',
     'plb': 'ptr-lower-bound',
     'pub': 'ptr-upper-bound',
@@ -93,6 +93,7 @@ class CPOPredicate(CD.CDictionaryRecord):
     def is_ptr_lower_bound(self): return False
     def is_ptr_upper_bound(self): return False
     def is_ptr_upper_bound_deref(self): return False
+    def is_value_constraint(self): return False
 
     def __str__(self): return 'po-predicate ' + self.tags[0]
 
@@ -304,7 +305,7 @@ class CPOIndexUpperBound(CPOPredicate):
 
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp())
-                    + ',bound:' + str(self.getbound()) + ')')
+                    + ',bound:' + str(self.get_bound()) + ')')
 
 
 
@@ -774,5 +775,8 @@ class CPOValueConstraint(CPOPredicate):
 
     def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
 
-    def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
+    def get_tag(self): return CPOPredicate.get_tag(self) + ':' + str(self.get_exp())
 
+    def is_value_constraint(self): return True
+
+    def __str__(self): return self.get_tag()
