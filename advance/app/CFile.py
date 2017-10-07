@@ -24,8 +24,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # ------------------------------------------------------------------------------
+import xml.etree.ElementTree as ET
 
 import advance.util.fileutil as UF
+import advance.util.xmlutil as UX
 
 from advance.app.CFunction import CFunction
 from advance.app.CGCompTag import CGCompTag
@@ -35,8 +37,15 @@ from advance.app.CGType import CGType
 from advance.app.CGVarDecl import CGVarDecl
 from advance.app.CGVarDef import CGVarDef
 
+from advance.api.InterfaceDictionary import InterfaceDictionary
+
 from advance.app.CGXrefs import CGXrefs
 from advance.source.CSrcFile import CSrcFile
+from advance.app.CContextTable import CContextTable
+from advance.app.CFileDictionary import CFileDictionary
+from advance.app.CFileDeclarations import CFileDeclarations
+
+from advance.proof.CFilePredicateDictionary import CFilePredicateDictionary
 
 class CFile():
     '''C File level declarations.'''
@@ -45,37 +54,32 @@ class CFile():
         self.index = index
         self.capp = capp
         self.xnode = xnode
-        self.gtypes = {}            # name -> CGType
-        self.gcomptagdefs = {}      # key -> CGCompTag
-        self.gcomptagdecls = {}     # key -> CGCompTag
-        self.gvardecls = {}         # vid -> CGVarDecl
-        self.gvardefs = {}          # vid -> CGVarDef
-        self.genumtagdefs = {}      # ename -> CGEnumTag
-        self.genumtagdecls = {}     # ename -> CGEnumTag
-        self.gfunctions = {}        # vid -> CGFunction
+        self.name = self.xnode.get('filename')
+        self.declarations = CFileDeclarations(self)
+        self.contexttable = CContextTable(self)
+        self.predicatedictionary = CFilePredicateDictionary(self)
+        self.interfacedictionary = InterfaceDictionary(self)
         self.functions = {}         # vid -> CFunction
         self.functionnames = {}     # functionname -> vid
         self.strings = {}           # string-index -> (len,string)
         self.sourcefile = None      # CSrcFile
 
-    def getindex(self): return self.index
-
-    def getcapp(self): return self.capp
-
-    def getfilename(self): return self.xnode.get('filename')
-
-    def getmaxfunctionnamelength(self):
+    def get_max_functionname_length(self):
         return max([ len(x) for x in self.functionnames ])
 
-    def getstring(self,index):
-        self._initializestrings()
-        if index in self.strings: return self.strings[index]
-
-    def getsourceline(self,n):
-        self._initializesource()
+    def get_source_line(self,n):
+        self._initialize_source()
         if not self.sourcefile is None:
-            return self.sourcefile.getline(n)
+            return self.sourcefile.get_line(n)
 
+    def reinitialize_tables(self):
+        self.declarations.initialize()
+        self.contexttable.initialize()
+        self.predicatedictionary.initialize(force=True)
+        self.interfacedictionary.initialize()
+        self.iter_functions(lambda(f):f.reinitialize_tables())
+
+    '''
     def getgtypes(self):
         self._initialize_gtypes()
         return self.gtypes.values()
@@ -116,7 +120,13 @@ class CFile():
         if not comptag is None:
             return self.getgcomptag(key).getcompinfo()
         print(self.getfilename() + ': comptag with index ' + str(key) + ' not found')
+    '''
 
+    def is_struct(self,ckey): return self.declarations.is_struct(ckey)
+        
+    def get_structname(self,ckey): return self.declarations.get_structname(ckey)
+
+    '''
     def getgenumtagdefs(self):
         self._initialize_genumtagdefs()
         return self.genumtagdefs.values()
@@ -146,21 +156,22 @@ class CFile():
     def getgfunction(self,vid):
         self._initialize_gfunctions()
         return self.gfunctions[vid]
+    '''
 
-    def hasfunctionbyname(self,fname):
+    def has_function_by_name(self,fname):
         self._initialize_functions()
         return fname in self.functionnames
 
-    def getfunctionbyname(self,fname):
+    def get_function_by_name(self,fname):
         self._initialize_functions()
         if fname in self.functionnames:
             vid = self.functionnames[fname]
             return self.functions[vid]
         else:
-            print('Function name ' + fname + ' not found in ' + self.getfilename())
+            print('Function name ' + fname + ' not found in ' + self.name())
             print('Names: ' + str(self.functionnames.keys()))
 
-    def getfunctionbyindex(self,index):
+    def get_function_by_index(self,index):
         self._initialize_functions()
         if index in self.functions:
             return self.functions[index]
@@ -168,27 +179,27 @@ class CFile():
             print 'Unable to find function with global vid ' + str(index)
             #raise FunctionMissingError('Unable to find function with global vid ' + str(index))
             
-    def hasfunctionbyindex(self,index):
+    def has_function_by_index(self,index):
         self._initialize_functions()
         return index in self.functions
 
-    def getfunctions(self):
+    def get_functions(self):
         self._initialize_functions()
         return self.functions.values()
 
-    def fniter(self,f):
-        for fn in self.getfunctions(): f(fn)
+    def iter_functions(self,f):
+        for fn in self.get_functions(): f(fn)
 
-    def getcallinstrs(self):
+    def get_callinstrs(self):
         result = []
         def f(fn): result.extend(fn.getcallinstrs())
-        self.fniter(f)
+        self.iter_functions(f)
         return result
 
     def get_ppos(self):
         result = []
         def f(fn): result.extend(fn.get_ppos())
-        self.fniter(f)
+        self.iter_functions(f)
         return result
 
     def get_line_ppos(self):
@@ -197,7 +208,7 @@ class CFile():
         for fn in fnppos:
             for ppo in fnppos[fn]:
                 line = ppo.getline()
-                pred = ppo.getpredicatetag()
+                pred = ppo.get_predicate_tag()
                 if not line in result: result[line] = {}
                 if not pred in result[line]:
                     result[line][pred] = {}
@@ -206,29 +217,49 @@ class CFile():
                 result[line][pred]['ppos'].append(ppo)
         return result
 
-    def get_spos(self):
+    def get_spos(self,force=False):
         result = []
-        def f(fn): result.extend(fn.get_spos())
-        self.fniter(f)
+        def f(fn): result.extend(fn.get_spos(force))
+        self.iter_functions(f)
         return result
 
     def get_open_ppos(self):
         result = []
         def f(fn): result.extend(fn.get_open_ppos())
-        self.fniter(f)
-        return results
+        self.iter_functions(f)
+        return result
 
     def get_violations(self):
         result = []
         def f(fn): result.extend(fn.get_violations())
-        self.fniter(f)
-        return results
+        self.iter_functions(f)
+        return result
 
     def get_delegated(self):
         result = []
         def f(fn): result.extend(fn.get_delegated())
-        self.fniter(f)
-        return results
+        self.iter_functions(f)
+        return result
+
+    def save_predicate_dictionary(self):
+        path = self.capp.path
+        xroot = UX.get_xml_header('po-dictionary','po-dictionary')
+        xnode = ET.Element('po-dictionary')
+        xroot.append(xnode)
+        self.predicatedictionary.write_xml(xnode)
+        filename = UF.get_cfile_predicate_dictionaryname(path,self.name)
+        with open(filename,'w') as fp:
+            fp.write(UX.doc_to_pretty(ET.ElementTree(xroot)))
+
+    def save_declarations(self):
+        path = self.capp.path
+        xroot = UX.get_xml_header('cfile','cfile')
+        xnode = ET.Element('cfile')
+        xroot.append(xnode)
+        self.declarations.write_xml(xnode)
+        filename = UF.get_cfile_dictionaryname(path,self.name)
+        with open(filename,'w') as fp:
+            fp.write(UX.doc_to_pretty(ET.ElementTree(xroot)))
 
     def _initialize_gtypes(self):
         if len(self.gtypes) > 0: return
@@ -273,30 +304,25 @@ class CFile():
             self.gvardefs[vid] = CGVarDef(self,v)
 
     def _initialize_gfunctions(self):
-        if len(self.gfunctions) > 0: return
+        if len(self.declarations.gfunctions) > 0: return
         for f in self.xnode.find('functions').findall('gfun'):
             vid = int(f.find('svar').get('vid'))
-            self.gfunctions[vid] = CGFunction(self,f)
+            self.declarations.gfunctions[vid] = CGFunction(self,f)
 
     def _initialize_function(self,vid):
         if vid in self.functions: return
-        fname = self.getgfunction(vid).getname()
-        f = UF.get_cfun_xnode(self.capp.path,self.getfilename(),fname)
+        fname = self.declarations.get_gfunction(vid).getname()
+        f = UF.get_cfun_xnode(self.capp.path,self.name,fname)
         if not f is None:
             self.functions[vid] = CFunction(self,f)
             self.functionnames[fname] = vid
 
     def _initialize_functions(self):
         self._initialize_gfunctions()
-        for vid in self.gfunctions.keys():
+        for vid in self.declarations.gfunctions.keys():
             self._initialize_function(vid)
 
-    def _initializestrings(self):
-        if len(self.strings) == 0:
-            for f in self.xnode.find('string-table').findall('istr'):
-                self.strings[int(f.get('id'))] = f.get('str')
-
-    def _initializesource(self):
+    def _initialize_source(self):
         if self.sourcefile is None:
-            self.sourcefile = self.capp.getsrcfile(self.getfilename())
+            self.sourcefile = self.capp.get_srcfile(self.name)
 
