@@ -71,14 +71,14 @@ class IndexedTable ():
         self.name = name
         self.keytable = {}              # key -> index
         self.indextable = {}            # index -> object
-        self.next = 0
+        self.next = 1
         self.reserved = []
         self.checkpoint = None
 
     def reset(self):
         self.keytable = {}
         self.indextable = {}
-        self.next = 0
+        self.next = 1
         self.reserved = []
         self.checkpoint = None
 
@@ -148,7 +148,7 @@ class IndexedTable ():
         else:
             raise InvalidArgumentError
 
-    def size(self): return self.next
+    def size(self): return (self.next - 1)
 
     def retrieve(self,index):
         if index in self.indextable:
