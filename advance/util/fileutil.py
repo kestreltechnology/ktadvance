@@ -91,13 +91,21 @@ def get_cfile_dictionary_xnode(path,cfilename):
     filename = get_cfile_dictionaryname(path,cfilename)
     return get_xnode(filename,'cfile','C dictionary file')
 
-def get_cfile_podictionaryname(path,cfilename):
+def get_cfile_predicate_dictionaryname(path,cfilename):
     cfilename = get_cfilenamebase(cfilename)
-    return os.path.join(path,cfilename + '_podictionary.xml')
+    return os.path.join(path,cfilename + '_prd.xml')
 
-def get_cfile_podictionary_xnode(path,cfilename):
-    filename = get_cfile_podictionaryname(path,cfilename)
+def get_cfile_predicate_dictionary_xnode(path,cfilename):
+    filename = get_cfile_predicate_dictionaryname(path,cfilename)
     return get_xnode(filename,'po-dictionary','PO predicate dictionary file',show=False)
+
+def get_cfile_interface_dictionaryname(path,cfilename):
+    cfilename = get_cfilenamebase(cfilename)
+    return os.path.join(path,cfilename + '_interface.xml')
+
+def get_cfile_interface_dictionary_xnode(path,cfilename):
+    filename = get_cfile_interface_dictionaryname(path,cfilename)
+    return get_xnode(filename,'interface-dictionary','Interface objects dictionary file')
 
 def get_cfile_contexttablename(path,cfilename):
     cfilename = get_cfilenamebase(cfilename)
@@ -169,6 +177,13 @@ def get_invs_xnode(path,cfilename,fname):
     filename = get_invs_filename(path,cfilename,fname)
     return get_xnode(filename,'function','Function invariants',show=False)
 
+def get_pod_filename(path,cfilename,fname):
+    return (get_cfun_basename(path,cfilename,fname) + '_pod.xml')
+
+def get_pod_xnode(path,cfilename,fname):
+    filename = get_pod_filename(path,cfilename,fname)
+    return get_xnode(filename,'function','Function proof obligation types',show=False)
+
 def get_ppo_filename(path,cfilename,fname):
     return (get_cfun_basename(path,cfilename,fname) + '_ppo.xml')
 
@@ -186,6 +201,13 @@ def get_spo_xnode(path,cfilename,fname):
 def save_spo_file(path,cfilename,fname,cnode):
     filename = get_spo_filename(path,cfilename,fname)
     header = UX.get_xml_header(filename,'spos')
+    header.append(cnode)
+    with open(filename,'w') as fp:
+        fp.write(UX.doc_to_pretty(ET.ElementTree(header)))
+
+def save_pod_file(path,cfilename,fname,cnode):
+    filename = get_pod_filename(path,cfilename,fname)
+    header = UX.get_xml_header(filename,'pod')
     header.append(cnode)
     with open(filename,'w') as fp:
         fp.write(UX.doc_to_pretty(ET.ElementTree(header)))
