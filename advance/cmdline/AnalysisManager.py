@@ -37,6 +37,7 @@ from advance.invariants.CGlobalInvariants import CGlobalInvariants
 class AnalysisManager(object):
 
     def __init__(self,capp,onefile=False,filter=False,wordsize=0,unreachability=False,
+                     delegate_to_post=True,
                      thirdpartysummaries=[],nofilter=True,
                      verbose=True):
         '''Initialize the analyzer location and target file location'''
@@ -52,6 +53,7 @@ class AnalysisManager(object):
         self.thirdpartysummaries = thirdpartysummaries
         self.unreachability = unreachability # use unreachability as justification for discharge
         self.verbose = verbose
+        self.delegate_to_post = delegate_to_post
 
     def reset(self):
         def g(fi):
@@ -90,7 +92,7 @@ class AnalysisManager(object):
                 print(str(cmd))
                 result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT)
                 print('\nResult: ' + str(result))
-                self.capp.get_file(cfilename).podictionary.initialize()
+                self.capp.get_file(cfilename).predicatedictionary.initialize()
             else:
                 result = subprocess.call(cmd,cwd=self.path,stdout=open(os.devnull, 'w'),stderr=subprocess.STDOUT)
             if result != 0:
@@ -167,6 +169,7 @@ class AnalysisManager(object):
             if self.nofilter: cmd.append('-nofilter')
             if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
             if self.unreachability: cmd.append('-unreachability')
+            if not self.delegate_to_post: cmd.append('-disable_post_delegation')
             cmd.append(self.path)
             if self.verbose:
                 print(cmd)
