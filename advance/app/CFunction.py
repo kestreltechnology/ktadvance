@@ -25,6 +25,8 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import xml.etree.ElementTree as ET
+
 import advance.util.fileutil as UF
 from advance.app.CLocation import CLocation
 from advance.app.CFunDeclarations import CFunDeclarations
@@ -34,6 +36,7 @@ from advance.invariants.CFunInvDictionary import CFunInvDictionary
 from advance.invariants.CFunInvariantTable import CFunInvariantTable
 
 from advance.api.CFunctionApi import CFunctionApi
+from advance.proof.CFunPODictionary import CFunPODictionary
 from advance.proof.CFunctionProofs import CFunctionProofs
 
 class CFunction():
@@ -49,6 +52,7 @@ class CFunction():
         self.formals = {}                            # vid -> CVarInfo
         self.locals = {}                             # vid -> CVarInfo
         # self.body = CFunctionBody(self,self.xnode.find('sbody'))
+        self.podictionary = CFunPODictionary(self)
         self.proofs = CFunctionProofs(self)        
         self.api = CFunctionApi(self)              
         self.vard = CFunVarDictionary(self.fdecls)
@@ -102,25 +106,33 @@ class CFunction():
 
     def update_spos(self): self.proofs.update_spos()
 
-    def accept_post_request(self,rv,fvid): self.proofs.add_returnsite_obligation(rv,fvid)
+    def accept_post_request(self,postcondition):
+        self.proofs.add_returnsite_postcondition(postcondition)
 
     def request_postconditions(self):
-        for r in self.get_api().get_post_requests():
-            tgtfid = r.get_function_index()
+        for r in self.get_api().get_postcondition_requests():
+            tgtfid = r.callee.get_vid()
             tgtfun = self.getcapp().resolve_vid_function(self.cfile.index,tgtfid)
             if tgtfun is None:
                 print('No function found to register post request in function ' +
                           self.cfile.name + ':' + self.name)
             else:
-                fidtgt = tgtfun.cfile.index
-                vidtgt = self.getcapp().convert_vid(self.cfile.index,self.get_vid(),fidtgt)
-                tgtfun.accept_post_request(r,vidtgt)
+                postcondition = r.postcondition
+                tgtpostconditionix = tgtfun.cfile.interfacedictionary.index_postcondition(postcondition)
+                tgtpostcondition = tgtfun.cfile.interfacedictionary.get_postcondition(tgtpostconditionix)
+                tgtfun.accept_post_request(tgtpostcondition)
 
     def save_spos(self): self.proofs.save_spos()
 
+    def save_pod(self):
+        cnode = ET.Element('function')
+        cnode.set('name',self.name)
+        self.podictionary.write_xml(cnode)
+        UF.save_pod_file(self.cfile.capp.path,self.cfile.name,self.name,cnode)
+
     def get_ppos(self): return self.proofs.get_ppos()
 
-    def get_spos(self): return self.proofs.get_spos()
+    def get_spos(self,force=False): return self.proofs.get_spos(force)
 
     def get_open_ppos(self): return self.proofs.get_open_ppos()
 
