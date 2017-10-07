@@ -192,6 +192,7 @@ class ConstantValueVariable(VDictionaryRecord):
 
     def is_initial_value(self): return False
     def is_function_return_value(self): return False
+    def is_exp_function_return_value(self): return False
     def is_sideeffect_value(self): return False
     def is_symbolic_value(self): return False
     def is_memory_address(self): return False
@@ -222,7 +223,7 @@ class CVVFunctionReturnValue(ConstantValueVariable):
 
     def get_location(self): return self.cdecls.getlocation(int(self.args[0]))
 
-    def get_callee(self): return self.xd.get_xpr(int(self.args[1]))
+    def get_callee(self): return self.vd.fdecls.get_varinfo(int(self.args[1]))
 
     def get_args(self):
         result = []
@@ -238,6 +239,30 @@ class CVVFunctionReturnValue(ConstantValueVariable):
                     + ','.join([ str(a) for a in self.get_args() ])
                     + ')')
 
+class CVVExpFunctionReturnValue(ConstantValueVariable):
+
+    def __init__(self,vd,index,tags,args):
+        ConstantValueVariable.__init__(self,vd,index,tags,args)
+
+    def is_exp_function_return_value(self): return True
+
+    def get_location(self): return self.cdecls.getlocation(int(self.args[0]))
+
+    def get_callee(self): return self.xd.get_xpr(int(self.args[1]))
+
+    def get_args(self):
+        result = []
+        for a in self.args[2:]:
+            if int(a) == -1:
+                result.append(None)
+            else:
+                result.append(self.xd.get_xpr(int(a)))
+        return result
+
+    def __str__(self):
+        return (str(self.get_callee()) + '('
+                    + ','.join([ str(a) for a in self.get_args() ])
+                    + ')')
 
 
 class CVVSideEffectValue(ConstantValueVariable):
@@ -293,9 +318,10 @@ class CVVMemoryAddress(ConstantValueVariable):
 
     def is_memory_address(self): return True
 
-    def get_memory_region_id(self): return int(self.args[0])
+    def get_memory_reference(self):
+        return self.vd.get_memory_reference_data(int(self.args[0]))
 
-    def __str__(self): return 'address-of(' + str(self.get_memory_region_id())
+    def __str__(self): return 'memory-address:' + str(self.get_memory_reference())
 
 
 
@@ -383,16 +409,17 @@ class CheckVariable(CVariableDenotation):
 
     def is_check_variable(self): return True
 
-    def get_po_expnr_ids(self): return zip(self.args[1::2],self.args[2::2])
+    def get_po_isppo_expnr_ids(self):
+        return zip(self.args[1::3],self.args[2::3],self.args[3::3])
 
-    def get_po_ids(self): return [ x for (x,_) in self.get_po_expnr_ids() ]
+    def get_po_ids(self): return [ x for (_,x,_) in self.get_po_isppo_expnr_ids() ]
 
     def get_type(self): return self.cd.get_typ(int(self.args[0]))
 
     def __str__(self):
         return ('check('
-                    + ';'.join([ (str(x[0]) + ','
-                                      + str(x[1])) for x in self.get_po_expnr_ids() ])
+                    + ';'.join([ (('ppo:' if x[0] == 1 else 'spo:') + str(x[1]) + ','
+                                      + str(x[2])) for x in self.get_po_isppo_expnr_ids() ])
                     + ')')
 
 class AuxiliaryVariable(CVariableDenotation):
