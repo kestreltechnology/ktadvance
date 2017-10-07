@@ -106,6 +106,7 @@ class TestManager():
         testfilename = os.path.join(self.cpath,testname + '.json')
         self.testsetref = TestSetRef(testfilename)
         self.testresults = TestResults(self.testsetref)
+        self.proofcheckcount = 0   # used to decide when to switch on post delegation
 
     def get_test_results(self): return self.testresults
 
@@ -205,7 +206,9 @@ class TestManager():
                 capp = CApplication(self.sempath,cfilename=creffilename)
                 am = AnalysisManager(capp,onefile=True,verbose=self.verbose)
                 am.create_file_primary_proofobligations(creffilename)
-                ppos = capp.get_single_file().get_ppos()
+                cfile = capp.get_single_file()
+                cfile.reinitialize_tables()
+                ppos = cfile.get_ppos()
                 for creffun in creffile.get_functions():
                     fname = creffun.name
                     if self.saveref:
@@ -235,9 +238,9 @@ class TestManager():
     def check_spos(self,cfilename,cfun,spos,refspos):
         d = {}
         for spo in spos:
-            context = spo.get_cfg_context_string()
+            context = spo.cfg_context_string
             if not context in d: d[context] = []
-            d[context].append(spo.get_predicate_tag())
+            d[context].append(spo.predicatetag)
         for spo in refspos:
             context = spo.get_context()
             if not context in d:
@@ -263,10 +266,13 @@ class TestManager():
                 cappfile = CApplication(self.sempath,cfilename=cfilename).get_single_file()
                 def f(fn):
                     fn.update_spos()
+                    fn.request_postconditions()
                 cappfile.iter_functions(f)
-                def g(fn): fn.save_spos()
+                def g(fn):
+                    fn.save_spos()
+                    fn.save_pod()
                 cappfile.iter_functions(g)
-                cappfile.save_podictionary()
+                cappfile.save_predicate_dictionary()
                 cappfile.save_declarations()
                 spos = cappfile.get_spos()
                 if delaytest: continue
@@ -290,14 +296,14 @@ class TestManager():
                         else:
                             self.testresults.add_spo_count_error(
                                 cfilename,fname,len(funspos),len(refspos))
-                            raise FunctionSPOError(cfilename + ':' + fname)
+                            raise FunctionSPOError(cfilename + ':' + fname + ' (' + str(len(funspos)) + ')')
         except FunctionSPOError as detail:
             self.print_test_results()
             print('')
             print('*' * 80)
             print('Function SPO error: ' + str(detail))
             print('*' * 80)
-            #exit()
+            exit()
         if self.saveref:
             self.testsetref.save()
             exit()
@@ -328,7 +334,7 @@ class TestManager():
                     self.testresults.add_pev_discrepancy(
                         cfilename,cfun,ppo,d[context][p])
 
-    def test_ppo_proofs(self):
+    def test_ppo_proofs(self,delaytest=False):
         if not os.path.isfile(self.config.canalyzer):
             raise AnalyzerMissingError(self.config.canalyzer)
         self.testresults.set_pevs()
@@ -341,12 +347,16 @@ class TestManager():
             # only generate invariants if required
             if creffile.has_domains():
                 for d in creffile.get_domains():
-                    am = AnalysisManager(capp,onefile=True,verbose=self.verbose)
+                    delegate_to_post = self.proofcheckcount > 12
+                    am = AnalysisManager(capp,onefile=True,verbose=self.verbose,
+                                             delegate_to_post=delegate_to_post)
                     am.generate_file_local_invariants(cfilename,d)
                     am.check_file_proofobligations(cfilename)
+                self.proofcheckcount += 1
             cfile = capp.get_single_file()
             cfile.reinitialize_tables()
             ppos = cfile.get_ppos()
+            if delaytest: continue
             for cfun in creffile.get_functions():
                 fname = cfun.name
                 funppos = [ ppo for ppo in ppos if ppo.cfun.name == fname ]
@@ -357,9 +367,9 @@ class TestManager():
         d = {}
         fname = cfun.name
         for spo in funspos:
-            context = spo.get_cfg_context_string()
+            context = spo.cfg_context_string
             if not context in d: d[context] = {}
-            p = spo.get_predicate_tag()
+            p = spo.predicatetag
             if p in d[context]:
                 raise FunctionSEVError(
                     cfilename + ':' + fname + ':' + str(context) + ': ' +
@@ -382,7 +392,6 @@ class TestManager():
     def test_sevs(self,delaytest=False):
         self.testresults.set_sevs()
         for creffile in self.get_cref_files():
-            if creffile.has_spos():
                 creffilename = creffile.name
                 cfilefilename = UF.get_cfile_filename(self.tgtxpath,creffilename)
                 if not os.path.isfile(cfilefilename):
@@ -391,11 +400,14 @@ class TestManager():
                 cappfile = capp.get_single_file()
                 if creffile.has_domains():
                     for d in creffile.get_domains():
-                        am = AnalysisManager(capp,onefile=True,verbose=self.verbose)
+                        delegate_to_post = self.proofcheckcount > 12
+                        am = AnalysisManager(capp,onefile=True,verbose=self.verbose,
+                                                 delegate_to_post=delegate_to_post)
                         am.generate_file_local_invariants(creffilename,d)
                         am.check_file_proofobligations(creffilename)
+                    self.proofcheckcount += 1    
                 cappfile.reinitialize_tables()
-                spos = cappfile.get_spos()
+                spos = cappfile.get_spos(force=True)
                 if delaytest: continue
                 for cfun in creffile.get_functions():
                     fname = cfun.name

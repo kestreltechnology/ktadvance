@@ -78,9 +78,12 @@ if __name__ == '__main__':
     try:
         if testmanager.test_parser(savesemantics=args.savesemantics) or UF.unpack_tar_file(cpath):
             testmanager.test_ppos()
-            testmanager.test_ppo_proofs()
+            testmanager.test_ppo_proofs(delaytest=True)
             testmanager.test_spos(delaytest=True)
             testmanager.test_sevs(delaytest=True)
+            testmanager.test_spos(delaytest=True)
+            testmanager.test_sevs(delaytest=True)
+            testmanager.test_ppo_proofs()
             testmanager.test_spos()
             testmanager.test_sevs()
             if testmanager.verbose:

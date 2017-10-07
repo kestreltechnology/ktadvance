@@ -269,7 +269,7 @@ class TestResults():
                                 ctxt = spo.get_cfg_context_string() if hasmultiple else ''
                                 lines.append(
                                     '    ' + str(spo.get_line()).rjust(4) + ' ' +
-                                    spo.get_hashstr().ljust(20) +
+                                    spo.get_predicate().ljust(20) +
                                     '  found:' + status.ljust(11) +
                                     '  expected:' + spo.get_status().ljust(11) + '  ' + ctxt)
         return '\n'.join(lines)
