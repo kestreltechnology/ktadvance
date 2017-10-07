@@ -50,6 +50,7 @@ memory_base_constructors = {
 constant_value_variable_constructors = {
     'iv':lambda(x):CV.CVVInitialValue(*x),
     'frv':lambda(x):CV.CVVFunctionReturnValue(*x),
+    'erv':lambda(x):CV.CVVExpFunctionReturnValue(*x),
     'sev':lambda(x):CV.CVVSideEffectValue(*x),
     'sv':lambda(x):CV.CVVSymbolicValue(*x),
     'ma':lambda(x):CV.CVVMemoryAddress(*x)
@@ -72,7 +73,7 @@ class CFunVarDictionary ():
     def __init__(self,fdecls):
         self.fdecls = fdecls
         self.cfun = self.fdecls.cfun
-        self.xd = CFunXprDictionary()
+        self.xd = CFunXprDictionary(self)
         self.allocated_region_data_table = IT.IndexedTable('allocated-region-data-table')
         self.memory_base_table = IT.IndexedTable('memory-base-table')
         self.memory_reference_data_table = IT.IndexedTable('memory-reference-data-table')

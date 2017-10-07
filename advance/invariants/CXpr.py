@@ -31,6 +31,7 @@ class XDictionaryRecord():
 
     def __init__(self,xd,index,tags,args):
         self.xd = xd
+        self.vd = self.xd.vd
         self.index = index
         self.tags = tags
         self.args = args
@@ -89,7 +90,11 @@ class CXVariable(XDictionaryRecord):
 
     def get_type(self): return self.tags[0]
 
-    def __str__(self): return str(self.get_name()) + ':' + self.get_type()
+    def get_denotation(self): return self.vd.get_c_variable_denotation(self.get_seqnr())
+
+    def __str__(self):
+        return (str(self.get_name()) + ':' + self.get_type()
+                    + '[' + str(self.get_denotation()) + ']')
 
 
 class CXXCstBase(XDictionaryRecord):

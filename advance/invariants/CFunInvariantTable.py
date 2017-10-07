@@ -77,7 +77,8 @@ class CFunInvariantTable():
         for xloc in xnode.findall('loc'):
             ictxt = int(xloc.get('ictxt'))
             self.invariants[ictxt] = []
-            for findex in [ int(x) for x in xloc.get('ifacts').split(',') ]:
-                self.invariants[ictxt].append(self.invd.get_invariant_fact(findex))
+            if 'ifacts' in xloc.attrib:
+                for findex in [ int(x) for x in xloc.get('ifacts').split(',') ]:
+                    self.invariants[ictxt].append(self.invd.get_invariant_fact(findex))
 
             

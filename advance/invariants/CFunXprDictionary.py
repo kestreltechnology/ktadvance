@@ -53,7 +53,8 @@ xpr_constructors = {
 class CFunXprDictionary ():
     '''Indexed analysis expressions.'''
 
-    def __init__(self):
+    def __init__(self,vd):
+        self.vd = vd
         self.numerical_table = IT.IndexedTable('numerical-table')
         self.symbol_table = IT.IndexedTable('symbol-table')
         self.variable_table = IT.IndexedTable('variable-table')
