@@ -33,6 +33,7 @@ from advance.app.CCompInfo import CCompInfo
 from advance.app.CFile import CFile
 from advance.app.CVarInfo import CVarInfo
 from advance.app.IndexManager import IndexManager
+from advance.app.CGlobalDeclarations import CGlobalDeclarations
 
 from advance.source.CSrcFile import CSrcFile
 from __builtin__ import file
@@ -46,62 +47,77 @@ class CApplication():
         self.srcpath = os.path.join(path,'sourcefiles') if srcpath is None else srcpath
         self.filenames = {}          # file index -> filename
         self.files = {}              # filename -> CFile
+        if self.singlefile:
+            self.declarations = None         # TBD: set to CFileDeclarations
+        else:
+            self.declarations = CGlobalDeclarations(self)
         self.indexmanager = IndexManager(self.singlefile)
         self.callgraph = {}     # (fid,vid) -> (callsitespos, (tgtfid,tgtvid))
         self.revcallgraph = {}  # (tgtfid,tgtvid) -> ((fid,vid),callsitespos)
         self._initialize(cfilename)
 
-    def getfilenames(self): return self.filenames.values()
+    def get_filenames(self): return self.filenames.values()
 
-    def getmaxfilenamelength(self): return max([ len(x) for x in self.getfilenames()])
+    def get_max_filename_length(self):
+        return max([ len(x) for x in self.get_filenames()])
 
-    def getpath(self): return self.path
-
-    def getfiles(self):
+    def get_files(self):
 		self._initialize_files()
 		return self.files.values()
 
     # return file from single-file application
-    def getsinglefile(self):
+    def get_single_file(self):
         if 0 in self.filenames:
             return self.files[self.filenames[0]]
         else:
             raise Exception('requesting unspecified file from application')
 
-    def getcfile(self):
-        if self.singlefile: return self.getsinglefile()
+    def get_cfile(self):
+        if self.singlefile: return self.get_single_file()
 
-    def getfile(self,fname):
-        index = self.getfileindex(fname)
+    def get_file(self,fname):
+        index = self.get_file_index(fname)
         self._initialize_file(index,fname)
         if fname in self.files:
             return self.files[fname]
 
-    def getfilebyindex(self,index):
+    def get_file_by_index(self,index):
         if index in self.filenames:
             return self.getfile(self.filenames[index])
 
-    def getfileindex(self,fname):
+    def get_file_index(self,fname):
         for i in self.filenames:
             if self.filenames[i] == fname: return i
             
-    def getsrcfile(self,fname):
+    def get_srcfile(self,fname):
         srcfile = os.path.join(self.srcpath,fname)
         return CSrcFile(self,srcfile)
 
     '''return a list of ((fid,vid),callsitespos). '''
-    def getcallsites(self,fid,vid):
-        self._initializecallgraphs()
+    def get_callsites(self,fid,vid):
+        self._initialize_callgraphs()
         if (fid,vid) in self.revcallgraph:
             return self.revcallgraph[(fid,vid)]
         return []
 
-    def fileiter(self,f):
-        for file in self.getfiles(): f(file)
+    def iter_files(self,f):
+        for file in self.get_files(): f(file)
 
-    def functioniter(self,f):
-        def g(fi): fi.fniter(f)
-        self.fileiter(g)
+    def iter_files_parallel(self, f, processes):
+        Process_pool = multiprocessing.Pool(processes)
+        Process_pool.map(f, self.get_files())
+
+    def iter_filenames(self,f):
+        for fname in self.filenames.values(): f(fname)
+        
+    def iter_filenames_parallel(self, f, processes):
+        Process_pool = multiprocessing.Pool(processes)
+        filenames = [ v for v in self.filenames.values() ]
+        Process_pool.map(f, filenames)
+
+    def iter_functions(self,f):
+        def g(fi): fi.iter_functions(f)
+        self.iter_files(g)
 
     def resolve_vid_function(self,fid,vid):
         result = self.indexmanager.resolve_vid(fid,vid)
@@ -112,7 +128,7 @@ class CApplication():
                 filename = self.filenames[tgtfid]
                 self._initialize_file(tgtfid,filename)
                 if not self.files[filename] is None:
-                    return self.files[filename].getfunctionbyindex(tgtvid)
+                    return self.files[filename].get_function_by_index(tgtvid)
 
     def convert_vid(self,fidsrc,vid,fidtgt):
         return self.indexmanager.convert_vid(fidsrc,vid,fidtgt)
@@ -120,7 +136,7 @@ class CApplication():
     def get_gckey(self,fid,ckey):
         return self.indexmanager.get_gckey(fid,ckey)
          
-    def getfunctionbyindex(self,index):
+    def get_function_by_index(self,index):
         for f in self.files:
             if self.files[f].hasfunctionbyindex(index):
                 return self.files[f].getfunctionbyindex(index)
@@ -128,25 +144,13 @@ class CApplication():
             print('No function found with index ' + str(index))
             # exit(1)
 
-    def getcallinstrs(self):
+    def get_callinstrs(self):
         result = []
         def f(fi): result.extend(fi.getcallinstrs())
-        self.fileiter(f)
+        self.iter_files(f)
         return result
         
-    def fileiter_parallel(self, f, processes):
-        Process_pool = multiprocessing.Pool(processes)
-        Process_pool.map(f, self.getfiles())
-
-    def filenameiter(self,f):
-        for fname in self.filenames.values(): f(fname)
-        
-    def filenameiter_parallel(self, f, processes):
-        Process_pool = multiprocessing.Pool(processes)
-        filenames = [ v for v in self.filenames.values() ]
-        Process_pool.map(f, filenames)
-
-    def getexternals(self):
+    def get_externals(self):
 		result = {}
 		for e in self.xnode.find('global-definitions').find('external-varinfos'):
 			vfile = e.get('vfile')
@@ -156,74 +160,101 @@ class CApplication():
 			result[vfile].append((vname,summarized))
 		return result
 
-    def getcompinfo(self,fileindex,ckey):
-        return self.getfilebyindex(fileindex).getcompinfo(ckey)
+    def get_compinfo(self,fileindex,ckey):
+        return self.get_file_by_index(fileindex).get_compinfo(ckey)
 
-    def getfilecompinfos(self):
+    def get_file_compinfos(self):
         result = []
-        def f(f):result.extend(f.getcompinfos())
+        def f(f):result.extend(f.declarations.getcompinfos())
         self.fileiter(f)
         return result
 
-    def getvarinfos(self):
+    def get_varinfos(self):
 		self._initialize_varinfos()
 		return self.varinfos.values()
 
-    def getfileglobalvarinfos(self):
+    def get_file_global_varinfos(self):
         result = []
-        def f(f):result.extend(f.getglobalvarinfos())
+        def f(f):result.extend(f.declarations.get_global_varinfos())
         self.fileiter(f)
         return result
+
+    # ------------------- Application statistics -------------------------------
+    def get_line_counts(self):
+        counts = {}
+        def f(cfile):
+            decls = cfile.declarations
+            counts[cfile.name] = (decls.get_max_line(),
+                                      decls.get_code_line_count(),
+                                      decls.get_function_count())
+        self.iter_files(f)
+        flen = self.get_max_filename_length()
+        lines = []
+        lines.append('file'.ljust(flen) + 'LOC'.rjust(12) + 'CLOC'.rjust(12)
+                         + 'functions'.rjust(12))
+        lines.append('-' * (flen + 36))
+        for (c,(ml,mc,fc)) in sorted(counts.items()):
+            lines.append(c.ljust(flen) + str(ml).rjust(12) + str(mc).rjust(12)
+                             + str(fc).rjust(12))
+        lines.append('-' * (flen + 36))
+        mltotal = sum(x[0] for x in counts.values())
+        mctotal = sum(x[1] for x in counts.values())
+        fctotal = sum(x[2] for x in counts.values())
+        lines.append('total'.ljust(flen) + str(mltotal).rjust(12)
+                         + str(mctotal).rjust(12)
+                         + str(fctotal).rjust(12))
+        return '\n'.join(lines)
+        
 
     '''Create secondary proof obligations for all call sites and return sites.
 
     Save spo files only after all secondary proof obligations have been created,
-    as postcondition requests are created for remove functions.
+    as postcondition requests are created for remote functions.
     Note: this step cannot be parallelized because of the post conditions.
     '''
-    def updatespos(self):
+    def update_spos(self):
         def f(fn):
             fn.updatespos()
             fn.requestpostconditions()
         def g(fn): fn.savespos()
-        def h(cfile): cfile.fniter(f)
-        def k(cfile): cfile.fniter(g)
-        self.fileiter(h)
-        self.fileiter(k)
+        def h(cfile): cfile.iter_functions(f)
+        def k(cfile): cfile.iter_functions(g)
+        self.iter_files(h)
+        self.iter_files(k)
 
     def get_ppos(self):
         result = []
         def f(fn): result.extend(fn.get_ppos())
-        def g(fi): fi.fniter(f)
-        self.fileiter(g)
+        def g(fi): fi.iter_functions(f)
+        self.iter_files(g)
         return result
 
     def get_spos(self):
         result = []
         def f(fn): result.extend(fn.get_spos())
-        def g(fi): fi.fniter(f)
-        self.fileiter(g)
+        def g(fi): fi.iter_functions(f)
+        self.iter_files(g)
         return result
 
     def get_open_ppos(self):
         result = []
         def f(fn): result.extend(fn.get_open_ppos())
-        def g(fi): fi.fniter(f)
-        self.fileiter(g)
+        def g(fi): fi.iter_functions(f)
+        self.iter_files(g)
         return result
 
     def get_violations(self):
         result = []
         def f(fn): result.extend(fn.get_violations())
-        def g(fi): fi.fniter(f)
-        self.fileiter(g)
+        def g(fi): fi.iter_functions(f)
+        self.iter_files(g)
         return result
 
     def get_delegated(self):
         result = []
         def f(fn): result.extend(fn.get_delegated())
-        def g(fi): fi.fniter(f)
-        self.fileiter(g)
+        def g(fi): fi.iter_functions(f)
+        self.iter_files(g)
         return result
 
     def _initialize(self,fname):
@@ -237,11 +268,7 @@ class CApplication():
                 else:
                     self.filenames[int(id)] = c.get('name')
         else:
-            self._initialize_file(0,fname)
-
-        for (fid,fname) in self.filenames.items():
-            self.indexmanager.addfile(self.path,fid,fname)
-            
+            self._initialize_file(0,fname)            
 
     def _initialize_files(self):
 		for i,f in self.filenames.items(): self._initialize_file(i,f)
@@ -254,20 +281,21 @@ class CApplication():
         if not cfile is None:
             self.filenames[index] = fname
             self.files[fname] = CFile(self,index,cfile)
+            self.indexmanager.add_file(self.files[fname])
 
     def _initializecallgraphs(self):
         if len(self.callgraph) > 0: return
         def collectcallers(fn):
-            fid = fn.getfile().getindex()
-            vid = fn.getid()
+            fid = fn.cfile.index
+            vid = fn.get_vid
             def g(cs):
                 fundef = self.indexmanager.resolve_vid(fid,cs.getcalleeid())
                 if not fundef is None:
                     if not (fid,vid) in self.callgraph:
                         self.callgraph[(fid,vid)] = []
                     self.callgraph[(fid,vid)].append((cs,fundef))
-            fn.itercallsites(g)
-        self.functioniter(collectcallers)
+            fn.iter_callsites(g)
+        self.iter_functions(collectcallers)
 
         for s in self.callgraph:
             for (cs,t) in self.callgraph[s]:
