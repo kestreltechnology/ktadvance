@@ -28,7 +28,7 @@
 from advance.api.ApiAssumption import ApiAssumption
 from advance.api.FieldAssignment import FieldAssignment
 from advance.api.CGlobalAssignment import CGlobalAssignment
-from advance.api.PostRequest import PostRequest
+from advance.api.PostConditionRequest import PostConditionRequest
 
 import advance.util.fileutil as UF
 
@@ -41,14 +41,22 @@ class CFunctionApi():
         self.xnode = None
         self.parameters = {}              # nr -> (vid,vname)
         self.apiassumptions = {}          # id -> ApiAssumption
-        self.postrequests = {}            # id -> PostRequest
+        self.postconditionrequests = {}            # id -> PostConditionRequest
+        self.postconditionguarantees = {}  # id -> PostCondition
         self.dsassumptions = {}
         self.globalassumptions = {}
         self.globalassignments = []       # CGlobalAssignment list
         self.fieldassignments = {}        # nr -> FieldAssignment
         self.initialize()
 
-    def get_api_assumptions(self): return self.apiassumptions.values()
+    def get_api_assumptions(self):
+        return self.apiassumptions.values()
+
+    def get_postcondition_requests(self):
+        return self.postconditionrequests.values()
+
+    def get_postcondition_guarantees(self):
+        return self.postconditionguarantees.values()
 
     def get_global_assignments(self):
         self._get_global_assignments()
@@ -73,7 +81,19 @@ class CFunctionApi():
             for a in self.get_api_assumptions():
                 lines.append('   ' + str(a))
         else:
-            lines.append('\n  --no assumptions')
+            lines.append('\n  -- no assumptions')
+        if len(self.postconditionrequests) > 0:
+            lines.append('\n  postcondition requests:')
+            for p in self.get_postcondition_requests():
+                lines.append('   ' + str(p))
+        else:
+            lines.append('\n  -- no postcondition requests')
+        if len(self.postconditionguarantees) > 0:
+            lines.append('\n  postcondition guarantees:')
+            for p in self.get_postcondition_guarantees():
+                lines.append('   ' + str(p))
+        else:
+            lines.append('\n  -- no postcondition guarantees')
         return '\n'.join(lines)
 
     def initialize(self):
@@ -84,11 +104,20 @@ class CFunctionApi():
             return
         self.xnode = xnode
         for x in self.xnode.find('api').find('api-assumptions').findall('aa'):
-            predicate = self.cfile.podictionary.read_xml_predicate(x)
+            predicate = self.cfile.predicatedictionary.read_xml_predicate(x)
             id = int(x.get('ipr'))
             ppos = [ int(i) for i in x.get('ppos').split(',') ] if 'ppos' in x.attrib else []
             spos = [ int(i) for i in x.get('spos').split(',') ] if 'spos' in x.attrib else []
             self.apiassumptions[id] = ApiAssumption(self,id,predicate,ppos,spos)
+        for x in self.xnode.find('api').find('postcondition-requests').findall('rr'):
+            postrequest = self.cfile.interfacedictionary.read_xml_postrequest(x)
+            ppos = [ int(i) for i in x.get('ppos').split(',') ] if 'ppos' in x.attrib else []
+            spos = [ int(i) for i in x.get('spos').split(',') ] if 'spos' in x.attrib else []
+            request = PostConditionRequest(self,postrequest,ppos,spos)
+            self.postconditionrequests[postrequest.index] = request
+        for x in self.xnode.find('api').find('postcondition-guarantees').findall('gg'):
+            postcondition = self.cfile.interfacedictionary.read_xml_postcondition(x)
+            self.postconditionguarantees[postcondition.index] = postcondition
 
     def _get_global_assignments(self):
         if len(self.globalassignments) > 0: return
