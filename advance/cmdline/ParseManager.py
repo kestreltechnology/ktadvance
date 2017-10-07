@@ -78,7 +78,7 @@ class ParseManager():
         tarcmd = [ 'tar', '-cf' , tarfilename , 'semantics']
         subprocess.call(tarcmd,cwd=self.cpath,stderr=subprocess.STDOUT) if self.verbose else subprocess.call(tarcmd,cwd=self.cpath,stdout=open(os.devnull,'w'), stderr=subprocess.STDOUT)
         gzipcmd = [ 'gzip', tarfilename ]
-        subprocess.call(gzipcmd,cwd=self.cpath,stderr=subprocess.STDOUT) if self.verbose else subprocess.call(tarcmd,cwd=self.cpath,stdout=open(os.devnull,'w'), stderr=subprocess.STDOUT)
+        subprocess.call(gzipcmd,cwd=self.cpath,stderr=subprocess.STDOUT) if self.verbose else subprocess.call(gzipcmd,cwd=self.cpath,stdout=open(os.devnull,'w'), stderr=subprocess.STDOUT)
 
     def preprocess_file_with_gcc(self,cfilename,copyfiles=True):
         '''Invoke gcc preprocessor on c source file.
