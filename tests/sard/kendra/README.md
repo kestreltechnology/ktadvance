@@ -41,8 +41,6 @@ test:
 ```
 > python chc_report_kendratest_file.py id115.c
 ```
-Some of the kendra directories show sample output for this report.
-
 To see a summary of the results for all tests:
 ```
 > python chc_kendra_dashboard.py
@@ -52,4 +50,12 @@ targeted violation:
 ```
 > python chc_kendra_dashboard.py --predicates
 ```
+
+Some of the kendra directories show sample output for the file report
+and some discussion on the approach used in that particular example,
+or the reason for remaining open proof obligations:
+* **id115Q**: First example
+* **id167Q**: Supporting proof obligations
+* **id263Q**: Postconditions
+* **id295Q**: Open proof obligations
 
