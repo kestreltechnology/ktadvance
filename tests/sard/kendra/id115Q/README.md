@@ -39,14 +39,6 @@ Api:
   parameters:
     int argc
     ((char *) *) argv
-
-  -- no assumptions
-
-  -- no postcondition requests
-
-  -- no postcondition guarantees
-
-  -- no library calls
 --------------------------------------------------------------------------------
 Primary Proof Obligations:
 --------------------------------------------------------------------------------

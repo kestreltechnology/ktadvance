@@ -41,7 +41,9 @@ test:
 ```
 > python chc_report_kendratest_file.py id115.c
 ```
-or, to see a summary of the results for all tests:
+Some of the kendra directories show sample output for this report.
+
+To see a summary of the results for all tests:
 ```
 > python chc_kendra_dashboard.py
 ```
