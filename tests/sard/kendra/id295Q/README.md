@@ -1,14 +1,18 @@
 ## id295Q
 
-### Discussion
+### Discussion: open proof obligations
 The results shown below indicate an open proof obligation (17) for ptr-upper-bound
-for id295.c; the same proof obligation for id298.c (the safe) version is proven safe.
-The reason for the open proof obligation is that we cannot (at present) prove the
+for id295.c; the same proof obligation for id298.c (the safe version) is proven safe.
+The reason for the open proof obligation is that we do not (at present) prove the
 absence of other null-terminating character in the string, and thus the string may
 be shorter than indicated by the null-terminator position at the end of the array.
 Note that sufficient information is available: we can derive this information from
 the memset semantics. Proving absence of change of these values, however, requires
 more expensive dataflow analysis that is currently not performed.
+
+Open proof obligations in the report are accompanied by some of the invariants
+generated for that location, which may assist in identifying the information that
+is missing to enable discharge of the proof obligation.
 
 Results for id295.c:
 
@@ -77,10 +81,10 @@ Primary Proof Obligations:
 
 <?>   17     60  ptr-upper-bound(caste((char *),&(buf)),ntp(caste((char *),&(src))),op:pluspi,typ:char) (open)
                   --
-                  argv:nv[lv:argv:((char *) *)  id295.c:51] : sx:(argv_4_)#init:nv[aux-argv:nv[lv:argv:((char *) *)  id295.c:51]_init]
-                  argc:nv[lv:argc:int  id295.c:51] : sx:(argc_2_)#init:nv[aux-argc:nv[lv:argc:int  id295.c:51]_init]
-                  src[4105]:nv[lv:src:char[4106]  id295.c:53[4105]] : iv:0
-                  check_(ppo:15:1)_(ppo:16:1)_(ppo:17:3)_(ppo:19:1)_(ppo:20:2)_(ppo:21:2):nv[check(ppo:15,1;ppo:16,1;ppo:17,3;ppo:19,1;ppo:20,2;ppo:21,2)] : sx:(2)address:nv[aux-memory-address:&buf:nv[lv:buf:char[10]  id295.c:54]]
+                  argv: sx:(argv_4_)#init:nv[aux-argv:nv[lv:argv:((char *) *)  id295.c:51]_init]
+                  argc: sx:(argc_2_)#init:nv[aux-argc:nv[lv:argc:int  id295.c:51]_init]
+                  src[4105]: iv:0
+                  check_(ppo:17:3): sx:(2)address:nv[aux-memory-address:&buf:nv[lv:buf:char[10]  id295.c:54]]
                   src:sv[lv:src:char[4106]  id295.c:53] : syms:initialized-range_memset_4106
                   src[4105]:sv[lv:src:char[4106]  id295.c:53[4105]] : syms:assignedAt#57
 <S>   18     60  pointer-cast(&(buf),from:char,to:char) (safe)
