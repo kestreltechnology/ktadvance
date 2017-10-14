@@ -118,6 +118,7 @@ class AnalysisManager(object):
                 cmd.extend(['-summaries',s])
             if self.nofilter: cmd.append('-nofilter')
             if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
+            if self.verbose: cmd.append('-verbose')
             cmd.append(self.path)
             if self.verbose:
                 print(cmd)

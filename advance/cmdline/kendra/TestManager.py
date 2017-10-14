@@ -169,23 +169,23 @@ class TestManager():
     def create_reference_ppos(self,cfilename,fname,ppos):
         result = []
         for ppo in ppos:
-            ctxt = ppo.get_context_strings()
+            ctxt = ppo.context
             d = {}
-            d['line'] = ppo.getline()
-            d['cfgctxt'] = ctxt[0]
-            d['expctxt'] = ctxt[1]
+            d['line'] = ppo.get_line()
+            d['cfgctxt'] = str(ctxt.get_cfg_context())
+            d['expctxt'] = str(ctxt.get_exp_context())
             d['predicate'] = ppo.get_predicate_tag()
-            d['tgtstatus'] = 'unknown'
-            d['status'] = 'unknown'
+            d['tgtstatus'] = 'open'
+            d['status'] = 'open'
             result.append(d)
-        self.testsetref.setppos(cfilename,fname,result)
+        self.testsetref.set_ppos(cfilename,fname,result)
 
     def create_reference_spos(self,cfilename,fname,spos):
         result = []
         if len(spos) > 0:
             for spo in spos:
                 d = {}
-                d['line'] = spo.getline()
+                d['line'] = spo.get_line()
                 d['cfgctxt'] = spo.get_cfg_contextstring()
                 d['tgtstatus'] = 'unknown'
                 d['status'] = 'unknown'
@@ -211,11 +211,12 @@ class TestManager():
                 ppos = cfile.get_ppos()
                 for creffun in creffile.get_functions():
                     fname = creffun.name
+                    cfun = cfile.get_function_by_name(fname)
                     if self.saveref:
                         if creffun.has_ppos():
                             print('Ppos not created for ' + fname + ' (delete first)')
                         else:
-                            self.create_reference_ppos(creffilename,fname,ppos[fname])
+                            self.create_reference_ppos(creffilename,fname,cfun.get_ppos())
                             saved = True
                     else:
                         refppos = creffun.get_ppos()

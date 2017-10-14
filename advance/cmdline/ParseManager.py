@@ -147,7 +147,7 @@ class ParseManager():
             cmd.append(self.tgtplatform)
                 
         
-    def pre_process(self,ccommand,copyfiles=True):
+    def preprocess(self,ccommand,copyfiles=True):
         if self.verbose: print('\n\n' + ('=' * 80))
         if self.verbose: print('***** ' + ccommand['file'] + ' *****')
         if self.verbose: print('=' * 80)
