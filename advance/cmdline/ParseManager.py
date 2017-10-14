@@ -215,7 +215,7 @@ class ParseManager():
         if self.verbose:print('\n\nCollect c files')
         for n in cfiles:
             n = os.path.abspath(n)
-            name = self.normalizefilename(n)
+            name = self.normalize_filename(n)
             if self.verbose:print('   Add ' + name + ' (' + str(cfiles[n]) + ' lines)')
             targetfiles.addfile(name)
         targetfiles.save_xml_file(self.tgtxpath)
@@ -233,7 +233,7 @@ class ParseManager():
                     self.parse_ifile(fname)
                     basename = fname[:-2]
                     cfile = basename + '.c'
-                    targetfiles.addfile(self.normalizefilename(cfile))
+                    targetfiles.addfile(self.normalize_filename(cfile))
         targetfiles.save_xml_file(self.tgtxpath)
 
     def parse_cfiles(self,copyfiles=True):
@@ -242,7 +242,7 @@ class ParseManager():
         for d,dnames,fnames in os.walk(self.cpath):
             for fname in fnames:
                 if fname.endswith('.c'):
-                    fname = self.normalizefilename(os.path.join(d,fname))
+                    fname = self.normalize_filename(os.path.join(d,fname))
                     if fname.startswith('semantics'): continue
                     ifilename = self.preprocess_file_with_gcc(fname,copyfiles)
                     self.parse_ifile(ifilename)
