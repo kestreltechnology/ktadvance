@@ -182,8 +182,8 @@ class ParseManager():
             p = subprocess.call(command,cwd=ccommand['directory'],stderr=subprocess.STDOUT) if self.verbose else subprocess.call(command,cwd=ccommand['directory'],stdout=open(os.devnull, 'w'),stderr=subprocess.STDOUT)
             if self.verbose: print('result: ' + str(p))
             if copyfiles:
-                tgtcfilename = os.path.join(self.tgtspath,self.normalizefilename(cfilename))
-                tgtifilename = os.path.join(self.tgtspath,self.normalizefilename(ifilename))
+                tgtcfilename = os.path.join(self.tgtspath,self.normalize_filename(cfilename))
+                tgtifilename = os.path.join(self.tgtspath,self.normalize_filename(ifilename))
                 tgtcdir = os.path.dirname(tgtcfilename)
                 if not os.path.isdir(tgtcdir):
                     os.makedirs(tgtcdir)
