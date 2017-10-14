@@ -136,7 +136,7 @@ class ParseManager():
             return (-1)
 
     def set_platform(self,cmd):
-        index = self.get_platformindex(cmd)
+        index = self.get_platform_index(cmd)
         if index >= 0:
             platform = cmd[index]
             if platform == self.tgtplatform:
