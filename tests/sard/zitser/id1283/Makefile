@@ -1,5 +1,5 @@
 
-all:	obo-bad setup
+all:	obo-bad
 
 clean:	
 	rm -rf *-bad /tmp/foo
