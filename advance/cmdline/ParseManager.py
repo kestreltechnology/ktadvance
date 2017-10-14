@@ -174,7 +174,7 @@ class ParseManager():
             ecommand.append('-fno-inline')
             ecommand.append('-fno-builtin')
             ecommand.append('-fno-asm')
-            self.setplatform(ecommand)
+            self.set_platform(ecommand)
             if self.verbose: print('\nIssue command: ' + str(ecommand) + '\n')
             p = subprocess.call(ecommand,cwd=ccommand['directory'],stderr=subprocess.STDOUT) if self.verbose else subprocess.call(ecommand,cwd=ccommand['directory'],stdout=open(os.devnull, 'w'),stderr=subprocess.STDOUT)
             if self.verbose: print('result: ' + str(p))
