@@ -114,7 +114,7 @@ if __name__ == '__main__':
                 exit(1)
 
     parsemanager = ParseManager(cpath,tgtpath,filter=args.filter)
-    parsemanager.initializepaths()
+    parsemanager.initialize_paths()
 
     if doclean:
         cleancmd = [ 'make', 'clean' ]
@@ -155,4 +155,4 @@ if __name__ == '__main__':
     parsemanager.parse_with_ccommands(compilecommands,copyfiles=True)
 
     if args.savesemantics:
-        parsemanager.savesemantics()
+        parsemanager.save_semantics()

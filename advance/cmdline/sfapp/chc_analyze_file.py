@@ -58,6 +58,8 @@ def parse():
                             type=int,default=0)
     parser.add_argument('--analysisrounds',type=int,default=3,
                             help='number of times to generate secondary proof obligations')
+    parser.add_argument('--verbose',help='print out intermediate results',
+                            action='store_true')
     args = parser.parse_args()
     return args
 
@@ -92,7 +94,7 @@ if __name__ == '__main__':
             exit(1)
 
     capp = CApplication(sempath,args.cfile)
-    ktadvpath = capp.getpath()
+    ktadvpath = capp.path
     xfilename = UF.get_cfile_filename(ktadvpath,args.cfile)
 
     if not os.path.isfile(xfilename):
@@ -102,26 +104,38 @@ if __name__ == '__main__':
                               'check the directory name' ]))
         exit(1)
     
-    am = AnalysisManager(capp,onefile=True,wordsize=int(args.wordsize))
+    am = AnalysisManager(capp,onefile=True,wordsize=int(args.wordsize),verbose=args.verbose,
+                             unreachability=True)
 
     cfilename = args.cfile
 
     if not args.continueanalysis:
-        am.create_file_primaryproofobligations(cfilename)
+        am.create_file_primary_proofobligations(cfilename)
 
-    am.generate_file_localinvariants(cfilename,'llvis')
+    # am.generate_file_global_invariants(cfilename)
+    am.generate_file_local_invariants(cfilename,'llvips')
+    capp.iter_files(lambda(f):f.reinitialize_tables())    
+
     am.check_file_proofobligations(cfilename)
+    capp.iter_files(lambda(f):f.reinitialize_tables())
+    capp.iter_functions(lambda(f):f.get_api().initialize())
+
+    apis = []
+    capp.iter_functions(lambda(f):apis.append(str(f.get_api())))
+    for a in apis: print(a)
 
     def f(fn):
-        print(fn.getname())
-        fn.updatespos()
-        fn.requestpostconditions()
+        print(fn.name)
+        fn.update_spos()
 
-    def g(fn): fn.savespos()
+    def g(fn): fn.save_spos()
 
     for k in range(args.analysisrounds):
-        capp.getcfile().fniter(f)
-        capp.getcfile().fniter(g)
+        capp.get_cfile().iter_functions(f)
+        capp.get_cfile().iter_functions(g)
 
-        am.generate_file_localinvariants(cfilename,'llvis')
+        capp.get_cfile().save_predicate_dictionary()
+
+        am.generate_file_local_invariants(cfilename,'llvips')
         am.check_file_proofobligations(cfilename)
+

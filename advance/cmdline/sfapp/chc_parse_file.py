@@ -102,11 +102,11 @@ if __name__ == '__main__':
             os.remove('semantics_linux.tar.gz')
     
     parsemanager = ParseManager(cpath,targetpath)
-    parsemanager.initializepaths()
+    parsemanager.initialize_paths()
 
     try:
         basename = os.path.basename(cfilename)
-        ifilename = parsemanager.preprocess_file_withgcc(basename)
+        ifilename = parsemanager.preprocess_file_with_gcc(basename)
         result = parsemanager.parse_ifile(ifilename)
         if result != 0:
             print('*' * 80)
@@ -121,4 +121,4 @@ if __name__ == '__main__':
         
     
     if args.savesemantics:
-        parsemanager.savesemantics()
+        parsemanager.save_semantics()
