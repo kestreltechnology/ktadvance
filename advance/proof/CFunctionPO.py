@@ -25,12 +25,16 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import xml.etree.ElementTree as ET
+
 po_status = {
     'g': 'safe',
     'o': 'open',
     'r': 'violation',
     'x': 'dead-code'
     }
+
+po_status_indicators = { v:k for (k,v) in po_status.items() }
 
 class CProofDependencies():
     '''Extent of dependency of a closed proof obligation.
@@ -59,6 +63,13 @@ class CProofDependencies():
     def has_external_dependencies(self): return self.level == 'a'
 
     def is_deadcode(self): return self.level == 'x'
+
+    def write_xml(self,cnode):
+        cnode.set('deps',self.level)
+        if len(self.ids) > 0:
+            cnode.set('ids',','.join([str(i) for i in self.ids ]))
+        if len(self.invs) > 0:
+            cnode.set('invs',','.join([str(i) for i in self.invs ]))
 
     def __str__(self): return self.level
 
@@ -117,6 +128,17 @@ class CFunctionPO():
         if self.dependencies.is_stmt(): return '<S>'
         if self.dependencies.is_local(): return '<L>'
         return '<A>'
+
+    def write_xml(self,cnode):
+        self.pod.write_xml_spo_type(cnode,self.potype)
+        cnode.set('s',po_status_indicators[self.status])
+        cnode.set('id',str(self.id))
+        if not self.dependencies is None:
+            self.dependencies.write_xml(cnode)
+        if not self.explanation is None:
+            enode = ET.Element('e')
+            enode.set('txt',self.explanation)
+            cnode.append(enode)
 
     def __str__(self):
         return (str(self.id).rjust(4) + '  ' + str(self.get_line()).rjust(5) + '  ' +
