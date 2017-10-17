@@ -32,6 +32,8 @@ from advance.api.PostConditionRequest import PostConditionRequest
 
 import advance.util.fileutil as UF
 
+memory_free_functions = [ 'free', 'realloc' ]
+
 class CFunctionApi():
 
     def __init__(self,cfun):
@@ -47,6 +49,8 @@ class CFunctionApi():
         self.globalassumptions = {}
         self.globalassignments = []       # CGlobalAssignment list
         self.fieldassignments = {}        # nr -> FieldAssignment
+        self.missingsummaries = []
+        self.librarycalls = {}            # (header,fname) -> count
         self.initialize()
 
     def get_api_assumptions(self):
@@ -61,6 +65,13 @@ class CFunctionApi():
     def get_global_assignments(self):
         self._get_global_assignments()
         return self.globalassignments
+
+    def may_free_memory(self):
+        for (_,fname) in self.librarycalls:
+            if fname in memory_free_functions:
+                return True
+        else:
+            return False
 
     def get_parameters(self): return self.cfun.ftype.get_args().get_args()
 
@@ -94,6 +105,12 @@ class CFunctionApi():
                 lines.append('   ' + str(p))
         else:
             lines.append('\n  -- no postcondition guarantees')
+        if len(self.librarycalls) > 0:
+            lines.append('\n  library calls:')
+            for (k,v) in self.librarycalls:
+                lines.append('   ' + k + ':' + v + ' -- ' + str(self.librarycalls[(k,v)]))
+        else:
+            lines.append('\n  -- no library calls')
         return '\n'.join(lines)
 
     def initialize(self):
@@ -118,6 +135,14 @@ class CFunctionApi():
         for x in self.xnode.find('api').find('postcondition-guarantees').findall('gg'):
             postcondition = self.cfile.interfacedictionary.read_xml_postcondition(x)
             self.postconditionguarantees[postcondition.index] = postcondition
+        for x in self.xnode.find('api').find('library-calls').findall('lc'):
+            header = x.get('h')
+            fname = x.get('f')
+            count = x.get('c')
+            self.librarycalls[(header,fname)] = count
+        for x in self.xnode.find('api').find('missing-summaries').findall('ms'):
+            self.missingsummaries.append(x.get('n'))
+
 
     def _get_global_assignments(self):
         if len(self.globalassignments) > 0: return
