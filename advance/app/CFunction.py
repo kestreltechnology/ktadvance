@@ -59,10 +59,16 @@ class CFunction():
         self.invd = CFunInvDictionary(self.vard)
         self.invtable = CFunInvariantTable(self.invd)
         self.invariants = None                       # CFunctionInvariants object
+        self.mayfreememory = True
         self._initialize()
 
     def reinitialize_tables(self):
         self.vard.initialize(force=True)
+        self.mayfreememory = False
+        def f(cs):
+            if cs.mayfreememory: self.mayfreememory = True
+        self.iter_callsites(f)
+        if self.api.may_free_memory: self.mayfreememory = True
 
     def get_formal_vid(self,name):
         for v in self.formals:
@@ -140,11 +146,24 @@ class CFunction():
 
     def get_delegated(self): return self.proofs.get_delegated()
 
+    def may_free_memory(self):
+        self.mayfreememory = False
+        def f(cs):
+            if cs.mayfreememory:
+                self.mayfreememory = True
+        self.iter_callsites(f)
+        return (self.mayfreememory or self.api.may_free_memory())
+
     def _initialize(self):
         for v in self.fdecls.get_formals(): self.formals[v.get_vid()] = v
         for v in self.fdecls.get_locals(): self.locals[v.get_vid()] = v
         self.vard.initialize()
         self.invtable.initialize()
+        self.mayfreememory = False
+        def f(cs):
+            if cs.mayfreememory: self.mayfreememory = True
+        self.iter_callsites(f)
+        if self.api.may_free_memory(): self.mayfreememory = True
 
     def _read_invariants(self):
         if not self.invariants is None: return
