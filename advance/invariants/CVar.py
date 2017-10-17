@@ -79,6 +79,7 @@ class MemoryBase(VDictionaryRecord):
     def is_global_address(self): return False
     def is_basevar(self): return False
     def is_string_literal(self): return False
+    def is_freed(self): return False
     def is_uninterpreted(self): return False
 
     def __str__(self): return 'memory-base ' + self.tags[0]
@@ -133,6 +134,8 @@ class MemoryBaseHeapAddress(MemoryBase):
 
     def is_heap_address(self): return True
 
+    def is_valid(self): return (int(self.args[1]) == 1)
+
     def get_allocated_region_id(self): return int(self.args[0])
 
     def __str__(self): return 'heap-' + str(self.get_allocated_region_id())
@@ -169,6 +172,18 @@ class MemoryBaseUninterpreted(MemoryBase):
     def get_name(self): return self.tags[1]
 
     def __str__(self): return 'uninterpreted_memory_base_' + self.get_name()
+
+
+class MemoryBaseFreed(MemoryBase):
+
+    def __init__(self,vd,index,tags,args):
+        MemoryBase.__init__(self,vd,index,tags,args)
+
+    def is_freed(self): return True
+
+    def get_region(self): return self.get_memory_base(int(self.args[0]))
+
+    def __str__(self): return 'freed(' + str(self.get_region()) + ')'
 
 
 class MemoryReferenceData(VDictionaryRecord):
@@ -235,7 +250,7 @@ class CVVFunctionReturnValue(ConstantValueVariable):
         return result
 
     def __str__(self):
-        return (str(self.get_callee()) + '('
+        return (str(self.get_callee().vname) + '('
                     + ','.join([ str(a) for a in self.get_args() ])
                     + ')')
 
@@ -274,7 +289,7 @@ class CVVSideEffectValue(ConstantValueVariable):
 
     def get_location(self): return self.cdecls.get_location(int(self.args[0]))
 
-    def get_callee(self): return self.xd.get_xpr(int(self.args[1]))
+    def get_callee(self): return self.vd.fdecls.get_varinfo(int(self.args[1]))
 
     def get_argnr(self): return int(self.args[2])
 
@@ -282,7 +297,7 @@ class CVVSideEffectValue(ConstantValueVariable):
 
     def get_args(self):
         result = []
-        for a in self.args[3:]:
+        for a in self.args[4:]:
             if int(a) == -1:
                 result.append(None)
             else:
@@ -351,7 +366,9 @@ class LocalVariable(CVariableDenotation):
 
     def get_varinfo(self): return self.vd.fdecls.get_varinfo(int(self.args[0]))
 
-    def __str__(self): return 'lv:' + str(self.get_varinfo())
+    def get_offset(self): return self.vd.fdecls.dictionary.get_offset(int(self.args[1]))
+
+    def __str__(self): return 'lv:' + str(self.get_varinfo()) + str(self.get_offset())
 
 class GlobalVariable(CVariableDenotation):
 
