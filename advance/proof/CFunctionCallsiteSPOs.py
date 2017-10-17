@@ -31,17 +31,11 @@ import xml.etree.ElementTree as ET
 
 import advance.util.xmlutil as UX
 
+
 from advance.app.CLocation import CLocation
 from advance.proof.CFunctionCallsiteSPO import CFunctionCallsiteSPO
 from advance.proof.CFunctionPO import CProofDependencies
-
-po_status = {
-    'g': 'safe',
-    'o': 'open',
-    'r': 'violation',
-    'x': 'dead-code'
-    }
-
+from advance.proof.CFunctionPO import po_status
 
 class CFunctionCallsiteSPOs():
     '''Represents the supporting proof obligations associated with a call site.'''
@@ -56,10 +50,12 @@ class CFunctionCallsiteSPOs():
         self.spos = {}             # api-id -> CFunctionCallsiteSPO
         self.postguarantees = {}
         self.iargs = xnode.get('iargs')
+        self.mayfreememory = True
         if self.iargs == "":
             self.args = []
         else:
-            self.args = [ self.cfile.declarations.dictionary.get_exp(int(i)) for i in self.iargs.split(',') ]
+            self.args = [ self.cfile.declarations.dictionary.get_exp(int(i))
+                              for i in self.iargs.split(',') ]
         self._initialize(xnode)
 
     def get_line(self): return self.location.get_line()
@@ -72,11 +68,8 @@ class CFunctionCallsiteSPOs():
         if calleefun is None:
             logging.warning('Missing external function in ' + self.cfile.name + ' - ' +
                                 self.cfun.name + ': ' + str(self.callee))
-            # TODO: this should be recorded in a logfile
-            # print('*' * 80)
-            # print('Warning: No semantics available for external function ' + self.callee)
-            # print('*' * 80)
             return
+        self.mayfreememory = calleefun.may_free_memory()
         api = calleefun.get_api()
         if len(api.get_api_assumptions()) > 0:
             pars = api.get_parameters()
@@ -88,10 +81,11 @@ class CFunctionCallsiteSPOs():
                     subst[vid] = arg
             else:
                 print('*' * 80)
-                print('Warning: Number of arguments (' + str(len(self.args)) +
-                        ') is not the same as the number of parameters (' + str(len(pars)) +
-                        ') in call site spos in function ' + self.cfun.name +
-                        ' in file ' + cfile.name)
+                print('Warning: Number of arguments (' + str(len(self.args))
+                        + ') is not the same as the number of parameters (' + str(len(pars))
+                        + ') in call site spos in function ' + self.cfun.name
+                        + ' in file ' + cfile.name)
+                print('*' * 80)
                 return
             for a in api.get_api_assumptions():
                 pid = self.cfile.predicatedictionary.index_predicate(a.predicate,subst=subst)
@@ -103,7 +97,6 @@ class CFunctionCallsiteSPOs():
                     ispotype = self.cfun.podictionary.index_spo_type(['cs'],[iloc,ictxt,pid,apiid])
                     spotype = self.cfun.podictionary.get_spo_type(ispotype)
                     self.spos[apiid].append(CFunctionCallsiteSPO(self,spotype))
-                    print(str(self.spos[apiid]))
         for g in api.get_postcondition_guarantees():
             iipc = self.cfile.interfacedictionary.index_postcondition(g)
             if not iipc in self.postguarantees:
@@ -145,7 +138,12 @@ class CFunctionCallsiteSPOs():
             gnode = ET.Element('pg')
             self.cfile.interfacedictionary.write_xml_postcondition(gnode,g)
             ggnode.append(gnode)
-        cnode.extend([oonode, ggnode] )
+        ffnode = ET.Element('frees')
+        if self.mayfreememory:
+            ffnode.set('v','yes')
+        else:
+            ffnode.set('v','no')
+        cnode.extend([oonode, ggnode, ffnode] )
 
     def _initialize(self,xnode):
         oonode = xnode.find('api-conditions')
@@ -159,16 +157,16 @@ class CFunctionCallsiteSPOs():
                     status = po_status[po.get('s','o')]
                     if 'deps' in po.attrib:
                         level = po.get('deps')
+                        invs = po.get('invs')
+                        if invs is not None and len(invs) > 0:
+                            invs = [ int(x) for x in po.get('invs').split(',') ]
+                        else:
+                            invs = []
                         if level == 'a':
                             ids = [int(x) for x in po.get('ids').split(',') ]
-                            invs = po.get('invs')
-                            if len(invs) > 0:
-                                invs = [ int(x) for x in po.get('invs').split(',') ]
-                            else:
-                                invs = []
-                            deps = CProofDependencies(self,level,ids,invs)
                         else:
-                            deps = CProofDependencies(self,level)
+                            ids = []
+                        deps = CProofDependencies(self,level,ids,invs)
                     expl = None
                     enode = po.find('e')
                     if not enode is None:
@@ -180,3 +178,4 @@ class CFunctionCallsiteSPOs():
                 g = self.cfile.interfacedictionary.read_xml_postcondition(p)
                 ig = self.cfile.interfacedictionary.index_postcondition(g)
                 self.postguarantees[ig] = g
+        self.mayfreememory = xnode.find('frees').get('v')
