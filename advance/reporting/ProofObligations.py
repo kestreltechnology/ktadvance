@@ -86,7 +86,7 @@ def get_tag_method_count(pos,filefilter=lambda(f):True,extradsmethods=[]):
     dsmethods = get_dsmethods(extradsmethods)
     for po in pos:
         if not filefilter(po.cfile.name): continue
-        tag = po.get_predicate_tag()
+        tag = po.predicatetag
         if not tag in result:
             result[tag] = {}
             for dm in dsmethods: result[tag][dm] = 0
@@ -232,7 +232,7 @@ def function_code_tostring(fn,pofilter=lambda(po):True):
     lines.append(fd.pos_on_code_tostring(ppos,pofilter=pofilter))
     lines.append('-' * 80)
     if len(spos) > 0:
-        lines.append('Secondary Proof Obligations:')
+        lines.append('Supporting Proof Obligations:')
         lines.append(fd.pos_on_code_tostring(spos,pofilter=pofilter))
     return '\n'.join(lines)
 
@@ -259,7 +259,7 @@ def proofobligation_stats_tostring(pporesults,sporesults,rhlen=25,header1='',ext
     lines.append('\nPrimary Proof Obligations')
     lines.append(row_method_count_tostring(pporesults,perc=True,rhlen=rhlen,header1=header1))
     if len(sporesults) > 0:
-        lines.append('\nSecondary Proof Obligations')
+        lines.append('\nSupporting Proof Obligations')
         lines.append(row_method_count_tostring(sporesults,perc=True,rhlen=rhlen,header1=header1))   
     return '\n'.join(lines)
 
@@ -325,7 +325,7 @@ def make_po_tag_dict(pos,pofilter=lambda(po):True):
     '''Create a predicate tag dictionary from a a list of proof obligations.
 
     Args:
-      pos: list of proof obligations (primary or secondary)
+      pos: list of proof obligations (primary or supporting)
       pofilter: predicate that specifies which proof obligations to include
     Returns:
       dictionary that organizes the proof obligations by predicate tag
@@ -342,7 +342,7 @@ def make_po_file_function_dict(pos,filefilter=lambda(f):True):
     '''Create a file, function dictionary from a list of proof obligations.
 
     Args:
-      pos: list of proof obligations (primary or secondary)
+      pos: list of proof obligations (primary or supporting)
       filefilter: predicate that specifies which c files to include
     Returns:
       dictionary that organizes the proof obligations by c file
