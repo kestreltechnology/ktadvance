@@ -109,7 +109,7 @@ class NRVIntervalValue(NonRelationalValue):
 
 
 
-class NRBaseOffsetValue(NonRelationalValue):
+class NRVBaseOffsetValue(NonRelationalValue):
 
     def __init__(self,invd,index,tags,args):
         NonRelationalValue.__init__(self,invd,index,tags,args)
@@ -148,14 +148,15 @@ class NRBaseOffsetValue(NonRelationalValue):
         return int(self.args[3]) == 1
 
     def __str__(self):
+        pcbn = ', null:' + ('maybe' if self.can_be_null() else 'no')
         if self.has_offset_value():
-            return 'bv:' + str(self.get_xpr()) + ':' + str(self.get_value())
+            return 'bv:' + str(self.get_xpr()) + ':' + str(self.get_offset_value()) + pcbn
         else:
             lb = self.get_lower_bound()
             ub = self.get_upper_bound()
             plb = '<-' if lb is None else '[' + str(lb)
             pub = '->' if ub is None else str(ub) + ']'
-            return 'bv:' + str(self.get_xpr()) + ':' + plb + ';' + pub
+            return 'bv:' + str(self.get_xpr()) + ':' + plb + ';' + pub + pcbn
 
         
         

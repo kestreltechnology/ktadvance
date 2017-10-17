@@ -44,7 +44,8 @@ memory_base_constructors = {
     'ga':lambda(x):CV.MemoryBaseGlobalAddress(*x),
     'ha':lambda(x):CV.MemoryBaseHeapAddress(*x),
     'bv':lambda(x):CV.MemoryBaseBaseVar(*x),
-    'ui':lambda(x):CV.MemoryBaseUninterpreted(*x)
+    'ui':lambda(x):CV.MemoryBaseUninterpreted(*x),
+    'fr':lambda(x):CV.MemoryBaseFreed(*x)
     }
 
 constant_value_variable_constructors = {
@@ -142,7 +143,7 @@ class CFunVarDictionary ():
         def get_value(node):
             rep = IT.get_rep(node)
             args = (self,) + rep
-            return AllocatedRegionData(*args)
+            return CV.AllocatedRegionData(*args)
         self.allocated_region_data_table.read_xml(txnode,'n',get_value)
 
     def _read_xml_memory_base_table(self,txnode):
