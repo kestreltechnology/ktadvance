@@ -80,7 +80,11 @@ class CConstStr(CConstBase):
 
     def is_str(self): return True
 
-    def __str__(self): return 'str(' + str(self.get_string()) + ')'
+    def __str__(self):
+        strg = str(self.get_string())
+        if len(strg) > 25:
+            strg = str(len(strg)) + '-char string'
+        return 'str(' + strg + ')'
         
 
 class CConstWStr(CConstBase):
