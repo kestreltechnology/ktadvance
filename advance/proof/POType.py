@@ -90,7 +90,6 @@ class CallsiteSPOType(POTypeDictionaryRecord):
 
     def __init__(self,pod,index,tags,args):
         POTypeDictionaryRecord.__init__(self,pod,index,tags,args)
-        print('callsite spo: ' + str(args))
 
     def get_location(self): return self.cdecls.get_location(int(self.args[0]))
 
