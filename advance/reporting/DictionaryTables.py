@@ -57,13 +57,25 @@ file_tables = {
     'typsiglist': lambda(f):f.declarations.dictionary.typsiglist_table,
     'string': lambda(f):f.declarations.dictionary.string_table,
     
-    # podictionary
-    'predicate':lambda(f):f.podictionary.po_predicate_table
+    # predicatedictionary
+    'predicate':lambda(f):f.predicatedictionary.po_predicate_table,
+
+    # interface dictionary
+    'api-parameter': lambda(f):f.interfacedictionary.api_parameter_table,
+    's-term': lambda(f):f.interfacedictionary.s_term_table,
+    'postcondition': lambda(f):f.interfacedictionary.postcondition_table,
+    'postrequest': lambda(f):f.interfacedictionary.postrequest_table,
+    'sideeffect': lambda(f):f.interfacedictionary.sideeffect_table
     }
 
 function_tables = {
     # declarations
     'local_varinfo': lambda(f):f.fdecls.local_varinfo_table,
+
+    # proof types
+    'assumption_type': lambda(f):f.podictionary.assumption_type_table,
+    'ppo_type': lambda(f):f.podictionary.ppo_type_table,
+    'spo_type': lambda(f):f.podictionary.spo_type_table,
 
     # vard
     'allocated_region_data':  lambda(f):f.vard.allocated_region_data_table,
