@@ -153,7 +153,8 @@ class CDictionary():
             (self.typ_table,self._read_xml_typ_table),
             (self.typsig_table,self._read_xml_typsig_table),
             (self.typsiglist_table,self._read_xml_typsiglist_table),
-            (self.string_table,self._read_xml_string_table) ]
+            (self.string_table,self._read_xml_string_table)
+    ]
 
     # --------------- Statistics -----------------------------------------------
 
@@ -226,10 +227,16 @@ class CDictionary():
 
     def get_string(self,ix): return self.string_table.retrieve(ix)
 
-    # ---------------Provide read_xml service for semantics files --------------
+    # --------Provide read_xml/write_xml service for semantics files ----------
 
     def read_xml_funargs(self,node,tag='iargs'):
         return self.get_funargs(int(node.get(tag)))
+
+    def write_xml_exp(self,node,exp,tag='iexp'):
+        node.set(tag,str(self.index_exp(exp)))
+
+    def read_xml_exp(self,node,tag='iexp'):
+        return self.get_exp(int(node.get(tag)))
 
     # ----------------------- Initialize dictionary from file ------------------
  
@@ -253,7 +260,7 @@ class CDictionary():
 
     def index_attribute(self,a): return None        # TBD
     
-    def index_attributes(self,a): return 0          # TBD
+    def index_attributes(self,a): return 1          # TBD
 
     def index_constant(self,c):                     # TBF
         if c.is_int():
@@ -295,6 +302,7 @@ class CDictionary():
             def f(index,key): return CE.CExpUnOp(self,index,e.tags,args)
             return self.exp_table.add(IT.get_key(e.tags,args),f)
         if e.is_binop():
+            print(e.index)
             args = [ self.index_exp(e.get_exp1(),subst=subst,fid=fid),
                          self.index_exp(e.get_exp2(),subst=subst,fid=fid),
                          self.index_typ(e.get_type()) ]
@@ -364,42 +372,44 @@ class CDictionary():
             return self.offset_table.add(IT.get_key(o.tags,args),f)
 
     def index_typ(self,t):                    # TBF
+        # omit attributes argument if there are no attributes
+        def ia(attrs):
+            return [] if len(attrs.get_attributes()) == 0 else [ self.index_attributes(attrs) ]
         if t.is_void():
             tags = [ 'tvoid' ]
-            args = [ self.index_attributes(t.get_attributes()) ]
+            args = ia(t.get_attributes())
             def f(index,key): return CT.CTypVoid(self,index,tags,args)
             return self.typ_table.add(IT.get_key(tags,args),f)
         elif t.is_int():
             tags = [ 'tint', t.get_kind() ]
-            args = [ self.index_attributes(t.get_attributes()) ]
+            args = ia(t.get_attributes())
             def f(index,key): return CT.CTypInt(self,index,tags,args)
             return self.typ_table.add(IT.get_key(tags,args),f)
         elif t.is_float():
             tags = [ 'tfloat', t.get_kind() ]
-            args = [ self.index_attributes(t.get_attributes()) ]
+            args = ia(t.get_attributes())
             def f(index,key): return CT.CTypFloat(self,index,tags,args)
             return self.typ_table.add(IT.get_key(tags,args),f)
         elif t.is_pointer():
             tags = [ 'tptr' ]
-            args = [ self.index_typ(t.get_pointedto_type().expand()),
-                         self.index_attributes(t.get_attributes()) ]
+            args = ([ self.index_typ(t.get_pointedto_type().expand()) ]
+                        + ia(t.get_attributes()))
             def f(index,key): return CT.CTypPtr(self,index,tags,args)
             return self.typ_table.add(IT.get_key(tags,args),f)
         elif t.is_named_type():
             tags = [ 'tnamed', t.get_name() ]
-            args = [ self.index_attributes(t.get_attributes()) ]
+            args = ia(t.get_attributes())
             def f(index,key): return CT.CTypNamed(self,index,tags,args)
             return self.typ_table.add(IT.get_key(tags,args),f)
         elif t.is_comp():
             tags = [ 'tcomp' ]
             ckey = self.index_compinfo_key(t.get_struct(),t.cd.cfile.index)
-            args = [ ckey,
-                         self.index_attributes(t.get_attributes()) ]
+            args = [ ckey ] + ia(t.get_attributes())
             def f(index,key): return CT.CTypComp(self,index,tags,args)
             return self.typ_table.add(IT.get_key(tags,args),f)
         elif t.is_enum():
             tags = t.tags
-            args = [ self.index_attributes(t.get_attributes()) ]
+            args = ia(t.get_attributes())
             def f(index,key): return CT.CTypEnum(self,index,tags,args)
             return self.typ_table.add(IT.get_key(tags,args),f)
         elif t.is_array():
@@ -407,8 +417,7 @@ class CDictionary():
             arraysize = (self.index_exp(t.get_array_size_expr())
                              if t.has_array_size_expr() else (-1))
             args = [ self.index_typ(t.get_array_basetype().expand()),
-                         arraysize ,
-                         self.index_attributes(t.get_attributes()) ]
+                         arraysize ] + ia(t.get_attributes())
             def f(index,key): return CT.CTypArray(self,index,tags,args)
             return self.typ_table.add(IT.get_key(tags,args),f)
         elif t.is_function():
@@ -421,7 +430,7 @@ class CDictionary():
             return self.typ_table.add(IT.get_key(tags,args),f)
         elif t.is_builtin_vaargs():
             tags = [ 'tbuiltinvaargs' ]
-            args = [ self.index_attributes(t.get_attributes()) ]
+            args = ia(t.get_attributes())
             def f(index,key): return CT.CTypBuiltinVaargs(self,index,tags,args)
             return self.typ_table.add(IT.get_key(tags,args),f)
         else:
