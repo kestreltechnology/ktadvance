@@ -27,7 +27,6 @@
 
 import xml.etree.ElementTree as ET
 
-import advance.proof.CPOUtil as P
 import advance.util.printutil as UP
 
 from advance.proof.CFunctionPO import CFunctionPO
@@ -35,32 +34,12 @@ from advance.proof.CFunctionPO import CFunctionPO
 class CFunctionCallsiteSPO(CFunctionPO):
     '''Represents a secondary proof obligation associated with a call site.'''
 
-    def __init__(self,csspos,spoid,apiid,pred):
-        CFunctionPO.__init__(self,csspos.cspos)
+    def __init__(self,csspos,potype,status='open',deps=None,expl=None):
+        CFunctionPO.__init__(self,csspos.cspos,potype,status,deps,expl)
         self.csspos = csspos               # CFunctionCallsiteSPOs
-        self.spoid = spoid                 # string
-        self.apiid = apiid                 # string
-        self.pred = pred                   # CPOPredicate
+        self.apiid = potype.get_external_id()           # int    (predicate id of the callee)
 
-    def getid(self): return self.spoid
-
-    def get_api_id(self): return self.apiid
-        
-    def getlocation(self): return self.csspos.getlocation()
-
-    def getcontext(self): return self.csspos.getcontext()
-
-    def getpredicatetag(self): return self.pred.gettag()
-
-    def hashstr(self): return self.pred.hashstr()
-
-    def getcfgcontextstring(self): return self.getcontext().getcfgcontextstring()
-
-    def getpredicate(self): return self.pred
-
-    def writexml(self,cnode):
-        pnode = ET.Element('predicate')
-        self.getpredicate().writexml(pnode)
-        cnode.set('id',self.getid())
-        cnode.set('api-id',self.get_api_id())
-        cnode.append(pnode)
+    def __str__(self):
+        return (str(self.id).rjust(4) + ' ' + str(self.apiid).rjust(4) + ' '
+                    + str(self.location.get_line()).rjust(4) + '   ' 
+                    + str(self.predicate) + ' (' + self.status + ')')
