@@ -43,4 +43,6 @@ class CLval(CD.CDictionaryRecord):
 
     def get_offset(self): return self.cd.get_offset(self.args[1])
 
+    def has_variable(self,vid): return self.get_lhost().has_variable(vid)
+
     def __str__(self): return (str(self.get_lhost()) + str(self.get_offset()))
