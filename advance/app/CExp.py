@@ -58,6 +58,7 @@ unoperatorstrings = {
     "lnot": "!"
     }
 
+
 class CExpBase(CD.CDictionaryRecord):
     '''Base class for all expressions.'''
 
@@ -76,6 +77,8 @@ class CExpBase(CD.CDictionaryRecord):
     def is_unop(self): return False
     def is_alignof(self): return False
     def is_alignofe(self): return False
+
+    def has_variable(self,vid): return False
 
     def __str__(self): return 'baseexp:' + self.tags[0]
 
@@ -114,6 +117,8 @@ class CExpLval(CExpBase):
     def get_lval(self): return self.cd.get_lval(self.args[0])
 
     def is_lval(self): return True
+
+    def has_variable(self,vid): return self.get_lval().has_variable(vid)
 
     def __str__(self): return str(self.get_lval())
         
@@ -210,6 +215,8 @@ class CExpAlignOfE(CExpBase):
 
     def get_exp(self): return self.cd.get_exp(self.args[0])
 
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
     def __str__(self): return 'alignofe(' + str(self.get_exp()) + ')'
         
 
@@ -234,6 +241,8 @@ class CExpUnOp(CExpBase):
     def get_op(self): return self.tags[1]
 
     def is_unop(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
     def __str__(self):
         return '(' + unoperatorstrings[self.getop()] + ' ' + str(self.get_exp()) + ')'
@@ -264,6 +273,9 @@ class CExpBinOp(CExpBase):
 
     def is_binop(self): return True
 
+    def has_variable(self,vid):
+        return self.get_exp1().has_variable(vid) or self.get_exp2().has_variable(vid)
+
     def __str__(self):
         return ('(' + str(self.get_exp1()) + ' ' + binoperatorstrings[self.get_op()] + ' '
                     + str(self.get_exp2()) + ')')
@@ -292,6 +304,11 @@ class CExpQuestion(CExpBase):
 
     def get_type(self): return self.cd.get_typ(self.args[3])
 
+    def has_variable(self,vid):
+        return (self.get_condition().has_variable(vid)
+                    or self.get_true_exp().has_variable(vid)
+                    or self.get_false_exp().has_variable(vid))
+
     def __str__(self):
         return ('(' + str(self.getcondition()) + ' ? '
                     + str(self.get_true_exp()) + ' : '
@@ -317,6 +334,8 @@ class CExpCastE(CExpBase):
 
     def is_caste(self): return True
 
+    def has_variable(self,vid): return self.get_exp().get_variable(vid)
+
     def __str__(self):
         return 'caste(' + str(self.get_type()) + ',' + str(self.get_exp()) + ')'
     
@@ -336,6 +355,8 @@ class CExpAddrOf(CExpBase):
     def get_lval(self): return self.cd.get_lval(self.args[0])
 
     def is_addrof(self): return True
+
+    def has_variable(self,vid): return self.get_lval().has_variable(vid)
 
     def __str__(self): return '&(' + str(self.get_lval()) + ')'
         
@@ -373,6 +394,8 @@ class CExpStartOf(CExpBase):
 
     def is_startof(self): return True
 
+    def has_variable(self,vid): return self.get_lval().has_variable(vid)
+
     def __str__(self): return '&(' + str(self.get_lval()) + ')'
         
 
@@ -393,6 +416,9 @@ class CExpCnApp(CExpBase):
     def get_type(self): return self.cd.get_typ(int(self.args[0]))
 
     def get_args(self): return [ self.cd.get_exp(int(i)) for i in self.args[1:] ]
+
+    def has_variable(self,vid):
+        return any([ a.has_variable(vid) for a in self.get_args()])
 
     def __str__(self):
         return self.get_name() + '(' + ','.join([str(a) for a in self.get_args()]) + ')'
