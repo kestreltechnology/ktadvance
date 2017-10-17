@@ -32,10 +32,10 @@ else
   { __assert_fail("buf != NULL","id151.c",57, "main"); }
 ```
 which explains the many proof obligations that get generated for this seemingly
-simple instructions.
+simple instruction.
 
 The __assert_fail function has postcondition _false_, that is, it does not return.
-This means only the then branch, with condition buff != NULL, continues, based on
+This means only the then branch, with condition buf != NULL, continues, based on
 which proof obligation 31 (not-null(buf)) can be proven safe.
 
 
