@@ -45,7 +45,8 @@ class CAttrInt(CAttrBase):
 
     def get_int(self): return self.args[0]
 
-    def __str__(self): return 'aint(' + str(self.getint()) + ')'
+    def __str__(self): return 'aint(' + str(self.get_int()) + ')'
+
 
 class CAttrStr(CAttrBase):
 
@@ -56,6 +57,7 @@ class CAttrStr(CAttrBase):
 
     def __str__(self): return 'astr(' + str(self.get_str()) + ')'
 
+
 class CAttrCons(CAttrBase):
 
     def __init__(self,cd,index,tags,args):
@@ -64,6 +66,7 @@ class CAttrCons(CAttrBase):
     def get_cons(self): return self.tags[1]
 
     def __str__(self): return 'acons(' + str(self.get_cons()) + ')'
+
 
 class CAttrSizeOf(CAttrBase):
 
@@ -74,6 +77,7 @@ class CAttrSizeOf(CAttrBase):
 
     def __str__(self): return 'asizeof(' + str(self.get_type()) + ')'
 
+
 class CAttrSizeOfE(CAttrBase):
 
     def __init__(self,cd,index,tags,args):
@@ -82,6 +86,7 @@ class CAttrSizeOfE(CAttrBase):
     def get_param(self): return CAttrBase.get_param(self,self.args[0])
 
     def __str__(self): return 'asizeofe(' + str(self.get_param()) + ')'
+
 
 class CAttrSizeOfS(CAttrBase):
 
@@ -92,6 +97,7 @@ class CAttrSizeOfS(CAttrBase):
 
     def __str__(self): return 'asizeofs(' + str(self.get_typsig()) + ')'
 
+
 class CAttrAlignOf(CAttrBase):
 
     def __init__(self,cd,index,tags,args):
@@ -100,6 +106,7 @@ class CAttrAlignOf(CAttrBase):
     def get_type(self): return CAttrBase.get_typ(self,self.args[0])
 
     def __str__(self): return 'aalignof(' + str(self.get_type()) + ')'
+
 
 class CAttrAlignOfE(CAttrBase):
 
@@ -110,6 +117,7 @@ class CAttrAlignOfE(CAttrBase):
 
     def __str__(self): return 'aalignofe(' + str(self.get_param()) + ')'
 
+
 class CAttrAlignOfS(CAttrBase):
 
     def __init__(self,cd,index,tags,args):
@@ -118,6 +126,7 @@ class CAttrAlignOfS(CAttrBase):
     def get_typsig(self): return CAttrBase.get_typsig(self,self.args[0])
 
     def __str__(self): return 'aalignofs(' + str(self.get_typsig()) + ')'
+
 
 class CAttrUnOp(CAttrBase):
 
@@ -130,6 +139,7 @@ class CAttrUnOp(CAttrBase):
 
     def __str__(self):
         return ('aunop(' + self.getop() + ',' + str(self.get_param()) + ')')
+
 
 class CAttrBinOp(CAttrBase):
 
@@ -146,6 +156,7 @@ class CAttrBinOp(CAttrBase):
         return ('abinop(' + self.get_param1() + ' ' + self.get_op() + ' '
                     + self.get_param2() + ')')
 
+
 class CAttrDot(CAttrBase):
 
     def __init__(self,cd,index,tags,args):
@@ -154,6 +165,7 @@ class CAttrDot(CAttrBase):
     def get_name(self): return tags[1]
 
     def __str__(self): return 'adot(' + self.get_name() + ')'
+
 
 class CAttrStar(CAttrBase):
 
@@ -164,6 +176,7 @@ class CAttrStar(CAttrBase):
 
     def __str__(self): return 'astar(' + str(self.get_param()) + ')'
 
+
 class CAttrAddrOf(CAttrBase):
 
     def __init__(self,cd,index,tags,args):
@@ -172,6 +185,7 @@ class CAttrAddrOf(CAttrBase):
     def get_param(self): return CAttrBase.get_param(self,self.args[0])
 
     def __str__(self): return 'aaddrof(' + str(self.get_param()) + ')'
+
 
 class CAttrIndex(CAttrBase):
 
@@ -185,6 +199,7 @@ class CAttrIndex(CAttrBase):
     def __str__(self):
         return ('aindex(' + str(self.get_param1()) + ','
                     + str(self.get_param2()) + ')')
+
 
 class CAttrQuestion(CAttrBase):
 

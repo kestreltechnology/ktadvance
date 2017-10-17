@@ -77,9 +77,9 @@ class CTypBase(CD.CDictionaryRecord):
     def get_attributes(self):
         aindex = attribute_index[self.tags[0]]
         if len(self.args) > aindex:
-            return self.cd.get_attributes(self.args[aindex])
+            return self.cd.get_attributes(int(self.args[aindex]))
         else:
-            return []
+            return self.cd.get_attributes(1)
 
     def equal(self,other):
         return self.expand().index == other.expand().index

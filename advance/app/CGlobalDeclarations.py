@@ -383,7 +383,7 @@ class CGlobalDeclarations():
             gvinit = []            
         tags = [ vname ]
         vargs = varinfo.args
-        args = [ -1, vtype, -1, vargs[3], vargs[4], -1, vargs[6] ] + gvinit
+        args = [ -1, vtype, -1, vargs[3], vargs[4], -1, vargs[6], vargs[7] ] + gvinit
         key = (','.join(tags),','.join([str(x) for x in args]))
         def f(index,key): return CVarInfo(self,index,tags,args)
         gvarinfoindex = self.varinfo_table.add(key,f)

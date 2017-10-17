@@ -142,7 +142,6 @@ class CFileDeclarations():
             return self.gvardecls[vid].varinfo
         if vid in self.gfunctions:
             return self.gfunctions[vid].varinfo
-        raise InvalidArgumentError('CFileDeclarations.getglobalvarinfo')
 
     # ------------------ Retrieve items from file definitions dictionary -------
 
