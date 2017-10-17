@@ -48,7 +48,10 @@ class CFileDictionary(CDictionary):
             if lhost.is_var() and lhost.get_vid() in subst:
                 if e.get_lval().get_offset().has_offset():
                     raise Exception('Unexpected offset in exp to be substituted: ' + str(e))
-                return self.index_exp(subst[lhost.get_vid()],subst,fid)
+                # avoid re-substitution for recursive functions
+                newsubst = subst.copy()
+                newsubst.pop(lhost.get_vid())
+                return self.index_exp(subst[lhost.get_vid()],newsubst,fid)
         return CDictionary.index_exp(self,e,subst,fid)
                 
                 
