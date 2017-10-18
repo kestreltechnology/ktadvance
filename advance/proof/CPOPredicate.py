@@ -55,6 +55,7 @@ po_predicate_names = {
     'pub': 'ptr-upper-bound',
     'pubd': 'ptr-upper-bound-deref',
     'cb': 'common-base',
+    'cbt': 'common-base-type',
     'ft': 'format-string',
     'no': 'no-overlap',
     'vc': 'value-constraint',
@@ -451,9 +452,9 @@ class CPOUnsignedToSignedCast(CPOPredicate):
 
     def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
 
-    def get_from_ikind(self): return self.tags[1]
+    def get_from_kind(self): return self.tags[1]
 
-    def get_tgt_ikind(self): return self.tags[2]
+    def get_tgt_kind(self): return self.tags[2]
 
     def is_unsigned_to_signed_cast(self): return True
 
@@ -721,6 +722,26 @@ class CPOCommonBase(CPOPredicate):
         return (self.get_tag() + '(' + str(self.get_exp1()) + ','
                     + str(self.get_exp2()) + ')')
 
+
+class CPOCommonBaseType(CPOPredicate):
+    '''
+    tags:
+        0: 'cbt'
+
+    args:
+        0: exp1
+        1: exp2
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp1(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_exp2(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp1()) + ','
+                    + str(self.get_exp2()) + ')')
 
 
 class CPOFormatString(CPOPredicate):

@@ -59,6 +59,7 @@ po_predicate_constructors = {
     'pub': lambda(x):PO.CPOPtrUpperBound(*x),
     'pubd': lambda(x):PO.CPOPtrUpperBoundDeref(*x),
     'cb': lambda(x):PO.CPOCommonBase(*x),
+    'cbt': lambda(x):PO.CPOCommonBaseType(*x),
     'ft': lambda(x):PO.CPOFormatString(*x),
     'no': lambda(x):PO.CPONoOverlap(*x),
     'vc': lambda(x):PO.CPOValueConstraint(*x),
