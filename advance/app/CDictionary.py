@@ -256,11 +256,25 @@ class CDictionary():
             
     # -------------------- Index items by category -----------------------------
 
-    def index_attrparam(self,a): return None        # TBD
+    def index_attrparam(self,a):
+        if a.is_int():
+            def f(index,key): return CA.CAttrInt(self,index,a.tags,a.args)
+            return self.attrparam_table.add(IT.get_key(a.tags,a.args),f)
+        if a.is_str():
+            def f(index,key): return CA.CAttrStr(self,index,a.tags,a.args)
+            return self.attrparam_table.add(IT.get_key(a.tags,a.args),f)
+        print('No case yet for attrparam ' + str(a))
+        
 
-    def index_attribute(self,a): return None        # TBD
+    def index_attribute(self,a):
+        args = [ self.index_attrparam(p) for p in a.get_params() ]
+        def f(index,key): return CA.CAttribute(self,index,a.tags,args)
+        return self.attribute_table.add(IT.get_key(a.tags,args),f)
     
-    def index_attributes(self,a): return 1          # TBD
+    def index_attributes(self,aa):
+        args = [ self.index_attribute(a) for a in aa.get_attributes() ]
+        def f(index,key): return CA.CAttributes(self,index,aa.tags,args)
+        return self.attributes_table.add(IT.get_key(aa.tags,args),f)
 
     def index_constant(self,c):                     # TBF
         if c.is_int():
@@ -302,7 +316,6 @@ class CDictionary():
             def f(index,key): return CE.CExpUnOp(self,index,e.tags,args)
             return self.exp_table.add(IT.get_key(e.tags,args),f)
         if e.is_binop():
-            print(e.index)
             args = [ self.index_exp(e.get_exp1(),subst=subst,fid=fid),
                          self.index_exp(e.get_exp2(),subst=subst,fid=fid),
                          self.index_typ(e.get_type()) ]
@@ -329,7 +342,7 @@ class CDictionary():
 
     def index_funarg(self,funarg):
         tags = [ funarg.get_name() ]
-        args = [ self.index_typ(funarg.get_type().expand()) ]
+        args = [ self.index_typ(funarg.get_type()) ]
         def f(index,key): return CT.CFunArg(self,index,tags,args)
         return self.funarg_table.add(IT.get_key(tags,args),f)
 
@@ -392,7 +405,7 @@ class CDictionary():
             return self.typ_table.add(IT.get_key(tags,args),f)
         elif t.is_pointer():
             tags = [ 'tptr' ]
-            args = ([ self.index_typ(t.get_pointedto_type().expand()) ]
+            args = ([ self.index_typ(t.get_pointedto_type()) ]
                         + ia(t.get_attributes()))
             def f(index,key): return CT.CTypPtr(self,index,tags,args)
             return self.typ_table.add(IT.get_key(tags,args),f)
@@ -416,7 +429,7 @@ class CDictionary():
             tags = [ 'tarray' ]
             arraysize = (self.index_exp(t.get_array_size_expr())
                              if t.has_array_size_expr() else (-1))
-            args = [ self.index_typ(t.get_array_basetype().expand()),
+            args = [ self.index_typ(t.get_array_basetype()),
                          arraysize ] + ia(t.get_attributes())
             def f(index,key): return CT.CTypArray(self,index,tags,args)
             return self.typ_table.add(IT.get_key(tags,args),f)
@@ -424,8 +437,8 @@ class CDictionary():
             index_funargs_opt = self.index_funargs_opt(t.get_args())
             ixfunargs = -1 if index_funargs_opt is None else index_funargs_opt
             tags = [ 'tfun' ]
-            args = [ self.index_typ(t.get_return_type().expand()),
-                        ixfunargs, (1 if t.is_vararg() else 0) ]
+            args = [ self.index_typ(t.get_return_type()),
+                        ixfunargs, (1 if t.is_vararg() else 0) ] + ia(t.get_attributes())
             def f(index,key): return CT.CTypFun(self,index,tags,args)
             return self.typ_table.add(IT.get_key(tags,args),f)
         elif t.is_builtin_vaargs():

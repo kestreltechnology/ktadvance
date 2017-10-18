@@ -333,8 +333,6 @@ class CGlobalDeclarations():
                     self.compinfo_table.remove_checkpoint()
                     self.incompatibles = {}
                     break
-        print('State at finishing file ' + str(fid))
-        print(self.get_state())
 
 
     # -------------------- Indexing varinfos -----------------------------------

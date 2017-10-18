@@ -119,7 +119,8 @@ class CTypVoid(CTypBase):
 
     def is_void(self): return True
 
-    def __str__(self): return 'void'
+    def __str__(self):
+        return 'void' + '[' + str(self.get_attributes()) + ']'
         
 
 class CTypInt(CTypBase):
@@ -139,7 +140,8 @@ class CTypInt(CTypBase):
 
     def get_kind(self): return self.tags[1]
 
-    def __str__(self): return integernames[self.get_kind()]
+    def __str__(self):
+        return (integernames[self.get_kind()] + '[' + str(self.get_attributes()) + ']')
         
 
 class CTypFloat(CTypBase):
@@ -181,7 +183,8 @@ class CTypNamed(CTypBase):
 
     def is_named_type(self): return True
 
-    def __str__(self): return self.get_name()
+    def __str__(self):
+        return self.get_name() + '[' + str(self.get_attributes()) + ']'
         
 
 class CTypComp(CTypBase):
