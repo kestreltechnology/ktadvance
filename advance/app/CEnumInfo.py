@@ -34,8 +34,8 @@ class CEnumInfo(CD.CDeclarationsRecord):
         CD.CDeclarationsRecord.__init__(self,decls,index,tags,args)
         self.ename = self.tags[0]
         self.ikind = self.tags[1]
-        self.eattr = self.getdictionary().get_attributes(args[0])
-        self.eitems = [ self.decls.getenumitem(i) for i in self.args[1:] ]
+        self.eattr = self.get_dictionary().get_attributes(args[0])
+        self.eitems = [ self.decls.get_enumitem(i) for i in self.args[1:] ]
 
     def __str__(self):
         return (self.name + ' (' + str(len(self.items)) + ' items)')

@@ -32,7 +32,7 @@ class CEnumItem(CD.CDeclarationsRecord):
     def __init__(self,decls,index,tags,args):
         CD.CDeclarationsRecord.__init__(self,decls,index,tags,args)
         self.name = self.tags[0]
-        self.exp = self.getdictionary().getexp(self.args[0])
-        self.loc = self.decls.getlocation(self.args[1])
+        self.exp = self.get_dictionary().get_exp(self.args[0])
+        self.loc = self.decls.get_location(self.args[1])
 
     def __str__(self): return self.name + ':' + str(self.exp)

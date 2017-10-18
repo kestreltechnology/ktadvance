@@ -248,7 +248,7 @@ class CDictionary():
 
     # ------------------- stubs, overridden in global dictionary ---------------
 
-    def index_compinfo_key(self,compinfo,_): return compinfo.getckey() 
+    def index_compinfo_key(self,compinfo,_): return compinfo.get_ckey() 
 
     def index_varinfo_vid(self,vid,_): return vid
 
@@ -267,7 +267,7 @@ class CDictionary():
             def f(index,key): return CC.CConstInt(self,index,c.tags,c.args)
             return self.constant_table.add(IT.get_key(c.tags,c.args),f)
         if c.is_str():
-            args = [ self.index_string(c.get_str()) ]
+            args = [ self.index_string(c.get_string()) ]
             def f(index,key): return CC.CConstStr(self,index,c.tags,args)
             return self.constant_table.add(IT.get_key(c.tags,args),f)
         if c.is_chr():
@@ -345,7 +345,7 @@ class CDictionary():
             args = [ self.index_varinfo_vid(h.get_vid(),fid) ]
             def f(index,key): return CH.CLHostVar(self,index,h.tags,args)
             return self.lhost_table.add(IT.get_key(h.tags,args),f)
-        if h.ismem():
+        if h.is_mem():
             args = [ self.index_exp(h.get_exp(),subst=subst,fid=fid) ]
             def f(index,key): return CH.CLHostMem(self,index,h.tags,args)
             return self.lhost_table.add(IT.get_key(h.tags,args),f)

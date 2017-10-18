@@ -245,7 +245,7 @@ class CExpUnOp(CExpBase):
     def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
     def __str__(self):
-        return '(' + unoperatorstrings[self.getop()] + ' ' + str(self.get_exp()) + ')'
+        return '(' + unoperatorstrings[self.get_op()] + ' ' + str(self.get_exp()) + ')'
     
 
 class CExpBinOp(CExpBase):

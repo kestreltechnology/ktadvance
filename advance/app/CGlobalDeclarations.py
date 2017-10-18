@@ -99,8 +99,8 @@ class CGlobalDeclarations():
         self.tables = [
             (self.fieldinfo_table,self._read_xml_fieldinfo_table),
             (self.compinfo_table,self._read_xml_compinfo_table),
-            (self.varinfo_table,self._read_xml_varinfo_table),
             (self.initinfo_table,self._read_xml_initinfo_table),
+            (self.varinfo_table,self._read_xml_varinfo_table),
             (self.offset_init_table,self._read_xml_offset_init_table) ]
 
         # Collect names for compinfo equivalence classes
