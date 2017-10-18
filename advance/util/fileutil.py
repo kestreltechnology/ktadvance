@@ -85,7 +85,7 @@ def get_cfile_xnode(path,cfilename):
 
 def get_cfile_dictionaryname(path,cfilename):
     cfilename = get_cfilenamebase(cfilename)
-    return os.path.join(path,cfilename + '_dictionary.xml')
+    return os.path.join(path,cfilename + '_cdict.xml')
 
 def get_cfile_dictionary_xnode(path,cfilename):
     filename = get_cfile_dictionaryname(path,cfilename)
@@ -101,15 +101,15 @@ def get_cfile_predicate_dictionary_xnode(path,cfilename):
 
 def get_cfile_interface_dictionaryname(path,cfilename):
     cfilename = get_cfilenamebase(cfilename)
-    return os.path.join(path,cfilename + '_interface.xml')
+    return os.path.join(path,cfilename + '_ixf.xml')
 
 def get_cfile_interface_dictionary_xnode(path,cfilename):
     filename = get_cfile_interface_dictionaryname(path,cfilename)
-    return get_xnode(filename,'interface-dictionary','Interface objects dictionary file')
+    return get_xnode(filename,'interface-dictionary','Interface objects dictionary file',show=False)
 
 def get_cfile_contexttablename(path,cfilename):
     cfilename = get_cfilenamebase(cfilename)
-    return os.path.join(path,cfilename + '_contexts.xml')
+    return os.path.join(path,cfilename + '_ctxt.xml')
 
 def get_cfile_contexttable_xnode(path,cfilename):
     filename = get_cfile_contexttablename(path,cfilename)
