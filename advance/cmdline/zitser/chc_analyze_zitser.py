@@ -114,10 +114,6 @@ if __name__ == '__main__':
 
     am.create_app_primary_proofobligations()
     capp.iter_files(lambda(f):f.reinitialize_tables())
-
-    def g(ppo): print(str(ppo))
-    def f(cfun): cfun.iter_ppos(g)
-    capp.iter_functions(f)
     
     for i in range(3):
         am.generate_app_local_invariants(['llvis'])
