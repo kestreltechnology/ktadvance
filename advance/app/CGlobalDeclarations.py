@@ -340,15 +340,15 @@ class CGlobalDeclarations():
     # -------------------- Indexing varinfos -----------------------------------
     
     def index_init(self,init,fid=-1):
-        if init.issingle():
+        if init.is_single():
             tags = [ 'single' ]
-            args = [ self.dictionary.index_exp(init.get_exp()).index ]
+            args = [ self.dictionary.index_exp(init.get_exp()) ]
             def f(index,key): return CI.CSingleInitInfo(self,index,tags,args)
             return self.initinfo_table.add(IT.get_key(tags,args),f)
-        if init.iscompound():
+        if init.is_compound():
             tags = [ 'compound' ]
-            gtype = self.dictionary.index_typ(init.get_typ()).index
-            oinits = [ self.index_offset_init(x).index
+            gtype = self.dictionary.index_typ(init.get_typ())
+            oinits = [ self.index_offset_init(x)
                            for x in init.get_offset_initializers() ]
             args = [ gtype ] + oinits
             def f(index,key): return CI.CCompoundInitInfo(self,index,tags,args)
@@ -356,8 +356,8 @@ class CGlobalDeclarations():
         raise InvalidArgumentError('indexinit: ' + str(init))
         
     def index_offset_init(self,oinit,fid=-1):
-        args = [ self.dictionary.index_offset(oinit.get_offset()).index,
-                     self.index_init(oinit.get_initializer()).index ]
+        args = [ self.dictionary.index_offset(oinit.get_offset()),
+                     self.index_init(oinit.get_initializer()) ]
         def f(index,key): return CI.COffsetInitInfo(self,index,[],args)
         return self.offset_init_table.add(IT.get_key([],args),f)
 
@@ -378,7 +378,7 @@ class CGlobalDeclarations():
         vtype = self.dictionary.index_typ(varinfo.vtype.expand())
         if varinfo.has_initializer():
             vinit = varinfo.get_initializer()
-            gvinit = [ self.index_init(vinit,fid=fid).index ]
+            gvinit = [ self.index_init(vinit,fid=fid) ]
         else:
             gvinit = []            
         tags = [ vname ]

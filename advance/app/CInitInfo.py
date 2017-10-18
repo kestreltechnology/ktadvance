@@ -58,7 +58,7 @@ class CCompoundInitInfo(CInitInfoBase):
     def __init__(self,decls,index,tags,args):
         CInitInfoBase.__init__(self,decls,index,tags,args)
 
-    def get_typ(self): return self.get_dictionary().gettyp(self.args[0])
+    def get_typ(self): return self.get_dictionary().get_typ(self.args[0])
 
     def get_offset_initializers(self):
         return [ self.decls.get_offset_init(x) for x in self.args[1:] ]

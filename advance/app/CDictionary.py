@@ -360,13 +360,13 @@ class CDictionary():
         if not o.has_offset():
             def f(index,key): return CO.CNoOffset(self,index,o.tags,o.args)
             return self.offset_table.add(IT.get_key(o.tags,o.args),f)
-        if o.isfield():
+        if o.is_field():
             ckey = self.convert_ckey(o.get_ckey(),fid)
             args = [ ckey, self.index_offset(o.get_offset(),fid) ]
             def f(index,key): return CO.CFieldOffset(self,index,o.tags,args)
             return self.offset_table.add(IT.get_key(o.tags,args),f)
-        if o.isindex():
-            args = [ self.index_exp(o.get_indexexp()),
+        if o.is_index():
+            args = [ self.index_exp(o.get_index_exp()),
                          self.index_offset(o.get_offset(),fid) ]
             def f(index,key): return CO.CIndexOffset(self,index,o.tags,args)
             return self.offset_table.add(IT.get_key(o.tags,args),f)

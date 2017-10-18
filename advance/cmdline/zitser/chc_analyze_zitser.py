@@ -122,11 +122,11 @@ if __name__ == '__main__':
     for i in range(3):
         am.generate_app_local_invariants(['llvis'])
         am.check_app_proofobligations()
-    '''
-    for i in range(args.analysisrounds):
-        capp.updatespos()
 
-        am.generate_app_localinvariants(['llvis'])
+    for i in range(args.analysisrounds):
+        capp.update_spos()
+
+        am.generate_app_local_invariants(['llvis'])
         am.check_app_proofobligations()
-    '''
+
         

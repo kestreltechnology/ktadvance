@@ -214,9 +214,9 @@ class CApplication():
     '''
     def update_spos(self):
         def f(fn):
-            fn.updatespos()
-            fn.requestpostconditions()
-        def g(fn): fn.savespos()
+            fn.update_spos()
+            fn.request_postconditions()
+        def g(fn): fn.save_spos()
         def h(cfile): cfile.iter_functions(f)
         def k(cfile): cfile.iter_functions(g)
         self.iter_files(h)
