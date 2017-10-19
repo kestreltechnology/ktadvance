@@ -81,7 +81,7 @@ class TestSetRef():
             lines.append(cfile.name)
             for cfun in cfile.get_functions():
                 lines.append('  ' + cfun.name)
-                if cfun.hasppos():
+                if cfun.has_ppos():
                     for ppo in sorted(cfun.get_ppos(),key=lambda(p):p.get_line()):
                         hasmultiple = cfun.has_multiple(ppo.get_line(),ppo.get_predicate())
                         ctxt = ppo.get_context_string() if hasmultiple else ''

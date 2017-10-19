@@ -76,17 +76,17 @@ if __name__ == '__main__':
         testmanager = TestManager(cpath,cpath,testname,verbose=args.verbose)
         testmanager.clean()
         try:
-            if testmanager.testparser() or UF.unpack_tar_file(cpath):
-                testmanager.testppos()
-                testmanager.testpevs()
-                testmanager.testspos(delaytest=True)
-                testmanager.testsevs(delaytest=True)
-                testmanager.testspos()
-                testmanager.testsevs()
+            if testmanager.test_parser() or UF.unpack_tar_file(cpath):
+                testmanager.test_ppos()
+                testmanager.test_pevs()
+                testmanager.test_spos(delaytest=True)
+                testmanager.test_sevs(delaytest=True)
+                testmanager.test_spos()
+                testmanager.test_sevs()
                 if testmanager.verbose: 
-                    testmanager.printtestresults()
+                    testmanager.print_test_results()
                 else:
-                    testmanager.printtestresultssummary()
+                    testmanager.print_test_results_summary()
             else:
                 print(
                     '\n' + ('*' * 80) + '\nThis test set is not supported on the mac.' +
