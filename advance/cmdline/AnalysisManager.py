@@ -94,7 +94,8 @@ class AnalysisManager(object):
                 print('\nResult: ' + str(result))
                 self.capp.get_file(cfilename).predicatedictionary.initialize()
             else:
-                result = subprocess.call(cmd,cwd=self.path,stdout=open(os.devnull, 'w'),stderr=subprocess.STDOUT)
+                result = subprocess.call(cmd,cwd=self.path,stdout=open(os.devnull, 'w'),
+                                             stderr=subprocess.STDOUT)
             if result != 0:
                 print('Error in creating primary proof obligations')
                 exit(1)
@@ -104,7 +105,7 @@ class AnalysisManager(object):
             exit(1)
 
     def create_file_support_proofobligations(self,cfile):
-        if self.verbose: print('Creating support proof obligations for ' + cfile.name)
+        if self.verbose: print('Creating supporting proof obligations for ' + cfile.name)
         def createspos(fn):fnupdate.spos()
         cfile.iter_functions(createspos)
 
@@ -125,7 +126,8 @@ class AnalysisManager(object):
                 result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT)
                 print('\nResult: ' + str(result))
             else:
-                result = subprocess.call(cmd,cwd=self.path,stdout=open(os.devnull,'w'),stderr=subprocess.STDOUT)
+                result = subprocess.call(cmd,cwd=self.path,stdout=open(os.devnull,'w'),
+                                             stderr=subprocess.STDOUT)
             if result != 0:
                 print('Error in generating invariants')
                 exit(1)
@@ -177,7 +179,8 @@ class AnalysisManager(object):
                 result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT)
                 if self.verbose: print('\nResult: ' + str(result))
             else:
-                result = subprocess.call(cmd,cwd=self.path,stdout=open(os.devnull,'w'),stderr=subprocess.STDOUT)
+                result = subprocess.call(cmd,cwd=self.path,stdout=open(os.devnull,'w'),
+                                             stderr=subprocess.STDOUT)
             if result != 0:
                 print('Error in checking proof obligations')
                 exit(1)

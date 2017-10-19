@@ -69,7 +69,9 @@ class CFunXprDictionary ():
 
     # ------------- Retrieve items from dictionary tables ----------------------
 
-    def get_numerical(self,ix): return self.numerical_table.retrieve(ix)
+    def get_numerical(self,ix):
+        if ix > 0:
+            return self.numerical_table.retrieve(ix)
 
     def get_symbol(self,ix): return self.symbol_table.retrieve(ix)
 
