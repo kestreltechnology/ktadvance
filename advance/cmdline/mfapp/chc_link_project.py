@@ -53,11 +53,11 @@ if __name__ == '__main__':
     capp = CApplication(semdir)
     linker = CLinker(capp)
 
-    linker.linkcompinfos()
-    linker.linkvarinfos()
+    linker.link_compinfos()
+    linker.link_varinfos()
 
-    def savexrefs(f):
-        capp.indexmanager.savexrefs(capp.getpath(),f.getfilename(),f.getindex())
-    capp.fileiter(savexrefs)
+    def save_xrefs(f):
+        capp.indexmanager.save_xrefs(capp.path,f.name,f.index)
+    capp.iter_files(savexrefs)
 
-    linker.saveglobalcompinfos()
+    linker.save_global_compinfos()

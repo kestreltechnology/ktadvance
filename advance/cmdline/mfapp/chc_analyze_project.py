@@ -57,6 +57,9 @@ def parse():
                             help='number of files to process in parallel',
                             type=int,
                             default=1)
+    parser.add_argument('--verbose',
+                            help='Print all output from analyzer to console',
+                            action='store_true')
     parser.add_argument('--deletesemantics',
                             help='Unpack a fresh version of the semantics files',
                             action='store_true')
@@ -74,8 +77,8 @@ def timing(activity):
           '\nCompleted ' + activity + ' in ' + str(time.time() - t0) + ' secs' +
           '\n' + ('=' * 80))
 
-def savexrefs(f):
-    capp.indexmanager.savexrefs(capp.path,f.name,f.index)
+def save_xrefs(f):
+    capp.indexmanager.save_xrefs(capp.path,f.name,f.index)
 
 if __name__ == '__main__':
 
@@ -105,24 +108,25 @@ if __name__ == '__main__':
     if not os.path.isfile(globaldefs):
         capp = CApplication(sempath)
         linker = CLinker(capp)
-        linker.linkcompinfos()
-        linker.linkvarinfos()
-        capp.fileiter(savexrefs)
+        linker.link_compinfos()
+        linker.link_varinfos()
+        capp.iter_files(save_xrefs)
 
-        linker.saveglobalcompinfos()
+        linker.save_global_compinfos()
         
     # have to reinitialize capp to get linking info properly initialized
     capp = CApplication(sempath)
-    am = AnalysisManager(capp,filter=args.filter)
+    am = AnalysisManager(capp,filter=args.filter,verbose=args.verbose)
 
-    am.create_app_primaryproofobligations()
+    am.create_app_primary_proofobligations()
+
     for i in range(3):
-        am.generate_app_localinvariants(['llvis'])
+        am.generate_app_local_invariants(['llvis'])
     am.check_app_proofobligations()
 
     for i in range(args.analysisrounds):
-        capp.updatespos()
+        capp.update_spos()
 
-        am.generate_app_localinvariants(['llvis'])
+        am.generate_app_local_invariants(['llvis'])
         am.check_app_proofobligations()
-    '''
+
