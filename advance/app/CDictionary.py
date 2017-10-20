@@ -263,6 +263,10 @@ class CDictionary():
         if a.is_str():
             def f(index,key): return CA.CAttrStr(self,index,a.tags,a.args)
             return self.attrparam_table.add(IT.get_key(a.tags,a.args),f)
+        if a.is_cons():
+            args = [ self.index_attrparam(p) for p in a.get_params() ]
+            def f(index,key): return CA.CAttrCons(self,index,a.tags,args)
+            return self.attrparam_table.add(IT.get_key(a.tags,a.args),f)
         print('No case yet for attrparam ' + str(a))
         
 

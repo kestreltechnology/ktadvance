@@ -84,7 +84,8 @@ class CAttrCons(CAttrBase):
 
     def get_cons(self): return self.tags[1]
 
-    def get_param(self): return self.cd.get_attrparam(int(self.args[0]))
+    def get_params(self):
+        return [ self.cd.get_attrparam(int(i)) for i in self.args ]
 
     def is_cons(self): return True
 
