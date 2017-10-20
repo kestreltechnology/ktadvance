@@ -127,7 +127,7 @@ class CPONull(CPOPredicate):
        0: exp
     '''
     def __init__(self,cd,index,tags,args):
-        CPOPredicate.__init__(self,cd,index.tags,args)
+        CPOPredicate.__init__(self,cd,index,tags,args)
 
     def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
 
