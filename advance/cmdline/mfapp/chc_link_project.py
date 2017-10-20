@@ -58,6 +58,6 @@ if __name__ == '__main__':
 
     def save_xrefs(f):
         capp.indexmanager.save_xrefs(capp.path,f.name,f.index)
-    capp.iter_files(savexrefs)
+    capp.iter_files(save_xrefs)
 
     linker.save_global_compinfos()
