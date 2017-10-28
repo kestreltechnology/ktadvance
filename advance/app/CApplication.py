@@ -216,9 +216,14 @@ class CApplication():
         def f(fn):
             fn.update_spos()
             fn.request_postconditions()
-        def g(fn): fn.save_spos()
+        def g(fn):
+            fn.save_spos()
+            fn.save_pod()
         def h(cfile): cfile.iter_functions(f)
-        def k(cfile): cfile.iter_functions(g)
+        def k(cfile):
+            cfile.iter_functions(g)
+            cfile.save_predicate_dictionary()
+            cfile.save_declarations()
         self.iter_files(h)
         self.iter_files(k)
 

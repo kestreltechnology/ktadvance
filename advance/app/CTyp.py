@@ -30,7 +30,7 @@ import advance.app.CDictionaryRecord as CD
 integernames = {
     'ichar': 'char' ,
     'ischar': 'signed char',
-    'iuchar': 'unsinged char',
+    'iuchar': 'unsigned char',
     'ibool': 'bool',
     'iint': 'int',
     'iuint': 'unsigned int',
@@ -323,7 +323,9 @@ class CTypFun(CTypBase):
 
     def is_function(self): return True
 
-    def is_default_function_prototype(self): return (self.get_args() is None)
+    def is_default_function_prototype(self):
+        return ((self.get_args() is None)
+                    or all([x.get_name().startswith('par') for x in self.get_args().get_args()])
 
     def is_vararg(self): return (self.args[2] == 1)
 

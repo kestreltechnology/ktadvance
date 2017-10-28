@@ -403,7 +403,7 @@ class CGlobalDeclarations():
     def resolve_default_function_prototypes(self):
         print('Resolving ' + str(len(self.default_function_prototypes)) + ' function prototypes')
         for (fid,varinfo) in self.default_function_prototypes:
-            def f(key): return key[0].startswith(varinfo.vname + ',')
+            def f(key): return key[0].startswith(varinfo.vname)
             candidates = self.varinfo_table.retrieve_by_key(f)
             if len(candidates) == 1:
                 self.vid2gvid[fid][varinfo.get_vid()] = candidates[0][1].get_vid()

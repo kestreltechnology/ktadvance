@@ -63,12 +63,13 @@ class CFunction():
         self._initialize()
 
     def reinitialize_tables(self):
+        self.podictionary.initialize()
         self.vard.initialize(force=True)
         self.mayfreememory = False
         def f(cs):
             if cs.mayfreememory: self.mayfreememory = True
         self.iter_callsites(f)
-        if self.api.may_free_memory: self.mayfreememory = True
+        if self.api.may_free_memory(): self.mayfreememory = True
 
     def get_formal_vid(self,name):
         for v in self.formals:
