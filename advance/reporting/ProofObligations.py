@@ -203,8 +203,11 @@ class FunctionDisplay():
                 lines.append((' ' * indent) + expl)
             else:
                 lines.append('\n<?> ' + str(po))
-                lines.append((' ' * 18) + '--')
-                lines.append(self._get_po_invariants(po.context,po.id))
+                if po.has_diagnostic():
+                    lines.append((' ' * indent) + '---> ' + po.diagnostic)
+                else:
+                    lines.append((' ' * 18) + '--')
+                    lines.append(self._get_po_invariants(po.context,po.id))
         self.currentline = self.fline + 1
         return '\n'.join(lines)
 
@@ -242,6 +245,10 @@ def function_code_open_tostring(fn):
 
 def function_code_violation_tostring(fn):
     pofilter = lambda(po):po.isviolated()
+    return function_code_tostring(fn,pofilter=pofilter)
+
+def function_code_predicate_tostring(fn,p):
+    pofilter = lambda(po):po.predicatetag == p
     return function_code_tostring(fn,pofilter=pofilter)
     
 def file_code_tostring(cfile,pofilter=lambda(po):True):
@@ -369,4 +376,6 @@ def tag_file_function_pos_tostring(pos,filefilter=lambda(f):True,pofilter=lambda
                 lines.append('    Function: ' + ff)
                 for po in sorted(fundict[f][ff],key=lambda(po):po.get_line()):
                     lines.append((' ' * 6) + str(po))
+                    if po.has_diagnostic():
+                        lines.append((' ' * 8) + ' ---> ' + po.diagnostic)
     return '\n'.join(lines)
