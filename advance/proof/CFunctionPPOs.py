@@ -80,4 +80,8 @@ class CFunctionPPOs(CFunctionPOs):
             enode = p.find('e')
             if not enode is None:
                 expl = enode.get('txt')
-            self.ppos[id] = CFunctionPPO(self,id,ppotype,status,deps,expl)
+            diag = None
+            dnode = p.find('d')
+            if not dnode is None:
+                diag = dnode.get('txt')
+            self.ppos[id] = CFunctionPPO(self,id,ppotype,status,deps,expl,diag)

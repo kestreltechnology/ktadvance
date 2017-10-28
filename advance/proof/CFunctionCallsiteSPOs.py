@@ -123,6 +123,9 @@ class CFunctionCallsiteSPOs():
         self.cfile.declarations.write_xml_location(cnode,self.location)
         self.cfile.contexttable.write_xml_context(cnode,self.context)
         self.cfile.declarations.write_xml_varinfo(cnode,self.callee)
+        calleefun = self.cfile.capp.resolve_vid_function(self.cfile.index,self.callee.get_vid())
+        if not calleefun is None:
+            self.mayfreememory = calleefun.may_free_memory()
         cnode.set('iargs',self.iargs)
         oonode = ET.Element('api-conditions')
         for apiid in self.spos:
@@ -178,4 +181,4 @@ class CFunctionCallsiteSPOs():
                 g = self.cfile.interfacedictionary.read_xml_postcondition(p)
                 ig = self.cfile.interfacedictionary.index_postcondition(g)
                 self.postguarantees[ig] = g
-        self.mayfreememory = xnode.find('frees').get('v')
+        self.mayfreememory = xnode.find('frees').get('v') == 'yes'

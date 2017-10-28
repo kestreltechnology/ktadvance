@@ -77,7 +77,7 @@ class CProofDependencies():
 class CFunctionPO():
     '''Super class of primary and supporting proof obligations.'''
 
-    def __init__(self,cpos,potype,status='open',deps=None,expl=None):
+    def __init__(self,cpos,potype,status='open',deps=None,expl=None,diag=None):
         self.cpos = cpos                # CFunctionPOs
         self.cfun = cpos.cfun
         self.cfile = cpos.cfile
@@ -92,6 +92,7 @@ class CFunctionPO():
         self.location = self.potype.get_location()
         self.dependencies = deps
         self.explanation = expl
+        self.diagnostic = diag
 
     def is_ppo(self): return False
     def is_spo(self): return False
@@ -121,6 +122,8 @@ class CFunctionPO():
 
     def has_explanation(self): return (not self.explanation is None)
 
+    def has_diagnostic(self): return (not self.diagnostic is None)
+
     def get_display_prefix(self):
         if self.is_violated(): return '<*>'
         if self.is_open(): return '<?>'
@@ -139,6 +142,10 @@ class CFunctionPO():
             enode = ET.Element('e')
             enode.set('txt',self.explanation)
             cnode.append(enode)
+        if not self.diagnostic is None:
+            dnode = ET.Element('d')
+            dnode.set('txt',self.diagnostic)
+            cnode.append(dnode)
 
     def __str__(self):
         return (str(self.id).rjust(4) + '  ' + str(self.get_line()).rjust(5) + '  ' +
