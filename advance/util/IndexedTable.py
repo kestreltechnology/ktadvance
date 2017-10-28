@@ -86,7 +86,7 @@ class IndexedTable ():
         if self.checkpoint is None:
             self.checkpoint = self.next
             return self.next
-        raise InvalidArgumentError("Checkpoint has already been set at "
+        raise IndexedTableError("Checkpoint has already been set at "
                                        + str(self.checkpoint))
 
     def iter(self,f):
@@ -146,7 +146,7 @@ class IndexedTable ():
             self.indextable[index] = obj
             self.reserved.remove(index)
         else:
-            raise InvalidArgumentError
+            raise IndexedTableError("Trying to commit nonexisting index: " + str(index))
 
     def size(self): return (self.next - 1)
 
@@ -154,9 +154,9 @@ class IndexedTable ():
         if index in self.indextable:
             return self.indextable[index]
         else:
-            print('Unable to retrieve item ' + str(index) + ' from table ' + self.name
+            msg = ('Unable to retrieve item ' + str(index) + ' from table ' + self.name
                       + ' (size: ' + str(self.size()) + ')')
-            raise IndexedTableError(self.name + ', size: ' + str(self.size()))
+            raise IndexedTableError(msg + '\n' + self.name + ', size: ' + str(self.size()))
 
     def retrieve_by_key(self,f):
         result = []
