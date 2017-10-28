@@ -46,9 +46,6 @@ def parse():
     parser = argparse.ArgumentParser(usage=usage,description=description)
     parser.add_argument('path',
                             help='directory that holds the semantics directory (or tar.gz file)')
-    parser.add_argument('--deletesemantics',
-                            help='Unpack a fresh version of the semantics files',
-                            action='store_true')
     parser.add_argument('--verbose',
                             help='Print all output from analyzer to console',
                             action='store_true')
@@ -78,11 +75,11 @@ if __name__ == '__main__':
         exit(1)
         
     sempath = os.path.join(cpath,'semantics')
-    if (not os.path.isdir(sempath)) or args.deletesemantics:
-        success = UF.unpack_tar_file(cpath,args.deletesemantics)
-        if not success:
-            print(UP.semantics_tar_not_found_err_msg(cpath))
-            exit(1)
+    #if (not os.path.isdir(sempath)) or args.deletesemantics:
+    success = UF.unpack_tar_file(cpath,True)
+    if not success:
+        print(UP.semantics_tar_not_found_err_msg(cpath))
+        exit(1)
 
     capp = CApplication(sempath)
 
@@ -116,13 +113,14 @@ if __name__ == '__main__':
     capp.iter_files(lambda(f):f.reinitialize_tables())
     
     for i in range(3):
-        am.generate_app_local_invariants(['llvis'])
+        am.generate_app_local_invariants(['llvisp'])
         am.check_app_proofobligations()
+        capp.iter_files(lambda(f):f.reinitialize_tables())
 
     for i in range(args.analysisrounds):
         capp.update_spos()
 
-        am.generate_app_local_invariants(['llvis'])
+        am.generate_app_local_invariants(['llvisp'])
         am.check_app_proofobligations()
+        capp.iter_files(lambda(f):f.reinitialize_tables())
 
-        
