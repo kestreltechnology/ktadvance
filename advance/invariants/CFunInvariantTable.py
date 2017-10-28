@@ -34,7 +34,7 @@ class CFunInvariantTable():
     def __init__(self,invd):
         self.invd = invd
         self.cfun = self.invd.cfun
-        self.invariants = {}
+        self.invariants = {}          # context -> CInvariantFact list
 
     def get_invariants(self,context):
         ictxt = self.cfun.cfile.contexttable.index_cfg_projection(context)
@@ -52,7 +52,19 @@ class CFunInvariantTable():
                 return poId in cvar.get_po_ids()
             else:
                 return True
-        return [ inv for inv in invs if filter(inv) ]
+        invs = [ inv for inv in invs if filter(inv) ]
+        nonrsinvs = [ inv for inv in invs if not inv.get_non_relational_value().is_region_set() ]
+        rsinvs = [ inv for inv in invs if inv.get_non_relational_value().is_region_set() ]
+        varsets = {}
+        for r in rsinvs:
+            cvar = r.get_variable()
+            if not cvar.get_seqnr() in varsets:
+                varsets[cvar.get_seqnr() ] = r
+            else:
+                if r.get_non_relational_value().size() < varsets[cvar.get_seqnr()].get_non_relational_value().size():
+                    varsets[cvar.get_seqnr()] = r
+        invs = sorted(nonrsinvs + varsets.values(),key=lambda(i):str(i.get_variable()))
+        return invs
 
     def initialize(self):
         xnode = UF.get_invs_xnode(self.cfun.cfile.capp.path,self.cfun.cfile.name,self.cfun.name)

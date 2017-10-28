@@ -51,6 +51,11 @@ class NonRelationalValue(InvDictionaryRecord):
     def __init__(self,invd,index,tags,args):
         InvDictionaryRecord.__init__(self,invd,index,tags,args)
 
+    def is_symbolic_expr(self): return False
+    def is_interval_value(self): return False
+    def is_base_offset_value(self): return False
+    def is_region_set(self): return False
+    def is_initialized_set(self): return False
 
     def __str__(self): return 'nrv:' + self.tags[0]
 
@@ -63,6 +68,8 @@ class NRVSymbolicExpr(NonRelationalValue):
 
     def get_xpr(self): return self.xd.get_xpr(int(self.args[0]))
 
+    def is_symbolic_expr(self): return True
+
     def __str__(self): return 'sx:' + str(self.get_xpr())
 
 
@@ -71,6 +78,8 @@ class NRVIntervalValue(NonRelationalValue):
 
     def __init__(self,invd,index,tags,args):
         NonRelationalValue.__init__(self,invd,index,tags,args)
+
+    def is_interval_value(self): return True
 
     def get_lower_bound(self):
         if int(self.args[0]) >= 0:
@@ -113,6 +122,8 @@ class NRVBaseOffsetValue(NonRelationalValue):
 
     def __init__(self,invd,index,tags,args):
         NonRelationalValue.__init__(self,invd,index,tags,args)
+
+    def is_base_offset_value(self): return True
 
     def get_address_type(self): return self.tags[1]
 
@@ -165,7 +176,11 @@ class NRVRegionSet(NonRelationalValue):
     def __init__(self,invd,index,args,tags):
         NonRelationalValue.__init__(self,invd,index,args,tags)
 
+    def is_region_set(self): return True
+
     def get_regions(self): return [ self.xd.get_symbol(int(i)) for i in self.args ]
+
+    def size(self): return len(self.get_regions())
 
     def __str__(self): return 'regions:' + ','.join([str(a) for a in self.get_regions()])
 
@@ -174,6 +189,8 @@ class NRVInitializedSet(NonRelationalValue):
 
     def __init__(self,invd,index,args,tags):
         NonRelationalValue.__init__(self,invd,index,args,tags)
+
+    def is_initialized_set(self): return True
 
     def get_symbols(self): return [ self.xd.get_symbol(int(i)) for i in self.args ]
 
