@@ -79,6 +79,7 @@ class AnalysisManager(object):
 
     def create_file_primary_proofobligations(self,cfilename):
         try:
+            cfile = self.capp.get_file(cfilename)
             if self.verbose:print('Creating primary proof obligations for ' + cfilename)
             cmd = [ self.canalyzer, '-summaries', self.chsummaries,
                         '-command', 'primary', '-cfile', cfilename ]
@@ -99,6 +100,9 @@ class AnalysisManager(object):
             if result != 0:
                 print('Error in creating primary proof obligations')
                 exit(1)
+            cfile.reinitialize_tables()
+            cfile.reload_ppos()
+            cfile.reload_spos()
         except subprocess.CalledProcessError, args:
             print(args.output)
             print(args)
@@ -111,6 +115,7 @@ class AnalysisManager(object):
 
     def generate_file_local_invariants(self,cfilename,domains):
         try:
+            cfile = self.capp.get_file(cfilename)
             if self.verbose: print('Generating invariants for ' + cfilename)
             cmd = [ self.canalyzer, '-summaries', self.chsummaries,
                         '-command', 'localinvs', '-cfile', cfilename,
@@ -131,6 +136,9 @@ class AnalysisManager(object):
             if result != 0:
                 print('Error in generating invariants')
                 exit(1)
+            cfile.reinitialize_tables()
+            cfile.reload_ppos()
+            cfile.reload_spos()
         except subprocess.CalledProcessError, args:
             print(args.output)
             print(args)
@@ -164,6 +172,7 @@ class AnalysisManager(object):
 
     def check_file_proofobligations(self,cfilename):
         try:
+            cfile = self.capp.get_file(cfilename)
             if self.verbose: print('Checking proof obligations for ' + cfilename)
             cmd = [ self.canalyzer, '-summaries', self.chsummaries,
                         '-command', 'check', '-cfile', cfilename ]
@@ -177,13 +186,16 @@ class AnalysisManager(object):
             if self.verbose:
                 print(cmd)
                 result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT)
-                if self.verbose: print('\nResult: ' + str(result))
+                print('\nResult: ' + str(result))
             else:
                 result = subprocess.call(cmd,cwd=self.path,stdout=open(os.devnull,'w'),
                                              stderr=subprocess.STDOUT)
             if result != 0:
                 print('Error in checking proof obligations')
                 exit(1)
+            cfile.reinitialize_tables()
+            cfile.reload_ppos()
+            cfile.reload_spos()
         except subprocess.CalledProcessError, args:
             print(args.output)
             print(args)
