@@ -161,6 +161,11 @@ class CFilePredicateDictionary():
             args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]
             def f(index,key): return POCPONonNegative(self,index,p.tags,args)
             return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_no_overlap():
+            args = [ self.dictionary.index_exp(p.get_exp1(),subst=subst),
+                         self.dictionary.index_exp(p.get_exp2(),subst=subst) ]
+            def f(index,key): return PO.CPONoOverlap(self,index,p.tags,args)
+            return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_null_terminated():
             args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]
             def f(index,key): return PO.CPONullTerminated(self,index,p.tags,args)
@@ -201,6 +206,12 @@ class CFilePredicateDictionary():
             args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]
             def f(index,key): return PO.CPOValueConstraint(self,index,p.tags,args)
             return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_common_base():
+            args = [ self.dictionary.index_exp(p.get_exp1(),subst=subst),
+                         self.dictionary.index_exp(p.get_exp2(),subst=subst) ]
+            def f(index,key): return PO.CPOCommonBase(self,index,p.tags,args)
+            return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
+        print('***** Predicate without indexing: ' + str(p))
 
     def read_xml_predicate(self,xnode,tag='ipr'):
         return self.get_predicate(int(xnode.get(tag)))

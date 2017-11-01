@@ -68,33 +68,35 @@ class CPOPredicate(CD.CDictionaryRecord):
         CD.CDictionaryRecord.__init__(self,cd,index,tags,args)
 
     def get_tag(self): return po_predicate_names[self.tags[0]]
-
-    def is_not_null(self): return False
-    def is_null(self): return False
-    def is_valid_mem(self): return False
-    def is_global_mem(self): return False
+        
     def is_allocation_base(self): return False
-    def is_type_at_offset(self): return False
-    def is_lower_bound(self): return False
-    def is_upper_bound(self): return False
+    def is_cast(self): return False
+    def is_common_base(self): return False
+    def is_global_mem(self): return False
     def is_index_lower_bound(self): return False
     def is_index_upper_bound(self): return False
     def is_initialized(self): return False
     def is_initialized_range(self): return False
-    def is_cast(self): return False
-    def is_pointer_cast(self): return False
-    def is_signed_to_unsigned_cast(self): return False
-    def is_unsigned_to_signed_cast(self): return False
-    def is_not_zero(self): return False
-    def is_non_negative(self): return False
-    def is_null_terminated(self): return False
-    def is_int_underflow(self): return False
     def is_int_overflow(self): return False
-    def is_width_overflow(self): return False
+    def is_int_underflow(self): return False
+    def is_lower_bound(self): return False
+    def is_non_negative(self): return False
+    def is_no_overlap(self): return False
+    def is_not_null(self): return False
+    def is_not_zero(self): return False
+    def is_null(self): return False
+    def is_null_terminated(self): return False
+    def is_pointer_cast(self): return False
     def is_ptr_lower_bound(self): return False
     def is_ptr_upper_bound(self): return False
     def is_ptr_upper_bound_deref(self): return False
+    def is_signed_to_unsigned_cast(self): return False
+    def is_type_at_offset(self): return False
+    def is_unsigned_to_signed_cast(self): return False
+    def is_upper_bound(self): return False
+    def is_valid_mem(self): return False
     def is_value_constraint(self): return False
+    def is_width_overflow(self): return False
 
     def __str__(self): return 'po-predicate ' + self.tags[0]
 
@@ -718,6 +720,8 @@ class CPOCommonBase(CPOPredicate):
 
     def get_exp2(self): return self.cd.dictionary.get_exp(self.args[1])
 
+    def is_common_base(self): return True
+
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp1()) + ','
                     + str(self.get_exp2()) + ')')
@@ -776,6 +780,8 @@ class CPONoOverlap(CPOPredicate):
     def get_exp1(self): return self.cd.dictionary.get_exp(self.args[0])
 
     def get_exp2(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def is_no_overlap(self): return True
 
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp1()) + ','
