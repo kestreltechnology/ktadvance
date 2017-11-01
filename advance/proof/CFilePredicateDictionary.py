@@ -178,7 +178,7 @@ class CFilePredicateDictionary():
         if p.is_int_overflow():
             args = [ self.dictionary.index_exp(p.get_exp1(),subst=subst),
                          self.dictionary.index_exp(p.get_exp2(),subst=subst) ]
-            def f(index,key): return POCPOIntOverflow(self,index,p.tags,args)
+            def f(index,key): return PO.CPOIntOverflow(self,index,p.tags,args)
             return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_width_overflow():
             args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]
