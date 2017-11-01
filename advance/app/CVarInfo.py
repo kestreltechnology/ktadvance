@@ -54,7 +54,7 @@ class CVarInfo(CD.CDeclarationsRecord):
         self.vinline = args[4] == 1
         self.vdecl = self.decls.get_location(self.args[5]) if not (self.args[5] == -1) else None
         self.vaddrof = args[6] == 1
-        self.vparam = args[7] == 1
+        self.vparam = args[7]
         self.vinit = self.decls.get_initinfo(self.args[8]) if len(self.args) == 9 else None
 
     def get_vid(self):

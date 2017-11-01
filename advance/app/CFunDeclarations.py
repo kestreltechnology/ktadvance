@@ -44,10 +44,10 @@ class CFunDeclarations():
         self.initialize(xnode)
 
     def get_formals(self):
-        return [ x for x in self.local_varinfo_table.values() if x.vparam ]
+        return [ x for x in self.local_varinfo_table.values() if x.vparam > 0 ]
 
     def get_locals(self):
-        return [ x for x in self.local_varinfo_table.values() if not x.vparam ]
+        return [ x for x in self.local_varinfo_table.values() if x.vparam == 0 ]
 
     def get_varinfo(self,vid):
         if vid in self.varinfos:
