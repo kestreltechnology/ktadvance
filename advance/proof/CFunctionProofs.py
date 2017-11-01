@@ -98,14 +98,18 @@ class CFunctionProofs():
         self._get_spos()
         self.spos.iter_callsites(f)
 
+    def reload_ppos(self): self._get_ppos(force=True)
+
+    def reload_spos(self): self._get_spos(force=True)
+
     def get_ppos(self):
         result = []
         def f(ppo): result.append(ppo)
         self.iter_ppos(f)
         return result
 
-    def get_spos(self,force=False):
-        if force: self._get_spos(force)
+    def get_spos(self):
+        self._get_spos()
         result = []
         def f(spo): result.append(spo)
         self.iter_spos(f)
@@ -132,8 +136,8 @@ class CFunctionProofs():
         self.iter_ppos(f)
         return result
 
-    def _get_ppos(self):
-        if self.ppos is None:
+    def _get_ppos(self,force=False):
+        if self.ppos is None or force:
             xnode = UF.get_ppo_xnode(self.capp.path,self.cfile.name,self.cfun.name)
             if not xnode is None:
                 self.ppos = CFunctionPPOs(self,xnode)

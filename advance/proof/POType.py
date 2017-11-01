@@ -25,6 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+from advance.util.IndexedTable import IndexedTableError
 
 class POTypeDictionaryRecord():
     '''Base class for proof obligation types in the PODictionary.'''
@@ -59,7 +60,12 @@ class PPOType(POTypeDictionaryRecord):
 
     def get_context(self): return self.contexts.get_program_context(int(self.args[1]))
 
-    def get_predicate(self): return self.pd.get_predicate(int(self.args[2]))
+    def get_predicate(self):
+        try:
+            return self.pd.get_predicate(int(self.args[2]))
+        except IndexedTableError as e:
+            print(str(e))
+            raise
 
     def __str__(self):
         return ('ppo(' + str(self.get_location()) + ',' + str(self.get_context())

@@ -46,7 +46,21 @@ class CFunctionCallsiteSPOs():
         self.context = self.cfile.contexttable.read_xml_context(xnode)
         self.cfun = self.cspos.cfun
         self.location = self.cfile.declarations.read_xml_location(xnode)
-        self.callee = self.cfile.declarations.read_xml_varinfo(xnode)
+        if 'ivinfo' in xnode.attrib:
+            self.callee = self.cfile.declarations.read_xml_varinfo(xnode)
+        else:
+            self.callee = None
+        if 'iexp' in xnode.attrib:
+            self.callee_exp = self.cfile.declarations.dictionary.read_xml_exp(xnode)
+        else:
+            self.callee_exp = None
+        if 'icallees' in xnode.attrib:
+            self.icallees = xnode.get('icallees')
+            self.callees = [ self.cfile.declarations.get_varinfo(int(i))
+                                  for i in self.icallees.split(',') ]
+        else:
+            self.icallees = None
+            self.callees = None
         self.spos = {}             # api-id -> CFunctionCallsiteSPO
         self.postguarantees = {}
         self.iargs = xnode.get('iargs')
@@ -58,11 +72,18 @@ class CFunctionCallsiteSPOs():
                               for i in self.iargs.split(',') ]
         self._initialize(xnode)
 
+    def is_indirect_call(self): return not (self.callee_exp is None)
+
+    def is_direct_call(self): return (self.callee_exp is None)
+
+    def has_callee(self): return not (self.callee is None)
+
     def get_line(self): return self.location.get_line()
 
     def get_cfg_context_string(self): return str(self.context)
 
     def update(self):
+        if not self.has_callee(): return
         cfile = self.cfile
         calleefun = cfile.capp.resolve_vid_function(cfile.index,self.callee.get_vid())
         if calleefun is None:
@@ -122,10 +143,15 @@ class CFunctionCallsiteSPOs():
     def write_xml(self,cnode):
         self.cfile.declarations.write_xml_location(cnode,self.location)
         self.cfile.contexttable.write_xml_context(cnode,self.context)
-        self.cfile.declarations.write_xml_varinfo(cnode,self.callee)
-        calleefun = self.cfile.capp.resolve_vid_function(self.cfile.index,self.callee.get_vid())
-        if not calleefun is None:
-            self.mayfreememory = calleefun.may_free_memory()
+        if not self.callee is None:
+            self.cfile.declarations.write_xml_varinfo(cnode,self.callee)
+            calleefun = self.cfile.capp.resolve_vid_function(self.cfile.index,self.callee.get_vid())
+            if not calleefun is None:
+                self.mayfreememory = calleefun.may_free_memory()
+        if not self.callee_exp is None:
+            self.cfile.declarations.dictionary.write_xml_exp(cnode,self.callee_exp)
+        if not self.icallees is None:
+            cnode.set('icallees',self.icallees)
         cnode.set('iargs',self.iargs)
         oonode = ET.Element('api-conditions')
         for apiid in self.spos:
@@ -174,7 +200,11 @@ class CFunctionCallsiteSPOs():
                     enode = po.find('e')
                     if not enode is None:
                         expl = enode.get('txt')
-                    self.spos[apiid].append(CFunctionCallsiteSPO(self,spotype,status,deps,expl))
+                    diag = None
+                    dnode = po.find('d')
+                    if not dnode is None:
+                        diag = dnode.get('txt')
+                    self.spos[apiid].append(CFunctionCallsiteSPO(self,spotype,status,deps,expl,diag))
         ggnode = xnode.find('post-guarantees')
         if not ggnode is None:
             for p in ggnode.findall('pg'):

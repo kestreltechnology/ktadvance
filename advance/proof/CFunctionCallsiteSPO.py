@@ -34,8 +34,8 @@ from advance.proof.CFunctionPO import CFunctionPO
 class CFunctionCallsiteSPO(CFunctionPO):
     '''Represents a secondary proof obligation associated with a call site.'''
 
-    def __init__(self,csspos,potype,status='open',deps=None,expl=None):
-        CFunctionPO.__init__(self,csspos.cspos,potype,status,deps,expl)
+    def __init__(self,csspos,potype,status='open',deps=None,expl=None,diag=None):
+        CFunctionPO.__init__(self,csspos.cspos,potype,status,deps,expl,diag)
         self.csspos = csspos               # CFunctionCallsiteSPOs
         self.apiid = potype.get_external_id()           # int    (predicate id of the callee)
 

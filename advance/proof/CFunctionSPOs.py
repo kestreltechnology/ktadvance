@@ -81,17 +81,23 @@ class CFunctionSPOs(CFunctionPOs):
         cssnode = ET.Element('callsites')
         rrnode = ET.Element('returnsites')
         dcnode = ET.Element('direct-calls')
+        idcnode = ET.Element('indirect-calls')
         for cs in self.callsitespos.values():
-            csnode = ET.Element('dc')
-            cs.write_xml(csnode)
-            dcnode.append(csnode)
+            if cs.is_direct_call():
+                csnode = ET.Element('dc')
+                cs.write_xml(csnode)
+                dcnode.append(csnode)
+            if cs.is_indirect_call():
+                csnode = ET.Element('ic')
+                cs.write_xml(csnode)
+                idcnode.append(csnode)
         for rs in self.returnsitespos.values():
             rsnode = ET.Element('rs')
             rs.write_xml(rsnode)
             rrnode.append(rsnode)
         snode.append(cssnode)
         snode.append(rrnode)
-        cssnode.append(dcnode)
+        cssnode.extend([dcnode,idcnode])
         cnode.extend([ snode ])
 
     def _initialize(self):
@@ -99,6 +105,12 @@ class CFunctionSPOs(CFunctionPOs):
         css = spos.find('callsites').find('direct-calls')
         if not css is None:
             for cs in css.findall('dc'):
+                cspo = CFunctionCallsiteSPOs(self,cs)
+                cfgctxt = cspo.get_cfg_context_string()
+                self.callsitespos[cfgctxt] = cspo
+        icss = spos.find('callsites').find('indirect-calls')
+        if not icss is None:
+            for cs in icss.findall('ic'):
                 cspo = CFunctionCallsiteSPOs(self,cs)
                 cfgctxt = cspo.get_cfg_context_string()
                 self.callsitespos[cfgctxt] = cspo
