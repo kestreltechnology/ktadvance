@@ -46,13 +46,8 @@ def parse():
 if __name__ == '__main__':
     args = parse()
 
-    for id in range(115,399,4):
+    for id in range(115,403,4):
 
-        # currently broken:
-        #if id == 163: continue
-        #if id == 283: continue
-        #if id == 315: continue
-            
         testname = 'id' + str(id) + 'Q'
         cpath = UF.get_kendra_testpath(testname)
         if not os.path.isdir(cpath):

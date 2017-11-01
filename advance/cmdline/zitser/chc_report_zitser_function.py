@@ -43,6 +43,7 @@ def parse():
     parser.add_argument('--open',help='only show open proof obligations',action='store_true')
     parser.add_argument('--violations',help='only show proof obligations that are violated',
                             action='store_true')
+    parser.add_argument('--predicate',help='only show proof obligations of this type')
     args = parser.parse_args()
     return args
 
@@ -78,6 +79,8 @@ if __name__ == '__main__':
         print(RP.function_code_open_tostring(cfunction))
     elif args.violations:
         print(RP.function_code_violation_tostring(cfunction))
+    elif args.predicate:
+        print(RP.function_code_predicate_tostring(cfunction,args.predicate))
     else:
         print(RP.function_code_tostring(cfunction))
 

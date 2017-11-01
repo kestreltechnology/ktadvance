@@ -207,7 +207,6 @@ class TestManager():
                 am = AnalysisManager(capp,onefile=True,verbose=self.verbose)
                 am.create_file_primary_proofobligations(creffilename)
                 cfile = capp.get_single_file()
-                cfile.reinitialize_tables()
                 ppos = cfile.get_ppos()
                 for creffun in creffile.get_functions():
                     fname = creffun.name
@@ -348,7 +347,7 @@ class TestManager():
             # only generate invariants if required
             if creffile.has_domains():
                 for d in creffile.get_domains():
-                    delegate_to_post = self.proofcheckcount > 12
+                    delegate_to_post = self.proofcheckcount > 200
                     am = AnalysisManager(capp,onefile=True,verbose=self.verbose,
                                              delegate_to_post=delegate_to_post)
                     am.generate_file_local_invariants(cfilename,d)
@@ -401,14 +400,13 @@ class TestManager():
                 cappfile = capp.get_single_file()
                 if creffile.has_domains():
                     for d in creffile.get_domains():
-                        delegate_to_post = self.proofcheckcount > 12
+                        delegate_to_post = self.proofcheckcount > 200
                         am = AnalysisManager(capp,onefile=True,verbose=self.verbose,
                                                  delegate_to_post=delegate_to_post)
                         am.generate_file_local_invariants(creffilename,d)
                         am.check_file_proofobligations(creffilename)
                     self.proofcheckcount += 1    
-                cappfile.reinitialize_tables()
-                spos = cappfile.get_spos(force=True)
+                spos = cappfile.get_spos()
                 if delaytest: continue
                 for cfun in creffile.get_functions():
                     fname = cfun.name
