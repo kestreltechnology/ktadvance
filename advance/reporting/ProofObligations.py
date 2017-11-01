@@ -183,7 +183,7 @@ class FunctionDisplay():
             return self.cfile.get_source_line(line).strip()
         return '?'
 
-    def pos_on_code_tostring(self,pos,pofilter=lambda(po):True):
+    def pos_on_code_tostring(self,pos,pofilter=lambda(po):True,showinvs=False):
         lines = []
         for po in sorted(pos,key=lambda(po):po.get_line()):
             if not pofilter(po): continue
@@ -205,7 +205,7 @@ class FunctionDisplay():
                 lines.append('\n<?> ' + str(po))
                 if po.has_diagnostic():
                     lines.append((' ' * indent) + '---> ' + po.diagnostic)
-                else:
+                if (showinvs or (not po.has_diagnostic())):
                     lines.append((' ' * 18) + '--')
                     lines.append(self._get_po_invariants(po.context,po.id))
         self.currentline = self.fline + 1
@@ -218,7 +218,7 @@ class FunctionDisplay():
             lines.append((' ' * 18) + str(inv))
         return '\n'.join(lines)
 
-def function_code_tostring(fn,pofilter=lambda(po):True):
+def function_code_tostring(fn,pofilter=lambda(po):True,showinvs=False):
     lines = []
     fd = FunctionDisplay(fn)
     ppos = fn.get_ppos()
@@ -232,11 +232,11 @@ def function_code_tostring(fn,pofilter=lambda(po):True):
     lines.append(str(fn.api))
     lines.append('-' * 80)
     lines.append('Primary Proof Obligations:')
-    lines.append(fd.pos_on_code_tostring(ppos,pofilter=pofilter))
+    lines.append(fd.pos_on_code_tostring(ppos,pofilter=pofilter,showinvs=showinvs))
     lines.append('-' * 80)
     if len(spos) > 0:
         lines.append('Supporting Proof Obligations:')
-        lines.append(fd.pos_on_code_tostring(spos,pofilter=pofilter))
+        lines.append(fd.pos_on_code_tostring(spos,pofilter=pofilter,showinvs=showinvs))
     return '\n'.join(lines)
 
 def function_code_open_tostring(fn):
@@ -251,9 +251,9 @@ def function_code_predicate_tostring(fn,p):
     pofilter = lambda(po):po.predicatetag == p
     return function_code_tostring(fn,pofilter=pofilter)
     
-def file_code_tostring(cfile,pofilter=lambda(po):True):
+def file_code_tostring(cfile,pofilter=lambda(po):True,showinvs=False):
     lines = []
-    def f(fn): lines.append(function_code_tostring(fn,pofilter=pofilter))
+    def f(fn): lines.append(function_code_tostring(fn,pofilter=pofilter,showinvs=showinvs))
     cfile.iter_functions(f)
     return '\n'.join(lines)
 
