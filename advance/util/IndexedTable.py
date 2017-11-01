@@ -32,7 +32,7 @@ class IndexedTableError(Exception):
     def __init__(self,msg):
         self.msg = msg
 
-    def __str__(self): return msg
+    def __str__(self): return self.msg
 
 def get_rep(node):
     tags = node.get('t')
