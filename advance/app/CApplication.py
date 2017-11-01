@@ -227,39 +227,48 @@ class CApplication():
         self.iter_files(h)
         self.iter_files(k)
 
+    def reinitialize_tables(self):
+        def f(fi):fi.reinitialize_tables()
+        self.iter_files(f)
+        
+    # reload ppos after analyzer checks
+    def reload_ppos(self):
+        def f(fn):fn.reload_ppos()
+        self.iter_functions(f)
+
+    # reload spos after analyzer invariant generation and analyzer checks
+    def reload_spos(self):
+        def f(fn):fn.reload_spos()
+        self.iter_functions(f)
+
     def get_ppos(self):
         result = []
         def f(fn): result.extend(fn.get_ppos())
-        def g(fi): fi.iter_functions(f)
-        self.iter_files(g)
+        self.iter_functions(f)
         return result
 
     def get_spos(self):
         result = []
         def f(fn): result.extend(fn.get_spos())
-        def g(fi): fi.iter_functions(f)
-        self.iter_files(g)
+        self.iter_functions(f)
         return result
 
     def get_open_ppos(self):
         result = []
         def f(fn): result.extend(fn.get_open_ppos())
-        def g(fi): fi.iter_functions(f)
-        self.iter_files(g)
+        self.iter_functions(f)
         return result
 
     def get_violations(self):
         result = []
         def f(fn): result.extend(fn.get_violations())
-        def g(fi): fi.iter_functions(f)
-        self.iter_files(g)
+        self.iter_functions(f)
         return result
 
     def get_delegated(self):
         result = []
         def f(fn): result.extend(fn.get_delegated())
-        def g(fi): fi.iter_functions(f)
-        self.iter_files(g)
+        self.iter_functions(f)
         return result
 
     def _initialize(self,fname):

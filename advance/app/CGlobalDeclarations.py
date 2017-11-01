@@ -408,6 +408,9 @@ class CGlobalDeclarations():
             if len(candidates) == 1:
                 self.vid2gvid[fid][varinfo.get_vid()] = candidates[0][1].get_vid()
                 print('Resolved prototype for ' + varinfo.vname)
+            else:
+                print('Unable to resolve prototype for ' + varinfo.vname + ': '
+                          + str(len(candidates)))
 
     # -------------------- Writing xml -----------------------------------------
 

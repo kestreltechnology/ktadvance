@@ -63,6 +63,7 @@ class CFunction():
         self._initialize()
 
     def reinitialize_tables(self):
+        self.api = CFunctionApi(self)
         self.podictionary.initialize()
         self.vard.initialize(force=True)
         self.mayfreememory = False
@@ -74,6 +75,8 @@ class CFunction():
     def get_formal_vid(self,name):
         for v in self.formals:
             if self.formals[v].vname == name: return v
+        else:
+            print('Formals: ' + ','.join([ str(v) for v in self.formals.values() ]))
 
     def iter_ppos(self,f): self.proofs.iter_ppos(f)
 
@@ -137,9 +140,13 @@ class CFunction():
         self.podictionary.write_xml(cnode)
         UF.save_pod_file(self.cfile.capp.path,self.cfile.name,self.name,cnode)
 
+    def reload_ppos(self): self.proofs.reload_ppos()
+
+    def reload_spos(self): self.proofs.reload_spos()
+
     def get_ppos(self): return self.proofs.get_ppos()
 
-    def get_spos(self,force=False): return self.proofs.get_spos(force)
+    def get_spos(self): return self.proofs.get_spos()
 
     def get_open_ppos(self): return self.proofs.get_open_ppos()
 
@@ -156,7 +163,8 @@ class CFunction():
         return (self.mayfreememory or self.api.may_free_memory())
 
     def _initialize(self):
-        for v in self.fdecls.get_formals(): self.formals[v.get_vid()] = v
+        for v in self.fdecls.get_formals():
+            self.formals[v.get_vid()] = v
         for v in self.fdecls.get_locals(): self.locals[v.get_vid()] = v
         self.vard.initialize()
         self.invtable.initialize()

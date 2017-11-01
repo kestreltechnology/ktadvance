@@ -79,84 +79,10 @@ class CFile():
         self.interfacedictionary.initialize()
         self.iter_functions(lambda(f):f.reinitialize_tables())
 
-    '''
-    def getgtypes(self):
-        self._initialize_gtypes()
-        return self.gtypes.values()
-
-    def getgtype(self,name):
-        self._initialize_gtypes()
-        if name in self.gtypes:
-            return self.gtypes[name].gettypeinfo().gettype()
-
-    def getgcomptagdefs(self):
-        self._initialize_gcomptagdefs()
-        return self.gcomptagdefs.values()
-
-    def getgcomptagdecls(self):
-        self._initialize_gcomptagdecls()
-        return self.gcomptagdecls.values()
-
-    def getgcomptag(self,key):
-        self._initialize_gcomptagdefs()
-        self._initialize_gcomptagdecls()
-        if key in self.gcomptagdefs:
-            return self.gcomptagdefs[key]
-        if key in self.gcomptagdecls:
-            return self.gcomptagdecls[key]
-        print('Key ' + str(key) + ' not found in ' + self.getfilename())
-        for key in (self.gcomptagdefs.keys() + self.gcomptagdecls.keys()):
-            print(str(key))
-
-    def getcompinfos(self):
-        result = {}
-        for c in (self.getgcomptagdecls() + self.getgcomptagdefs()):
-            if c.getcompinfo().getkey() in result: continue
-            result[c.getcompinfo().getkey()] = c.getcompinfo()
-        return result.values()
-
-    def getcompinfo(self,key):
-        comptag = self.getgcomptag(key)
-        if not comptag is None:
-            return self.getgcomptag(key).getcompinfo()
-        print(self.getfilename() + ': comptag with index ' + str(key) + ' not found')
-    '''
 
     def is_struct(self,ckey): return self.declarations.is_struct(ckey)
         
     def get_structname(self,ckey): return self.declarations.get_structname(ckey)
-
-    '''
-    def getgenumtagdefs(self):
-        self._initialize_genumtagdefs()
-        return self.genumtagdefs.values()
-
-    def getgenumtagdecls(self):
-        self._initialize_genumtagdecls()
-        return self.genumtagdecls.values()
-
-    def getgvardecls(self):
-        self._initialize_gvardecls()
-        return self.gvardecls.values()
-
-    def getgvardefs(self):
-        self._initialize_gvardefs()
-        return self.gvardefs.values()
-
-    def getglobalvarinfos(self):
-        gvardecls = self.getgvardecls()
-        gvardefs = self.getgvardefs()
-        gfundecls = self.getgfunctions()
-        return [ v.getvarinfo() for v in (gvardecls + gvardefs + gfundecls) ]
-
-    def getgfunctions(self):
-        self._initialize_gfunctions()
-        return self.gfunctions.values()
-
-    def getgfunction(self,vid):
-        self._initialize_gfunctions()
-        return self.gfunctions[vid]
-    '''
 
     def has_function_by_name(self,fname):
         self._initialize_functions()
@@ -196,6 +122,14 @@ class CFile():
         self.iter_functions(f)
         return result
 
+    def reload_spos(self):
+        def f(fn):fn.reload_spos()
+        self.iter_functions(f)
+
+    def reload_ppos(self):
+        def f(fn):fn.reload_ppos()
+        self.iter_functions(f)
+
     def get_ppos(self):
         result = []
         def f(fn): result.extend(fn.get_ppos())
@@ -217,9 +151,9 @@ class CFile():
                 result[line][pred]['ppos'].append(ppo)
         return result
 
-    def get_spos(self,force=False):
+    def get_spos(self):
         result = []
-        def f(fn): result.extend(fn.get_spos(force))
+        def f(fn): result.extend(fn.get_spos())
         self.iter_functions(f)
         return result
 
