@@ -324,8 +324,13 @@ class CTypFun(CTypBase):
     def is_function(self): return True
 
     def is_default_function_prototype(self):
-        return ((self.get_args() is None)
-                    or all([x.get_name().startswith('par') for x in self.get_args().get_args()]))
+        args = self.get_args()
+        if args is None:
+            return True
+        else:
+            args = args.get_args()
+            return (len(args) > 0
+                        and all([x.get_name().startswith('$par$') for x in args]))
 
     def is_vararg(self): return (self.args[2] == 1)
 
