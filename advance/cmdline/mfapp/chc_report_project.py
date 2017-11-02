@@ -30,6 +30,7 @@ import os
 
 import advance.reporting.ProofObligations as RP
 
+from advance.util.IndexedTable import IndexedTableError
 from advance.app.CApplication import CApplication
 
 def parse():
@@ -54,5 +55,8 @@ if __name__ == '__main__':
         exit(1)
    
     capp = CApplication(sempath)
-    print(RP.project_proofobligation_stats_tostring(capp))
+    try:
+        print(RP.project_proofobligation_stats_tostring(capp))
+    except IndexedTableError as e:
+        print(e.msg)
     
