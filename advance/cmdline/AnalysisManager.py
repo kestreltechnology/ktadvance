@@ -79,7 +79,6 @@ class AnalysisManager(object):
 
     def create_file_primary_proofobligations(self,cfilename):
         try:
-            cfile = self.capp.get_file(cfilename)
             if self.verbose:print('Creating primary proof obligations for ' + cfilename)
             cmd = [ self.canalyzer, '-summaries', self.chsummaries,
                         '-command', 'primary', '-cfile', cfilename ]
@@ -100,6 +99,7 @@ class AnalysisManager(object):
             if result != 0:
                 print('Error in creating primary proof obligations')
                 exit(1)
+            cfile = self.capp.get_file(cfilename)
             cfile.reinitialize_tables()
             cfile.reload_ppos()
             cfile.reload_spos()
