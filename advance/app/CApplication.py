@@ -223,6 +223,7 @@ class CApplication():
         def k(cfile):
             cfile.iter_functions(g)
             cfile.save_predicate_dictionary()
+            cfile.save_interface_dictionary()
             cfile.save_declarations()
         self.iter_files(h)
         self.iter_files(k)

@@ -185,6 +185,16 @@ class CFile():
         with open(filename,'w') as fp:
             fp.write(UX.doc_to_pretty(ET.ElementTree(xroot)))
 
+    def save_interface_dictionary(self):
+        path = self.capp.path
+        xroot = UX.get_xml_header('interface-dictionary','interface-dictionary')
+        xnode = ET.Element('interface-dictionary')
+        xroot.append(xnode)
+        self.interfacedictionary.write_xml(xnode)
+        filename = UF.get_cfile_interface_dictionaryname(path,self.name)
+        with open(filename,'w') as fp:
+            fp.write(UX.doc_to_pretty(ET.ElementTree(xroot)))
+
     def save_declarations(self):
         path = self.capp.path
         xroot = UX.get_xml_header('cfile','cfile')
