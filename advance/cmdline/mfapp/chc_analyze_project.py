@@ -65,7 +65,7 @@ def parse():
                             action='store_true')
     parser.add_argument('--analysisrounds',
                             help='Number of times to create secondary proof obligations',
-                            type=int, default=5)
+                            type=int, default=2)
     args = parser.parse_args()
     return args
 
@@ -120,13 +120,13 @@ if __name__ == '__main__':
 
     am.create_app_primary_proofobligations()
 
-    for i in range(3):
-        am.generate_app_local_invariants(['llvis'])
+    for i in range(2):
+        am.generate_app_local_invariants(['llvisp'])
     am.check_app_proofobligations()
 
     for i in range(args.analysisrounds):
         capp.update_spos()
 
-        am.generate_app_local_invariants(['llvis'])
+        am.generate_app_local_invariants(['llvisp'])
         am.check_app_proofobligations()
 
