@@ -104,7 +104,7 @@ class CFunctionCallsiteSPOs():
                 print('*' * 80)
                 print('Warning: Number of arguments (' + str(len(self.args))
                         + ') is not the same as the number of parameters (' + str(len(pars))
-                        + ') in call site spos in function ' + self.cfun.name
+                        + ') in call to ' + calleefun.name + ' in function ' + self.cfun.name
                         + ' in file ' + cfile.name)
                 print('*' * 80)
                 return
