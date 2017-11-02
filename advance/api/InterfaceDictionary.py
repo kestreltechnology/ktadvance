@@ -25,6 +25,8 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import xml.etree.ElementTree as ET
+
 import advance.util.fileutil as UF
 import advance.util.IndexedTable as IT
 
@@ -91,12 +93,14 @@ class InterfaceDictionary():
         self.postcondition_table = IT.IndexedTable('postcondition-table')
         self.postrequest_table = IT.IndexedTable('postrequest-table')
         self.sideeffect_table = IT.IndexedTable('sideeffect-table')
+        self.precondition_table = IT.IndexedTable('precondition-table')
         self.tables = [
             (self.api_parameter_table,self._read_xml_api_parameter_table),
             (self.s_term_table,self._read_xml_s_term_table),
             (self.postcondition_table,self._read_xml_postcondition_table),
             (self.postrequest_table,self._read_xml_postrequest_table),
-            (self.sideeffect_table, self._read_xml_sideeffect_table) ]
+            (self.sideeffect_table, self._read_xml_sideeffect_table),
+            (self.precondition_table, self._read_xml_precondition_table) ]
         self.initialize()
         
     # ----------------- Retrieve items from dictionary tables ------------------
@@ -236,6 +240,15 @@ class InterfaceDictionary():
         if xnode is None: return
         for (t,f) in self.tables: f(xnode.find(t.name))
 
+    # ----------------------- Printing -----------------------------------------
+
+    def write_xml(self,node):
+        def f(n,r):r.write_xml(n)
+        for (t,_) in self.tables:
+            tnode = ET.Element(t.name)
+            t.write_xml(tnode,f)
+            node.append(tnode)
+
     # --------------------- Initialization -------------------------------------
 
     def _read_xml_api_parameter_table(self,txnode):
@@ -276,5 +289,8 @@ class InterfaceDictionary():
             args = (self,) + rep
             return sideeffect_constructors[tag](args)
         self.sideeffect_table.read_xml(txnode,'n',get_value)
+
+    def _read_xml_precondition_table(self,txnode):
+        pass
 
         
