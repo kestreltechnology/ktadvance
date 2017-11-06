@@ -1,0 +1,553 @@
+\documentclass[11pt]{article}
+\usepackage{epsfig}
+\usepackage{subfigure}
+\usepackage{rotating} 
+\usepackage{amsfonts,amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[longnamesfirst,numbers]{natbib}
+\usepackage{setspace}
+\usepackage{pifont}
+\usepackage{enumitem}
+\usepackage{listings} 
+\usepackage{wrapfig}
+
+%\setlist{nolistsep,noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
+\setlist{nolistsep,itemsep=4pt,topsep=4pt,parsep=0pt,partopsep=0pt}
+\DeclareGraphicsExtensions{.png,.jpg}
+\graphicspath{{.}}
+
+\newcommand\commentout[1]{}
+\newcommand\cvt{{\sc cvt}}
+
+\def\Implies{\;\Longrightarrow\;}
+\def\Equiv{\;\equiv\;}
+\def\Equals{\;\;{\bf = }\;\;}
+\def\And{\;\wedge\;}
+\def\Or{\;\vee\;}
+
+\headheight 0in
+\parindent=0.0in
+\parskip=2ex plus1ex
+\topmargin 0.0in
+\textheight 8.0in
+\textwidth 6.250in
+\evensidemargin -2.0mm
+\oddsidemargin 4.0mm
+%\evensidemargin 0.375in
+%\oddsidemargin -0.03125in
+
+\usepackage{fancyheadings}
+\pagestyle{fancy}
+\lhead{KT Advance C Analyzer}
+\chead{}
+\rhead{Reference Manual}
+\cfoot{Kestrel Technology LLC}
+
+\newcommand\ch{{\bf CodeHawk}}
+\newcommand\fname{$<$f$>$}
+\newcommand\fnname{$<$ff$>$}
+
+%\setcounter{page}{3}
+
+\normalsize
+\setlength{\headheight}{2\baselineskip}
+
+\begin{document}
+
+\vfill
+\vfill
+
+
+{\Large\bf{
+KT Advance Reference Manual}}
+
+\vfill
+
+{\Large{Kestrel Technology, LLC}}
+
+\bigskip
+
+November 1, 2017
+
+\vfill
+\vfill
+\vfill
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Overview}
+
+The KT Advance C Analyzer consists of three components:
+\begin{enumerate}
+\item {\bf Parser:} A Mac/Linux executable that takes as input a preprocessed
+C source file and produces a set of xml files that precisely represent the
+semantics of the C source file;
+\item {\bf C Analyzer:} A Mac/Linux executable that takes as input the
+semantics files produced by the parser as well as analysis results files if
+available, and produces a set of xml files that hold analysis results. The
+C Analyzer will be wrapped in a license manager to protect the contained 
+intellectual property.
+\item {\bf PyAdvance:} Python code, provided as source code to licensed
+users, that performs linking and provides various analyzer invocation, 
+integration, and reporting services.
+\end{enumerate}
+
+\section{Approach}
+
+\subsection{Proof by Induction}
+
+The goal of the KT Advance C Analyzer is to mathematically prove absence
+of memory safety vulnerabilities, or, more precisely, prove absence of
+undefined behavior related to memory safety. The technique used to accomplish 
+this is proof
+by structural induction on the control flow graph of each function: for each
+instruction we assume that the state of an execution (viewed as a sequence of states) 
+reaching this point is well-defined
+(the inductive hypothesis), and we have to prove that all possible states
+reached after the instruction are still well defined (the inductive step).
+If indeed we can show that every instruction, starting from a well-defined
+state, ends in a well-defined state, we can conclude that no undefined
+behavior is possible in any execution of the application.
+
+\subsection{Primary Proof Obligations}
+
+The inductive step requires proving for each instruction that the weakest
+precondition of that instruction with respect to well-definedness as
+defined in the C Standard~\cite{cstandard} is program-valid, that is,
+it is valid on all possible states that an execution can be in when
+reaching that instruction. We have chosen to express these weakest
+preconditions as conjunctions of a collection of primitive predicates rather than as one
+monolithic predicate to facilitate the use of different analysis domains
+and potentially specialized proof tools for different predicates.
+We call the primitive predicates that form the weakest precondition
+``primary proof obligations.'' For example, the primary proof obligations
+(also referred to as ppo's) for 
+the instruction {\tt j = j/i} would be that {\tt j} and
+{\tt i} both be initialized and that {\tt i} is not equal to zero,
+or, formally $initialized(i) \wedge initialized(j) \wedge not-zero(i)$,
+all of which can be proven separately. A list and detailed description
+of all primitive predicates used is given below.
+
+\subsection{Proof Obligation Predicates}
+
+\paragraph{allocation-base (ptr:exp): }
+The value of the ptr expression is the address of a 
+                dynamically allocated memory region.
+
+\paragraph{common-base (ptr1:exp, ptr2:exp): }
+The value of the ptr1 expression and the value of the ptr2 expression
+   point to the same memory region (where a region can be an allocated region, or a region
+   defined by a declared variable).
+   
+\paragraph{common-base-type (ptr1:exp, ptr2:exp): }
+The value of the ptr1 expression and the value of the ptr2 expression
+  point at elements of the same array.
+
+\paragraph{index-lower-bound (index:exp): }
+The value of the index expression is greater than or equal to zero.
+
+\paragraph{index-upper-bound (index:exp, size:exp):}
+The value of the index expression is less than the value of the
+   size expression. 
+
+\paragraph{initialized (lhs:lval): }
+The value in the location denoted by lhs is initialized.
+
+\paragraph{initialized-range (ptr:exp, len:exp): }
+The value of the ptr expression points to a memory region of which at least
+len bytes are initialized starting from the address in ptr.
+
+\paragraph{lower-bound (ptr:exp):}
+The value of the ptr expression is greater than or equal to the
+    lower bound of the memory region it is pointing at (vacuously true for NULL).
+    
+\paragraph{non-negative (scalar:exp):}
+The value of the scalar expression is non-negative.
+
+\paragraph{no-overlap (ptr1:exp, ptr2:exp): }
+the value of the ptr1 expression and the value of the ptr2
+   expression do not point at the same memory region.
+
+\paragraph{not-null (ptr:exp):}
+The value of the ptr expression is not NULL.
+
+\paragraph{not-zero (scalar:exp): }
+The value of the scalar expression is not zero.
+
+\paragraph{null (ptr:exp): }
+The value of the ptr expression is NULL.
+
+\paragraph{null-terminated (ptr:exp): }
+The ptr expression points at a memory region that contains a null-terminator
+within its bounds.
+
+\paragraph{ptr-lower-bound (t:typ, op:binop, ptr:exp, scalar:exp)}
+The result of the operation op performed on the ptr expression and scalar expression
+is greater than or equal to the lower bound of the memory region pointed to by
+the ptr expression.
+
+\paragraph{ptr-upper-bound (t:typ, op:binop, ptr:exp, scalar:exp)}
+The result of the operation op performed on the ptr expression and scalar expression
+is less than or equal to the upper bound of the memory region pointed to by the ptr
+expression.
+
+\paragraph{upper-bound (ptr:exp):}
+The value of the ptr expression is less than or equal to the
+    upper bound of the memory region it is is pointing at (vacuously true for NULL).
+
+\paragraph{valid-mem (ptr:exp): }
+The value of the ptr expression is the address of or inside a 
+	valid memory region, that is, a memory region that has not been freed.
+
+The following predicates are not a weakest precondition for undefined behavior, but
+are included to identify constructs generally considered undesirable.
+
+\paragraph{format-string (ptr:exp): }
+The value of the ptr expression points at a string literal.
+
+
+\section{Files}
+
+Analysis is modular: the C Analyzer analyzes (preprocessed) c source files
+in isolation; the PyAdvance integrator transfers results from one file to
+another in terms of api assumptions, postcondition guarantees, etc. These
+analysis artifacts are saved in xml files associated with the entire
+application, individual files or single functions.
+Below we list these files, along with their role in the analysis and their
+format and contents.
+
+All analysis artifacts are kept in a subdirectory {\tt semantics/ktadvance}
+of the analysis directory.
+Below we will refer to this directory as the top directory.
+
+\subsection{Application-level}
+
+The following two files combine information about the entire application
+at the top level of the 
+
+\begin{itemize}[leftmargin=*]
+\item {\bf target\_files.xml: } a list of the source files included in the
+  application. \\
+  \emph{created by:} Parser \\
+  \emph{updated by:} none
+\item {\bf globaldefinitions.xml:} a dictionary of global definitions and declarations
+  that are shared by all source files. \\
+  \emph{created by:} PyAdvance Linker  (advance/linker) \\
+  \emph{updated by:} none
+\end{itemize}
+
+\subsection{File-level}
+
+The following files are kept for each source file \fname.c in a directory relative
+to the top directory that corresponds to their location in the original application
+source directory.
+\begin{itemize}[leftmargin=*]
+\item {\bf \fname\_cfile.xml: } Global definitions.\\
+   \emph{created by:} Parser \\
+   \emph{updated by:} none
+\item {\bf \fname\_cdict.xml: } Dictionary of types, variables, expressions, etc.
+   that appear in the program.\\
+   \emph{created by:} Parser \\
+   \emph{updated by:} C Analyzer (primary proof obligation generation)
+\item {\bf \fname\_gxrefs.xml: } Mapping between global indices and file-local
+   indices for struct definitions and global variables. \\
+   \emph{created by:} PyAdvance Linker \\
+   \emph{updated by:} none
+\item {\bf \fname\_ctxt.xml:} Dictionary of precise locations in the program,
+   expressed as program contexts, a pair of a cfg-context, specifying the location
+   in terms of control-flow-graph nodes, and an exp-context, specifying a location
+   within an expression, in terms of nodes in the syntax tree. \\
+   \emph{created by:} C Analyzer (primary proof obligation generation). \\
+   \emph{updated by:} none
+\item {\bf \fname\_ixf.xml:} Dictionary of components of interface expressions,
+   such as function preconditions, postconditions, and side effects.\\
+   \emph{created by:} C Analyzer (invariant generation) \\
+   \emph{updated by:} C Analyzer (invariant generation)
+\item {\bf \fname\_prd.xml:} Dictionary of predicates used in primary and supporting
+   proof obligations.\\
+   \emph{created by:} C Analyzer (primary proof obligation generator) \\
+   \emph{updated by:} PyAdvance (creation of supporting proof obligations)
+\end{itemize}
+
+\subsection{Function-level}
+
+The following files are kept for each function \fnname in file \fname.c, 
+in a subdirectory \fname in the directory that holds the \fname\_xxx.xml
+files.
+
+\begin{itemize}[leftmargin=*]
+\item {\bf \fnname\_cfun.xml:} Complete semantics of the function, expressed
+   as CIL-like data structures, using dictionary indices for types, expressions,
+   etc.\\
+   \emph{created by:} Parser \\
+   \emph{updated by:} none
+\item {\bf \fnname\_api.xml:} Application interface artifacts for a function,
+  including assumptions on arguments (used to create supporting proof obligations),
+  postcondition guarantees provided by the function, postcondition requests from
+  other functions.\\
+  \emph{created by:} C Analyzer (primary proof obligation generation) \\
+  \emph{updated by:} C Analyzer (invariant gernation, proof obligation check), PyAdvance
+\item {\bf \fnname\_ppo.xml:} Primary proof obligations for a function. \\
+  \emph{created by:} C Analyzer (primary proof obligation generation) \\
+  \emph{updated by:} C Analyzer (proof obligation check)
+\item {\bf \fnname\_spo.xml:} Supporting proof obligations for a function. \\
+  \emph{created by:} C Analyzer (primary proof obligation generation) \\
+  \emph{updated by:} PyAdvance, C Analyzer (proof obligation check)
+\item {\bf \fnname\_pod.xml:} Dictionary of primary and supporting proof obligation
+   types, using predicate and type/expression indices from \fname\_cdict.xml and
+   \fname\_prd.xml. \\
+   \emph{created by:} C Analyzer (primary proof obligation generation) \\
+   \emph{updated by:} PyAdvance (creation of supporting proof obligations)
+\item {\bf \fnname\_vars.xml:} Dictionary of analysis artifacts referenced in invariants.\\
+   \emph{created by:} C Analyzer (invariant generation) \\
+   \emph{updated by:} C Analyzer (invariant generation)
+\item {\bf \fnname\_invs.xml:} Dictionary of invariant values and location invariant table.\\
+   \emph{created by:} C Analyzer (invariant generation) \\
+   \emph{updated by:} C Analyzer (invariant generation)
+\end{itemize}
+
+\section{Dictionary Data Structure Formats}
+
+Several file-level and function-level files provide an index representation
+of commonly used entities such as expressions and locations. Each data item is
+represented by a list of strings and a list of integers, which can be indices
+into other dictionaries or immediate values. Each dictionary file generally
+has multiple tables for related data structures. Below we describe the
+structure for each of these tables in these files.
+
+\subsection{\fname\_cdict}
+
+The primary dictionary file for a source file is the \fname\_cdict.xml file,
+which includes entries for all entities relevant to the source code in that
+file, including types and expressions. Below we describe each of the tables
+included in this file, and for each of the tables a reference to the relevant
+python files in PyAdvance that provide the data structures for the entities
+in that table. Basic indexing and access to the {\tt \_cdict} dictionary is 
+provided by {\tt advance/app/CDictionary.py}
+
+\subsubsection{Expressions (exp)}
+
+\paragraph{PyAdvance reference:} {\tt advance/app/CDictionary.py, advance/app/CExp.py}
+
+\paragraph{Constant (CExpConst)}
+\begin{itemize}
+\item \emph{tags:} "const"
+\item \emph{args:} constant-table index
+\end{itemize}
+
+\paragraph{Lval (CExpLval)}
+\begin{itemize}
+\item \emph{tags:} "lval"
+\item \emph{args:} lval-table index
+\end{itemize}
+
+\paragraph{SizeOf (CExpSizeOf)}
+\begin{itemize}
+\item \emph{tags:} "sizeof"
+\item \emph{args:} typ-table index
+\end{itemize}
+
+\paragraph{SizeOfE (CExpSizeOfE)}
+\begin{itemize}
+\item \emph{tags:} "sizeofe"
+\item \emph{args:} exp-table index
+\end{itemize}
+
+\paragraph{SizeOfStr (CExpSizeOfStr)}
+\begin{itemize}
+\item \emph{tags:} "sizeofstr" 
+\item \emph{args:} string-table index
+\end{itemize}
+
+\paragraph{AlignOf (CExpAlignOf)}
+\begin{itemize}
+\item \emph{tags:} "alignof"
+\item \emph{args:} typ-table index
+\end{itemize}
+
+\paragraph{AlignOfE (CExpAlignOfE)}
+\begin{itemize}
+\item \emph{tags:} "alignofe"
+\item \emph{args:} exp-table index
+\end{itemize}
+
+\paragraph{UnOp (CExpUnOp)}
+\begin{itemize}
+\item \emph{tags:} 1:"unop", 2:operator (see Table~\ref{tab:unop})
+\item \emph{args:} 1:exp-table index, 2:typ-table index (result type)
+\end{itemize}
+
+
+\begin{table}[t]
+\centering
+\begin{tabular}{l|l} \hline
+"neg" & arithmetic negation \\
+"bnot" & bitwise complementation \\
+"lnot" & logical not  \\ \hline
+\end{tabular}
+\caption{\label{tab:unop}Unary operators}
+\end{table}
+
+
+\paragraph{BinOp (CExpBinOp)}
+\begin{itemize}
+\item \emph{tags:} 1:"binop", 2:operator (see Table~\ref{tab:binop})
+\item \emph{args:} 1:exp-table index, 2:exp-table index, 3:typ-table index (result type)
+\end{itemize}
+
+\begin{table}[t]
+\centering
+\begin{tabular}{l|l} \hline
+"plusa" & scalar addition \\
+"pluspi" & pointer plus scalar \\
+"indexpi" & pointer plus scalar\\
+"minusa" & scalar subtraction \\
+"minuspi" & pointer minus scalar \\
+"minuspp" & pointer subtraction \\
+"mult" & scalar multiplication \\
+"div" & scalar division \\
+"mod" & scalar modulo \\
+"shiftlt" & bitwise leftshift \\
+"shiftrt" & bitwise rightshift \\
+"lt" & less than \\
+"gt" & greater than \\
+"le" & less than or equal to \\
+"ge" & greater than or equal to \\
+"eq" & equal \\
+"ne" & not equal \\
+"band" & bitwise and \\
+"bxor" & bitwise xor \\
+"bor" & bitwise or \\
+"land" & logical and \\
+"lor" & logical or
+\end{tabular}
+\caption{\label{tab:binop}Binary operators}
+\end{table}
+
+\paragraph{Question (CExpQuestion)}
+\begin{itemize}
+\item \emph{tags:} "question"
+\item \emph{args:} 1:exp-table index, 2:exp-table index, 3:exp-table index, 4:typ-table index
+      (result type)
+\end{itemize}
+
+\paragraph{CastE (CExpCastE)}
+\begin{itemize}
+\item \emph{tags:} "caste"
+\item \emph{args:} 1:typ-table index (target type), 2:exp-table index
+\end{itemize}
+
+\paragraph{AddrOf (CExpAddrOf)}
+\begin{itemize}
+\item \emph{tags:} "addrof"
+\item \emph{args:} lval-table index
+\end{itemize}
+
+\paragraph{AddrOfLabel (CExpAddrOfLabel)}
+\begin{itemize}
+\item \emph{tags:} "addroflabel"
+\item \emph{args:} statement index
+\end{itemize}
+
+\paragraph{StartOf (CExpStartOf)}
+\begin{itemize}
+\item \emph{tags:} "startof"
+\item \emph{args:} lval-table index
+\end{itemize}
+
+\paragraph{FnApp (CExpFnApp)}
+\begin{itemize}
+\item \emph{tags:} 1:"fnapp", 2:filename
+\item \emph{args:} 1:linenr, 2:bytenr, 3:exp-table index, 4:opt-exp-list-table index
+\end{itemize}
+
+\paragraph{CnApp (CExpCnApp)}
+\begin{itemize}
+\item \emph{tags:} 1:"cnapp", 2:name
+\item \emph{args:} 1:typ-table index, 2:opt-exp-list-table index
+\end{itemize}
+
+\subsubsection{Types (typ)}
+
+\paragraph{PyAdvance reference:} {\tt advance/app/CDictionary.py, advance/app.CTyp.py}
+
+\paragraph{Note:} For all types shown below the listed attributes-table index is
+  optional: it is assumed the type has no associated attributes when this index
+  is absent.
+
+\paragraph{TVoid (CTypVoid)}
+\begin{itemize}
+\item \emph{tags:} "tvoid"
+\item \emph{args:} attributes-table index
+\end{itemize}
+
+\paragraph{TInt (CTypInt)}
+\begin{itemize}
+\item \emph{tags:} 1:"tint", 2:integer kind ("ichar", "ischar", "iuchar","ibool",
+   "iint", "iuint", "ishort", "iushort", "ilong", "iulong", "ilonglong", "iulonglong")
+\item \emph{args:} attributes-table index
+\end{itemize}
+
+\paragraph{TFloat (CTypFloat)}
+\begin{itemize}
+\item \emph{tags:} 1:"tfloat", 2:float kind ("float", "fdouble", "flongdouble")
+\item \emph{args:} attributes-table index
+\end{itemize}
+
+\paragraph{TPtr (CTypPtr)}
+\begin{itemize}
+\item \emph{tags:} "tptr"
+\item \emph{args:} 1:typ-table index (target type), 2:attributes-table index
+\end{itemize}
+
+\paragraph{TArray (CTypArray)}
+\begin{itemize}
+\item \emph{tags:} "tarray"
+\item \emph{args:} 1:typ-table index (element type), 2:opt exp-table index (size), 
+   3: attributes-table index
+\end{itemize}
+
+\paragraph{TFun (CTypFun)}
+\begin{itemize}
+\item \emph{tags:} "tfun"
+\item \emph{args:} 1:typ-table index (return type), 2:opt-fun-args index (argument types),
+         3:is\_varargs, 4:attributes-table index
+\end{itemize}
+
+\paragraph{TNamed (CTypNamed)}
+\begin{itemize}
+\item \emph{tags:} 1:"tnamed", 2:name
+\item \emph{args:} attributes-table index
+\end{itemize}
+
+\paragraph{TComp (CTypComp)}
+\begin{itemize}
+\item \emph{tags:} "tcomp"
+\item \emph{args:} 1:ckey (unique struct identifier), 2:attributes-table index
+\end{itemize}
+
+\paragraph{TEnum (CTypEnum)}
+\begin{itemize}
+\item \emph{tags:} 1:"tenum", 2:name
+\item \emph{args:} attributes-table index
+\end{itemize}
+
+\paragraph{TBuiltinVaargs (CTypBuiltinVaargs)}
+\begin{itemize}
+\item \emph{tags:} 1:"tbuiltin-va-list"
+\item \emph{args:} attributes-table index
+\end{itemize}
+
+
+%\begin{center}
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=.85\textwidth]{figures/initialdisplay.png}
+%\caption{\label{fig:initialdisplay}Initial display (textcrunchr\_1)}
+%\end{figure}
+%\end{center}
+
+\end{document}
