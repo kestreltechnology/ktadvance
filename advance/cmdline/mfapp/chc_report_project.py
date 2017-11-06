@@ -29,6 +29,7 @@ import argparse
 import os
 
 import advance.reporting.ProofObligations as RP
+import advance.util.printutil as UP
 
 from advance.util.IndexedTable import IndexedTableError
 from advance.app.CApplication import CApplication
