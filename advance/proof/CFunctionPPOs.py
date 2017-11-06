@@ -72,7 +72,11 @@ class CFunctionPPOs(CFunctionPOs):
                 level = p.get('deps')
                 if level == 'a':
                     ids = [int(x) for x in p.get('ids').split(',') ]
-                    invs = [ int(x) for x in p.get('invs').split(',') ]
+                    invs = p.get('invs')
+                    if len(invs) > 0:
+                        invs = [ int(x) for x in invs.split(',') ]
+                    else:
+                        invs = []
                     deps = CProofDependencies(self,level,ids,invs)
                 else:
                     deps = CProofDependencies(self,level)
