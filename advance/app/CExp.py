@@ -334,7 +334,7 @@ class CExpCastE(CExpBase):
 
     def is_caste(self): return True
 
-    def has_variable(self,vid): return self.get_exp().get_variable(vid)
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
     def __str__(self):
         return 'caste(' + str(self.get_type()) + ',' + str(self.get_exp()) + ')'

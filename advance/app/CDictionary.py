@@ -246,7 +246,7 @@ class CDictionary():
             t.reset()
             f(xnode.find(t.name))
 
-    # ------------------- stubs, overridden in global dictionary ---------------
+    # --------------- stubs, overridden in file/global dictionary -------------
 
     def index_compinfo_key(self,compinfo,_): return compinfo.get_ckey() 
 
@@ -296,6 +296,10 @@ class CDictionary():
             return self.constant_table.add(IT.get_key(c.tags,c.args),f)
         else:
             print('This constant not yet handled ' + str(c))
+
+    def mk_exp_index(self,tags,args):
+        def f(index,key): return exp_constructors[tags[0]]((self,index,tags,args))
+        return self.exp_table.add(IT.get_key(tags,args),f)
 
     def index_exp(self,e,subst={},fid=-1):                            # TBF
         if e.is_constant():
@@ -357,6 +361,10 @@ class CDictionary():
         def f(index,key): return CT.CFunArgs(self,index,tags,args)
         return self.funargs_table.add(IT.get_key(tags,args),f)
 
+    def mk_lhost_index(self,tags,args):
+        def f(index,key): return lhost_constructors[tags[0]]((self,index,tags,args))
+        return self.lhost_table.add(IT.get_key(tags,args),f)
+
     def index_lhost(self,h,subst={},fid=-1):
         if h.is_var():
             args = [ self.index_varinfo_vid(h.get_vid(),fid) ]
@@ -367,18 +375,26 @@ class CDictionary():
             def f(index,key): return CH.CLHostMem(self,index,h.tags,args)
             return self.lhost_table.add(IT.get_key(h.tags,args),f)
 
+    def mk_lval_index(self,tags,args):
+        def f(index,key): return CV.CLval(self,index,tags,args)
+        return self.lval_table.add(IT.get_key(tags,args),f)
+
     def index_lval(self,lval,subst={},fid=-1):
         args = [ self.index_lhost(lval.get_lhost(),subst=subst,fid=fid),
                      self.index_offset(lval.get_offset()) ]
         def f(index,key): return CV.CLval(self,index,[],args)
         return self.lval_table.add(IT.get_key([],args),f)
+
+    def mk_offset_index(self,tags,args):
+        def f(index,key): return offset_constructors[tags[0]]((self,index,tags,args))
+        return self.offset_table.add(IT.get_key(tags,args),f)
                      
     def index_offset(self,o,fid=-1):
         if not o.has_offset():
             def f(index,key): return CO.CNoOffset(self,index,o.tags,o.args)
             return self.offset_table.add(IT.get_key(o.tags,o.args),f)
         if o.is_field():
-            ckey = self.convert_ckey(o.get_ckey(),fid)
+            ckey = self.convert_ckey(o.get_ckey(),o.cd.cfile.index)
             args = [ ckey, self.index_offset(o.get_offset(),fid) ]
             def f(index,key): return CO.CFieldOffset(self,index,o.tags,args)
             return self.offset_table.add(IT.get_key(o.tags,args),f)

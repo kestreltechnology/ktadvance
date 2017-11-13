@@ -75,6 +75,24 @@ class IndexManager():
                         if tgtfid in self.gvid2vid[gvid]:
                             return (tgtfid,self.gvid2vid[gvid][tgtfid])
 
+    '''return a list of (fid,vid) pairs that refer to the same global variable.'''
+    def get_gvid_references(self,gvid):
+        result = []
+        for fid in self.gvid2vid[gvid]:
+            result.append((fid,self.gvid2vid[gvid][fid]))
+        return result
+
+    def has_gvid_reference(self,gvid,fid):
+        if gvid in self.gvid2vid:
+            return fid in self.gvid2vid[gvid]
+        else:
+            return False
+
+    def get_gvid_reference(self,gvid,fid):
+        if gvid in self.gvid2vid:
+            if fid in self.gvid2vid[gvid]:
+                return self.gvid2vid[gvid][fid]
+
     '''return a list of (fid,vid) pairs that refer to the same variable.'''
     def get_vid_references(self,srcfid,srcvid):
         result = []
@@ -124,6 +142,21 @@ class IndexManager():
         if fid in self.ckey2gckey:
             if ckey in self.ckey2gckey[fid]:
                 return self.ckey2gckey[fid][ckey]
+
+    def convert_ckey(self,fidsrc,ckey,fidtgt):
+        if self.issinglefile:
+            return ckey
+        gckey = self.get_gckey(fidsrc,ckey)
+        if not gckey is None:
+            if gckey in self.gckey2ckey:
+                if fidtgt in self.gckey2ckey[gckey]:
+                    return self.gckey2ckey[gckey][fidtgt]
+                else:
+                    print('Target fid ' + str(fidtgt) + ' not found for global key ' + str(gckey))
+            else:
+                print('Global key ' + str(gckey) + ' not found in converter')
+        else:
+            print('Local key ' + str(ckey) + ' not found for source file ' + str(fidsrc))
 
     def add_ckey2gckey(self,fid,ckey,gckey):
         if not fid in self.ckey2gckey:
