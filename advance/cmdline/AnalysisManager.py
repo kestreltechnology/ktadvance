@@ -201,6 +201,40 @@ class AnalysisManager(object):
             print(args)
             exit(1)
 
+    def generate_and_check_file(self,cfilename,domains):
+        try:
+            cfile = self.capp.get_file(cfilename)
+            if self.verbose: print('Generating invariants and checking proof obligations for '
+                                       + cfilename)
+            cmd = [ self.canalyzer, '-summaries', self.chsummaries,
+                        '-command', 'generate_and_check', '-cfile', cfilename,
+                        '-domains', domains ]
+            for s in self.thirdpartysummaries:
+                cmd.extend(['-summaries',s])
+            if self.nofilter: cmd.append('-nofilter')
+            if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
+            if self.unreachability: cmd.append('-unreachability')
+            if not self.delegate_to_post: cmd.append('-disable_post_delegation')
+            if self.verbose: cmd.append('-verbose')
+            cmd.append(self.path)
+            if self.verbose:
+                print(cmd)
+                result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT)
+                print('\nResult: ' + str(result))
+            else:
+                result = subprocess.call(cmd,cwd=self.path,stdout=open(os.devnull,'w'),
+                                             stderr=subprocess.STDOUT)
+            if result != 0:
+                print('Error in generating invariants or checking proof obligations')
+                exit(1)
+            cfile.reinitialize_tables()
+            cfile.reload_ppos()
+            cfile.reload_spos()
+        except subprocess.CalledProcessError, args:
+            print(args.output)
+            print(args)
+            exit(1)
+
     def create_app_primary_proofobligations(self):
         def f(cfile):self.create_file_primary_proofobligations(cfile)
         self.capp.iter_filenames(f)
@@ -265,6 +299,10 @@ class AnalysisManager(object):
             self.capp.iter_filenames_parallel(self._check_app_proofobligations, processes)
         else:
             self.capp.iter_filenames(self._check_app_proofobligations)
+
+    def generate_and_check_app(self, domains, processes=1):
+        def f(cfile): self.generate_and_check_file(cfile,domains)
+        self.capp.iter_filenames(f)
 
             
             
