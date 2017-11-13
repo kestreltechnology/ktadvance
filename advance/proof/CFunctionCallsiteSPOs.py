@@ -109,15 +109,24 @@ class CFunctionCallsiteSPOs():
                 print('*' * 80)
                 return
             for a in api.get_api_assumptions():
-                pid = self.cfile.predicatedictionary.index_predicate(a.predicate,subst=subst)
-                apiid = a.id
-                if not apiid in self.spos:
-                    self.spos[apiid] = []
-                    ictxt = self.cfile.contexttable.index_context(self.context)
-                    iloc = self.cfile.declarations.index_location(self.location)
-                    ispotype = self.cfun.podictionary.index_spo_type(['cs'],[iloc,ictxt,pid,apiid])
-                    spotype = self.cfun.podictionary.get_spo_type(ispotype)
-                    self.spos[apiid].append(CFunctionCallsiteSPO(self,spotype))
+                try:
+                    pid = self.cfile.predicatedictionary.index_predicate(a.predicate,subst=subst)
+                    apiid = a.id
+                    if not apiid in self.spos:
+                        self.spos[apiid] = []
+                        ictxt = self.cfile.contexttable.index_context(self.context)
+                        iloc = self.cfile.declarations.index_location(self.location)
+                        ispotype = self.cfun.podictionary.index_spo_type(['cs'],[iloc,ictxt,pid,apiid])
+                        spotype = self.cfun.podictionary.get_spo_type(ispotype)
+                        self.spos[apiid].append(CFunctionCallsiteSPO(self,spotype))
+                except:
+                    print('*' * 80)
+                    print('******** Warning: Unable to create spo for assumption ')
+                    print(str(a))
+                    print('from function ' + calleefun.name + ' in file '
+                              + calleefun.cfile.name)
+                    print('*' * 80)
+                    
         for g in api.get_postcondition_guarantees():
             iipc = self.cfile.interfacedictionary.index_postcondition(g)
             if not iipc in self.postguarantees:

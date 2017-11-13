@@ -35,6 +35,7 @@ import advance.proof.POType as PP
 
 assumption_type_constructors = {
     'aa': lambda(x):AT.ATApiAssumptionType(*x),
+    'ua': lambda(x):AT.ATUserAssumptionType(*x),
     'pc': lambda(x):AT.ATPostconditionType(*x)
     }
 

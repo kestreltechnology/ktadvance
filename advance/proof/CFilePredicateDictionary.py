@@ -79,6 +79,10 @@ class CFilePredicateDictionary():
 
     def get_predicate(self,ix): return self.po_predicate_table.retrieve(ix)
 
+    def mk_predicate_index(self,tags,args):
+        def f(index,key): return po_predicate_constructors[tags[0]]((self,index,tags,args))
+        return self.po_predicate_table.add(IT.get_key(tags,args),f)
+
     def index_predicate(self,p,subst={}):
         if p.is_not_null():
             args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]

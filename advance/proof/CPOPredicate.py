@@ -61,6 +61,10 @@ po_predicate_names = {
     'vc': 'value-constraint',
     'pre': 'precondition' }
 
+def get_predicate_tag(name):
+    revnames = { v:k for (k,v) in po_predicate_names.items() }
+    if name in revnames: return revnames[name]
+
 
 class CPOPredicate(CD.CDictionaryRecord):
 
@@ -72,6 +76,7 @@ class CPOPredicate(CD.CDictionaryRecord):
     def is_allocation_base(self): return False
     def is_cast(self): return False
     def is_common_base(self): return False
+    def is_format_string(self): return False
     def is_global_mem(self): return False
     def is_index_lower_bound(self): return False
     def is_index_upper_bound(self): return False
@@ -98,6 +103,8 @@ class CPOPredicate(CD.CDictionaryRecord):
     def is_value_constraint(self): return False
     def is_width_overflow(self): return False
 
+    def has_variable(self,vid): return False
+
     def __str__(self): return 'po-predicate ' + self.tags[0]
 
 
@@ -117,6 +124,8 @@ class CPONotNull(CPOPredicate):
 
     def is_not_null(self): return True
 
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
     def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
 
 
@@ -134,6 +143,8 @@ class CPONull(CPOPredicate):
     def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
 
     def is_null(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
     def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
 
@@ -154,6 +165,8 @@ class CPOValidMem(CPOPredicate):
 
     def is_valid_mem(self): return True
 
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
     def __str__(self): return self.get_tag() +'(' + str(self.get_exp()) + ')'
 
 
@@ -173,6 +186,8 @@ class CPOGlobalMem(CPOPredicate):
 
     def is_global_mem(self): return True
 
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
     def __str__(self):return self.get_tag() + '(' + str(self.get_exp()) + ')'
 
 
@@ -191,6 +206,8 @@ class CPOAllocationBase(CPOPredicate):
     def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
 
     def is_allocation_base(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
     def __str__(self):return self.get_tag() + '(' + str(self.get_exp()) + ')'
 
@@ -212,6 +229,8 @@ class CPOTypeAtOffset(CPOPredicate):
     def get_type(self): return self.cd.dictionary.get_typ(self.args[0])
 
     def get_exp(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
     def is_type_at_offset(self): return True
 
@@ -239,6 +258,8 @@ class CPOLowerBound(CPOPredicate):
 
     def is_lower_bound(self): return True
 
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_type()) + ','
             + str(self.get_exp()) + ')')
@@ -260,6 +281,8 @@ class CPOUpperBound(CPOPredicate):
     def get_type(self): return self.cd.dictionary.get_typ(self.args[0])
 
     def get_exp(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
     def is_upper_bound(self): return True
 
@@ -284,6 +307,8 @@ class CPOIndexLowerBound(CPOPredicate):
 
     def is_index_lower_bound(self): return True
 
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
     def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
 
 
@@ -306,6 +331,8 @@ class CPOIndexUpperBound(CPOPredicate):
 
     def is_index_upper_bound(self): return True
 
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp())
                     + ',bound:' + str(self.get_bound()) + ')')
@@ -326,6 +353,8 @@ class CPOInitialized(CPOPredicate):
     def get_lval(self): return self.cd.dictionary.get_lval(self.args[0])
 
     def is_initialized(self): return True
+
+    def has_variable(self,vid): return self.get_lval().has_variable(vid)
 
     def __str__(self): return self.get_tag() + '(' + str(self.get_lval()) + ')'
 
@@ -348,6 +377,8 @@ class CPOInitializedRange(CPOPredicate):
     def get_length(self): return self.cd.dictionary.get_exp(self.args[1])
 
     def is_initialized_range(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp())
@@ -375,6 +406,8 @@ class CPOCast(CPOPredicate):
     def get_tgt_type(self): return self.cd.dictionary.get_typ(self.args[1])
 
     def is_cast(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp()) + ',from:'
@@ -404,6 +437,8 @@ class CPOPointerCast(CPOPredicate):
 
     def is_pointer_cast(self): return True
 
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp()) + ',from:'
                     + str(self.get_from_type())
@@ -431,6 +466,8 @@ class CPOSignedToUnsignedCast(CPOPredicate):
     def get_tgt_kind(self): return self.tags[2]
 
     def is_signed_to_unsigned_cast(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp())
@@ -460,6 +497,8 @@ class CPOUnsignedToSignedCast(CPOPredicate):
 
     def is_unsigned_to_signed_cast(self): return True
 
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp())
                     + ',from:' + self.get_from_kind()
@@ -482,6 +521,8 @@ class CPONotZero(CPOPredicate):
 
     def is_not_zero(self): return True
 
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
     def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
 
 
@@ -501,6 +542,8 @@ class CPONonNegative(CPOPredicate):
 
     def is_non_negative(self): return True
 
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
     def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
 
 
@@ -519,6 +562,8 @@ class CPONullTerminated(CPOPredicate):
     def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
 
     def is_null_terminated(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
     def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
 
@@ -547,6 +592,9 @@ class CPOIntUnderflow(CPOPredicate):
     def get_exp2(self): return self.cd.dictionary.get_exp(self.args[1])
 
     def is_int_underflow(self): return True
+
+    def has_variable(self,vid):
+        return self.get_exp1().has_variable(vid) or self.get_exp2().has_variable(vid)
 
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp1())
@@ -580,6 +628,9 @@ class CPOIntOverflow(CPOPredicate):
 
     def is_int_overflow(self): return True
 
+    def has_variable(self,vid):
+        return self.get_exp1().has_variable(vid) or self.get_exp2().has_variable(vid)
+
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp1())
                     + ',' + str(self.get_exp2())
@@ -604,6 +655,8 @@ class CPOWidthOverflow(CPOPredicate):
     def get_ikind(self): return self.tags[1]
 
     def is_width_overflow(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp()) + ',kind:'
@@ -634,6 +687,9 @@ class CPOPtrLowerBound(CPOPredicate):
     def get_binop(self): return self.tags[1]
 
     def is_ptr_lower_bound(self): return True
+
+    def has_variable(self,vid):
+        return self.get_exp1().has_variable(vid) or self.get_exp2().has_variable(vid)
 
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp1()) + ','
@@ -666,6 +722,9 @@ class CPOPtrUpperBound(CPOPredicate):
 
     def is_ptr_upper_bound(self): return True
 
+    def has_variable(self,vid):
+        return self.get_exp1().has_variable(vid) or self.get_exp2().has_variable(vid)
+
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp1()) + ','
                     + str(self.get_exp2()) + ',op:' + self.get_binop()
@@ -697,6 +756,9 @@ class CPOPtrUpperBoundDeref(CPOPredicate):
 
     def is_ptr_upper_bound_deref(self): return True
 
+    def has_variable(self,vid):
+        return self.get_exp1().has_variable(vid) or self.get_exp2().has_variable(vid)
+
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp1()) + ','
                     + str(self.get_exp2()) + ',op:' + self.get_binop()
@@ -722,6 +784,9 @@ class CPOCommonBase(CPOPredicate):
 
     def is_common_base(self): return True
 
+    def has_variable(self,vid):
+        return self.get_exp1().has_variable(vid) or self.get_exp2().has_variable(vid)
+
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp1()) + ','
                     + str(self.get_exp2()) + ')')
@@ -743,6 +808,9 @@ class CPOCommonBaseType(CPOPredicate):
 
     def get_exp2(self): return self.cd.dictionary.get_exp(self.args[1])
 
+    def has_variable(self,vid):
+        return self.get_exp1().has_variable(vid) or self.get_exp2().has_variable(vid)
+
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp1()) + ','
                     + str(self.get_exp2()) + ')')
@@ -760,6 +828,10 @@ class CPOFormatString(CPOPredicate):
         CPOPredicate.__init__(self,cd,index,tags,args)
 
     def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def is_format_string(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
     def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
 
@@ -783,6 +855,9 @@ class CPONoOverlap(CPOPredicate):
 
     def is_no_overlap(self): return True
 
+    def has_variable(self,vid):
+        return self.get_exp1().has_variable(vid) or self.get_exp2().has_variable(vid)
+
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp1()) + ','
                     + str(self.get_exp2()) + ')')
@@ -805,5 +880,7 @@ class CPOValueConstraint(CPOPredicate):
     def get_tag(self): return CPOPredicate.get_tag(self) + ':' + str(self.get_exp())
 
     def is_value_constraint(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
     def __str__(self): return self.get_tag()
