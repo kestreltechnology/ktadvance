@@ -141,6 +141,9 @@ def get_global_invs_filename(path,cfilename,objectname):
     objectname = '' if objectname == 'all' else '_' + objectname 
     return os.path.join(path,cfilename + objectname + '_ginvs.xml')
 
+def get_cfile_usr_filename(path,cfilename):
+    return os.path.join(path,(get_cfilenamebase(cfilename) + '_usr.xml'))
+
 # ----------------------------------------------------------------- functions --
 
 def get_cfun_basename(path,cfilename,fname):
@@ -268,14 +271,35 @@ def get_zitser_path():
     sardpath = os.path.join(Config().testdir,'sard')
     return os.path.abspath(os.path.join(sardpath,'zitser'))
 
+def get_zitser_summaries():
+    path = get_zitser_path()
+    summarypath = os.path.join(path,'testcasesupport')
+    summarypath = os.path.join(summarypath,'zitsersummaries')
+    return os.path.join(summarypath,'zitsersummaries.jar')
+
 def get_zitser_testpath(testname):
     return os.path.join(get_zitser_path(),testname)
+
+def get_zitser_userpath(testname):
+    return os.path.join(get_zitser_testpath(testname),'ktadvanceuser')
+
+def get_zitser_globaluserfile(testname):
+    return os.path.join(get_zitser_userpath(testname),'advanceuserglobal.xml')
+
+def get_zitser_globaluserfile_xnode(testname):
+    filename = get_zitser_globaluserfile(testname)
+    return get_xnode(filename,'user-data','user-data',show=True)
+
+def get_zitser_cfile_userdata(testname,cfilename):
+    path = get_zitser_userpath(testname)
+    filename = get_cfilenamebase(path,cfilename)
+    return filename ^ "_user.xml"
 
 # ------------------------------------------------------------ juliet tests ----
 
 def get_juliet_path():
     sardpath = os.path.join(Config().testdir,'sard')
-    return os.path.abspath(os.path.join(sardpath,'juliet_v1.2'))
+    return os.path.abspath(os.path.join(sardpath,'juliet_v1.3'))
 
 def get_juliet_summaries():
     path = get_juliet_path()
@@ -337,19 +361,25 @@ def unpack_src_i_tar_file(testname):
 # ------------------------------------------------------------ unzip tar file --
 
 def unpack_tar_file(path,deletesemantics=False):
-    targzfile = 'semantics_linux.tar.gz'
+    linuxtargzfile = 'semantics_linux.tar.gz'
+    mactargzfile = 'semantics_mac.tar.gz'
     os.chdir(path)
 
-    if os.path.isfile(targzfile):
-        if os.path.isdir('semantics'):
-            if deletesemantics:
-                print('Removing existing semantics directory')
-                shutil.rmtree('semantics')
-            else:
-                return True
+    if os.path.isfile(linuxtargzfile):
+        targzfile = linuxtargzfile
+    elif os.path.isfile(mactargzfile):
+        targzfile = mactargzfile
+    elif os.path.isdir('semantics') and not deletesemantics:
+        return True
     else:
-        print('Not deleting the semantics directory; no gzipped tar file found')
         return False
+
+    if os.path.isdir('semantics'):
+        if deletesemantics:
+            print('Removing existing semantics directory')
+            shutil.rmtree('semantics')
+        else:
+            return True
 
     if os.path.isfile(targzfile):
         cmd = [ 'tar', 'xfz', targzfile ]

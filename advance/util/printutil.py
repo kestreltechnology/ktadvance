@@ -94,4 +94,8 @@ def semantics_not_found_err_msg(cpath):
                         '  ' + cpath,
                         '  Please analyze the application first to produce the analysis results to report.'])
 
+def global_definitions_not_found_err_msg(cpath):
+    return err_msg(['No globaldefinitions.xml file found in ', cpath,
+                        ' Please run the linker first to produce a global definitions file and cross references.'])
+
     
