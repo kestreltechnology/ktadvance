@@ -121,12 +121,8 @@ if __name__ == '__main__':
     am.create_app_primary_proofobligations()
 
     for i in range(2):
-        am.generate_app_local_invariants(['llvis'])
-        am.check_app_proofobligations()
+        am.generate_and_check_app('llvis')        
 
     for i in range(args.analysisrounds):
         capp.update_spos()
-
-        am.generate_app_local_invariants(['llvisp'])
-        am.check_app_proofobligations()
-
+        am.generate_and_check_app('llvisp')

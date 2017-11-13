@@ -60,4 +60,10 @@ if __name__ == '__main__':
         print(RP.project_proofobligation_stats_tostring(capp))
     except IndexedTableError as e:
         print(e.msg)
+
+    missingsummaries = capp.get_missing_summaries()
+    if len(missingsummaries) > 0:
+        print('\nMissing summaries:')
+        for s in sorted(missingsummaries):
+            print(str(missingsummaries[s]).rjust(5) + '  ' + s)
     
