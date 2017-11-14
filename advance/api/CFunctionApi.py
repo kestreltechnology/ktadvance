@@ -34,7 +34,7 @@ import advance.util.fileutil as UF
 
 memory_free_functions = [ 'free', 'realloc' ]
 
-class CFunctionApi():
+class CFunctionApi(object):
 
     def __init__(self,cfun):
         self.cfun = cfun

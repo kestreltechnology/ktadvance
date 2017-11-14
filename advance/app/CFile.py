@@ -47,7 +47,7 @@ from advance.app.CFileDeclarations import CFileDeclarations
 
 from advance.proof.CFilePredicateDictionary import CFilePredicateDictionary
 
-class CFile():
+class CFile(object):
     '''C File level declarations.'''
 
     def __init__(self,capp,index,xnode):

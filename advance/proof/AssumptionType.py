@@ -25,7 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-class ATDictionaryRecord():
+class ATDictionaryRecord(object):
     '''Base class for assumption types.'''
 
     def __init__(self,pod,index,tags,args):
