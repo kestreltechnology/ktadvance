@@ -42,6 +42,35 @@ class CFileDictionary(CDictionary):
         xnode = xnode.find('c-dictionary')
         CDictionary.initialize(self,xnode,force)
 
+    def index_compinfo_key(self,compinfo,_):
+        cfid = compinfo.decls.cfile.index
+        fid = self.cfile.index
+        ckey = compinfo.get_ckey()
+        if not (cfid == fid):
+            tgtkey = self.cfile.capp.indexmanager.convert_ckey(cfid,ckey,fid)
+            if tgtkey is None:
+                raise LookupError('Unable to find key for ' + str(ckey)
+                                      + ' from file ' + str(cfid)
+                                      + ' in file ' + str(fid))
+            else:
+                return tgtkey
+        else:
+            return ckey
+
+    def convert_ckey(self,ckey,fid=-1):
+        if fid == -1: return ckey
+        thisfid = self.cfile.index
+        if not (thisfid == fid):
+            tgtkey = self.cfile.capp.indexmanager.convert_ckey(fid,ckey,thisfid)
+            if tgtkey is None:
+                raise LookupError('Unable to find key for ' + str(ckey)
+                                      + ' from file ' + str(fid)
+                                      + ' in file ' + str(thisfid))
+            else:
+                return tgtkey
+        else:
+            return ckey
+
     def index_exp(self,e,subst={},fid=-1):
         if e.is_lval():
             lhost = e.get_lval().get_lhost()

@@ -55,6 +55,16 @@ class ATApiAssumptionType(ATDictionaryRecord):
     def __str__(self): return 'api:' + str(self.get_predicate())
 
 
+class ATUserAssumptionType(ATDictionaryRecord):
+
+    def __init__(self,pod,index,tags,args):
+        ATDictionaryRecord.__init__(self,pod,index,tags,args)
+
+    def get_predicate(self): return self.pd.get_predicate(int(self.args[0]))
+
+    def __str__(self): return 'user:' + str(self.get_predicate())
+
+
 class ATPostconditionType(ATDictionaryRecord):
 
     def __init__(self,pod,index,tags,args):

@@ -35,8 +35,6 @@ class ApiAssumption(object):
         self.ppos = ppos
         self.spos = spos
 
-    def get_dependent_pos(self): return self.primarypos
-
     def __str__(self):
         strppos = ''
         strspos = ''

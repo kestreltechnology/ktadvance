@@ -205,6 +205,16 @@ class CFile(object):
         with open(filename,'w') as fp:
             fp.write(UX.doc_to_pretty(ET.ElementTree(xroot)))
 
+    def save_user_assumptions(self,userdata,assumptions):
+        path = self.capp.path
+        xroot = UX.get_xml_header('cfile','cfile')
+        xnode = ET.Element('cfile')
+        xroot.append(xnode)
+        userdata.write_xml(xnode,assumptions)
+        filename = UF.get_cfile_usr_filename(path,self.name)
+        with open(filename,'w') as fp:
+            fp.write(UX.doc_to_pretty(ET.ElementTree(xroot)))
+        
     def _initialize_gtypes(self):
         if len(self.gtypes) > 0: return
         for t in self.xnode.find('global-type-definitions').findall('gtype'):

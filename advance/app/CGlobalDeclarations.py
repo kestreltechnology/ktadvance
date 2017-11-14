@@ -147,6 +147,13 @@ class CGlobalDeclarations(object):
 
     # --------------------- Retrieve derived items -----------------------------
 
+    def has_varinfo_by_name(self,name):
+        return any([ v.vname == name for v in self.varinfo_table.values() ])
+
+    def get_varinfo_by_name(self,name):
+        for v in self.varinfo_table.values():
+            if v.vname == name: return v
+
     def get_structname(self,ckey):
         if ckey in self.compinfo_names:
             return list(self.compinfo_names[ckey])[0]
@@ -160,11 +167,11 @@ class CGlobalDeclarations(object):
         return None
 
     def is_struct(self,ckey):
-        cinfo = self.getcompinfo(ckey)
+        cinfo = self.get_compinfo(ckey)
         if cinfo is None:
             print('Compinfo ' + str(ckey) + ' not found')
             return False
-        return self.getcompinfo(ckey).isstruct
+        return self.get_compinfo(ckey).isstruct
 
     def convert_ckey(self,ckey,fid=-1):
         if fid >= 0:

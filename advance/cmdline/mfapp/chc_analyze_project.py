@@ -121,12 +121,8 @@ if __name__ == '__main__':
     am.create_app_primary_proofobligations(processes=args.maxprocesses)
 
     for i in range(2):
-        am.generate_app_local_invariants(['llvis'],processes=args.maxprocesses)
-        am.check_app_proofobligations(processes=args.maxprocesses)
+        am.generate_and_check_app('llvis', processes=args.maxprocesses)        
 
     for i in range(args.analysisrounds):
         capp.update_spos()
-
-        am.generate_app_local_invariants(['llvisp'],processes=args.maxprocesses)
-        am.check_app_proofobligations(processes=args.maxprocesses)
-
+        am.generate_and_check_app('llvisp', processes=args.maxprocesses)

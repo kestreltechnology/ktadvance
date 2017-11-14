@@ -76,6 +76,7 @@ class CApplication(object):
         if self.singlefile: return self.get_single_file()
 
     def get_file(self,fname):
+        self._initialize_files()
         index = self.get_file_index(fname)
         self._initialize_file(index,fname)
         if fname in self.files:
@@ -83,7 +84,7 @@ class CApplication(object):
 
     def get_file_by_index(self,index):
         if index in self.filenames:
-            return self.getfile(self.filenames[index])
+            return self.get_file(self.filenames[index])
 
     def get_file_index(self,fname):
         for i in self.filenames:
@@ -170,15 +171,14 @@ class CApplication(object):
     def get_compinfo(self,fileindex,ckey):
         return self.get_file_by_index(fileindex).get_compinfo(ckey)
 
+    def get_global_compinfos(self):
+        return self.declarations.compinfo_table.values()
+
     def get_file_compinfos(self):
         result = []
         def f(f):result.extend(f.declarations.getcompinfos())
         self.fileiter(f)
         return result
-
-    def get_varinfos(self):
-		self._initialize_varinfos()
-		return self.varinfos.values()
 
     def get_file_global_varinfos(self):
         result = []
@@ -211,6 +211,15 @@ class CApplication(object):
                          + str(mctotal).rjust(12)
                          + str(fctotal).rjust(12))
         return '\n'.join(lines)
+
+    def get_missing_summaries(self):
+        result = {}
+        def f(cfun):
+            for s in cfun.api.missingsummaries:
+                if not s in result: result[s] = 0
+                result[s] += 1
+        self.iter_functions(f)
+        return result
         
 
     '''Create secondary proof obligations for all call sites and return sites.

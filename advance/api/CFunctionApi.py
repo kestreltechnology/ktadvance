@@ -26,6 +26,7 @@
 # ------------------------------------------------------------------------------
 
 from advance.api.ApiAssumption import ApiAssumption
+from advance.api.GlobalAssumption import GlobalAssumption
 from advance.api.FieldAssignment import FieldAssignment
 from advance.api.CGlobalAssignment import CGlobalAssignment
 from advance.api.PostConditionRequest import PostConditionRequest
@@ -43,6 +44,7 @@ class CFunctionApi(object):
         self.xnode = None
         self.parameters = {}              # nr -> (vid,vname)
         self.apiassumptions = {}          # id -> ApiAssumption
+        self.globalassumptions = {}       # id -> GlobalAssumption
         self.postconditionrequests = {}            # id -> PostConditionRequest
         self.postconditionguarantees = {}  # id -> PostCondition
         self.dsassumptions = {}
@@ -126,6 +128,12 @@ class CFunctionApi(object):
             ppos = [ int(i) for i in x.get('ppos').split(',') ] if 'ppos' in x.attrib else []
             spos = [ int(i) for i in x.get('spos').split(',') ] if 'spos' in x.attrib else []
             self.apiassumptions[id] = ApiAssumption(self,id,predicate,ppos,spos)
+        for x in self.xnode.find('api').find('global-assumptions').findall('ga'):
+            predicate = self.cfile.predicatedictionary.read_xml_predicate(x)
+            id = int(x.get('ipr'))
+            ppos = [ int(i) for i in x.get('ppos').split(',') ] if 'ppos' in x.attrib else []
+            spos = [ int(i) for i in x.get('spos').split(',') ] if 'spos' in x.attrib else []
+            self.globalassumptions[id] = GlobalAssumptions(self,id,predicate,ppos,spos)
         for x in self.xnode.find('api').find('postcondition-requests').findall('rr'):
             postrequest = self.cfile.interfacedictionary.read_xml_postrequest(x)
             ppos = [ int(i) for i in x.get('ppos').split(',') ] if 'ppos' in x.attrib else []

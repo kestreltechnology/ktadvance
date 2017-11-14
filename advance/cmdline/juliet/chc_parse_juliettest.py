@@ -99,8 +99,8 @@ if __name__ == '__main__':
             print('Removing semantics_linux.tar.gz')
             os.remove('semantics_linux.tar.gz')
 
-    parsemanager = ParseManager(cpath,cpath,nofilter=True)
-    parsemanager.initializepaths()
+    parsemanager = ParseManager(cpath,cpath)
+    parsemanager.initialize_paths()
     
     cleancmd = [ 'make', 'clean' ]
     p = subprocess.call(cleancmd,cwd=cpath,stderr=subprocess.STDOUT)
@@ -125,6 +125,7 @@ if __name__ == '__main__':
         print('Expected to find file')
         print('   ' + ccfilename)
         print('*' * 80)
+
         exit(1)
     
     with open(ccfilename) as fp:
@@ -139,4 +140,4 @@ if __name__ == '__main__':
     parsemanager.parse_with_ccommands(compilecommands,copyfiles=True)
 
     if args.savesemantics:
-        parsemanager.savesemantics()
+        parsemanager.save_semantics()

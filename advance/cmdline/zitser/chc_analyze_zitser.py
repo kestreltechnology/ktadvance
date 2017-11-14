@@ -38,6 +38,7 @@ from advance.util.Config import Config
 from advance.app.CApplication import CApplication
 from advance.cmdline.AnalysisManager import AnalysisManager
 from advance.linker.CLinker import CLinker
+from advance.userdata.UserData import UserData
 
 def parse():
     usage = ('\nCall with the name of one of the sard/zitser projects, e.g., id1284')
@@ -112,15 +113,15 @@ if __name__ == '__main__':
     am.create_app_primary_proofobligations()
     capp.iter_files(lambda(f):f.reinitialize_tables())
     
+    xuserdata = UF.get_zitser_globaluserfile_xnode(args.path)
+    userdata = UserData(xuserdata,capp)
+    print(str(userdata))
+    userdata.distribute()
+   
     for i in range(3):
-        am.generate_app_local_invariants(['llvisp'])
-        am.check_app_proofobligations()
-        capp.iter_files(lambda(f):f.reinitialize_tables())
+        am.generate_and_check_app('llvisp')
 
     for i in range(args.analysisrounds):
         capp.update_spos()
-
-        am.generate_app_local_invariants(['llvisp'])
-        am.check_app_proofobligations()
-        capp.iter_files(lambda(f):f.reinitialize_tables())
+        am.generate_and_check_app('llvisp')
 
