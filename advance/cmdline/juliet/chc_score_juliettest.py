@@ -71,7 +71,7 @@ if __name__ == '__main__':
     testset = JulietTestSetRef(d)
     julietppos = JTS.get_julietppos(testset)
     
-    ppopairs = JTS.get_ppopairs(julietppos,capp)
+    ppopairs = JTS.get_ppo_pairs(julietppos,capp)
     print(JTS.testppo_results_tostring(ppopairs,capp))
     
     testsummary = {}

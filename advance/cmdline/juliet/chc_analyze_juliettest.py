@@ -74,6 +74,8 @@ def timing(activity):
           '\nCompleted ' + activity + ' in ' + str(time.time() - t0) + ' secs' +
           '\n' + ('=' * 80))
 
+def save_xrefs(f):
+    capp.indexmanager.save_xrefs(capp.path,f.name,f.index)
 
 if __name__ == '__main__':
 
@@ -94,14 +96,10 @@ if __name__ == '__main__':
 
     capp = CApplication(sempath)
     linker = CLinker(capp)
-    linker.linkcompinfos()
-    linker.linkvarinfos()
-
-    def savexrefs(f):
-        capp.indexmanager.savexrefs(capp.getpath(),f.getfilename(),f.getindex())
-    capp.fileiter(savexrefs)
-    
-    linker.saveglobalcompinfos()
+    linker.link_compinfos()
+    linker.link_varinfos()
+    capp.iter_files(save_xrefs)
+    linker.save_global_compinfos()
 
     # have to reinitialize capp to get linking info properly initialized
     capp = CApplication(sempath)
@@ -111,14 +109,11 @@ if __name__ == '__main__':
     am = AnalysisManager(capp,wordsize=64,unreachability=True,
                              thirdpartysummaries=[UF.get_juliet_summaries()])
 
-    am.create_app_primaryproofobligations()
-    am.generate_app_localinvariants(['llvis'], args.maxprocesses)
-    am.generate_app_localinvariants(['llvis'], args.maxprocesses)
-    am.generate_app_localinvariants(['llvis'], args.maxprocesses)
-    am.check_app_proofobligations(args.maxprocesses)
+    am.create_app_primary_proofobligations()
 
-    for i in range(args.analysisrounds):
-        capp.updatespos()
+    for i in range(2):
+        am.generate_and_check_app('llvisp')
 
-        am.generate_app_localinvariants(['llvis'], args.maxprocesses)
-        am.check_app_proofobligations()
+    for i in range(2):
+        capp.update_spos()
+        am.generate_and_check_app('llvisp')
