@@ -38,7 +38,7 @@ from advance.app.CGlobalDeclarations import CGlobalDeclarations
 from advance.source.CSrcFile import CSrcFile
 from __builtin__ import file
 
-class CApplication():
+class CApplication(object):
     '''Primary access point for source code and analysis results.'''
 
     def __init__(self,path,cfilename=None,srcpath=None):
@@ -104,16 +104,23 @@ class CApplication():
         for file in self.get_files(): f(file)
 
     def iter_files_parallel(self, f, processes):
-        Process_pool = multiprocessing.Pool(processes)
+        Process_pool = multiprocessing.Pool(processes, maxtasksperchild=10)
         Process_pool.map(f, self.get_files())
+        Process_pool.close()
+        Process_pool.join()
 
     def iter_filenames(self,f):
         for fname in self.filenames.values(): f(fname)
         
     def iter_filenames_parallel(self, f, processes):
-        Process_pool = multiprocessing.Pool(processes)
-        filenames = [ v for v in self.filenames.values() ]
-        Process_pool.map(f, filenames)
+        for fname in self.filenames.values(): 
+            while(len(multiprocessing.active_children()) >= processes):
+                pass
+
+            multiprocessing.Process(target=f, args=(fname,)).start()
+            
+        while(len(multiprocessing.active_children()) > 0):
+            pass
 
     def iter_functions(self,f):
         def g(fi): fi.iter_functions(f)

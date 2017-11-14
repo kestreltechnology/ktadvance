@@ -25,6 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import multiprocessing
 
 import subprocess, os, shutil
 from functools import partial
@@ -77,18 +78,40 @@ class AnalysisManager(object):
                         os.remove(os.path.join(logfiledir,f))
         self.capp.iter_files(g)
 
+    def _reset_tables(self, cfilename):
+        cfile = self.capp.get_file(cfilename)
+        cfile.reinitialize_tables()
+        cfile.reload_ppos()
+        cfile.reload_spos()
+
+    def execute_cmd(self, CMD):
+        try:
+            print(CMD)
+            result = subprocess.check_output(CMD)
+            print(result)
+        except subprocess.CalledProcessError as args:
+            print(args.output)
+            print(args)
+            exit(1)
+
+    def create_file_primary_proofobligations_cmd_partial(self):
+        cmd = [ self.canalyzer, '-summaries', self.chsummaries,
+                    '-command', 'primary' ]
+        for s in self.thirdpartysummaries:
+            cmd.extend(['-summaries',s])
+
+        if self.nofilter: cmd.append('-nofilter')
+        if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
+        cmd.append(self.path)
+        cmd.append('-cfile')
+        return cmd        
+
     def create_file_primary_proofobligations(self,cfilename):
         try:
-            if self.verbose:print('Creating primary proof obligations for ' + cfilename)
-            cmd = [ self.canalyzer, '-summaries', self.chsummaries,
-                        '-command', 'primary', '-cfile', cfilename ]
-            for s in self.thirdpartysummaries:
-                cmd.extend(['-summaries',s])
-
-            if self.nofilter: cmd.append('-nofilter')
-            if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
-            cmd.append(self.path)
+            cmd = self.create_file_primary_proofobligations_cmd_partial()
+            cmd.append(cfilename)
             if self.verbose:
+                print('Creating primary proof obligations for ' + cfilename)
                 print(str(cmd))
                 result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT)
                 print('\nResult: ' + str(result))
@@ -113,20 +136,23 @@ class AnalysisManager(object):
         def createspos(fn):fnupdate.spos()
         cfile.iter_functions(createspos)
 
+    def generate_file_local_invariants_cmd_partial(self, domains):
+        cmd = [ self.canalyzer, '-summaries', self.chsummaries,
+                    '-command', 'localinvs', '-domains', domains ]
+        for s in self.thirdpartysummaries:
+            cmd.extend(['-summaries',s])
+        if self.nofilter: cmd.append('-nofilter')
+        if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
+        cmd.append(self.path)
+        cmd.append('-cfile')
+        return cmd
+
     def generate_file_local_invariants(self,cfilename,domains):
         try:
-            cfile = self.capp.get_file(cfilename)
-            if self.verbose: print('Generating invariants for ' + cfilename)
-            cmd = [ self.canalyzer, '-summaries', self.chsummaries,
-                        '-command', 'localinvs', '-cfile', cfilename,
-                        '-domains', domains ]
-            for s in self.thirdpartysummaries:
-                cmd.extend(['-summaries',s])
-            if self.nofilter: cmd.append('-nofilter')
-            if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
-            if self.verbose: cmd.append('-verbose')
-            cmd.append(self.path)
-            if self.verbose:
+            cmd = self.generate_file_local_invariants_cmd_partial(domains)
+            cmd.append(cfilename)
+            if self.verbose: 
+                print('Generating invariants for ' + cfilename)
                 print(cmd)
                 result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT)
                 print('\nResult: ' + str(result))
@@ -136,9 +162,6 @@ class AnalysisManager(object):
             if result != 0:
                 print('Error in generating invariants')
                 exit(1)
-            cfile.reinitialize_tables()
-            cfile.reload_ppos()
-            cfile.reload_spos()
         except subprocess.CalledProcessError, args:
             print(args.output)
             print(args)
@@ -146,15 +169,15 @@ class AnalysisManager(object):
 
     def generate_file_global_invariants(self,cfilename):
         try:
-            if self.verbose: print('Generating global invariants for ' + cfilename)
             cmd = [ self.canalyzer, '-summaries', self.chsummaries,
-                        '-command', 'globalinvs', '-cfile', cfilename ]
+                    '-command', 'globalinvs', '-cfile', cfilename ]
             for s in self.thirdpartysummaries:
                 cmd.extend(['-summaries',s])
             if self.nofilter: cmd.append('-nofilter')
-            if self.wordsize > 0: cmd.extend(['wordsize',str(self.wordsize)])
+            if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
             cmd.append(self.path)
-            if self.verbose:
+            if self.verbose: 
+                print('Generating global invariants for ' + cfilename)
                 print(cmd)
                 result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT)
                 print('\nResult: ' + str(result))
@@ -170,20 +193,26 @@ class AnalysisManager(object):
             exit(1)
 
 
+    def check_file_proofobligations_cmd_partial(self):
+        cmd = [ self.canalyzer, '-summaries', self.chsummaries,
+                   '-command', 'check' ]
+        for s in self.thirdpartysummaries:
+            cmd.extend(['-summaries',s])
+        if self.nofilter: cmd.append('-nofilter')
+        if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
+        if self.unreachability: cmd.append('-unreachability')
+        if not self.delegate_to_post: cmd.append('-disable_post_delegation')
+        cmd.append(self.path)
+        cmd.append('-cfile')
+        return cmd
+        
+
     def check_file_proofobligations(self,cfilename):
         try:
-            cfile = self.capp.get_file(cfilename)
-            if self.verbose: print('Checking proof obligations for ' + cfilename)
-            cmd = [ self.canalyzer, '-summaries', self.chsummaries,
-                        '-command', 'check', '-cfile', cfilename ]
-            for s in self.thirdpartysummaries:
-                cmd.extend(['-summaries',s])
-            if self.nofilter: cmd.append('-nofilter')
-            if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
-            if self.unreachability: cmd.append('-unreachability')
-            if not self.delegate_to_post: cmd.append('-disable_post_delegation')
-            cmd.append(self.path)
-            if self.verbose:
+            cmd = self.check_file_proofobligations_cmd_partial()
+            cmd.append(cfilename)
+            if self.verbose: 
+                print('Checking proof obligations for ' + cfilename)
                 print(cmd)
                 result = subprocess.call(cmd,cwd=self.path,stderr=subprocess.STDOUT)
                 print('\nResult: ' + str(result))
@@ -193,33 +222,39 @@ class AnalysisManager(object):
             if result != 0:
                 print('Error in checking proof obligations')
                 exit(1)
-            cfile.reinitialize_tables()
-            cfile.reload_ppos()
-            cfile.reload_spos()
         except subprocess.CalledProcessError, args:
             print(args.output)
             print(args)
             exit(1)
 
-    def create_app_primary_proofobligations(self):
-        def f(cfile):self.create_file_primary_proofobligations(cfile)
-        self.capp.iter_filenames(f)
+    def create_app_primary_proofobligations(self, processes=1):
+        if processes > 1:
+            def f(cfile):
+                cmd = self.create_file_primary_proofobligations_cmd_partial()
+                cmd.append(cfile)
+                self.execute_cmd(cmd)
+            self.capp.iter_filenames_parallel(f, processes)
+        else:
+            def f(cfile):self.create_file_primary_proofobligations(cfile)
+            self.capp.iter_filenames(f)
 
     def generate_app_global_invariants(self):
         def f(cfile):self.generate_file_global_invariants(cfile)
         self.capp.iter_filenames(f)
 
-    def _generate_app_local_invariants(self, domains, cfile):
-        for d in domains:
-            self.generate_file_local_invariants(cfile, d)
-
     def generate_app_local_invariants(self,domains,processes=1):
-        gen = partial(self._generate_app_local_invariants, domains)
         if processes > 1:
-            AUP.pickling_setup()
-            self.capp.iter_filenames_parallel(gen, processes)
+            def f(cfile):
+                for d in domains:
+                    cmd = self.generate_file_local_invariants_cmd_partial(d)
+                    cmd.append(cfile)
+                    self.execute_cmd(cmd)
+            self.capp.iter_filenames_parallel(f, processes)
         else:
-            self.capp.iter_filenames(gen)
+            def f(cfile):
+                for d in domains:
+                    self.generate_file_local_invariants(cfile, d)
+            self.capp.iter_filenames(f)
     '''
     def generate_global_invariants(self,objectname,filenames=[]):
         initializers = {}
@@ -256,15 +291,17 @@ class AnalysisManager(object):
         globalinvs = CGlobalInvariants(self.capp,objectname,filenames,initializers,assignments)
         globalinvs.save()
     '''
-    def _check_app_proofobligations(self, cfile):
-        self.check_file_proofobligations(cfile)
-
+    
     def check_app_proofobligations(self, processes=1):
         if processes > 1:
-            AUP.pickling_setup()
-            self.capp.iter_filenames_parallel(self._check_app_proofobligations, processes)
+            def f(cfile):
+                cmd = self.check_file_proofobligations_cmd_partial()
+                cmd.append(cfile)
+                self.execute_cmd(cmd)
+            self.capp.iter_filenames_parallel(f, processes)
         else:
-            self.capp.iter_filenames(self._check_app_proofobligations)
+            self.capp.iter_filenames(self.check_file_proofobligations)
+        self.capp.iter_filenames(self._reset_tables)
 
             
             
