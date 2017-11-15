@@ -307,13 +307,14 @@ class CApplication():
             self.files[fname] = CFile(self,index,cfile)
             self.indexmanager.add_file(self.files[fname])
 
-    def _initializecallgraphs(self):
+    def _initialize_callgraphs(self):
         if len(self.callgraph) > 0: return
         def collectcallers(fn):
             fid = fn.cfile.index
-            vid = fn.get_vid
+            vid = fn.svar.get_vid()
             def g(cs):
-                fundef = self.indexmanager.resolve_vid(fid,cs.getcalleeid())
+                if cs.callee is None: return
+                fundef = self.indexmanager.resolve_vid(fid,cs.callee.get_vid())
                 if not fundef is None:
                     if not (fid,vid) in self.callgraph:
                         self.callgraph[(fid,vid)] = []
