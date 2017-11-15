@@ -39,7 +39,7 @@ from advance.cmdline.AnalysisManager import AnalysisManager
 def parse():
     usage= (
         '\nCall with the directory name of one of the subdirectories in\n' +
-        'tests/sard/juliet_v1.2\n\n' +
+        'tests/sard/juliet_v1.3\n\n' +
         ' Example: python chc_prepare_juliettest.py CWE121/s01/CWE129_largeQ  \\ \n' +
         '    CWE121_Stack_Based_Buffer_Overflow__CWE129_large_\n\n')
     description = (

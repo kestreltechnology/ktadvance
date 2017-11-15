@@ -26,14 +26,29 @@
 # ------------------------------------------------------------------------------
 
 import os
+import time
 
 import advance.util.fileutil as UF
+import advance.util.printutil as UP
+
+def getjulietstatus(dname):
+    ktmodtime = 0
+    scmodtime = 0
+    sempath = os.path.join(dname,'semantics')
+    if os.path.isdir(sempath):
+        ktpath = os.path.join(sempath,'ktadvance')
+        if os.path.isdir(ktpath):
+            ktmodtime = os.path.getmtime(ktpath)
+    scorefile = os.path.join(dname,'summaryresults.json')
+    if os.path.isfile(scorefile):
+        scmodtime = os.path.getmtime(scorefile)
+    return (ktmodtime,scmodtime)
 
 if __name__ == '__main__':
 
     path = UF.get_juliet_path()
 
-    result = []
+    result = {}
 
     if os.path.isdir(path):
         for d1 in os.listdir(path):
@@ -46,11 +61,14 @@ if __name__ == '__main__':
                             for d3 in os.listdir(fd2):
                                 fd3 = os.path.join(fd2,d3)
                                 if os.path.isdir(fd3):
-                                    result.append(os.path.join(os.path.join(d1,d2),d3))
+                                    dname = os.path.join(os.path.join(d1,d2),d3)
+                                    result[dname] = getjulietstatus(fd3)
                         else:
-                            result.append(os.path.join(d1,d2))
+                            dname = os.path.join(d1,d2)
+                            result[dname] = getjulietstatus(fd2)
 
-    print('Juliet test sets currently provided (' + str(len(result)) + '):')
-    print('~' * 50)
+    print(UP.reportheader('Juliet test sets currently provided (' + str(len(result)) + ')'))
+    print('\n  ' + 'directory'.ljust(42) + 'analysis time    score time')
+    print('-' * 80)
     for d in sorted(result):
-        print('  ' + d)
+        print('  ' + d.ljust(40) + UP.chtime(result[d][0]) + '  ' + UP.chtime(result[d][1]))

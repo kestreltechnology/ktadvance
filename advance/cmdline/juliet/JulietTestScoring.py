@@ -48,10 +48,12 @@ def keymatches(tppo,ppo):
             (tppo.has_exp_ctxt() and str(ppo.context.get_exp_context()) == tppo.expctxt)):
             if ((not tppo.has_variable_names()) or
                     (tppo.has_variable_names() and
-                         any([ ppo.has_variable(vname) for vname in tppo.get_variable_names()]))):
+                         any([ ppo.has_variable_name(vname) for vname in tppo.variablename]))):
                 if ((not tppo.has_target_type()) or
                         (tppo.has_target_type() and ppo.has_target_type(tppo.get_target_type()))):
                     return True
+            else:
+                print('Variable names: ' + str(tppo.variablename))
     return False
 
 def initialize_testsummary(testset,d):
@@ -68,7 +70,7 @@ def initialize_testsummary(testset,d):
 def classify_tgt_violation(ppo):
     if ppo is None: return 'unknown'
     if ppo.is_violated(): return 'reported'
-    if ppo.dependencies is None: return 'other'
+    if ppo.dependencies is None: return 'unknown'
     dm = ppo.dependencies.level
     if dm == 'f' or dm == 's': return 'found-safe'
     if ppo.is_delegated(): return 'found-deferred'
@@ -77,11 +79,12 @@ def classify_tgt_violation(ppo):
 def classify_tgt_safecontrol(ppo):
     if ppo is None: return 'unknown'
     if ppo.is_violated(): return 'other'
+    if ppo.dependencies is None: return 'unknown'
     dm = ppo.dependencies.level
     if dm == 's': return 'stmt-safe'
     if dm == 'f':  return 'safe'
-    if ev.is_delegated(): return 'deferred'
-    if ev.is_deadcode(): return 'deadcode'
+    if ppo.is_delegated(): return 'deferred'
+    if ppo.is_deadcode(): return 'deadcode'
     return 'other'
 
 def fill_testsummary(pairs,d):
@@ -97,19 +100,19 @@ def fill_testsummary(pairs,d):
                     classification = classify_tgt_safecontrol(ppo)
                     tsummary['safe-controls'][classification] += 1
 
-def testppo_calls_tostring(ev,capp):
+def testppo_calls_tostring(ppo,capp):
     lines = []
-    cfun = ev.get_function()
-    cfile = ev.get_file()
-    callsites = capp.get_callsites(cfile.index,cfun.getid())
+    cfun = ppo.cfun
+    cfile = ppo.cfile
+    callsites = capp.get_callsites(cfile.index,cfun.svar.get_vid())
     if len(callsites) > 0:
         lines.append('    calls:')
         for ((fid,vid),cs) in callsites:
             def f(spo):
-                sev = spo.get_evidence()
+                sev = spo.explanation
                 if sev is None: sevtxt = '?'
                 else:
-                    sevtxt = (sev.get_displayprefix() + '  ' + sev.get_evidence())
+                    sevtxt = spo.get_display_prefix() + '  ' + sev
                 lines.append('     C:' + str(spo.get_line()).rjust(3) + '  ' +
                                  spo.predicatetag.ljust(25) + sevtxt)
             cs.iter(f)
@@ -133,7 +136,7 @@ def testppo_results_tostring(pairs,capp):
                                  str(ppo.id).rjust(3) + ': ' +
                                  ppo.predicatetag.ljust(25) + evstr)
                 if (not ev is None) and ppo.is_delegated():
-                    lines.append(testppo_calls_tostring(ev,capp))
+                    lines.append(testppo_calls_tostring(ppo,capp))
     return '\n'.join(lines)
                                  
 def testsummary_tostring(d,totals):
