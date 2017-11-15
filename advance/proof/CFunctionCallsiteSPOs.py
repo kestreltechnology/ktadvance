@@ -37,7 +37,7 @@ from advance.proof.CFunctionCallsiteSPO import CFunctionCallsiteSPO
 from advance.proof.CFunctionPO import CProofDependencies
 from advance.proof.CFunctionPO import po_status
 
-class CFunctionCallsiteSPOs():
+class CFunctionCallsiteSPOs(object):
     '''Represents the supporting proof obligations associated with a call site.'''
 
     def __init__(self,cspos,xnode):

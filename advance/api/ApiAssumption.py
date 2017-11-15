@@ -25,7 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-class ApiAssumption():
+class ApiAssumption(object):
 
     def __init__(self,capi,id,predicate,ppos,spos):
         self.id = id

@@ -37,7 +37,7 @@ TODO:
   - save gxrefs file if new vid's were added to a file
 '''
 
-class IndexManager():
+class IndexManager(object):
 
     def __init__(self,issinglefile):
         self.issinglefile = issinglefile    # application consists of a single file

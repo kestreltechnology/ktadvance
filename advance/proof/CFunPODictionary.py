@@ -49,7 +49,7 @@ spo_type_constructors = {
     'rs': lambda(x):PP.ReturnsiteSPOType(*x)
     }
 
-class CFunPODictionary():
+class CFunPODictionary(object):
     '''Indexed function proof obligations.'''
 
     def __init__(self,cfun):

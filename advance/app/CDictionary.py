@@ -121,7 +121,7 @@ typsig_constructors = {
     'tsbase': lambda(x):CS.CTypsigBase(*x)
     }
 
-class CDictionary():
+class CDictionary(object):
     '''Indexed types.'''
 
     def __init__(self):

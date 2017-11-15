@@ -66,7 +66,7 @@ po_predicate_constructors = {
     'pre': lambda(x):PO.CPOPredicate(*x)
     }
 
-class CFilePredicateDictionary():
+class CFilePredicateDictionary(object):
     '''Dictionary that encodes proof obligation predicates.'''
 
     def __init__(self,cfile):

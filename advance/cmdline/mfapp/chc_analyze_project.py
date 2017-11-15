@@ -118,11 +118,11 @@ if __name__ == '__main__':
     capp = CApplication(sempath)
     am = AnalysisManager(capp,filter=args.filter,verbose=args.verbose)
 
-    am.create_app_primary_proofobligations()
+    am.create_app_primary_proofobligations(processes=args.maxprocesses)
 
     for i in range(2):
-        am.generate_and_check_app('llvis')        
+        am.generate_and_check_app('llvis', processes=args.maxprocesses)        
 
     for i in range(args.analysisrounds):
         capp.update_spos()
-        am.generate_and_check_app('llvisp')
+        am.generate_and_check_app('llvisp', processes=args.maxprocesses)

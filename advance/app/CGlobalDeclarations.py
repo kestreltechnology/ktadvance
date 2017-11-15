@@ -54,7 +54,7 @@ class ConjectureFailure(Exception):
                     + str(self.gckey))
 
 
-class CGlobalDeclarations():
+class CGlobalDeclarations(object):
     '''Dictionary that indexes global variables and struct definitions from all files.
 
     The indexing of struct definitions may involve backtracking in the case of
