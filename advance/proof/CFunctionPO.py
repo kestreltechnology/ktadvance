@@ -99,7 +99,14 @@ class CFunctionPO():
 
     def get_line(self): return self.location.get_line()
 
-    def has_variable(self,vname): return self.predicate.has_variable(vname)
+    def has_variable_name(self,vname):
+        vid = self.cfun.get_variable_vid(vname)
+        if not vid is None:
+            return self.has_variable(vid)
+        else:
+            False
+
+    def has_variable(self,vid): return self.predicate.has_variable(vid)
 
     def has_target_type(self,targettype): return self.predicate.has_target_type()
 
