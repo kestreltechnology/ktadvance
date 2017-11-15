@@ -78,6 +78,12 @@ class CFunction():
         else:
             print('Formals: ' + ','.join([ str(v) for v in self.formals.values() ]))
 
+    def get_variable_vid(self,vname):
+        for v in self.formals:
+            if self.formals[v].vname == vname: return self.formals[v].get_vid()
+        for v in self.locals:
+            if self.locals[v].vname == vname: return self.locals[v].get_vid()
+
     def iter_ppos(self,f): self.proofs.iter_ppos(f)
 
     def get_ppo(self,index): return self.proofs.get_ppo(index)
