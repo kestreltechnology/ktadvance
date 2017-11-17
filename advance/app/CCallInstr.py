@@ -27,7 +27,7 @@
 
 import advance.app.CTTypeExp as T
 
-class CCallInstr():
+class CCallInstr(object):
 
     def __init__(self,ctxt,xnode):
         self.ctxt = ctxt

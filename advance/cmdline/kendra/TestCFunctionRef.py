@@ -28,7 +28,7 @@
 from advance.cmdline.kendra.TestPPORef import TestPPORef
 from advance.cmdline.kendra.TestSPORef import TestSPORef
 
-class TestCFunctionRef():
+class TestCFunctionRef(object):
 
     def __init__(self,testcfileref,name,r):
         self.testcfileref = testcfileref

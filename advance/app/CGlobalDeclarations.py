@@ -38,8 +38,8 @@ from advance.app.CVarInfo import CVarInfo
 from advance.util.IndexedTable import IndexedTable
 
 initinfo_constructors = {
-    'single':lambda(x):CI.CSingleInitInfo(*x),
-    'compound':lambda(x):CI.CCompoundInitInfo(*x)
+    'single':lambda x:CI.CSingleInitInfo(*x),
+    'compound':lambda x:CI.CCompoundInitInfo(*x)
     }
 
 

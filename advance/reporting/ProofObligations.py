@@ -169,7 +169,7 @@ def row_method_count_tostring(d,perc=False,extradsmethods=[],rhlen=25,header1=''
     return '\n'.join(lines)
     
 
-class FunctionDisplay():
+class FunctionDisplay(object):
 
     def __init__(self,cfunction):
         self.cfunction = cfunction

@@ -226,7 +226,7 @@ class CTTypeArray(T.CTTypeBase):
         return str(etype) + '[' + size + ']'
     
 
-class CTTypeFunArg():
+class CTTypeFunArg(object):
 
     def __init__(self,ctxt,xnode):
         self.ctxt = ctxt
@@ -395,7 +395,7 @@ class CExpLval(B.CExpBase):
     def __str__(self): return str(self.getlval())
 
 
-class CLval():
+class CLval(object):
 
     def __init__(self,ctxt,xnode,subst={}):
         self.ctxt = ctxt

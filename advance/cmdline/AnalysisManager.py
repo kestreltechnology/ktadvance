@@ -28,10 +28,8 @@
 import multiprocessing
 
 import subprocess, os, shutil
-from functools import partial
 
 import advance.util.fileutil as UF
-import advance.util.pickling as AUP
 from advance.util.Config import Config
 from advance.invariants.CGlobalInvariants import CGlobalInvariants
 
@@ -88,7 +86,7 @@ class AnalysisManager(object):
         try:
             print(CMD)
             result = subprocess.check_output(CMD)
-            print(result)
+            print(result.decode('utf-8'))
         except subprocess.CalledProcessError as args:
             print(args.output)
             print(args)
@@ -126,7 +124,7 @@ class AnalysisManager(object):
             cfile.reinitialize_tables()
             cfile.reload_ppos()
             cfile.reload_spos()
-        except subprocess.CalledProcessError, args:
+        except subprocess.CalledProcessError as args:
             print(args.output)
             print(args)
             exit(1)
@@ -162,7 +160,7 @@ class AnalysisManager(object):
             if result != 0:
                 print('Error in generating invariants')
                 exit(1)
-        except subprocess.CalledProcessError, args:
+        except subprocess.CalledProcessError as args:
             print(args.output)
             print(args)
             exit(1)
@@ -187,7 +185,7 @@ class AnalysisManager(object):
             if result != 0:
                 print('Error in generating global invariants')
                 exit(1)
-        except subprocess.CalledProcessError, args:
+        except subprocess.CalledProcessError as args:
             print(args.output)
             print(args)
             exit(1)
@@ -222,7 +220,7 @@ class AnalysisManager(object):
             if result != 0:
                 print('Error in checking proof obligations')
                 exit(1)
-        except subprocess.CalledProcessError, args:
+        except subprocess.CalledProcessError as args:
             print(args.output)
             print(args)
             exit(1)
@@ -268,7 +266,7 @@ class AnalysisManager(object):
             if result != 0:
                 print('Error in generating invariants or checking proof obligations')
                 exit(1)
-        except subprocess.CalledProcessError, args:
+        except subprocess.CalledProcessError as args:
             print(args.output)
             print(args)
             exit(1)

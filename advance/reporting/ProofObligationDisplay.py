@@ -25,7 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-class ProofObligationDisplay():
+class ProofObligationDisplay(object):
 
     def __init__(self,cfile,cfunction):
         self.cfile = cfile

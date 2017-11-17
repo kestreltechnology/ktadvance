@@ -77,8 +77,7 @@ class CFile(object):
         self.contexttable.initialize()
         self.predicatedictionary.initialize(force=True)
         self.interfacedictionary.initialize()
-        self.iter_functions(lambda(f):f.reinitialize_tables())
-
+        self.iter_functions(lambda f:f.reinitialize_tables())
 
     def is_struct(self,ckey): return self.declarations.is_struct(ckey)
         
@@ -102,7 +101,7 @@ class CFile(object):
         if index in self.functions:
             return self.functions[index]
         else:
-            print 'Unable to find function with global vid ' + str(index)
+            print('Unable to find function with global vid ' + str(index))
             #raise FunctionMissingError('Unable to find function with global vid ' + str(index))
             
     def has_function_by_index(self,index):

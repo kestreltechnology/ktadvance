@@ -26,7 +26,7 @@
 # ------------------------------------------------------------------------------
 
 
-class CDictionaryRecord():
+class CDictionaryRecord(object):
     '''Base class for all objects kept in the CDictionary.'''
 
     def __init__(self,cd,index,tags,args):
@@ -43,7 +43,7 @@ class CDictionaryRecord():
         if len(argstr) > 0: node.set('a',argstr)
         node.set('ix',str(self.index))
     
-class CDeclarationsRecord():
+class CDeclarationsRecord(object):
     '''Base class for all objects kept in the CFileDeclarations.'''
 
     def __init__(self,decls,index,tags,args):

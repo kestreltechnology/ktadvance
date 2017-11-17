@@ -29,7 +29,7 @@ import json
 
 from advance.cmdline.kendra.TestCFileRef import TestCFileRef
 
-class TestSetRef():
+class TestSetRef(object):
     '''Provides access to the reference results of a set of C files.'''
 
     def __init__(self,specfilename):

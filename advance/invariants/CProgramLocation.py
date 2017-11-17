@@ -29,7 +29,7 @@ from advance.app.CLocation import CLocation
 
 import advance.app.CContext as CC
 
-class CProgramLocation():
+class CProgramLocation(object):
 
     def __init__(self,invs,xnode):
         self.invs = invs

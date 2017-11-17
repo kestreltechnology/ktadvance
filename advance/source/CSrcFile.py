@@ -29,7 +29,7 @@ import os
 
 import advance.util.fileutil as UF
 
-class CSrcFile():
+class CSrcFile(object):
     '''Represents the text file that holds the C source code.'''
 
     def __init__(self,capp,fname):

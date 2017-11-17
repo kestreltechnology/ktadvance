@@ -51,8 +51,8 @@ from advance.app.CVarInfo import CVarInfo
 from advance.app.CTypeInfo import CTypeInfo
 
 initinfo_constructors = {
-    'single':lambda(x):CI.CSingleInitInfo(*x),
-    'compound':lambda(x):CI.CCompoundInitInfo(*x)
+    'single':lambda x:CI.CSingleInitInfo(*x),
+    'compound':lambda x:CI.CCompoundInitInfo(*x)
     }
 
 def table_to_string(title,d,headerlen=10):
@@ -72,7 +72,7 @@ class CFilename(CD.CDeclarationsRecord):
     def __str__(self): return self.get_filename()
 
 
-class CFileDeclarations():
+class CFileDeclarations(object):
     '''C File level definitions and declarations.'''
 
     def __init__(self,cfile):
@@ -128,11 +128,11 @@ class CFileDeclarations():
     def get_global_functions(self): return self.gfunctions.values()
 
     def get_compinfos(self):
-        comptags = self.gcomptagdecls.values() + self.gcomptagdefs.values()
+        comptags = list(self.gcomptagdecls.values()) + list(self.gcomptagdefs.values())
         return [ x.compinfo for x in comptags ]
 
     def get_global_varinfos(self):
-        gvars = self.gvardefs.values() + self.gvardecls.values() + self.gfunctions.values()
+        gvars = list(self.gvardefs.values()) + list(self.gvardecls.values()) + list(self.gfunctions.values())
         return [ x.varinfo for x in gvars ]
 
     def get_global_varinfo(self,vid):

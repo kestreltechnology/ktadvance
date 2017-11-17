@@ -67,11 +67,11 @@ class CFunctionSPOs(CFunctionPOs):
             exit(1)
 
     def iter_callsites(self,f):
-        for cs in sorted(self.callsitespos.values(),key=lambda(p):(p.get_line())):
+        for cs in sorted(self.callsitespos.values(),key=lambda p:(p.get_line())):
             f(cs)
 
     def iter(self,f):
-        for cs in sorted(self.callsitespos.values(),key=lambda(p):(p.get_line())):
+        for cs in sorted(self.callsitespos.values(),key=lambda p:(p.get_line())):
             cs.iter(f)
         for cs in self.returnsitespos.values():
             cs.iter(f)

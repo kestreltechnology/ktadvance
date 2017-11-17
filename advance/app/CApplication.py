@@ -26,6 +26,7 @@
 # ------------------------------------------------------------------------------
 import os
 import multiprocessing
+import sys
 
 import advance.util.fileutil as UF
 
@@ -36,7 +37,8 @@ from advance.app.IndexManager import IndexManager
 from advance.app.CGlobalDeclarations import CGlobalDeclarations
 
 from advance.source.CSrcFile import CSrcFile
-from __builtin__ import file
+
+#from __builtin__ import file
 
 class CApplication(object):
     '''Primary access point for source code and analysis results.'''
@@ -62,8 +64,8 @@ class CApplication(object):
         return max([ len(x) for x in self.get_filenames()])
 
     def get_files(self):
-		self._initialize_files()
-		return self.files.values()
+        self._initialize_files()
+        return self.files.values()
 
     # return file from single-file application
     def get_single_file(self):
@@ -159,14 +161,14 @@ class CApplication(object):
         return result
         
     def get_externals(self):
-		result = {}
-		for e in self.xnode.find('global-definitions').find('external-varinfos'):
-			vfile = e.get('vfile')
-			vname = e.get('vname')
-			summarized = e.get('summarized')
-			if vfile not in result: result[vfile] = []
-			result[vfile].append((vname,summarized))
-		return result
+        result = {}
+        for e in self.xnode.find('global-definitions').find('external-varinfos'):
+            vfile = e.get('vfile')
+            vname = e.get('vname')
+            summarized = e.get('summarized')
+            if vfile not in result: result[vfile] = []
+            result[vfile].append((vname,summarized))
+        return result
 
     def get_compinfo(self,fileindex,ckey):
         return self.get_file_by_index(fileindex).get_compinfo(ckey)
@@ -302,7 +304,7 @@ class CApplication(object):
             self._initialize_file(0,fname)            
 
     def _initialize_files(self):
-		for i,f in self.filenames.items(): self._initialize_file(i,f)
+        for i,f in self.filenames.items(): self._initialize_file(i,f)
 
     def _initialize_file(self,index,fname):
         if fname in self.files:

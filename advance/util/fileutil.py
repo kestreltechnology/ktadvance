@@ -41,7 +41,7 @@ def get_xnode(filename,rootnode,desc,show=True):
             tree = ET.parse(filename)
             root = tree.getroot()
             return root.find(rootnode)
-        except ET.ParseError, args:
+        except (ET.ParseError, args):
             print('Problem in ' + filename)
             print(args)
     else:

@@ -39,7 +39,7 @@ tagtable = {
     }
 
 
-class CConstantBase():
+class CConstantBase(object):
 
     def __init__(self,ctxt,xnode):
         self.xnode = xnode

@@ -26,7 +26,7 @@
 # ------------------------------------------------------------------------------
 
 
-class CompCompatibility():
+class CompCompatibility(object):
     '''Determines compatibility between two structs.'''
 
     def __init__(self,comp1,comp2):

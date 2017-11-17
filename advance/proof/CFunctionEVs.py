@@ -28,7 +28,7 @@
 from advance.proof.CFunctionEV import CFunctionPEV
 from advance.proof.CFunctionEV import CFunctionSEV
 
-class CFunctionEVs():
+class CFunctionEVs(object):
     '''Superclass of CFunctionPEVs and CFunctionSEVs.'''
 
     def __init__(self,cproofs):

@@ -31,7 +31,7 @@ import advance.util.fileutil as UF
 import advance.util.IndexedTable as IT
 
 
-class CContextBaseRep():
+class CContextBaseRep(object):
     '''Base class for all context representations.'''
 
     def __init__(self,ctxttable,index,tags,args):
@@ -106,7 +106,7 @@ class CProgramContext(CContextBaseRep):
         return ('(' + str(self.get_cfg_context()) + ',' + str(self.get_exp_context()) + ')')
 
 
-class CContextTable():
+class CContextTable(object):
 
     def __init__(self,cfile):
         self.cfile = cfile

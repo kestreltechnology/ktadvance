@@ -31,7 +31,7 @@ import advance.util.IndexedTable as IT
 from advance.app.CVarInfo import CVarInfo
 
 
-class CFunDeclarations():
+class CFunDeclarations(object):
     '''Function parameter and local variable declarations.'''
 
     def __init__(self,cfun,xnode):

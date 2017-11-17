@@ -39,7 +39,7 @@ tagtable = {
     'tfun': 'fn'
     }
 
-class CTTypeBase():
+class CTTypeBase(object):
     '''Variable type.
 
     By default a variable type is local to a particular c file, that is,
@@ -288,7 +288,7 @@ class CTTypeEnum(CTTypeBase):
     def __str__(self): return self.getname()
 
     
-class COffsetBase():
+class COffsetBase(object):
 
     def __init__(self,ctxt,xnode):
         self.ctxt = ctxt
@@ -303,7 +303,7 @@ class COffsetBase():
     def isfieldoffset(self): return False
 
 
-class CLHostBase():
+class CLHostBase(object):
 
     def __init__(self,ctxt,xnode):
         self.ctxt = ctxt

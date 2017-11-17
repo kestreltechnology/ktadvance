@@ -40,7 +40,7 @@ po_status = {
     }
 
 
-class CFunctionReturnsiteSPOs():
+class CFunctionReturnsiteSPOs(object):
     '''Represents the secondary proof obligations associated with a return site.
 
     The secondary proof obligations at a return site are generated from the post

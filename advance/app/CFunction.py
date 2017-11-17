@@ -39,7 +39,7 @@ from advance.api.CFunctionApi import CFunctionApi
 from advance.proof.CFunPODictionary import CFunPODictionary
 from advance.proof.CFunctionProofs import CFunctionProofs
 
-class CFunction():
+class CFunction(object):
     '''Function implementation.'''
 
     def __init__(self,cfile,xnode):

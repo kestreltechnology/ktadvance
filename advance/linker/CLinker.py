@@ -53,7 +53,7 @@ Goal: produce equivalence classes of (fileindex,compinfo key) pairs that
 
 '''
 
-class CLinker():
+class CLinker(object):
 
     def __init__(self,capp):
         self.capp = capp                              # CApplication
@@ -185,7 +185,7 @@ class CLinker():
 
     def _checkcompinfopairs(self):
         self.possiblycompatiblestructs = []
-        compinfos = sorted(self.compinfos,key=lambda(c):c.getid())
+        compinfos = sorted(self.compinfos,key=lambda c:c.getid())
         print('Checking all combinations of ' + str(len(compinfos)) + ' struct definitions')
         for (c1,c2) in itertools.combinations(compinfos,2):
             if c1.getid() == c2.getid(): continue

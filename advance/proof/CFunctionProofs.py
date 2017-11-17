@@ -52,7 +52,7 @@ object.
                                        id -> CFunctionReturnsiteSPO
 '''
 
-class CFunctionProofs():
+class CFunctionProofs(object):
 
     def __init__(self,cfun):
         self.cfun = cfun

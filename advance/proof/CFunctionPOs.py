@@ -26,7 +26,7 @@
 # ------------------------------------------------------------------------------
 
 
-class CFunctionPOs():
+class CFunctionPOs(object):
     '''Superclass of CFunctionPPOs and CFunctionSPOs.'''
 
     def __init__(self,cproofs):

@@ -30,14 +30,14 @@ import advance.util.IndexedTable as IT
 import advance.invariants.CInv as CI
 
 non_relational_value_constructors = {
-    'sx': lambda(x):CI.NRVSymbolicExpr(*x),
-    'iv': lambda(x):CI.NRVIntervalValue(*x),
-    'bv': lambda(x):CI.NRVBaseOffsetValue(*x),
-    'rs': lambda(x):CI.NRVRegionSet(*x),
-    'iz': lambda(x):CI.NRVInitializedSet(*x)
+    'sx': lambda x:CI.NRVSymbolicExpr(*x),
+    'iv': lambda x:CI.NRVIntervalValue(*x),
+    'bv': lambda x:CI.NRVBaseOffsetValue(*x),
+    'rs': lambda x:CI.NRVRegionSet(*x),
+    'iz': lambda x:CI.NRVInitializedSet(*x)
     }
 
-class CFunInvDictionary():
+class CFunInvDictionary(object):
     '''Indexed function invariants.'''
 
     def __init__(self,vard):

@@ -81,7 +81,7 @@ from advance.cmdline.ParseManager import ParseManager
 from advance.cmdline.kendra.TestResults import TestResults
 from advance.cmdline.kendra.TestSetRef import TestSetRef
 
-class TestManager():
+class TestManager(object):
     '''Provides utility functions to support regression and platform tests.
     
     Args:

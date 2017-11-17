@@ -34,19 +34,19 @@ import advance.proof.AssumptionType as AT
 import advance.proof.POType as PP
 
 assumption_type_constructors = {
-    'aa': lambda(x):AT.ATApiAssumptionType(*x),
-    'ua': lambda(x):AT.ATUserAssumptionType(*x),
-    'pc': lambda(x):AT.ATPostconditionType(*x)
+    'aa': lambda x:AT.ATApiAssumptionType(*x),
+    'ua': lambda x:AT.ATUserAssumptionType(*x),
+    'pc': lambda x:AT.ATPostconditionType(*x)
     }
 
 ppo_type_constructors = {
-    'p': lambda(x):PP.PPOType(*x),
-    'pl': lambda(x):PP.PPOLibType(*x)
+    'p': lambda x:PP.PPOType(*x),
+    'pl': lambda x:PP.PPOLibType(*x)
     }
 
 spo_type_constructors = {
-    'cs': lambda(x):PP.CallsiteSPOType(*x),
-    'rs': lambda(x):PP.ReturnsiteSPOType(*x)
+    'cs': lambda x:PP.CallsiteSPOType(*x),
+    'rs': lambda x:PP.ReturnsiteSPOType(*x)
     }
 
 class CFunPODictionary(object):

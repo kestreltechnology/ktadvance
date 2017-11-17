@@ -37,38 +37,38 @@ import advance.invariants.CVar as CV
 from advance.invariants.CFunXprDictionary import CFunXprDictionary
 
 memory_base_constructors = {
-    'null':lambda(x):CV.MemoryBaseNull(*x),
-    'str':lambda(x):CV.MemoryBaseStringLiteral(*x),
-    'sa':lambda(x):CV.MemoryBaseStackAddress(*x),
-    'saa':lambda(x):CV.MemoryBaseAllocStackAddress(*x),
-    'ga':lambda(x):CV.MemoryBaseGlobalAddress(*x),
-    'ha':lambda(x):CV.MemoryBaseHeapAddress(*x),
-    'bv':lambda(x):CV.MemoryBaseBaseVar(*x),
-    'ui':lambda(x):CV.MemoryBaseUninterpreted(*x),
-    'fr':lambda(x):CV.MemoryBaseFreed(*x)
+    'null':lambda x:CV.MemoryBaseNull(*x),
+    'str':lambda x:CV.MemoryBaseStringLiteral(*x),
+    'sa':lambda x:CV.MemoryBaseStackAddress(*x),
+    'saa':lambda x:CV.MemoryBaseAllocStackAddress(*x),
+    'ga':lambda x:CV.MemoryBaseGlobalAddress(*x),
+    'ha':lambda x:CV.MemoryBaseHeapAddress(*x),
+    'bv':lambda x:CV.MemoryBaseBaseVar(*x),
+    'ui':lambda x:CV.MemoryBaseUninterpreted(*x),
+    'fr':lambda x:CV.MemoryBaseFreed(*x)
     }
 
 constant_value_variable_constructors = {
-    'iv':lambda(x):CV.CVVInitialValue(*x),
-    'frv':lambda(x):CV.CVVFunctionReturnValue(*x),
-    'erv':lambda(x):CV.CVVExpFunctionReturnValue(*x),
-    'sev':lambda(x):CV.CVVSideEffectValue(*x),
-    'sv':lambda(x):CV.CVVSymbolicValue(*x),
-    'ma':lambda(x):CV.CVVMemoryAddress(*x)
+    'iv':lambda x:CV.CVVInitialValue(*x),
+    'frv':lambda x:CV.CVVFunctionReturnValue(*x),
+    'erv':lambda x:CV.CVVExpFunctionReturnValue(*x),
+    'sev':lambda x:CV.CVVSideEffectValue(*x),
+    'sv':lambda x:CV.CVVSymbolicValue(*x),
+    'ma':lambda x:CV.CVVMemoryAddress(*x)
     }
 
 c_variable_denotation_constructors = {
-    'lv':lambda(x):CV.LocalVariable(*x),
-    'gv':lambda(x):CV.GlobalVariable(*x),
-    'mv':lambda(x):CV.MemoryVariable(*x),
-    'mrv':lambda(x):CV.MemoryRegionVariable(*x),
-    'rv':lambda(x):CV.ReturnVariable(*x),
-    'fv':lambda(x):CV.FieldVariable(*x),
-    'cv':lambda(x):CV.CheckVariable(*x),
-    'av':lambda(x):CV.AuxiliaryVariable(*x)
+    'lv':lambda x:CV.LocalVariable(*x),
+    'gv':lambda x:CV.GlobalVariable(*x),
+    'mv':lambda x:CV.MemoryVariable(*x),
+    'mrv':lambda x:CV.MemoryRegionVariable(*x),
+    'rv':lambda x:CV.ReturnVariable(*x),
+    'fv':lambda x:CV.FieldVariable(*x),
+    'cv':lambda x:CV.CheckVariable(*x),
+    'av':lambda x:CV.AuxiliaryVariable(*x)
     }
 
-class CFunVarDictionary ():
+class CFunVarDictionary (object):
     '''Indexed analysis variables.'''
 
     def __init__(self,fdecls):

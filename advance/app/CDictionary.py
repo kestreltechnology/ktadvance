@@ -41,84 +41,84 @@ import advance.app.CTypsig as CS
 
 
 attrparam_constructors = {
-    'aint': lambda(x):CA.CAttrInt(*x),
-    'astr': lambda(x):CA.CAttrStr(*x),
-    'acons': lambda(x):CA.CAttrCons(*x),
-    'asizeof': lambda(x):CA.CAttrSizeOf(*x),
-    'asizeofe': lambda(x):CA.CAttrSizeOfE(*x),
-    'asizeofs': lambda(x):CA.CAttrSizeOfS(*x),
-    'aalignof': lambda(x):CA.CAttrAlignOf(*x),
-    'aalignofe': lambda(x):CA.CAttrAlignOfE(*x),
-    'aalignofs': lambda(x):CA.CAttrAlignOfS(*x),
-    'aunop': lambda(x):CA.CAttrUnOp(*x),
-    'abinop': lambda(x):CA.CAttrBinOp(*x),
-    'adot': lambda(x):CA.CAttrDot(*x),
-    'astar': lambda(x):CA.CAttrStar(*x),
-    'aaddrof': lambda(x):CA.CAttrAddrOf(*x),
-    'aindex': lambda(x):CA.CAttrIndex(*x),
-    'aquestion': lambda(x):CA.CAttrQuestion(*x)
+    'aint': lambda x:CA.CAttrInt(*x),
+    'astr': lambda x:CA.CAttrStr(*x),
+    'acons': lambda x:CA.CAttrCons(*x),
+    'asizeof': lambda x:CA.CAttrSizeOf(*x),
+    'asizeofe': lambda x:CA.CAttrSizeOfE(*x),
+    'asizeofs': lambda x:CA.CAttrSizeOfS(*x),
+    'aalignof': lambda x:CA.CAttrAlignOf(*x),
+    'aalignofe': lambda x:CA.CAttrAlignOfE(*x),
+    'aalignofs': lambda x:CA.CAttrAlignOfS(*x),
+    'aunop': lambda x:CA.CAttrUnOp(*x),
+    'abinop': lambda x:CA.CAttrBinOp(*x),
+    'adot': lambda x:CA.CAttrDot(*x),
+    'astar': lambda x:CA.CAttrStar(*x),
+    'aaddrof': lambda x:CA.CAttrAddrOf(*x),
+    'aindex': lambda x:CA.CAttrIndex(*x),
+    'aquestion': lambda x:CA.CAttrQuestion(*x)
     }
 
 constant_constructors = {
-    'int': lambda(x):CC.CConstInt(*x),
-    'str': lambda(x):CC.CConstStr(*x),
-    'wstr': lambda(x):CC.CConstWStr(*x),
-    'chr': lambda(x):CC.CConstChr(*x),
-    'real': lambda(x):CC.CConstReal(*x),
-    'enum': lambda(x):CC.CConstEnum(*x)
+    'int': lambda x:CC.CConstInt(*x),
+    'str': lambda x:CC.CConstStr(*x),
+    'wstr': lambda x:CC.CConstWStr(*x),
+    'chr': lambda x:CC.CConstChr(*x),
+    'real': lambda x:CC.CConstReal(*x),
+    'enum': lambda x:CC.CConstEnum(*x)
     }
 
 exp_constructors = {
-    'const': lambda(x):CE.CExpConst(*x),
-    'lval': lambda(x):CE.CExpLval(*x),
-    'sizeof': lambda(x):CE.CExpSizeOf(*x),
-    'sizeofe': lambda(x):CE.CExpSizeOfE(*x),
-    'sizeofstr': lambda(x):CE.CExpSizeOfStr(*x),
-    'alignof': lambda(x):CE.CExpAlignOf(*x),
-    'alignofe': lambda(x):CE.CExpAlignOfE(*x),
-    'unop': lambda(x):CE.CExpUnOp(*x),
-    'binop': lambda(x):CE.CExpBinOp(*x),
-    'question': lambda(x):CE.CExpQuestion(*x),
-    'caste': lambda(x):CE.CExpCastE(*x),
-    'addrof': lambda(x):CE.CExpAddrOf(*x),
-    'addroflabel': lambda(x):CE.CExpAddrOfLabel(*x),
-    'startof': lambda(x):CE.CExpStartOf(*x),
-    'fnapp': lambda(x):CE.CExpFnApp(*x),
-    'cnapp': lambda(x):CE.CExpCnApp(*x)
+    'const': lambda x:CE.CExpConst(*x),
+    'lval': lambda x:CE.CExpLval(*x),
+    'sizeof': lambda x:CE.CExpSizeOf(*x),
+    'sizeofe': lambda x:CE.CExpSizeOfE(*x),
+    'sizeofstr': lambda x:CE.CExpSizeOfStr(*x),
+    'alignof': lambda x:CE.CExpAlignOf(*x),
+    'alignofe': lambda x:CE.CExpAlignOfE(*x),
+    'unop': lambda x:CE.CExpUnOp(*x),
+    'binop': lambda x:CE.CExpBinOp(*x),
+    'question': lambda x:CE.CExpQuestion(*x),
+    'caste': lambda x:CE.CExpCastE(*x),
+    'addrof': lambda x:CE.CExpAddrOf(*x),
+    'addroflabel': lambda x:CE.CExpAddrOfLabel(*x),
+    'startof': lambda x:CE.CExpStartOf(*x),
+    'fnapp': lambda x:CE.CExpFnApp(*x),
+    'cnapp': lambda x:CE.CExpCnApp(*x)
     }
 
 lhost_constructors = {
-    'var': lambda(x):CH.CLHostVar(*x),
-    'mem': lambda(x):CH.CLHostMem(*x)
+    'var': lambda x:CH.CLHostVar(*x),
+    'mem': lambda x:CH.CLHostMem(*x)
     }
 
 offset_constructors = {
-    'n': lambda(x):CO.CNoOffset(*x),
-    'f': lambda(x):CO.CFieldOffset(*x),
-    'i': lambda(x):CO.CIndexOffset(*x)
+    'n': lambda x:CO.CNoOffset(*x),
+    'f': lambda x:CO.CFieldOffset(*x),
+    'i': lambda x:CO.CIndexOffset(*x)
     }
 
 typ_constructors = {
-    'tvoid': lambda(x):CT.CTypVoid(*x),
-    'tint': lambda(x):CT.CTypInt(*x),
-    'tfloat': lambda(x):CT.CTypFloat(*x),
-    'tnamed': lambda(x):CT.CTypNamed(*x),
-    'tcomp': lambda(x):CT.CTypComp(*x),
-    'tenum': lambda(x):CT.CTypEnum(*x),
-    'tbuiltin-va-list': lambda(x):CT.CTypBuiltinVaargs(*x),
-    'tbuiltinvaargs': lambda(x):CT.CTypBuiltinVaargs(*x),
-    'tptr': lambda(x):CT.CTypPtr(*x),
-    'tarray': lambda(x):CT.CTypArray(*x),
-    'tfun': lambda(x):CT.CTypFun(*x)
+    'tvoid': lambda x:CT.CTypVoid(*x),
+    'tint': lambda x:CT.CTypInt(*x),
+    'tfloat': lambda x:CT.CTypFloat(*x),
+    'tnamed': lambda x:CT.CTypNamed(*x),
+    'tcomp': lambda x:CT.CTypComp(*x),
+    'tenum': lambda x:CT.CTypEnum(*x),
+    'tbuiltin-va-list': lambda x:CT.CTypBuiltinVaargs(*x),
+    'tbuiltinvaargs': lambda x:CT.CTypBuiltinVaargs(*x),
+    'tptr': lambda x:CT.CTypPtr(*x),
+    'tarray': lambda x:CT.CTypArray(*x),
+    'tfun': lambda x:CT.CTypFun(*x)
     }
 
 typsig_constructors = {
-    'tsarray': lambda(x):CS.CTypsigArray(*x),
-    'tsptr': lambda(x):CS.CTypsigPtr(*x),
-    'tscomp': lambda(x):CS.CTypsigComp(*x),
-    'tsfun': lambda(x):CS.CTypsigFun(*x),
-    'tsenum': lambda(x):CS.CTypsigEnum(*x),
-    'tsbase': lambda(x):CS.CTypsigBase(*x)
+    'tsarray': lambda x:CS.CTypsigArray(*x),
+    'tsptr': lambda x:CS.CTypsigPtr(*x),
+    'tscomp': lambda x:CS.CTypsigComp(*x),
+    'tsfun': lambda x:CS.CTypsigFun(*x),
+    'tsenum': lambda x:CS.CTypsigEnum(*x),
+    'tsbase': lambda x:CS.CTypsigBase(*x)
     }
 
 class CDictionary(object):

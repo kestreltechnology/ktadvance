@@ -37,52 +37,52 @@ import advance.api.SideEffect as SE
 import advance.api.STerm as ST
 
 api_parameter_constructors = {
-    'pf': lambda(x):AP.APFormal(*x),
-    'pg': lambda(x):AP.APGlobal(*x)
+    'pf': lambda x:AP.APFormal(*x),
+    'pg': lambda x:AP.APGlobal(*x)
 }
 
 s_term_constructors = {
-    'av': lambda(x):ST.STArgValue(*x),
-    'rv': lambda(x):ST.STReturnValue(*x),
-    'nc': lambda(x):ST.STNamedConstant(*x),
-    'ic': lambda(x):ST.STNumConstant(*x),
-    'is': lambda(x):ST.STIndexSize(*x),
-    'bs': lambda(x):ST.STByteSize(*x),
-    'fo': lambda(x):ST.STFieldOffset(*x),
-    'aa': lambda(x):ST.STArgAddressedValue(*x),
-    'at': lambda(x):ST.STArgNullTarminatorPos(*x),
-    'st': lambda(x):ST.STArgSizeOfType(*x),
-    'ax': lambda(x):ST.STArithmeticExpr(*x),
-    'fs': lambda(x):ST.STFormattedOutputSize(*x),
-    'rt': lambda(x):ST.STRuntimeValue
+    'av': lambda x:ST.STArgValue(*x),
+    'rv': lambda x:ST.STReturnValue(*x),
+    'nc': lambda x:ST.STNamedConstant(*x),
+    'ic': lambda x:ST.STNumConstant(*x),
+    'is': lambda x:ST.STIndexSize(*x),
+    'bs': lambda x:ST.STByteSize(*x),
+    'fo': lambda x:ST.STFieldOffset(*x),
+    'aa': lambda x:ST.STArgAddressedValue(*x),
+    'at': lambda x:ST.STArgNullTarminatorPos(*x),
+    'st': lambda x:ST.STArgSizeOfType(*x),
+    'ax': lambda x:ST.STArithmeticExpr(*x),
+    'fs': lambda x:ST.STFormattedOutputSize(*x),
+    'rt': lambda x:ST.STRuntimeValue
     }
 
 postcondition_constructors = {
-    'nm': lambda(x):PC.PostNewMemory(*x),
-    'ab': lambda(x):PC.PostAllocationBase(*x),
-    'null': lambda(x):PC.PostNull(*x),
-    'iz': lambda(x):PC.PostInitialized(*x),
-    'ir': lambda(x):PC.PostInitializedRange(*x),
-    'nt': lambda(x):PC.PostNullTerminated(*x),
-    'false': lambda(x):PC.PostFalse(*x),
-    'px': lambda(x):PC.PostRelationalExpr(*x)
+    'nm': lambda x:PC.PostNewMemory(*x),
+    'ab': lambda x:PC.PostAllocationBase(*x),
+    'null': lambda x:PC.PostNull(*x),
+    'iz': lambda x:PC.PostInitialized(*x),
+    'ir': lambda x:PC.PostInitializedRange(*x),
+    'nt': lambda x:PC.PostNullTerminated(*x),
+    'false': lambda x:PC.PostFalse(*x),
+    'px': lambda x:PC.PostRelationalExpr(*x)
     }
 
 sideeffect_constructors = {
-    'sc': lambda(x):SE.SEConst(*x),
-    'cf': lambda(x):SE.SEConstField(*x),
-    'pv': lambda(x):SE.SEPreservesValidity(*x),
-    'iz': lambda(x):SE.SEInitializes(*x),
-    'ir': lambda(x):SE.SEInitializesRange(*x),
-    'fr': lambda(x):SE.SEFrees(*x),
-    'rp': lambda(x):SE.SERepositions(*x),
-    'iv': lambda(x):SE.SEInvalidates(*x),
-    'ff': lambda(x):SE.SEFunctional(*x),
-    'pm': lambda(x):SE.SEPreservesAllMemory(*x),
-    'pn': lambda(x):SE.SEPreservesNullTermination(*x)
+    'sc': lambda x:SE.SEConst(*x),
+    'cf': lambda x:SE.SEConstField(*x),
+    'pv': lambda x:SE.SEPreservesValidity(*x),
+    'iz': lambda x:SE.SEInitializes(*x),
+    'ir': lambda x:SE.SEInitializesRange(*x),
+    'fr': lambda x:SE.SEFrees(*x),
+    'rp': lambda x:SE.SERepositions(*x),
+    'iv': lambda x:SE.SEInvalidates(*x),
+    'ff': lambda x:SE.SEFunctional(*x),
+    'pm': lambda x:SE.SEPreservesAllMemory(*x),
+    'pn': lambda x:SE.SEPreservesNullTermination(*x)
     }
 
-class InterfaceDictionary():
+class InterfaceDictionary(object):
     '''Function interface constructs.'''
 
 

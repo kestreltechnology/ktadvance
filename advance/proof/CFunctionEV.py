@@ -25,7 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-class CFunctionEV():
+class CFunctionEV(object):
     '''Super class of CFunctionPEV and CFunctionSEV; represents PO evidence.'''
 
     def __init__(self,cevs,xnode):

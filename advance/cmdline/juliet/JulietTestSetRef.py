@@ -27,7 +27,7 @@
 
 from advance.cmdline.juliet.JulietTestRef import JulietTestRef
 
-class JulietTestSetRef():
+class JulietTestSetRef(object):
 
     def __init__(self,d):
         self.d = d

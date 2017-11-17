@@ -26,7 +26,7 @@
 # ------------------------------------------------------------------------------
 
 
-class CCallInstr():
+class CCallInstr(object):
 
     def __init__(self,cinstrs,xnode):
         self.cinstrs = cinstrs
