@@ -32,9 +32,11 @@ import advance.util.IndexedTable as IT
 import advance.app.GlobalAssignment as GA
 
 assignment_constructors = {
-    'init': lambda(x):GA.InitAssignment(*x),
-    'g': lambda(x):GA.GlobalAssignment(*x),
-    's': lambda(x):GA.StaticAssignment(*x),
+    'init': lambda x:GA.InitAssignment(*x),
+    'g': lambda x:GA.GlobalAssignment(*x),
+    'gi': lambda x:GA.GlobalIndexAssignment(*x),
+    's': lambda x:GA.StaticAssignment(*x),
+    'si': lambda x:GA.StaticIndexAssignment(*x),
     'f': lambda(x):GA.FieldAssignment(*x),
     'u': lambda(x):GA.UnknownAssignment(*x)
     }
