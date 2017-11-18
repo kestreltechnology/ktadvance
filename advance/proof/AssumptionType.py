@@ -38,6 +38,10 @@ class ATDictionaryRecord(object):
 
     def get_key(self): return (','.join(self.tags), ','.join([str(x) for x in self.args]))
 
+    def is_api_assumption(self): return False
+    def is_user_assumption(self): return False
+    def is_postcondition_assumption(self): return False
+
     def write_xml(self,node):
         (tagstr,argstr) = self.get_key()
         if len(tagstr) > 0: node.set('t',tagstr)
@@ -50,7 +54,11 @@ class ATApiAssumptionType(ATDictionaryRecord):
     def __init__(self,pod,index,tags,args):
         ATDictionaryRecord.__init__(self,pod,index,tags,args)
 
+    def get_apiid(self): return self.args[0]
+
     def get_predicate(self): return self.pd.get_predicate(int(self.args[0]))
+
+    def is_api_assumption(self): return True
 
     def __str__(self): return 'api:' + str(self.get_predicate())
 
