@@ -106,7 +106,7 @@ if __name__ == '__main__':
 
     # assume wordsize of 64
     # use unreachability as a means of proof obligation discharge
-    am = AnalysisManager(capp,wordsize=64,unreachability=True,
+    am = AnalysisManager(capp,wordsize=64,unreachability=True,delegate_to_post=False,
                              thirdpartysummaries=[UF.get_juliet_summaries()])
 
     am.create_app_primary_proofobligations()
@@ -114,6 +114,6 @@ if __name__ == '__main__':
     for i in range(2):
         am.generate_and_check_app('llvisp')
 
-    for i in range(2):
+    for i in range(5):
         capp.update_spos()
         am.generate_and_check_app('llvisp')

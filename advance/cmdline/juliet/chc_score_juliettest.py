@@ -76,7 +76,7 @@ if __name__ == '__main__':
     
     testsummary = {}
     JTS.initialize_testsummary(testset,testsummary)
-    JTS.fill_testsummary(ppopairs,testsummary)
+    JTS.fill_testsummary(ppopairs,testsummary,capp)
     totals = JTS.get_testsummarytotals(testsummary)
 
     print(JTS.testsummary_tostring(testsummary,totals))

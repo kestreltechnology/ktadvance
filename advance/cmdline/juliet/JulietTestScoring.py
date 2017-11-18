@@ -52,8 +52,6 @@ def keymatches(tppo,ppo):
                 if ((not tppo.has_target_type()) or
                         (tppo.has_target_type() and ppo.has_target_type(tppo.get_target_type()))):
                     return True
-            else:
-                print('Variable names: ' + str(tppo.variablename))
     return False
 
 def initialize_testsummary(testset,d):
@@ -67,38 +65,69 @@ def initialize_testsummary(testset,d):
             d[tindex]['safe-controls'][c] = 0
     testset.iter(f)
 
-def classify_tgt_violation(ppo):
+def classify_tgt_violation(ppo,capp):
     if ppo is None: return 'unknown'
     if ppo.is_violated(): return 'reported'
     if ppo.dependencies is None: return 'unknown'
     dm = ppo.dependencies.level
     if dm == 'f' or dm == 's': return 'found-safe'
-    if ppo.is_delegated(): return 'found-deferred'
+    if ppo.is_delegated():
+        spos = get_associated_spos(ppo,capp)
+        if len(spos) > 0:
+            classifications = [ classify_tgt_violation(spo,capp) for spo in spos ]
+            if 'reported' in classifications: return 'reported'
+            if all( [ x == 'found-safe' for x in classifications ] ): return 'found-safe'
+        else:
+            return 'found-safe'
+        return 'found-deferred'
     return 'other'
 
-def classify_tgt_safecontrol(ppo):
+def classify_tgt_safecontrol(ppo,capp):
     if ppo is None: return 'unknown'
     if ppo.is_violated(): return 'other'
     if ppo.dependencies is None: return 'unknown'
     dm = ppo.dependencies.level
     if dm == 's': return 'stmt-safe'
     if dm == 'f':  return 'safe'
-    if ppo.is_delegated(): return 'deferred'
+    if ppo.is_delegated():
+        spos = get_associated_spos(ppo,capp)
+        if len(spos) > 0:
+            classifications = [ classify_tgt_safecontrol(spo,capp) for spo in spos ]
+            if all( [ x == 'safe' or x == 'stmt-safe' for x in classifications ]):
+                return 'safe'
+            if 'other' in classifications: return 'other'
+        return 'deferred'
     if ppo.is_deadcode(): return 'deadcode'
     return 'other'
 
-def fill_testsummary(pairs,d):
+def fill_testsummary(pairs,d,capp):
     for filename in pairs:
         for fn in pairs[filename]:
             for (jppo,ppo) in pairs[filename][fn]:
                 tindex = jppo.get_test()
                 tsummary = d[tindex]
                 if jppo.is_violation():
-                    classification = classify_tgt_violation(ppo)
+                    classification = classify_tgt_violation(ppo,capp)
                     tsummary['violations'][classification] += 1
                 else:
-                    classification = classify_tgt_safecontrol(ppo)
+                    classification = classify_tgt_safecontrol(ppo,capp)
                     tsummary['safe-controls'][classification] += 1
+
+def get_associated_spos(ppo,capp):
+    result = []
+    cfun = ppo.cfun
+    cfile = ppo.cfile
+    callsites = capp.get_callsites(cfile.index,cfun.svar.get_vid())
+    assumptions = ppo.dependencies.ids
+    assumptions = [ cfun.podictionary.get_assumption_type(i) for i in assumptions ]
+    assumptions = [ a.get_apiid() for a in assumptions if a.is_api_assumption() ]
+    if len(callsites) > 0:
+        for ((fid,vid),cs) in callsites:
+            def f(spo):
+                if spo.apiid in assumptions:
+                    result.append(spo)
+            cs.iter(f)
+    return result
 
 def testppo_calls_tostring(ppo,capp):
     lines = []
