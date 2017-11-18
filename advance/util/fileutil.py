@@ -99,6 +99,14 @@ def get_cfile_predicate_dictionary_xnode(path,cfilename):
     filename = get_cfile_predicate_dictionaryname(path,cfilename)
     return get_xnode(filename,'po-dictionary','PO predicate dictionary file',show=False)
 
+def get_cfile_assignment_dictionaryname(path,cfilename):
+    cfilename = get_cfilenamebase(cfilename)
+    return os.path.join(path,cfilename + '_cgl.xml')
+
+def get_cfile_assignment_dictionary_xnode(path,cfilename):
+    filename = get_cfile_assignment_dictionaryname(path,cfilename)
+    return get_xnode(filename,'assignment-dictionary','Global assignments dictionary file',show=False)
+
 def get_cfile_interface_dictionaryname(path,cfilename):
     cfilename = get_cfilenamebase(cfilename)
     return os.path.join(path,cfilename + '_ixf.xml')
