@@ -67,11 +67,11 @@ class CFunInvariantTable(object):
             if not cvar.get_seqnr() in varsets:
                 varsets[cvar.get_seqnr() ] = r
             else:
-                if r.get_non_relational_value().size() < varsets[cvar.get_seqnr()].get_non_relational_value().size():
+                if (r.get_non_relational_value().size()
+                        < varsets[cvar.get_seqnr()].get_non_relational_value().size()):
                     varsets[cvar.get_seqnr()] = r
         invs = unrinvs + sorted(nonrsinvs + varsets.values(),key=lambda i:str(i.get_variable()))
-
-       return invs
+        return invs
 
     def initialize(self):
         xnode = UF.get_invs_xnode(self.cfun.cfile.capp.path,self.cfun.cfile.name,self.cfun.name)
