@@ -380,7 +380,8 @@ class CGlobalDeclarations(object):
             vname = varinfo.vname + '__file__' + str(fid) + '__'
         else:
             vname = varinfo.vname
-        vtype = self.dictionary.index_typ(varinfo.vtype.expand())
+        vtypeix = self.dictionary.index_typ(varinfo.vtype.expand())
+        vtype = self.dictionary.get_typ(vtypeix)
         if varinfo.has_initializer():
             vinit = varinfo.get_initializer()
             gvinit = [ self.index_init(vinit,fid=fid) ]
@@ -388,7 +389,8 @@ class CGlobalDeclarations(object):
             gvinit = []            
         tags = [ vname ]
         vargs = varinfo.args
-        args = [ -1, vtype, -1, vargs[3], vargs[4], -1, vargs[6], vargs[7] ] + gvinit
+        vaddrof = 1 if vtype.is_function() else vargs[6]
+        args = [ -1, vtypeix, -1, vargs[3], vargs[4], -1, vaddrof, vargs[7] ] + gvinit
         key = (','.join(tags),','.join([str(x) for x in args]))
         def f(index,key): return CVarInfo(self,index,tags,args)
         gvarinfoindex = self.varinfo_table.add(key,f)

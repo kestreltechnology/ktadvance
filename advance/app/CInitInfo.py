@@ -49,7 +49,7 @@ class CSingleInitInfo(CInitInfoBase):
 
     def is_single(self): return True
 
-    def __str__(self): return str(self.getexp())
+    def __str__(self): return str(self.get_exp())
         
 
 class CCompoundInitInfo(CInitInfoBase):

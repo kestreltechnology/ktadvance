@@ -44,6 +44,7 @@ from advance.source.CSrcFile import CSrcFile
 from advance.app.CContextTable import CContextTable
 from advance.app.CFileDictionary import CFileDictionary
 from advance.app.CFileDeclarations import CFileDeclarations
+from advance.app.CFileAssignmentDictionary import CFileAssignmentDictionary
 
 from advance.proof.CFilePredicateDictionary import CFilePredicateDictionary
 
@@ -59,6 +60,7 @@ class CFile(object):
         self.contexttable = CContextTable(self)
         self.predicatedictionary = CFilePredicateDictionary(self)
         self.interfacedictionary = InterfaceDictionary(self)
+        self.assigndictionary = CFileAssignmentDictionary(self)
         self.functions = {}         # vid -> CFunction
         self.functionnames = {}     # functionname -> vid
         self.strings = {}           # string-index -> (len,string)
