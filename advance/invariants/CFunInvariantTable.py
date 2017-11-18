@@ -46,15 +46,21 @@ class CFunInvariantTable():
     def get_po_invariants(self,context,poId):
         invs = self.get_invariants(context)
         def filter(inv):
-            var = inv.get_variable()
-            cvar = self.cfun.vard.get_c_variable_denotation(var.get_seqnr())
-            if cvar.is_check_variable():
-                return poId in cvar.get_po_ids()
+            if inv.is_nrv_fact():
+                var = inv.get_variable()
+                cvar = self.cfun.vard.get_c_variable_denotation(var.get_seqnr())
+                if cvar.is_check_variable():
+                    return poId in cvar.get_po_ids()
+                else:
+                    return True
             else:
                 return True
         invs = [ inv for inv in invs if filter(inv) ]
-        nonrsinvs = [ inv for inv in invs if not inv.get_non_relational_value().is_region_set() ]
-        rsinvs = [ inv for inv in invs if inv.get_non_relational_value().is_region_set() ]
+        unrinvs = [ inv for inv in invs if inv.is_unreachable_fact() ]
+        nonrsinvs = [ inv for inv in invs if inv.is_nrv_fact ()
+                          and (not inv.get_non_relational_value().is_region_set()) ]
+        rsinvs = [ inv for inv in invs if inv.is_nrv_fact()
+                       and inv.get_non_relational_value().is_region_set() ]
         varsets = {}
         for r in rsinvs:
             cvar = r.get_variable()
@@ -63,7 +69,7 @@ class CFunInvariantTable():
             else:
                 if r.get_non_relational_value().size() < varsets[cvar.get_seqnr()].get_non_relational_value().size():
                     varsets[cvar.get_seqnr()] = r
-        invs = sorted(nonrsinvs + varsets.values(),key=lambda(i):str(i.get_variable()))
+        invs = unrinvs + sorted(nonrsinvs + varsets.values(),key=lambda(i):str(i.get_variable()))
         return invs
 
     def initialize(self):

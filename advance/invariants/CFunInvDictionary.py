@@ -37,6 +37,11 @@ non_relational_value_constructors = {
     'iz': lambda(x):CI.NRVInitializedSet(*x)
     }
 
+inv_constructors = {
+    'nrv': lambda(x):CI.CInvariantNRVFact(*x),
+    'x': lambda(x):CI.UnreachableFact(*x)
+    }
+
 class CFunInvDictionary():
     '''Indexed function invariants.'''
 
@@ -100,6 +105,7 @@ class CFunInvDictionary():
     def _read_xml_invariant_fact_table(self,txnode):
         def get_value(node):
             rep = IT.get_rep(node)
+            tag = rep[1][0]
             args = (self,) + rep
-            return CI.CInvariantFact(*args)
+            return inv_constructors[tag](args)
         self.invariant_fact_table.read_xml(txnode,'n',get_value)

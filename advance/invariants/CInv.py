@@ -202,6 +202,19 @@ class CInvariantFact(InvDictionaryRecord):
     def __init__(self,invd,index,args,tags):
         InvDictionaryRecord.__init__(self,invd,index,args,tags)
 
+    def is_nrv_fact(self): return False
+    def is_unreachable_fact(self): return False
+
+    def __str__(self): return 'invariant fact ' + str(self.index)
+
+
+class CInvariantNRVFact(CInvariantFact):
+
+    def __init__(self,invd,index,args,tags):
+        CInvariantFact.__init__(self,invd,index,args,tags)
+
+    def is_nrv_fact(self): return True
+
     def get_variable(self): return self.xd.get_variable(int(self.args[0]))
 
     def get_non_relational_value(self):
@@ -212,3 +225,13 @@ class CInvariantFact(InvDictionaryRecord):
                     + str(self.get_non_relational_value()) )
 
 
+class UnreachableFact(CInvariantFact):
+
+    def __init__(self,invd,index,args,tags):
+        CInvariantFact.__init__(self,invd,index,args,tags)
+
+    def is_unreachable_fact(self): return True
+
+    def get_domain(self): return self.tags[1]
+
+    def __str__(self): return ('unreachable(' + self.get_domain() + ')')
