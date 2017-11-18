@@ -369,9 +369,9 @@ def tag_file_function_pos_tostring(pos,filefilter=lambda(f):True,pofilter=lambda
     tagdict = make_po_tag_dict(pos,pofilter=pofilter)
     for tag in sorted(tagdict):
         fundict = make_po_file_function_dict(tagdict[tag],filefilter=filefilter)
-        lines.append('\n' + tag + '\n' + ('-' * 80))
+        lines.append('\n\n' + tag + '\n' + ('-' * 80))
         for f in sorted(fundict):
-            lines.append('  File: ' + f)
+            lines.append('\n  File: ' + f)
             for ff in sorted(fundict[f]):
                 lines.append('    Function: ' + ff)
                 for po in sorted(fundict[f][ff],key=lambda(po):po.get_line()):
