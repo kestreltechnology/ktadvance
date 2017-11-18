@@ -26,7 +26,7 @@
 # ------------------------------------------------------------------------------
 
 
-class CGVarDef():
+class CGVarDef(object):
     '''Global variable definition.'''
 
     def __init__(self,varinfo,location,initializer=None):

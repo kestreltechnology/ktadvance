@@ -35,7 +35,7 @@ from advance.util.Config import Config
 
 import advance.util.xmlutil as UX
 
-class ParseManager():
+class ParseManager(object):
     '''Utility functions to support preprocessing and parsing source code.'''
 
     def __init__(self,cpath,tgtpath,filter=False,posix=False,verbose=True,tgtplatform='-m64'):
@@ -277,7 +277,7 @@ class ParseManager():
 
 
 
-class TargetFiles():
+class TargetFiles(object):
 
     def __init__(self):
         self.files = {}

@@ -27,7 +27,7 @@
 
 import advance.util.printutil as UP
 
-class CTTypeSize():
+class CTTypeSize(object):
 
     def __init__(self):
         self.basetypes = {}

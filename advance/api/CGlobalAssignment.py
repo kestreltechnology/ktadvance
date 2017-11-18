@@ -27,7 +27,7 @@
 
 from advance.app.CLocation import CLocation
 
-class CGlobalAssignment():
+class CGlobalAssignment(object):
 
     def __init__(self,cfunction,xnode):
         self.cfunction = cfunction

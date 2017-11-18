@@ -26,7 +26,7 @@
 # ------------------------------------------------------------------------------
 
 
-class CGCompTag():
+class CGCompTag(object):
     '''File-level definition of a struct.'''
 
     def __init__(self,compinfo,location):

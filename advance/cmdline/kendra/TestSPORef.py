@@ -26,7 +26,7 @@
 # ------------------------------------------------------------------------------
 
 
-class TestSPORef():
+class TestSPORef(object):
 
     def __init__(self,testcfunctionref,r):
         self.testcfunctionref = testcfunctionref

@@ -26,7 +26,7 @@
 # ------------------------------------------------------------------------------
 
 
-class TestResults():
+class TestResults(object):
 
     def __init__(self,testsetref):
         self.testsetref = testsetref      # TestSetRef

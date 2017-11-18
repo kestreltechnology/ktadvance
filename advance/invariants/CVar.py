@@ -25,7 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-class VDictionaryRecord():
+class VDictionaryRecord(object):
     '''Base class for all objects kept in the VarDictionary.'''
 
     def __init__(self,vd,index,tags,args):

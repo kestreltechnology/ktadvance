@@ -26,7 +26,7 @@
 # ------------------------------------------------------------------------------
 
 
-class CGXrefs():
+class CGXrefs(object):
 
     def __init__(self,cfile,xnode):
         self.cfile = cfile

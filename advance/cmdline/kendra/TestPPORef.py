@@ -25,7 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-class TestPPORef():
+class TestPPORef(object):
 
     def __init__(self,testcfunctionref,r):
         self.testcfunctionref = testcfunctionref

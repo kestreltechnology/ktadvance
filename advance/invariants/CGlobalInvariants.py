@@ -54,7 +54,7 @@ def getrange(explist):
     return (result[0],result[1])
             
 
-class CGlobalInvariants():
+class CGlobalInvariants(object):
 
     def __init__(self,capp,objectname,filenames,initializers,assignments):
         self.capp = capp

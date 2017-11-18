@@ -26,7 +26,7 @@
 # ------------------------------------------------------------------------------
 
 
-class FieldAssignment():
+class FieldAssignment(object):
 
     def __init__(self,cfun,xnode):
         self.cfun = cfun

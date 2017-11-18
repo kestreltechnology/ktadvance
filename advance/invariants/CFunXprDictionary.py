@@ -34,23 +34,23 @@ import advance.util.IndexedTable as IT
 import advance.invariants.CXpr as CX
 
 xcst_constructors = {
-    'ss':lambda(x):CX.CXSymSet(*x),
-    'ic':lambda(x):CX.CXIntConst(*x),
-    'bc':lambda(x):CX.CXBoolConst(*x),
-    'r':lambda(x):CX.CXRandom(*x),
-    'ui':lambda(x):CX.CXUnknownInt(*x),
-    'us':lambda(x):CX.CXUnknownSet(*x)
+    'ss':lambda x:CX.CXSymSet(*x),
+    'ic':lambda x:CX.CXIntConst(*x),
+    'bc':lambda x:CX.CXBoolConst(*x),
+    'r':lambda x:CX.CXRandom(*x),
+    'ui':lambda x:CX.CXUnknownInt(*x),
+    'us':lambda x:CX.CXUnknownSet(*x)
     }
 
 xpr_constructors = {
-    'v':lambda(x):CX.CXVar(*x),
-    'c':lambda(x):CX.CXConst(*x),
-    'x':lambda(x):CX.CXOp(*x),
-    'a':lambda(x):CX.CXAttr(*x)
+    'v':lambda x:CX.CXVar(*x),
+    'c':lambda x:CX.CXConst(*x),
+    'x':lambda x:CX.CXOp(*x),
+    'a':lambda x:CX.CXAttr(*x)
     }
 
 
-class CFunXprDictionary ():
+class CFunXprDictionary (object):
     '''Indexed analysis expressions.'''
 
     def __init__(self,vd):

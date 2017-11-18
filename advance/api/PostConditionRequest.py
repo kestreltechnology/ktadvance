@@ -25,7 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-class PostConditionRequest():
+class PostConditionRequest(object):
 
     def __init__(self,capi,postrequest,ppos,spos):
         self.capi = capi

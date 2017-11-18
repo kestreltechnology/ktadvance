@@ -25,7 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-class InvDictionaryRecord():
+class InvDictionaryRecord(object):
     '''Base class for all objects kept in the CFunInvDictionary.'''
 
     def __init__(self,invd,index,tags,args):

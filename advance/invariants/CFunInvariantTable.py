@@ -28,7 +28,7 @@
 import advance.util.fileutil as UF
 
 
-class CFunInvariantTable():
+class CFunInvariantTable(object):
     '''Function-level invariants.'''
 
     def __init__(self,invd):
@@ -69,8 +69,9 @@ class CFunInvariantTable():
             else:
                 if r.get_non_relational_value().size() < varsets[cvar.get_seqnr()].get_non_relational_value().size():
                     varsets[cvar.get_seqnr()] = r
-        invs = unrinvs + sorted(nonrsinvs + varsets.values(),key=lambda(i):str(i.get_variable()))
-        return invs
+        invs = unrinvs + sorted(nonrsinvs + varsets.values(),key=lambda i:str(i.get_variable()))
+
+       return invs
 
     def initialize(self):
         xnode = UF.get_invs_xnode(self.cfun.cfile.capp.path,self.cfun.cfile.name,self.cfun.name)

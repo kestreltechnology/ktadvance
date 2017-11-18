@@ -56,7 +56,7 @@ def get_rep(node):
 
 def get_key(tags,args): return (','.join(tags), ','.join([str(x) for x in args]))
 
-class IndexedTable ():
+class IndexedTable (object):
     '''Table to provide unique indices to objects represented by a key string.
 
     The table can be checkpointed and reset to that checkpoint with
@@ -172,8 +172,8 @@ class IndexedTable ():
             node.append(snode)
 
     def read_xml(self,node,tag,get_value,
-                     get_key=lambda(x):x.get_key(),
-                     get_index=lambda(x):x.index):
+                     get_key=lambda x:x.get_key(),
+                     get_index=lambda x:x.index):
         if node is None:
             print('Xml node not present in ' + self.name)
             raise IndexedTableError(self.name)

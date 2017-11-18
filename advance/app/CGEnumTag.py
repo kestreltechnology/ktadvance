@@ -28,7 +28,7 @@
 from advance.app.CEnumInfo import CEnumInfo
 from advance.app.CLocation import CLocation
 
-class CGEnumTag():
+class CGEnumTag(object):
     '''File-level definition of an enum.'''
 
     def __init__(self,enuminfo,location):

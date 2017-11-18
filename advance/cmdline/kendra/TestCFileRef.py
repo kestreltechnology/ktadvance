@@ -28,7 +28,7 @@
 
 from advance.cmdline.kendra.TestCFunctionRef import TestCFunctionRef
 
-class TestCFileRef():
+class TestCFileRef(object):
 
     def __init__(self,testsetref,name,r):
         self.testsetref = testsetref

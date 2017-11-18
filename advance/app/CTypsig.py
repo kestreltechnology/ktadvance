@@ -100,7 +100,7 @@ class cTypsigBase(CTypsigTSBase):
     def __str__(self): return 'tsbase(' + str(self.get_type()) + ')'
         
 
-class CTypsigList():
+class CTypsigList(object):
 
     def __init__(self,cd,index,tags,args):
         self.cd = cd

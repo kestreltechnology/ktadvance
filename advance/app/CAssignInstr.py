@@ -26,7 +26,7 @@
 # ------------------------------------------------------------------------------
 
 
-class CAssignInstr():
+class CAssignInstr(object):
 
     def __init__(self,ctxt,xnode):
         self.ctxt = ctxt

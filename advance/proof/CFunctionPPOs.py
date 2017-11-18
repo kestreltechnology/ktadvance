@@ -52,7 +52,7 @@ class CFunctionPPOs(CFunctionPOs):
         if id in self.ppos: return self.ppos[id]
 
     def iter(self,f): 
-        for ppo in sorted(self.ppos,key=lambda(p):(self.ppos[p].location.get_line(),
+        for ppo in sorted(self.ppos,key=lambda p:(self.ppos[p].location.get_line(),
                                                        int(self.ppos[p].id))): 
             f(self.ppos[ppo])
 

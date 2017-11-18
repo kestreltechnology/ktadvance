@@ -27,7 +27,7 @@
 
 from advance.util.IndexedTable import IndexedTableError
 
-class POTypeDictionaryRecord():
+class POTypeDictionaryRecord(object):
     '''Base class for proof obligation types in the PODictionary.'''
 
     def __init__(self,pod,index,tags,args):

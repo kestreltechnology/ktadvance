@@ -26,7 +26,7 @@
 # ------------------------------------------------------------------------------
 
 
-class CGVarDecl():
+class CGVarDecl(object):
     '''Global variable declaration within a file.'''
 
     def __init__(self,varinfo,location):

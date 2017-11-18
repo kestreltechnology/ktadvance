@@ -26,7 +26,7 @@
 # ------------------------------------------------------------------------------
 
 
-class XDictionaryRecord():
+class XDictionaryRecord(object):
     '''Base class for all objects kept in the XprDictionary.'''
 
     def __init__(self,xd,index,tags,args):

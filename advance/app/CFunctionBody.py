@@ -56,7 +56,7 @@ def getstatement(ctxt,snode):
     print('Unknown statement tag: ' + tag)
     exit(1)
 
-class CBlock():
+class CBlock(object):
 
     def __init__(self,ctxt,xnode):
         self.ctxt = ctxt
@@ -89,7 +89,7 @@ class CBlock():
             self.stmts[stmtid] = getstatement(self.ctxt,s)
 
 
-class CFunctionBody():
+class CFunctionBody(object):
     '''Function implementation.'''
 
     def __init__(self,cfun,xnode):
@@ -107,7 +107,7 @@ class CFunctionBody():
     def getcallinstrs(self): return self.block.getcallinstrs()
 
 
-class CStmt():
+class CStmt(object):
     '''Function body statement.'''
 
     def __init__(self,ctxt,xnode):

@@ -36,7 +36,7 @@ po_status = {
 
 po_status_indicators = { v:k for (k,v) in po_status.items() }
 
-class CProofDependencies():
+class CProofDependencies(object):
     '''Extent of dependency of a closed proof obligation.
 
     levels:
@@ -74,7 +74,7 @@ class CProofDependencies():
     def __str__(self): return self.level
 
 
-class CFunctionPO():
+class CFunctionPO(object):
     '''Super class of primary and supporting proof obligations.'''
 
     def __init__(self,cpos,potype,status='open',deps=None,expl=None,diag=None):

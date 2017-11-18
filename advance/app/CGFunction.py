@@ -28,7 +28,7 @@
 from advance.app.CVarInfo import CVarInfo
 from advance.app.CLocation import CLocation
 
-class CGFunction():
+class CGFunction(object):
     '''Function declaration.'''
 
     def __init__(self,varinfo):

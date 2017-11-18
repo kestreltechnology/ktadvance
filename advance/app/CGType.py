@@ -28,7 +28,7 @@
 from advance.app.CTypeInfo import CTypeInfo
 from advance.app.CLocation import CLocation
 
-class CGType():
+class CGType(object):
     '''A type definition that associates a name with a type.'''
 
     def __init__(self,typeinfo,location):
