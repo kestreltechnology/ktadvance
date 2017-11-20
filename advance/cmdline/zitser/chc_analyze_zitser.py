@@ -113,10 +113,10 @@ if __name__ == '__main__':
     am.create_app_primary_proofobligations()
     capp.iter_files(lambda(f):f.reinitialize_tables())
     
-    xuserdata = UF.get_zitser_globaluserfile_xnode(args.path)
-    userdata = UserData(xuserdata,capp)
-    print(str(userdata))
-    userdata.distribute()
+    # xuserdata = UF.get_zitser_globaluserfile_xnode(args.path)
+    # userdata = UserData(xuserdata,capp)
+    # print(str(userdata))
+    # userdata.distribute()
    
     for i in range(3):
         am.generate_and_check_app('llvisp')
