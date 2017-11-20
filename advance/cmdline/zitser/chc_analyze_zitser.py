@@ -111,7 +111,7 @@ if __name__ == '__main__':
     am = AnalysisManager(capp,verbose=args.verbose)
 
     am.create_app_primary_proofobligations()
-    capp.iter_files(lambda(f):f.reinitialize_tables())
+    capp.iter_files(lambda f:f.reinitialize_tables())
     
     # xuserdata = UF.get_zitser_globaluserfile_xnode(args.path)
     # userdata = UserData(xuserdata,capp)

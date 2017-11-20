@@ -40,7 +40,7 @@ class TestCFileRef(object):
     def get_functionnames(self): return sorted(self.functions.keys())
 
     def get_functions(self):
-        return sorted(self.functions.values(),key=lambda(f):f.name)
+        return sorted(self.functions.values(),key=lambda f:f.name)
 
     def get_function(self,fname):
         if fname in self.functions:

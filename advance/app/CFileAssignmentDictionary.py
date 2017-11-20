@@ -37,8 +37,8 @@ assignment_constructors = {
     'gi': lambda x:GA.GlobalIndexAssignment(*x),
     's': lambda x:GA.StaticAssignment(*x),
     'si': lambda x:GA.StaticIndexAssignment(*x),
-    'f': lambda(x):GA.FieldAssignment(*x),
-    'u': lambda(x):GA.UnknownAssignment(*x)
+    'f': lambda x:GA.FieldAssignment(*x),
+    'u': lambda x:GA.UnknownAssignment(*x)
     }
 
 class CFileAssignmentDictionary(object):
