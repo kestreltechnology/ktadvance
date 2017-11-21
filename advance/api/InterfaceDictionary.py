@@ -31,6 +31,7 @@ import advance.util.fileutil as UF
 import advance.util.IndexedTable as IT
 
 import advance.api.ApiParameter as AP
+import advance.api.LibraryVariable as LV
 import advance.api.PostCondition as PC
 import advance.api.PostRequest as PR
 import advance.api.SideEffect as SE
@@ -82,25 +83,36 @@ sideeffect_constructors = {
     'pn': lambda x:SE.SEPreservesNullTermination(*x)
     }
 
+lv_property_constructors = {
+    'nn': lambda x:LV.LVNotNull(*x),
+    'i' : lambda x:LV.LVInitialized(*x)
+    }
+
 class InterfaceDictionary(object):
     '''Function interface constructs.'''
 
 
     def __init__(self,cfile):
         self.cfile = cfile
+        self.declarations = self.cfile.declarations
+        self.dictionary = self.declarations.dictionary
         self.api_parameter_table = IT.IndexedTable('api-parameter-table')
         self.s_term_table = IT.IndexedTable('s-term-table')
         self.postcondition_table = IT.IndexedTable('postcondition-table')
         self.postrequest_table = IT.IndexedTable('postrequest-table')
         self.sideeffect_table = IT.IndexedTable('sideeffect-table')
         self.precondition_table = IT.IndexedTable('precondition-table')
+        self.lv_property_table = IT.IndexedTable('lv-property-table')
+        self.library_variable_table = IT.IndexedTable('library-variable-table')
         self.tables = [
             (self.api_parameter_table,self._read_xml_api_parameter_table),
             (self.s_term_table,self._read_xml_s_term_table),
             (self.postcondition_table,self._read_xml_postcondition_table),
             (self.postrequest_table,self._read_xml_postrequest_table),
             (self.sideeffect_table, self._read_xml_sideeffect_table),
-            (self.precondition_table, self._read_xml_precondition_table) ]
+            (self.precondition_table, self._read_xml_precondition_table),
+            (self.lv_property_table, self._read_xml_lv_property_table),
+            (self.library_variable_table, self._read_xml_library_variable_table) ]
         self.initialize()
         
     # ----------------- Retrieve items from dictionary tables ------------------
@@ -289,6 +301,21 @@ class InterfaceDictionary(object):
             args = (self,) + rep
             return sideeffect_constructors[tag](args)
         self.sideeffect_table.read_xml(txnode,'n',get_value)
+
+    def _read_xml_lv_property_table(self,txnode):
+        def get_value(node):
+            rep = IT.get_rep(node)
+            tag =  rep[1][0]
+            args = (self,) + rep
+            return lv_property_constructors[tag](args)
+        self.lv_property_table.read_xml(txnode,'n',get_value)
+
+    def _read_xml_library_variable_table(self,txnode):
+        def get_value(node):
+            rep = IT.get_rep(node)
+            args = (self,) + rep
+            return LV.LibraryVariable(*args)
+        self.library_variable_table.read_xml(txnode,'n',get_value)
 
     def _read_xml_precondition_table(self,txnode):
         pass
