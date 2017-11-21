@@ -51,7 +51,12 @@ tests = [
     'CWE121/s03/CWE805_char_declare_loop',
     'CWE122/s01/char_type_overrun_memcpy',
     'CWE122/s01/char_type_overrun_memmove',
-    'CWE122/s05/CWE131_loop'
+    'CWE122/s05/CWE131_loop',
+    'CWE122/s05/CWE131_memcpy',
+    'CWE122/s06/CWE131_memmove',
+    'CWE122/s06/CWE135',
+    'CWE122/s06/c_CWE129_connect_socket',
+    'CWE122/s06/c_CWE129_fgets'
     ]
 
 if __name__ == '__main__':
