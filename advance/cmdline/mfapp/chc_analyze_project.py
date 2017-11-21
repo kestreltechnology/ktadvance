@@ -57,6 +57,10 @@ def parse():
                             help='number of files to process in parallel',
                             type=int,
                             default=1)
+    parser.add_argument('--wordsize',
+                            help='size of an integer in bits',
+                            type=int,
+                            default=32)
     parser.add_argument('--verbose',
                             help='Print all output from analyzer to console',
                             action='store_true')
@@ -116,7 +120,7 @@ if __name__ == '__main__':
         
     # have to reinitialize capp to get linking info properly initialized
     capp = CApplication(sempath)
-    am = AnalysisManager(capp,filter=args.filter,verbose=args.verbose)
+    am = AnalysisManager(capp,filter=args.filter,verbose=args.verbose,wordsize=args.wordsize)
 
     am.create_app_primary_proofobligations(processes=args.maxprocesses)
 
