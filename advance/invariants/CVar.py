@@ -346,6 +346,7 @@ class CVariableDenotation(VDictionaryRecord):
     def __init__(self,vd,index,tags,args):
         VDictionaryRecord.__init__(self,vd,index,tags,args)
 
+    def is_library_variable(self): return False
     def is_local_variable(self): return False
     def is_global_variable(self): return False
     def is_memory_variable(self): return False
@@ -356,6 +357,21 @@ class CVariableDenotation(VDictionaryRecord):
     def is_auxiliary_variable(self): return False
 
     def __str__(self): return 'c-variable-denotation ' + self.tags[0]
+
+class CVLibraryVariable(CVariableDenotation):
+
+    def __init__(self,vd,index,tags,args):
+        CVariableDenotation.__init__(self,vd,index,tags,args)
+
+    def is_library_variable(self): return True
+
+    def get_varinfo(self): return self.vd.fdecls.get(varinfo(self.args[0]))
+
+    def get_library_variable(self):
+        return self.vd.cfile.interfacedictionary.get_library_variable(self.args[1])
+
+    def __str__(self): return 'libv:' + str(self.get_varinfo())
+
 
 class LocalVariable(CVariableDenotation):
 

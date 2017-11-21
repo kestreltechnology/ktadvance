@@ -58,6 +58,7 @@ constant_value_variable_constructors = {
     }
 
 c_variable_denotation_constructors = {
+    'libv':lambda x:CV.CVLibraryVariable(*x),
     'lv':lambda x:CV.LocalVariable(*x),
     'gv':lambda x:CV.GlobalVariable(*x),
     'mv':lambda x:CV.MemoryVariable(*x),
@@ -74,6 +75,7 @@ class CFunVarDictionary (object):
     def __init__(self,fdecls):
         self.fdecls = fdecls
         self.cfun = self.fdecls.cfun
+        self.cfile = self.cfun.cfile
         self.xd = CFunXprDictionary(self)
         self.allocated_region_data_table = IT.IndexedTable('allocated-region-data-table')
         self.memory_base_table = IT.IndexedTable('memory-base-table')
