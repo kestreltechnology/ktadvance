@@ -240,11 +240,11 @@ def function_code_tostring(fn,pofilter=lambda(po):True,showinvs=False):
     return '\n'.join(lines)
 
 def function_code_open_tostring(fn):
-    pofilter = lambda(po):not po.isdischarged()
+    pofilter = lambda(po):not po.is_closed()
     return function_code_tostring(fn,pofilter=pofilter)
 
 def function_code_violation_tostring(fn):
-    pofilter = lambda(po):po.isviolated()
+    pofilter = lambda(po):po.is_violated()
     return function_code_tostring(fn,pofilter=pofilter)
 
 def function_code_predicate_tostring(fn,p):
@@ -258,7 +258,7 @@ def file_code_tostring(cfile,pofilter=lambda(po):True,showinvs=False):
     return '\n'.join(lines)
 
 def file_code_open_tostring(fn):
-    pofilter = lambda(po):not po.isdischarged()
+    pofilter = lambda(po):not po.is_closed()
     return file_code_tostring(fn,pofilter=pofilter)
 
 def proofobligation_stats_tostring(pporesults,sporesults,rhlen=25,header1='',extradsmethods=[]):
