@@ -37,6 +37,9 @@ from advance.app.CApplication import CApplication
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('path',help='directory that holds the semantics directory')
+    parser.add_argument('--externalreferences',
+                            help='report all external references to functions',
+                            action='store_true')
     args = parser.parse_args()
     return args
 
@@ -61,9 +64,10 @@ if __name__ == '__main__':
     except IndexedTableError as e:
         print(e.msg)
 
-    missingsummaries = capp.get_missing_summaries()
-    if len(missingsummaries) > 0:
-        print('\nMissing summaries:')
-        for s in sorted(missingsummaries):
-            print(str(missingsummaries[s]).rjust(5) + '  ' + s)
+    if args.externalreferences:
+        externalreferences = capp.get_missing_summaries()
+        if len(externalreferences) > 0:
+            print('\nExternal references (including missing library functions):')
+            for s in sorted(externalreferences):
+                print(str(externalreferences[s]).rjust(5) + '  ' + s)
     
