@@ -76,7 +76,7 @@ class AnalysisManager(object):
                         os.remove(os.path.join(logfiledir,f))
         self.capp.iter_files(g)
 
-    def _reset_tables(self, cfilename):
+    def reset_tables(self, cfilename):
         cfile = self.capp.get_file(cfilename)
         cfile.reinitialize_tables()
         cfile.reload_ppos()
@@ -334,7 +334,7 @@ class AnalysisManager(object):
             self.capp.iter_filenames_parallel(f, processes)
         else:
             self.capp.iter_filenames(self.check_file_proofobligations)
-        self.capp.iter_filenames(self._reset_tables)
+        self.capp.iter_filenames(self.reset_tables)
 
     def generate_and_check_app(self, domains, processes=1):
         if processes > 1:
@@ -346,7 +346,7 @@ class AnalysisManager(object):
         else:
             def f(cfile): self.generate_and_check_file(cfile,domains)
             self.capp.iter_filenames(f)
-        self.capp.iter_filenames(self._reset_tables)
+        self.capp.iter_filenames(self.reset_tables)
 
             
             
