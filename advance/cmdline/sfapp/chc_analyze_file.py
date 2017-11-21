@@ -111,31 +111,15 @@ if __name__ == '__main__':
 
     if not args.continueanalysis:
         am.create_file_primary_proofobligations(cfilename)
+        am.reset_tables(cfilename)
 
     # am.generate_file_global_invariants(cfilename)
-    am.generate_file_local_invariants(cfilename,'llvips')
-    capp.iter_files(lambda(f):f.reinitialize_tables())    
-
-    am.check_file_proofobligations(cfilename)
-    capp.iter_files(lambda(f):f.reinitialize_tables())
-    capp.iter_functions(lambda(f):f.get_api().initialize())
-
-    apis = []
-    capp.iter_functions(lambda(f):apis.append(str(f.get_api())))
-    for a in apis: print(a)
-
-    def f(fn):
-        print(fn.name)
-        fn.update_spos()
-
-    def g(fn): fn.save_spos()
+    am.generate_and_check_file(cfilename,'llvisp')
+    am.reset_tables(cfilename)
 
     for k in range(args.analysisrounds):
-        capp.get_cfile().iter_functions(f)
-        capp.get_cfile().iter_functions(g)
+        capp.update_spos()
+        am.generate_and_check_file(cfilename,'llsvisp')
+        am.reset_tables(cfilename)
 
-        capp.get_cfile().save_predicate_dictionary()
-
-        am.generate_file_local_invariants(cfilename,'llvips')
-        am.check_file_proofobligations(cfilename)
 

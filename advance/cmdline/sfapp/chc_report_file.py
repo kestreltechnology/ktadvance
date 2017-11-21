@@ -67,9 +67,9 @@ if __name__ == '__main__':
 
     if args.showcode:
         if args.open:
-            def pofilter(po):return not po.isdischarged()
+            def pofilter(po):return not po.is_closed()
             print(RP.file_code_tostring(cfile,pofilter=pofilter))
         else:
-            print(RP.file_code_tostring(cfile))
+            print(RP.file_code_tostring(cfile,showinvs=True))
 
     print(RP.file_proofobligation_stats_tostring(cfile))
