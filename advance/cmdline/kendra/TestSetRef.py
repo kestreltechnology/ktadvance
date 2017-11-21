@@ -42,7 +42,7 @@ class TestSetRef(object):
     def get_cfilenames(self): return sorted(self.cfiles.keys())
 
     def get_cfiles(self):
-        return sorted(self.cfiles.values(),key=lambda(f):f.name)
+        return sorted(self.cfiles.values(),key=lambda f:f.name)
 
     def get_cfile(self,cfilename):
         if cfilename in self.cfiles:
@@ -82,7 +82,7 @@ class TestSetRef(object):
             for cfun in cfile.get_functions():
                 lines.append('  ' + cfun.name)
                 if cfun.has_ppos():
-                    for ppo in sorted(cfun.get_ppos(),key=lambda(p):p.get_line()):
+                    for ppo in sorted(cfun.get_ppos(),key=lambda p:p.get_line()):
                         hasmultiple = cfun.has_multiple(ppo.get_line(),ppo.get_predicate())
                         ctxt = ppo.get_context_string() if hasmultiple else ''
                         status = ppo.get_status().ljust(12)

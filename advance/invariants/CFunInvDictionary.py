@@ -38,8 +38,8 @@ non_relational_value_constructors = {
     }
 
 inv_constructors = {
-    'nrv': lambda(x):CI.CInvariantNRVFact(*x),
-    'x': lambda(x):CI.UnreachableFact(*x)
+    'nrv': lambda x:CI.CInvariantNRVFact(*x),
+    'x': lambda x:CI.UnreachableFact(*x)
     }
 
 
