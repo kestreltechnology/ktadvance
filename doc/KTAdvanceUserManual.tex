@@ -1,0 +1,412 @@
+\documentclass[11pt]{article}
+\usepackage{epsfig}
+\usepackage{subfigure}
+\usepackage{rotating} 
+\usepackage{amsfonts,amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[longnamesfirst,numbers]{natbib}
+\usepackage{setspace}
+\usepackage{pifont}
+\usepackage{enumitem}
+\usepackage{listings} 
+\usepackage{wrapfig}
+
+%\setlist{nolistsep,noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
+\setlist{nolistsep,itemsep=4pt,topsep=4pt,parsep=0pt,partopsep=0pt}
+\DeclareGraphicsExtensions{.png,.jpg}
+\graphicspath{{.}}
+
+\newcommand\commentout[1]{}
+\newcommand\cvt{{\sc cvt}}
+
+\def\Implies{\;\Longrightarrow\;}
+\def\Equiv{\;\equiv\;}
+\def\Equals{\;\;{\bf = }\;\;}
+\def\And{\;\wedge\;}
+\def\Or{\;\vee\;}
+
+\headheight 0in
+\parindent=0.0in
+\parskip=2ex plus1ex
+\topmargin 0.0in
+\textheight 8.0in
+\textwidth 6.250in
+\evensidemargin -2.0mm
+\oddsidemargin 4.0mm
+%\evensidemargin 0.375in
+%\oddsidemargin -0.03125in
+
+\usepackage{fancyheadings}
+\pagestyle{fancy}
+\lhead{KT Advance C Analyzer}
+\chead{}
+\rhead{User Manual}
+\cfoot{Kestrel Technology LLC}
+
+\newcommand\ch{{\bf CodeHawk}}
+\newcommand\fname{$<$f$>$}
+\newcommand\fnname{$<$ff$>$}
+
+%\setcounter{page}{3}
+
+\normalsize
+\setlength{\headheight}{2\baselineskip}
+
+\begin{document}
+
+\vfill
+\vfill
+
+
+{\Large\bf{
+KT Advance User Manual}}
+
+\vfill
+
+{\Large{Kestrel Technology, LLC}}
+
+\bigskip
+
+November 24, 2017
+
+\vfill
+\vfill
+\vfill
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Quick Start}
+
+\subsection{System Requirements}
+
+\subsubsection{Platform: MacOSX or Linux}
+
+The KT Advance C Analyzer consists of three components that may be run on
+different platforms:
+\begin{enumerate}
+\item {\bf Parser:} A Mac/Linux executable (parseFile) that takes as input a preprocessed
+C source file and produces a set of xml files that precisely represent the
+semantics of the C source file. This program is an extension of the CIL
+parser front end, developed by George Necula, at UC Berkeley, an now maintained
+by INRIA in France. Except for very simple programs (typically programs that do
+not include any standard libraries), it is recommended to run the parser on
+a Linux platform, as the parser pulls in definitions from the standard header files
+resident on the system.
+\item {\bf C Analyzer:} A Mac/Linux executable (ktadvance) that takes as input the
+semantics files produced by the parser as well as analysis results files, if available, 
+and produces a set of xml files that hold analysis results. This executable
+will be wrapped in a license manager to protect the contained 
+intellectual property. The C Analyzer operates solely on the semantics files produced
+by the parser without any other dependencies on the local system, and thus it can be
+run equally well on Mac or Linux.
+\item {\bf PyAdvance:} Python code, provided as source code to licensed
+users, that performs linking and provides various analyzer invocation, 
+integration, and reporting services. All reporting scripts (scripts whose name typically
+start with {\tt chc\_report\_} or {\tt chc\_show\_} rely only on python code and thus
+can (theoretically) be run on any platform that has python installed, including Windows
+platforms. Thus if analysis has been performed on a server and the results saved, the 
+analysis results can then be viewed and queried by anyone with access to these results.
+\end{enumerate}
+
+\subsubsection{Utility Programs}
+The front-end parser makes use of the utility {\tt bear} to record and reply the actions
+performed by the Make file when compiling an application. This utility is usually available
+via a package manager.
+
+\subsubsection{Other Dependencies}
+The analyzer and python scripts make use of jar files; being able to extract these 
+requires a working Java installation.
+
+\subsection{Organization}
+
+The {\tt ktadvance} repository has three top directories:
+\begin{enumerate}
+\item {\tt advance:} python scripts and programs to run the analysis and view the results;
+  Section~\ref{sec:pyadvance} describes these scripts and programs in more details.
+\item {\tt doc:} KT Advance User Manual (this document) and a Reference Manual that
+  explains the analysis approach and describes in detail the data representation of
+  all intermediate data artifacts and analysis results data.
+\item {\tt tests:} regression tests and other test cases, several of which have been 
+  pre-parsed and are ready for analysis. The reason for having pre-parsed applications
+  is to provide reference applications that enable longitudional study of analyis 
+  performance. Several of the test directories have dedicated scripts for parsing and
+  analysis, as described in Section~\ref{sec:tests}.
+\end{enumerate}
+
+\subsection{General Use Guidelines}
+
+The analysis consists of three phases that may be performed on different platforms.
+\begin{enumerate}
+\item {\bf Parsing:} This phase takes as input the original source code, a Makefile 
+  (if there is more than one source file), and, in case of library includes, the 
+  library header files resident on the system. This phase produces as output a set 
+  of xml files that completely capture the semantics of the application, and are 
+  the sole input for the Analysis phase.
+
+  Because of the dependency on the resident system library header files it is 
+  generally recommended to perform this phase of the analysis on a Linux system, 
+  because of its more standard library environment than MacOSX (the CIL parser 
+  also may have issues with some of the Darwin constructs on MacOSX).
+  
+  For several of the test cases in {\tt tests/sard/kendra} and for all of the test cases 
+  in {\tt tests/sard/zitser} and {\tt tests/sard/juliet\_v1.3} the parsing step has 
+  already been performed (on Linux) 
+  and the resulting artifacts are checked in in files named {\tt semantics\_linux.tar.gz}. These 
+  gzipped tar files contain all xml files necessary for the analysis, and thus 
+  to analyze these files the parsing phase can be skipped altogether.
+  
+\item {\bf Analysis:} This phase takes as input the xml files produced by the parsing 
+  phase. As long as the source code is not modified, the analysis can be run several 
+  times without having to repeat the parsing step. The Analysis step can be run on 
+  either MacOSX or Linux, independently of where the parsing step was performed, as 
+  it operates solely on the xml files produced and is not dependent on any external 
+  programs or library headers.
+  
+\item {\bf Viewing Results:} All analysis results are saved in a directory with the name
+  {\tt semantics} in the analysis directory. Various reporting scripts are provided to
+  process and view these results. These scripts rely only on python code and thus can
+  be run on any platform once the analysis results have been produced.
+\end{enumerate}
+
+\subsection{Getting Started}
+
+All interactions with the KT Advance C Analyzer are performed via python scripts from the
+command line. All scripts have been tested to work with python 2.7. An effort has been
+made, however, to have all python code also compliant with python 3.x.
+
+All scripts to interact with the analyzer are in the directory 
+{\tt ktadvance/advance/cmdline}. 
+This directory has a few subdirectories with scripts dedicated to some of the test 
+sets in the tests directory, as follows:
+\begin{itemize}
+\item {\bf kendra:} scripts to analyze and report on the test cases in 
+ {\tt tests/sard/kendra};
+\item {\bf zitser:} scripts to analyze and report on the test cases in
+ {\tt tests/sard/zitser};
+\item {\bf juliet:} scripts to analyze, score, and report on the test cases in
+ {\tt tests/sard/juliet\_v1.3}.
+\end{itemize}
+
+Two other subdirectories have scripts to parse, analyze, and report on any c file or
+c application:
+\begin{itemize}
+\item {\bf sfapp:} scripts to parse and analyze an application that consists of a single
+  c file that be compiled directly with gcc (without a Make file). 
+\item {\bf mfapp:} scripts to parse and analyze an application that comes with a Makefile.
+  It is expected that the Makefile exists (that is, a configure script has already been
+  run, if necessary).
+\end{itemize}
+
+Section~\ref{sec:tests} provides a detailed description of the scripts available in
+the test-specific cmdline directories and Section~\ref{sec:app} describes the scripts
+for the general files and applications. In general, user scripts start with the 
+prefix {\tt chc\_} followed by some verb that indicates the action performed; most 
+scripts have a --help command-line
+option that describes the arguments expected.
+
+\section{Running Test Cases}
+\label{sec:tests}
+
+\subsection{Kendra}
+
+The {\tt ktadvance/tests/sard/kendra} directory contains a collection of very small test
+programs retrieved from the NIST Software Assurance Reference Dataset ({\tt samate.nist.gov}).
+These programs are a subset of the collection of test cases developed by 
+Kendra Kratkiewicz~\cite{}. These test cases serve as a good first illustration of
+the KT Advance analysis approach and presentation of results. 
+Section~\ref{sec:runkendra} has step-by-step instructions how to run these tests
+and some comments on particular cases.
+
+\subsubsection{Organization}
+The test cases are organized in groups of four related test cases, where the first 
+three test cases have a given vulnerability with varying magnitude of overflow and 
+in the fourth case that vulnerability is fixed (or absent). The names of the tests 
+refer to the sequence numbers in the SARD repository, and the name of the group 
+refers to the sequence number of the first test. For example, the test group id115Q 
+contains the test cases id115.c, id116.c, id116.c, and id117.c . 
+
+The kendra tests are also used as regression tests for generating and discharging proof 
+obligations.
+Each test directory has a reference file [testname].json (e.g., id115Q.json) that lists 
+all proof obligations
+and their expected proof status, against which the analysis results are checked after
+each test run.
+
+\subsection{Running the Tests}
+\label{sec:runkendra}
+
+Set the {\tt PYTHONPATH} environment variable (or adapt for a different location
+of the ktadvance directory):
+\begin{verbatim}
+> export PYTHONPATH=$HOME/ktadvance
+\end{verbatim}
+To see a list of test sets currently provided in the {\tt tests/sard/kendra}
+directory:
+\begin{verbatim}
+> cd ktadvance/advance/cmdline/kendra
+> python chc_list_kendratests.py
+\end{verbatim}
+To run the analysis of a test set (staying in the cmdline/kendra directory):
+\begin{verbatim}
+> python chc_test_kendra_set.py id115Q
+\end{verbatim}
+(or any other of the test set names provided in the list displayed earlier.)
+This will print the summary results for the four test programs included:
+\begin{small}
+\begin{verbatim}
+File          Parsing        PPO Gen        SPO Gen      PPO Results    SPO Results  
+-------------------------------------------------------------------------------------
+id115.c          ok             ok             ok             ok             ok      
+id116.c          ok             ok             ok             ok             ok      
+id117.c          ok             ok             ok             ok             ok      
+id118.c          ok             ok             ok             ok             ok      
+\end{verbatim}
+\end{small}
+\bibliography{citations}
+indicating that all stages ran without error, all proof obligations were correctly
+generated and the analysis results are as expected. 
+To see more of the output while running the test, add --verbose as a command-line option.
+
+To see which proof obligations are included in the test cases, with line numbers and
+expected proof status:
+\begin{verbatim}
+> python chc_show_kendra_test.py id115Q
+
+id115.c
+  main
+      56  index-lower-bound      safe                                                 
+      56  index-upper-bound      violation                                            
+      56  cast                   safe                                                 
+id116.c
+  main
+      56  index-lower-bound      safe                                                 
+      56  index-upper-bound      violation                                            
+      56  cast                   safe                                                 
+id117.c
+  main
+      56  index-lower-bound      safe                                                 
+      56  index-upper-bound      violation                                            
+      56  cast                   safe                                                 
+id118.c
+  main
+      56  index-lower-bound      safe                                                 
+      56  index-upper-bound      safe                                                 
+      56  cast                   safe 
+\end{verbatim} 
+When a test case has been analyzed the analysis results are saved in the 
+{\tt semantics/ktadvance} directory and are available for inspection and to
+reporting scripts.
+To see a full report, including code, proof justifications, and summary for an individual
+test file (note the filename):
+\begin{small}
+\begin{verbatim}
+> python chc_report_kendratest_file.py id115.c
+
+Function main
+--------------------------------------------------------------------------------
+50  int main(int argc, char *argv[])
+--------------------------------------------------------------------------------
+Api:
+  parameters:
+    int[] argc
+    ((char[] *) *) argv
+
+  -- no assumptions
+
+  -- no postcondition requests
+
+  -- no postcondition guarantees
+
+  -- no library calls
+--------------------------------------------------------------------------------
+Primary Proof Obligations:
+--------------------------------------------------------------------------------
+51  {
+52    char buf[10];
+53
+54
+55    /*  BAD  */
+56    buf[4105] = 'A';
+--------------------------------------------------------------------------------
+<S>    1     56  index-lower-bound(4105) (safe)
+                  index value 4105 is non-negative
+<*>    2     56  index-upper-bound(4105,bound:10) (violation)
+                  index value 4105 violates upper bound 10
+<S>    3     56  cast(chr('A'),from:int[],to:char[]) (safe)
+                  casting constant value 65 to char
+--------------------------------------------------------------------------------
+
+Primary Proof Obligations
+functions    stmt   local     api    post  global    open   total
+---------------------------------------------------------------
+main          3       0       0       0       0       0       3
+---------------------------------------------------------------
+total         3       0       0       0       0       0       3
+percent  100.00    0.00    0.00    0.00    0.00    0.00
+
+
+Proof Obligation Statistics for file id115
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Primary Proof Obligations
+                             stmt   local     api    post  global    open   total
+---------------------------------------------------------------------------------
+cast                            1       0       0       0       0       0       1
+index-lower-bound               1       0       0       0       0       0       1
+index-upper-bound               1       0       0       0       0       0       1
+---------------------------------------------------------------------------------
+total                           3       0       0       0       0       0       3
+percent                    100.00    0.00    0.00    0.00    0.00    0.00
+\end{verbatim}
+\end{small}
+
+For each line of code that has associated proof obligations the report shows the
+proof obligation predicate, whether it is valid (safe, indicated by $<$S$>$) or 
+violated (indicated by $<$*$>$), and the reason for the assessment. For the safe
+case, id118.c, the output shows that the proof obligation for the upper bound is
+indeed safe.
+\begin{small}
+\begin{verbatim}
+> python chc_report_kendratest_file.py id118.c
+
+....
+
+--------------------------------------------------------------------------------
+Primary Proof Obligations:
+--------------------------------------------------------------------------------
+51  {
+52    char buf[10];
+53
+54
+55    /*  OK  */
+56    buf[9] = 'A';
+--------------------------------------------------------------------------------
+<S>    1     56  index-lower-bound(9) (safe)
+                  index value 9 is non-negative
+<S>    2     56  index-upper-bound(9,bound:10) (safe)
+                  index value 9 is less than bound 10
+<S>    3     56  cast(chr('A'),from:int[],to:char[]) (safe)
+                  casting constant value 65 to char
+--------------------------------------------------------------------------------
+
+....
+\end{verbatim}
+\end{small}
+
+
+
+
+For a list of
+all proof obligation predicates and their meaning, please see the KT Advance
+Reference Manual in this directory.
+
+To analyze all kendra test cases run
+\begin{verbatim}
+> python chc_test_kendra_sets.py
+\end{verbatim}
+If all of them complete all analysis results are available for inspection and reporting.
+Below we highlight some special cases.
+\end{document}
