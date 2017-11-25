@@ -68,7 +68,7 @@ KT Advance Reference Manual}}
 
 \bigskip
 
-November 1, 2017
+November 24, 2017
 
 \vfill
 \vfill
@@ -200,7 +200,8 @@ The value of the ptr expression is less than or equal to the
 
 \paragraph{valid-mem (ptr:exp): }
 The value of the ptr expression is the address of or inside a 
-	valid memory region, that is, a memory region that has not been freed.
+	valid memory region, that is, a memory region that has not been freed and
+	has not gone out of scope.
 
 The following predicates are not a weakest precondition for undefined behavior, but
 are included to identify constructs generally considered undesirable.
@@ -316,7 +317,8 @@ of commonly used entities such as expressions and locations. Each data item is
 represented by a list of strings and a list of integers, which can be indices
 into other dictionaries or immediate values. Each dictionary file generally
 has multiple tables for related data structures. Below we describe the
-structure for each of these tables in these files.
+data elements contained in these structures. Indices into other tables are
+referred to by the table name.
 
 \subsection{\fname\_cdict}
 
@@ -326,59 +328,113 @@ file, including types and expressions. Below we describe each of the tables
 included in this file, and for each of the tables a reference to the relevant
 python files in PyAdvance that provide the data structures for the entities
 in that table. Basic indexing and access to the {\tt \_cdict} dictionary is 
-provided by {\tt advance/app/CDictionary.py}
+provided by {\tt advance/app/CDictionary.py} Table~\ref{tab:cdict} lists all
+tables included in this dictionary and the PyAdvance.py files that implement
+the corresponding objects.
 
-\subsubsection{Expressions (exp)}
+\begin{table}
+\centering
+\begin{tabular}{l|l|l}
+name & description & AdvancePy reference\\  \hline
+{\tt attr} & program type attributes & app/CAttributes.py \\
+{\tt const} & program constants & app/CConstExp.py\\
+{\tt exp} & program (sub)expressions & app/CExp.py \\
+{\tt host} & program location & app/CLHost.py \\
+{\tt lval} & program left-hand values & app/CLval.py\\
+{\tt offset} & location offsets (field, index) & app/COffsetExp.py \\
+{\tt typ} & program types & app/CTyp.py \\
+\end{tabular}
+\caption{\label{tab:cdict}Tables included in the \_cdict dictionary}
+\end{table}
 
-\paragraph{PyAdvance reference:} {\tt advance/app/CDictionary.py, advance/app/CExp.py}
+\subsubsection{Attribute Parameter Table}
 
-\paragraph{Constant (CExpConst)}
-\begin{itemize}
-\item \emph{tags:} "const"
-\item \emph{args:} constant-table index
-\end{itemize}
+The attribute parameter table, shown in Table~\ref{tab:attrtable} contains attributes 
+that are associated with types in the program.
 
-\paragraph{Lval (CExpLval)}
-\begin{itemize}
-\item \emph{tags:} "lval"
-\item \emph{args:} lval-table index
-\end{itemize}
+\begin{table}
+\centering
+\begin{tabular}{l|c||c|c|c|c||l}
+\multicolumn{2}{c||}{tags} & \multicolumn{4}{|c||}{args} & description \\ \hline
+\multicolumn{1}{c|}{1} & 2 & 1 & 2 & 3 & 4 & \\ \hline 
+"aint" & & value & & & & integer value \\
+"astr" & & {\tt string} & & & & string value \\
+"acons" & name & & & & & \\
+"asizeof" & & {\tt typ} & & & & \\
+"asizeofe" & & {\tt attr} & & & & \\
+"asizeofs" & & {\tt typsig} & & & & \\
+"aalignof" & & {\tt typ} & & & & \\
+"aalignofe" & & {\tt attr} & & & & \\
+"aalignofs" & & {\tt typsig} & & & & \\
+"aunop" & unop & {\tt attr} & & & & \\
+"abinop" & binop & {\tt attr} & {\tt attr} & & & \\
+"adot" & & {\tt attr} & & & & \\
+"astar" & & {\tt attr} & & & & \\
+"aaddrof" & & {\tt attr} & & & & \\
+"aindex" & & {\tt attr} & {\tt attr} & & & \\
+"aquestion" & & {\tt attr} & {\tt attr} & {\tt attr} & & \\ \hline
+\end{tabular}
+\caption{\label{tab:attrtable}Attribute-table: Tags and arguments for program type attributes}
+\end{table}
 
-\paragraph{SizeOf (CExpSizeOf)}
-\begin{itemize}
-\item \emph{tags:} "sizeof"
-\item \emph{args:} typ-table index
-\end{itemize}
 
-\paragraph{SizeOfE (CExpSizeOfE)}
-\begin{itemize}
-\item \emph{tags:} "sizeofe"
-\item \emph{args:} exp-table index
-\end{itemize}
 
-\paragraph{SizeOfStr (CExpSizeOfStr)}
-\begin{itemize}
-\item \emph{tags:} "sizeofstr" 
-\item \emph{args:} string-table index
-\end{itemize}
+\subsubsection{Constant Table}
 
-\paragraph{AlignOf (CExpAlignOf)}
-\begin{itemize}
-\item \emph{tags:} "alignof"
-\item \emph{args:} typ-table index
-\end{itemize}
+The constant table, shown in Table~\ref{tab:consttable} contains constants that 
+appear in the program. Integer and 
+real constants are represented as strings as they appear textually in the program.
 
-\paragraph{AlignOfE (CExpAlignOfE)}
-\begin{itemize}
-\item \emph{tags:} "alignofe"
-\item \emph{args:} exp-table index
-\end{itemize}
+\begin{table}
+\centering
+\begin{tabular}{l|c|c||c|c||l}
+\multicolumn{3}{c||}{tags} & \multicolumn{2}{|c||}{args} & description \\ \hline
+\multicolumn{1}{c|}{1} & 2 & 3 & 1 & 2 & \\ \hline 
+"chr" & & & ord(chr) & & character represented by its ordinal number \\
+"int" & string-rep & ikind & & & integer constant \\
+"str" & & {\tt string} & & & constant string \\
+"wstr" & & & *value & & wide string (represented by list of integers) \\
+"real" & string-rep & fkind & & & real number constant \\
+\end{tabular}
+\caption{\label{tab:consttable}Const-table: Tags and arguments for program constants}
+\end{table}
 
-\paragraph{UnOp (CExpUnOp)}
-\begin{itemize}
-\item \emph{tags:} 1:"unop", 2:operator (see Table~\ref{tab:unop})
-\item \emph{args:} 1:exp-table index, 2:typ-table index (result type)
-\end{itemize}
+
+\subsubsection{Expression Table}
+
+The expression table contains expressions and subexpressions that represent
+expressions in the program. 
+Expressions are represented by an indicator tag followed by an optional second tag
+and one through four table indices or immediate values, as shown in
+Table~\ref{tab:exptable}. 
+
+The string values for \em{unop} and \em{binop} are shown
+in Tables~\ref{tab:unop} and \ref{tab:binop}, respectively.
+\begin{table}
+\centering
+\begin{tabular}{l|c||c|c|c|c||l}
+\multicolumn{2}{c||}{tags} & \multicolumn{4}{|c||}{args} & description \\ \hline
+\multicolumn{1}{c|}{1} & 2 & 1 & 2 & 3 & 4 & \\ \hline 
+"addrof" & & {\tt lval} & & & & address of location \\
+"addroflabel" & & stmt index & & & \\
+"alignof" & & {\tt typ} & & & & alignment of a type \\
+"alignofe" & & {\tt exp} & & & & alignment of type of expr \\
+"binop" & binop & {\tt exp} & {\tt exp} & {\tt typ} & & binary expression \\
+"caste" & & {\tt typ} & {\tt exp} & & & cast of expression \\
+"cnapp" & name & *{\tt exp} & & & & custom predicate on expressions \\
+"const" & & {\tt const} & & & & constant \\
+"fnapp" & filename & line-nr & byte-nr & {\tt exp} & *{\tt exp} & function application @loc \\
+"lval" & & {\tt lval} & & & & left-hand-side (location) \\
+"question" & & {\tt exp} & {\tt exp} & {\tt exp} & {\tt typ} & ? : expression \\
+"sizeof" & & {\tt typ} & & & & size of type \\
+"sizeofe" & & {\tt exp} & & & & size of type of expr \\
+"sizeofstr" & & {\tt string} & & & & size of string\\
+"startof" & & {\tt lval} & & & & same as addrof \\
+"unop" & unop & {\tt exp} & {\tt typ} & & & unary expression \\ \hline
+\end{tabular}
+\caption{\label{tab:exptable}Exp-table: Tags and arguments for expressions}
+\end{table}
+
 
 
 \begin{table}[t]
@@ -391,12 +447,6 @@ provided by {\tt advance/app/CDictionary.py}
 \caption{\label{tab:unop}Unary operators}
 \end{table}
 
-
-\paragraph{BinOp (CExpBinOp)}
-\begin{itemize}
-\item \emph{tags:} 1:"binop", 2:operator (see Table~\ref{tab:binop})
-\item \emph{args:} 1:exp-table index, 2:exp-table index, 3:typ-table index (result type)
-\end{itemize}
 
 \begin{table}[t]
 \centering
@@ -427,119 +477,128 @@ provided by {\tt advance/app/CDictionary.py}
 \caption{\label{tab:binop}Binary operators}
 \end{table}
 
-\paragraph{Question (CExpQuestion)}
-\begin{itemize}
-\item \emph{tags:} "question"
-\item \emph{args:} 1:exp-table index, 2:exp-table index, 3:exp-table index, 4:typ-table index
-      (result type)
-\end{itemize}
+\subsubsection{Lval Table}
 
-\paragraph{CastE (CExpCastE)}
-\begin{itemize}
-\item \emph{tags:} "caste"
-\item \emph{args:} 1:typ-table index (target type), 2:exp-table index
-\end{itemize}
+An lval (a value that can be on the left side of an assignment, that is, a
+program storage location) consists of a base location called a host, and an
+optional offset, which can be a field or index. Their representations are
+shown in Table~\ref{tab:lvaltable}.
 
-\paragraph{AddrOf (CExpAddrOf)}
-\begin{itemize}
-\item \emph{tags:} "addrof"
-\item \emph{args:} lval-table index
-\end{itemize}
+\begin{table}
+\centering
+\begin{tabular}{l|l|c||c|c|c|c||l}
+& \multicolumn{2}{c||}{tags} & \multicolumn{4}{|c||}{args} & description \\ \hline
+& \multicolumn{1}{c|}{1} & 2 & 1 & 2 & 3 & 4 & \\ \hline 
+\multicolumn{8}{l}{{\tt lval}} \\ \hline
+& & & {\tt host} & {\tt offset} & & & left-hand side value \\ \hline
+\multicolumn{8}{l}{{\tt host}} \\ \hline
+& "var" & name & id & & & & program variable \\
+& "mem" & & {\tt exp} & & & & expression dereference \\ \hline
+\multicolumn{8}{l}{{\tt offset}} \\ \hline
+& "n" & & & & & & no offset \\
+& "f" & name & key & {\tt offset} & & & field offset (fieldname,struct identifier) \\
+& "i" & & {\tt exp} & {\tt offset} & & & index offset \\ \hline
+\end{tabular}
+\caption{\label{tab:lvaltable}Lval-table: tags and arguments for program locations}
+\end{table}
 
-\paragraph{AddrOfLabel (CExpAddrOfLabel)}
-\begin{itemize}
-\item \emph{tags:} "addroflabel"
-\item \emph{args:} statement index
-\end{itemize}
 
-\paragraph{StartOf (CExpStartOf)}
-\begin{itemize}
-\item \emph{tags:} "startof"
-\item \emph{args:} lval-table index
-\end{itemize}
+\subsubsection{Type Table}
 
-\paragraph{FnApp (CExpFnApp)}
-\begin{itemize}
-\item \emph{tags:} 1:"fnapp", 2:filename
-\item \emph{args:} 1:linenr, 2:bytenr, 3:exp-table index, 4:opt-exp-list-table index
-\end{itemize}
+The typ-table contains data types that represent types that appear in the program
+with elements shown in Table~\ref{tab:typtable}.
+Some elements are optional and can be absent; these are shown between brackets
+(e.g., {\tt (attrs)}. Some elements are optional and have value -1 if not provided;
+these are shown in square brackets (e.g., {\tt [exp]} for the array size expression).
 
-\paragraph{CnApp (CExpCnApp)}
-\begin{itemize}
-\item \emph{tags:} 1:"cnapp", 2:name
-\item \emph{args:} 1:typ-table index, 2:opt-exp-list-table index
-\end{itemize}
+The type of integer is specified by the string indicated as \emph{ikind}, which can 
+have the following values with the obvious meanings: "ichar", "ischar", "iuchar","ibool",
+   "iint", "iuint", "ishort", "iushort", "ilong", "iulong", "ilonglong", "iulonglong".
+The type of float is specified by the string indeciate as \emph{fkind} which can 
+have one of the following three values: "float", "fdouble", "flongdouble".
 
-\subsubsection{Types (typ)}
+\begin{table}
+\centering
+\begin{tabular}{l|c||c|c|c|c||l}
+\multicolumn{2}{c||}{tags} & \multicolumn{4}{|c||}{args} & description \\ \hline
+\multicolumn{1}{c|}{1} & 2 & 1 & 2 & 3 & 4 & \\ \hline 
+"tarray" & & {\tt typ} & {\tt [exp]} & {\tt (attrs)} & & array (element type, size) \\
+"tbuiltin-va-list" & & {\tt (attrs)} & & & & builtin varargs \\
+"tcomp" & & key & {\tt (attrs)} & & & struct/union type identifier \\
+"tenum" & name & {\tt (attrs)} & & & & enum type \\
+"tfloat" & fkind & {\tt (attrs)} & & & & floating point number types \\
+"tfun" & & {\tt typ} & {\tt [fun-args]} & is-varargs & {\tt (attrs)} & function (return type, args) \\
+"tint" & ikind & {\tt (attrs)}  & & & & integer types \\
+"tnamed" & name & {\tt (attrs)} & & & & type name \\
+"tptr" & & {\tt typ} & {\tt (attrs)} & & & pointer to another type \\
+"tvoid" & & {\tt (attrs)}  & & & & void type \\ \hline
+\end{tabular}
+\caption{\label{tab:typtable}Typ-table: tags and arguments for types}
+\end{table}
 
-\paragraph{PyAdvance reference:} {\tt advance/app/CDictionary.py, advance/app.CTyp.py}
+\subsubsection{Type Signature Table}
 
-\paragraph{Note:} For all types shown below the listed attributes-table index is
-  optional: it is assumed the type has no associated attributes when this index
-  is absent.
+\begin{table}
+\centering
+\begin{tabular}{l|c||c|c|c|c||l}
+\multicolumn{2}{c||}{tags} & \multicolumn{4}{|c||}{args} & description \\ \hline
+\multicolumn{1}{c|}{1} & 2 & 1 & 2 & 3 & 4 & \\ \hline 
+"tsarray" & length & {\tt typsig} & {\tt (attrs)} & & & \\
+"tsptr" & & {\tt typsig} & {\tt (attrs)} & & & \\
+"tscomp" & name & is-struct & {\tt (attrs)} & & \\
+"tsfun" & & {\tt typsig} & {\tt typsig-list} & is-varargs & {\tt (attrs)} & \\
+"tsenum" & name & {\tt (attrs)} & & & & \\
+"tsbase" & & {\tt typsig} & & & &
+\end{tabular}
+\caption{\label{tab:typtable}Typsig-table: tags and arguments for type signatures}
+\end{table}
 
-\paragraph{TVoid (CTypVoid)}
-\begin{itemize}
-\item \emph{tags:} "tvoid"
-\item \emph{args:} attributes-table index
-\end{itemize}
+\subsection{Declarations Tables}
 
-\paragraph{TInt (CTypInt)}
-\begin{itemize}
-\item \emph{tags:} 1:"tint", 2:integer kind ("ichar", "ischar", "iuchar","ibool",
-   "iint", "iuint", "ishort", "iushort", "ilong", "iulong", "ilonglong", "iulonglong")
-\item \emph{args:} attributes-table index
-\end{itemize}
+Table~\ref{tab:decls} shows the data representation of the various types of 
+declarations included in the program. The compinfo represents struct and union
+definitions. The enuminfo represents enum definitions. The init represents
+initializers for global variables. The typeinfo represents type definitions,
+associating a name with a type. Finally, the varinfo represents variable
+definitions. 
+All variables in a program are indexed: within a file each variable has a unique
+identifier, called {\tt vid}. Global variable identifiers are cross referenced
+across files via the \_gxrefs.xml files. The address? element of the varinfo
+indicates whether the address of the variable has been taken (that is, if it can
+be aliased). The param element is a positive integer for formal parameters of
+functions, indicating its sequence number in the list of parameters (starting at
+1), or zero for all other variables.
 
-\paragraph{TFloat (CTypFloat)}
-\begin{itemize}
-\item \emph{tags:} 1:"tfloat", 2:float kind ("float", "fdouble", "flongdouble")
-\item \emph{args:} attributes-table index
-\end{itemize}
-
-\paragraph{TPtr (CTypPtr)}
-\begin{itemize}
-\item \emph{tags:} "tptr"
-\item \emph{args:} 1:typ-table index (target type), 2:attributes-table index
-\end{itemize}
-
-\paragraph{TArray (CTypArray)}
-\begin{itemize}
-\item \emph{tags:} "tarray"
-\item \emph{args:} 1:typ-table index (element type), 2:opt exp-table index (size), 
-   3: attributes-table index
-\end{itemize}
-
-\paragraph{TFun (CTypFun)}
-\begin{itemize}
-\item \emph{tags:} "tfun"
-\item \emph{args:} 1:typ-table index (return type), 2:opt-fun-args index (argument types),
-         3:is\_varargs, 4:attributes-table index
-\end{itemize}
-
-\paragraph{TNamed (CTypNamed)}
-\begin{itemize}
-\item \emph{tags:} 1:"tnamed", 2:name
-\item \emph{args:} attributes-table index
-\end{itemize}
-
-\paragraph{TComp (CTypComp)}
-\begin{itemize}
-\item \emph{tags:} "tcomp"
-\item \emph{args:} 1:ckey (unique struct identifier), 2:attributes-table index
-\end{itemize}
-
-\paragraph{TEnum (CTypEnum)}
-\begin{itemize}
-\item \emph{tags:} 1:"tenum", 2:name
-\item \emph{args:} attributes-table index
-\end{itemize}
-
-\paragraph{TBuiltinVaargs (CTypBuiltinVaargs)}
-\begin{itemize}
-\item \emph{tags:} 1:"tbuiltin-va-list"
-\item \emph{args:} attributes-table index
-\end{itemize}
+\begin{table}
+\centering
+\small
+\begin{tabular}{l|l|c||c|c|c|c|c|c|c|c|c|l}
+&\multicolumn{2}{c||}{tags} & \multicolumn{9}{|c|}{args}   \\ \hline
+&\multicolumn{1}{c|}{1} & 2 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\ \hline 
+\multicolumn{12}{l}{compinfo} \\ \hline
+& name & & key & struct? & {\tt attrs} & \multicolumn{6}{|l|}{*{\tt fieldinfo}} \\ \hline
+\multicolumn{12}{l}{enuminfo} \\ \hline
+& name & ekind & {\tt attrs} & \multicolumn{8}{|l|}{*{\tt enumitem}} \\ \hline
+\multicolumn{12}{l}{enumitem} \\ \hline
+& name & & {\tt exp} & {\tt loc} & & & & & & & \\ \hline
+\multicolumn{12}{l}{fieldinfo} \\ \hline
+& name & & key & {\tt typ} & bitfield & {\tt attrs} & {\tt loc} & & & & \\ \hline
+\multicolumn{12}{l}{init} \\ \hline
+& "single" & & {\tt exp} & \multicolumn{8}{|l|}{\mbox{}} \\
+& "compound" & & {\tt typ} & \multicolumn{8}{|l|}{*{\tt offset-init}} \\ \hline
+\multicolumn{12}{l}{loc} \\ \hline
+& & & {\tt filename} & byte & line & & & & & &\\ \hline
+\multicolumn{12}{l}{offset-init} \\ \hline
+& & & {\tt offset} & {\tt init} & & & & & & & \\ \hline
+\multicolumn{12}{l}{typeinfo} \\ \hline
+& name & & {\tt typ} & & & & & & & & \\ \hline
+\multicolumn{12}{l}{varinfo} \\ \hline
+& name & storage & vid & {\tt typ} & {\tt attrs} & global? & inlined? & {\tt loc} &
+   address? & param & {\tt init} \\ \hline
+&\multicolumn{1}{c|}{1} & 2 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\ \hline 
+\end{tabular}
+\caption{\label{tab:decls}Declarations tables: tags and arguments for program declarations}
+\end{table}
 
 
 %\begin{center}
