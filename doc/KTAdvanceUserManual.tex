@@ -200,17 +200,16 @@ c application:
   run, if necessary).
 \end{itemize}
 
-Section~\ref{sec:tests} provides a detailed description of the scripts available in
+Sections~\ref{sec:kendratests} through \ref{sec:juliettests} provide a detailed 
+description and walkthrough of the scripts available in
 the test-specific cmdline directories and Section~\ref{sec:app} describes the scripts
 for the general files and applications. In general, user scripts start with the 
 prefix {\tt chc\_} followed by some verb that indicates the action performed; most 
 scripts have a --help command-line
 option that describes the arguments expected.
 
-\section{Running Test Cases}
-\label{sec:tests}
-
-\subsection{Kendra}
+\section{Running Test Cases: Kendra}
+\label{sec:kendratests}
 
 The {\tt ktadvance/tests/sard/kendra} directory contains a collection of very small test
 programs retrieved from the NIST Software Assurance Reference Dataset ({\tt samate.nist.gov}).
@@ -220,7 +219,7 @@ the KT Advance analysis approach and presentation of results.
 Section~\ref{sec:runkendra} has step-by-step instructions how to run these tests
 and some comments on particular cases.
 
-\subsubsection{Organization}
+\subsection{Organization}
 The test cases are organized in groups of four related test cases, where the first 
 three test cases have a given vulnerability with varying magnitude of overflow and 
 in the fourth case that vulnerability is fixed (or absent). The names of the tests 
@@ -234,6 +233,41 @@ Each test directory has a reference file [testname].json (e.g., id115Q.json) tha
 all proof obligations
 and their expected proof status, against which the analysis results are checked after
 each test run.
+
+\subsection{Summary of Scripts}
+Scripts to analyze and report on the kendra test cases are located in the 
+{\tt advance/cmdline/kendra} directory. They are (in alphabetical
+order):
+\begin{itemize}
+\item {\tt chc\_clean\_kendraset.py}: removes the {\tt semantics} for the given
+  kendra set. \\
+  \emph{Example:} {\tt python chc\_clean\_kendraset.py id115Q}
+\item {\tt chc\_kendra\_dashboard.py}: outputs a summary of the results of all
+  kendra sets (after analysis has been performed for all of them). \\
+  \emph{Example:} {\tt python chc\_kendra\_dashboard.py}
+\item {\tt chc\_list\_kendrasets.py}: outputs a list of all kendra sets.\\
+  \emph{Example:} {\tt python chc\_list\_kendrasets.py}
+\item {\tt chc\_report\_kendratest\_file.py}: outputs a report of all proof obligations
+   and their analysis results for a given kendra c file. \\
+   \emph{Example:} {\tt python chc\_report\_kendratest\_file.py id115.c}
+\item {\tt chc\-show\_kendra\_file\_table.py}: outputs the entries for a particular
+   kendra file in a given (file-level) data dictionary \\
+   \emph{Example:} {\tt python chc\_show\_kendra\_file\_table id115.c --table predicate} \\
+   \emph{Example:} {\tt python chc\_show\_kendra\_file\_table id115.c --list}
+\item {\tt chc\_show\_kendra\_function\_table.py}: outputs the entries for a particular
+   kendra file in a given (function-level) data dictionary \\
+   \emph{Example:} {\tt python chc\_show\_kendra\_function\_table id115.c main --table 
+     ppo\_type}
+   \emph{Example:} {\tt python chc\_show\_kendra\_function\_table id115.c main --list}
+\item {\tt chc\_show\_kendraset.py}: outputs a list of proof obligations for each file
+    in the set \\
+    \emph{Example:} {\tt python chc\_show\_kendraset.py id115Q}
+\item {\tt chc\_test\_kendraset.py}: (parses and) analyzes the c files in the given test
+    set \\
+    \emph{Example:} {\tt python chc\_test\_kendraset.py id115Q} \\
+    \emph{Example:} {\tt python chc\_test\_kendraset.py id115Q --verbose}
+\end{itemize}
+Below we give a more detailed walkthrough and illustration for invoking some of these scripts.
 
 \subsection{Running the Tests}
 \label{sec:runkendra}
@@ -408,5 +442,483 @@ To analyze all kendra test cases run
 > python chc_test_kendra_sets.py
 \end{verbatim}
 If all of them complete all analysis results are available for inspection and reporting.
-Below we highlight some special cases.
+Below we discuss some special cases.
+
+\subsection{Some Kendra Examples Discussed}
+
+\subsubsection{Id151Q: Library Function Postconditions and Macros}
+
+The tests in this set program call two library functions: assert and malloc. 
+Proving the memory safety of this program requires knowledge of the semantics 
+of both of these library functions, in this case in particular the postconditions 
+of these functions. To obtain this information the analysis makes use of 
+library function summaries (provided in {\tt advance/summaries/cchsummaries.jar}).
+
+The malloc summary includes a postcondition that states that the return value 
+points to a newly allocated region of memory with size (in bytes) given by the 
+first argument, or the return value is NULL. Proof obligation 34 uses this 
+information to determine that the buffer access on line 60 violates its bounds. 
+Similarly in program id154.c (the safe version) the same information is used 
+to prove the buffer access safe.
+
+The assert call is actually a macro that expands into a conditional expression 
+that calls a function {\tt \_\_assert\_fail}. In particular, the call
+\begin{verbatim}
+assert (buf != NULL);
+\end{verbatim}
+expands into
+\begin{small}
+\begin{verbatim}
+((buf != ((void *)0)) ? (void) (0) : __assert_fail ("buf != NULL", "id151.c", 57,
+                                                    __PRETTY_FUNCTION__))
+\end{verbatim}
+\end{small}
+which by CIL gets represented as
+\begin{small}
+\begin{verbatim}
+if ((caste(unsigned long,buf) != caste(unsigned long,caste((void *),0))))
+  { }
+else
+  { __assert_fail("buf != NULL","id151.c",57, "main"); }
+\end{verbatim}
+\end{small}
+which explains the many proof obligations that get generated for this seemingly 
+simple instruction.
+
+The {\tt \_\_assert\_fail} function has postcondition {\tt false}, that is, it does not 
+return. This means only the then branch, with condition {\tt buf != NULL}, continues, 
+based on which proof obligation 31 (not-null(buf)) can be proven safe.
+
+The results for id151.c are
+\begin{small}
+\begin{verbatim}
+Function main
+--------------------------------------------------------------------------------
+52  int main(int argc, char *argv[])
+--------------------------------------------------------------------------------
+Api:
+  parameters:
+    int[] argc
+    ((char[] *) *) argv
+
+  postcondition guarantees:
+   post-expr(eq,return-val,num-constant(0))
+
+  library calls:
+   assert:__assert_fail -- 1
+   stdlib:malloc -- 1
+--------------------------------------------------------------------------------
+Primary Proof Obligations:
+--------------------------------------------------------------------------------
+53  {
+54    char * buf;
+55
+56    buf = (char *) malloc(10 * sizeof(char));
+--------------------------------------------------------------------------------
+<S>    1     56  int-underflow(10,sizeof(char[]),op:mult,ikind:iulong) (safe)
+                  underflow is well defined for unsigned types
+<S>    2     56  int-overflow(10,sizeof(char[]),op:mult,ikind:iulong) (safe)
+                  overflow is well defined for unsigned types
+<S>    3     56  pointer-cast(tmp,from:void[],to:char[]) (safe)
+                  cast to character type
+<L>    4     56  initialized(tmp)     (safe)
+                  assignedAt#56(rv:malloc)
+--------------------------------------------------------------------------------
+57    assert (buf != NULL);
+--------------------------------------------------------------------------------
+<S>    5     57  cast(buf,from:(char[] *),to:unsigned long[]) (safe)
+                  casting a pointer to integer type unsigned long
+<L>    6     57  initialized(buf)     (safe)
+                  assignedAt#56
+<S>    7     57  cast(caste((void[] *),0),from:(void[] *),to:unsigned long[]) (safe)
+                  null-pointer cast
+<S>    8     57  cast(0,from:int[],to:(void[] *)) (safe)
+                  null-pointer cast
+<S>    9     57  not-null(str(main))  (safe)
+                  string literal
+<S>   10     57  null-terminated(str(main)) (safe)
+                  string literal
+<S>   11     57  ptr-upper-bound(str(main),ntp(str(main)),op:pluspi,typ:char[]) (safe)
+                  upperbound of constant string argument: main
+<S>   12     57  initialized-range(str(main),len:ntp(str(main))) (safe)
+                  constant string
+<S>   13     57  not-null(str(id151.c)) (safe)
+                  string literal
+<S>   14     57  null-terminated(str(id151.c)) (safe)
+                  string literal
+<S>   15     57  ptr-upper-bound(str(id151.c),ntp(str(id151.c)),op:pluspi,typ:char[]) (safe)
+                  upperbound of constant string argument: id151.c
+<S>   16     57  initialized-range(str(id151.c),len:ntp(str(id151.c))) (safe)
+                  constant string
+<S>   17     57  not-null(str(buf != NULL)) (safe)
+                  string literal
+<S>   18     57  null-terminated(str(buf != NULL)) (safe)
+                  string literal
+<S>   19     57  ptr-upper-bound(str(buf != NULL),ntp(str(buf != NULL)),op:pluspi,typ:char[]) (safe)
+                  upperbound of constant string argument: buf != NULL
+<S>   20     57  initialized-range(str(buf != NULL),len:ntp(str(buf != NULL))) (safe)
+                  constant string
+<S>   21     57  valid-mem(str(buf != NULL)) (safe)
+                  constant string is allocated by compiler
+<S>   22     57  lower-bound(char[],str(buf != NULL)) (safe)
+                  constant string is allocated by compiler
+<S>   23     57  upper-bound(char[],str(buf != NULL)) (safe)
+                  constant string is allocated by compiler
+<S>   24     57  valid-mem(str(id151.c)) (safe)
+                  constant string is allocated by compiler
+<S>   25     57  lower-bound(char[],str(id151.c)) (safe)
+                  constant string is allocated by compiler
+<S>   26     57  upper-bound(char[],str(id151.c)) (safe)
+                  constant string is allocated by compiler
+<S>   27     57  valid-mem(str(main)) (safe)
+                  constant string is allocated by compiler
+<S>   28     57  lower-bound(char[],str(main)) (safe)
+                  constant string is allocated by compiler
+<S>   29     57  upper-bound(char[],str(main)) (safe)
+                  constant string is allocated by compiler
+--------------------------------------------------------------------------------
+58
+59    /*  BAD  */
+60    buf[4105] = 'A';
+--------------------------------------------------------------------------------
+<L>   30     60  initialized(buf)     (safe)
+                  assignedAt#56
+<L>   31     60  not-null(buf)        (safe)
+                  null has been explicitly excluded (either by assignment or by checking)
+<L>   32     60  valid-mem(buf)       (safe)
+                  all memory regions potentially pointed at are valid: addrof_heapregion_1
+<S>   33     60  ptr-lower-bound(buf,4105,op:indexpi,typ:char[]) (safe)
+                  add non-negative number:  value is 4105
+<*>   34     60  ptr-upper-bound-deref(buf,4105,op:indexpi,typ:char[]) (violation)
+                  increment is larger than or equal to the size of the memory region 
+                  returned by malloc: violates ((4105 * 1) < 10)
+<S>   35     60  not-null((buf + 4105)) (safe)
+                  arguments of pointer arithmetic are checked for null
+<S>   36     60  valid-mem((buf + 4105)) (safe)
+                  pointer arithmetic stays within memory region
+<S>   37     60  lower-bound(char[],(buf + 4105)) (safe)
+                  result of pointer arithmetic is guaranteed to satisfy lowerbound 
+                  by inductive hypothesis
+<S>   38     60  upper-bound(char[],(buf + 4105)) (safe)
+                  result of pointer arithmetic is guaranteed to satisfy upperbound 
+                  by inductive hypothesis
+<S>   39     60  cast(chr('A'),from:int[],to:char[]) (safe)
+                  casting constant value 65 to char
+--------------------------------------------------------------------------------
+
+Primary Proof Obligations
+functions    stmt   local     api    post  global    open   total
+---------------------------------------------------------------
+main         33       6       0       0       0       0      39
+---------------------------------------------------------------
+total        33       6       0       0       0       0      39
+percent   84.62   15.38    0.00    0.00    0.00    0.00
+
+
+Proof Obligation Statistics for file id151
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Primary Proof Obligations
+                             stmt   local     api    post  global    open   total
+---------------------------------------------------------------------------------
+cast                            4       0       0       0       0       0       4
+initialized                     0       3       0       0       0       0       3
+initialized-range               3       0       0       0       0       0       3
+int-overflow                    1       0       0       0       0       0       1
+int-underflow                   1       0       0       0       0       0       1
+lower-bound                     4       0       0       0       0       0       4
+not-null                        4       1       0       0       0       0       5
+null-terminated                 3       0       0       0       0       0       3
+pointer-cast                    1       0       0       0       0       0       1
+ptr-lower-bound                 1       0       0       0       0       0       1
+ptr-upper-bound                 3       0       0       0       0       0       3
+ptr-upper-bound-deref           0       1       0       0       0       0       1
+upper-bound                     4       0       0       0       0       0       4
+valid-mem                       4       1       0       0       0       0       5
+---------------------------------------------------------------------------------
+total                          33       6       0       0       0       0      39
+percent                     84.62   15.38    0.00    0.00    0.00    0.00
+\end{verbatim}
+\end{small}
+For id154.c (the safe version) the results are:
+\begin{small}
+\begin{verbatim}
+Function main
+--------------------------------------------------------------------------------
+52  int main(int argc, char *argv[])
+--------------------------------------------------------------------------------
+Api:
+  parameters:
+    int[] argc
+    ((char[] *) *) argv
+
+  postcondition guarantees:
+   post-expr(eq,return-val,num-constant(0))
+
+  library calls:
+   assert:__assert_fail -- 1
+   stdlib:malloc -- 1
+--------------------------------------------------------------------------------
+Primary Proof Obligations:
+--------------------------------------------------------------------------------
+53  {
+54    char * buf;
+55
+56    buf = (char *) malloc(10 * sizeof(char));
+--------------------------------------------------------------------------------
+<S>    1     56  int-underflow(10,sizeof(char[]),op:mult,ikind:iulong) (safe)
+                  underflow is well defined for unsigned types
+<S>    2     56  int-overflow(10,sizeof(char[]),op:mult,ikind:iulong) (safe)
+                  overflow is well defined for unsigned types
+<S>    3     56  pointer-cast(tmp,from:void[],to:char[]) (safe)
+                  cast to character type
+<L>    4     56  initialized(tmp)     (safe)
+                  assignedAt#56(rv:malloc)
+--------------------------------------------------------------------------------
+57    assert (buf != NULL);
+--------------------------------------------------------------------------------
+.......
+--------------------------------------------------------------------------------
+58
+59    /*  OK  */
+60    buf[9] = 'A';
+--------------------------------------------------------------------------------
+<L>   30     60  initialized(buf)     (safe)
+                  assignedAt#56
+<L>   31     60  not-null(buf)        (safe)
+                  null has been explicitly excluded (either by assignment or by checking)
+<L>   32     60  valid-mem(buf)       (safe)
+                  all memory regions potentially pointed at are valid: addrof_heapregion_1
+<S>   33     60  ptr-lower-bound(buf,9,op:indexpi,typ:char[]) (safe)
+                  add non-negative number:  value is 9
+<L>   34     60  ptr-upper-bound-deref(buf,9,op:indexpi,typ:char[]) (safe)
+                  increment is less than the size of the memory region returned by 
+                  malloc: satisfies ((9 * 1) < 10)
+<S>   35     60  not-null((buf + 9))  (safe)
+                  arguments of pointer arithmetic are checked for null
+<S>   36     60  valid-mem((buf + 9)) (safe)
+                  pointer arithmetic stays within memory region
+<S>   37     60  lower-bound(char[],(buf + 9)) (safe)
+                  result of pointer arithmetic is guaranteed to satisfy lowerbound 
+                  by inductive hypothesis
+<S>   38     60  upper-bound(char[],(buf + 9)) (safe)
+                  result of pointer arithmetic is guaranteed to satisfy upperbound 
+                  by inductive hypothesis
+<S>   39     60  cast(chr('A'),from:int[],to:char[]) (safe)
+                  casting constant value 65 to char
+--------------------------------------------------------------------------------
+.......
+\end{verbatim}
+\end{small}
+
+\subsubsection{Id167Q: Supporting Proof Obligations}
+
+The programs in this set illustrate the concept and use of \emph{supporting proof obligations}.
+The safety of the array access in {\tt function1} depends on the size of the array {\tt buf} 
+that is passed in as an argument. Since {\tt function1} is not in a position to determine 
+this size it must delegate the responsibility for the safety of the array access to 
+the caller of the function. It does so by automatically generating the necessary 
+conditions for safety on the argument value and advertising these as assumptions in 
+its api. In this case there are two safety conditions: (1) the argument should not 
+be null, and (2) the size of the argument should be at least 4106 (since it 
+accesses index 4105).
+
+The api assumptions generated by {\tt function1} are converted by the calling function, 
+{\tt main}, into so-called supporting proof obligations that express the conditions 
+applied to the actual arguments. In program id167.c the resulting proof obligation 
+for the second api assumption, 4106 < 10, evaluates to false, resulting in the 
+report of a memory safety violation. In program id170.c both supporting proof 
+obligations are shown valid.
+
+Note that the violation in program 167.c is reported in {\tt main} and not in {\tt function1}, 
+although the actual buffer overflow will happen in {\tt function1}. In general a 
+violation is placed at the highest applicable position in the call graph if there 
+is a choice, because this will be the most likely position where a correction 
+must be made. The program position of the actual buffer violation can be 
+found by following the chain of assumptions and dependent ppo's/spos's that 
+leads to the assumption that is being violated.
+
+Results for id167.c:
+\begin{small}
+\begin{verbatim}
+Function function1
+--------------------------------------------------------------------------------
+50  void function1(char * buf)
+--------------------------------------------------------------------------------
+Api:
+  parameters:
+    (char[] *) buf
+
+  api assumptions
+   5  not-null(buf)
+      --Dependent ppo's: [2]
+   14  ptr-upper-bound-deref(buf,4105,op:pluspi,typ:char[])
+      --Dependent ppo's: [5]
+--------------------------------------------------------------------------------
+Primary Proof Obligations:
+--------------------------------------------------------------------------------
+51  {
+52    /*  BAD  */
+53    buf[4105] = 'A';
+--------------------------------------------------------------------------------
+<S>    1     53  initialized(buf)     (safe)
+                  buf is a function parameter
+<A>    2     53  not-null(buf)        (safe)
+                  condition not-null(buf) delegated to api
+<L>    3     53  valid-mem(buf)       (safe)
+                  all memory regions potentially pointed at are valid: 
+                  addr_in_(buf_1_)#init
+<S>    4     53  ptr-lower-bound(buf,4105,op:indexpi,typ:char[]) (safe)
+                  add non-negative number:  value is 4105
+<A>    5     53  ptr-upper-bound-deref(buf,4105,op:indexpi,typ:char[]) (safe)
+                  condition ptr-upperbound-deref(((buf +i 4105):char) delegated to api
+<S>    6     53  not-null((buf + 4105)) (safe)
+                  arguments of pointer arithmetic are checked for null
+<S>    7     53  valid-mem((buf + 4105)) (safe)
+                  pointer arithmetic stays within memory region
+<S>    8     53  lower-bound(char[],(buf + 4105)) (safe)
+                  result of pointer arithmetic is guaranteed to satisfy lowerbound 
+                  by inductive hypothesis
+<S>    9     53  upper-bound(char[],(buf + 4105)) (safe)
+                  result of pointer arithmetic is guaranteed to satisfy upperbound 
+                  by inductive hypothesis
+<S>   10     53  cast(chr('A'),from:int[],to:char[]) (safe)
+                  casting constant value 65 to char
+--------------------------------------------------------------------------------
+
+Function main
+--------------------------------------------------------------------------------
+56  int main(int argc, char *argv[])
+--------------------------------------------------------------------------------
+Api:
+  parameters:
+    int[] argc
+    ((char[] *) *) argv
+
+  postcondition guarantees:
+   post-expr(eq,return-val,num-constant(0))
+
+  -- no library calls
+--------------------------------------------------------------------------------
+Primary Proof Obligations:
+--------------------------------------------------------------------------------
+57  {
+58    char buf[10];
+59
+60
+61    function1(buf);
+--------------------------------------------------------------------------------
+<S>    1     61  valid-mem(&(buf))    (safe)
+                  address of a variable is a valid memory region
+<S>    2     61  lower-bound(char[],&(buf)) (safe)
+                  address of a variable
+<S>    3     61  upper-bound(char[],&(buf)) (safe)
+                  address of a variable
+--------------------------------------------------------------------------------
+Supporting Proof Obligations:
+--------------------------------------------------------------------------------
+57  {
+58    char buf[10];
+59
+60
+61    function1(buf);
+--------------------------------------------------------------------------------
+<S>    1    5   61   not-null(&(buf)) (safe)
+                        address of variable buf
+<*>    2   14   61   ptr-upper-bound-deref(&(buf),4105,op:pluspi,typ:char[]) (violation)
+                        adding 4105 to the start of an array of length 10 violates 
+                        the upperbound
+
+Primary Proof Obligations
+functions       stmt   local     api    post  global    open   total
+--------------------------------------------------------------------
+function1          7       1       2       0       0       0      10
+main               3       0       0       0       0       0       3
+--------------------------------------------------------------------
+total             10       1       2       0       0       0      13
+percent        76.92    7.69   15.38    0.00    0.00    0.00
+
+Supporting Proof Obligations
+functions       stmt   local     api    post  global    open   total
+--------------------------------------------------------------------
+main               2       0       0       0       0       0       2
+--------------------------------------------------------------------
+total              2       0       0       0       0       0       2
+percent       100.00    0.00    0.00    0.00    0.00    0.00
+
+
+Proof Obligation Statistics for file id167
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Primary Proof Obligations
+                             stmt   local     api    post  global    open   total
+---------------------------------------------------------------------------------
+cast                            1       0       0       0       0       0       1
+initialized                     1       0       0       0       0       0       1
+lower-bound                     2       0       0       0       0       0       2
+not-null                        1       0       1       0       0       0       2
+ptr-lower-bound                 1       0       0       0       0       0       1
+ptr-upper-bound-deref           0       0       1       0       0       0       1
+upper-bound                     2       0       0       0       0       0       2
+valid-mem                       2       1       0       0       0       0       3
+---------------------------------------------------------------------------------
+total                          10       1       2       0       0       0      13
+percent                     76.92    7.69   15.38    0.00    0.00    0.00
+
+Supporting Proof Obligations
+                             stmt   local     api    post  global    open   total
+---------------------------------------------------------------------------------
+not-null                        1       0       0       0       0       0       1
+ptr-upper-bound-deref           1       0       0       0       0       0       1
+---------------------------------------------------------------------------------
+total                           2       0       0       0       0       0       2
+percent                    100.00    0.00    0.00    0.00    0.00    0.00
+\end{verbatim}
+\end{small}
+
+\section{Running Test Cases: Zitser}
+
+The test cases in the directory {\tt ktadvance/tests/sard/zitser} 
+are test cases number 1283 through 1310 from the NIST Software Assurance Reference Dataset
+(samate.nist.gov). These test cases were contributed by Misha Zitser, and are described 
+in the paper "Testing Static Analysis Tools Using Exploitable Overflows From Open Source 
+Code", Misha Zitser, Richard Lippmann, and Tim Leek, Proceedings of the 12th ACM SIGSOFT 
+twelfth international symposium on Foundations of software engineering, pages 97-106.
+
+All test cases have been pre-parsed and are ready for analysis.
+
+\subsection{Summary of Scripts}
+
+Scripts to analyze and report on the zitser test cases are located in the
+directory \\ {\tt ktadvance/advance/cmdline/zitser}. They are (in alphabetical order):
+\begin{itemize}[leftmargin=*]
+\item {\tt chc\_analyze\_zitser.py}: analyzes the given zitser test case.\\
+\emph{Example:} {\tt python chc\_analyze\_zitser.py id1283} \\
+\emph{Example:} {\tt python chc\_analyze\_zitser.py id1283 --verbose}
+\item {\tt chc\_analyze\_zitser\_set.py}: analyzes all zitser test cases (id1283-id1310);
+  this may take 20-30 minutes. \\
+\emph{Example:} {\tt python chc\_analyze\_zitser\_set.py}
+\item {\tt chc\_investigate\_ppos.py}: outputs all open primary proof obligations per 
+   predicate, per file, per function for a given test case that has been analyzed; 
+   may optionally be restricted to a single predicate \\
+\emph{Example:} {\tt python chc\_investigate\_ppos.py id1283} \\
+\emph{Example:} {\tt python chc\_investigate\_ppos.py id1283 --predicate valid-mem}
+\item {\tt chc\_report\_violations.py}: outputs a list of all (universal) violations
+   found.\\
+\emph{Example:} {\tt python chc\_report\_violations.py id1283}
+\item {\tt chc\_report\_zitser.py}: outputs a summary of the status of the proof 
+   obligations for the given zitser test case that has been analyzed.\\
+\emph{Example:} {\tt python chc\_report\_zitser.py id1283}
+\item {\tt chc\_report\_zitser\_file.py}: outputs a summary of the status for the
+  proof obligations for the given zitser test case c file that has been analyzed
+  (optionally with a listing of the code and the proof obligations associated with
+  each line of code).\\
+\emph{Example:} {\tt python chc\_report\_zitser\_file.py id1283 call\_fb\_realpath.c} \\
+\emph{Example:} {\tt python chc\_report\_zitser\_file.py id1283 call\_fb\_realpath.c --showcode}
+\item {\tt chc\_report\_zitser\_function.py}: outputs the code and associated proof
+  obligations with justification, if closed, and diagnostic or invariants, if open
+  for a given function in a given zitser test case.\\
+\emph{Example:} {\tt python chc\_report\_zitser\_function.py id1283 realpath-bad.c wu\_realpath}
+   
+\end{itemize}
 \end{document}
