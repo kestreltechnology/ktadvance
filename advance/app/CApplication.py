@@ -67,6 +67,8 @@ class CApplication(object):
         self._initialize_files()
         return self.files.values()
 
+    def has_single_file(self): return 0 in self.filenames
+
     # return file from single-file application
     def get_single_file(self):
         if 0 in self.filenames:
@@ -148,8 +150,8 @@ class CApplication(object):
          
     def get_function_by_index(self,index):
         for f in self.files:
-            if self.files[f].hasfunctionbyindex(index):
-                return self.files[f].getfunctionbyindex(index)
+            if self.files[f].has_function_by_index(index):
+                return self.files[f].get_function_by_index(index)
         else:
             print('No function found with index ' + str(index))
             # exit(1)
