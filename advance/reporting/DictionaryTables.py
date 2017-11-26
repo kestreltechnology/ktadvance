@@ -96,6 +96,21 @@ function_tables = {
     'xpr': lambda(f):f.vard.xd.xpr_table
     }
 
+def list_file_tables():
+    lines = []
+    lines.append('*' * 80)
+    for k in sorted(file_tables):
+        lines.append('  ' + k)
+    lines.append('*' * 80)
+    return '\n'.join(lines)
+
+def list_function_tables():
+    lines = []
+    lines.append('*' * 80)
+    for k in sorted(function_tables):
+        lines.append('  ' + k)
+    lines.append('*' * 80)
+    return '\n'.join(lines)
 
 def get_file_table(f,tablename):
     lines = []
@@ -106,11 +121,8 @@ def get_file_table(f,tablename):
         else:
             lines.append('\n' + table.name + ' is empty' + '\n')
     else:
-        lines.append('*' * 80)
         lines.append('File table ' + tablename + ' not found.\nTables available:')
-        for k in sorted(file_tables):
-            lines.append('  ' + k)
-        lines.append('*' * 80)
+        lines.append(list_file_tables())
     return '\n'.join(lines)
 
 
@@ -118,15 +130,12 @@ def get_function_table(f,functionname,tablename):
     lines = []
     
     if not tablename in function_tables:
-        lines.append('*' * 80)
         lines.append('File table ' + tablename + ' not found.\nTables available:')
-        for k in sorted(function_tables):
-            lines.append('  ' + k)
-        lines.append('*' * 80)
+        lines.append(list_function_tables())
         return '\n'.join(lines)
 
     if not f.has_function_by_name(functionname):
-        lines.append('*' * 80)
+        lines.append('*' * 80)        
         lines.append('Function name ' + functionname + ' not found in file '
                          + f.name + '\nFunction names available:')
         for k in sorted(f.functionnames):
