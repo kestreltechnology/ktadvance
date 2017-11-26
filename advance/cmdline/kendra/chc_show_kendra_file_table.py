@@ -36,7 +36,8 @@ from advance.app.CApplication import CApplication
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('cfilename',help='name of kendra c file (.e.g., id115.c)')
-    parser.add_argument('tablename',help='name of table to be shown')
+    parser.add_argument('--table',help='name of table to be shown')
+    parser.add_argument('--list',help='list names of file tables',action='store_true')
     args = parser.parse_args()
     return args
 
@@ -54,6 +55,17 @@ if __name__ == '__main__':
 
     sempath = os.path.join(cpath,'semantics')
     cfapp = CApplication(sempath,cfilename)
-    cfile = cfapp.get_cfile()
+    if cfapp.has_single_file():
+        cfile = cfapp.get_cfile()
 
-    print(str(DT.get_file_table(cfile,args.tablename)))
+        if (args.table is None) or args.list:
+            print(str(DT.list_file_tables()))
+
+        else:
+            print(str(DT.get_file_table(cfile,args.table)))
+
+    else:
+        print('*' * 80)
+        print('File not found. Please make sure the test has been analyzed.')
+        print('*' * 80)
+        exit(1)
