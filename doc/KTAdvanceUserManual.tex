@@ -90,7 +90,8 @@ different platforms:
 \item {\bf Parser:} A Mac/Linux executable (parseFile) that takes as input a preprocessed
 C source file and produces a set of xml files that precisely represent the
 semantics of the C source file. This program is an extension of the CIL
-parser front end, developed by George Necula, at UC Berkeley, an now maintained
+parser front end, developed by George Necula, at UC 
+Berkeley~\cite{DBLP:conf/cc/NeculaMRW02}, an now maintained
 by INRIA in France. Except for very simple programs (typically programs that do
 not include any standard libraries), it is recommended to run the parser on
 a Linux platform, as the parser pulls in definitions from the standard header files
@@ -250,7 +251,7 @@ order):
 \item {\tt chc\_report\_kendratest\_file.py}: outputs a report of all proof obligations
    and their analysis results for a given kendra c file. \\
    \emph{Example:} {\tt python chc\_report\_kendratest\_file.py id115.c}
-\item {\tt chc\-show\_kendra\_file\_table.py}: outputs the entries for a particular
+\item {\tt chc\_show\_kendra\_file\_table.py}: outputs the entries for a particular
    kendra file in a given (file-level) data dictionary \\
    \emph{Example:} {\tt python chc\_show\_kendra\_file\_table id115.c --table predicate} \\
    \emph{Example:} {\tt python chc\_show\_kendra\_file\_table id115.c --list}
@@ -881,10 +882,7 @@ percent                    100.00    0.00    0.00    0.00    0.00    0.00
 The test cases in the directory {\tt ktadvance/tests/sard/zitser} 
 are test cases number 1283 through 1310 from the NIST Software Assurance Reference Dataset
 (samate.nist.gov). These test cases were contributed by Misha Zitser, and are described 
-in the paper "Testing Static Analysis Tools Using Exploitable Overflows From Open Source 
-Code", Misha Zitser, Richard Lippmann, and Tim Leek, Proceedings of the 12th ACM SIGSOFT 
-twelfth international symposium on Foundations of software engineering, pages 97-106.
-
+in~\cite{DBLP:conf/sigsoft/ZitserLL04}
 All test cases have been pre-parsed and are ready for analysis.
 
 \subsection{Summary of Scripts}
@@ -919,6 +917,371 @@ directory \\ {\tt ktadvance/advance/cmdline/zitser}. They are (in alphabetical o
   obligations with justification, if closed, and diagnostic or invariants, if open
   for a given function in a given zitser test case.\\
 \emph{Example:} {\tt python chc\_report\_zitser\_function.py id1283 realpath-bad.c wu\_realpath}
-   
+\item {\tt chc\_show\_zitser\_file\_table.py}: outputs the entries for a zitser test case file
+  in a given (file-level) data dictionary \\
+\emph{Example:} {\tt python chc\_show\_zitser\_file\_table.py id1283 realpath-bad.c typ}
+\item {\tt chc\_show\_zitser\_function\_table.py}: outputs the entries for a zitser test case
+  function in a given (function-level) data dictionary \\
+\emph{Example:} {\tt python chc\_show\_zitser\_function\_table.py id1283 realpath-bad.c
+    wu\_realpath local\_varinfo}
+\item {\tt chc\_zitser\_dashboard.py}: outputs a summary of the results of all zitser test
+    cases (after all test cases have been analyzed) \\
+\emph{Example:} {\tt python chc\_zitser\_dashboard.py} 
 \end{itemize}
+
+\subsection{Running the Tests}
+
+To analyze all 28 zitser test cases:
+\begin{verbatim}
+> export PYTHONPATH=$HOME/ktadvance
+> cd ktadvance/advance/cmdline/zitser
+> python chc_analyze_zitser_set.py
+\end{verbatim}
+Since all zitser tests have been pre-parsed the analysis can be run on either Linux
+or MacOS; the results will always be the same, as the analysis has no dependencies
+on the compiler or resident standard header files.
+
+To analyze a single zitser test case, say id1283:
+\begin{verbatim}
+> python chc_analyze_zitser.py id1283
+\end{verbatim}
+or 
+\begin{verbatim}
+> python chc_analyze_zitser.py id1283 --verbose
+\end{verbatim}
+to have intermediate output printed to the console.
+
+Once a test case is analyzed its results can be inspected. The command
+\begin{verbatim}
+> python chc_report_zitser.py id1283
+\end{verbatim}
+outputs a summary of the status of all proof obligations:
+\begin{small}
+\begin{verbatim}
+Primary Proof Obligations
+c files                  stmt   local     api    post  global    open   total
+-----------------------------------------------------------------------------
+call_fb_realpath           78      10       1       0       0      10      99
+realpath-bad              685     440      59       0       0     196    1380
+-----------------------------------------------------------------------------
+total                     763     450      60       0       0     206    1479
+percent                 51.59   30.43    4.06    0.00    0.00   13.93
+
+Supporting Proof Obligations
+c files                  stmt   local     api    post  global    open   total
+-----------------------------------------------------------------------------
+call_fb_realpath           10       0       0       0       0       1      11
+realpath-bad                7       1       2       0       0       1      11
+-----------------------------------------------------------------------------
+total                      17       1       2       0       0       2      22
+percent                 77.27    4.55    9.09    0.00    0.00    9.09
+
+
+Proof Obligation Statistics
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Primary Proof Obligations
+                             stmt   local     api    post  global    open   total
+---------------------------------------------------------------------------------
+allocation-base                 0       2       0       0       0       0       2
+cast                           47       6       0       0       0       4      57
+common-base                     0       1       0       0       0       0       1
+format-string                  33       0       0       0       0       0      33
+global-mem                      5       0       0       0       0       2       7
+index-lower-bound               5       0       0       0       0       0       5
+index-upper-bound               5       0       0       0       0       0       5
+initialized                    49     156       1       0       0       9     215
+initialized-range              40       0       0       0       0      49      89
+int-overflow                   12       2       0       0       0       5      19
+int-underflow                  19       0       0       0       0       0      19
+lower-bound                    82      66       0       0       0      17     165
+no-overlap                      4       8       2       0       0       4      18
+not-null                       58      56      46       0       0       1     161
+null-terminated                40       1       0       0       0      47      88
+pointer-cast                  115       0       0       0       0       0     115
+ptr-lower-bound                 7       1       0       0       0       2      10
+ptr-upper-bound                62       0       7       0       0      36     105
+ptr-upper-bound-deref           3       0       4       0       0       3      10
+signed-to-unsigned-cast        13       2       0       0       0       0      15
+upper-bound                    82      66       0       0       0      17     165
+valid-mem                      82      83       0       0       0      10     175
+---------------------------------------------------------------------------------
+total                         763     450      60       0       0     206    1479
+percent                     51.59   30.43    4.06    0.00    0.00   13.93
+
+Supporting Proof Obligations
+                             stmt   local     api    post  global    open   total
+---------------------------------------------------------------------------------
+initialized                     0       0       0       0       0       2       2
+no-overlap                      1       1       0       0       0       0       2
+not-null                        3       0       1       0       0       0       4
+ptr-upper-bound                 7       0       1       0       0       0       8
+ptr-upper-bound-deref           6       0       0       0       0       0       6
+---------------------------------------------------------------------------------
+total                          17       1       2       0       0       2      22
+percent                     77.27    4.55    9.09    0.00    0.00    9.09
+
+\end{verbatim}
+\end{small}
+The command
+\begin{verbatim}
+> python chc_report_zitser_file.py id1283 realpath-bad.c
+\end{verbatim}
+outputs the summary results for a single c file. Adding the option {\tt --showcode}
+will produce a more detailed output that associates all proof obligations with the
+source code for all functions in the given c file. The command
+\begin{verbatim}
+> python chc_report_zitser_function.py id1283 realpath-bad.c fb_realpath
+\end{verbatim}
+will output the source code for the function with the associated proof obligations
+and their status, as well as a summary of results for the function.
+
+The script {\tt chc\_investigate\_ppos.py} allows inspection of all open proof obligations
+or all proof obligations of a certain predicate, e.g.:
+\begin{small}
+\begin{verbatim}
+> python chc_investigate_ppos.py id1283 --predicate upper-bound
+upper-bound
+--------------------------------------------------------------------------------
+
+  File: realpath-bad
+    Function: fb_realpath
+       138    284  upper-bound(char[],q) (open)
+       172    292  upper-bound(char[],q) (open)
+       181    293  upper-bound(char[const: ],caste((char[const: ] *),q)) (open)
+       203    299  upper-bound(char[const: ],caste((char[const: ] *),q)) (open)
+       223    305  upper-bound(char[],q) (open)
+       231    313  upper-bound(char[],p) (open)
+       254    315  upper-bound(char[],p) (open)
+       265    316  upper-bound(char[const: ],caste((char[const: ] *),p)) (open)
+       320    325  upper-bound(char[const: ],caste((char[const: ] *),p)) (open)
+       431    359  upper-bound(char[const: ],caste((char[const: ] *),p)) (open)
+       464    365  upper-bound(char[const: ],caste((char[const: ] *),p)) (open)
+       567    390  upper-bound(char[const: ],caste((char[const: ] *),p)) (open)
+       586    391  upper-bound(char[],p) (open)
+       609    397  upper-bound(char[const: ],caste((char[const: ] *),p)) (open)
+       628    414  upper-bound(char[const: ],caste((char[const: ] *),p)) (open)
+    Function: wu_realpath
+       137    180  upper-bound(char[],ptr) (open)
+       158    181  upper-bound(char[],ptr) (open)
+
+........
+\end{verbatim}
+\end{small}
+
+To see a summary of the analysis results of all zitser test cases (after they have
+all been analyzed):
+\begin{small}
+\begin{verbatim}
+> python chc_zitser_dashboard.py
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Zitser test cases: id1283 - id1310
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Primary proof obligations
+
+zitser testcase              stmt   local     api    post  global    open   total
+---------------------------------------------------------------------------------
+id1283                        763     450      60       0       0     206    1479
+id1284                        640     347      51       0       0     164    1202
+id1285                        871     294      35       0       0     271    1471
+id1286                       1195     356      43       0       0     334    1928
+id1287                        421     116      15       0       0     108     660
+id1288                        378     118      16       0       0     111     623
+id1289                        408     263      29       0       0     329    1029
+id1290                        371     246      24       0       0     301     942
+id1291                       1220    1099      58       0       0     399    2776
+id1292                       1219    1102      59       0       0     398    2778
+id1293                        807     805      47       0       0     262    1921
+id1294                        926     848      51       0       0     272    2097
+id1295                        302     164      32       0       0      99     597
+id1296                        312     166      32       0       0      99     609
+id1297                        355     521      16       0       0     219    1111
+id1298                        725    1320      17       0       0     222    2284
+id1299                        393     344      66       0       0     274    1077
+id1300                        490     351      74       0       0     277    1192
+id1301                        420     206      23       0       0     153     802
+id1302                        255     168      16       0       0      98     537
+id1303                        264     222      14       0       0     153     653
+id1304                        291     252      14       0       0     156     713
+id1305                        433     204      25       0       0     106     768
+id1306                        478     213      34       0       0     112     837
+id1307                        137      53       2       0       0     106     298
+id1308                        138      53       2       0       0     107     300
+id1309                        750     655      50       0       0     650    2105
+id1310                        765     661      50       0       0     653    2129
+---------------------------------------------------------------------------------
+total                       15727   11597     955       0       0    6639   34918
+percent                     45.04   33.21    2.73    0.00    0.00   19.01
+
+Secondary proof obligations
+
+......
+
+Proof obligation types
+
+Primary proof obligations
+                             stmt   local     api    post  global    open   total
+---------------------------------------------------------------------------------
+allocation-base                 0       2       2       0       0      10      14
+cast                         1516     166       0       0       0     163    1845
+common-base                     0     193      16       0       0      13     222
+common-base-type                0      91       0       0       0      10     101
+format-string                 593       0       0       0       0       2     595
+global-mem                     87       0       0       0       0      44     131
+index-lower-bound              93      12       0       0       0       2     107
+index-upper-bound              83      12       0       0       0      12     107
+initialized                   968    4581      48       0       0     824    6421
+initialized-range             769       8       0       0       0     509    1286
+int-overflow                  218      26       0       0       0     145     389
+int-underflow                 316      21       8       0       0      44     389
+lower-bound                  1616    1178       0       0       0     690    3484
+no-overlap                     77      49      10       0       0      38     174
+non-negative                  179       0       0       0       0       0     179
+not-null                     1208    1709     785       0       0     600    4302
+not-zero                        2       0       0       0       0       0       2
+null-terminated               792      62       0       0       0     451    1305
+pointer-cast                 1839       0       0       0       0      40    1879
+ptr-lower-bound               728      28      12       0       0     129     897
+ptr-upper-bound               938      24      25       0       0     508    1495
+ptr-upper-bound-deref         122       9      49       0       0     696     876
+signed-to-unsigned-cast       165      36       0       0       0      74     275
+unsigned-to-signed-cast        67      41       0       0       0     157     265
+upper-bound                  1574     910       0       0       0     932    3416
+valid-mem                    1598    2439       0       0       0     546    4583
+width-overflow                179       0       0       0       0       0     179
+---------------------------------------------------------------------------------
+total                       15727   11597     955       0       0    6639   34918
+percent                     45.04   33.21    2.73    0.00    0.00   19.01
+
+Secondary proof obligations
+                             stmt   local     api    post  global    open   total
+---------------------------------------------------------------------------------
+allocation-base                 0       0       0       0       0      26      26
+common-base                     0       4       0       0       0       0       4
+initialized                     6       0       0       0       0      54      60
+int-underflow                   0       4       0       0       0       2       6
+no-overlap                      4       2       0       0       0       0       6
+not-null                       46      52      30       0       0      83     211
+ptr-lower-bound                 0       4       0       0       0       2       6
+ptr-upper-bound                16       7       3       0       0      18      44
+ptr-upper-bound-deref          10      10      10       0       0      19      49
+---------------------------------------------------------------------------------
+total                          82      83      43       0       0     204     412
+percent                     19.90   20.15   10.44    0.00    0.00   49.51
+\end{verbatim}
+\end{small}
+
+\section{Running Test Cases: Juliet}
+
+The {\tt ktadvance/tests/sard/juliet\_v1.3} directory contains a subset of the 
+test cases from the Juliet Test Suite, developed by the NSA Center for Assured 
+Software, and updated by NIST. The entire test suite is available from the
+NIST SARD repository, at {\tt samate.nist.gov}. These tests are also part of the
+SATE V Ockham competition organized by NIST~\cite{Ockham}.
+
+\subsection{Organization}
+The test cases are organized in a similar way as the original Test Suite, except 
+that the file hierarchy is extended by one level to create separate directories 
+for each functional variant, that solely contain the flow variants for that 
+functional variant. Furthermore, C++ variants have been removed.
+
+Each functional variant directory contains the following files:
+\begin{itemize}[leftmargin=*]
+\item {\tt [name]\_src.tar.gz}: the original c source files, including a reduced main file,
+{\tt main\_linux.c} that contains a main function that calls the functions in
+the flow variants.
+\item {\tt semantics\_linux.tar.gz}: the result of preprocessing and parsing the source 
+  files (on a linux platform) into KT Advance Analyzer input format
+  The files in this tar file provide all necessary information for the analysis; 
+  the analysis can be run on any platforms; all platform dependencies are included 
+  in the files.
+\item {\tt scorekey.json}: a specification of the proof obligations and their locations
+  that are relevant to the vulnerability being tested by the test case, for both the
+  good and the bad versions of the functions.
+\end{itemize}
+
+\begin{table}
+\centering
+\begin{tabular}{|l|}  \hline
+  CWE121/s01/CWE129\_large  \\                
+  CWE121/s01/CWE129\_rand  \\                 
+  CWE121/s01/CWE131\_loop   \\                 
+  CWE121/s01/char\_type\_overrun\_memcpy  \\    
+  CWE121/s01/char\_type\_overrun\_memmove \\   
+  CWE121/s02/CWE193\_char\_alloca\_loop  \\    
+  CWE121/s02/CWE193\_char\_alloca\_ncpy  \\    
+  CWE121/s02/CWE193\_char\_declare\_loop  \\   
+  CWE121/s03/CWE805\_char\_declare\_loop  \\   
+  CWE121/s03/CWE805\_char\_declare\_memcpy \\  
+  CWE121/s03/CWE805\_char\_declare\_memmove  \\
+  CWE121/s03/CWE805\_char\_declare\_ncpy  \\   
+  CWE122/s01/char\_type\_overrun\_memcpy \\    
+  CWE122/s01/char\_type\_overrun\_memmove \\   
+  CWE122/s05/CWE131\_loop \\                 
+  CWE122/s05/CWE131\_memcpy \\               
+  CWE122/s06/CWE131\_memmove \\              
+  CWE122/s06/CWE135  \\                     
+  CWE122/s06/c\_CWE129\_connect\_socket \\     
+  CWE122/s06/c\_CWE129\_fgets \\ \hline             
+\end{tabular}
+\caption{\label{tab:juliet} Current set of Juliet Tests provided in {\tt tests/sard/juliet\_v1.3}}
+\end{table}
+
+The tests currently provided are shown in Table~\ref{tab:juliet}. More tests will be
+added in the near future.
+
+\subsection{Summary of Scripts}
+
+Scripts to analyze, report on, and score the juliet test cases are located in the
+{\tt advance/cmdline/juliet} directory. They are (in alphabetical order):
+
+\begin{itemize}[leftmargin=*]
+\item {\tt chc\_analyze\_juliettest.py}: analyzes the given juliet test case \\
+\emph{Example:} {\tt python chc\_analyze\_juliettest.py CWE121/s01/CWE129\_large}
+\item {\tt chc\_analyze\_juliettest\_sets.py}: analyzes all juliet test cases in the
+   {\tt juliet\_v1.3} directory. This may take more than an hour.\\
+\emph{Example:} {\tt python chc\_analyze\_juliettest\_sets.py}
+\item {\tt chc\_juliet\_dashboard.py}: outputs a summary of the proof obligation status
+   of the proof obligations related to the vulnerability being tested (as specified
+   in the {\tt scorekey.json} file). Can only be run after all test cases have been
+   analyzed and scored. \\
+\emph{Example:} {\tt python chc\_juliet\_dashboard.py}
+\item {\tt chc\_list\_juliettests.py}: outputs the list of juliet tests in the
+  {\tt tests/sard/juliet\_v1.3} directory with date and times of their last analysis
+  and scoring.
+\item {\tt chc\_parse\_juliettest.py}: preprocesses and parses the given juliet test.
+ This script is only used when adding new test sets; all existing tests have already
+ been parsed. \\
+\emph{Example:} {\tt python chc\_parse\_juliettest.py CWE121/s01/CWE129\_large}
+\item {\tt chc\_prepare\_juliettest.py}: renames the flow variants into x[nn].c to 
+  reduce filename and function-name lengths in reports. This script is only used when
+  adding new test sets.\\
+\emph{Example:} {\tt python chc\_prepare\_juliettest.py CWE121/s01/CWE129\_large \\
+   CWE121\_Stack\_Based\_Buffer\_Overflow\_\_CWE129\_large\_}
+\item {\tt chc\_report\_juliettest.py}: outputs a summary of the status of the proof
+   obligations for all flow variants in the test.\\
+\emph{Example:} {\tt python chc\_report\_juliettest.py CWE121/s01/CWE129\_large}
+\item {\tt chc\_report\_juliettest\_file.py}: outputs a summary of the status of the
+   proof obligations for a given flow variant in the test. \\
+\emph{Example:} {\tt python chc\_report\_juliettest\_file.py CWE121/s01/CWE129\_large x01.c}\\
+\emph{Example:} \\
+{\tt python chc\_report\_juliettest\_file.py CWE121/s01/CWE129\_large x01.c 
+ --showcode}
+\item {\tt chc\_report\_juliettest\_function.py}: outputs the source code of the given
+   function with all associated proof obligations and a summary of their status.\\
+\emph{Example:}\\
+ {\tt python chc\_report\_juliettest\_function.py CWE121/s01/CWE129\_large x01.c goodB2G}
+\item {\tt chc\_report\_juliettest\_sets.py}: outputs a summary of the proof obligation
+  status (for all proof obligations) for all juliet tests currently provided.\\
+\emph{Example:} {\tt python chc\_report\_juliettest\_sets.py}
+\item {\tt chc\_score\_juliettest.py}: compares the analysis results with the desired results
+   as specified in the file scorekey.json and records the results in the file summaryresults.json 
+   and outputs a comparison report. \\
+\emph{Example:} {\tt python chc\_score\_juliettest.py CWE121/s01/CWE129\_large}
+\end{itemize}
+
+\bibliographystyle{plain}
+\bibliography{citations}
+
 \end{document}
