@@ -91,7 +91,18 @@ class MemoryBaseNull(MemoryBase):
 
     def is_null(self): return True
 
-    def __str__(self): return 'null'
+    def has_associated_region(self): return (not (self.args[0] == -1))
+
+    def get_associated_region(self):
+        if self.args[0] > 0:
+            return self.vd.get_memory_base(self.args[0])
+
+    def __str__(self):
+        if self.has_associated_region():
+            a = ' (' + str(self.get_associated_region()) + ')'
+        else:
+            a = ''
+        return ( 'null' + a )
 
 
 class MemoryBaseStackAddress(MemoryBase):
@@ -160,7 +171,7 @@ class MemoryBaseStringLiteral(MemoryBase):
 
     def get_string(self): return self.cd.get_string(int(self.args[0]))
 
-    def __str__(self): return '&(' + str(self.get_string()) + ')'
+    def __str__(self): return '&("' + str(self.get_string()) + '")'
 
 class MemoryBaseUninterpreted(MemoryBase):
 
@@ -181,7 +192,7 @@ class MemoryBaseFreed(MemoryBase):
 
     def is_freed(self): return True
 
-    def get_region(self): return self.get_memory_base(int(self.args[0]))
+    def get_region(self): return self.vd.get_memory_base(int(self.args[1]))
 
     def __str__(self): return 'freed(' + str(self.get_region()) + ')'
 
