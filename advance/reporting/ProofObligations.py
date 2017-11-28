@@ -218,22 +218,25 @@ class FunctionDisplay(object):
             lines.append((' ' * 18) + str(inv))
         return '\n'.join(lines)
 
-def function_code_tostring(fn,pofilter=lambda po:True,showinvs=False):
+def function_code_tostring(fn,pofilter=lambda po:True,showinvs=False,showpreamble=True):
     lines = []
     fd = FunctionDisplay(fn)
     ppos = fn.get_ppos()
+    ppos = [ x for x in ppos if pofilter(x) ]
     spos = fn.get_spos()
     fnloc = fn.get_location().get_line()
     fnstartline = fn.cfile.get_source_line(fnloc).strip()
     lines.append('\nFunction ' + fn.name)
     lines.append('-' * 80)
     lines.append(fnstartline)
-    lines.append('-' * 80)
-    lines.append(str(fn.api))
-    lines.append('-' * 80)
-    lines.append('Primary Proof Obligations:')
-    lines.append(fd.pos_on_code_tostring(ppos,pofilter=pofilter,showinvs=showinvs))
-    lines.append('-' * 80)
+    if showpreamble:
+        lines.append('-' * 80)
+        lines.append(str(fn.api))
+        lines.append('-' * 80)
+    if len(ppos) > 0:
+        lines.append('Primary Proof Obligations:')
+        lines.append(fd.pos_on_code_tostring(ppos,pofilter=pofilter,showinvs=showinvs))
+        lines.append('-' * 80)
     if len(spos) > 0:
         lines.append('Supporting Proof Obligations:')
         lines.append(fd.pos_on_code_tostring(spos,pofilter=pofilter,showinvs=showinvs))
