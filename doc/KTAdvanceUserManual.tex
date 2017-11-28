@@ -215,7 +215,8 @@ option that describes the arguments expected.
 The {\tt ktadvance/tests/sard/kendra} directory contains a collection of very small test
 programs retrieved from the NIST Software Assurance Reference Dataset ({\tt samate.nist.gov}).
 These programs are a subset of the collection of test cases developed by 
-Kendra Kratkiewicz~\cite{}. These test cases serve as a good first illustration of
+Kendra Kratkiewicz~\cite{Kratkiewicz/05/Using}. These test cases serve as a good first 
+illustration of
 the KT Advance analysis approach and presentation of results. 
 Section~\ref{sec:runkendra} has step-by-step instructions how to run these tests
 and some comments on particular cases.
@@ -1275,11 +1276,568 @@ Scripts to analyze, report on, and score the juliet test cases are located in th
 \item {\tt chc\_report\_juliettest\_sets.py}: outputs a summary of the proof obligation
   status (for all proof obligations) for all juliet tests currently provided.\\
 \emph{Example:} {\tt python chc\_report\_juliettest\_sets.py}
+\item {\tt chc\_report\_juliettest\_vulnerability.py}: outputs the source code for the
+  given test with the proof obligations associated with the vulnerability tested
+  (obtained from the scorekey) \\
+\emph{Example:} {\tt python chc\_report\_vulnerability.py CWE121/s01/CWE129\_large 01}
 \item {\tt chc\_score\_juliettest.py}: compares the analysis results with the desired results
    as specified in the file scorekey.json and records the results in the file summaryresults.json 
    and outputs a comparison report. \\
 \emph{Example:} {\tt python chc\_score\_juliettest.py CWE121/s01/CWE129\_large}
 \end{itemize}
+
+\subsection{Running the Tests}
+
+Set the PYTHONPATH environment variable (or adapt for a different location of the ktadvance
+directory):
+\begin{verbatim}
+> export PYTHONPATH=$HOME/ktadvance
+\end{verbatim}
+All tests provided in the {\tt tests/sard/juliet\_v1.3} directory have been pre-parsed and
+thus are ready for analysis. To analyze a Juliet test case:
+\begin{verbatim}
+> cd ktadvance/advance/cmdline/juliet
+> python chc_analyze_juliettest.py CWE121/s01/CWE129_large
+\end{verbatim}
+or, if multiple processors are available:
+\begin{verbatim}
+> python chc_analyze_juliettest.py CWE121/s01/CWE129_large --maxprocesses 16
+\end{verbatim}
+which allows the invariant generation and proof obligation checking to be
+performed in parallel for different c files.
+The analysis will produce a semantics directory in the test directory that contains all analysis
+results. These analysis results can be inspected by various reporting scripts.
+To see a summary of the results for this test case:
+\begin{small}
+\begin{verbatim}
+> python chc_report_juliettest.py CWE121/s01/CWE129_large
+Primary Proof Obligations
+c files            stmt   local     api    post  global    open   total
+-----------------------------------------------------------------------
+io                  298      63      14       0       0      47     422
+main_linux            7       3       0       0       0       1      11
+std_thread           70      84      14       0       0      28     196
+x01                  24      34       0       0       0       2      60
+x02                  42      54       0       0       0       3      99
+x03                  42      54       0       0       0       3      99
+x04                  52      54       0       0       0       3     109
+x05                  52      54       0       0       0       3     109
+x06                  52      54       0       0       0       3     109
+x07                  52      54       0       0       0       3     109
+x08                  57      73       0       0       0       4     134
+x09                 103      71       0       0       0       6     180
+x10                 103      71       0       0       0       6     180
+x11                  42      64       0       0       0       3     109
+x12                  55      74       0       0       0       5     134
+x13                 103      71       0       0       0       6     180
+x14                 103      71       0       0       0       6     180
+x15                 135      71       0       0       0       6     212
+x16                  24      34       0       0       0       2      60
+x17                  52      60       0       0       0       4     116
+x18                  24      34       0       0       0       2      60
+x21                  87      50       2       0       0       4     143
+x22a                  0       4       0       0       0       0       4
+x22b                 87      46       2       0       0       4     139
+x31                  24      40       0       0       0       2      66
+x32                  46      71       0       0       0      29     146
+x34                  46      44       0       0       0       8      98
+x41                  53      37       2       0       0       3      95
+x42                  49      44       0       0       0       5      98
+x44                  53      55       2       0       0       3     113
+x45                  49      44       0       0       0       5      98
+x51a                  0       3       0       0       0       0       3
+x51b                 53      34       2       0       0       3      92
+x52a                  0       3       0       0       0       0       3
+x52b                  3       0       0       0       0       0       3
+x52c                 53      34       2       0       0       3      92
+x53a                  0       3       0       0       0       0       3
+x53b                  3       0       0       0       0       0       3
+x53c                  3       0       0       0       0       0       3
+x53d                 53      34       2       0       0       3      92
+x54a                  0       3       0       0       0       0       3
+x54b                  3       0       0       0       0       0       3
+x54c                  3       0       0       0       0       0       3
+x54d                  3       0       0       0       0       0       3
+x54e                 53      34       2       0       0       3      92
+x61a                 46      44       0       0       0       5      95
+x61b                  3       0       0       0       0       0       3
+x63a                  9       0       0       0       0       0       9
+x63b                 49      50       5       0       0       6     110
+x64a                 12       0       0       0       0       0      12
+x64b                 49      53       3       0       0      11     116
+x65a                  0      21       0       0       0       0      21
+x65b                 53      34       2       0       0       3      92
+x66a                 15       3       0       0       0       0      18
+x66b                 64      44       6       0       0       8     122
+x67a                  0       3       0       0       0       3       6
+x67b                 49      41       0       0       0       5      95
+x68a                  0       3       0       0       0       0       3
+x68b                 49      41       0       0       0       5      95
+-----------------------------------------------------------------------
+total              2614    2122      60       0       0     267    5063
+percent           51.63   41.91    1.19    0.00    0.00    5.27
+
+Supporting Proof Obligations
+c files            stmt   local     api    post  global    open   total
+-----------------------------------------------------------------------
+x21                   0       2       0       0       0       0       2
+x22a                  0       2       0       0       0       0       2
+x41                   0       2       0       0       0       0       2
+x44                   0       2       0       0       0       0       2
+x51a                  0       2       0       0       0       0       2
+x52a                  0       2       0       0       0       0       2
+x52b                  0       0       2       0       0       0       2
+x53a                  0       2       0       0       0       0       2
+x53b                  0       0       2       0       0       0       2
+x53c                  0       0       2       0       0       0       2
+x54a                  0       2       0       0       0       0       2
+x54b                  0       0       2       0       0       0       2
+x54c                  0       0       2       0       0       0       2
+x54d                  0       0       2       0       0       0       2
+x63a                  1       1       0       0       0       0       2
+x64a                  3       0       0       0       0       0       3
+x65a                  0       2       0       0       0       0       2
+x66a                  6       0       0       0       0       0       6
+-----------------------------------------------------------------------
+total                10      19      12       0       0       0      41
+percent           24.39   46.34   29.27    0.00    0.00    0.00
+
+
+Proof Obligation Statistics
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Primary Proof Obligations
+                             stmt   local     api    post  global    open   total
+---------------------------------------------------------------------------------
+allocation-base                 0       1       3       0       0       0       4
+cast                           35       0       0       0       0       4      39
+format-string                  17       0       0       0       0       0      17
+global-mem                      1       0       0       0       0       0       1
+index-lower-bound             295     248       0       0       0       0     543
+index-upper-bound             150     348      20       0       0      25     543
+initialized                   247    1225       3       0       0     161    1636
+initialized-range             180       0       0       0       0       3     183
+int-overflow                  156     130       0       0       0       0     286
+int-underflow                 286       0       0       0       0       0     286
+lower-bound                   216      40       0       0       0      13     269
+no-overlap                      1       0       0       0       0       0       1
+not-null                      197      22      31       0       0       6     256
+not-zero                        1       0       0       0       0       0       1
+null-terminated               180       1       0       0       0       2     183
+pointer-cast                   36       0       0       0       0       6      42
+ptr-lower-bound                 3       9       0       0       0       2      14
+ptr-upper-bound               180       0       0       0       0       4     184
+ptr-upper-bound-deref           0       0       3       0       0      11      14
+signed-to-unsigned-cast         3       0       0       0       0       5       8
+unsigned-to-signed-cast         2       0       0       0       0       2       4
+upper-bound                   214      37       0       0       0      15     266
+valid-mem                     214      61       0       0       0       8     283
+---------------------------------------------------------------------------------
+total                        2614    2122      60       0       0     267    5063
+percent                     51.63   41.91    1.19    0.00    0.00    5.27
+
+Supporting Proof Obligations
+                             stmt   local     api    post  global    open   total
+---------------------------------------------------------------------------------
+index-upper-bound               0      19      12       0       0       0      31
+not-null                        7       0       0       0       0       0       7
+ptr-upper-bound-deref           3       0       0       0       0       0       3
+---------------------------------------------------------------------------------
+total                          10      19      12       0       0       0      41
+percent                     24.39   46.34   29.27    0.00    0.00    0.00
+\end{verbatim}
+\end{small}
+The output of this report shows the number of and status of all proof obligations
+in all files included in the test (flow variants are renamed to x[nn].c). This report
+does not distinguish between proof obligations proven valid and proof obligations
+that are shown to be violated. The status
+is divided (currently) into four categories:
+\begin{itemize}
+\item {\tt stmt}: the proof obligation was proven valid or a violation based on the
+   information in the statement (or instruction) and its associated declarations.
+   No invariants were necessary for the proof.
+\item {\tt local}: the proof obligation was proven valid or a violation based on 
+   local invariants, that is, invariants generated within the function.
+\item {\tt api}: the proof obligation was delegated to the api, possibly with the use
+   of local invariants. This is done only if all variables in the proof obligations
+   are shown to be in a linear equality relation with function parameters.
+\item {\tt open}: the proof obligation could not be proven valid or a violation.
+\end{itemize}
+Thus juliet test CWE121/s01/CWE129\_large has a total of 5063 proof obligations, 5.27\%
+of which could not be proven valid or a violation.
+
+To inspect the status of the proof obligations associated with the vulnerability being
+tested for, for a given file:
+\begin{small}
+\begin{verbatim}
+> python chc_report_juliettest_vulnerability CWE121/s01/CWE129_large 01
+********** Function: CWE121_Stack_Based_Buffer_Overflow__CWE129_large_01_bad ***
+
+Function CWE121_Stack_Based_Buffer_Overflow__CWE129_large_01_bad
+--------------------------------------------------------------------------------
+22  void CWE121_Stack_Based_Buffer_Overflow__CWE129_large_01_bad()
+Primary Proof Obligations:
+--------------------------------------------------------------------------------
+23  {
+24      int data;
+25      /* Initialize data */
+26      data = -1;
+27      /* POTENTIAL FLAW: Use an invalid index */
+28      data = 10;
+29      {
+30          int i;
+31          int buffer[10] = { 0 };
+32          /* POTENTIAL FLAW: Attempt to write to an index of the array that 
+                   is above the upper bound
+33          * This code does check to see if the array index is negative */
+34          if (data >= 0)
+35          {
+36              buffer[data] = 1;
+--------------------------------------------------------------------------------
+<*>   12     36  index-upper-bound(data,bound:10) (violation)
+                  index value, 10, is greater than or equal to length, 10
+--------------------------------------------------------------------------------
+
+
+********** Function: goodB2G ***************************************************
+
+Function goodB2G
+--------------------------------------------------------------------------------
+85  static void goodB2G()
+Primary Proof Obligations:
+--------------------------------------------------------------------------------
+86  {
+87      int data;
+88      /* Initialize data */
+89      data = -1;
+90      /* POTENTIAL FLAW: Use an invalid index */
+91      data = 10;
+92      {
+93          int i;
+94          int buffer[10] = { 0 };
+95          /* FIX: Properly validate the array index and prevent a buffer overflow */
+96          if (data >= 0 && data < (10))
+97          {
+98              buffer[data] = 1;
+--------------------------------------------------------------------------------
+<X>   13     98  index-upper-bound(data,bound:10) (dead-code)
+                  unreachable
+--------------------------------------------------------------------------------
+
+
+********** Function: goodG2B ***************************************************
+
+Function goodG2B
+--------------------------------------------------------------------------------
+55  static void goodG2B()
+Primary Proof Obligations:
+--------------------------------------------------------------------------------
+56  {
+57      int data;
+58      /* Initialize data */
+59      data = -1;
+60      /* FIX: Use a value greater than 0, but less than 10 to avoid attempting to
+61       * access an index of the array in the sink that is out-of-bounds */
+62      data = 7;
+63      {
+64          int i;
+65          int buffer[10] = { 0 };
+66          /* POTENTIAL FLAW: Attempt to write to an index of the array that 
+                    is above the upper bound
+67          * This code does check to see if the array index is negative */
+68          if (data >= 0)
+69          {
+70              buffer[data] = 1;
+--------------------------------------------------------------------------------
+<L>   12     70  index-upper-bound(data,bound:10) (safe)
+                  index value, 7, is less than length, 10
+--------------------------------------------------------------------------------
+\end{verbatim}
+\end{small}
+
+which shows the code up to the location of the vulnerability together with the
+proof obligation(s) that are violated due to the vulnerability. In cases where
+the proof obligation is delegated to the caller, the callers are shown as well:
+\begin{small}
+\begin{verbatim}
+> python chc_report_juliettest_vulnerability CWE121/s01/CWE129_large 22
+
+********** Function: CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_badSink ***
+
+Function CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_badSink
+--------------------------------------------------------------------------------
+25  void CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_badSink(int data)
+Primary Proof Obligations:
+--------------------------------------------------------------------------------
+26  {
+27      if(CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_badGlobal)
+28      {
+29          {
+30              int i;
+31              int buffer[10] = { 0 };
+32              /* POTENTIAL FLAW: Attempt to write to an index of the array that 
+                      is above the upper bound
+33              * This code does check to see if the array index is negative */
+34              if (data >= 0)
+35              {
+36                  buffer[data] = 1;
+--------------------------------------------------------------------------------
+<A>   13     36  index-upper-bound(data,bound:10) (safe)
+                  condition data < 10 delegated to api
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Callers
+--------------------------------------------------------------------------------
+
+Function CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_bad
+--------------------------------------------------------------------------------
+27  void CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_bad()
+Supporting Proof Obligations:
+--------------------------------------------------------------------------------
+28  {
+29      int data;
+30      /* Initialize data */
+31      data = -1;
+32      /* POTENTIAL FLAW: Use an invalid index */
+33      data = 10;
+34      CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_badGlobal = 1; /* true */
+35      CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_badSink(data);
+--------------------------------------------------------------------------------
+<*>    1   77   35   index-upper-bound(data,bound:10) (violation)
+                        index value, 10, is greater than or equal to length, 10
+
+
+********** Function: CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_goodB2G1Sink ***
+
+Function CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_goodB2G1Sink
+--------------------------------------------------------------------------------
+61  void CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_goodB2G1Sink(int data)
+Primary Proof Obligations:
+--------------------------------------------------------------------------------
+62  {
+63      if(CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_goodB2G1Global)
+64      {
+65          /* INCIDENTAL: CWE 561 Dead Code, the code below will never run */
+66          printLine("Benign, fixed string");
+67      }
+68      else
+69      {
+70          {
+71              int i;
+72              int buffer[10] = { 0 };
+73              /* FIX: Properly validate the array index and prevent a buffer overflow */
+74              if (data >= 0 && data < (10))
+75              {
+76                  buffer[data] = 1;
+--------------------------------------------------------------------------------
+<L>   21     76  index-upper-bound(data,bound:10) (safe)
+                  upper bound of index value range, 9, is less than length, 10
+--------------------------------------------------------------------------------
+
+
+********** Function: CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_goodB2G2Sink ***
+
+Function CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_goodB2G2Sink
+--------------------------------------------------------------------------------
+92  void CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_goodB2G2Sink(int data)
+Primary Proof Obligations:
+--------------------------------------------------------------------------------
+93  {
+94      if(CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_goodB2G2Global)
+95      {
+96          {
+97              int i;
+98              int buffer[10] = { 0 };
+99              /* FIX: Properly validate the array index and prevent a buffer overflow */
+100              if (data >= 0 && data < (10))
+101              {
+102                  buffer[data] = 1;
+--------------------------------------------------------------------------------
+<L>   14    102  index-upper-bound(data,bound:10) (safe)
+                  upper bound of index value range, 9, is less than length, 10
+--------------------------------------------------------------------------------
+
+
+********** Function: CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_goodG2BSink ***
+
+Function CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_goodG2BSink
+--------------------------------------------------------------------------------
+118  void CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_goodG2BSink(int data)
+Primary Proof Obligations:
+--------------------------------------------------------------------------------
+119  {
+120      if(CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_goodG2BGlobal)
+121      {
+122          {
+123              int i;
+124              int buffer[10] = { 0 };
+125              /* POTENTIAL FLAW: Attempt to write to an index of the array 
+                        that is above the upper bound
+126              * This code does check to see if the array index is negative */
+127              if (data >= 0)
+128              {
+129                  buffer[data] = 1;
+--------------------------------------------------------------------------------
+<A>   13    129  index-upper-bound(data,bound:10) (safe)
+                  condition data < 10 delegated to api
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Callers
+--------------------------------------------------------------------------------
+
+Function goodG2B
+--------------------------------------------------------------------------------
+78  static void goodG2B()
+Supporting Proof Obligations:
+--------------------------------------------------------------------------------
+79  {
+80      int data;
+81      /* Initialize data */
+82      data = -1;
+83      /* FIX: Use a value greater than 0, but less than 10 to avoid attempting to
+84       * access an index of the array in the sink that is out-of-bounds */
+85      data = 7;
+86      CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_goodG2BGlobal = 1; /* true */
+87      CWE121_Stack_Based_Buffer_Overflow__CWE129_large_22_goodG2BSink(data);
+--------------------------------------------------------------------------------
+<L>    1   11   87   index-upper-bound(data,bound:10) (safe)
+                        index value, 7, is less than length, 10
+\end{verbatim}
+\end{small}
+
+To see all proof obligations associated with the code:
+\begin{verbatim}
+> python chc_report_juliettest_file.py CWE121/s01/CWE129_large x01.c --showcode
+\end{verbatim}
+or for a single funciton:
+\begin{verbatim}
+> python chc_report_juliettest_function.py CWE121/s01/CWE129_large x01.c goodG2B
+\end{verbatim}
+
+To check the analysis results against the scorekey:
+\begin{small}
+\begin{verbatim}
+> python chc_score_juliettest.py CWE121/s01/CWE129_large
+
+x01.c
+
+  CWE121_Stack_Based_Buffer_Overflow__CWE129_large_01_bad
+     36   12: index-upper-bound        <*>  index value, 10, is greater than or equal to length, 10
+
+  goodB2G
+     98   13: index-upper-bound        <X>  unreachable
+
+  goodG2B
+     70   12: index-upper-bound        <L>  index value, 7, is less than length, 10
+
+x02.c
+
+  CWE121_Stack_Based_Buffer_Overflow__CWE129_large_02_bad
+     41   12: index-upper-bound        <*>  index value, 10, is greater than or equal to length, 10
+
+  goodB2G1
+     84   13: index-upper-bound        <X>  unreachable
+
+  goodB2G2
+    118   13: index-upper-bound        <X>  unreachable
+
+  goodG2B1
+    159   12: index-upper-bound        <L>  index value, 7, is less than length, 10
+
+......
+
+x67b.c
+
+  CWE121_Stack_Based_Buffer_Overflow__CWE129_large_67b_badSink
+     37   13: index-upper-bound        ?
+
+  CWE121_Stack_Based_Buffer_Overflow__CWE129_large_67b_goodB2GSink
+     90   14: index-upper-bound        <L>  upper bound of index value range, 9, is less than length, 10
+
+  CWE121_Stack_Based_Buffer_Overflow__CWE129_large_67b_goodG2BSink
+     66   13: index-upper-bound        ?
+
+x68b.c
+
+  CWE121_Stack_Based_Buffer_Overflow__CWE129_large_68b_badSink
+     36   13: index-upper-bound        ?
+
+  CWE121_Stack_Based_Buffer_Overflow__CWE129_large_68b_goodB2GSink
+     89   14: index-upper-bound        <L>  upper bound of index value range, 9, is less than length, 10
+
+  CWE121_Stack_Based_Buffer_Overflow__CWE129_large_68b_goodG2BSink
+     65   13: index-upper-bound        ?
+
+Summary
+
+test              violations                    safe-controls
+         V    S    D    U    O                S    L    D    X    U    O
+--------------------------------------------------------------------------------
+01       1    0    0    0    0       |        0    1    0    1    0    0
+02       1    0    0    0    0       |        0    1    0    2    0    0
+03       1    0    0    0    0       |        0    1    0    2    0    0
+04       1    0    0    0    0       |        0    2    0    2    0    0
+05       1    0    0    0    0       |        0    2    0    2    0    0
+06       1    0    0    0    0       |        0    2    0    2    0    0
+07       1    0    0    0    0       |        0    2    0    2    0    0
+08       1    0    0    0    0       |        0    3    0    1    0    0
+09       0    0    0    1    0       |        0    4    0    0    0    0
+10       0    0    0    1    0       |        0    4    0    0    0    0
+11       1    0    0    0    0       |        0    2    0    2    0    0
+12       0    0    0    1    0       |        0    3    0    2    0    0
+13       0    0    0    1    0       |        0    4    0    0    0    0
+14       0    0    0    1    0       |        0    4    0    0    0    0
+15       0    0    0    1    0       |        0    4    0    0    0    0
+16       1    0    0    0    0       |        0    1    0    1    0    0
+17       0    0    0    1    0       |        0    2    0    0    0    0
+18       1    0    0    0    0       |        0    1    0    1    0    0
+21       1    0    0    0    0       |        0    3    0    0    0    0
+22       1    0    0    0    0       |        0    3    0    0    0    0
+31       1    0    0    0    0       |        0    1    0    1    0    0
+32       0    0    0    1    0       |        0    1    0    0    1    0
+34       0    0    0    1    0       |        0    1    0    0    1    0
+41       1    0    0    0    0       |        0    2    0    0    0    0
+42       0    0    0    1    0       |        0    1    0    0    1    0
+44       1    0    0    0    0       |        0    2    0    0    0    0
+45       0    0    0    1    0       |        0    1    0    0    1    0
+51       1    0    0    0    0       |        0    2    0    0    0    0
+52       1    0    0    0    0       |        0    2    0    0    0    0
+53       1    0    0    0    0       |        0    2    0    0    0    0
+54       1    0    0    0    0       |        0    2    0    0    0    0
+61       0    0    0    1    0       |        0    1    0    0    1    0
+63       1    0    0    0    0       |        0    2    0    0    0    0
+64       0    0    0    1    0       |        0    1    0    0    1    0
+65       1    0    0    0    0       |        0    2    0    0    0    0
+66       0    0    0    1    0       |        0    1    0    0    1    0
+67       0    0    0    1    0       |        0    1    0    0    1    0
+68       0    0    0    1    0       |        0    1    0    0    1    0
+--------------------------------------------------------------------------------
+total   22    0    0   16    0       |        0   75    0   21    9    0
+\end{verbatim}
+\end{small}
+For each test this report shows the proof obligations associated with the
+vulnerability and their status. The summary shows how many of the violations
+were identified and how many of the safe controls were indeed proven safe.
+The column headers indicate:
+\begin{itemize}
+\item {\bf violations}
+  \begin{itemize}
+  \item {\bf V:} violation proven
+  \item {\bf S:} proven safe (should not happen)
+  \item {\bf D:} delegated (without callers, should probably not happen)
+  \item {\bf U:} unknown, open proof obligation
+  \item {\bf O:} other
+  \end{itemize}
+\item {\bf safe controls}
+  \begin{itemize}
+  \item {\bf S:} proven statement safe (no invariants necessary)
+  \item {\bf L:} proven safe (using local invariants)
+  \item {\bf D:} delegated (without callers, should probably not happen)
+  \item {\bf U:} unknown, open proof obligation
+  \item {\bf O:} other
+  \end{itemize}
+\end{itemize}
+
 
 \bibliographystyle{plain}
 \bibliography{citations}
