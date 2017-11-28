@@ -45,10 +45,9 @@ class Config(object):
         summariesdir = os.path.join(self.rootdir,'summaries')
         self.summaries = os.path.join(summariesdir,'cchsummaries.jar')
         self.binariesdir = os.path.join(self.bindir,'binaries')
-        #self.cparser = os.path.join(self.binariesdir,'parseFile_linux')
-        #self.canalyzer = os.path.join(self.binariesdir,'ktadvance_linux')
-        self.cparser = '/home/mcgraw/KT_Repo/test/CodeHawk/CHC/cchcil/parseFile'
-        self.canalyzer = '/home/mcgraw/KT_Repo/test/CodeHawk/CHC/cchcmdline/canalyzer'
+        self.cparser = os.path.join(self.binariesdir,'parseFile_linux')
+        self.canalyzer = os.path.join(self.binariesdir,'ktadvance_linux')
+
         if self.platform == 'mac':
             self.cparser = os.path.join(self.binariesdir,'parseFile_mac')
             self.canalyzer = os.path.join(self.binariesdir,'ktadvance_mac')
