@@ -106,6 +106,8 @@ class CFunctionPO(object):
         else:
             False
 
+    def has_dependencies(self): return (not self.dependencies is None)
+
     def has_variable(self,vid): return self.predicate.has_variable(vid)
 
     def has_target_type(self,targettype): return self.predicate.has_target_type()
