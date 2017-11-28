@@ -26,6 +26,8 @@
 # ------------------------------------------------------------------------------
 
 import advance.util.fileutil as UF
+import advance.util.IndexedTable as IT
+import advance.app.CTyp as CT
 
 from advance.app.CDictionary import CDictionary
 
@@ -42,6 +44,12 @@ class CGlobalDictionary(CDictionary):
 
     def index_varinfo_vid(self,varinfo,fid):
         return self.decls.index_varinfo_vid(varinfo,fid)
+
+    def index_funarg(self,funarg):
+        tags = [ 'arg' ]
+        args = [ self.index_typ(funarg.get_type()) ]
+        def f(index,key): return CT.CFunArg(self,index,tags,args)
+        return self.funarg_table.add(IT.get_key(tags,args),f)
 
     def _initialize(self):
         xnode = UF.get_global_dictionary_xnode(self.capp.path)
