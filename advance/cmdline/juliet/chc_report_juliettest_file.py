@@ -38,8 +38,8 @@ from advance.app.CApplication import CApplication
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('path',
-                            help='path to the juliet test case (relative to juliet_v1.2)' +
-                            ' (e.g., CWE121/s01/CWE129_largeQ)')
+                            help='path to the juliet test case (relative to juliet_v1.3)' +
+                            ' (e.g., CWE121/s01/CWE129_large)')
     parser.add_argument('cfile',help='name of juliet c file (.e.g., x01.c)')
     parser.add_argument('--showcode',help='show proof obligations on code for entire file',
                             action='store_true')

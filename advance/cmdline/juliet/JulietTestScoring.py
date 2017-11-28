@@ -115,18 +115,19 @@ def fill_testsummary(pairs,d,capp):
 
 def get_associated_spos(ppo,capp):
     result = []
-    cfun = ppo.cfun
-    cfile = ppo.cfile
-    callsites = capp.get_callsites(cfile.index,cfun.svar.get_vid())
-    assumptions = ppo.dependencies.ids
-    assumptions = [ cfun.podictionary.get_assumption_type(i) for i in assumptions ]
-    assumptions = [ a.get_apiid() for a in assumptions if a.is_api_assumption() ]
-    if len(callsites) > 0:
-        for ((fid,vid),cs) in callsites:
-            def f(spo):
-                if spo.apiid in assumptions:
-                    result.append(spo)
-            cs.iter(f)
+    if ppo.has_dependencies():
+        cfun = ppo.cfun
+        cfile = ppo.cfile
+        callsites = capp.get_callsites(cfile.index,cfun.svar.get_vid())
+        assumptions = ppo.dependencies.ids
+        assumptions = [ cfun.podictionary.get_assumption_type(i) for i in assumptions ]
+        assumptions = [ a.get_apiid() for a in assumptions if a.is_api_assumption() ]
+        if len(callsites) > 0:
+            for ((fid,vid),cs) in callsites:
+                def f(spo):
+                    if spo.apiid in assumptions:
+                        result.append(spo)
+                cs.iter(f)
     return result
 
 def testppo_calls_tostring(ppo,capp):

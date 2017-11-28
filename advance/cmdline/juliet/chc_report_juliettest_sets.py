@@ -29,31 +29,9 @@ import os
 
 import advance.util.fileutil as UF
 import advance.reporting.ProofObligations as RP
+import advance.cmdline.juliet.JulietTestCases as JTC
 
 from advance.app.CApplication import CApplication
-
-testcases = [
-    'CWE121/s01/char_type_overrun_memcpy',
-    'CWE121/s01/char_type_overrun_memmove',
-    'CWE121/s01/CWE129_large',
-    'CWE121/s01/CWE129_rand',
-    'CWE121/s01/CWE131_loop',
-    'CWE121/s02/CWE193_char_alloca_loop',
-    'CWE121/s02/CWE193_char_alloca_ncpy',
-    'CWE121/s02/CWE193_char_declare_loop',
-    'CWE121/s03/CWE805_char_declare_memcpy',
-    'CWE121/s03/CWE805_char_declare_memmove',
-    'CWE121/s03/CWE805_char_declare_ncpy',
-    'CWE121/s03/CWE805_char_declare_loop',
-    'CWE122/s01/char_type_overrun_memcpy',
-    'CWE122/s01/char_type_overrun_memmove',
-    'CWE122/s05/CWE131_loop',
-    'CWE122/s05/CWE131_memcpy',
-    'CWE122/s06/CWE131_memmove',
-    'CWE122/s06/CWE135',
-    'CWE122/s06/c_CWE129_connect_socket',
-    'CWE122/s06/c_CWE129_fgets'
-    ]
 
 if __name__ == '__main__':
 
@@ -64,14 +42,14 @@ if __name__ == '__main__':
     print('~' * 80)
     print('\nPrimary proof obligations\n')
 
-    rhlen = max(len(x) for x in testcases)
+    rhlen = max(len(x) for x in JTC.testcases)
 
     allppos = []
     allspos = []
 
     sumppos = {}
     sumspos = {}
-    for t in testcases:
+    for t in JTC.testcases:
         cpath = UF.get_juliet_testpath(t)
         sempath = os.path.join(cpath,'semantics')
         if not os.path.isdir(sempath):

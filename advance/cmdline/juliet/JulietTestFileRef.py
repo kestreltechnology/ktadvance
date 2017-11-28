@@ -120,8 +120,8 @@ class JulietPpo():
 
     def __str__(self):
         ctxt = ''
-        if self.hasexpctxt(): ctxt = ' (' + self.getexpctxt() + ')'
-        return (self.getpredicate() + ctxt)
+        if self.has_exp_ctxt(): ctxt = ' (' + self.get_exp_ctxt() + ')'
+        return (str(self.line) + '  ' + self.predicate + ctxt)
 
 
 class JulietViolation(JulietPpo):
