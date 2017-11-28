@@ -113,13 +113,12 @@ if __name__ == '__main__':
         am.create_file_primary_proofobligations(cfilename)
         am.reset_tables(cfilename)
 
-    # am.generate_file_global_invariants(cfilename)
     am.generate_and_check_file(cfilename,'llvisp')
     am.reset_tables(cfilename)
 
     for k in range(args.analysisrounds):
         capp.update_spos()
-        am.generate_and_check_file(cfilename,'llsvisp')
+        am.generate_and_check_file(cfilename,'llvisp')
         am.reset_tables(cfilename)
 
 

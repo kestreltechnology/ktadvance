@@ -92,11 +92,12 @@ if __name__ == '__main__':
         print('*' * 80)
         exit(1)
 
+    os.chdir(targetpath)
+    if os.path.isdir('semantics'):
+        print('Removing semantics directory')
+        shutil.rmtree('semantics')
+
     if args.savesemantics:
-        os.chdir(targetpath)
-        if os.path.isdir('semantics'):
-            print('Removing semantics directory')
-            shutil.rmtree('semantics')
         if os.path.isfile('semantics_linux.tar.gz'):
             print('Removing semantics_linux.tar.gz')
             os.remove('semantics_linux.tar.gz')
