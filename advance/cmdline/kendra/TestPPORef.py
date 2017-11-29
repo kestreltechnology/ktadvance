@@ -25,26 +25,26 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-class TestPPORef():
+class TestPPORef(object):
 
     def __init__(self,testcfunctionref,r):
         self.testcfunctionref = testcfunctionref
         self.r = r
 
-    def getline(self): return int(self.r['line'])
+    def get_line(self): return int(self.r['line'])
 
-    def getcfgcontext(self): return self.r['cfgctxt']
+    def get_cfg_context(self): return self.r['cfgctxt']
 
-    def getexpcontext(self): return self.r['expctxt']
+    def get_exp_context(self): return self.r['expctxt']
 
-    def getcontext(self):
-        return (self.getcfgcontext(),self.getexpcontext())
+    def get_context(self):
+        return (self.get_cfg_context(),self.get_exp_context())
 
-    def getcontextstring(self):
-        return ('(' + str(self.getcfgcontext()) + ',' + self.getexpcontext() + ')')
+    def get_context_string(self):
+        return ('(' + str(self.get_cfg_context()) + ',' + self.get_exp_context() + ')')
 
-    def getpredicate(self): return self.r['predicate']
+    def get_predicate(self): return self.r['predicate']
 
-    def gettgtstatus(self): return self.r['tgtstatus']
+    def get_tgt_status(self): return self.r['tgtstatus']
 
-    def getstatus(self): return self.r['status']
+    def get_status(self): return self.r['status']

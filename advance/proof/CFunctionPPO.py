@@ -25,39 +25,16 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CContext import makecontext
-from advance.app.CContext import CContext
 from advance.app.CLocation import CLocation
 
-from advance.proof.CFunctionPO import CFunctionPO
+import advance.proof.CFunctionPO as S
 
-import advance.proof.CPOUtil as P
-
-class CFunctionPPO(CFunctionPO):
+class CFunctionPPO(S.CFunctionPO):
     '''Represents a primary proof obligation within a function.'''
 
-    def __init__(self,cpos,xnode):
-        CFunctionPO.__init__(self,cpos)
-        self.xnode = xnode
+    def __init__(self,cpos,id,ppotype,status,deps,expl,diag):
+        S.CFunctionPO.__init__(self,cpos,ppotype,status,deps,expl,diag)
 
-    def isppo(self): return True
+    def is_ppo(self): return True
 
-    def getid(self): return self.xnode.get('id')
-
-    def getlocation(self): return CLocation(self.xnode.find('location'))
-
-    def getpredicatetag(self):
-        return self.xnode.find('predicate').get('tag')
-
-    def getpredicate(self):
-        pnode = self.xnode.find('predicate')
-        return P.getpredicate(self.getcontext(),pnode)
-
-    def isdischarged(self): return self.cpos.is_ppo_discharged(self.getid())
-
-    def getcontext(self):
-        return makecontext(self.getfunction(),self.xnode.find('context'))
-
-    def getorigin(self): return self.xnode.get('origin')
-
-
+    def get_predicate_tag(self): return self.predicate.get_tag()

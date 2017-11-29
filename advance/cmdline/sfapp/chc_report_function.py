@@ -39,6 +39,8 @@ def parse():
     parser.add_argument('cfile',help='filename of c file')
     parser.add_argument('cfunction',help='name of function to report on')
     parser.add_argument('--open',help='only show open proof obligations',action='store_true')
+    parser.add_argument('--violations',help='only show proof obligations that are violated',
+                            action='store_true')
     args = parser.parse_args()
     return args
 
@@ -62,17 +64,21 @@ if __name__ == '__main__':
         exit(1)
         
     cfapp = CApplication(sempath,args.cfile)
-    cfile = cfapp.getcfile()
+    cfile = cfapp.get_cfile()
 
-    if not cfile.hasfunctionbyname(args.cfunction):
+    if not cfile.has_function_by_name(args.cfunction):
         print(UP.cfunction_not_found_err_sg(cpath,args.cfile,args.cfunction))
         exit(1)
 
-    cfunction = cfile.getfunctionbyname(args.cfunction)
+    cfunction = cfile.get_function_by_name(args.cfunction)
 
-    if args.open:
-        def pofilter(po):return not po.isdischarged()
-        print(RP.function_code_tostring(cfunction,pofilter=pofilter))
-    else:  
-        print(RP.function_code_tostring(cfunction))
-       
+    if args.open and args.violations:
+        def pofilter(po):return not po.is_closed() or po.is_violated()
+    elif args.open:
+        def pofilter(po):return not po.is_closed()
+    elif args.violations:
+        def pofilter(po):return po.is_violated()
+    else:
+        def pofilter(po):return True
+
+    print(RP.function_code_tostring(cfunction,pofilter=pofilter))

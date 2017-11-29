@@ -26,18 +26,26 @@
 # ------------------------------------------------------------------------------
 
 
-class TestSPORef():
+class TestSPORef(object):
 
     def __init__(self,testcfunctionref,r):
         self.testcfunctionref = testcfunctionref
         self.r = r
 
-    def getline(self): return int(self.r['line'])
+    def get_line(self): return int(self.r['line'])
 
-    def getcontext(self): return self.r['cfgctxt']
+    def get_context(self): return self.r['cfgctxt']
 
-    def gettgtstatus(self): return self.r['tgtstatus']
+    def get_tgt_status(self): return self.r['tgtstatus']
 
-    def getstatus(self): return self.r['status']
+    def get_status(self): return self.r['status']
 
-    def gethashstr(self): return self.r['hashstr']
+    def get_predicate(self): return self.r['predicate']
+
+    def get_type(self): return self.r['type']
+
+    def get_argnr(self): return self.r['argnr']
+
+    def get_id(self):
+        if self.get_type() == 'callsite':
+            return (self.get_predicate(),self.get_argnr())

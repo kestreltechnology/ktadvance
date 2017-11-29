@@ -50,22 +50,35 @@ def parse():
     parser = argparse.ArgumentParser(usage=usage,description=description)
     parser.add_argument('path',
                             help='directory that holds the semantics directory (or tar.gz file)')
+<<<<<<< HEAD
     parser.add_argument('--nofilter',
                         help='disable filtering out files with absolute path',
                         action='store_true')
     parser.add_argument('--wordsize',
                         help='wordsize of target platform (e.g., 32 or 64)',
                         type=int, default=0)
+=======
+    parser.add_argument('--filter',
+                            help='filter out files with absolute path',
+                            action='store_true')
+>>>>>>> dev
     parser.add_argument('--maxprocesses',
                             help='number of files to process in parallel',
                             type=int,
                             default=1)
+    parser.add_argument('--wordsize',
+                            help='size of an integer in bits',
+                            type=int,
+                            default=32)
+    parser.add_argument('--verbose',
+                            help='Print all output from analyzer to console',
+                            action='store_true')
     parser.add_argument('--deletesemantics',
                             help='Unpack a fresh version of the semantics files',
                             action='store_true')
     parser.add_argument('--analysisrounds',
                             help='Number of times to create secondary proof obligations',
-                            type=int, default=5)
+                            type=int, default=2)
     args = parser.parse_args()
     return args
 
@@ -77,8 +90,8 @@ def timing(activity):
           '\nCompleted ' + activity + ' in ' + str(time.time() - t0) + ' secs' +
           '\n' + ('=' * 80))
 
-def savexrefs(f):
-    capp.indexmanager.savexrefs(capp.getpath(),f.getfilename(),f.getindex())
+def save_xrefs(f):
+    capp.indexmanager.save_xrefs(capp.path,f.name,f.index)
 
 if __name__ == '__main__':
 
@@ -103,29 +116,26 @@ if __name__ == '__main__':
             print(UP.semantics_tar_not_found_err_msg(cpath))
             exit(1)
 
-    capp = CApplication(sempath)
-
     # check linkinfo
     globaldefs = os.path.join(sempath,os.path.join('ktadvance','globaldefinitions.xml'))
     if not os.path.isfile(globaldefs):
+        capp = CApplication(sempath)
         linker = CLinker(capp)
-        linker.linkcompinfos()
-        linker.linkvarinfos()
-        capp.fileiter(savexrefs)
+        linker.link_compinfos()
+        linker.link_varinfos()
+        capp.iter_files(save_xrefs)
 
-        linker.saveglobalcompinfos()
+        linker.save_global_compinfos()
         
-    # have to reinitialized capp to get linking info properly initialized
+    # have to reinitialize capp to get linking info properly initialized
     capp = CApplication(sempath)
-    am = AnalysisManager(capp,wordsize=args.wordsize,nofilter=args.nofilter)
+    am = AnalysisManager(capp,filter=args.filter,verbose=args.verbose,wordsize=args.wordsize)
 
-    am.create_app_primaryproofobligations()
-    for i in range(3):
-        am.generate_app_localinvariants(['llvis'])
-    am.check_app_proofobligations()
+    am.create_app_primary_proofobligations(processes=args.maxprocesses)
+
+    for i in range(2):
+        am.generate_and_check_app('llvisp', processes=args.maxprocesses)
 
     for i in range(args.analysisrounds):
-        capp.updatespos()
-
-        am.generate_app_localinvariants(['llvis'])
-        am.check_app_proofobligations()
+        capp.update_spos()
+        am.generate_and_check_app('llvisp', processes=args.maxprocesses)

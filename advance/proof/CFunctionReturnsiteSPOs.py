@@ -27,15 +27,20 @@
 import xml.etree.ElementTree as ET
 
 import advance.util.xmlutil as UX
+import advance.proof.CFunctionPO as PO
 
-import advance.app.CTTypeExp as TX
-import advance.proof.CPOUtil as P
-
-from advance.app.CContext import makecontext
 from advance.app.CLocation import CLocation
 from advance.proof.CFunctionReturnsiteSPO import CFunctionReturnsiteSPO
 
-class CFunctionReturnsiteSPOs():
+po_status = {
+    'g': 'safe',
+    'o': 'open',
+    'r': 'violation',
+    'x': 'dead-code'
+    }
+
+
+class CFunctionReturnsiteSPOs(object):
     '''Represents the secondary proof obligations associated with a return site.
 
     The secondary proof obligations at a return site are generated from the post
@@ -44,59 +49,65 @@ class CFunctionReturnsiteSPOs():
 
     def __init__(self,cspos,xnode):
         self.cspos = cspos
-        self.xnode = xnode
-        self.location = CLocation(self.xnode.find('location'))
-        self.spos = {}     # (fvid,spo-id) -> CFunctionReturnsiteSPO
-        self._initialize()
+        self.cfile = self.cspos.cfile
+        self.context = self.cfile.contexttable.read_xml_context(xnode)
+        self.cfun = self.cspos.cfun
+        self.location = self.cfile.declarations.read_xml_location(xnode)
+        self.returnexp = self.cfile.declarations.dictionary.read_xml_exp(xnode)
+        self.spos = {}     # pcid -> CFunctionReturnsiteSPO list
+        self._initialize(xnode)
 
-    def getfunction(self): return self.cspos.getfunction()
+    def get_line(self): return self.location.getline()
 
-    def getfile(self): return self.cspos.getfile()
+    def add_postcondition(self,postcondition):
+        pcid = self.cfun.cfile.interfacedictionary.index_postcondition(postcondition)
+        if not pcid in self.spos:
+            self.spos[pcid] = []
 
-    def getlocation(self): return self.location
-
-    def getline(self): return self.location.getline()
-
-    def getcontext(self): return makecontext(self.getfunction(), self.xnode.find('context'))
-
-    def getexp(self): return TX.getexp(self.getcontext(),self.xnode.find('exp'))
-
-    def getcfgcontextstring(self): return self.getcontext().getcfgcontextstring()
+    def get_cfg_context_string(self): return str(self.context)
 
     def iter(self,f):
         for id in self.spos:
-            f(self.spos[id])
+            for spo in self.spos[id]:
+                f(spo)
 
-    def addspo(self,rv,vid):
-        subst = { rv.getfunctionindex(): self.getexp() }
-        p = P.getpredicate(self.getcontext(),rv.getpredicatenode(),subst)
-        h = p.hashstr()
-        id = self.cspos.idregistry.add('S',h)
-        rqid = rv.getid()
-        rvspo = CFunctionReturnsiteSPO(self,id,rqid,p)
-        self.spos[(vid,id)] = rvspo
+    def write_xml(self,cnode):
+        self.cfile.declarations.write_xml_location(cnode,self.location)
+        self.cfile.contexttable.write_xml_context(cnode,self.context)
+        self.cfile.declarations.dictionary.write_xml_exp(cnode,self.returnexp)
+        oonode = ET.Element('postconditions')
+        for pcid in self.spos:
+            pcnode = ET.Element('pc')
+            pcnode.set('iipc',str(pcid))
+            for spo in self.spos[pcid]:
+                onode = ET.Element('po')
+                spo.write_xml(onode)
+                pcnode.append(onode)
+            oonode.append(pcnode)
+        cnode.extend([oonode] )
 
-    def writexml(self,cnode):
-        lnode = ET.Element('location')
-        knode = ET.Element('context')
-        enode = ET.Element('exp')
-        self.getlocation().writexml(lnode)
-        self.getcontext().writexml(knode)
-        self.getexp().writexml(enode)
-        cnode.extend([ lnode, knode, enode])
-        oonode = ET.Element('obligations')
-        for (vid,spoid) in self.spos:
-            onode = ET.Element('obligation')
-            self.spos[(vid,spoid)].writexml(onode)
-            onode.set('vid',str(vid))
-            oonode.append(onode)
-        cnode.append(oonode)
-
-    def _initialize(self):
-        for obligation in self.xnode.find('obligations').findall('obligation'):
-            p = obligation.find('predicate')
-            pred = P.getpredicate(self.getcontext(),p)
-            id = obligation.get('id')
-            gvid = int(obligation.get('vid'))
-            rqid = obligation.get('rq-id')
-            self.spos[(gvid,id)] = CFunctionReturnsiteSPO(self,id,rqid,pred)
+    def _initialize(self,xnode):
+        for p in xnode.find('postconditions').findall('pc'):
+            iipc = int(p.get('iipc'))
+            self.spos[iipc] = []
+            for po in p.findall('po'):
+                spotype = self.cfun.podictionary.read_xml_spo_type(po)
+                deps = None
+                status = po_status[po.get('s','o')]
+                if 'deps' in po.attrib:
+                    level = po.get('deps')
+                    if level == 'a':
+                        ids = [int(x) for x in po.get('ids').split(',') ]
+                        invs = po.get('invs')
+                        if len(invs) > 0:
+                            invs = [ int(x) for x in invs.split(',') ]
+                        else:
+                            invs = []
+                        deps = PO.CProofDependencies(self,level,ids,invs)
+                    else:
+                        deps = PO.CProofDependencies(self,level)
+                expl = None
+                enode = po.find('e')
+                if not enode is None:
+                    expl = enode.get('txt')
+                self.spos[iipc].append(CFunctionReturnsiteSPO(self,spotype,status,deps,expl))

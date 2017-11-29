@@ -34,6 +34,7 @@ from advance.linker.CompCompatibility import CompCompatibility
 from advance.app.CCompInfo import CCompInfo
 
 from advance.util.UnionFind import UnionFind
+from advance.app.CGlobalDictionary import CGlobalDictionary
 
 import advance.util.fileutil as UF
 import advance.util.xmlutil as UX
@@ -52,36 +53,42 @@ Goal: produce equivalence classes of (fileindex,compinfo key) pairs that
 
 '''
 
-class CLinker():
+class CLinker(object):
 
     def __init__(self,capp):
         self.capp = capp                              # CApplication
-        self.compinfos = capp.getfilecompinfos()      # CCompInfo list
-        self.varinfos = capp.getfileglobalvarinfos()
-        self.possiblycompatiblestructs = []           # (id,id) list
-        self.notcompatiblestructs = set([])           # (id,id) set
-        self.globalcompinfos = {}                     # id representative -> global id
-        self.compinfoxrefs = {}                       # id -> global id
-        self.compinfoinstances = {}                   # global id -> global compinfo
-        self.sharedinstances = {}                     # global id -> (compinfo list)
-        self.varinfoxrefs = {}
+        self.declarations = self.capp.declarations
 
-    def getfilecompinfoxrefs(self,fileindex):
+    def get_file_compinfo_xrefs(self,fileindex):
         result = {}
         for (fidx,ckey) in self.compinfoxrefs:
             if fidx == fileindex: result[ckey] = self.compinfoxrefs[(fidx,ckey)]
         return result
 
-    def getfilevarinfoxrefs(self,fileindex):
+    def get_file_varinfo_xrefs(self,fileindex):
         result = {}
         for (fidx,vid) in self.varinfoxrefs:
             if fidx == fileindex: result[vid] = self.varinfoxrefs[(fidx,vid)]
         return result
 
-    def getglobalcompinfos(self): return self.compinfoinstances
+    def get_global_compinfos(self): return self.compinfoinstances
 
-    def getsharedinstances(self): return self.sharedinstances
+    def get_shared_instances(self): return self.sharedinstances
 
+    def link_compinfos(self):
+        def f(cfile):
+            print('-' * 80)
+            print('Linking ' + cfile.name)
+            print('-' * 80)
+            compinfos = cfile.declarations.get_compinfos()
+            self.declarations.index_file_compinfos(cfile.index,compinfos)
+        self.capp.iter_files(f)
+        ckey2gckey = self.declarations.ckey2gckey
+        for fid in ckey2gckey:
+            for ckey in ckey2gckey[fid]:
+                gckey = ckey2gckey[fid][ckey]
+                self.capp.indexmanager.add_ckey2gckey(fid,ckey,gckey)
+    '''
     def linkcompinfos(self):
         self._checkcompinfopairs()
 
@@ -98,12 +105,15 @@ class CLinker():
             print('Found ' + str(pcount) + ' compatible combinations')
 
         gcomps = UnionFind()
-        for c in self.compinfos: gcomps[ c.getid() ]
+        
+        for c in self.compinfos: 
+            gcomps[ c.getid() ]
+
         for (c1,c2) in self.possiblycompatiblestructs: gcomps.union(c1,c2)
 
         eqclasses = set([])
         for c in self.compinfos:
-            eqclasses.add(gcomps[c.getid()])
+            eqclasses.add(gcomps[c.id])
 
         print('Created ' + str(len(eqclasses)) + ' globally unique struct ids')
 
@@ -113,13 +123,13 @@ class CLinker():
             gckey += 1
 
         for c in self.compinfos:
-            id = c.getid()
+            id = c.id
             gckey = self.globalcompinfos[gcomps[id]]
             self.compinfoxrefs[id] = gckey
             self.capp.indexmanager.addckey2gckey(id[0],id[1],gckey)
 
         for c in self.compinfos:
-            id = c.getid()
+            id = c.id
             gckey = self.globalcompinfos[gcomps[id]]
             if not gckey in self.compinfoinstances:
                 fidx = id[0]
@@ -130,7 +140,20 @@ class CLinker():
             else:
                 filename = self.capp.getfilebyindex(id[0]).getfilename()
                 self.sharedinstances[gckey].append((filename,c))
+    '''
 
+    def link_varinfos(self):
+        def f(cfile):
+            varinfos = cfile.declarations.get_global_varinfos()
+            self.declarations.index_file_varinfos(cfile.index,varinfos)
+        self.capp.iter_files(f)
+        self.declarations.resolve_default_function_prototypes()
+        vid2gvid = self.declarations.vid2gvid
+        for fid in vid2gvid:
+            for vid in vid2gvid[fid]:
+                gvid = vid2gvid[fid][vid]
+                self.capp.indexmanager.add_vid2gvid(fid,vid,gvid)
+    '''
     def linkvarinfos(self): 
         globalvarinfos = {}       
         for vinfo in self.varinfos:
@@ -148,39 +171,21 @@ class CLinker():
                 self.varinfoxrefs[id] = gvid
                 self.capp.indexmanager.addvid2gvid(id[0],id[1],gvid)
             gvid += 1
-
-    def saveglobalcompinfos(self):
-        path = self.capp.getpath()
-        compinfos = self.getglobalcompinfos()
-        sharedinstances = self.getsharedinstances()
+    '''
+    def save_global_compinfos(self):
+        path = self.capp.path
         xroot = UX.get_xml_header('globals','globals')
         xnode = ET.Element('globals')
         xroot.append(xnode)
-        cxnode = ET.Element('global-compinfos')
-        xnode.extend([ cxnode ])
-        for gckey in sorted(compinfos):
-            cnode = ET.Element('gcompinfo')
-            ffnode = ET.Element('shared-instances')
-            cnode.append(ffnode)
-            for (fname,compinfo) in sorted(sharedinstances[gckey]):
-                fnode = ET.Element('fstruct')
-                fnode.set('filename',fname)
-                fnode.set('ckey',str(compinfo.getkey()))
-                fnode.set('cname',compinfo.getname())
-                if not compinfo.isstruct():
-                    fnode.set('cstruct','false')
-                ffnode.append(fnode)
-            cnode.set('gckey',str(gckey))
-            compinfos[gckey].writexml(cnode)
-            cxnode.append(cnode)
-        filename = UF.get_globaldefinitions_filename(path)
+        self.declarations.write_xml(xnode)
+        filename = UF.get_global_definitions_filename(path)
         with open(filename,'w') as fp:
             fp.write(UX.doc_to_pretty(ET.ElementTree(xroot)))
 
 
     def _checkcompinfopairs(self):
         self.possiblycompatiblestructs = []
-        compinfos = sorted(self.compinfos,key=lambda(c):c.getid())
+        compinfos = sorted(self.compinfos,key=lambda c:c.getid())
         print('Checking all combinations of ' + str(len(compinfos)) + ' struct definitions')
         for (c1,c2) in itertools.combinations(compinfos,2):
             if c1.getid() == c2.getid(): continue
@@ -192,13 +197,4 @@ class CLinker():
                     self.possiblycompatiblestructs.append(pair)
                 else:
                     self.notcompatiblestructs.add(pair)
-            else:
-                self.notcompatiblestructs.add(pair)
-        
 
-        
-                                                      
-                
-        
-
-    

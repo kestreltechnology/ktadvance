@@ -30,8 +30,6 @@ import xml.etree.ElementTree as ET
 import advance.util.idregistry as UI
 import advance.util.xmlutil as UX
 
-import advance.proof.CPOUtil as P
-
 from advance.proof.CFunctionCallsiteSPOs import CFunctionCallsiteSPOs
 from advance.proof.CFunctionReturnsiteSPOs import CFunctionReturnsiteSPOs
 
@@ -43,70 +41,82 @@ class CFunctionSPOs(CFunctionPOs):
     def __init__(self,cproofs,xnode):
         CFunctionPOs.__init__(self,cproofs)
         self.xnode = xnode
+        self.cproofs = cproofs
+        self.spocounter = 0
         self.callsitespos = {}             # cfg-contextstring -> CFunctionCallsiteSPOs
         self.returnsitespos = {}           # cfg-contextstring -> CFunctionReturnsiteSPOs
-        self.idregistry = UI.IDRegistry(self.xnode.find('id-registry'))
         self._initialize()
 
-    def getspoid(self,k): return self.idregistry.add('S',k)
-
-    def addreturnsiteobligation(self,rv,fvid):
+    def add_returnsite_postcondition(self,postcondition):
         for r in self.returnsitespos.values():
-            r.addspo(rv,fvid)
+            r.add_postcondition(postcondition)
+
+    def get_new_id(self):
+        self.spocounter += 1
+        return self.spocounter
 
     def update(self):
         for cs in self.callsitespos.values(): cs.update()
 
-    def getspo(self,id):
+    def get_spo(self,id):
         for cs in self.callsitespos.values():
-            if cs.hasspo(id):
+            if cs.has_spo(id):
                 return cs.getspo(id)
         else:
             print('No spo found with id ' + str(id))
             exit(1)
 
-    def itercallsites(self,f):
-        for cs in sorted(self.callsitespos.values(),key=lambda(p):(p.getline())):
+    def iter_callsites(self,f):
+        for cs in sorted(self.callsitespos.values(),key=lambda p:(p.get_line())):
             f(cs)
 
     def iter(self,f):
-        for cs in sorted(self.callsitespos.values(),key=lambda(p):(p.getline())):
+        for cs in sorted(self.callsitespos.values(),key=lambda p:(p.get_line())):
             cs.iter(f)
         for cs in self.returnsitespos.values():
             cs.iter(f)
 
-    def writexml(self,cnode):
-        snode = ET.Element('secondary-proof-obligations')
+    def write_xml(self,cnode):
+        snode = ET.Element('spos')
         cssnode = ET.Element('callsites')
-        for cs in self.callsitespos.values():
-            csnode = ET.Element('callsite')
-            cs.writexml(csnode)
-            cssnode.append(csnode)
-        snode.append(cssnode)
-        rssnode = ET.Element('return-sites')
-        for rs in self.returnsitespos.values():
-            rsnode = ET.Element('return-site')
-            rs.writexml(rsnode)
-            rssnode.append(rsnode)
-        snode.append(rssnode)
-        dssnode = ET.Element('ds-expectations')
+        rrnode = ET.Element('returnsites')
+        dcnode = ET.Element('direct-calls')
         idcnode = ET.Element('indirect-calls')
-        snode.extend( [ dssnode, idcnode ])
-        idnode = ET.Element('id-registry')
-        self.idregistry.writexml(idnode)
-        cnode.extend([ snode, idnode])
+        for cs in self.callsitespos.values():
+            if cs.is_direct_call():
+                csnode = ET.Element('dc')
+                cs.write_xml(csnode)
+                dcnode.append(csnode)
+            if cs.is_indirect_call():
+                csnode = ET.Element('ic')
+                cs.write_xml(csnode)
+                idcnode.append(csnode)
+        for rs in self.returnsitespos.values():
+            rsnode = ET.Element('rs')
+            rs.write_xml(rsnode)
+            rrnode.append(rsnode)
+        snode.append(cssnode)
+        snode.append(rrnode)
+        cssnode.extend([dcnode,idcnode])
+        cnode.extend([ snode ])
 
     def _initialize(self):
-        spos = self.xnode.find('secondary-proof-obligations')
-        css = spos.find('callsites')
+        spos = self.xnode.find('spos')
+        css = spos.find('callsites').find('direct-calls')
         if not css is None:
-            for cs in css.findall('callsite'):
+            for cs in css.findall('dc'):
                 cspo = CFunctionCallsiteSPOs(self,cs)
-                cfgctxt = cspo.getcfgcontextstring()
+                cfgctxt = cspo.get_cfg_context_string()
                 self.callsitespos[cfgctxt] = cspo
-        rss = spos.find('return-sites')
+        icss = spos.find('callsites').find('indirect-calls')
+        if not icss is None:
+            for cs in icss.findall('ic'):
+                cspo = CFunctionCallsiteSPOs(self,cs)
+                cfgctxt = cspo.get_cfg_context_string()
+                self.callsitespos[cfgctxt] = cspo
+        rss = spos.find('returnsites')
         if not rss is None:
-            for rs in rss.findall('return-site'):
+            for rs in rss.findall('rs'):
                 rsspos = CFunctionReturnsiteSPOs(self,rs)
-                cfgctxt = rsspos.getcfgcontextstring()
+                cfgctxt = rsspos.get_cfg_context_string()
                 self.returnsitespos[cfgctxt] = rsspos

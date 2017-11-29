@@ -27,7 +27,7 @@
 
 
 
-class COffsetBase():
+class COffsetBase(object):
 
     def __init__(self,ctxt,xnode):
         self.ctxt = ctxt

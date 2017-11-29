@@ -1,0 +1,612 @@
+\documentclass[11pt]{article}
+\usepackage{epsfig}
+\usepackage{subfigure}
+\usepackage{rotating} 
+\usepackage{amsfonts,amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[longnamesfirst,numbers]{natbib}
+\usepackage{setspace}
+\usepackage{pifont}
+\usepackage{enumitem}
+\usepackage{listings} 
+\usepackage{wrapfig}
+
+%\setlist{nolistsep,noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
+\setlist{nolistsep,itemsep=4pt,topsep=4pt,parsep=0pt,partopsep=0pt}
+\DeclareGraphicsExtensions{.png,.jpg}
+\graphicspath{{.}}
+
+\newcommand\commentout[1]{}
+\newcommand\cvt{{\sc cvt}}
+
+\def\Implies{\;\Longrightarrow\;}
+\def\Equiv{\;\equiv\;}
+\def\Equals{\;\;{\bf = }\;\;}
+\def\And{\;\wedge\;}
+\def\Or{\;\vee\;}
+
+\headheight 0in
+\parindent=0.0in
+\parskip=2ex plus1ex
+\topmargin 0.0in
+\textheight 8.0in
+\textwidth 6.250in
+\evensidemargin -2.0mm
+\oddsidemargin 4.0mm
+%\evensidemargin 0.375in
+%\oddsidemargin -0.03125in
+
+\usepackage{fancyheadings}
+\pagestyle{fancy}
+\lhead{KT Advance C Analyzer}
+\chead{}
+\rhead{Reference Manual}
+\cfoot{Kestrel Technology LLC}
+
+\newcommand\ch{{\bf CodeHawk}}
+\newcommand\fname{$<$f$>$}
+\newcommand\fnname{$<$ff$>$}
+
+%\setcounter{page}{3}
+
+\normalsize
+\setlength{\headheight}{2\baselineskip}
+
+\begin{document}
+
+\vfill
+\vfill
+
+
+{\Large\bf{
+KT Advance Reference Manual}}
+
+\vfill
+
+{\Large{Kestrel Technology, LLC}}
+
+\bigskip
+
+November 24, 2017
+
+\vfill
+\vfill
+\vfill
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Overview}
+
+The KT Advance C Analyzer consists of three components:
+\begin{enumerate}
+\item {\bf Parser:} A Mac/Linux executable that takes as input a preprocessed
+C source file and produces a set of xml files that precisely represent the
+semantics of the C source file;
+\item {\bf C Analyzer:} A Mac/Linux executable that takes as input the
+semantics files produced by the parser as well as analysis results files if
+available, and produces a set of xml files that hold analysis results. The
+C Analyzer will be wrapped in a license manager to protect the contained 
+intellectual property.
+\item {\bf PyAdvance:} Python code, provided as source code to licensed
+users, that performs linking and provides various analyzer invocation, 
+integration, and reporting services.
+\end{enumerate}
+
+\section{Approach}
+
+\subsection{Proof by Induction}
+
+The goal of the KT Advance C Analyzer is to mathematically prove absence
+of memory safety vulnerabilities, or, more precisely, prove absence of
+undefined behavior related to memory safety. The technique used to accomplish 
+this is proof
+by structural induction on the control flow graph of each function: for each
+instruction we assume that the state of an execution (viewed as a sequence of states) 
+reaching this point is well-defined
+(the inductive hypothesis), and we have to prove that all possible states
+reached after the instruction are still well defined (the inductive step).
+If indeed we can show that every instruction, starting from a well-defined
+state, ends in a well-defined state, we can conclude that no undefined
+behavior is possible in any execution of the application.
+
+\subsection{Primary Proof Obligations}
+
+The inductive step requires proving for each instruction that the weakest
+precondition of that instruction with respect to well-definedness as
+defined in the C Standard~\cite{cstandard} is program-valid, that is,
+it is valid on all possible states that an execution can be in when
+reaching that instruction. We have chosen to express these weakest
+preconditions as conjunctions of a collection of primitive predicates rather than as one
+monolithic predicate to facilitate the use of different analysis domains
+and potentially specialized proof tools for different predicates.
+We call the primitive predicates that form the weakest precondition
+``primary proof obligations.'' For example, the primary proof obligations
+(also referred to as ppo's) for 
+the instruction {\tt j = j/i} would be that {\tt j} and
+{\tt i} both be initialized and that {\tt i} is not equal to zero,
+or, formally $initialized(i) \wedge initialized(j) \wedge not-zero(i)$,
+all of which can be proven separately. A list and detailed description
+of all primitive predicates used is given below.
+
+\subsection{Proof Obligation Predicates}
+
+\paragraph{allocation-base (ptr:exp): }
+The value of the ptr expression is the address of a 
+                dynamically allocated memory region.
+
+\paragraph{common-base (ptr1:exp, ptr2:exp): }
+The value of the ptr1 expression and the value of the ptr2 expression
+   point to the same memory region (where a region can be an allocated region, or a region
+   defined by a declared variable).
+   
+\paragraph{common-base-type (ptr1:exp, ptr2:exp): }
+The value of the ptr1 expression and the value of the ptr2 expression
+  point at elements of the same array.
+
+\paragraph{index-lower-bound (index:exp): }
+The value of the index expression is greater than or equal to zero.
+
+\paragraph{index-upper-bound (index:exp, size:exp):}
+The value of the index expression is less than the value of the
+   size expression. 
+
+\paragraph{initialized (lhs:lval): }
+The value in the location denoted by lhs is initialized.
+
+\paragraph{initialized-range (ptr:exp, len:exp): }
+The value of the ptr expression points to a memory region of which at least
+len bytes are initialized starting from the address in ptr.
+
+\paragraph{lower-bound (ptr:exp):}
+The value of the ptr expression is greater than or equal to the
+    lower bound of the memory region it is pointing at (vacuously true for NULL).
+    
+\paragraph{non-negative (scalar:exp):}
+The value of the scalar expression is non-negative.
+
+\paragraph{no-overlap (ptr1:exp, ptr2:exp): }
+the value of the ptr1 expression and the value of the ptr2
+   expression do not point at the same memory region.
+
+\paragraph{not-null (ptr:exp):}
+The value of the ptr expression is not NULL.
+
+\paragraph{not-zero (scalar:exp): }
+The value of the scalar expression is not zero.
+
+\paragraph{null (ptr:exp): }
+The value of the ptr expression is NULL.
+
+\paragraph{null-terminated (ptr:exp): }
+The ptr expression points at a memory region that contains a null-terminator
+within its bounds.
+
+\paragraph{ptr-lower-bound (t:typ, op:binop, ptr:exp, scalar:exp)}
+The result of the operation op performed on the ptr expression and scalar expression
+is greater than or equal to the lower bound of the memory region pointed to by
+the ptr expression.
+
+\paragraph{ptr-upper-bound (t:typ, op:binop, ptr:exp, scalar:exp)}
+The result of the operation op performed on the ptr expression and scalar expression
+is less than or equal to the upper bound of the memory region pointed to by the ptr
+expression.
+
+\paragraph{upper-bound (ptr:exp):}
+The value of the ptr expression is less than or equal to the
+    upper bound of the memory region it is is pointing at (vacuously true for NULL).
+
+\paragraph{valid-mem (ptr:exp): }
+The value of the ptr expression is the address of or inside a 
+	valid memory region, that is, a memory region that has not been freed and
+	has not gone out of scope.
+
+The following predicates are not a weakest precondition for undefined behavior, but
+are included to identify constructs generally considered undesirable.
+
+\paragraph{format-string (ptr:exp): }
+The value of the ptr expression points at a string literal.
+
+
+\section{Files}
+
+Analysis is modular: the C Analyzer analyzes (preprocessed) c source files
+in isolation; the PyAdvance integrator transfers results from one file to
+another in terms of api assumptions, postcondition guarantees, etc. These
+analysis artifacts are saved in xml files associated with the entire
+application, individual files or single functions.
+Below we list these files, along with their role in the analysis and their
+format and contents.
+
+All analysis artifacts are kept in a subdirectory {\tt semantics/ktadvance}
+of the analysis directory.
+Below we will refer to this directory as the top directory.
+
+\subsection{Application-level}
+
+The following two files combine information about the entire application
+at the top level of the 
+
+\begin{itemize}[leftmargin=*]
+\item {\bf target\_files.xml: } a list of the source files included in the
+  application. \\
+  \emph{created by:} Parser \\
+  \emph{updated by:} none
+\item {\bf globaldefinitions.xml:} a dictionary of global definitions and declarations
+  that are shared by all source files. \\
+  \emph{created by:} PyAdvance Linker  (advance/linker) \\
+  \emph{updated by:} none
+\end{itemize}
+
+\subsection{File-level}
+
+The following files are kept for each source file \fname.c in a directory relative
+to the top directory that corresponds to their location in the original application
+source directory.
+\begin{itemize}[leftmargin=*]
+\item {\bf \fname\_cfile.xml: } Global definitions.\\
+   \emph{created by:} Parser \\
+   \emph{updated by:} none
+\item {\bf \fname\_cdict.xml: } Dictionary of types, variables, expressions, etc.
+   that appear in the program.\\
+   \emph{created by:} Parser \\
+   \emph{updated by:} C Analyzer (primary proof obligation generation)
+\item {\bf \fname\_gxrefs.xml: } Mapping between global indices and file-local
+   indices for struct definitions and global variables. \\
+   \emph{created by:} PyAdvance Linker \\
+   \emph{updated by:} none
+\item {\bf \fname\_ctxt.xml:} Dictionary of precise locations in the program,
+   expressed as program contexts, a pair of a cfg-context, specifying the location
+   in terms of control-flow-graph nodes, and an exp-context, specifying a location
+   within an expression, in terms of nodes in the syntax tree. \\
+   \emph{created by:} C Analyzer (primary proof obligation generation). \\
+   \emph{updated by:} none
+\item {\bf \fname\_ixf.xml:} Dictionary of components of interface expressions,
+   such as function preconditions, postconditions, and side effects.\\
+   \emph{created by:} C Analyzer (invariant generation) \\
+   \emph{updated by:} C Analyzer (invariant generation)
+\item {\bf \fname\_prd.xml:} Dictionary of predicates used in primary and supporting
+   proof obligations.\\
+   \emph{created by:} C Analyzer (primary proof obligation generator) \\
+   \emph{updated by:} PyAdvance (creation of supporting proof obligations)
+\end{itemize}
+
+\subsection{Function-level}
+
+The following files are kept for each function \fnname in file \fname.c, 
+in a subdirectory \fname in the directory that holds the \fname\_xxx.xml
+files.
+
+\begin{itemize}[leftmargin=*]
+\item {\bf \fnname\_cfun.xml:} Complete semantics of the function, expressed
+   as CIL-like data structures, using dictionary indices for types, expressions,
+   etc.\\
+   \emph{created by:} Parser \\
+   \emph{updated by:} none
+\item {\bf \fnname\_api.xml:} Application interface artifacts for a function,
+  including assumptions on arguments (used to create supporting proof obligations),
+  postcondition guarantees provided by the function, postcondition requests from
+  other functions.\\
+  \emph{created by:} C Analyzer (primary proof obligation generation) \\
+  \emph{updated by:} C Analyzer (invariant gernation, proof obligation check), PyAdvance
+\item {\bf \fnname\_ppo.xml:} Primary proof obligations for a function. \\
+  \emph{created by:} C Analyzer (primary proof obligation generation) \\
+  \emph{updated by:} C Analyzer (proof obligation check)
+\item {\bf \fnname\_spo.xml:} Supporting proof obligations for a function. \\
+  \emph{created by:} C Analyzer (primary proof obligation generation) \\
+  \emph{updated by:} PyAdvance, C Analyzer (proof obligation check)
+\item {\bf \fnname\_pod.xml:} Dictionary of primary and supporting proof obligation
+   types, using predicate and type/expression indices from \fname\_cdict.xml and
+   \fname\_prd.xml. \\
+   \emph{created by:} C Analyzer (primary proof obligation generation) \\
+   \emph{updated by:} PyAdvance (creation of supporting proof obligations)
+\item {\bf \fnname\_vars.xml:} Dictionary of analysis artifacts referenced in invariants.\\
+   \emph{created by:} C Analyzer (invariant generation) \\
+   \emph{updated by:} C Analyzer (invariant generation)
+\item {\bf \fnname\_invs.xml:} Dictionary of invariant values and location invariant table.\\
+   \emph{created by:} C Analyzer (invariant generation) \\
+   \emph{updated by:} C Analyzer (invariant generation)
+\end{itemize}
+
+\section{Dictionary Data Structure Formats}
+
+Several file-level and function-level files provide an index representation
+of commonly used entities such as expressions and locations. Each data item is
+represented by a list of strings and a list of integers, which can be indices
+into other dictionaries or immediate values. Each dictionary file generally
+has multiple tables for related data structures. Below we describe the
+data elements contained in these structures. Indices into other tables are
+referred to by the table name.
+
+\subsection{\fname\_cdict}
+
+The primary dictionary file for a source file is the \fname\_cdict.xml file,
+which includes entries for all entities relevant to the source code in that
+file, including types and expressions. Below we describe each of the tables
+included in this file, and for each of the tables a reference to the relevant
+python files in PyAdvance that provide the data structures for the entities
+in that table. Basic indexing and access to the {\tt \_cdict} dictionary is 
+provided by {\tt advance/app/CDictionary.py} Table~\ref{tab:cdict} lists all
+tables included in this dictionary and the PyAdvance.py files that implement
+the corresponding objects.
+
+\begin{table}
+\centering
+\begin{tabular}{l|l|l}
+name & description & AdvancePy reference\\  \hline
+{\tt attr} & program type attributes & app/CAttributes.py \\
+{\tt const} & program constants & app/CConstExp.py\\
+{\tt exp} & program (sub)expressions & app/CExp.py \\
+{\tt host} & program location & app/CLHost.py \\
+{\tt lval} & program left-hand values & app/CLval.py\\
+{\tt offset} & location offsets (field, index) & app/COffsetExp.py \\
+{\tt typ} & program types & app/CTyp.py \\
+\end{tabular}
+\caption{\label{tab:cdict}Tables included in the \_cdict dictionary}
+\end{table}
+
+\subsubsection{Attribute Parameter Table}
+
+The attribute parameter table, shown in Table~\ref{tab:attrtable} contains attributes 
+that are associated with types in the program.
+
+\begin{table}
+\centering
+\begin{tabular}{l|c||c|c|c|c||l}
+\multicolumn{2}{c||}{tags} & \multicolumn{4}{|c||}{args} & description \\ \hline
+\multicolumn{1}{c|}{1} & 2 & 1 & 2 & 3 & 4 & \\ \hline 
+"aint" & & value & & & & integer value \\
+"astr" & & {\tt string} & & & & string value \\
+"acons" & name & & & & & \\
+"asizeof" & & {\tt typ} & & & & \\
+"asizeofe" & & {\tt attr} & & & & \\
+"asizeofs" & & {\tt typsig} & & & & \\
+"aalignof" & & {\tt typ} & & & & \\
+"aalignofe" & & {\tt attr} & & & & \\
+"aalignofs" & & {\tt typsig} & & & & \\
+"aunop" & unop & {\tt attr} & & & & \\
+"abinop" & binop & {\tt attr} & {\tt attr} & & & \\
+"adot" & & {\tt attr} & & & & \\
+"astar" & & {\tt attr} & & & & \\
+"aaddrof" & & {\tt attr} & & & & \\
+"aindex" & & {\tt attr} & {\tt attr} & & & \\
+"aquestion" & & {\tt attr} & {\tt attr} & {\tt attr} & & \\ \hline
+\end{tabular}
+\caption{\label{tab:attrtable}Attribute-table: Tags and arguments for program type attributes}
+\end{table}
+
+
+
+\subsubsection{Constant Table}
+
+The constant table, shown in Table~\ref{tab:consttable} contains constants that 
+appear in the program. Integer and 
+real constants are represented as strings as they appear textually in the program.
+
+\begin{table}
+\centering
+\begin{tabular}{l|c|c||c|c||l}
+\multicolumn{3}{c||}{tags} & \multicolumn{2}{|c||}{args} & description \\ \hline
+\multicolumn{1}{c|}{1} & 2 & 3 & 1 & 2 & \\ \hline 
+"chr" & & & ord(chr) & & character represented by its ordinal number \\
+"int" & string-rep & ikind & & & integer constant \\
+"str" & & {\tt string} & & & constant string \\
+"wstr" & & & *value & & wide string (represented by list of integers) \\
+"real" & string-rep & fkind & & & real number constant \\
+\end{tabular}
+\caption{\label{tab:consttable}Const-table: Tags and arguments for program constants}
+\end{table}
+
+
+\subsubsection{Expression Table}
+
+The expression table contains expressions and subexpressions that represent
+expressions in the program. 
+Expressions are represented by an indicator tag followed by an optional second tag
+and one through four table indices or immediate values, as shown in
+Table~\ref{tab:exptable}. 
+
+The string values for \em{unop} and \em{binop} are shown
+in Tables~\ref{tab:unop} and \ref{tab:binop}, respectively.
+\begin{table}
+\centering
+\begin{tabular}{l|c||c|c|c|c||l}
+\multicolumn{2}{c||}{tags} & \multicolumn{4}{|c||}{args} & description \\ \hline
+\multicolumn{1}{c|}{1} & 2 & 1 & 2 & 3 & 4 & \\ \hline 
+"addrof" & & {\tt lval} & & & & address of location \\
+"addroflabel" & & stmt index & & & \\
+"alignof" & & {\tt typ} & & & & alignment of a type \\
+"alignofe" & & {\tt exp} & & & & alignment of type of expr \\
+"binop" & binop & {\tt exp} & {\tt exp} & {\tt typ} & & binary expression \\
+"caste" & & {\tt typ} & {\tt exp} & & & cast of expression \\
+"cnapp" & name & *{\tt exp} & & & & custom predicate on expressions \\
+"const" & & {\tt const} & & & & constant \\
+"fnapp" & filename & line-nr & byte-nr & {\tt exp} & *{\tt exp} & function application @loc \\
+"lval" & & {\tt lval} & & & & left-hand-side (location) \\
+"question" & & {\tt exp} & {\tt exp} & {\tt exp} & {\tt typ} & ? : expression \\
+"sizeof" & & {\tt typ} & & & & size of type \\
+"sizeofe" & & {\tt exp} & & & & size of type of expr \\
+"sizeofstr" & & {\tt string} & & & & size of string\\
+"startof" & & {\tt lval} & & & & same as addrof \\
+"unop" & unop & {\tt exp} & {\tt typ} & & & unary expression \\ \hline
+\end{tabular}
+\caption{\label{tab:exptable}Exp-table: Tags and arguments for expressions}
+\end{table}
+
+
+
+\begin{table}[t]
+\centering
+\begin{tabular}{l|l} \hline
+"neg" & arithmetic negation \\
+"bnot" & bitwise complementation \\
+"lnot" & logical not  \\ \hline
+\end{tabular}
+\caption{\label{tab:unop}Unary operators}
+\end{table}
+
+
+\begin{table}[t]
+\centering
+\begin{tabular}{l|l} \hline
+"plusa" & scalar addition \\
+"pluspi" & pointer plus scalar \\
+"indexpi" & pointer plus scalar\\
+"minusa" & scalar subtraction \\
+"minuspi" & pointer minus scalar \\
+"minuspp" & pointer subtraction \\
+"mult" & scalar multiplication \\
+"div" & scalar division \\
+"mod" & scalar modulo \\
+"shiftlt" & bitwise leftshift \\
+"shiftrt" & bitwise rightshift \\
+"lt" & less than \\
+"gt" & greater than \\
+"le" & less than or equal to \\
+"ge" & greater than or equal to \\
+"eq" & equal \\
+"ne" & not equal \\
+"band" & bitwise and \\
+"bxor" & bitwise xor \\
+"bor" & bitwise or \\
+"land" & logical and \\
+"lor" & logical or
+\end{tabular}
+\caption{\label{tab:binop}Binary operators}
+\end{table}
+
+\subsubsection{Lval Table}
+
+An lval (a value that can be on the left side of an assignment, that is, a
+program storage location) consists of a base location called a host, and an
+optional offset, which can be a field or index. Their representations are
+shown in Table~\ref{tab:lvaltable}.
+
+\begin{table}
+\centering
+\begin{tabular}{l|l|c||c|c|c|c||l}
+& \multicolumn{2}{c||}{tags} & \multicolumn{4}{|c||}{args} & description \\ \hline
+& \multicolumn{1}{c|}{1} & 2 & 1 & 2 & 3 & 4 & \\ \hline 
+\multicolumn{8}{l}{{\tt lval}} \\ \hline
+& & & {\tt host} & {\tt offset} & & & left-hand side value \\ \hline
+\multicolumn{8}{l}{{\tt host}} \\ \hline
+& "var" & name & id & & & & program variable \\
+& "mem" & & {\tt exp} & & & & expression dereference \\ \hline
+\multicolumn{8}{l}{{\tt offset}} \\ \hline
+& "n" & & & & & & no offset \\
+& "f" & name & key & {\tt offset} & & & field offset (fieldname,struct identifier) \\
+& "i" & & {\tt exp} & {\tt offset} & & & index offset \\ \hline
+\end{tabular}
+\caption{\label{tab:lvaltable}Lval-table: tags and arguments for program locations}
+\end{table}
+
+
+\subsubsection{Type Table}
+
+The typ-table contains data types that represent types that appear in the program
+with elements shown in Table~\ref{tab:typtable}.
+Some elements are optional and can be absent; these are shown between brackets
+(e.g., {\tt (attrs)}. Some elements are optional and have value -1 if not provided;
+these are shown in square brackets (e.g., {\tt [exp]} for the array size expression).
+
+The type of integer is specified by the string indicated as \emph{ikind}, which can 
+have the following values with the obvious meanings: "ichar", "ischar", "iuchar","ibool",
+   "iint", "iuint", "ishort", "iushort", "ilong", "iulong", "ilonglong", "iulonglong".
+The type of float is specified by the string indeciate as \emph{fkind} which can 
+have one of the following three values: "float", "fdouble", "flongdouble".
+
+\begin{table}
+\centering
+\begin{tabular}{l|c||c|c|c|c||l}
+\multicolumn{2}{c||}{tags} & \multicolumn{4}{|c||}{args} & description \\ \hline
+\multicolumn{1}{c|}{1} & 2 & 1 & 2 & 3 & 4 & \\ \hline 
+"tarray" & & {\tt typ} & {\tt [exp]} & {\tt (attrs)} & & array (element type, size) \\
+"tbuiltin-va-list" & & {\tt (attrs)} & & & & builtin varargs \\
+"tcomp" & & key & {\tt (attrs)} & & & struct/union type identifier \\
+"tenum" & name & {\tt (attrs)} & & & & enum type \\
+"tfloat" & fkind & {\tt (attrs)} & & & & floating point number types \\
+"tfun" & & {\tt typ} & {\tt [fun-args]} & is-varargs & {\tt (attrs)} & function (return type, args) \\
+"tint" & ikind & {\tt (attrs)}  & & & & integer types \\
+"tnamed" & name & {\tt (attrs)} & & & & type name \\
+"tptr" & & {\tt typ} & {\tt (attrs)} & & & pointer to another type \\
+"tvoid" & & {\tt (attrs)}  & & & & void type \\ \hline
+\end{tabular}
+\caption{\label{tab:typtable}Typ-table: tags and arguments for types}
+\end{table}
+
+\subsubsection{Type Signature Table}
+
+\begin{table}
+\centering
+\begin{tabular}{l|c||c|c|c|c||l}
+\multicolumn{2}{c||}{tags} & \multicolumn{4}{|c||}{args} & description \\ \hline
+\multicolumn{1}{c|}{1} & 2 & 1 & 2 & 3 & 4 & \\ \hline 
+"tsarray" & length & {\tt typsig} & {\tt (attrs)} & & & \\
+"tsptr" & & {\tt typsig} & {\tt (attrs)} & & & \\
+"tscomp" & name & is-struct & {\tt (attrs)} & & \\
+"tsfun" & & {\tt typsig} & {\tt typsig-list} & is-varargs & {\tt (attrs)} & \\
+"tsenum" & name & {\tt (attrs)} & & & & \\
+"tsbase" & & {\tt typsig} & & & &
+\end{tabular}
+\caption{\label{tab:typtable}Typsig-table: tags and arguments for type signatures}
+\end{table}
+
+\subsection{Declarations Tables}
+
+Table~\ref{tab:decls} shows the data representation of the various types of 
+declarations included in the program. The compinfo represents struct and union
+definitions. The enuminfo represents enum definitions. The init represents
+initializers for global variables. The typeinfo represents type definitions,
+associating a name with a type. Finally, the varinfo represents variable
+definitions. 
+All variables in a program are indexed: within a file each variable has a unique
+identifier, called {\tt vid}. Global variable identifiers are cross referenced
+across files via the \_gxrefs.xml files. The address? element of the varinfo
+indicates whether the address of the variable has been taken (that is, if it can
+be aliased). The param element is a positive integer for formal parameters of
+functions, indicating its sequence number in the list of parameters (starting at
+1), or zero for all other variables.
+
+\begin{table}
+\centering
+\small
+\begin{tabular}{l|l|c||c|c|c|c|c|c|c|c|c|l}
+&\multicolumn{2}{c||}{tags} & \multicolumn{9}{|c|}{args}   \\ \hline
+&\multicolumn{1}{c|}{1} & 2 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\ \hline 
+\multicolumn{12}{l}{compinfo} \\ \hline
+& name & & key & struct? & {\tt attrs} & \multicolumn{6}{|l|}{*{\tt fieldinfo}} \\ \hline
+\multicolumn{12}{l}{enuminfo} \\ \hline
+& name & ekind & {\tt attrs} & \multicolumn{8}{|l|}{*{\tt enumitem}} \\ \hline
+\multicolumn{12}{l}{enumitem} \\ \hline
+& name & & {\tt exp} & {\tt loc} & & & & & & & \\ \hline
+\multicolumn{12}{l}{fieldinfo} \\ \hline
+& name & & key & {\tt typ} & bitfield & {\tt attrs} & {\tt loc} & & & & \\ \hline
+\multicolumn{12}{l}{init} \\ \hline
+& "single" & & {\tt exp} & \multicolumn{8}{|l|}{\mbox{}} \\
+& "compound" & & {\tt typ} & \multicolumn{8}{|l|}{*{\tt offset-init}} \\ \hline
+\multicolumn{12}{l}{loc} \\ \hline
+& & & {\tt filename} & byte & line & & & & & &\\ \hline
+\multicolumn{12}{l}{offset-init} \\ \hline
+& & & {\tt offset} & {\tt init} & & & & & & & \\ \hline
+\multicolumn{12}{l}{typeinfo} \\ \hline
+& name & & {\tt typ} & & & & & & & & \\ \hline
+\multicolumn{12}{l}{varinfo} \\ \hline
+& name & storage & vid & {\tt typ} & {\tt attrs} & global? & inlined? & {\tt loc} &
+   address? & param & {\tt init} \\ \hline
+&\multicolumn{1}{c|}{1} & 2 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\ \hline 
+\end{tabular}
+\caption{\label{tab:decls}Declarations tables: tags and arguments for program declarations}
+\end{table}
+
+
+%\begin{center}
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=.85\textwidth]{figures/initialdisplay.png}
+%\caption{\label{fig:initialdisplay}Initial display (textcrunchr\_1)}
+%\end{figure}
+%\end{center}
+
+\end{document}

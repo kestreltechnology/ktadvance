@@ -27,41 +27,43 @@
 
 import xml.etree.ElementTree as ET
 
-class CLocation():
-    '''Location in a C source program.'''
+import advance.app.CDictionaryRecord as CD
 
-    def __init__(self,xnode):
-        self.xnode = xnode
+class CLocation(CD.CDeclarationsRecord):
+    '''Location in a C source program.
 
-    def getbyte(self): return int(self.xnode.get('byte'))
+    tags: -
 
-    def getline(self): return int(self.xnode.get('line'))
+    args:
+        0: filename index
+        1: byte number
+        2: line number
+    '''
 
-    def getfile(self): return self.xnode.get('file')
+    def __init__(self,decls,index,tags,args):
+        CD.CDeclarationsRecord.__init__(self,decls,index,tags,args)
 
-    def writexml(self,cnode):
-        if not self.xnode is None:
-            cnode.set('byte',str(self.getbyte()))
-            cnode.set('line',str(self.getline()))
-            cnode.set('file',self.getfile())
-        else:
-            print('Location node missing')
+    def get_byte(self): return int(self.args[1])
 
-    def getloc(self):
-        return (self.getfile(), self.getline(), self.getbyte())
+    def get_line(self): return int(self.args[2])
+
+    def get_file(self): return self.decls.get_filename(self.args[0]).get_filename()
+
+    def get_loc(self):
+        return (self.get_file(), self.get_line(), self.get_byte())
 
 
-    def __ge__(self,loc): return self.getloc >= loc.getloc()
+    def __ge__(self,loc): return self.get_loc >= loc.get_loc()
 
-    def __gt__(self,loc): return self.getloc > loc.getloc()
+    def __gt__(self,loc): return self.get_loc > loc.get_loc()
 
-    def __le__(self,loc): return self.getloc <= loc.getloc()
+    def __le__(self,loc): return self.get_loc <= loc.get_loc()
 
-    def __lt__(self,loc): return self.getloc < loc.getloc()
+    def __lt__(self,loc): return self.get_loc < loc.get_loc()
 
-    def __eq__(self,loc): return self.getloc == loc.getloc()
+    def __eq__(self,loc): return self.get_loc == loc.get_loc()
 
-    def __ne__(self,loc): return self.getloc != loc.getloc()
+    def __ne__(self,loc): return self.get_loc != loc.get_loc()
         
     def __str__(self):
-        return (self.getfile() + ':' + str(self.getline()))
+        return (str(self.get_file()) + ':' + str(self.get_line()))

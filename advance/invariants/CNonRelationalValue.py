@@ -37,7 +37,7 @@ def makenonrelationalvalue(invs,xnode):
     else:
         return CNonRelationalValue(invs,xnode)
         
-class CNonRelationalValue():
+class CNonRelationalValue(object):
 
     def __init__(self,invs,xnode):
         self.invs = invs

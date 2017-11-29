@@ -34,10 +34,10 @@ fidvidmax_initial_value = 1000000
 
 '''
 TODO:
-  - save gxrefs file if new vid's weer added to a file
+  - save gxrefs file if new vid's were added to a file
 '''
 
-class IndexManager():
+class IndexManager(object):
 
     def __init__(self,issinglefile):
         self.issinglefile = issinglefile    # application consists of a single file
@@ -52,6 +52,16 @@ class IndexManager():
 
         self.gviddefs = {}        # gvid -> fid  (file in which gvid is defined)
 
+    def get_vid_gvid_subst(self,fid): return self.vid2gvid[fid]
+
+    def get_fid_gvid_subset(self,fileindex):
+        result = {}
+        for gvid in self.gvid2vid:
+            for fid in self.gvid2vid[gvid]:
+                if fid == fileindex:
+                    result[gvid] = self.gvid2vid[gvid][fid]
+        return result
+
     '''return the fid of the file in which this vid is defined, with the local vid.'''
     def resolve_vid(self,fid,vid):
         if self.issinglefile:
@@ -64,6 +74,24 @@ class IndexManager():
                     if gvid in self.gvid2vid:
                         if tgtfid in self.gvid2vid[gvid]:
                             return (tgtfid,self.gvid2vid[gvid][tgtfid])
+
+    '''return a list of (fid,vid) pairs that refer to the same global variable.'''
+    def get_gvid_references(self,gvid):
+        result = []
+        for fid in self.gvid2vid[gvid]:
+            result.append((fid,self.gvid2vid[gvid][fid]))
+        return result
+
+    def has_gvid_reference(self,gvid,fid):
+        if gvid in self.gvid2vid:
+            return fid in self.gvid2vid[gvid]
+        else:
+            return False
+
+    def get_gvid_reference(self,gvid,fid):
+        if gvid in self.gvid2vid:
+            if fid in self.gvid2vid[gvid]:
+                return self.gvid2vid[gvid][fid]
 
     '''return a list of (fid,vid) pairs that refer to the same variable.'''
     def get_vid_references(self,srcfid,srcvid):
@@ -102,13 +130,35 @@ class IndexManager():
             if vid in self.vid2gvid[fid]:
                 return self.vid2gvid[fid][vid]
 
+    '''return the vid of the gvid in the file with index fid.'''
+    def get_vid(self,fid,gvid):
+        if self.issinglefile: return vid
+        if gvid in self.gvid2vid:
+            if fid in self.gvid2vid[gvid]:
+                return self.gvid2vid[gvid][fid]
+
     def get_gckey(self,fid,ckey):
         if self.issinglefile: return ckey
         if fid in self.ckey2gckey:
             if ckey in self.ckey2gckey[fid]:
                 return self.ckey2gckey[fid][ckey]
 
-    def addckey2gckey(self,fid,ckey,gckey):
+    def convert_ckey(self,fidsrc,ckey,fidtgt):
+        if self.issinglefile:
+            return ckey
+        gckey = self.get_gckey(fidsrc,ckey)
+        if not gckey is None:
+            if gckey in self.gckey2ckey:
+                if fidtgt in self.gckey2ckey[gckey]:
+                    return self.gckey2ckey[gckey][fidtgt]
+                else:
+                    print('Target fid ' + str(fidtgt) + ' not found for global key ' + str(gckey))
+            else:
+                print('Global key ' + str(gckey) + ' not found in converter')
+        else:
+            print('Local key ' + str(ckey) + ' not found for source file ' + str(fidsrc))
+
+    def add_ckey2gckey(self,fid,ckey,gckey):
         if not fid in self.ckey2gckey:
             self.ckey2gckey[fid] = {}
         self.ckey2gckey[fid][ckey] = gckey
@@ -116,7 +166,7 @@ class IndexManager():
             self.gckey2ckey[gckey] = {}
         self.gckey2ckey[gckey][fid] = ckey
 
-    def addvid2gvid(self,fid,vid,gvid):
+    def add_vid2gvid(self,fid,vid,gvid):
         if not fid in self.vid2gvid:
             self.vid2gvid[fid] = {}
         self.vid2gvid[fid][vid] = gvid
@@ -124,15 +174,17 @@ class IndexManager():
             self.gvid2vid[gvid] = {}
         self.gvid2vid[gvid][fid] = vid
 
-    def addfile(self,path,fid,fname):
-        xcfile = UF.get_cfile_xnode(path,fname)
+    def add_file(self,cfile):
+        path = cfile.capp.path
+        fname = cfile.name
+        fid = cfile.index
         xxreffile = UF.get_cxreffile_xnode(path,fname)
         if not xxreffile is None:
             self._add_xrefs(xxreffile,fid)
-        self._add_globaldefinitions(xcfile,fid)
+        self._add_globaldefinitions(cfile.declarations,fid)
         self.fidvidmax[fid] = fidvidmax_initial_value
 
-    def savexrefs(self,path,fname,fid):
+    def save_xrefs(self,path,fname,fid):
         xrefroot = UX.get_xml_header('global-xrefs','global-xrefs')
         xrefsnode = ET.Element('global-xrefs')
         xrefroot.append(xrefsnode)
@@ -185,18 +237,13 @@ class IndexManager():
             self.gvid2vid[gvid][fid] = vid        
 
 
-    def _add_globaldefinitions(self,xnode,fid):
-        xvardefs = xnode.find('global-var-definitions')
-        for xvardef in xvardefs.findall('gvar'):
-            vid = int(xvardef.find('varinfo').get('vid'))
-            gvid = self.get_gvid(fid,vid)
+    def _add_globaldefinitions(self,declarations,fid):
+        for gvar in declarations.get_globalvar_definitions():
+            gvid = self.get_gvid(fid,gvar.varinfo.get_vid())
             if not gvid is None:
                 self.gviddefs[gvid] = fid
 
-        xfunctions = xnode.find('functions')
-        for xgfun in xfunctions.findall('gfun'):
-            xvarinfo = xgfun.find('svar')
-            vid = int(xvarinfo.get('vid'))
-            gvid = self.get_gvid(fid,vid)
+        for gfun in declarations.get_global_functions():
+            gvid = self.get_gvid(fid,gfun.varinfo.get_vid())
             if not gvid is None:
                 self.gviddefs[gvid] = fid

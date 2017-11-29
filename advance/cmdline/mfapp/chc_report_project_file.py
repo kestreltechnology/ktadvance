@@ -61,7 +61,7 @@ if __name__ == '__main__':
         exit(1)
         
     cfapp = CApplication(sempath,args.cfile)
-    cfile = cfapp.getcfile()
+    cfile = cfapp.get_cfile()
 
     if args.showcode:
         if args.open:

@@ -36,6 +36,9 @@ from advance.app.CApplication import CApplication
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('cfilename',help='name of kendra c file (.e.g., id115.c)')
+    parser.add_argument('--show_invariants',
+                            help='show invariants in addition to diagnostic',
+                            action='store_true')
     args = parser.parse_args()
     return args
 
@@ -53,9 +56,9 @@ if __name__ == '__main__':
 
     sempath = os.path.join(cpath,'semantics')
     cfapp = CApplication(sempath,cfilename)
-    cfile = cfapp.getcfile()
+    cfile = cfapp.get_cfile()
 
-    print(RP.file_code_tostring(cfile))
+    print(RP.file_code_tostring(cfile,showinvs=args.show_invariants))
     print(RP.file_proofobligation_stats_tostring(cfile))
 
 

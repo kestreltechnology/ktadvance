@@ -27,7 +27,7 @@
 
 from advance.cmdline.juliet.JulietTestRef import JulietTestRef
 
-class JulietTestSetRef():
+class JulietTestSetRef(object):
 
     def __init__(self,d):
         self.d = d
@@ -49,10 +49,10 @@ class JulietTestSetRef():
                 return m
         return m
 
-    def gettests(self): return self.tests.items()
+    def get_tests(self): return self.tests.items()
 
     def iter(self,f):
-        for (t,test) in self.gettests():
+        for (t,test) in self.get_tests():
             f(t,test)
 
     def __str__(self):

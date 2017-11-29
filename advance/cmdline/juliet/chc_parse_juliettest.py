@@ -40,20 +40,20 @@ import advance.util.fileutil as UF
 def parse():
     usage = (
         '\nCall with the directory name of one of the subdirectories in\n' +
-        'tests/sard/juliet_v1.2\n\n' +
-        '  Example: python chc_parse_juliettest.py CWE121/s01/CWE129_largeQ\n\n' +
+        'tests/sard/juliet_v1.3\n\n' +
+        '  Example: python chc_parse_juliettest.py CWE121/s01/CWE129_large\n\n' +
         'Use the option --savesemantics to save the semantics directory in\n' +
         'a gzipped tar file for later analysis (potentially on a different platform)\n')
     description = (
-        'Parses a group of tests from the NSA/CAS Juliet Test Suite v1.2\n'
+        'Parses a group of tests from the NSA/CAS/NIST Juliet Test Suite v1.3\n'
         'and produces xml files that hold the\n' +
         'semantics of the application source files.\n' +
         'It uses the command-line utility bear to extract the compilation\n' +
         'commands from the Makefile.')
     parser = argparse.ArgumentParser(usage=usage,description=description)
     parser.add_argument('path',
-                            help='path to the test case (relative to juliet_v1.2)' +
-                            ' (e.g., CWE121/s01/CWE129_largeQ)')
+                            help='path to the test case (relative to juliet_v1.3)' +
+                            ' (e.g., CWE121/s01/CWE129_large)')
     parser.add_argument('--savesemantics',
                             help='create gzipped tar file with semantics files',
                             action='store_true')
@@ -99,8 +99,8 @@ if __name__ == '__main__':
             print('Removing semantics_linux.tar.gz')
             os.remove('semantics_linux.tar.gz')
 
-    parsemanager = ParseManager(cpath,cpath,nofilter=True)
-    parsemanager.initializepaths()
+    parsemanager = ParseManager(cpath,cpath)
+    parsemanager.initialize_paths()
     
     cleancmd = [ 'make', 'clean' ]
     p = subprocess.call(cleancmd,cwd=cpath,stderr=subprocess.STDOUT)
@@ -125,6 +125,7 @@ if __name__ == '__main__':
         print('Expected to find file')
         print('   ' + ccfilename)
         print('*' * 80)
+
         exit(1)
     
     with open(ccfilename) as fp:
@@ -139,4 +140,4 @@ if __name__ == '__main__':
     parsemanager.parse_with_ccommands(compilecommands,copyfiles=True)
 
     if args.savesemantics:
-        parsemanager.savesemantics()
+        parsemanager.save_semantics()

@@ -41,6 +41,7 @@ def parse():
     parser.add_argument('cfile',help='name of c file that is part of the test')
     parser.add_argument('cfunction',help='name of function in c file')
     parser.add_argument('--open',help='only show open proof obligations',action='store_true')
+    parser.add_argument('--predicate',help='only show proof obligations of this type')
     args = parser.parse_args()
     return args
 
@@ -58,16 +59,18 @@ if __name__ == '__main__':
         exit(1)
         
     cfapp = CApplication(sempath,args.cfile)
-    cfile = cfapp.getcfile()
+    cfile = cfapp.get_cfile()
 
-    if not cfile.hasfunctionbyname(args.cfunction):
+    if not cfile.has_function_by_name(args.cfunction):
         print(UP.cfunction_not_found_err_sg(cpath,args.cfile,args.cfunction))
         exit(1)
 
-    cfunction = cfile.getfunctionbyname(args.cfunction)
+    cfunction = cfile.get_function_by_name(args.cfunction)
 
     if args.open:
         print(RP.function_code_open_tostring(cfunction))
+    elif args.predicate:
+        print(RP.function_code_predicate_tostring(cfunction,args.predicate))
     else:
         print(RP.function_code_tostring(cfunction))
 

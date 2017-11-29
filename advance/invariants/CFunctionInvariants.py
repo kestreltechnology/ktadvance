@@ -30,7 +30,7 @@ from advance.invariants.CLocationValues import CLocationValues
 
 import advance.invariants.CNonRelationalValue as NR
 
-class CFunctionInvariants():
+class CFunctionInvariants(object):
 
     def __init__(self,cfunction,xnode):
         self.cfunction = cfunction

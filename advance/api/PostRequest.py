@@ -25,35 +25,19 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CContext import CContext
-import advance.proof.CPOUtil as P
+import advance.app.CDictionaryRecord as CD
 
-class PostRequest():
+class PostRequest(CD.CDictionaryRecord):
 
-    def __init__(self,capi,xnode):
-        self.capi = capi
-        self.cfun = self.capi.cfun
-        self.xnode = xnode
-        self.primarypos = []
-        self._initialize()
+    def __init__(self,cd,index,tags,args):
+        CD.CDictionaryRecord.__init__(self,cd,index,tags,args)
 
-    def getid(self): return self.xnode.get('id')
+    def get_callee(self):
+        return self.cd.cfile.declarations.get_global_varinfo(int(self.args[0]))
 
-    def getpredicatenode(self): return self.xnode.find('predicate')
-
-    def getpredicate(self):
-        ctxt = CContext(self.cfun.cfile,self.cfun,None)
-        return P.getpredicate(ctxt,self.xnode.find('predicate'))
-
-    def getfunctionindex(self):
-        return int(self.xnode.get('fvid'))
-
-    def getdependentpos(self): return self.primarypos
-
-    def _initialize(self):
-        for x in self.xnode.find('dependent-primary-proof-obligations').findall('po'):
-            self.primarypos.append(x.get('id'))
+    def get_postcondition(self):
+        return self.cd.get_postcondition(int(self.args[1]))
 
     def __str__(self):
-        return (str(self.getpredicate()) + "\n      --Dependent ppo's: [" +
-                    ', '.join(str(i) for i in self.getdependentpos()) + ']\n')
+        return str(self.get_callee()) + ':' + str(self.get_postcondition())
+

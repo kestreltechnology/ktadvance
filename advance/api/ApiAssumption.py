@@ -25,38 +25,21 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CContext import CContext
-import advance.proof.CPOUtil as P
+class ApiAssumption(object):
 
-class ApiAssumption():
-
-    def __init__(self,capi,xnode):
+    def __init__(self,capi,id,predicate,ppos,spos):
+        self.id = id
         self.capi = capi
         self.cfun = self.capi.cfun
-        self.xnode = xnode
-        self.primarypos = []
-        self._initialize()
-
-    def getid(self): return self.xnode.get('id')
-
-    def getpredicatenode(self): return self.xnode.find('predicate')
-
-    def getpredicate(self):
-        ctxt = CContext(self.cfun.cfile,self.cfun,None)
-        return P.getpredicate(ctxt,self.xnode.find('predicate'))
-
-    def getdependentpos(self): return self.primarypos
-
-    def _initialize(self):
-        for x in self.xnode.find('dependent-primary-proof-obligations').findall('po'):
-            self.primarypos.append(x.get('id'))
+        self.predicate = predicate
+        self.ppos = ppos
+        self.spos = spos
 
     def __str__(self):
-        return (str(self.getpredicate()) + "\n    --Dependent ppo's: [" +
-                ', '.join(str(i) for i in self.getdependentpos()) + ']\n')
-
-    
-
-    
-    
-        
+        strppos = ''
+        strspos = ''
+        if len(self.ppos) > 0:
+            strppos = "\n      --Dependent ppo's: [" + ','.join(str(i) for i in self.ppos) + ']'
+        if len(self.spos) > 0:
+            strspos = "\n      --Dependent spo's: [" + ','.join(str(i) for i in self.spos) + ']'
+        return (str(self.id) + '  ' + str(self.predicate) + strppos + strspos)

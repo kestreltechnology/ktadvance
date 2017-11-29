@@ -42,24 +42,19 @@ from advance.linker.CLinker import CLinker
 def parse():
     usage = (
         '\nCall with the directory name of one of the subdirectories in\n' +
-        'tests/sard/juliet_v1.2\n\n' +
-        '  Example: python chc_analyze_juliettest.py CWE121/s01/CWE129_largeQ\n\n' +
-        'Use the option --deletesemantics to start fresh from the application\n' +
-        'semantics, deleting previous analysis results\n')
+        'tests/sard/juliet_v1.3\n\n' +
+        '  Example: python chc_analyze_juliettest.py CWE121/s01/CWE129_large\n\n')
     description = (
-        'Analyzes a group of tests from the NSA/CAS Juliet Test Suite v1.2\n' +
+        'Analyzes a group of tests from the NSA/CAS Juliet Test Suite v1.3\n' +
         'and saves the analysis results in xml files in the semantics/ktadvance\n' +
         'directory.')
     parser = argparse.ArgumentParser(usage=usage,description=description)
     parser.add_argument('path',
-                            help="path to the test case (relative to juliet_v1.2)" +
-                            " (e.g., CWE121/s01/CWE129_largeQ)")
+                            help="path to the test case (relative to juliet_v1.3)" +
+                            " (e.g., CWE121/s01/CWE129_large)")
     parser.add_argument('--maxprocesses',
                             help='number of files to process in parallel',
                             type=int, default=1)
-    parser.add_argument('--deletesemantics',
-                            help='Unpack a fresh version of the semantics files',
-                            action='store_true'),
     parser.add_argument('--analysisrounds',
                             help='Number of times to generate secondary proof obligations',
                             type=int,default=5)
@@ -74,6 +69,8 @@ def timing(activity):
           '\nCompleted ' + activity + ' in ' + str(time.time() - t0) + ' secs' +
           '\n' + ('=' * 80))
 
+def save_xrefs(f):
+    capp.indexmanager.save_xrefs(capp.path,f.name,f.index)
 
 if __name__ == '__main__':
 
@@ -86,39 +83,32 @@ if __name__ == '__main__':
         exit()
 
     sempath = os.path.join(testpath,'semantics')
-    if (not os.path.isdir(sempath)) or args.deletesemantics:
-        success = UF.unpack_tar_file(testpath,args.deletesemantics)
-        if not success:
-            print(UP.semantics_tar_ot_found_err_msg(cpath))
-            exit(1)
+    # if (not os.path.isdir(sempath)) or args.deletesemantics:
+    success = UF.unpack_tar_file(cpath,True)
+    if not success:
+        print(UP.semantics_tar_ot_found_err_msg(cpath))
+        exit(1)
 
     capp = CApplication(sempath)
     linker = CLinker(capp)
-    linker.linkcompinfos()
-    linker.linkvarinfos()
-
-    def savexrefs(f):
-        capp.indexmanager.savexrefs(capp.getpath(),f.getfilename(),f.getindex())
-    capp.fileiter(savexrefs)
-    
-    linker.saveglobalcompinfos()
+    linker.link_compinfos()
+    linker.link_varinfos()
+    capp.iter_files(save_xrefs)
+    linker.save_global_compinfos()
 
     # have to reinitialize capp to get linking info properly initialized
     capp = CApplication(sempath)
 
     # assume wordsize of 64
     # use unreachability as a means of proof obligation discharge
-    am = AnalysisManager(capp,wordsize=64,unreachability=True,
+    am = AnalysisManager(capp,wordsize=64,unreachability=True,delegate_to_post=False,
                              thirdpartysummaries=[UF.get_juliet_summaries()])
 
-    am.create_app_primaryproofobligations()
-    am.generate_app_localinvariants(['llvis'], args.maxprocesses)
-    am.generate_app_localinvariants(['llvis'], args.maxprocesses)
-    am.generate_app_localinvariants(['llvis'], args.maxprocesses)
-    am.check_app_proofobligations(args.maxprocesses)
+    am.create_app_primary_proofobligations(processes=args.maxprocesses)
 
-    for i in range(args.analysisrounds):
-        capp.updatespos()
+    for i in range(2):
+        am.generate_and_check_app('llvisp',processes=args.maxprocesses)
 
-        am.generate_app_localinvariants(['llvis'], args.maxprocesses)
-        am.check_app_proofobligations()
+    for i in range(5):
+        capp.update_spos()
+        am.generate_and_check_app('llvisp',processes=args.maxprocesses)

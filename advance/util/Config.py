@@ -27,7 +27,7 @@
 
 import os
 
-class Config():
+class Config(object):
 
     def __init__(self):
         '''user-specific settings'''
@@ -47,6 +47,7 @@ class Config():
         self.binariesdir = os.path.join(self.bindir,'binaries')
         self.cparser = os.path.join(self.binariesdir,'parseFile_linux')
         self.canalyzer = os.path.join(self.binariesdir,'ktadvance_linux')
+
         if self.platform == 'mac':
             self.cparser = os.path.join(self.binariesdir,'parseFile_mac')
             self.canalyzer = os.path.join(self.binariesdir,'ktadvance_mac')

@@ -40,6 +40,9 @@ def parse():
     parser.add_argument('--showcode',help='show proof obligations on code for entire file',
                             action='store_true')
     parser.add_argument('--open',help='only show open proof obligations',action='store_true')
+    parser.add_argument('--violations',help='only show proof obligations that are violated',
+                            action='store_true')
+
     args = parser.parse_args()
     return args
 
@@ -63,13 +66,18 @@ if __name__ == '__main__':
         exit(1)
 
     cfapp = CApplication(sempath,args.cfile)
-    cfile = cfapp.getcfile()
+    cfile = cfapp.get_cfile()
 
     if args.showcode:
-        if args.open:
-            def pofilter(po):return not po.isdischarged()
-            print(RP.file_code_tostring(cfile,pofilter=pofilter))
+        if args.open and args.violations:
+            def pofilter(po):return not po.is_closed() or po.is_violated()
+        elif args.open:
+            def pofilter(po):return not po.is_closed()
+        elif args.violations:
+            def pofilter(po):return po.is_violated()
         else:
-            print(RP.file_code_tostring(cfile))
+            def pofilter(po):return True
+        print(RP.file_code_tostring(cfile,pofilter=pofilter))
+
 
     print(RP.file_proofobligation_stats_tostring(cfile))

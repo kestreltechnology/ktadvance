@@ -92,21 +92,22 @@ if __name__ == '__main__':
         print('*' * 80)
         exit(1)
 
+    os.chdir(targetpath)
+    if os.path.isdir('semantics'):
+        print('Removing semantics directory')
+        shutil.rmtree('semantics')
+
     if args.savesemantics:
-        os.chdir(targetpath)
-        if os.path.isdir('semantics'):
-            print('Removing semantics directory')
-            shutil.rmtree('semantics')
         if os.path.isfile('semantics_linux.tar.gz'):
             print('Removing semantics_linux.tar.gz')
             os.remove('semantics_linux.tar.gz')
     
     parsemanager = ParseManager(cpath,targetpath)
-    parsemanager.initializepaths()
+    parsemanager.initialize_paths()
 
     try:
         basename = os.path.basename(cfilename)
-        ifilename = parsemanager.preprocess_file_withgcc(basename)
+        ifilename = parsemanager.preprocess_file_with_gcc(basename)
         result = parsemanager.parse_ifile(ifilename)
         if result != 0:
             print('*' * 80)
@@ -121,4 +122,4 @@ if __name__ == '__main__':
         
     
     if args.savesemantics:
-        parsemanager.savesemantics()
+        parsemanager.save_semantics()

@@ -45,20 +45,18 @@ def classifypo(po,d):
       po: proof obligation (CFunctionPO)
       d: dictionary, with discharge methods initialized (is updated)
     '''
-    if po.isdischarged():
-        pev = po.getevidence()
-        if pev.isdelegatedtoapi():
+    if po.is_closed():
+        deps = po.dependencies
+        if deps.has_external_dependencies():
             d['api'] += 1
-        elif pev.isdelegatedtopost():
-            d['post'] += 1
-        elif pev.isdelegatedtoglobal():
-            d['global'] += 1
-        else:
-            d[pev.getdischargemethod()] += 1
+        elif deps.is_stmt():
+            d['stmt'] += 1
+        elif deps.is_local():
+            d['local'] += 1
     else:
         d['open'] += 1
 
-def get_method_count(pos,filefilter=lambda(f):True,extradsmethods=[]):
+def get_method_count(pos,filefilter=lambda f:True,extradsmethods=[]):
     '''Create dicharge method count dictionary from proof obligation list.
 
     Args:
@@ -74,7 +72,7 @@ def get_method_count(pos,filefilter=lambda(f):True,extradsmethods=[]):
         classifypo(po,result)
     return result
 
-def get_tag_method_count(pos,filefilter=lambda(f):True,extradsmethods=[]):
+def get_tag_method_count(pos,filefilter=lambda f:True,extradsmethods=[]):
     '''Create predicate tag, discharge method count dictionary.
 
     Args:
@@ -87,15 +85,15 @@ def get_tag_method_count(pos,filefilter=lambda(f):True,extradsmethods=[]):
     result = {}
     dsmethods = get_dsmethods(extradsmethods)
     for po in pos:
-        if not filefilter(po.getfile().getfilename()): continue
-        tag = po.getpredicatetag()
+        if not filefilter(po.cfile.name): continue
+        tag = po.predicatetag
         if not tag in result:
             result[tag] = {}
             for dm in dsmethods: result[tag][dm] = 0
         classifypo(po,result[tag])
     return result
 
-def get_file_method_count(pos,filefilter=lambda(f):True,extradsmethods=[]):
+def get_file_method_count(pos,filefilter=lambda f:True,extradsmethods=[]):
     '''Create file, discharge method count dictionary from proof obligation list.
 
     Args:
@@ -108,7 +106,7 @@ def get_file_method_count(pos,filefilter=lambda(f):True,extradsmethods=[]):
     result = {}
     dsmethods = get_dsmethods(extradsmethods)
     for po in pos:
-        pofile = po.getfile().getfilename()
+        pofile = po.cfile.name
         if not filefilter(pofile): continue
         if not pofile in result:
             result[pofile] = {}
@@ -129,7 +127,7 @@ def get_function_method_count(pos,extradsmethods=[]):
     result = {}
     dsmethods = get_dsmethods(extradsmethods)
     for po in pos:
-        pofunction = po.getfunction().getname()
+        pofunction = po.cfun.name
         if not pofunction in result:
             result[pofunction] = {}
             for dm in dsmethods: result[pofunction][dm] = 0
@@ -171,72 +169,101 @@ def row_method_count_tostring(d,perc=False,extradsmethods=[],rhlen=25,header1=''
     return '\n'.join(lines)
     
 
-class FunctionDisplay():
+class FunctionDisplay(object):
 
     def __init__(self,cfunction):
         self.cfunction = cfunction
-        self.cfile = self.cfunction.getfile()
-        self.fline = self.cfunction.getlocation().getline()
-        self.currentline = self.fline
+        self.cfile = self.cfunction.cfile
+        self.fline = self.cfunction.get_location().get_line()
+        self.currentline = self.fline + 1
 
-    def getsourceline(self,line):
-        srcline = self.cfile.getsourceline(line)
+    def get_source_line(self,line):
+        srcline = self.cfile.get_source_line(line)
         if not srcline is None:
-            return self.cfile.getsourceline(line).strip()
+            return self.cfile.get_source_line(line).strip()
         return '?'
 
-    def pos_on_code_tostring(self,pos,pofilter=lambda(po):True):
+    def pos_on_code_tostring(self,pos,pofilter=lambda po:True,showinvs=False):
         lines = []
-        for po in sorted(pos,key=lambda(po):po.getline()):
+        for po in sorted(pos,key=lambda po:po.get_line()):
             if not pofilter(po): continue
-            line = po.getline()
+            line = po.get_line()
             if line >= self.currentline:
                 lines.append('-' * 80)
                 for n in range(self.currentline,line+1):
-                    lines.append(self.getsourceline(n))
+                    lines.append(self.get_source_line(n))
                 lines.append('-' * 80)
             self.currentline = line + 1
             delegated = ''
-            if po.isdischarged():
-                ev = po.getevidence()
-                prefix = ev.getdisplayprefix()
-                if ev.isdelegated(): delegated = '--' + ev.getassumptiontype() + '--'
-                lines.append(prefix + ' ' + str(po) + delegated)
-                lines.append((' ' * 18) + ev.getevidence())
+            indent = 18 if po.is_ppo() else 24
+            if po.is_closed():
+                expl = po.explanation
+                prefix = po.get_display_prefix()
+                lines.append(prefix + ' ' + str(po))
+                lines.append((' ' * indent) + expl)
             else:
-                lines.append('<?> ' + str(po))
-                lines.append((' ' * 18) + '--')
-        self.currentline = self.fline
+                lines.append('\n<?> ' + str(po))
+                if po.has_diagnostic():
+                    lines.append((' ' * indent) + '---> ' + po.diagnostic)
+                if (showinvs or (not po.has_diagnostic())):
+                    lines.append((' ' * 18) + '--')
+                    lines.append(self._get_po_invariants(po.context,po.id))
+        self.currentline = self.fline + 1
         return '\n'.join(lines)
 
-def function_code_tostring(fn,pofilter=lambda(po):True):
+    def _get_po_invariants(self,context,poId):
+        lines = []
+        invs = self.cfunction.invtable.get_po_invariants(context,poId)
+        for inv in invs:
+            lines.append((' ' * 18) + str(inv))
+        return '\n'.join(lines)
+
+def function_code_tostring(fn,pofilter=lambda po:True,showinvs=False,showpreamble=True):
     lines = []
     fd = FunctionDisplay(fn)
     ppos = fn.get_ppos()
+    ppos = [ x for x in ppos if pofilter(x) ]
     spos = fn.get_spos()
-    lines.append('\nPrimary Proof Obligations for ' + fn.getname())
-    lines.append(fd.pos_on_code_tostring(ppos,pofilter=pofilter))
+    fnloc = fn.get_location().get_line()
+    fnstartline = fn.cfile.get_source_line(fnloc).strip()
+    lines.append('\nFunction ' + fn.name)
+    lines.append('-' * 80)
+    lines.append(fnstartline)
+    if showpreamble:
+        lines.append('-' * 80)
+        lines.append(str(fn.api))
+        lines.append('-' * 80)
+    if len(ppos) > 0:
+        lines.append('Primary Proof Obligations:')
+        lines.append(fd.pos_on_code_tostring(ppos,pofilter=pofilter,showinvs=showinvs))
+        lines.append('-' * 80)
     if len(spos) > 0:
-        lines.append('\nSecondary Proof Obligations for ' + fn.getname())
-        lines.append(fd.pos_on_code_tostring(spos,pofilter=pofilter))
+        lines.append('Supporting Proof Obligations:')
+        lines.append(fd.pos_on_code_tostring(spos,pofilter=pofilter,showinvs=showinvs))
     return '\n'.join(lines)
 
 def function_code_open_tostring(fn):
-    pofilter = lambda(po):not po.isdischarged()
+
+    pofilter = lambda po:not po.is_closed()
     return function_code_tostring(fn,pofilter=pofilter)
 
 def function_code_violation_tostring(fn):
-    pofilter = lambda(po):po.isviolated()
+    pofilter = lambda po:po.is_violated()
+
+    return function_code_tostring(fn,pofilter=pofilter)
+
+def function_code_predicate_tostring(fn,p):
+    pofilter = lambda po:po.predicatetag == p
     return function_code_tostring(fn,pofilter=pofilter)
     
-def file_code_tostring(cfile,pofilter=lambda(po):True):
+def file_code_tostring(cfile,pofilter=lambda po:True,showinvs=False):
     lines = []
-    def f(fn): lines.append(function_code_tostring(fn,pofilter=pofilter))
-    cfile.fniter(f)
+    def f(fn): lines.append(function_code_tostring(fn,pofilter=pofilter,showinvs=showinvs))
+    cfile.iter_functions(f)
     return '\n'.join(lines)
 
 def file_code_open_tostring(fn):
-    pofilter = lambda(po):not po.isdischarged()
+    pofilter = lambda po:not po.is_closed()
     return file_code_tostring(fn,pofilter=pofilter)
 
 def proofobligation_stats_tostring(pporesults,sporesults,rhlen=25,header1='',extradsmethods=[]):
@@ -244,18 +271,18 @@ def proofobligation_stats_tostring(pporesults,sporesults,rhlen=25,header1='',ext
     lines.append('\nPrimary Proof Obligations')
     lines.append(row_method_count_tostring(pporesults,perc=True,rhlen=rhlen,header1=header1))
     if len(sporesults) > 0:
-        lines.append('\nSecondary Proof Obligations')
+        lines.append('\nSupporting Proof Obligations')
         lines.append(row_method_count_tostring(sporesults,perc=True,rhlen=rhlen,header1=header1))   
     return '\n'.join(lines)
 
-def project_proofobligation_stats_tostring(capp,filefilter=lambda(f):True,extradsmethods=[]):
+def project_proofobligation_stats_tostring(capp,filefilter=lambda f:True,extradsmethods=[]):
     lines = []
     ppos = capp.get_ppos()
     spos = capp.get_spos()
     pporesults = get_file_method_count(ppos,extradsmethods=extradsmethods,filefilter=filefilter)
     sporesults = get_file_method_count(spos,extradsmethods=extradsmethods,filefilter=filefilter)
 
-    rhlen = capp.getmaxfilenamelength() + 3
+    rhlen = capp.get_max_filename_length() + 3
     lines.append(proofobligation_stats_tostring(pporesults,sporesults,rhlen=rhlen,header1='c files',
                                                     extradsmethods=extradsmethods))
 
@@ -278,14 +305,14 @@ def file_proofobligation_stats_tostring(cfile,extradsmethods=[]):
     pporesults = get_function_method_count(ppos,extradsmethods=extradsmethods)
     sporesults = get_function_method_count(spos,extradsmethods=extradsmethods)
 
-    rhlen = cfile.getmaxfunctionnamelength() + 3
+    rhlen = cfile.get_max_functionname_length() + 3
     lines.append(proofobligation_stats_tostring(pporesults,sporesults,rhlen=rhlen,
                                                     header1='functions'))
 
     tagpporesults = get_tag_method_count(ppos,extradsmethods=extradsmethods)
     tagsporesults = get_tag_method_count(spos,extradsmethods=extradsmethods)
 
-    lines.append('\n\nProof Obligation Statistics for file ' + cfile.getfilename())
+    lines.append('\n\nProof Obligation Statistics for file ' + cfile.name)
     lines.append('~' * 80)
 
     lines.append(proofobligation_stats_tostring(tagpporesults,tagsporesults))
@@ -299,18 +326,18 @@ def function_proofobligation_stats_tostring(cfunction,extradsmethods=[]):
     tagpporesults = get_tag_method_count(ppos,extradsmethods=extradsmethods)
     tagsporesults = get_tag_method_count(spos,extradsmethods=extradsmethods)
 
-    lines.append('\n\nProof Obligation Statistics for function ' + cfunction.getname())
+    lines.append('\n\nProof Obligation Statistics for function ' + cfunction.name)
     lines.append('~' * 80)
 
     lines.append(proofobligation_stats_tostring(tagpporesults,tagsporesults))
     return '\n'.join(lines)
 
 
-def make_po_tag_dict(pos,pofilter=lambda(po):True):
+def make_po_tag_dict(pos,pofilter=lambda po:True):
     '''Create a predicate tag dictionary from a a list of proof obligations.
 
     Args:
-      pos: list of proof obligations (primary or secondary)
+      pos: list of proof obligations (primary or supporting)
       pofilter: predicate that specifies which proof obligations to include
     Returns:
       dictionary that organizes the proof obligations by predicate tag
@@ -318,40 +345,42 @@ def make_po_tag_dict(pos,pofilter=lambda(po):True):
     result = {}
     for po in pos:
         if pofilter(po):
-            tag = po.getpredicatetag()
+            tag = po.get_predicate_tag()
             if not tag in result: result[tag] = []
             result[tag].append(po)
     return result
 
-def make_po_file_function_dict(pos,filefilter=lambda(f):True):
+def make_po_file_function_dict(pos,filefilter=lambda f:True):
     '''Create a file, function dictionary from a list of proof obligations.
 
     Args:
-      pos: list of proof obligations (primary or secondary)
+      pos: list of proof obligations (primary or supporting)
       filefilter: predicate that specifies which c files to include
     Returns:
       dictionary that organizes the proof obligations by c file
     '''
     result = {}
     for po in pos:
-        cfile = po.getfile().getfilename()
+        cfile = po.cfile.name
         if filefilter(cfile):
             if not cfile in result: result[cfile] = {}
-            cfun = po.getfunction().getname()
+            cfun = po.cfun.name
             if not cfun in result[cfile]: result[cfile][cfun] = []
             result[cfile][cfun].append(po)
     return result
         
-def tag_file_function_pos_tostring(pos,filefilter=lambda(f):True,pofilter=lambda(po):True):
+def tag_file_function_pos_tostring(pos,filefilter=lambda f:True,pofilter=lambda po:True):
     lines = []
     tagdict = make_po_tag_dict(pos,pofilter=pofilter)
     for tag in sorted(tagdict):
         fundict = make_po_file_function_dict(tagdict[tag],filefilter=filefilter)
-        lines.append('\n' + tag + '\n' + ('-' * 80))
+        lines.append('\n\n' + tag + '\n' + ('-' * 80))
         for f in sorted(fundict):
-            lines.append('  File: ' + f)
+            lines.append('\n  File: ' + f)
             for ff in sorted(fundict[f]):
                 lines.append('    Function: ' + ff)
-                for po in sorted(fundict[f][ff],key=lambda(po):po.getline()):
+                for po in sorted(fundict[f][ff],key=lambda po:po.get_line()):
                     lines.append((' ' * 6) + str(po))
+                    if po.has_diagnostic():
+                        lines.append((' ' * 8) + ' ---> ' + po.diagnostic)
     return '\n'.join(lines)

@@ -42,15 +42,15 @@ the same predicate appear on the same line) by a set of variable names,
 one of which has to appear in the ppo, or an expression context.
 '''
 def keymatches(tppo,ppo):
-    if (tppo.getline() == ppo.getline() and
-            tppo.getpredicate() == ppo.getpredicatetag()):
-        if ((not tppo.hasexpctxt()) or
-            (tppo.hasexpctxt() and ppo.getcontextstrings()[1] == tppo.getexpctxt())):
-            if ((not tppo.hasvariablenames()) or
-                    (tppo.hasvariablenames() and
-                         any([ ppo.hasvariable(vname) for vname in tppo.getvariablenames()]))):
-                if ((not tppo.hastargettype()) or
-                        (tppo.hastargettype() and ppo.hastargettype(tppo.gettargettype()))):
+    if (tppo.line == ppo.get_line() and
+            tppo.predicate == ppo.predicatetag):
+        if ((not tppo.has_exp_ctxt()) or
+            (tppo.has_exp_ctxt() and str(ppo.context.get_exp_context()) == tppo.expctxt)):
+            if ((not tppo.has_variable_names()) or
+                    (tppo.has_variable_names() and
+                         any([ ppo.has_variable_name(vname) for vname in tppo.variablename]))):
+                if ((not tppo.has_target_type()) or
+                        (tppo.has_target_type() and ppo.has_target_type(tppo.get_target_type()))):
                     return True
     return False
 
@@ -65,53 +65,86 @@ def initialize_testsummary(testset,d):
             d[tindex]['safe-controls'][c] = 0
     testset.iter(f)
 
-def classify_tgt_violation(ev):
-    if ev is None: return 'unknown'
-    if ev.isviolation(): return 'reported'
-    dm = ev.getdischargemethod()
-    if dm == 'local' or dm == 'stmt': return 'found-safe'
-    if ev.isdelegated(): return 'found-deferred'
+def classify_tgt_violation(ppo,capp):
+    if ppo is None: return 'unknown'
+    if ppo.is_violated(): return 'reported'
+    if ppo.dependencies is None: return 'unknown'
+    dm = ppo.dependencies.level
+    if dm == 'f' or dm == 's': return 'found-safe'
+    if ppo.is_delegated():
+        spos = get_associated_spos(ppo,capp)
+        if len(spos) > 0:
+            classifications = [ classify_tgt_violation(spo,capp) for spo in spos ]
+            if 'reported' in classifications: return 'reported'
+            if all( [ x == 'found-safe' for x in classifications ] ): return 'found-safe'
+        else:
+            return 'found-safe'
+        return 'found-deferred'
     return 'other'
 
-def classify_tgt_safecontrol(ev):
-    if ev is None: return 'unknown'
-    if ev.isviolation(): return 'other'
-    dm = ev.getdischargemethod()
-    if dm == 'stmt': return 'stmt-safe'
-    if dm == 'local':  return 'safe'
-    if ev.isdelegated(): return 'deferred'
-    if ev.isdeadcode(): return 'deadcode'
+def classify_tgt_safecontrol(ppo,capp):
+    if ppo is None: return 'unknown'
+    if ppo.is_violated(): return 'other'
+    if ppo.dependencies is None: return 'unknown'
+    dm = ppo.dependencies.level
+    if dm == 's': return 'stmt-safe'
+    if dm == 'f':  return 'safe'
+    if ppo.is_delegated():
+        spos = get_associated_spos(ppo,capp)
+        if len(spos) > 0:
+            classifications = [ classify_tgt_safecontrol(spo,capp) for spo in spos ]
+            if all( [ x == 'safe' or x == 'stmt-safe' for x in classifications ]):
+                return 'safe'
+            if 'other' in classifications: return 'other'
+        return 'deferred'
+    if ppo.is_deadcode(): return 'deadcode'
     return 'other'
 
-def fill_testsummary(pairs,d):
+def fill_testsummary(pairs,d,capp):
     for filename in pairs:
         for fn in pairs[filename]:
             for (jppo,ppo) in pairs[filename][fn]:
-                tindex = jppo.gettest()
+                tindex = jppo.get_test()
                 tsummary = d[tindex]
-                ev = ppo.getevidence()
-                if jppo.isviolation():
-                    classification = classify_tgt_violation(ev)
+                if jppo.is_violation():
+                    classification = classify_tgt_violation(ppo,capp)
                     tsummary['violations'][classification] += 1
                 else:
-                    classification = classify_tgt_safecontrol(ev)
+                    classification = classify_tgt_safecontrol(ppo,capp)
                     tsummary['safe-controls'][classification] += 1
 
-def testppo_calls_tostring(ev,capp):
+def get_associated_spos(ppo,capp):
+    result = []
+    if ppo.has_dependencies():
+        cfun = ppo.cfun
+        cfile = ppo.cfile
+        callsites = capp.get_callsites(cfile.index,cfun.svar.get_vid())
+        assumptions = ppo.dependencies.ids
+        assumptions = [ cfun.podictionary.get_assumption_type(i) for i in assumptions ]
+        assumptions = [ a.get_apiid() for a in assumptions if a.is_api_assumption() ]
+        if len(callsites) > 0:
+            for ((fid,vid),cs) in callsites:
+                def f(spo):
+                    if spo.apiid in assumptions:
+                        result.append(spo)
+                cs.iter(f)
+    return result
+
+def testppo_calls_tostring(ppo,capp):
     lines = []
-    cfun = ev.getfunction()
-    cfile = ev.getfile()
-    callsites = capp.getcallsites(cfile.getindex(),cfun.getid())
+    cfun = ppo.cfun
+    cfile = ppo.cfile
+    callsites = capp.get_callsites(cfile.index,cfun.svar.get_vid())
     if len(callsites) > 0:
         lines.append('    calls:')
         for ((fid,vid),cs) in callsites:
             def f(spo):
-                sev = spo.getevidence()
+                sev = spo.explanation
                 if sev is None: sevtxt = '?'
                 else:
-                    sevtxt = (sev.getdisplayprefix() + '  ' + sev.getevidence())
-                lines.append('     C:' + str(spo.getline()).rjust(3) + '  ' +
-                                 spo.getpredicatetag().ljust(25) + sevtxt)
+                    sevtxt = spo.get_display_prefix() + '  ' + sev
+                lines.append('     C:' + str(spo.get_line()).rjust(3) + '  ' +
+                                 spo.predicatetag.ljust(25) + sevtxt)
             cs.iter(f)
     return '\n'.join(lines)
     
@@ -124,16 +157,16 @@ def testppo_results_tostring(pairs,capp):
             if len(pairs[filename][fn]) == 0: continue
             lines.append('\n  ' + fn)
             for (jppo,ppo) in pairs[filename][fn]:
-                ev = ppo.getevidence()
+                ev = ppo.explanation
                 if ev is None:
                     evstr = '?'
                 else:
-                    evstr = ev.getdisplayprefix() + '  ' + ev.getevidence()
-                lines.append('    ' + str(ppo.getline()).rjust(3) + '  ' +
-                                 ppo.getid().rjust(3) + ': ' +
-                                 ppo.getpredicatetag().ljust(25) + evstr)
-                if (not ev is None) and ev.isdelegatedtoapi():
-                    lines.append(testppo_calls_tostring(ev,capp))
+                    evstr = ppo.get_display_prefix() + '  ' + ev
+                lines.append('    ' + str(ppo.get_line()).rjust(3) + '  ' +
+                                 str(ppo.id).rjust(3) + ': ' +
+                                 ppo.predicatetag.ljust(25) + evstr)
+                if (not ev is None) and ppo.is_delegated():
+                    lines.append(testppo_calls_tostring(ppo,capp))
     return '\n'.join(lines)
                                  
 def testsummary_tostring(d,totals):
@@ -176,16 +209,16 @@ def get_julietppos(testset):
 
 Organized as a dictionary: filename -> functionname -> (testppo,ppo) list
 '''
-def get_ppopairs(julietppos,capp):
+def get_ppo_pairs(julietppos,capp):
     pairs = {}
     for filename in julietppos:
         if not filename in pairs: pairs[filename] = {}
         julietfileppos = julietppos[filename]
-        cfile = capp.getfile(filename)
+        cfile = capp.get_file(filename)
 
         fileppos = cfile.get_ppos()
         for ppo in fileppos:
-            fname = ppo.getfunction().getname()
+            fname = ppo.cfun.name
             if not fname in pairs[filename]: pairs[filename][fname] = []
             for jppo in julietfileppos:
                 if keymatches(jppo,ppo):

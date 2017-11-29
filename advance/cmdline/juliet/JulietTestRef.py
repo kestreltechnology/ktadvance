@@ -36,15 +36,15 @@ class JulietTestRef():
         self.cfiles = {}
         self._initialize()
 
-    def gettest(self): return self.test
+    def get_test(self): return self.test
 
     def expand(self,m): return self.testsetref.expand(m)
 
-    def getcfiles(self): return self.cfiles.items()
+    def get_cfiles(self): return self.cfiles.items()
 
     '''f: (filename,juliettestfile) -> unit. '''
     def iter(self,f):
-        for (filename,cfile) in self.getcfiles():
+        for (filename,cfile) in self.get_cfiles():
             f(filename,cfile)
 
     def __str__(self):

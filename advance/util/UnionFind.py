@@ -5,7 +5,7 @@ http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/215912
 with significant additional changes by D. Eppstein.
 """
 
-class UnionFind:
+class UnionFind(object):
     """Union-find data structure.
 
     Each unionFind instance X maintains a family of disjoint sets of

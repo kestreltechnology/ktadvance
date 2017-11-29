@@ -37,30 +37,30 @@ class JulietTestFileRef():
         self.spo_safecontrols = {}
         self._initialize()
 
-    def gettest(self): return self.testref.gettest()
+    def get_test(self): return self.testref.get_test()
 
     def expand(self,m): return self.testref.expand(m)
 
-    def getviolations(self):
+    def get_violations(self):
         return sorted(self.violations.items())
 
-    def getsafecontrols(self):
+    def get_safe_controls(self):
         return sorted(self.safecontrols.items())
 
     '''f: (line,julietppo) -> unit. '''
     def iter(self,f):
-        self.iterviolations(f)
-        self.itersafecontrols(f)
+        self.iter_violations(f)
+        self.iter_safe_controls(f)
 
     '''f: (line,julietppo) -> unit. '''
-    def iterviolations(self,f):
-        for (l,vs) in self.getviolations():
+    def iter_violations(self,f):
+        for (l,vs) in self.get_violations():
             for v in vs:
                 f(l,v)
 
     '''f: (line,julietppo) -> unit. '''
-    def itersafecontrols(self,f):
-        for (l,ss) in self.getsafecontrols():
+    def iter_safe_controls(self,f):
+        for (l,ss) in self.get_safe_controls():
             for s in ss:
                 f(l,s)
 
@@ -108,32 +108,20 @@ class JulietPpo():
         if 'V' in d: self.variablename = d['V']
         if 'T' in d: self.targettype = d['T']
 
-    def gettest(self): return self.testfileref.gettest()
+    def get_test(self): return self.testfileref.get_test()
 
-    def getpredicate(self): return self.predicate
+    def has_exp_ctxt(self): return not (self.expctxt is None)
 
-    def getline(self): return self.line
+    def has_cfg_ctxt(self): return not (self.cfgctxt is None)
 
-    def getexpctxt(self): return self.expctxt
+    def has_variable_names(self): return not (self.variablename is None)
 
-    def getcfgctxt(self): return self.cfgctxt
-
-    def getvariablenames(self): return self.variablename
-
-    def gettargettype(self): return self.targettype
-
-    def hasexpctxt(self): return not (self.expctxt is None)
-
-    def hascfgctxt(self): return not (self.cfgctxt is None)
-
-    def hasvariablenames(self): return not (self.variablename is None)
-
-    def hastargettype(self): return not (self.targettype is None)
+    def has_target_type(self): return not (self.targettype is None)
 
     def __str__(self):
         ctxt = ''
-        if self.hasexpctxt(): ctxt = ' (' + self.getexpctxt() + ')'
-        return (self.getpredicate() + ctxt)
+        if self.has_exp_ctxt(): ctxt = ' (' + self.get_exp_ctxt() + ')'
+        return (str(self.line) + '  ' + self.predicate + ctxt)
 
 
 class JulietViolation(JulietPpo):
@@ -141,7 +129,7 @@ class JulietViolation(JulietPpo):
     def __init__(self,testfileref,line,d):
         JulietPpo.__init__(self,testfileref,line,d)
 
-    def isviolation(self): return True
+    def is_violation(self): return True
         
 
 class JulietSafeControl(JulietPpo):
@@ -149,4 +137,4 @@ class JulietSafeControl(JulietPpo):
     def __init__(self,testfileref,line,d):
         JulietPpo.__init__(self,testfileref,line,d)
 
-    def isviolation(self): return False
+    def is_violation(self): return False

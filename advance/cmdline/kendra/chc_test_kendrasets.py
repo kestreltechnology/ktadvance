@@ -46,13 +46,8 @@ def parse():
 if __name__ == '__main__':
     args = parse()
 
-    for id in range(115,399,4):
+    for id in range(115,403,4):
 
-        # currently broken:
-        #if id == 163: continue
-        #if id == 283: continue
-        #if id == 315: continue
-            
         testname = 'id' + str(id) + 'Q'
         cpath = UF.get_kendra_testpath(testname)
         if not os.path.isdir(cpath):
@@ -76,17 +71,20 @@ if __name__ == '__main__':
         testmanager = TestManager(cpath,cpath,testname,verbose=args.verbose)
         testmanager.clean()
         try:
-            if testmanager.testparser() or UF.unpack_tar_file(cpath):
-                testmanager.testppos()
-                testmanager.testpevs()
-                testmanager.testspos(delaytest=True)
-                testmanager.testsevs(delaytest=True)
-                testmanager.testspos()
-                testmanager.testsevs()
+            if testmanager.test_parser() or UF.unpack_tar_file(cpath):
+                testmanager.test_ppos()
+                testmanager.test_ppo_proofs(delaytest=True)
+                testmanager.test_spos(delaytest=True)
+                testmanager.test_sevs(delaytest=True)
+                testmanager.test_spos(delaytest=True)
+                testmanager.test_sevs(delaytest=True)
+                testmanager.test_ppo_proofs()
+                testmanager.test_spos()
+                testmanager.test_sevs()
                 if testmanager.verbose: 
-                    testmanager.printtestresults()
+                    testmanager.print_test_results()
                 else:
-                    testmanager.printtestresultssummary()
+                    testmanager.print_test_results_summary()
             else:
                 print(
                     '\n' + ('*' * 80) + '\nThis test set is not supported on the mac.' +

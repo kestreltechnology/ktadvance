@@ -41,7 +41,7 @@ def get_xnode(filename,rootnode,desc,show=True):
             tree = ET.parse(filename)
             root = tree.getroot()
             return root.find(rootnode)
-        except ET.ParseError, args:
+        except (ET.ParseError, args):
             print('Problem in ' + filename)
             print(args)
     else:
@@ -56,8 +56,18 @@ def get_targetfiles_xnode(path):
     filename = get_targetfiles_filename(path)
     return get_xnode(filename,'c-files','File that holds the names of source files')
 
-def get_globaldefinitions_filename(path):
+def get_global_definitions_filename(path):
     return os.path.join(path,'globaldefinitions.xml')
+
+def get_global_declarations_xnode(path):
+    filename = get_global_definitions_filename(path)
+    return get_xnode(filename,'globals','Global type dictionary file',show=False)
+
+def get_global_dictionary_xnode(path):
+    filename = get_global_definitions_filename(path)
+    gnode = get_xnode(filename,'globals','Global type declarations file',show=False)
+    if not gnode is None:
+        return gnode.find('dictionary')
         
 # ------------------------------------------------------------------- files ----
 
@@ -68,6 +78,50 @@ def get_cfilenamebase(cfilename):
 def get_cfile_filename(path,cfilename):
     cfilename = get_cfilenamebase(cfilename)
     return os.path.join(path,cfilename + '_cfile.xml')
+
+def get_cfile_xnode(path,cfilename):
+    filename = get_cfile_filename(path,cfilename)
+    return get_xnode(filename,'c-file','C source file')
+
+def get_cfile_dictionaryname(path,cfilename):
+    cfilename = get_cfilenamebase(cfilename)
+    return os.path.join(path,cfilename + '_cdict.xml')
+
+def get_cfile_dictionary_xnode(path,cfilename):
+    filename = get_cfile_dictionaryname(path,cfilename)
+    return get_xnode(filename,'cfile','C dictionary file')
+
+def get_cfile_predicate_dictionaryname(path,cfilename):
+    cfilename = get_cfilenamebase(cfilename)
+    return os.path.join(path,cfilename + '_prd.xml')
+
+def get_cfile_predicate_dictionary_xnode(path,cfilename):
+    filename = get_cfile_predicate_dictionaryname(path,cfilename)
+    return get_xnode(filename,'po-dictionary','PO predicate dictionary file',show=False)
+
+def get_cfile_assignment_dictionaryname(path,cfilename):
+    cfilename = get_cfilenamebase(cfilename)
+    return os.path.join(path,cfilename + '_cgl.xml')
+
+def get_cfile_assignment_dictionary_xnode(path,cfilename):
+    filename = get_cfile_assignment_dictionaryname(path,cfilename)
+    return get_xnode(filename,'assignment-dictionary','Global assignments dictionary file',show=False)
+
+def get_cfile_interface_dictionaryname(path,cfilename):
+    cfilename = get_cfilenamebase(cfilename)
+    return os.path.join(path,cfilename + '_ixf.xml')
+
+def get_cfile_interface_dictionary_xnode(path,cfilename):
+    filename = get_cfile_interface_dictionaryname(path,cfilename)
+    return get_xnode(filename,'interface-dictionary','Interface objects dictionary file',show=False)
+
+def get_cfile_contexttablename(path,cfilename):
+    cfilename = get_cfilenamebase(cfilename)
+    return os.path.join(path,cfilename + '_ctxt.xml')
+
+def get_cfile_contexttable_xnode(path,cfilename):
+    filename = get_cfile_contexttablename(path,cfilename)
+    return get_xnode(filename,'c-contexts','C contexts file',show=False)
 
 def get_cfile_directory(path,cfilename):
     return os.path.join(path,get_cfilenamebase(cfilename))
@@ -82,13 +136,21 @@ def get_cfile_xnode(path,cfilename):
 
 def get_cxreffile_filename(path,cfilename):
     if cfilename.endswith('.c'):
-        return os.path.join(path,cfilename[:-2] + '_gxrefs.xml')
-    else:
-        return os.path.join(path,cfilename + '_gxrefs.xml')
+        cfilename = cfilename[:-2]
+    return os.path.join(path,cfilename + '_gxrefs.xml')
 
 def get_cxreffile_xnode(path,cfilename):
     filename = get_cxreffile_filename(path,cfilename)
     return get_xnode(filename,'global-xrefs','File with global cross references',show=False)
+
+def get_global_invs_filename(path,cfilename,objectname):
+    if cfilename.endswith('.c'):
+        cfilename = cfilename[:-2]
+    objectname = '' if objectname == 'all' else '_' + objectname 
+    return os.path.join(path,cfilename + objectname + '_ginvs.xml')
+
+def get_cfile_usr_filename(path,cfilename):
+    return os.path.join(path,(get_cfilenamebase(cfilename) + '_usr.xml'))
 
 # ----------------------------------------------------------------- functions --
 
@@ -112,12 +174,26 @@ def get_api_xnode(path,cfilename,fname):
     filename = get_api_filename(path,cfilename,fname)
     return get_xnode(filename,'function','Function api file')
 
+def get_vars_filename(path,cfilename,fname):
+    return (get_cfun_basename(path,cfilename,fname) + '_vars.xml')
+
+def get_vars_xnode(path,cfilename,fname):
+    filename = get_vars_filename(path,cfilename,fname)
+    return get_xnode(filename,'function','Function variable dictionary',show=False)
+
 def get_invs_filename(path,cfilename,fname):
     return (get_cfun_basename(path,cfilename,fname) + '_invs.xml')
 
 def get_invs_xnode(path,cfilename,fname):
     filename = get_invs_filename(path,cfilename,fname)
-    return get_xnode(filename,'function','Function invariants')
+    return get_xnode(filename,'function','Function invariants',show=False)
+
+def get_pod_filename(path,cfilename,fname):
+    return (get_cfun_basename(path,cfilename,fname) + '_pod.xml')
+
+def get_pod_xnode(path,cfilename,fname):
+    filename = get_pod_filename(path,cfilename,fname)
+    return get_xnode(filename,'function','Function proof obligation types',show=False)
 
 def get_ppo_filename(path,cfilename,fname):
     return (get_cfun_basename(path,cfilename,fname) + '_ppo.xml')
@@ -126,30 +202,23 @@ def get_ppo_xnode(path,cfilename,fname):
     filename = get_ppo_filename(path,cfilename,fname)
     return get_xnode(filename,'function','Primary proof obligations file')
 
-def get_pev_filename(path,cfilename,fname):
-    return (get_cfun_basename(path,cfilename,fname) + '_pev.xml')
-
-def get_pev_xnode(path,cfilename,fname):
-    filename = get_pev_filename(path,cfilename,fname)
-    return get_xnode(filename,'function','Primary evidence file')
-
 def get_spo_filename(path,cfilename,fname):
     return (get_cfun_basename(path,cfilename,fname) + '_spo.xml')
 
 def get_spo_xnode(path,cfilename,fname):
     filename = get_spo_filename(path,cfilename,fname)
-    return get_xnode(filename,'function','Secondary proof obligations file')
-
-def get_sev_filename(path,cfilename,fname):
-    return (get_cfun_basename(path,cfilename,fname) + '_sev.xml')
-
-def get_sev_xnode(path,cfilename,fname):
-    filename = get_sev_filename(path,cfilename,fname)
-    return get_xnode(filename,'function','Secondary evidence file')
+    return get_xnode(filename,'function','Secondary proof obligations file',show=False)
 
 def save_spo_file(path,cfilename,fname,cnode):
     filename = get_spo_filename(path,cfilename,fname)
     header = UX.get_xml_header(filename,'spos')
+    header.append(cnode)
+    with open(filename,'w') as fp:
+        fp.write(UX.doc_to_pretty(ET.ElementTree(header)))
+
+def save_pod_file(path,cfilename,fname,cnode):
+    filename = get_pod_filename(path,cfilename,fname)
+    header = UX.get_xml_header(filename,'pod')
     header.append(cnode)
     with open(filename,'w') as fp:
         fp.write(UX.doc_to_pretty(ET.ElementTree(header)))
@@ -210,14 +279,35 @@ def get_zitser_path():
     sardpath = os.path.join(Config().testdir,'sard')
     return os.path.abspath(os.path.join(sardpath,'zitser'))
 
+def get_zitser_summaries():
+    path = get_zitser_path()
+    summarypath = os.path.join(path,'testcasesupport')
+    summarypath = os.path.join(summarypath,'zitsersummaries')
+    return os.path.join(summarypath,'zitsersummaries.jar')
+
 def get_zitser_testpath(testname):
     return os.path.join(get_zitser_path(),testname)
+
+def get_zitser_userpath(testname):
+    return os.path.join(get_zitser_testpath(testname),'ktadvanceuser')
+
+def get_zitser_globaluserfile(testname):
+    return os.path.join(get_zitser_userpath(testname),'advanceuserglobal.xml')
+
+def get_zitser_globaluserfile_xnode(testname):
+    filename = get_zitser_globaluserfile(testname)
+    return get_xnode(filename,'user-data','user-data',show=True)
+
+def get_zitser_cfile_userdata(testname,cfilename):
+    path = get_zitser_userpath(testname)
+    filename = get_cfilenamebase(path,cfilename)
+    return filename ^ "_user.xml"
 
 # ------------------------------------------------------------ juliet tests ----
 
 def get_juliet_path():
     sardpath = os.path.join(Config().testdir,'sard')
-    return os.path.abspath(os.path.join(sardpath,'juliet_v1.2'))
+    return os.path.abspath(os.path.join(sardpath,'juliet_v1.3'))
 
 def get_juliet_summaries():
     path = get_juliet_path()
@@ -279,19 +369,25 @@ def unpack_src_i_tar_file(testname):
 # ------------------------------------------------------------ unzip tar file --
 
 def unpack_tar_file(path,deletesemantics=False):
-    targzfile = 'semantics_linux.tar.gz'
+    linuxtargzfile = 'semantics_linux.tar.gz'
+    mactargzfile = 'semantics_mac.tar.gz'
     os.chdir(path)
 
-    if os.path.isfile(targzfile):
-        if os.path.isdir('semantics'):
-            if deletesemantics:
-                print('Removing existing semantics directory')
-                shutil.rmtree('semantics')
-            else:
-                return True
+    if os.path.isfile(linuxtargzfile):
+        targzfile = linuxtargzfile
+    elif os.path.isfile(mactargzfile):
+        targzfile = mactargzfile
+    elif os.path.isdir('semantics') and not deletesemantics:
+        return True
     else:
-        print('Not deleting the semantics directory; no gzipped tar file found')
         return False
+
+    if os.path.isdir('semantics'):
+        if deletesemantics:
+            print('Removing existing semantics directory')
+            shutil.rmtree('semantics')
+        else:
+            return True
 
     if os.path.isfile(targzfile):
         cmd = [ 'tar', 'xfz', targzfile ]

@@ -81,7 +81,7 @@ from advance.cmdline.ParseManager import ParseManager
 from advance.cmdline.kendra.TestResults import TestResults
 from advance.cmdline.kendra.TestSetRef import TestSetRef
 
-class TestManager():
+class TestManager(object):
     '''Provides utility functions to support regression and platform tests.
     
     Args:
@@ -100,310 +100,329 @@ class TestManager():
         self.ismac = self.config.platform == 'mac'
         self.verbose = verbose
         self.parsemanager = ParseManager(self.cpath,self.tgtpath,verbose=self.verbose)
-        self.sempath = self.parsemanager.getsempath()
-        self.tgtxpath = self.parsemanager.gettgtxpath()
-        self.tgtspath = self.parsemanager.gettgtspath()
+        self.sempath = self.parsemanager.get_sempath()
+        self.tgtxpath = self.parsemanager.get_tgt_xpath()
+        self.tgtspath = self.parsemanager.get_tgt_spath()
         testfilename = os.path.join(self.cpath,testname + '.json')
         self.testsetref = TestSetRef(testfilename)
         self.testresults = TestResults(self.testsetref)
+        self.proofcheckcount = 0   # used to decide when to switch on post delegation
 
-    def gettestresults(self): return self.testresults
+    def get_test_results(self): return self.testresults
 
-    def printtestresults(self): print(str(self.testresults))
+    def print_test_results(self): print(str(self.testresults))
 
-    def printtestresultssummary(self): print(str(self.testresults.get_summary()))
+    def print_test_results_summary(self): print(str(self.testresults.get_summary()))
  
-    def testparser(self,savesemantics=False):
-        if self.ismac and self.testsetref.islinuxonly():
+    def test_parser(self,savesemantics=False):
+        if self.ismac and self.testsetref.is_linux_only():
             return False
         self.testresults.set_parsing()
         self.clean()
-        self.parsemanager.initializepaths()
+        self.parsemanager.initialize_paths()
         if self.verbose: print('\nParsing files\n' + ('-' * 80))
-        for cfile in self.getcfiles():
-            cfilename = cfile.getname()
-            ifilename = self.parsemanager.preprocess_file_withgcc(cfilename,copyfiles=True)
+        for cfile in self.get_cref_files():
+            cfilename = cfile.name
+            ifilename = self.parsemanager.preprocess_file_with_gcc(cfilename,copyfiles=True)
             parseresult = self.parsemanager.parse_ifile(ifilename)
             if parseresult != 0:
-                self.testresults.add_parseerror(cfilename,str(parseresult))
+                self.testresults.add_parse_error(cfilename,str(parseresult))
                 raise FileParseError(cfilename)
-            self.testresults.add_parsesuccess(cfilename)
+            self.testresults.add_parse_success(cfilename)
             if self.xcfile_exists(cfilename):
-                self.testresults.add_xcfilesuccess(cfilename)
+                self.testresults.add_xcfile_success(cfilename)
             else:
-                self.testresults.add_xcfileerror(cfilename)
+                self.testresults.add_xcfile_error(cfilename)
                 raise FileParseError(cfilename)
-            for fname in cfile.getfunctionnames():
+            for fname in cfile.get_functionnames():
                 if self.xffile_exists(cfilename,fname):
-                    self.testresults.add_xffilesuccess(cfilename,fname)
+                    self.testresults.add_xffile_success(cfilename,fname)
                 else:
-                    self.testresults.add_xffileerror(cfilename,fname)
+                    self.testresults.add_xffile_error(cfilename,fname)
                     raise FileParseError(cfilename)
         if savesemantics:
-            self.parsemanager.savesemantics()
+            self.parsemanager.save_semantics()
         return True
 
-    def checkppos(self,cfilename,cfun,ppos,refppos):
+    def check_ppos(self,cfilename,cfun,ppos,refppos):
         d = {}
         for ppo in ppos:
-            context = ppo.getcontextstrings()
+            context = ppo.get_context_strings()
             if not context in d: d[context] = []
-            d[context].append(ppo.getpredicatetag())
+            d[context].append(ppo.get_predicate_tag())
         for ppo in refppos:
-            p = ppo.getpredicate()
-            context = ppo.getcontext()
+            p = ppo.get_predicate()
+            context = ppo.get_context_string()
             if not context in d:
-                self.testresults.add_missingppo(cfilename,cfun,context,p)
+                self.testresults.add_missing_ppo(cfilename,cfun,context,p)
                 for c in d:
-                    if self.verbose: print(str(c))
+                    if self.verbose:
+                        print(str(c))
+                        print('Did not find ' + str(context))
                 raise FunctionPPOError(cfilename + ':' + cfun + ':' + ' Missing ppo: ' + str(context))
             else:
                 if not p in d[context]:
-                    self.testresults.add_missingppo(cfilename,cfun,context,p)
+                    self.testresults.add_missing_ppo(cfilename,cfun,context,p)
                     raise FunctionPPOError(
                         cfilename + ':' + cfun + ':' + str(context) + ':' + p)
                 
-    def createreferenceppos(self,cfilename,fname,ppos):
+    def create_reference_ppos(self,cfilename,fname,ppos):
         result = []
         for ppo in ppos:
-            ctxt = ppo.getcontextstrings()
+            ctxt = ppo.context
             d = {}
-            d['line'] = ppo.getline()
-            d['cfgctxt'] = ctxt[0]
-            d['expctxt'] = ctxt[1]
-            d['predicate'] = ppo.getpredicatetag()
-            d['tgtstatus'] = 'unknown'
-            d['status'] = 'unknown'
+            d['line'] = ppo.get_line()
+            d['cfgctxt'] = str(ctxt.get_cfg_context())
+            d['expctxt'] = str(ctxt.get_exp_context())
+            d['predicate'] = ppo.get_predicate_tag()
+            d['tgtstatus'] = 'open'
+            d['status'] = 'open'
             result.append(d)
-        self.testsetref.setppos(cfilename,fname,result)
+        self.testsetref.set_ppos(cfilename,fname,result)
 
-    def createreferencespos(self,cfilename,fname,spos):
+    def create_reference_spos(self,cfilename,fname,spos):
         result = []
         if len(spos) > 0:
             for spo in spos:
                 d = {}
-                d['line'] = spo.getline()
-                d['cfgctxt'] = spo.getcfgcontextstring()
-                d['hashstr'] = spo.hashstr()
+                d['line'] = spo.get_line()
+                d['cfgctxt'] = spo.get_cfg_contextstring()
                 d['tgtstatus'] = 'unknown'
                 d['status'] = 'unknown'
                 result.append(d)
-            self.testsetref.setspos(cfilename,fname,result)
+            self.testsetref.set_spos(cfilename,fname,result)
 
-    def testppos(self):
+    def test_ppos(self):
         if not os.path.isfile(self.config.canalyzer):
             raise AnalyzerMissingError(self.config.canalyzer)
         self.testresults.set_ppos()
         saved = False
         try:
-            for cfile in self.getcfiles():
-                cfilename = cfile.getname()
-                cfilefilename = UF.get_cfile_filename(self.tgtxpath,cfilename)
-                if not os.path.isfile(cfilefilename):
-                    raise XmlFileNotFoundError(cfilefilename)
-                capp = CApplication(self.sempath,cfilename=cfilename)
+            for creffile in self.get_cref_files():
+                creffilename = creffile.name
+                creffilefilename = UF.get_cfile_filename(self.tgtxpath,creffilename)
+                if not os.path.isfile(creffilefilename):
+                    raise XmlFileNotFoundError(creffilefilename)
+                capp = CApplication(self.sempath,cfilename=creffilename)
                 am = AnalysisManager(capp,onefile=True,verbose=self.verbose)
-                am.create_file_primaryproofobligations(cfilename)
-                ppos = capp.getsinglefile().get_ppos()
-                for cfun in cfile.getfunctions():
-                    fname = cfun.getname()
+                am.create_file_primary_proofobligations(creffilename)
+                cfile = capp.get_single_file()
+                ppos = cfile.get_ppos()
+                for creffun in creffile.get_functions():
+                    fname = creffun.name
+                    cfun = cfile.get_function_by_name(fname)
                     if self.saveref:
-                        if cfun.hasppos():
+                        if creffun.has_ppos():
                             print('Ppos not created for ' + fname + ' (delete first)')
                         else:
-                            self.createreferenceppos(cfilename,fname,ppos[fname])
+                            self.create_reference_ppos(creffilename,fname,cfun.get_ppos())
                             saved = True
                     else:
-                        refppos = cfun.getppos()
-                        funppos = [ ppo for ppo in ppos if ppo.getfunction().getname() == fname ]
+                        refppos = creffun.get_ppos()
+                        funppos = [ ppo for ppo in ppos if ppo.cfun.name == fname ]
                         if len(refppos) == len(funppos):
-                            self.testresults.add_ppocountsuccess(cfilename,fname)
-                            self.checkppos(cfilename,fname,funppos,refppos)
+                            self.testresults.add_ppo_count_success(creffilename,fname)
+                            self.check_ppos(creffilename,fname,funppos,refppos)
                         else:
-                            self.testresults.add_ppocounterror(
+                            self.testresults.add_ppo_count_error(
                                 cfilename,fname,len(funppos),len(refppos))
                             raise FunctionPPOError(cfilename + ':' + fname)
         except FunctionPPOError as detail:
-            self.printtestresults()
+            self.print_test_results()
             print('Function PPO error: ' + str(detail))
             exit()
         if self.saveref and saved:
             self.testsetref.save()
             exit()
 
-    def checkspos(self,cfilename,cfun,spos,refspos):
+    def check_spos(self,cfilename,cfun,spos,refspos):
         d = {}
         for spo in spos:
-            context = spo.getcfgcontextstring()
+            context = spo.cfg_context_string
             if not context in d: d[context] = []
-            d[context].append(spo.hashstr())
+            d[context].append(spo.predicatetag)
         for spo in refspos:
-            p = spo.gethashstr()
-            context = spo.getcontext()
+            context = spo.get_context()
             if not context in d:
-                self.testresults.add_missingspo(cfilename,cfun,context,p)
+                self.testresults.add_missing_spo(cfilename,cfun,context,p)
                 for c in d:
                     if self.verbose: print(str(c))
                 raise FunctionSPOError(cfilename + ':' + cfun + ':' + ' Missing spo: ' + str(context))
             else:
+                p = spo.get_predicate()
                 if not p in d[context]:
-                    self.testresults.add_missingspo(cfilename,cfun,context,p)
-                    for spo in spos: print(spo.hashstr())
+                    self.testresults.add_missing_spo(cfilename,cfun,context,p)
                     raise FunctionSPOError(
                         cfilename + ':' + cfun + ':' + str(context) + ':' + p)
 
-    def testspos(self,delaytest=False):
+    def test_spos(self,delaytest=False):
         try:
-            for cfile in self.getcfiles():
+            for creffile in self.get_cref_files():
                 self.testresults.set_spos()
-                cfilename = cfile.getname()
+                cfilename = creffile.name
                 cfilefilename = UF.get_cfile_filename(self.tgtxpath,cfilename)
                 if not os.path.isfile(cfilefilename):
                     raise XmlFileNotFoundError(xfilefilename)
-                cappfile = CApplication(self.sempath,cfilename=cfilename).getsinglefile()
+                cappfile = CApplication(self.sempath,cfilename=cfilename).get_single_file()
                 def f(fn):
-                    fn.updatespos()
-                    fn.requestpostconditions()
-                cappfile.fniter(f)
-                def g(fn): fn.savespos()
-                cappfile.fniter(g)
+                    fn.update_spos()
+                    fn.request_postconditions()
+                cappfile.iter_functions(f)
+                def g(fn):
+                    fn.save_spos()
+                    fn.save_pod()
+                cappfile.iter_functions(g)
+                cappfile.save_predicate_dictionary()
+                cappfile.save_declarations()
                 spos = cappfile.get_spos()
                 if delaytest: continue
-                for cfun in cfile.getfunctions():
-                    fname = cfun.getname()
+                for cfun in creffile.get_functions():
+                    fname = cfun.name
                     if self.saveref:
-                        if cfun.hasspos():
+                        if cfun.has_spos():
                             print('Spos not created for ' + fname + ' in ' + cfilename +
                                       ' (delete first)')
                         else:
-                            self.createreferencespos(cfilename,fname,spos[fname])
+                            self.create_reference_spos(cfilename,fname,spos[fname])
                     else:
-                        refspos = cfun.getspos()
-                        funspos = [ spo for spo in spos if spo.getfunction().getname() == fname ]
+                        refspos = cfun.get_spos()
+                        funspos = [ spo for spo in spos if spo.cfun.name == fname ]
                         if funspos is None and len(refspos) == 0:
-                            self.testresults.add_spocountsuccess(cfilename,fname)
+                            self.testresults.add_spo_count_success(cfilename,fname)
                             
                         elif len(refspos) == len(funspos):
-                            self.testresults.add_spocountsuccess(cfilename,fname)
-                            self.checkspos(cfilename,fname,funspos,refspos)
+                            self.testresults.add_spo_count_success(cfilename,fname)
+                            self.check_spos(cfilename,fname,funspos,refspos)
                         else:
-                            self.testresults.add_spocounterror(
+                            self.testresults.add_spo_count_error(
                                 cfilename,fname,len(funspos),len(refspos))
-                            raise FunctionSPOError(cfilename + ':' + fname)
+                            raise FunctionSPOError(cfilename + ':' + fname + ' (' + str(len(funspos)) + ')')
         except FunctionSPOError as detail:
-            self.printtestresults()
+            self.print_test_results()
             print('')
             print('*' * 80)
             print('Function SPO error: ' + str(detail))
             print('*' * 80)
-            #exit()
+            exit()
         if self.saveref:
             self.testsetref.save()
             exit()
 
-    def checkpevs(self,cfilename,cfun,funppos,refppos):
+    def check_ppo_proofs(self,cfilename,cfun,funppos,refppos):
         d = {}
-        fname = cfun.getname()
+        fname = cfun.name
         for ppo in funppos:
-            context = ppo.getcontextstrings()
+            context = ppo.get_context_strings()
             if not context in d: d[context] = {}
-            p = ppo.getpredicatetag()
+            p = ppo.get_predicate_tag()
             if p in d[context]:
                 raise FunctionPEVError(
                     cfilename + ':' + fname + ':' + str(context) + ': ' +
                     'multiple instances of ' + p)
             else:
-                d[context][p] = ppo.getstatus()
+                status = ppo.status
+                if ppo.is_delegated(): status += ':delegated'
+                d[context][p] = status
         for ppo in refppos:
-            context = ppo.getcontext()
-            p = ppo.getpredicate()
+            context = ppo.get_context_string()
+            p = ppo.get_predicate()
             if not context in d:
                 raise FunctionPEVError(
                     cfilename + ':' + fname + ':' + str(context) + ': missing')
             else:
-                if ppo.getstatus() != d[context][p]:
-                    self.testresults.add_pevdiscrepancy(
+                if ppo.get_status() != d[context][p]:
+                    self.testresults.add_pev_discrepancy(
                         cfilename,cfun,ppo,d[context][p])
 
-    def testpevs(self):
+    def test_ppo_proofs(self,delaytest=False):
         if not os.path.isfile(self.config.canalyzer):
             raise AnalyzerMissingError(self.config.canalyzer)
         self.testresults.set_pevs()
-        for cfile in self.getcfiles():
-            cfilename = cfile.getname()
+        for creffile in self.get_cref_files():
+            cfilename = creffile.name
             cfilefilename = UF.get_cfile_filename(self.tgtxpath,cfilename)
             if not os.path.isfile(cfilefilename):
                 raise XmlFileNotFoundError(cfilefilename)
             capp = CApplication(self.sempath,cfilename=cfilename)
             # only generate invariants if required
-            if cfile.hasdomains():
-                for d in cfile.getdomains():
-                    am = AnalysisManager(capp,onefile=True,verbose=self.verbose)
-                    am.generate_file_localinvariants(cfilename,d)
+            if creffile.has_domains():
+                for d in creffile.get_domains():
+                    delegate_to_post = self.proofcheckcount > 200
+                    am = AnalysisManager(capp,onefile=True,verbose=self.verbose,
+                                             delegate_to_post=delegate_to_post)
+                    am.generate_file_local_invariants(cfilename,d)
                     am.check_file_proofobligations(cfilename)
-            ppos = capp.getsinglefile().get_ppos()
-            for cfun in cfile.getfunctions():
-                fname = cfun.getname()
-                funppos = [ ppo for ppo in ppos if ppo.getfunction().getname() == fname ]
-                refppos = cfun.getppos()
-                self.checkpevs(cfilename,cfun,funppos,refppos)
+                self.proofcheckcount += 1
+            cfile = capp.get_single_file()
+            cfile.reinitialize_tables()
+            ppos = cfile.get_ppos()
+            if delaytest: continue
+            for cfun in creffile.get_functions():
+                fname = cfun.name
+                funppos = [ ppo for ppo in ppos if ppo.cfun.name == fname ]
+                refppos = cfun.get_ppos()
+                self.check_ppo_proofs(cfilename,cfun,funppos,refppos)
 
-    def checksevs(self,cfilename,cfun,funspos,refspos):
+    def check_sevs(self,cfilename,cfun,funspos,refspos):
         d = {}
-        fname = cfun.getname()
+        fname = cfun.name
         for spo in funspos:
-            context = spo.getcfgcontextstring()
+            context = spo.cfg_context_string
             if not context in d: d[context] = {}
-            p = spo.hashstr()
+            p = spo.predicatetag
             if p in d[context]:
                 raise FunctionSEVError(
                     cfilename + ':' + fname + ':' + str(context) + ': ' +
                     'multiple instances of ' + p)
             else:
-                d[context][p] = spo.getstatus()
+                status = spo.status
+                if spo.is_delegated() : status = status + ':delegated'
+                d[context][p] = status
         for spo in refspos:
-            context = spo.getcontext()
-            p = spo.gethashstr()
+            context = spo.get_context()
+            p = spo.get_predicate()
             if not context in d:
                 raise FunctionSEVError(
                     cfilename + ':' + fname + ':' + str(context) + ': missing')
             else:
-                if spo.getstatus() != d[context][p]:
-                    self.testresults.add_sevdiscrepancy(
+                if spo.get_status() != d[context][p]:
+                    self.testresults.add_sev_discrepancy(
                         cfilename,cfun,spo,d[context][p])
                     
-    def testsevs(self,delaytest=False):
+    def test_sevs(self,delaytest=False):
         self.testresults.set_sevs()
-        for cfile in self.getcfiles():
-            if cfile.hasspos():
-                cfilename = cfile.getname()
-                cfilefilename = UF.get_cfile_filename(self.tgtxpath,cfilename)
+        for creffile in self.get_cref_files():
+                creffilename = creffile.name
+                cfilefilename = UF.get_cfile_filename(self.tgtxpath,creffilename)
                 if not os.path.isfile(cfilefilename):
                     raise XmlFileNotFoundError(cfilefilename)
-                capp = CApplication(self.sempath,cfilename=cfilename)
-                cappfile = capp.getsinglefile()
-                if cfile.hasdomains():
-                    for d in cfile.getdomains():
-                        am = AnalysisManager(capp,onefile=True,verbose=self.verbose)
-                        am.generate_file_localinvariants(cfilename,d)
-                        am.check_file_proofobligations(cfilename)
+                capp = CApplication(self.sempath,cfilename=creffilename)
+                cappfile = capp.get_single_file()
+                if creffile.has_domains():
+                    for d in creffile.get_domains():
+                        delegate_to_post = self.proofcheckcount > 200
+                        am = AnalysisManager(capp,onefile=True,verbose=self.verbose,
+                                                 delegate_to_post=delegate_to_post)
+                        am.generate_file_local_invariants(creffilename,d)
+                        am.check_file_proofobligations(creffilename)
+                    self.proofcheckcount += 1    
                 spos = cappfile.get_spos()
                 if delaytest: continue
-                for cfun in cfile.getfunctions():
-                    fname = cfun.getname()
-                    funspos = [ spo for spo in spos if spo.getfunction().getname() == fname ]
-                    refspos = cfun.getspos()
-                    self.checksevs(cfilename,cfun,funspos,refspos)
+                for cfun in creffile.get_functions():
+                    fname = cfun.name
+                    funspos = [ spo for spo in spos if spo.cfun.name == fname ]
+                    refspos = cfun.get_spos()
+                    self.check_sevs(creffilename,cfun,funspos,refspos)
                     
 
-    def getcfilenames(self): return self.testsetref.getcfilenames()
+    def get_cref_filenames(self): return self.testsetref.get_cfilenames()
 
-    def getcfiles(self): return self.testsetref.getcfiles()
+    def get_cref_files(self): return self.testsetref.get_cfiles()
 
-    def getcfile(self,cfilename): self.testsetref.getcfile(cfilename)
+    def get_cref_file(self,cfilename): self.testsetref.get_cfile(cfilename)
 
     def clean(self):
-        for cfilename in self.getcfilenames():
+        for cfilename in self.get_cref_filenames():
             cfilename = os.path.join(self.cpath,cfilename)[:-2] + '.i'
             if os.path.isfile(cfilename):
                 if self.verbose: print('Removing ' + cfilename)

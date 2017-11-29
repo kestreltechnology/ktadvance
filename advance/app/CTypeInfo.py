@@ -25,22 +25,14 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-import advance.app.CTTypeExp as TX
-import advance.app.CContext as CC
+import advance.app.CDictionaryRecord as CD
 
-class CTypeInfo():
+class CTypeInfo(CD.CDeclarationsRecord):
     '''Type definition.'''
 
-    def __init__(self,cfile,xnode):
-        self.cfile = cfile
-        self.xnode = xnode
+    def __init__(self,cdecls,index,tags,args):
+        CD.CDeclarationsRecord.__init__(self,cdecls,index,tags,args)
+        self.name = tags[0]
+        self.type = self.get_dictionary().get_typ(self.args[0])
 
-    def getname(self): return self.xnode.get('tname')
-
-    def gettype(self):
-        t = self.xnode.find('ttype')
-        ctxt = CC.makefilecontext(self.cfile)
-        if not t is None:
-            return TX.gettype(ctxt,t)
-        else:
-            print('No ttype element found for ' + self.getname())
+    def __str__(self): return self.name + ':' + str(self.type)

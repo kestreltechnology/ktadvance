@@ -38,8 +38,8 @@ from advance.app.CApplication import CApplication
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('path',
-                            help='path to the juliet test case (relative to juliet_v1.2)' +
-                            ' (e.g., CWE121/s01/CWE129_largeQ)')
+                            help='path to the juliet test case (relative to juliet_v1.3)' +
+                            ' (e.g., CWE121/s01/CWE129_large)')
     args = parser.parse_args()
     return args
 
@@ -59,7 +59,8 @@ if __name__ == '__main__':
         
     capp = CApplication(sempath)
 
-    filterout = [ 'io', 'main_linux', 'std_thread' ]
+    # filterout = [ 'io', 'main_linux', 'std_thread' ]
+    filterout = []
     dc = [ 'deadcode' ]
     def filefilter(f): return (not f in filterout)
 

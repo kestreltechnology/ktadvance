@@ -28,7 +28,7 @@
 from advance.cmdline.kendra.TestPPORef import TestPPORef
 from advance.cmdline.kendra.TestSPORef import TestSPORef
 
-class TestCFunctionRef():
+class TestCFunctionRef(object):
 
     def __init__(self,testcfileref,name,r):
         self.testcfileref = testcfileref
@@ -38,38 +38,36 @@ class TestCFunctionRef():
         self.spos = {}
         self._initialize()
 
-    def getname(self): return self.name
-
-    def getppos(self):
+    def get_ppos(self):
         result = []
         for l in self.ppos: result.extend(self.ppos[l])
         return result
 
-    def hasppos(self): return len(self.ppos) > 0
+    def has_ppos(self): return len(self.ppos) > 0
 
-    def getspos(self):
+    def get_spos(self):
         result = []
         for l in self.spos: result.extend(self.spos[l])
         return result
 
-    def hasspos(self): return len(self.spos) > 0
+    def has_spos(self): return len(self.spos) > 0
 
-    def hasmultiple(self,line,pred):
+    def has_multiple(self,line,pred):
         if line in self.ppos:
-            ppopreds = [ p for p in self.ppos[line] if p.getpredicate() == pred ]
+            ppopreds = [ p for p in self.ppos[line] if p.get_predicate() == pred ]
         return len(ppopreds) > 1
 
     def _initialize(self):
         if 'ppos' in self.r:
             for p in self.r['ppos']:
                 ppo = TestPPORef(self,p)
-                line = ppo.getline()
+                line = ppo.get_line()
                 if not line in self.ppos: self.ppos[line] = []
                 self.ppos[line].append(ppo)
             if 'spos' in self.r:
                 for s in self.r['spos']:
                     spo = TestSPORef(self,s)
-                    line = spo.getline()
+                    line = spo.get_line()
                     if not line in self.spos: self.spos[line] = []
                     self.spos[line].append(spo)
 

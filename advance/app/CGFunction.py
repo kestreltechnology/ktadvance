@@ -25,42 +25,21 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CGFunctionArg import CGFunctionArg
 from advance.app.CVarInfo import CVarInfo
+from advance.app.CLocation import CLocation
 
-import advance.app.CContext as CC
-import advance.app.CTTypeExp as TX
-
-class CGFunction():
+class CGFunction(object):
     '''Function declaration.'''
 
-    def __init__(self,cfile,xnode):
-        self.cfile = cfile
-        self.xnode = xnode
-        self.varinfo = CVarInfo(self.cfile,self.xnode.find('svar'))
-        ctxt = CC.makefilecontext(self.cfile)
-        self.returnty = TX.gettype(ctxt,self.xnode.find('svar').find('vtyp').find('typ'))
-        self.args = []
-        for a in self.xnode.find('svar').find('vtyp').find('args').findall('arg'):
-            self.args.append(CGFunctionArg(self.cfile,a))
+    def __init__(self,varinfo):
+        self.varinfo = varinfo
 
-    def getvarinfo(self): return self.varinfo
+    def getname(self): return self.varinfo.vname
 
-    def getname(self): return self.getvarinfo().getname()
+    def gettype(self): return self.varinfo.vtype
 
     def getlinenr(self): return self.varinfo.getline()
 
-    def __str__(self):
-        if len(self.args) == 0:
-            return (str(self.returnty) + ' ' + self.varinfo.getname() + '()')
-        if len(self.args) == 1:
-            return (str(self.returnty) + ' ' + self.varinfo.getname() + '(' +
-                    str(self.args[0].gettype()) + ' ' + self.args[0].getname() + ')')
-        lines = []
-        lines.append(str(self.returnty) + ' ' + self.varinfo.getname() + '(')
-        for a in self.args:
-            lines.append('  ' + str(a.gettype()) + ' ' + a.getname())
-        lines.append(')')
-        return '\n'.join(lines)
-            
+    def __str__(self): return self.getname() + ': ' + str(self.gettype())
+             
                   

@@ -25,7 +25,7 @@
 import advance.app.CTTypeExp as TX
 import advance.app.CContext as CC
 
-class CLocationValues():
+class CLocationValues(object):
 
     def __init__(self,invs,xnode):
         self.invs = invs

@@ -29,7 +29,7 @@ import advance.util.printutil as UP
 
 dischargemethods = [ 'deadcode', 'stmt', 'local', 'api', 'post', 'open' ]
 
-class ProofObligationResults():
+class ProofObligationResults(object):
 
     def __init__(self,results,taglen=24):
         self.results = results      # tag -> method -> count

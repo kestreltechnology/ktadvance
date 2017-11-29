@@ -25,33 +25,32 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-import xml.etree.ElementTree as ET
+import advance.app.CDictionaryRecord as CD
 
-from advance.app.CLocation import CLocation
+class CFieldInfo(CD.CDeclarationsRecord):
+    '''Definition of a struct field.
 
-import advance.app.CContext as CC
-import advance.app.CTTypeExp as TX
+    tags:
+        0: fname
 
-class CFieldInfo():
-    '''Definition of a struct field.'''
+    args:
+        0: fcomp.ckey  (-1 for global structs)
+        1: ftype
+        2: fbitfield
+        3: fattr       (-1 for global structs)
+        4: floc        (-1 for global structs)
+    '''
 
-    def __init__(self,ccompinfo,xnode):
-        self.ccompinfo = ccompinfo
-        self.xnode = xnode
-        ctxt = CC.makefilecontext(self.ccompinfo.getfile())
-        self.ftype = TX.gettype(ctxt,self.xnode.find('ftyp'))
-        self.location = CLocation(self.xnode.find('floc'))
+    def __init__(self,cdecls,index,tags,args):
+        CD.CDeclarationsRecord.__init__(self,cdecls,index,tags,args)
+        self.fname = self.tags[0]
+        self.ftype = self.get_dictionary().get_typ(self.args[1])
+        self.bitfield = self.args[2]
 
-    def getname(self): return self.xnode.get('fname')
+    def get_location(self):
+        if self.args[4] >= 0: return self.decls.get_location(self.args[4])
 
-    def gettype(self): return self.ftype
+    def get_attributes(self):
+        if self.args[3] >= 0: return self.decls.get_attributes(self.args[3])
 
-    def getlocation(self): return self.location
-
-    def writexml(self,cnode):
-        tnode = ET.Element('ftyp')
-        lnode = ET.Element('floc')
-        cnode.set('fname',self.getname())
-        self.ftype.writexml(tnode)
-        self.location.writexml(lnode)
-        cnode.extend([ tnode, lnode ])
+    def __str__(self): return self.fname + ':' + str(self.ftype)

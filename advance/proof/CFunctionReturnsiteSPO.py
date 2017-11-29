@@ -27,7 +27,6 @@
 
 import xml.etree.ElementTree as ET
 
-import advance.proof.CPOUtil as P
 import advance.util.printutil as UP
 
 from advance.proof.CFunctionPO import CFunctionPO
@@ -35,32 +34,15 @@ from advance.proof.CFunctionPO import CFunctionPO
 class CFunctionReturnsiteSPO(CFunctionPO):
     '''Represents a secondary proof obligation associated with a return site.'''
 
-    def __init__(self,crspos,spoid,rqid,pred):
-        CFunctionPO.__init__(self,crspos.cspos)
+    def __init__(self,crspos,potype,status='open',deps=None,expl=None):
+        CFunctionPO.__init__(self,crspos.cspos,potype,status,deps,expl)
         self.crspos = crspos      # CFunctionReturnsiteSPOs
-        self.spoid = spoid
-        self.rqid = rqid
-        self.pred = pred          # CPOPredicate
+        self.external_id = self.potype.get_external_id()
 
-    def getid(self): return self.spoid
 
-    def getrequestid(self): return self.rqid
+    def write_xml(self,cnode):
+        self.pod.write_xml_spo_type(cnode,self.potype)
+        cnode.set('id',str(self.id))
 
-    def getlocation(self): return self.crspos.getlocation()
-
-    def getcontext(self): return self.crspos.getcontext()
-
-    def getpredicatetag(self): return self.pred.gettag()
-
-    def getpredicate(self): return self.pred
-
-    def hashstr(self): return self.pred.hashstr()
-
-    def getcfgcontextstring(self): return self.getcontext().getcfgcontextstring()        
-
-    def writexml(self,cnode):
-        pnode = ET.Element('predicate')
-        self.getpredicate().writexml(pnode)
-        cnode.set('id',self.getid())
-        cnode.set('rq-id',self.getrequestid())
-        cnode.append(pnode)
+    def __str__(self):
+        return (CFunctionPO.__str__(self) + ' (' + str(self.external_id) + ')')

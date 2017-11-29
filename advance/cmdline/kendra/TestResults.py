@@ -26,7 +26,7 @@
 # ------------------------------------------------------------------------------
 
 
-class TestResults():
+class TestResults(object):
 
     def __init__(self,testsetref):
         self.testsetref = testsetref      # TestSetRef
@@ -54,25 +54,25 @@ class TestResults():
 
     def set_sevs(self): self.includessevs = True
 
-    def add_parseerror(self,cfilename,msg):
+    def add_parse_error(self,cfilename,msg):
         self.parseresults[cfilename] = 'error: ' + msg
 
-    def add_parsesuccess(self,cfilename):
+    def add_parse_success(self,cfilename):
         self.parseresults[cfilename] = 'ok'
 
-    def add_xcfileerror(self,cfilename):
+    def add_xcfile_error(self,cfilename):
         self.xfileresults[cfilename]['xcfile'] = 'missing'
 
-    def add_xcfilesuccess(self,cfilename):
+    def add_xcfile_success(self,cfilename):
         self.xfileresults[cfilename]['xcfile'] = 'ok'
 
-    def add_xffileerror(self,cfilename,cfun):
+    def add_xffile_error(self,cfilename,cfun):
         self.xfileresults[cfilename]['xffiles'][cfun] = 'missing'
 
-    def add_xffilesuccess(self,cfilename,cfun):
+    def add_xffile_success(self,cfilename,cfun):
         self.xfileresults[cfilename]['xffiles'][cfun] = 'ok'
 
-    def add_ppocounterror(self,cfilename,cfun,lenppos,lenrefppos):
+    def add_ppo_count_error(self,cfilename,cfun,lenppos,lenrefppos):
         discrepancy = lenrefppos - lenppos
         if discrepancy > 0:
             msg = (str(discrepancy) + ' ppos are missing')
@@ -81,7 +81,7 @@ class TestResults():
                 
         self.pporesults[cfilename][cfun]['count'] = 'error: ' + msg
 
-    def add_spocounterror(self,cfilename,cfun,lenspos,lenrefspos):
+    def add_spo_count_error(self,cfilename,cfun,lenspos,lenrefspos):
         discrepancy = lenrefspos - lenspos
         if discrepancy > 0:
             msg = (str(discrepancy) + ' spos are missing')
@@ -90,25 +90,25 @@ class TestResults():
 
         self.sporesults[cfilename][cfun]['count'] = 'error: ' + msg
 
-    def add_ppocountsuccess(self,cfilename,cfun):
+    def add_ppo_count_success(self,cfilename,cfun):
         self.pporesults[cfilename][cfun]['count'] = 'ok'
 
-    def add_spocountsuccess(self,cfilename,cfun):
+    def add_spo_count_success(self,cfilename,cfun):
         self.sporesults[cfilename][cfun]['count'] = 'ok'
 
-    def add_missingppo(self,cfilename,cfun,context,predicate):
+    def add_missing_ppo(self,cfilename,cfun,context,predicate):
         self.pporesults[cfilename][cfun]['missingpredicates'].append((context,predicate))
 
-    def add_missingspo(self,cfilename,cfun,context,hashstr):
+    def add_missing_spo(self,cfilename,cfun,context,hashstr):
         self.sporesults[cfilename][cfun]['missing'].append((context,hashstr))
 
-    def add_pevdiscrepancy(self,cfilename,cfun,ppo,status):
-        hasmultiple = cfun.hasmultiple(ppo.getline(),ppo.getpredicate())
-        self.pevresults[cfilename][cfun.getname()]['discrepancies'].append((
+    def add_pev_discrepancy(self,cfilename,cfun,ppo,status):
+        hasmultiple = cfun.has_multiple(ppo.get_line(),ppo.get_predicate())
+        self.pevresults[cfilename][cfun.name]['discrepancies'].append((
             ppo,status,hasmultiple))
 
-    def add_sevdiscrepancy(self,cfilename,cfun,spo,status):
-        self.sevresults[cfilename][cfun.getname()]['discrepancies'].append((spo,status,False))
+    def add_sev_discrepancy(self,cfilename,cfun,spo,status):
+        self.sevresults[cfilename][cfun.name]['discrepancies'].append((spo,status,False))
 
     def get_summary(self):
         lines = []
@@ -117,8 +117,8 @@ class TestResults():
         lines.append(header)
         lines.append('-' * 85)
         for cfile in self.cfiles:
-            cfilename = cfile.getname()
-            cfunctions = cfile.getfunctions()
+            cfilename = cfile.name
+            cfunctions = cfile.get_functions()
             parsingok = ''
             pposok = 'ok'
             sposok = ''
@@ -126,7 +126,7 @@ class TestResults():
             sevsok = ''
             if len(cfunctions) > 0:
                 for cfun in cfunctions:
-                    fname = cfun.getname()
+                    fname = cfun.name
                     if self.includesparsing:
                         if self.xfileresults[cfilename]['xffiles'][fname] != 'ok':
                             parsingok = 'bad'
@@ -163,7 +163,8 @@ class TestResults():
                 if parsingok != 'bad':
                     parsingok = 'ok'
 
-            lines.append(cfilename.ljust(10) + parsingok.center(15) +  pposok.center(15) + sposok.center(15) + pevsok.center(15) + sevsok.center(15))
+            lines.append(cfilename.ljust(10) + parsingok.center(15) +  pposok.center(15)
+                             + sposok.center(15) + pevsok.center(15) + sevsok.center(15))
         return '\n'.join(lines)
 
     def __str__(self):
@@ -171,27 +172,27 @@ class TestResults():
         if self.includesparsing:
             lines.append('\nCheck parsing results:\n' + ('-' * 80))
             for cfile in self.cfiles:
-                cfilename = cfile.getname()
+                cfilename = cfile.name
                 lines.append(' ')
                 lines.append(cfilename)
                 lines.append('  parse : ' + self.parseresults[cfilename])
                 lines.append('  xcfile: ' + self.xfileresults[cfilename]['xcfile'])
-                cfunctions = cfile.getfunctions()
+                cfunctions = cfile.get_functions()
                 if len(cfunctions) > 0:
                     for cfun in cfunctions:
-                        fname = cfun.getname()
+                        fname = cfun.name
                         lines.append('    ' + fname + ': ' +
                                     self.xfileresults[cfilename]['xffiles'][fname])
         if self.includesppos:
             lines.append('\nCheck primary proof obligations:\n' + ('-' * 80))
             for cfile in self.cfiles:
-                cfilename = cfile.getname()
+                cfilename = cfile.name
                 lines.append('')
                 lines.append(cfilename)
-                cfunctions = cfile.getfunctions()
+                cfunctions = cfile.get_functions()
                 if len(cfunctions) > 0:
                     for cfun in cfunctions:
-                        fname = cfun.getname()
+                        fname = cfun.name
                         funresults = self.pporesults[cfilename][fname]
                         count = funresults['count']
                         missing = funresults['missingpredicates']
@@ -201,19 +202,19 @@ class TestResults():
                             lines.append('    ' + fname)
                             if count != 'ok':
                                 lines.append('      count: ' + count)
-                        for ((cctxt,ectxt),p) in missing:
-                            lines.append('        (' + str(cctxt) + ',' + str(ectxt) + ')' + ': ' + p)
+                        for (ctxt,p) in missing:
+                            lines.append('        (' + str(ctxt) + ')' + ': ' + p)
 
         if self.includesspos:
             lines.append('\nCheck secondary proof obligations:\n' + ('-' * 80))
             for cfile in self.cfiles:
-                cfilename = cfile.getname()
+                cfilename = cfile.name
                 lines.append('')
                 lines.append(cfilename)
-                cfunctions = cfile.getfunctions()
+                cfunctions = cfile.get_functions()
                 if len(cfunctions) > 0:
                     for cfun in cfunctions:
-                        fname = cfun.getname()
+                        fname = cfun.name
                         funresults = self.sporesults[cfilename][fname]
                         count = funresults['count']
                         missing = funresults['missing']
@@ -229,54 +230,54 @@ class TestResults():
         if self.includespevs:
             lines.append('\nCheck primary proof results:\n' + ('-' * 80))
             for cfile in self.cfiles:
-                cfilename = cfile.getname()
+                cfilename = cfile.name
                 lines.append('')
                 lines.append(cfilename)
-                cfunctions = cfile.getfunctions()
+                cfunctions = cfile.get_functions()
                 if len(cfunctions) > 0:
                     for cfun in cfunctions:
-                        fname = cfun.getname()
+                        fname = cfun.name
                         pevs = self.pevresults[cfilename][fname]['discrepancies']
                         if len(pevs) == 0:
                             lines.append('    ' + fname + ': ok')
                         else:
                             lines.append('    ' + fname)
                             for (ppo,status,hasmultiple) in pevs:
-                                ctxt = ppo.getcontextstring() if hasmultiple else ''
+                                ctxt = ppo.get_context_string() if hasmultiple else ''
                                 lines.append(
-                                    '    ' + str(ppo.getline()).rjust(4) + ' ' +
-                                    ppo.getpredicate().ljust(20) +
+                                    '    ' + str(ppo.get_line()).rjust(4) + ' ' +
+                                    ppo.get_predicate().ljust(20) +
                                     '  found:' + status.ljust(11) +
-                                    '  expected:' + ppo.getstatus().ljust(11) + '  ' + ctxt)
+                                    '  expected:' + ppo.get_status().ljust(11) + '  ' + ctxt)
 
         if self.includessevs:
             lines.append('\nCheck secondary proof results:\n' + ('-' * 80))
             for cfile in self.cfiles:
-                cfilename = cfile.getname()
+                cfilename = cfile.name
                 lines.append('')
                 lines.append(cfilename)
-                cfunctions = cfile.getfunctions()
+                cfunctions = cfile.get_functions()
                 if len(cfunctions) > 0:
                     for cfun in cfunctions:
-                        fname = cfun.getname()
+                        fname = cfun.name
                         sevs = self.sevresults[cfilename][fname]['discrepancies']
                         if len(sevs) == 0:
                             lines.append('    ' + fname + ': ok')
                         else:
                             lines.append('    ' + fname)
                             for (spo,status,hasmultiple) in sevs:
-                                ctxt = spo.getcfgcontextstring() if hasmultiple else ''
+                                ctxt = spo.get_cfg_context_string() if hasmultiple else ''
                                 lines.append(
-                                    '    ' + str(spo.getline()).rjust(4) + ' ' +
-                                    spo.gethashstr().ljust(20) +
+                                    '    ' + str(spo.get_line()).rjust(4) + ' ' +
+                                    spo.get_predicate().ljust(20) +
                                     '  found:' + status.ljust(11) +
-                                    '  expected:' + spo.getstatus().ljust(11) + '  ' + ctxt)
+                                    '  expected:' + spo.get_status().ljust(11) + '  ' + ctxt)
         return '\n'.join(lines)
             
     def _initialize(self):
-        self.cfiles = self.testsetref.getcfiles()
+        self.cfiles = self.testsetref.get_cfiles()
         for cfile in self.cfiles:
-            f = cfile.getname()
+            f = cfile.name
             self.parseresults[f] = 'none'
             self.xfileresults[f] = {}
             self.xfileresults[f]['xcfile'] = 'none'
@@ -285,8 +286,8 @@ class TestResults():
             self.pevresults[f] = {}
             self.sporesults[f] = {}
             self.sevresults[f] = {}
-            for cfun in cfile.getfunctions():
-                ff = cfun.getname()
+            for cfun in cfile.get_functions():
+                ff = cfun.name
                 self.pporesults[f][ff] = {}
                 self.pporesults[f][ff]['count'] = 'none'
                 self.pporesults[f][ff]['missingpredicates'] = []

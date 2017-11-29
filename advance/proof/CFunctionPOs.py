@@ -26,17 +26,14 @@
 # ------------------------------------------------------------------------------
 
 
-class CFunctionPOs():
+class CFunctionPOs(object):
     '''Superclass of CFunctionPPOs and CFunctionSPOs.'''
 
     def __init__(self,cproofs):
         self.cproofs = cproofs
+        self.cfun = self.cproofs.cfun
+        self.cfile = self.cfun.cfile
 
-    def getfunction(self):
-        return self.cproofs.getfunction()
-
-    def getfile(self):
-        return self.getfunction().getfile()
 
     def is_ppo_discharged(self,id): return self.cproofs.is_ppo_discharged(id)
 

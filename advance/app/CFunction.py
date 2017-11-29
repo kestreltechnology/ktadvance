@@ -25,90 +25,130 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import xml.etree.ElementTree as ET
+
 import advance.util.fileutil as UF
 from advance.app.CLocation import CLocation
-from advance.app.CFunctionBody import CFunctionBody
+from advance.app.CFunDeclarations import CFunDeclarations
 from advance.app.CVarInfo import CVarInfo
-
-from advance.invariants.CFunctionInvariants import CFunctionInvariants
+from advance.invariants.CFunVarDictionary import CFunVarDictionary
+from advance.invariants.CFunInvDictionary import CFunInvDictionary
+from advance.invariants.CFunInvariantTable import CFunInvariantTable
 
 from advance.api.CFunctionApi import CFunctionApi
+from advance.proof.CFunPODictionary import CFunPODictionary
 from advance.proof.CFunctionProofs import CFunctionProofs
 
-class CFunction():
+class CFunction(object):
     '''Function implementation.'''
 
     def __init__(self,cfile,xnode):
         self.cfile = cfile
         self.xnode = xnode
+        self.fdecls = CFunDeclarations(self,xnode.find('declarations'))
+        self.svar = self.cfile.declarations.get_varinfo(int(xnode.find('svar').get('ivinfo')))
+        self.ftype = self.svar.vtype
+        self.name = self.svar.vname
         self.formals = {}                            # vid -> CVarInfo
         self.locals = {}                             # vid -> CVarInfo
-        self.body = CFunctionBody(self,self.xnode.find('sbody'))
-        self.proofs = CFunctionProofs(self)          # CFunctionProofs object
-        self.api = CFunctionApi(self)                # CFunctionApi object
+        # self.body = CFunctionBody(self,self.xnode.find('sbody'))
+        self.podictionary = CFunPODictionary(self)
+        self.proofs = CFunctionProofs(self)        
+        self.api = CFunctionApi(self)              
+        self.vard = CFunVarDictionary(self.fdecls)
+        self.invd = CFunInvDictionary(self.vard)
+        self.invtable = CFunInvariantTable(self.invd)
         self.invariants = None                       # CFunctionInvariants object
+        self.mayfreememory = True
         self._initialize()
 
-    def iterppos(self,f): self.proofs.iterppos(f)
+    def reinitialize_tables(self):
+        self.api = CFunctionApi(self)
+        self.podictionary.initialize()
+        self.vard.initialize(force=True)
+        self.mayfreememory = False
+        def f(cs):
+            if cs.mayfreememory: self.mayfreememory = True
+        self.iter_callsites(f)
+        if self.api.may_free_memory(): self.mayfreememory = True
 
-    def getppo(self,index): return self.proofs.getppo(index)
+    def get_formal_vid(self,name):
+        for v in self.formals:
+            if self.formals[v].vname == name: return v
+        else:
+            print('Formals: ' + ','.join([ str(v) for v in self.formals.values() ]))
 
-    def itercallsites(self,f): self.proofs.itercallsites(f)
+    def get_variable_vid(self,vname):
+        for v in self.formals:
+            if self.formals[v].vname == vname: return self.formals[v].get_vid()
+        for v in self.locals:
+            if self.locals[v].vname == vname: return self.locals[v].get_vid()
 
-    def getcapp(self): return self.getfile().getcapp()
+    def iter_ppos(self,f): self.proofs.iter_ppos(f)
 
-    def getfile(self): return self.cfile
+    def get_ppo(self,index): return self.proofs.get_ppo(index)
 
-    def getname(self):
-        return self.xnode.find('svar').get('vname')
+    def iter_callsites(self,f): self.proofs.iter_callsites(f)
 
-    def getid(self):
-        return int(self.xnode.find('svar').get('vid'))
+    def getcapp(self): return self.cfile.capp
 
-    def getapi(self): return self.api
+    def get_vid(self): return self.svar.get_vid()
 
-    def getlocation(self):
-        return CLocation(self.xnode.find('svar').find('vdecl'))
+    def get_api(self): return self.api
 
-    def getlinenr(self): return self.getlocation().getline()
+    def get_location(self): return self.svar.vdecl
 
-    def getformals(self): return self.formals.values()
+    def get_line(self): return self.get_location().get_line()
 
-    def getlocals(self): return self.locals.values()
+    def get_formals(self): return self.formals.values()
 
-    def getbody(self): return self.body
+    def get_locals(self): return self.locals.values()
 
-    def getstmtcount(self): return self.body.getstmtcount()
+    def get_body(self): return self.body
 
-    def getinstrcount(self): return self.body.getinstrcount()
+    def get_stmt_count(self): return self.body.get_stmt_count()
 
-    def getcallinstrs(self): return self.body.getcallinstrs()
+    def get_instr_count(self): return self.body.get_instr_count()
 
-    def getinvariants(self):
+    def get_callinstrs(self): return self.body.get_callinstrs()
+
+    def get_invariants(self):
         self._readinvariants()
         return self.invariants
 
-    def getproofs(self): return self.proofs
+    def get_proofs(self): return self.proofs
 
-    def getcallsitespos(self): return self.proofs.getspos
+    def get_callsite_spos(self): return self.proofs.getspos
 
-    def updatespos(self): self.proofs.updatespos()
+    def update_spos(self): self.proofs.update_spos()
 
-    def acceptpostrequest(self,rv,fvid): self.proofs.addreturnsiteobligation(rv,fvid)
+    def accept_post_request(self,postcondition):
+        self.proofs.add_returnsite_postcondition(postcondition)
 
-    def requestpostconditions(self):
-        for r in self.getapi().getpostrequests():
-            tgtfid = r.getfunctionindex()
-            tgtfun = self.getcapp().resolve_vid_function(self.cfile.getindex(),tgtfid)
+    def request_postconditions(self):
+        for r in self.get_api().get_postcondition_requests():
+            tgtfid = r.callee.get_vid()
+            tgtfun = self.getcapp().resolve_vid_function(self.cfile.index,tgtfid)
             if tgtfun is None:
                 print('No function found to register post request in function ' +
-                          self.cfile.getfilename() + ':' + self.getname())
+                          self.cfile.name + ':' + self.name)
             else:
-                fidtgt = tgtfun.getfile().getindex()
-                vidtgt = self.getcapp().convert_vid(self.cfile.getindex(),self.getid(),fidtgt)
-                tgtfun.acceptpostrequest(r,vidtgt)
+                postcondition = r.postcondition
+                tgtpostconditionix = tgtfun.cfile.interfacedictionary.index_postcondition(postcondition)
+                tgtpostcondition = tgtfun.cfile.interfacedictionary.get_postcondition(tgtpostconditionix)
+                tgtfun.accept_post_request(tgtpostcondition)
 
-    def savespos(self): self.proofs.savespos()
+    def save_spos(self): self.proofs.save_spos()
+
+    def save_pod(self):
+        cnode = ET.Element('function')
+        cnode.set('name',self.name)
+        self.podictionary.write_xml(cnode)
+        UF.save_pod_file(self.cfile.capp.path,self.cfile.name,self.name,cnode)
+
+    def reload_ppos(self): self.proofs.reload_ppos()
+
+    def reload_spos(self): self.proofs.reload_spos()
 
     def get_ppos(self): return self.proofs.get_ppos()
 
@@ -120,17 +160,28 @@ class CFunction():
 
     def get_delegated(self): return self.proofs.get_delegated()
 
-    def _initialize(self):
-        for v in self.xnode.find('sformals').findall('varinfo'):
-            vid = int(v.get('vid'))
-            self.formals[vid] = CVarInfo(self.cfile,v)
-        for v in self.xnode.find('slocals').findall('varinfo'):
-            vid = int(v.get('vid'))
-            self.locals[vid] = CVarInfo(self.cfile,v)
-        self.proofs = CFunctionProofs(self)
+    def may_free_memory(self):
+        self.mayfreememory = False
+        def f(cs):
+            if cs.mayfreememory:
+                self.mayfreememory = True
+        self.iter_callsites(f)
+        return (self.mayfreememory or self.api.may_free_memory())
 
-    def _readinvariants(self):
+    def _initialize(self):
+        for v in self.fdecls.get_formals():
+            self.formals[v.get_vid()] = v
+        for v in self.fdecls.get_locals(): self.locals[v.get_vid()] = v
+        self.vard.initialize()
+        self.invtable.initialize()
+        self.mayfreememory = False
+        def f(cs):
+            if cs.mayfreememory: self.mayfreememory = True
+        self.iter_callsites(f)
+        if self.api.may_free_memory(): self.mayfreememory = True
+
+    def _read_invariants(self):
         if not self.invariants is None: return
-        xinvs = UF.get_invs_xnode(self.cfile.getcapp().getpath(),self.cfile.getfilename(),self.getname())
+        xinvs = UF.get_invs_xnode(self.cfile.capp.path,self.cfile.name,self.name)
         self.invariants = CFunctionInvariants(self,xinvs)
 

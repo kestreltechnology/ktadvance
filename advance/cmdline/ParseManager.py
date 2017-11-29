@@ -35,7 +35,7 @@ from advance.util.Config import Config
 
 import advance.util.xmlutil as UX
 
-class ParseManager():
+class ParseManager(object):
     '''Utility functions to support preprocessing and parsing source code.'''
 
     def __init__(self,cpath,tgtpath,filter=False,posix=False,verbose=True,tgtplatform='-m64'):
@@ -64,13 +64,13 @@ class ParseManager():
             self.tgtplatform = '-m64'
 
 
-    def getsempath(self): return self.sempath
+    def get_sempath(self): return self.sempath
 
-    def gettgtxpath(self): return self.tgtxpath
+    def get_tgt_xpath(self): return self.tgtxpath
 
-    def gettgtspath(self): return self.tgtspath
+    def get_tgt_spath(self): return self.tgtspath
 
-    def savesemantics(self):
+    def save_semantics(self):
         os.chdir(self.cpath)
         tarfilename = 'semantics_' + self.config.platform + '.tar'
         if os.path.isfile(tarfilename): os.remove(tarfilename)
@@ -78,9 +78,9 @@ class ParseManager():
         tarcmd = [ 'tar', '-cf' , tarfilename , 'semantics']
         subprocess.call(tarcmd,cwd=self.cpath,stderr=subprocess.STDOUT) if self.verbose else subprocess.call(tarcmd,cwd=self.cpath,stdout=open(os.devnull,'w'), stderr=subprocess.STDOUT)
         gzipcmd = [ 'gzip', tarfilename ]
-        subprocess.call(gzipcmd,cwd=self.cpath,stderr=subprocess.STDOUT) if self.verbose else subprocess.call(tarcmd,cwd=self.cpath,stdout=open(os.devnull,'w'), stderr=subprocess.STDOUT)
+        subprocess.call(gzipcmd,cwd=self.cpath,stderr=subprocess.STDOUT) if self.verbose else subprocess.call(gzipcmd,cwd=self.cpath,stdout=open(os.devnull,'w'), stderr=subprocess.STDOUT)
 
-    def preprocess_file_withgcc(self,cfilename,copyfiles=True):
+    def preprocess_file_with_gcc(self,cfilename,copyfiles=True):
         '''Invoke gcc preprocessor on c source file.
 
         Args:
@@ -113,21 +113,21 @@ class ParseManager():
                 shutil.copy(ifilename,tgtifilename)
         return ifilename
 
-    def getfilelength(self,fname):
+    def get_file_length(self,fname):
         with open(fname) as f:
             for i,l in enumerate(f): pass
         return i+1
 
-    def normalizefilename(self,filename):
+    def normalize_filename(self,filename):
         if filename.startswith(self.cpath):
             return filename[len(self.cpath)+1:]
         else:
             return filename
 
-    def hasplatform(self,cmd):
+    def has_platform(self,cmd):
         return ('-m32' in cmd) or ('-m64' in cmd)
 
-    def getplatformindex(self,cmd):
+    def get_platform_index(self,cmd):
         if '-m32' in cmd:
             return cmd.index('-m32')
         elif '-m64' in cmd:
@@ -135,8 +135,8 @@ class ParseManager():
         else:
             return (-1)
 
-    def setplatform(self,cmd):
-        index = self.getplatformindex(cmd)
+    def set_platform(self,cmd):
+        index = self.get_platform_index(cmd)
         if index >= 0:
             platform = cmd[index]
             if platform == self.tgtplatform:
@@ -174,7 +174,7 @@ class ParseManager():
             ecommand.append('-fno-inline')
             ecommand.append('-fno-builtin')
             ecommand.append('-fno-asm')
-            self.setplatform(ecommand)
+            self.set_platform(ecommand)
             if self.verbose: print('\nIssue command: ' + str(ecommand) + '\n')
             p = subprocess.call(ecommand,cwd=ccommand['directory'],stderr=subprocess.STDOUT) if self.verbose else subprocess.call(ecommand,cwd=ccommand['directory'],stdout=open(os.devnull, 'w'),stderr=subprocess.STDOUT)
             if self.verbose: print('result: ' + str(p))
@@ -182,8 +182,8 @@ class ParseManager():
             p = subprocess.call(command,cwd=ccommand['directory'],stderr=subprocess.STDOUT) if self.verbose else subprocess.call(command,cwd=ccommand['directory'],stdout=open(os.devnull, 'w'),stderr=subprocess.STDOUT)
             if self.verbose: print('result: ' + str(p))
             if copyfiles:
-                tgtcfilename = os.path.join(self.tgtspath,self.normalizefilename(cfilename))
-                tgtifilename = os.path.join(self.tgtspath,self.normalizefilename(ifilename))
+                tgtcfilename = os.path.join(self.tgtspath,self.normalize_filename(cfilename))
+                tgtifilename = os.path.join(self.tgtspath,self.normalize_filename(ifilename))
                 tgtcdir = os.path.dirname(tgtcfilename)
                 if not os.path.isdir(tgtcdir):
                     os.makedirs(tgtcdir)
@@ -207,7 +207,7 @@ class ParseManager():
             if not self.filter:
                 command.append('-nofilter')
             command.append(ifilename)
-            cfilelen = self.getfilelength(cfilename)
+            cfilelen = self.get_file_length(cfilename)
             cfiles[cfilename] = cfilelen
             if self.verbose : print('\nRun the parser: ' + str(command) + '\n')
             subprocess.call(command) if self.verbose else subprocess.call(command,stdout=open(os.devnull,'w'))
@@ -215,10 +215,10 @@ class ParseManager():
         if self.verbose:print('\n\nCollect c files')
         for n in cfiles:
             n = os.path.abspath(n)
-            name = self.normalizefilename(n)
+            name = self.normalize_filename(n)
             if self.verbose:print('   Add ' + name + ' (' + str(cfiles[n]) + ' lines)')
-            targetfiles.addfile(name)
-        targetfiles.savexmlfile(self.tgtxpath)
+            targetfiles.add_file(name)
+        targetfiles.save_xml_file(self.tgtxpath)
         linecount = sum(cfiles[n] for n in cfiles)
         if self.verbose: print('\nTotal ' + str(len(cfiles)) + ' files (' + str(linecount) + ' lines)')
         os.chdir(self.cpath)
@@ -233,8 +233,8 @@ class ParseManager():
                     self.parse_ifile(fname)
                     basename = fname[:-2]
                     cfile = basename + '.c'
-                    targetfiles.addfile(self.normalizefilename(cfile))
-        targetfiles.savexmlfile(self.tgtxpath)
+                    targetfiles.add_file(self.normalize_filename(cfile))
+        targetfiles.save_xml_file(self.tgtxpath)
 
     def parse_cfiles(self,copyfiles=True):
         os.chdir(self.cpath)
@@ -242,11 +242,11 @@ class ParseManager():
         for d,dnames,fnames in os.walk(self.cpath):
             for fname in fnames:
                 if fname.endswith('.c'):
-                    fname = self.normalizefilename(os.path.join(d,fname))
+                    fname = self.normalize_filename(os.path.join(d,fname))
                     if fname.startswith('semantics'): continue
-                    ifilename = self.preprocess_file_withgcc(fname,copyfiles)
+                    ifilename = self.preprocess_file_with_gcc(fname,copyfiles)
                     self.parse_ifile(ifilename)
-                    targetfiles.addfile(self.normalizefilename(fname))
+                    targetfiles.add_file(self.normalize_filename(fname))
         targetfiles.savexmlfile(self.tgtxpath)
 
         
@@ -268,7 +268,7 @@ class ParseManager():
         return p
         
 
-    def initializepaths(self):
+    def initialize_paths(self):
         '''Create directories for the target path.'''
         if not os.path.isdir(self.tgtpath): os.mkdir(self.tgtpath)
         if not os.path.isdir(self.sempath): os.mkdir(self.sempath)
@@ -277,15 +277,15 @@ class ParseManager():
 
 
 
-class TargetFiles():
+class TargetFiles(object):
 
     def __init__(self):
         self.files = {}
 
-    def addfile(self,fname):
+    def add_file(self,fname):
         self.files.setdefault(fname,len(self.files))
 
-    def savexmlfile(self,tgtpath):
+    def save_xml_file(self,tgtpath):
         tgtroot = UX.get_xml_header('target_files','c-files')
         cfilesnode = ET.Element('c-files')
         tgtroot.append(cfilesnode)

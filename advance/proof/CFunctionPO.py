@@ -25,60 +25,137 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CContext import makecontext
-from advance.app.CContext import CContext
-from advance.app.CLocation import CLocation
+import xml.etree.ElementTree as ET
 
-import advance.proof.CPOUtil as P
+po_status = {
+    'g': 'safe',
+    'o': 'open',
+    'r': 'violation',
+    'x': 'dead-code'
+    }
 
-class CFunctionPO():
-    '''Super class of primary and secondary proof obligations.'''
+po_status_indicators = { v:k for (k,v) in po_status.items() }
 
-    def __init__(self,cpos):
+class CProofDependencies(object):
+    '''Extent of dependency of a closed proof obligation.
+
+    levels:
+       's': dependent on statement itself only
+       'f': dependent on function context
+       'a': dependent on other functions in the application
+       'x': dead code
+
+    ids: list of api assumption id's on which the proof is dependent
+
+    invs: list of invariants indices used to establish dependencies or
+             validity
+    '''
+    def __init__(self,cpos,level,ids=[],invs=[]):
         self.cpos = cpos
+        self.level = level
+        self.ids = ids
+        self.invs = invs
 
-    def isppo(self): return False
+    def is_stmt(self): return self.level == 's'
 
-    def getfunction(self): return self.cpos.getfunction()
+    def is_local(self): return self.level == 's' or self.level == 'f'
 
-    def getfile(self): return self.cpos.getfile()
+    def has_external_dependencies(self): return self.level == 'a'
 
-    def getline(self): return self.getlocation().getline()
+    def is_deadcode(self): return self.level == 'x'
 
-    def hasvariable(self,vname):
-        return self.getpredicate().hasvariable(vname)
+    def write_xml(self,cnode):
+        cnode.set('deps',self.level)
+        if len(self.ids) > 0:
+            cnode.set('ids',','.join([str(i) for i in self.ids ]))
+        if len(self.invs) > 0:
+            cnode.set('invs',','.join([str(i) for i in self.invs ]))
 
-    def hastargettype(self,targettype):
-        return self.getpredicate().hastargettype()
+    def __str__(self): return self.level
 
-    def getcontextstrings(self): return self.getcontext().contextstrings()
 
-    def isdischarged(self):
-        if self.isppo():
-            return self.cpos.is_ppo_discharged(self.getid())
+class CFunctionPO(object):
+    '''Super class of primary and supporting proof obligations.'''
+
+    def __init__(self,cpos,potype,status='open',deps=None,expl=None,diag=None):
+        self.cpos = cpos                # CFunctionPOs
+        self.cfun = cpos.cfun
+        self.cfile = cpos.cfile
+        self.potype = potype
+        self.id = self.potype.index
+        self.pod = self.potype.pod
+        self.context = self.potype.get_context()
+        self.cfg_context_string = self.context.get_cfg_context_string()
+        self.predicate = self.potype.get_predicate()
+        self.predicatetag = self.predicate.get_tag()
+        self.status = status
+        self.location = self.potype.get_location()
+        self.dependencies = deps
+        self.explanation = expl
+        self.diagnostic = diag
+
+    def is_ppo(self): return False
+    def is_spo(self): return False
+
+    def get_line(self): return self.location.get_line()
+
+    def has_variable_name(self,vname):
+        vid = self.cfun.get_variable_vid(vname)
+        if not vid is None:
+            return self.has_variable(vid)
         else:
-            return self.cpos.is_spo_discharged(self.getid())
+            False
 
-    def isviolated(self):
-        if self.isppo():
-            return self.cpos.is_ppo_violated(self.getid())
-        else:
-            return self.cpos.is_spo_violated(self.getid())
+    def has_dependencies(self): return (not self.dependencies is None)
 
-    def getevidence(self):
-        if self.isdischarged():
-            if self.isppo():
-                return self.cpos.get_ppo_evidence(self.getid())
-            else:
-                return self.cpos.get_spo_evidence(self.getid())
+    def has_variable(self,vid): return self.predicate.has_variable(vid)
+
+    def has_target_type(self,targettype): return self.predicate.has_target_type()
+
+    def get_context_strings(self): return str(self.context)
+
+    def is_open(self): return self.status == 'open'
         
-    def getstatus(self):
-        if self.isdischarged():
-            return self.getevidence().getstatus()
-        return 'unknown'
+    def is_closed(self): return (not self.is_open())
+
+    def is_violated(self): return (self.status == 'violation')
+
+    def is_safe(self): return (self.status == 'safe')
+
+    def is_deadcode(self): return (self.status == 'dead-code')
+
+    def is_delegated(self):
+        if self.is_safe and not self.dependencies is None:
+            return self.dependencies.has_external_dependencies()
+        return False
+
+    def has_explanation(self): return (not self.explanation is None)
+
+    def has_diagnostic(self): return (not self.diagnostic is None)
+
+    def get_display_prefix(self):
+        if self.is_violated(): return '<*>'
+        if self.is_open(): return '<?>'
+        if self.is_deadcode(): return '<X>'
+        if self.dependencies.is_stmt(): return '<S>'
+        if self.dependencies.is_local(): return '<L>'
+        return '<A>'
+
+    def write_xml(self,cnode):
+        self.pod.write_xml_spo_type(cnode,self.potype)
+        cnode.set('s',po_status_indicators[self.status])
+        cnode.set('id',str(self.id))
+        if not self.dependencies is None:
+            self.dependencies.write_xml(cnode)
+        if not self.explanation is None:
+            enode = ET.Element('e')
+            enode.set('txt',self.explanation)
+            cnode.append(enode)
+        if not self.diagnostic is None:
+            dnode = ET.Element('d')
+            dnode.set('txt',self.diagnostic)
+            cnode.append(dnode)
 
     def __str__(self):
-        return (self.getid().rjust(4) + '  ' + str(self.getline()).rjust(5) + '  ' +
-                    str(self.getpredicate()).ljust(20))
-    
-    
+        return (str(self.id).rjust(4) + '  ' + str(self.get_line()).rjust(5) + '  ' +
+                    str(self.predicate).ljust(20) + ' (' + self.status + ')')

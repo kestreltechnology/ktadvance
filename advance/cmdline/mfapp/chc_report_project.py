@@ -29,12 +29,17 @@ import argparse
 import os
 
 import advance.reporting.ProofObligations as RP
+import advance.util.printutil as UP
 
+from advance.util.IndexedTable import IndexedTableError
 from advance.app.CApplication import CApplication
 
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('path',help='directory that holds the semantics directory')
+    parser.add_argument('--externalreferences',
+                            help='report all external references to functions',
+                            action='store_true')
     args = parser.parse_args()
     return args
 
@@ -54,5 +59,15 @@ if __name__ == '__main__':
         exit(1)
    
     capp = CApplication(sempath)
-    print(RP.project_proofobligation_stats_tostring(capp))
+    try:
+        print(RP.project_proofobligation_stats_tostring(capp))
+    except IndexedTableError as e:
+        print(e.msg)
+
+    if args.externalreferences:
+        externalreferences = capp.get_missing_summaries()
+        if len(externalreferences) > 0:
+            print('\nExternal references (including missing library functions):')
+            for s in sorted(externalreferences):
+                print(str(externalreferences[s]).rjust(5) + '  ' + s)
     

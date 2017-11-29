@@ -26,6 +26,7 @@
 # ------------------------------------------------------------------------------
 
 import datetime
+import time
 
 from advance.util.Config import Config
 
@@ -46,6 +47,11 @@ def cjust(s,l):
     prelen = (l - length) / 2
     suflen = l - (length + prelen)
     return ((' ' * prelen) + s + (' ' * suflen))
+
+def chtime(t):
+    if t == 0:
+        return '0'
+    return time.strftime('%Y-%m-%d %H:%m',time.localtime(t))
 
 def reportheader(title):
     lines = []
@@ -87,5 +93,9 @@ def semantics_not_found_err_msg(cpath):
     return err_msg(['No semantics directory found in directory',
                         '  ' + cpath,
                         '  Please analyze the application first to produce the analysis results to report.'])
+
+def global_definitions_not_found_err_msg(cpath):
+    return err_msg(['No globaldefinitions.xml file found in ', cpath,
+                        ' Please run the linker first to produce a global definitions file and cross references.'])
 
     

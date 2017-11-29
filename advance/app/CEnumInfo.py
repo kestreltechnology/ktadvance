@@ -25,24 +25,18 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CEnumItem import CEnumItem
+import advance.app.CDictionaryRecord as CD
 
-class CEnumInfo():
+class CEnumInfo(CD.CDeclarationsRecord):
     '''Global enum definition.'''
 
-    def __init__(self,cappfile,xnode):
-        self.cappfile = cappfile               # CApplication / CFile
-        self.xnode = xnode
-        self.eitems = {}
-        self._initialize()
-
-    def getname(self): return self.xnode.get('ename')
-
-    def getitems(self): return self.eitems.values()
+    def __init__(self,decls,index,tags,args):
+        CD.CDeclarationsRecord.__init__(self,decls,index,tags,args)
+        self.ename = self.tags[0]
+        self.ikind = self.tags[1]
+        self.eattr = self.get_dictionary().get_attributes(args[0])
+        self.eitems = [ self.decls.get_enumitem(i) for i in self.args[1:] ]
 
     def __str__(self):
-        return (self.getname() + ' (' + str(len(self.getitems())) + ' items)')
+        return (self.name + ' (' + str(len(self.items)) + ' items)')
 
-    def _initialize(self):
-        for e in self.xnode.find('eitems').findall('eitem'):
-            self.eitems[e.get('eitemname')] = CEnumItem(self,e)
