@@ -40,11 +40,11 @@ This repository is organized as follows:
 The analysis consists of two phases that may be performed on different platforms:
 1. **Parsing**: This phase takes as input the original source code, a Makefile (if there is more than
    one source file), and, in case of library includes, the library header files resident on the system.
-   This phase produces as output a set of xml files that completely capture the semantics of the application, and are the sole input for the Analysis phase.
+   This phase produces as output a set of XML files that completely capture the semantics of the application, and are the sole input for the Analysis phase.
 
    Because of the dependency on the resident system library header files it is generally recommended to perform this phase of the analysis on a Linux system, because of its more standard library environment than macOS (the CIL parser also may have issues with some of the Darwin constructs on macOS).
 
-2. **Analysis**: This phase takes as input the xml files produced by the parsing phase. As long as the source code is not modified, the analysis can be run several times without having to repeat the parsing step. The Analysis step can be run on either macOS or Linux, independently of where the parsing step was performed, as it operates solely on the XML files produced and is not dependent on any external programs or library headers.
+2. **Analysis**: This phase takes as input the XML files produced by the parsing phase. As long as the source code is not modified, the analysis can be run several times without having to repeat the parsing step. The Analysis step can be run on either macOS or Linux, independently of where the parsing step was performed, as it operates solely on the XML files produced and is not dependent on any external programs or library headers.
 
 For several of the test cases in ```tests/sard/kendra``` and for all of the test cases in ```tests/sard/juliet_v1.2```
 the parsing step has already been performed (on Linux) and the results are checked in in files named
