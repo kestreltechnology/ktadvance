@@ -50,9 +50,6 @@ def parse():
     parser = argparse.ArgumentParser(usage=usage,description=description)
     parser.add_argument('path',
                             help='directory that holds the semantics directory (or tar.gz file)')
-    parser.add_argument('--wordsize',
-                        help='wordsize of target platform (e.g., 32 or 64)',
-                        type=int, default=0)
     parser.add_argument('--filter',
                             help='filter out files with absolute path',
                             action='store_true')
