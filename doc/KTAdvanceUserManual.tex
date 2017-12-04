@@ -13,7 +13,18 @@
 \usepackage{wrapfig}
 \usepackage{fancyvrb}
 \usepackage{color}
+\usepackage{hyperref}
 \usepackage{listings}
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat?s bookmarks
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=blue,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
 
 %\setlist{nolistsep,noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
 \setlist{nolistsep,itemsep=4pt,topsep=4pt,parsep=0pt,partopsep=0pt}
@@ -71,7 +82,7 @@ KT Advance User Manual}}
 
 \bigskip
 
-November 24, 2017
+December 4, 2017
 
 \vfill
 \vfill
@@ -85,23 +96,23 @@ November 24, 2017
 
 \subsection{System Requirements}
 
-\subsubsection{Platform: MacOSX or Linux}
+\subsubsection{Platform: macOS or Linux}
 
 The KT Advance C Analyzer consists of three components that may be run on
 different platforms:
 \begin{enumerate}
-\item {\bf Parser:} A Mac/Linux executable (parseFile) that takes as input a preprocessed
-C source file and produces a set of xml files that precisely represent the
+\item {\bf Parser:} A Mac/Linux executable ({\tt parseFile}) that takes as input a preprocessed
+C source file and produces a set of XML files that precisely represent the
 semantics of the C source file. This program is an extension of the CIL
-parser front end, developed by George Necula, at UC 
-Berkeley~\cite{DBLP:conf/cc/NeculaMRW02}, an now maintained
-by INRIA in France. Except for very simple programs (typically programs that do
+parser front end, developed by George Necula at UC 
+Berkeley~\cite{DBLP:conf/cc/NeculaMRW02}, and now maintained by Gabriel Kerneis 
+on \href{https://github.com/cil-project/cil}{GitHub}. Except for very simple programs (typically programs that do
 not include any standard libraries), it is recommended to run the parser on
 a Linux platform, as the parser pulls in definitions from the standard header files
 resident on the system.
-\item {\bf C Analyzer:} A Mac/Linux executable (ktadvance) that takes as input the
+\item {\bf C Analyzer:} A Mac/Linux executable ({\tt ktadvance}) that takes as input the
 semantics files produced by the parser as well as analysis results files, if available, 
-and produces a set of xml files that hold analysis results. This executable
+and produces a set of XML files that hold analysis results. This executable
 will be wrapped in a license manager to protect the contained 
 intellectual property. The C Analyzer operates solely on the semantics files produced
 by the parser without any other dependencies on the local system, and thus it can be
@@ -109,8 +120,8 @@ run equally well on Mac or Linux.
 \item {\bf PyAdvance:} Python code, provided as source code to licensed
 users, that performs linking and provides various analyzer invocation, 
 integration, and reporting services. All reporting scripts (scripts whose name typically
-start with {\tt chc\_report\_} or {\tt chc\_show\_} rely only on python code and thus
-can (theoretically) be run on any platform that has python installed, including Windows
+start with {\tt chc\_report\_} or {\tt chc\_show\_} rely only on Python code and thus
+can (theoretically) be run on any platform that has Python installed, including Windows
 platforms. Thus if analysis has been performed on a server and the results saved, the 
 analysis results can then be viewed and queried by anyone with access to these results.
 \end{enumerate}
@@ -121,23 +132,23 @@ performed by the Make file when compiling an application. This utility is usuall
 via a package manager.
 
 \subsubsection{Other Dependencies}
-The analyzer and python scripts make use of jar files; being able to extract these 
-requires a working Java installation.
+The analyzer and Python scripts make use of {\tt jar} files; being able to extract these 
+requires a working Java (JRE or JDK) installation.
 
 \subsection{Organization}
 
 The {\tt ktadvance} repository has three top directories:
 \begin{enumerate}
-\item {\tt advance:} python scripts and programs to run the analysis and view the results;
-  Section~\ref{sec:pyadvance} describes these scripts and programs in more details.
+\item {\tt advance:} Python scripts and programs to run the analysis and view the results;
+  Section~\ref{sec:sfapp} describes these scripts and programs in more details.
 \item {\tt doc:} KT Advance User Manual (this document) and a Reference Manual that
   explains the analysis approach and describes in detail the data representation of
   all intermediate data artifacts and analysis results data.
 \item {\tt tests:} regression tests and other test cases, several of which have been 
   pre-parsed and are ready for analysis. The reason for having pre-parsed applications
-  is to provide reference applications that enable longitudional study of analyis 
+  is to provide reference applications that enable longitudinal study of analysis 
   performance. Several of the test directories have dedicated scripts for parsing and
-  analysis, as described in Section~\ref{sec:tests}.
+  analysis, as described in Section~\ref{sec:getstarted}.
 \end{enumerate}
 
 \subsection{General Use Guidelines}
@@ -147,39 +158,40 @@ The analysis consists of three phases that may be performed on different platfor
 \item {\bf Parsing:} This phase takes as input the original source code, a Makefile 
   (if there is more than one source file), and, in case of library includes, the 
   library header files resident on the system. This phase produces as output a set 
-  of xml files that completely capture the semantics of the application, and are 
-  the sole input for the Analysis phase.
+  of XML files that completely capture the semantics of the application, and are 
+  the sole input for the Analysis phase. \vspace{1em}
 
   Because of the dependency on the resident system library header files it is 
   generally recommended to perform this phase of the analysis on a Linux system, 
-  because of its more standard library environment than MacOSX (the CIL parser 
-  also may have issues with some of the Darwin constructs on MacOSX).
+  because of its more standard library environment than macOS (the CIL parser 
+  also may have issues with some of the Darwin constructs on macOS). \vspace{1em}
   
   For several of the test cases in {\tt tests/sard/kendra} and for all of the test cases 
   in {\tt tests/sard/zitser} and {\tt tests/sard/juliet\_v1.3} the parsing step has 
   already been performed (on Linux) 
-  and the resulting artifacts are checked in in files named {\tt semantics\_linux.tar.gz}. These 
-  gzipped tar files contain all xml files necessary for the analysis, and thus 
+  and the resulting artifacts are checked in in files named {\tt semantics\-.linux\-.tar.gz}. These 
+  gzipped tar files contain all XML files necessary for the analysis, and thus 
   to analyze these files the parsing phase can be skipped altogether.
   
-\item {\bf Analysis:} This phase takes as input the xml files produced by the parsing 
+\item {\bf Analysis:} This phase takes as input the XML files produced by the parsing 
   phase. As long as the source code is not modified, the analysis can be run several 
-  times without having to repeat the parsing step. The Analysis step can be run on 
-  either MacOSX or Linux, independently of where the parsing step was performed, as 
-  it operates solely on the xml files produced and is not dependent on any external 
+  times without having to repeat the parsing step. The analysis step can be run on 
+  either macOS or Linux, independently of where the parsing step was performed, as 
+  it operates solely on the XML files produced and is not dependent on any external 
   programs or library headers.
   
 \item {\bf Viewing Results:} All analysis results are saved in a directory with the name
   {\tt semantics} in the analysis directory. Various reporting scripts are provided to
-  process and view these results. These scripts rely only on python code and thus can
+  process and view these results. These scripts rely only on Python code and thus can
   be run on any platform once the analysis results have been produced.
 \end{enumerate}
 
 \subsection{Getting Started}
+\label{sec:getstarted}
 
-All interactions with the KT Advance C Analyzer are performed via python scripts from the
-command line. All scripts have been tested to work with python 2.7. An effort has been
-made, however, to have all python code also compliant with python 3.x.
+All interactions with the KT Advance C Analyzer are performed via Python scripts from the
+command line. All scripts have been tested to work with Python 2.7. An effort has been
+made, however, to have all Python code also compliant with Python 3.x.
 
 All scripts to interact with the analyzer are in the directory 
 {\tt ktadvance/advance/cmdline}. 
@@ -194,13 +206,13 @@ sets in the tests directory, as follows:
  {\tt tests/sard/juliet\_v1.3}.
 \end{itemize}
 
-Two other subdirectories have scripts to parse, analyze, and report on any c file or
-c application:
+Two other subdirectories have scripts to parse, analyze, and report on any C file or
+C application:
 \begin{itemize}
 \item {\bf sfapp:} scripts to parse and analyze an application that consists of a single
-  c file that be compiled directly with gcc (without a Make file). 
+  C file that be compiled directly with {\tt gcc} (without a {\tt Makefile}). 
 \item {\bf mfapp:} scripts to parse and analyze an application that comes with a Makefile.
-  It is expected that the Makefile exists (that is, a configure script has already been
+  It is expected that the {\tt Makefile} exists (that is, a configure script has already been
   run, if necessary).
 \end{itemize}
 
@@ -208,17 +220,16 @@ Sections~\ref{sec:kendratests} through \ref{sec:juliettests} provide a detailed
 description and walkthrough of the scripts available in
 the test-specific cmdline directories and Sections~\ref{sec:sfapp} and \ref{sec:mfapp}
 describe the scripts
-for the general case of applications consisting of a single c file and applications
-consisting of multiple c files, respectively. In general, user scripts start with the 
+for the general case of applications consisting of a single C file and applications
+consisting of multiple C files, respectively. In general, user scripts start with the 
 prefix {\tt chc\_} followed by some verb that indicates the action performed; most 
-scripts have a --help command-line
-option that describes the arguments expected.
+scripts have a {\tt --help} command-line option that describes the arguments expected.
 
 \section{Running Test Cases: Kendra}
 \label{sec:kendratests}
 
 The {\tt ktadvance/tests/sard/kendra} directory contains a collection of very small test
-programs retrieved from the NIST Software Assurance Reference Dataset ({\tt samate.nist.gov}).
+programs retrieved from the \href{http://samate.nist.gov/SRD}{NIST Software Assurance Reference Dataset}.
 These programs are a subset of the collection of test cases developed by 
 Kendra Kratkiewicz~\cite{Kratkiewicz/05/Using}. These test cases serve as a good first 
 illustration of
@@ -227,35 +238,35 @@ Section~\ref{sec:runkendra} has step-by-step instructions how to run these tests
 and some comments on particular cases.
 
 \subsection{Organization}
+
 The test cases are organized in groups of four related test cases, where the first 
 three test cases have a given vulnerability with varying magnitude of overflow and 
 in the fourth case that vulnerability is fixed (or absent). The names of the tests 
 refer to the sequence numbers in the SARD repository, and the name of the group 
-refers to the sequence number of the first test. For example, the test group id115Q 
-contains the test cases id115.c, id116.c, id116.c, and id117.c . 
+refers to the sequence number of the first test. For example, the test group {\tt id115Q}
+contains the test cases {\tt id115.c}, {\tt id116.c}, {\tt id116.c}, and {\tt id117.c}. 
 
-The kendra tests are also used as regression tests for generating and discharging proof 
+The Kendra tests are also used as regression tests for generating and discharging proof 
 obligations.
-Each test directory has a reference file [testname].json (e.g., id115Q.json) that lists 
-all proof obligations
-and their expected proof status, against which the analysis results are checked after
+Each test directory has a reference file {\tt [testname].json} (e.g., {\tt id115Q.json}) that lists 
+all proof obligations and their expected proof status, against which the analysis results are checked after
 each test run.
 
 \subsection{Summary of Scripts}
-Scripts to analyze and report on the kendra test cases are located in the 
+Scripts to analyze and report on the Kendra test cases are located in the 
 {\tt advance/cmdline/kendra} directory. They are (in alphabetical
 order):
 \begin{itemize}[leftmargin=*]
 \item {\tt chc\_clean\_kendraset.py}: removes the {\tt semantics} for the given
-  kendra set. \\
+  Kendra set. \\
   \emph{Example:} {\tt python chc\_clean\_kendraset.py id115Q}
 \item {\tt chc\_kendra\_dashboard.py}: outputs a summary of the results of all
   kendra sets (after analysis has been performed for all of them). \\
   \emph{Example:} {\tt python chc\_kendra\_dashboard.py}
 \item {\tt chc\_list\_kendrasets.py}: outputs a list of all kendra sets.\\
-  \emph{Example:} {\tt python chc\_list\_kendrasets.py}
+  \emph{Example:} {\tt python chc\_list\_kendratests.py}
 \item {\tt chc\_report\_kendratest\_file.py}: outputs a report of all proof obligations
-   and their analysis results for a given kendra c file. \\
+   and their analysis results for a given kendra C file. \\
    \emph{Example:} {\tt python chc\_report\_kendratest\_file.py id115.c}
 \item {\tt chc\_show\_kendra\_file\_table.py}: outputs the entries for a particular
    kendra file in a given (file-level) data dictionary \\
@@ -269,7 +280,7 @@ order):
 \item {\tt chc\_show\_kendraset.py}: outputs a list of proof obligations for each file
     in the set \\
     \emph{Example:} {\tt python chc\_show\_kendraset.py id115Q}
-\item {\tt chc\_test\_kendraset.py}: (parses and) analyzes the c files in the given test
+\item {\tt chc\_test\_kendraset.py}: (parses and) analyzes the C files in the given test
     set \\
     \emph{Example:} {\tt python chc\_test\_kendraset.py id115Q} \\
     \emph{Example:} {\tt python chc\_test\_kendraset.py id115Q --verbose}
@@ -280,7 +291,7 @@ Below we give a more detailed walkthrough and illustration for invoking some of 
 \label{sec:runkendra}
 
 Set the {\tt PYTHONPATH} environment variable (or adapt for a different location
-of the ktadvance directory):
+of the {\tt ktadvance} directory):
 \begin{verbatim}
 > export PYTHONPATH=$HOME/ktadvance
 \end{verbatim}
@@ -290,9 +301,9 @@ directory:
 > cd ktadvance/advance/cmdline/kendra
 > python chc_list_kendratests.py
 \end{verbatim}
-To run the analysis of a test set (staying in the cmdline/kendra directory):
+To run the analysis of a test set (staying in the {\tt cmdline/kendra} directory):
 \begin{verbatim}
-> python chc_test_kendra_set.py id115Q
+> python chc_test_kendraset.py id115Q
 \end{verbatim}
 (or any other of the test set names provided in the list displayed earlier.)
 This will print the summary results for the four test programs included:
@@ -309,12 +320,12 @@ id118.c          ok             ok             ok             ok             ok
 
 indicating that all stages ran without error, all proof obligations were correctly
 generated and the analysis results are as expected. 
-To see more of the output while running the test, add --verbose as a command-line option.
+To see more of the output while running the test, add {\tt --verbose} as a command-line option.
 
 To see which proof obligations are included in the test cases, with line numbers and
 expected proof status:
 \begin{verbatim}
-> python chc_show_kendra_test.py id115Q
+> python chc_show_kendraset.py id115Q
 
 id115.c
   main
@@ -407,7 +418,7 @@ percent                    100.00    0.00    0.00    0.00    0.00    0.00
 For each line of code that has associated proof obligations the report shows the
 proof obligation predicate, whether it is valid (safe, indicated by $<$S$>$) or 
 violated (indicated by $<$*$>$), and the reason for the assessment. For the safe
-case, id118.c, the output shows that the proof obligation for the upper bound is
+case, {\tt id118.c}, the output shows that the proof obligation for the upper bound is
 indeed safe.
 \begin{small}
 \begin{verbatim}
@@ -440,13 +451,12 @@ Primary Proof Obligations:
 
 
 
-For a list of
-all proof obligation predicates and their meaning, please see the KT Advance
-Reference Manual in this directory.
+For a list of all proof obligation predicates and their meaning, please see the KT Advance
+Reference Manual in the {\tt doc} directory.
 
-To analyze all kendra test cases run
+To analyze all Kendra test cases run
 \begin{verbatim}
-> python chc_test_kendra_sets.py
+> python chc_test_kendrasets.py
 \end{verbatim}
 If all of them complete all analysis results are available for inspection and reporting.
 Below we discuss some special cases.
@@ -455,20 +465,20 @@ Below we discuss some special cases.
 
 \subsubsection{Id151Q: Library Function Postconditions and Macros}
 
-The tests in this set program call two library functions: assert and malloc. 
+The tests in this set program call two library functions: {\tt assert} and {\tt malloc}. 
 Proving the memory safety of this program requires knowledge of the semantics 
 of both of these library functions, in this case in particular the postconditions 
 of these functions. To obtain this information the analysis makes use of 
 library function summaries (provided in {\tt advance/summaries/cchsummaries.jar}).
 
-The malloc summary includes a postcondition that states that the return value 
+The {\tt malloc} summary includes a postcondition that states that the return value 
 points to a newly allocated region of memory with size (in bytes) given by the 
 first argument, or the return value is NULL. Proof obligation 34 uses this 
 information to determine that the buffer access on line 60 violates its bounds. 
-Similarly in program id154.c (the safe version) the same information is used 
+Similarly in program {\tt id154.c} (the safe version) the same information is used 
 to prove the buffer access safe.
 
-The assert call is actually a macro that expands into a conditional expression 
+The {\tt assert} call is actually a macro that expands into a conditional expression 
 that calls a function {\tt \_\_assert\_fail}. In particular, the call
 \begin{verbatim}
 assert (buf != NULL);
@@ -494,9 +504,9 @@ simple instruction.
 
 The {\tt \_\_assert\_fail} function has postcondition {\tt false}, that is, it does not 
 return. This means only the then branch, with condition {\tt buf != NULL}, continues, 
-based on which proof obligation 31 (not-null(buf)) can be proven safe.
+based on which proof obligation 31 ({\tt not-null(buf)}) can be proven safe.
 
-The results for id151.c are
+The results for {\tt id151.c} are
 \begin{scriptsize}
 \begin{verbatim}
 Function main
@@ -647,7 +657,7 @@ total                          33       6       0       0       0       0      3
 percent                     84.62   15.38    0.00    0.00    0.00    0.00
 \end{verbatim}
 \end{scriptsize}
-For id154.c (the safe version) the results are:
+For {\tt id154.c} (the safe version) the results are:
 \begin{scriptsize}
 \begin{verbatim}
 Function main
@@ -726,26 +736,26 @@ that is passed in as an argument. Since {\tt function1} is not in a position to 
 this size it must delegate the responsibility for the safety of the array access to 
 the caller of the function. It does so by automatically generating the necessary 
 conditions for safety on the argument value and advertising these as assumptions in 
-its api. In this case there are two safety conditions: (1) the argument should not 
+its API. In this case there are two safety conditions: (1) the argument should not 
 be null, and (2) the size of the argument should be at least 4106 (since it 
 accesses index 4105).
 
-The api assumptions generated by {\tt function1} are converted by the calling function, 
+The API assumptions generated by {\tt function1} are converted by the calling function, 
 {\tt main}, into so-called supporting proof obligations that express the conditions 
-applied to the actual arguments. In program id167.c the resulting proof obligation 
-for the second api assumption, 4106 < 10, evaluates to false, resulting in the 
-report of a memory safety violation. In program id170.c both supporting proof 
+applied to the actual arguments. In program {\tt id167.c} the resulting proof obligation 
+for the second API assumption, $4106 < 10$, evaluates to false, resulting in the 
+report of a memory safety violation. In program {\tt id170.c} both supporting proof 
 obligations are shown valid.
 
-Note that the violation in program 167.c is reported in {\tt main} and not in {\tt function1}, 
+Note that the violation in program {\tt 167.c} is reported in {\tt main} and not in {\tt function1}, 
 although the actual buffer overflow will happen in {\tt function1}. In general a 
 violation is placed at the highest applicable position in the call graph if there 
 is a choice, because this will be the most likely position where a correction 
 must be made. The program position of the actual buffer violation can be 
-found by following the chain of assumptions and dependent ppo's/spos's that 
+found by following the chain of assumptions and dependent PPO's/SPO's that 
 leads to the assumption that is being violated.
 
-Results for id167.c:
+Results for {\tt id167.c}:
 \begin{scriptsize}
 \begin{verbatim}
 Function function1
@@ -886,20 +896,18 @@ percent                    100.00    0.00    0.00    0.00    0.00    0.00
 \section{Running Test Cases: Zitser}
 
 The test cases in the directory {\tt ktadvance/tests/sard/zitser} 
-are test cases number 1283 through 1310 from the NIST Software Assurance Reference Dataset
-(samate.nist.gov). These test cases were contributed by Misha Zitser, and are described 
-in~\cite{DBLP:conf/sigsoft/ZitserLL04}
+are test cases number 1283 through 1310 from the \href{http://samate.nist.gov/SRD}{NIST Software Assurance Reference Dataset}. These test cases were contributed by Misha Zitser, and are described  in~\cite{DBLP:conf/sigsoft/ZitserLL04}.
 All test cases have been pre-parsed and are ready for analysis.
 
 \subsection{Summary of Scripts}
 
-Scripts to analyze and report on the zitser test cases are located in the
-directory \\ {\tt ktadvance/advance/cmdline/zitser}. They are (in alphabetical order):
+Scripts to analyze and report on the Zitser test cases are located in the
+directory {\tt ktadvance/\-advance/\-cmdline/\-zitser}. They are (in alphabetical order):
 \begin{itemize}[leftmargin=*]
-\item {\tt chc\_analyze\_zitser.py}: analyzes the given zitser test case.\\
+\item {\tt chc\_analyze\_zitser.py}: analyzes the given Zitser test case.\\
 \emph{Example:} {\tt python chc\_analyze\_zitser.py id1283} \\
 \emph{Example:} {\tt python chc\_analyze\_zitser.py id1283 --verbose}
-\item {\tt chc\_analyze\_zitser\_set.py}: analyzes all zitser test cases (id1283-id1310);
+\item {\tt chc\_analyze\_zitser\_set.py}: analyzes all Zitser test cases (id1283-id1310);
   this may take 20-30 minutes. \\
 \emph{Example:} {\tt python chc\_analyze\_zitser\_set.py}
 \item {\tt chc\_investigate\_ppos.py}: outputs all open primary proof obligations per 
@@ -911,43 +919,43 @@ directory \\ {\tt ktadvance/advance/cmdline/zitser}. They are (in alphabetical o
    found.\\
 \emph{Example:} {\tt python chc\_report\_violations.py id1283}
 \item {\tt chc\_report\_zitser.py}: outputs a summary of the status of the proof 
-   obligations for the given zitser test case that has been analyzed.\\
+   obligations for the given Zitser test case that has been analyzed.\\
 \emph{Example:} {\tt python chc\_report\_zitser.py id1283}
 \item {\tt chc\_report\_zitser\_file.py}: outputs a summary of the status for the
-  proof obligations for the given zitser test case c file that has been analyzed
+  proof obligations for the given Zitser test case C file that has been analyzed
   (optionally with a listing of the code and the proof obligations associated with
   each line of code).\\
 \emph{Example:} {\tt python chc\_report\_zitser\_file.py id1283 call\_fb\_realpath.c} \\
 \emph{Example:} {\tt python chc\_report\_zitser\_file.py id1283 call\_fb\_realpath.c --showcode}
 \item {\tt chc\_report\_zitser\_function.py}: outputs the code and associated proof
   obligations with justification, if closed, and diagnostic or invariants, if open
-  for a given function in a given zitser test case.\\
+  for a given function in a given Zitser test case.\\
 \emph{Example:} {\tt python chc\_report\_zitser\_function.py id1283 realpath-bad.c wu\_realpath}
-\item {\tt chc\_show\_zitser\_file\_table.py}: outputs the entries for a zitser test case file
+\item {\tt chc\_show\_zitser\_file\_table.py}: outputs the entries for a Zitser test case file
   in a given (file-level) data dictionary \\
 \emph{Example:} {\tt python chc\_show\_zitser\_file\_table.py id1283 realpath-bad.c typ}
-\item {\tt chc\_show\_zitser\_function\_table.py}: outputs the entries for a zitser test case
+\item {\tt chc\_show\_zitser\_function\_table.py}: outputs the entries for a Zitser test case
   function in a given (function-level) data dictionary \\
-\emph{Example:} {\tt python chc\_show\_zitser\_function\_table.py id1283 realpath-bad.c
+\emph{Example:} {\tt python chc\_show\_zitser\_function\_table.py id1283 realpath-bad.c \\
     wu\_realpath local\_varinfo}
-\item {\tt chc\_zitser\_dashboard.py}: outputs a summary of the results of all zitser test
+\item {\tt chc\_zitser\_dashboard.py}: outputs a summary of the results of all Zitser test
     cases (after all test cases have been analyzed) \\
 \emph{Example:} {\tt python chc\_zitser\_dashboard.py} 
 \end{itemize}
 
 \subsection{Running the Tests}
 
-To analyze all 28 zitser test cases:
+To analyze all 28 Zitser test cases:
 \begin{verbatim}
 > export PYTHONPATH=$HOME/ktadvance
 > cd ktadvance/advance/cmdline/zitser
 > python chc_analyze_zitser_set.py
 \end{verbatim}
-Since all zitser tests have been pre-parsed the analysis can be run on either Linux
-or MacOS; the results will always be the same, as the analysis has no dependencies
+Since all Zitser tests have been pre-parsed the analysis can be run on either Linux
+or macOS; the results will always be the same, as the analysis has no dependencies
 on the compiler or resident standard header files.
 
-To analyze a single zitser test case, say id1283:
+To analyze a single Zitser test case, say id1283:
 \begin{verbatim}
 > python chc_analyze_zitser.py id1283
 \end{verbatim}
@@ -1033,9 +1041,9 @@ The command
 \begin{verbatim}
 > python chc_report_zitser_file.py id1283 realpath-bad.c
 \end{verbatim}
-outputs the summary results for a single c file. Adding the option {\tt --showcode}
+outputs the summary results for a single C file. Adding the option {\tt --showcode}
 will produce a more detailed output that associates all proof obligations with the
-source code for all functions in the given c file. The command
+source code for all functions in the given C file. The command
 \begin{verbatim}
 > python chc_report_zitser_function.py id1283 realpath-bad.c fb_realpath
 \end{verbatim}
@@ -1044,7 +1052,8 @@ and their status, as well as a summary of results for the function.
 
 The script {\tt chc\_investigate\_ppos.py} allows inspection of all open proof obligations
 or all proof obligations of a certain predicate, e.g.:
-\begin{small}
+
+\begin{scriptsize}
 \begin{verbatim}
 > python chc_investigate_ppos.py id1283 --predicate upper-bound
 upper-bound
@@ -1073,9 +1082,9 @@ upper-bound
 
 ........
 \end{verbatim}
-\end{small}
+\end{scriptsize}
 
-To see a summary of the analysis results of all zitser test cases (after they have
+To see a summary of the analysis results of all Zitser test cases (after they have
 all been analyzed):
 \begin{scriptsize}
 \begin{verbatim}
@@ -1184,24 +1193,24 @@ percent                     19.90   20.15   10.44    0.00    0.00   49.51
 The {\tt ktadvance/tests/sard/juliet\_v1.3} directory contains a subset of the 
 test cases from the Juliet Test Suite, developed by the NSA Center for Assured 
 Software, and updated by NIST. The entire test suite is available from the
-NIST SARD repository, at {\tt samate.nist.gov}. These tests are also part of the
+\href{http://samate.nist.gov}{NIST SARD repository}. These tests are also part of the
 SATE V Ockham competition organized by NIST~\cite{Ockham}.
 
 \subsection{Organization}
-The test cases are organized in a similar way as the original Test Suite, except 
+The test cases are organized in a similar way as the original test suite, except 
 that the file hierarchy is extended by one level to create separate directories 
 for each functional variant, that solely contain the flow variants for that 
 functional variant. Furthermore, C++ variants have been removed.
 
 Each functional variant directory contains the following files:
 \begin{itemize}[leftmargin=*]
-\item {\tt [name]\_src.tar.gz}: the original c source files, including a reduced main file,
+\item {\tt [name]\_src.tar.gz}: the original C source files, including a reduced main file,
 {\tt main\_linux.c} that contains a main function that calls the functions in
 the flow variants.
 \item {\tt semantics\_linux.tar.gz}: the result of preprocessing and parsing the source 
   files (on a linux platform) into KT Advance Analyzer input format
-  The files in this tar file provide all necessary information for the analysis; 
-  the analysis can be run on any platforms; all platform dependencies are included 
+  The files in this {\tt tar} file provide all necessary information for the analysis; 
+  the analysis can be run on any platform; all platform dependencies are included 
   in the files.
 \item {\tt scorekey.json}: a specification of the proof obligations and their locations
   that are relevant to the vulnerability being tested by the test case, for both the
@@ -1240,13 +1249,13 @@ added in the near future.
 
 \subsection{Summary of Scripts}
 
-Scripts to analyze, report on, and score the juliet test cases are located in the
-{\tt advance/cmdline/juliet} directory. They are (in alphabetical order):
+Scripts to analyze, report on, and score the Juliet test cases are located in the
+{\tt advance/\-cmdline/\-juliet} directory. They are (in alphabetical order):
 
 \begin{itemize}[leftmargin=*]
-\item {\tt chc\_analyze\_juliettest.py}: analyzes the given juliet test case \\
+\item {\tt chc\_analyze\_juliettest.py}: analyzes the given Juliet test case \\
 \emph{Example:} {\tt python chc\_analyze\_juliettest.py CWE121/s01/CWE129\_large}
-\item {\tt chc\_analyze\_juliettest\_sets.py}: analyzes all juliet test cases in the
+\item {\tt chc\_analyze\_juliettest\_sets.py}: analyzes all Juliet test cases in the
    {\tt juliet\_v1.3} directory. This may take more than an hour.\\
 \emph{Example:} {\tt python chc\_analyze\_juliettest\_sets.py}
 \item {\tt chc\_juliet\_dashboard.py}: outputs a summary of the proof obligation status
@@ -1254,14 +1263,14 @@ Scripts to analyze, report on, and score the juliet test cases are located in th
    in the {\tt scorekey.json} file). Can only be run after all test cases have been
    analyzed and scored. \\
 \emph{Example:} {\tt python chc\_juliet\_dashboard.py}
-\item {\tt chc\_list\_juliettests.py}: outputs the list of juliet tests in the
+\item {\tt chc\_list\_juliettests.py}: outputs the list of Juliet tests in the
   {\tt tests/sard/juliet\_v1.3} directory with date and times of their last analysis
   and scoring.
-\item {\tt chc\_parse\_juliettest.py}: preprocesses and parses the given juliet test.
+\item {\tt chc\_parse\_juliettest.py}: preprocesses and parses the given Juliet test.
  This script is only used when adding new test sets; all existing tests have already
  been parsed. \\
 \emph{Example:} {\tt python chc\_parse\_juliettest.py CWE121/s01/CWE129\_large}
-\item {\tt chc\_prepare\_juliettest.py}: renames the flow variants into x[nn].c to 
+\item {\tt chc\_prepare\_juliettest.py}: renames the flow variants into {\tt x[nn].c} to 
   reduce filename and function-name lengths in reports. This script is only used when
   adding new test sets.\\
 \emph{Example:} {\tt python chc\_prepare\_juliettest.py CWE121/s01/CWE129\_large \\
@@ -1280,24 +1289,24 @@ Scripts to analyze, report on, and score the juliet test cases are located in th
 \emph{Example:}\\
  {\tt python chc\_report\_juliettest\_function.py CWE121/s01/CWE129\_large x01.c goodB2G}
 \item {\tt chc\_report\_juliettest\_sets.py}: outputs a summary of the proof obligation
-  status (for all proof obligations) for all juliet tests currently provided.\\
+  status (for all proof obligations) for all Juliet tests currently provided.\\
 \emph{Example:} {\tt python chc\_report\_juliettest\_sets.py}
 \item {\tt chc\_report\_juliettest\_vulnerability.py}: outputs the source code for the
   given test with the proof obligations associated with the vulnerability tested
-  (obtained from the scorekey) \\
-\emph{Example:} {\tt python chc\_report\_vulnerability.py CWE121/s01/CWE129\_large 01}
+  (obtained from the {\tt scorekey}) \\
+\emph{Example:} {\tt python chc\_report\_juliettest\_vulnerability.py CWE121/s01/CWE129\_large 01}
 \item {\tt chc\_score\_juliettest.py}: compares the analysis results with the desired results
-   as specified in the file scorekey.json and records the results in the file summaryresults.json 
+   as specified in the file {\tt scorekey.json} and records the results in the file {\tt summaryresults.json} 
    and outputs a comparison report. \\
 \emph{Example:} {\tt python chc\_score\_juliettest.py CWE121/s01/CWE129\_large}
-\item {\tt chc\_score\_juliettest\_sets.py}: runs the scoring on all juliet tests present.
+\item {\tt chc\_score\_juliettest\_sets.py}: runs the scoring on all Juliet tests present.
 Can be run only after all tests have been analyzed \\
 \emph{Example:} {\tt python chc\_score\_juliettest\_sets.py}
 \end{itemize}
 
 \subsection{Running the Tests}
 
-Set the PYTHONPATH environment variable (or adapt for a different location of the ktadvance
+Set the {\tt PYTHONPATH} environment variable (or adapt for a different location of the {\tt ktadvance}
 directory):
 \begin{verbatim}
 > export PYTHONPATH=$HOME/ktadvance
@@ -1313,7 +1322,7 @@ or, if multiple processors are available:
 > python chc_analyze_juliettest.py CWE121/s01/CWE129_large --maxprocesses 16
 \end{verbatim}
 which allows the invariant generation and proof obligation checking to be
-performed in parallel for different c files.
+performed in parallel for different C files.
 The analysis will produce a semantics directory in the test directory that contains all analysis
 results. These analysis results can be inspected by various reporting scripts.
 To see a summary of the results for this test case:
@@ -1457,7 +1466,7 @@ percent                     24.39   46.34   29.27    0.00    0.00    0.00
 \end{verbatim}
 \end{scriptsize}
 The output of this report shows the number of and status of all proof obligations
-in all files included in the test (flow variants are renamed to x[nn].c). This report
+in all files included in the test (flow variants are renamed to {\tt x[nn].c}). This report
 does not distinguish between proof obligations proven valid and proof obligations
 that are shown to be violated. The status
 is divided (currently) into four categories:
@@ -1467,12 +1476,12 @@ is divided (currently) into four categories:
    No invariants were necessary for the proof.
 \item {\tt local}: the proof obligation was proven valid or a violation based on 
    local invariants, that is, invariants generated within the function.
-\item {\tt api}: the proof obligation was delegated to the api, possibly with the use
+\item {\tt api}: the proof obligation was delegated to the API, possibly with the use
    of local invariants. This is done only if all variables in the proof obligations
    are shown to be in a linear equality relation with function parameters.
 \item {\tt open}: the proof obligation could not be proven valid or a violation.
 \end{itemize}
-Thus juliet test CWE121/s01/CWE129\_large has a total of 5063 proof obligations, 5.27\%
+Thus Juliet test {\tt CWE121/s01/CWE129\_large} has a total of 5063 proof obligations, 5.27\%
 of which could not be proven valid or a violation.
 
 To inspect the status of the proof obligations associated with the vulnerability being
@@ -1567,6 +1576,7 @@ Primary Proof Obligations:
 which shows the code up to the location of the vulnerability together with the
 proof obligation(s) that are violated due to the vulnerability. In cases where
 the proof obligation is delegated to the caller, the callers are shown as well:
+
 \begin{scriptsize}
 \begin{verbatim}
 > python chc_report_juliettest_vulnerability CWE121/s01/CWE129_large 22
@@ -1715,15 +1725,16 @@ Supporting Proof Obligations:
 \end{scriptsize}
 
 To see all proof obligations associated with the code:
+
 \begin{verbatim}
 > python chc_report_juliettest_file.py CWE121/s01/CWE129_large x01.c --showcode
 \end{verbatim}
-or for a single funciton:
+or for a single function:
 \begin{verbatim}
 > python chc_report_juliettest_function.py CWE121/s01/CWE129_large x01.c goodG2B
 \end{verbatim}
 
-To check the analysis results against the scorekey:
+To check the analysis results against the score key:
 \begin{verbatim}
 > python chc_score_juliettest.py CWE121/s01/CWE129_large
 \end{verbatim}
@@ -1848,7 +1859,7 @@ The column headers indicate:
   \end{itemize}
 \end{itemize}
 
-To analyze and score all juliet tests present and see a summary of all results:
+To analyze and score all Juliet tests present and see a summary of all results:
 
 \begin{verbatim}
 > python chc_analyze_juliettest_sets.py
@@ -1898,23 +1909,24 @@ perc                 58.5           73.7           68.2
 \section{Analyzing Your Own Files}
 \label{sec:sfapp}
 
-The {ktadvance/advance/cmdline/sfapp} contains scripts that allow parsing and
+The {\tt ktadvance/advance/cmdline/sfapp} contains scripts that allow parsing and
 analyzing applications that consist of a single file and can be compiled directly
-by {\tt gcc} without the help of a Makefile.
+by {\tt gcc} without the help of a {\tt Makefile}.
 
 \subsection{Summary of Scripts}
+
 Scripts to parse, analyze, and report on C applications that consist of a single file
 are located in the {\tt advance/cmdline/sfapp} directory. They are (in alphabetical
 order):
 \begin{itemize}[leftmargin=*]
-\item {\tt chc\_analyze\_file.py}: analyzes the given c file.\\
+\item {\tt chc\_analyze\_file.py}: analyzes the given C file.\\
 \emph{Example:} {\tt python chc\_analyze\_file.py \$HOME/cfiletest test.c} \\
 \emph{Example:} {\tt python chc\_analyze\_file.py \$HOME/cfiletest test.c --deletesemantics}
-\item {\tt chc\_parse\_file.py}: preprocesses and parses the given c file.\\
+\item {\tt chc\_parse\_file.py}: preprocesses and parses the given C file.\\
 \emph{Example:} {\tt python chc\_parse\_file.py \$HOME/cfiletest/test.c} \\
 \emph{Example:} {\tt python chc\_parse\_file.py \$HOME/cfiletest/test.c --savesemantics}
 \item {\tt chc\_report\_file.py}: outputs a summary of the status of the proof obligations
-  for the given c file.\\
+  for the given C file.\\
 \emph{Examples:} 
 \begin{itemize}[leftmargin=*]
 \item {\tt python chc\_report\_file.py \$HOME/cfiletest test.c}
@@ -1956,17 +1968,17 @@ int main(int argc, char **argv) {
 \end{lstlisting}
 \end{small}
 \end{minipage}
-\caption{\label{fig:cfile} Example c file: {\tt test.c}}
+\caption{\label{fig:cfile} Example C file: {\tt test.c}}
 \end{figure}
 
 \subsection{Running the Scripts}
-Set the PYTHONPATH environment variable (or adapt for a different location of the ktadvance
-directory) and go to the single-file cmdline directory:
+Set the {\tt PYTHONPATH} environment variable (or adapt for a different location of the {\tt ktadvance}
+directory) and go to the single-file {\tt cmdline} directory:
 \begin{verbatim}
 > export PYTHONPATH=$HOME/ktadvance
 > cd ktadvance/advance/cmdline/sfapp
 \end{verbatim}
-Assume we would like to analyze the c file, {\tt test.c}, shown in 
+Assume we would like to analyze the C file, {\tt test.c}, shown in 
 Figure~\ref{fig:cfile} in the directory
 {\tt cfiletest}. We first need to parse the file:
 \begin{verbatim}
@@ -1977,7 +1989,7 @@ be parsed again:
 \begin{verbatim}
 > python chc_parse_file.py $HOME/cfiletest/test.c --savesemantics
 \end{verbatim}
-This will create a semantics\_linux.tar.gz (or semantics\_mac.tar.gz) file in the
+This will create a {\tt semantics\_linux.tar.gz} (or {\tt semantics\_mac.tar.gz}) file in the
 {\tt cfiletest} directory that gets unpacked by the analysis.
 
 To analyze the program:
@@ -2252,8 +2264,7 @@ index-upper-bound
 \end{verbatim}
 \end{scriptsize}
 
-\section{Analyzing Your Own Applications}
-\label{sec:mfapp}
+
 
 \bibliographystyle{plain}
 \bibliography{citations}
