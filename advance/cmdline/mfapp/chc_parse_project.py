@@ -31,6 +31,7 @@ import json
 import os
 import subprocess
 import shutil
+import codecs
 
 from advance.util.Config import Config
 from advance.cmdline.ParseManager import ParseManager
@@ -143,7 +144,7 @@ if __name__ == '__main__':
         print('*' * 80)
         exit(1)
 
-    with open(ccfilename) as fp:
+    with codecs.open(ccfilename, 'r', encoding='utf-8') as fp:
         compilecommands = json.load(fp)
 
     if len(compilecommands) == 0:
