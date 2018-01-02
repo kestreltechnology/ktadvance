@@ -185,14 +185,22 @@ class FunctionDisplay(object):
 
     def pos_on_code_tostring(self,pos,pofilter=lambda po:True,showinvs=False):
         lines = []
+        contexts = set([])
         for po in sorted(pos,key=lambda po:po.get_line()):
             if not pofilter(po): continue
             line = po.get_line()
             if line >= self.currentline:
+                if len(contexts) > 0:
+                    lines.append('\n' + (' ' * indent) + '-------- context invariants --------')
+                    for c in contexts:
+                        lines.append((' ' * indent) + str(c))
+                        lines.append(str(self._get_context_invariants(c)))
+                        lines.append(' ')
                 lines.append('-' * 80)
                 for n in range(self.currentline,line+1):
                     lines.append(self.get_source_line(n))
                 lines.append('-' * 80)
+                contexts = set([])
             self.currentline = line + 1
             delegated = ''
             indent = 18 if po.is_ppo() else 24
@@ -202,18 +210,48 @@ class FunctionDisplay(object):
                 lines.append(prefix + ' ' + str(po))
                 lines.append((' ' * indent) + expl)
             else:
+                contexts.add(po.context)
                 lines.append('\n<?> ' + str(po))
                 if po.has_diagnostic():
-                    lines.append((' ' * indent) + '---> ' + po.diagnostic)
+                    amsgs = po.diagnostic.amsgs
+                    if len(amsgs) > 0:
+                        for arg in sorted(amsgs):
+                            for s in sorted(amsgs[arg]):
+                                lines.append((' ' * indent) + s)
+                    keys = po.diagnostic.get_argument_indices()
+                    for k in sorted(keys):
+                        invids = po.diagnostic.get_invariant_ids(k)
+                        for id in invids:
+                            inv = self.cfunction.invd.get_invariant_fact(id).get_non_relational_value()
+                            lines.append((' ' * indent) + str(k) + ': ' + str(inv))
+                else:
+                    lines.append((' ' * indent) + '---> no diagnostic found')
+                lines.append(' ')
+                '''
                 if (showinvs or (not po.has_diagnostic())):
                     lines.append((' ' * 18) + '--')
                     lines.append(self._get_po_invariants(po.context,po.id))
+                '''
+        if len(contexts) > 0:
+                lines.append('\n' + (' ' * indent) + '-------- context invariants --------')
+                for c in contexts:
+                        lines.append((' ' * indent) + '=== ' + str(c) + ' ===')
+                        lines.append(str(self._get_context_invariants(c)))
+                        lines.append(' ')
+
         self.currentline = self.fline + 1
         return '\n'.join(lines)
 
     def _get_po_invariants(self,context,poId):
         lines = []
         invs = self.cfunction.invtable.get_po_invariants(context,poId)
+        for inv in invs:
+            lines.append((' ' * 18) + str(inv))
+        return '\n'.join(lines)
+
+    def _get_context_invariants(self,context):
+        lines = []
+        invs = self.cfunction.invtable.get_sorted_invariants(context)
         for inv in invs:
             lines.append((' ' * 18) + str(inv))
         return '\n'.join(lines)
@@ -380,7 +418,26 @@ def tag_file_function_pos_tostring(pos,filefilter=lambda f:True,pofilter=lambda 
             for ff in sorted(fundict[f]):
                 lines.append('    Function: ' + ff)
                 for po in sorted(fundict[f][ff],key=lambda po:po.get_line()):
+                    invd = po.cfun.invd
                     lines.append((' ' * 6) + str(po))
                     if po.has_diagnostic():
-                        lines.append((' ' * 8) + ' ---> ' + po.diagnostic)
+                        amsgs = po.diagnostic.amsgs
+                        if len(amsgs) > 0:
+                            for arg in sorted(amsgs):
+                                for s in sorted(amsgs[arg]):
+                                    lines.append((' ' * 14) + s)
+                        msgs = po.diagnostic.msgs
+                        if len(msgs) > 0:
+                            lines.append((' ' * 8) + ' ---> ' + msgs[0])
+                            for s in msgs[1:]:
+                                lines.append((' ' * 14) + s)
+                            lines.append(' ')
+                        keys = po.diagnostic.get_argument_indices()
+                        for k in keys:
+                            invids = po.diagnostic.get_invariant_ids(k)
+                            for id in invids:
+                                lines.append((' ' * 14) + str(k) + ': ' +
+                                                 str(invd.get_invariant_fact(id).get_non_relational_value()))
+                        lines.append(' ')
+
     return '\n'.join(lines)
