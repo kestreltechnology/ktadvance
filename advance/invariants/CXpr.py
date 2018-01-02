@@ -25,6 +25,11 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+xpr_operator_strings = {
+    "plus": " + " ,
+    "minus": " - " ,
+    "mult": " * " 
+    }
 
 class XDictionaryRecord(object):
     '''Base class for all objects kept in the XprDictionary.'''
@@ -92,9 +97,7 @@ class CXVariable(XDictionaryRecord):
 
     def get_denotation(self): return self.vd.get_c_variable_denotation(self.get_seqnr())
 
-    def __str__(self):
-        return (str(self.get_name()) + ':' + self.get_type()
-                    + '[' + str(self.get_denotation()) + ']')
+    def __str__(self): return (str(self.get_name()))
 
 
 class CXXCstBase(XDictionaryRecord):
@@ -223,7 +226,14 @@ class CXOp(CXXprBase):
     def get_args(self): return [ self.xd.get_xpr(int(i)) for i in self.args ]
 
     def __str__(self):
-        return '(' + self.get_op() + ',' + ','.join([str(x) for x in self.get_args() ]) + ')'
+        args = self.get_args()
+        if len(args) == 1:
+            return '(' + xpr_operator_strings[self.get_op()]  + str(args[0]) + ')'
+        elif len(args) == 2:
+            return '(' + str(args[0]) + xpr_operator_strings[self.get_op()] + str(args[1]) + ')'
+        else:
+            return ('(' + xpr_operator_strings[self.get_op()]
+                        + '(' + ','.join(str(x) for x in args) + ')')
 
 class CXAttr(CXXprBase):
 
@@ -238,3 +248,23 @@ class CXAttr(CXXprBase):
 
     def __str__(self):
         return 'attr(' + self.get_attr() + ',' + str(self.get_xpr()) + ')'
+
+class CXprList(XDictionaryRecord):
+
+    def __init__(self,xd,index,tags,args):
+        XDictionaryRecord.__init__(self,xd,index,tags,args)
+
+    def get_exprs(self): return [ self.xd.get_xpr(int(i)) for i in self.args ]
+
+    def __str__(self):
+        return ' && '.join([str(x) for x in self.get_exprs()])
+
+class CXprListList(XDictionaryRecord):
+
+    def __init__(self,xd,index,tags,args):
+        XDictionaryRecord.__init__(self,xd,index,tags,args)
+
+    def get_expr_lists(self): return [ self.xd.get_xpr_list(int(i)) for i in self.args ]
+
+    def __str__(self):
+        return ' || '.join([('(' + str(x) + ')') for x in self.get_expr_lists()])

@@ -31,6 +31,7 @@ import advance.invariants.CInv as CI
 
 non_relational_value_constructors = {
     'sx': lambda x:CI.NRVSymbolicExpr(*x),
+    'sb': lambda x:CI.NRVSymbolicBound(*x),
     'iv': lambda x:CI.NRVIntervalValue(*x),
     'bv': lambda x:CI.NRVBaseOffsetValue(*x),
     'rs': lambda x:CI.NRVRegionSet(*x),
@@ -39,7 +40,8 @@ non_relational_value_constructors = {
 
 inv_constructors = {
     'nrv': lambda x:CI.CInvariantNRVFact(*x),
-    'x': lambda x:CI.UnreachableFact(*x)
+    'x': lambda x:CI.UnreachableFact(*x),
+    'pc': lambda x:CI.CParameterConstraintFact(*x)
     }
 
 
