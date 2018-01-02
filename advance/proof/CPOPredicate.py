@@ -726,11 +726,10 @@ class CPOPtrUpperBound(CPOPredicate):
         return self.get_exp1().has_variable(vid) or self.get_exp2().has_variable(vid)
 
     def __str__(self):
-        return (self.get_tag() + '(' + str(self.get_exp1()) + ','
-                    + str(self.get_exp2()) + ',op:' + self.get_binop()
-                    + ',typ:' + str(self.get_type()) + ')' )
-
-
+        return (self.get_tag() + '(typ:' + str(self.get_type())
+                    + ',op:' + self.get_binop() + ','
+                    + str(self.get_exp1()) + ',' + str(self.get_exp2())
+                    + ')')
 
 class CPOPtrUpperBoundDeref(CPOPredicate):
     '''
@@ -760,12 +759,12 @@ class CPOPtrUpperBoundDeref(CPOPredicate):
         return self.get_exp1().has_variable(vid) or self.get_exp2().has_variable(vid)
 
     def __str__(self):
-        return (self.get_tag() + '(' + str(self.get_exp1()) + ','
-                    + str(self.get_exp2()) + ',op:' + self.get_binop()
-                    + ',typ:' + str(self.get_type()) + ')' )
+        return (self.get_tag() + '(typ:' + str(self.get_type())
+                    + ',op:' + self.get_binop() + ','
+                    + str(self.get_exp1()) + ',' + str(self.get_exp2())
+                    + ')')
 
- 
-    
+
 class CPOCommonBase(CPOPredicate):
     '''
     tags:
