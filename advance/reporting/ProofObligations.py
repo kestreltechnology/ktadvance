@@ -194,6 +194,7 @@ class FunctionDisplay(object):
                     lines.append('\n' + (' ' * indent) + '-------- context invariants --------')
                     for c in contexts:
                         lines.append((' ' * indent) + str(c))
+                        lines.append((' ' * indent) + ('-' * len(str(c))))
                         lines.append(str(self._get_context_invariants(c)))
                         lines.append(' ')
                 lines.append('-' * 80)
