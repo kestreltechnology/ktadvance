@@ -28,6 +28,7 @@
 from advance.proof.CFunctionPPO import CFunctionPPO
 from advance.proof.CFunctionPOs import CFunctionPOs
 from advance.proof.CFunctionPO import CProofDependencies
+from advance.proof.CFunctionPO import CProofDiagnostic
 
 import advance.util.printutil as UP
 
@@ -87,5 +88,14 @@ class CFunctionPPOs(CFunctionPOs):
             diag = None
             dnode = p.find('d')
             if not dnode is None:
-                diag = dnode.get('txt')
+                pinvs = {}
+                amsgs = {}
+                for n in dnode.find('invs').findall('arg'):
+                    pinvs[int(n.get('a'))] = [ int(x) for x in n.get('i').split(',') ]
+                pmsgs =  [ x.get('t') for x in dnode.find('msgs').findall('msg') ]
+                for n in dnode.find('amsgs').findall('arg'):
+                    arg = int(n.get('a'))
+                    msgs = [ x.get('t') for x in n.findall('msg') ]
+                    amsgs[arg] = msgs
+                diag = CProofDiagnostic(pinvs,pmsgs,amsgs)
             self.ppos[id] = CFunctionPPO(self,id,ppotype,status,deps,expl,diag)
