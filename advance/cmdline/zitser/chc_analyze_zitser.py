@@ -122,9 +122,9 @@ if __name__ == '__main__':
     # userdata.distribute()
    
     for i in range(3):
-        am.generate_and_check_app('llvisp')
+        am.generate_and_check_app('llvisrp')
 
     for i in range(args.analysisrounds):
         capp.update_spos()
-        am.generate_and_check_app('llvisp')
+        am.generate_and_check_app('llvisrp')
 
