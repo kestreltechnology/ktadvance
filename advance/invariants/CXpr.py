@@ -28,7 +28,10 @@
 xpr_operator_strings = {
     "plus": " + " ,
     "minus": " - " ,
-    "mult": " * " 
+    "mult": " * " ,
+    "div": " / * ",
+    "ge": " >= " ,
+    "le": " <= " 
     }
 
 class XDictionaryRecord(object):
