@@ -62,7 +62,11 @@ if __name__ == '__main__':
     try:
         print(RP.project_proofobligation_stats_tostring(capp))
     except IndexedTableError as e:
-        print(e.msg)
+        print(
+            '\n' + ('*' * 80) + '\nThe analysis results format has changed'
+            + '\nYou may have to re-run the analysis first: '
+            + '\n' + e.msg
+            + '\n' + ('*' * 80))
 
     if args.externalreferences:
         externalreferences = capp.get_missing_summaries()

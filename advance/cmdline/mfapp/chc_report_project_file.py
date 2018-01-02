@@ -35,6 +35,8 @@ import advance.reporting.ProofObligations as RP
 from advance.util.Config import Config
 from advance.app.CApplication import CApplication
 
+from advance.util.IndexedTable import IndexedTableError
+
 
 def parse():
     parser = argparse.ArgumentParser()
@@ -63,10 +65,19 @@ if __name__ == '__main__':
     cfapp = CApplication(sempath,args.cfile)
     cfile = cfapp.get_cfile()
 
-    if args.showcode:
-        if args.open:
-            print(RP.file_code_open_tostring(cfile))
-        else:
-            print(RP.file_code_tostring(cfile))
+    try:
+        if args.showcode:
+            if args.open:
+                print(RP.file_code_open_tostring(cfile))
+            else:
+                print(RP.file_code_tostring(cfile))
 
-    print(RP.file_proofobligation_stats_tostring(cfile))
+        print(RP.file_proofobligation_stats_tostring(cfile))
+    except IndexedTableError as e:
+        print(
+            '\n' + ('*' * 80) + '\nThe analysis results format has changed'
+            + '\nYou may have to re-run the analysis first: '
+            + '\n' + e.msg
+            + '\n' + ('*' * 80))
+
+        

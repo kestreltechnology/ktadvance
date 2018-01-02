@@ -30,9 +30,13 @@ import os
 
 import advance.util.printutil as UP
 import advance.util.fileutil as UF
+
+from advance.util.IndexedTable import IndexedTableError
+
 import advance.reporting.ProofObligations as RP
 
 from advance.app.CApplication import CApplication
+
 
 
 def parse():
@@ -67,12 +71,22 @@ if __name__ == '__main__':
 
     cfunction = cfile.get_function_by_name(args.cfunction)
 
-    if args.open:
-        print(RP.function_code_open_tostring(cfunction))
-    elif args.predicate:
-        print(RP.function_code_predicate_tostring(cfunction,args.predicate))
-    else:
-        print(RP.function_code_tostring(cfunction))
+    try:
 
-    print(RP.function_proofobligation_stats_tostring(cfunction))
+        if args.open:
+            print(RP.function_code_open_tostring(cfunction))
+        elif args.predicate:
+            print(RP.function_code_predicate_tostring(cfunction,args.predicate))
+        else:
+            print(RP.function_code_tostring(cfunction))
+
+        print(RP.function_proofobligation_stats_tostring(cfunction))
+
+    except IndexedTableError as e:
+        print(
+            '\n' + ('*' * 80) + '\nThe analysis results format has changed'
+            + '\nYou may have to re-run the analysis first: '
+            + '\n' + e.msg
+            + '\n' + ('*' * 80))
+    
 
