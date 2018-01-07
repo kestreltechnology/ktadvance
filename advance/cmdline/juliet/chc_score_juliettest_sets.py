@@ -37,5 +37,8 @@ if __name__ == '__main__':
             print('Error in testcase ' + testcase)
             break
     else:
+        cmd = [ 'python', 'chc_juliet_dashboard.py' ]
+        result = subprocess.call(cmd,stderr=subprocess.STDOUT)
+
         print('\n\n' + ('=' * 80) + '\nAll Juliet test cases were scored successfully.')
         print(('=' * 80) + '\n')
