@@ -190,7 +190,7 @@ class FunctionDisplay(object):
             if not pofilter(po): continue
             line = po.get_line()
             if line >= self.currentline:
-                if len(contexts) > 0:
+                if len(contexts) > 0 and showinvs:
                     lines.append('\n' + (' ' * indent) + '-------- context invariants --------')
                     for c in contexts:
                         lines.append((' ' * indent) + str(c))
@@ -233,7 +233,7 @@ class FunctionDisplay(object):
                     lines.append((' ' * 18) + '--')
                     lines.append(self._get_po_invariants(po.context,po.id))
                 '''
-        if len(contexts) > 0:
+        if len(contexts) > 0 and showinvs:
                 lines.append('\n' + (' ' * indent) + '-------- context invariants --------')
                 for c in contexts:
                         lines.append((' ' * indent) + '=== ' + str(c) + ' ===')
@@ -281,19 +281,19 @@ def function_code_tostring(fn,pofilter=lambda po:True,showinvs=False,showpreambl
         lines.append(fd.pos_on_code_tostring(spos,pofilter=pofilter,showinvs=showinvs))
     return '\n'.join(lines)
 
-def function_code_open_tostring(fn):
+def function_code_open_tostring(fn,showinvs=False):
 
     pofilter = lambda po:not po.is_closed()
-    return function_code_tostring(fn,pofilter=pofilter)
+    return function_code_tostring(fn,pofilter=pofilter,showinvs=showinvs)
 
-def function_code_violation_tostring(fn):
+def function_code_violation_tostring(fn,showinvs=False):
     pofilter = lambda po:po.is_violated()
 
-    return function_code_tostring(fn,pofilter=pofilter)
+    return function_code_tostring(fn,pofilter=pofilter,showinvs=showinvs)
 
-def function_code_predicate_tostring(fn,p):
+def function_code_predicate_tostring(fn,p,showinvs=False):
     pofilter = lambda po:po.predicatetag == p
-    return function_code_tostring(fn,pofilter=pofilter)
+    return function_code_tostring(fn,pofilter=pofilter,showinvs=showinvs)
     
 def file_code_tostring(cfile,pofilter=lambda po:True,showinvs=False):
     lines = []
@@ -301,9 +301,9 @@ def file_code_tostring(cfile,pofilter=lambda po:True,showinvs=False):
     cfile.iter_functions(f)
     return '\n'.join(lines)
 
-def file_code_open_tostring(fn):
+def file_code_open_tostring(fn,showinvs=False):
     pofilter = lambda po:not po.is_closed()
-    return file_code_tostring(fn,pofilter=pofilter)
+    return file_code_tostring(fn,pofilter=pofilter,showinvs=showinvs)
 
 def proofobligation_stats_tostring(pporesults,sporesults,rhlen=25,header1='',extradsmethods=[]):
     lines = []
