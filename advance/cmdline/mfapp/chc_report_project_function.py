@@ -36,7 +36,8 @@ from advance.util.IndexedTable import IndexedTableError
 import advance.reporting.ProofObligations as RP
 
 from advance.app.CApplication import CApplication
-
+from advance.app.CApplication import CFileNotFoundException
+from advance.app.CApplication import CFunctionNotFoundException
 
 
 def parse():
@@ -46,6 +47,7 @@ def parse():
     parser.add_argument('cfunction',help='name of function in c file')
     parser.add_argument('--open',help='only show open proof obligations',action='store_true')
     parser.add_argument('--predicate',help='only show proof obligations of this type')
+    parser.add_argument('--showinvs',help='show context invariants',action='store_true')
     args = parser.parse_args()
     return args
 
@@ -63,11 +65,23 @@ if __name__ == '__main__':
         exit(1)
         
     cfapp = CApplication(sempath,args.cfile)
-    cfile = cfapp.get_cfile()
+    try:
+        cfile = cfapp.get_cfile()
+    except CFileNotFoundException as e:
+        print(e)
+        exit(0)
 
     if not cfile.has_function_by_name(args.cfunction):
-        print(UP.cfunction_not_found_err_sg(cpath,args.cfile,args.cfunction))
-        exit(1)
+        lines = []
+        lines.append('*' * 80)
+        lines.append(('Function ' + args.cfunction + ' not found in file '
+                          + cfile.name + '; function names available:'))
+        lines.append('-' * 80)
+        for n in cfile.functionnames:
+            lines.append('  ' + n)
+        lines.append('*' * 80)
+        print('\n'.join(lines))
+        exit(0)
 
     cfunction = cfile.get_function_by_name(args.cfunction)
 
@@ -76,9 +90,9 @@ if __name__ == '__main__':
         if args.open:
             print(RP.function_code_open_tostring(cfunction))
         elif args.predicate:
-            print(RP.function_code_predicate_tostring(cfunction,args.predicate))
+            print(RP.function_code_predicate_tostring(cfunction,args.predicate,showinvs=args.showinvs))
         else:
-            print(RP.function_code_tostring(cfunction))
+            print(RP.function_code_tostring(cfunction,showinvs=args.showinvs))
 
         print(RP.function_proofobligation_stats_tostring(cfunction))
 

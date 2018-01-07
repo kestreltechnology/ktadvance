@@ -34,6 +34,7 @@ import advance.reporting.ProofObligations as RP
 
 from advance.util.Config import Config
 from advance.app.CApplication import CApplication
+from advance.app.CApplication import CFileNotFoundException
 
 from advance.util.IndexedTable import IndexedTableError
 
@@ -46,6 +47,7 @@ def parse():
                             action='store_true')
     parser.add_argument('--open',help='show only proof obligions on code that are still open',
                             action='store_true')
+    parser.add_argument('--showinvs',help='show context invariants',action='store_true')
     args = parser.parse_args()
     return args
 
@@ -63,12 +65,16 @@ if __name__ == '__main__':
         exit(1)
         
     cfapp = CApplication(sempath,args.cfile)
-    cfile = cfapp.get_cfile()
+    try:
+        cfile = cfapp.get_cfile()
+    except CFileNotFoundException as e:
+        print(e)
+        exit(0)
 
     try:
         if args.showcode:
             if args.open:
-                print(RP.file_code_open_tostring(cfile))
+                print(RP.file_code_open_tostring(cfile,showinvs=args.showinvs))
             else:
                 print(RP.file_code_tostring(cfile))
 
