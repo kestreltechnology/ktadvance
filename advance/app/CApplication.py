@@ -38,7 +38,40 @@ from advance.app.CGlobalDeclarations import CGlobalDeclarations
 
 from advance.source.CSrcFile import CSrcFile
 
-#from __builtin__ import file
+class CFileNotFoundException(Exception):
+
+    def __init__(self,filenames):
+        self.filenames = filenames
+
+    def __str__(self):
+        lines = []
+        lines.append('*' * 80)
+        lines.append('Requested file not found; filenames available: ')
+        lines.append('-' * 80)
+        for n in self.filenames:
+            lines.append('  ' + n)
+        lines.append('*' * 80)
+        return '\n'.join(lines)
+
+class CFunctionNotFoundException(Exception):
+
+    def __init__(self,cfile,functionname):
+        self.cfile = cfile
+        self.functionname = functionname
+
+    def __str__(self):
+        lines = []
+        lines.append('*' * 80)
+        lines.append(('Function ' + functionname + ' not found in file '
+                          + cfile.name + '; function names available:'))
+        lines.append('-' * 80)
+        for n in cfile.functionnames:
+            lines.append('  ' + n)
+        lines.append('*' * 80)
+        return '\n'.join(lines)
+        
+        
+
 
 class CApplication(object):
     '''Primary access point for source code and analysis results.'''
@@ -74,7 +107,9 @@ class CApplication(object):
         if 0 in self.filenames:
             return self.files[self.filenames[0]]
         else:
-            raise Exception('requesting unspecified file from application')
+            tgtxnode = UF.get_targetfiles_xnode(self.path)
+            filenames = [ c.get('name') for c in tgtxnode.findall('c-file') ]
+            raise CFileNotFoundException(filenames)
 
     def get_cfile(self):
         if self.singlefile: return self.get_single_file()
