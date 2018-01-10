@@ -29,6 +29,11 @@
 '''
 Utility functions for reporting proof obligations and their statistics.
 '''
+import time
+import uuid
+import platform
+import os
+from third_party.ScarfXmlWriter import ScarfXmlWriter
 
 dischargemethods = [ 'stmt', 'local', 'api', 'post', 'global', 'open' ]
 
@@ -335,8 +340,97 @@ def project_proofobligation_stats_tostring(capp,filefilter=lambda f:True,extrads
                                                     extradsmethods=extradsmethods))
 
     return '\n'.join(lines)
-    
-    
+
+def project_proofobligation_export_scarf(capp, outputFile, includeSafeProofObligations):
+
+    # make a directory to hold all the output files
+    # name it after the project directory (we're in semantics/ktadvance at this point)
+    odir = capp.path
+    for i in range(0, 2):
+        odir = os.path.split(odir)[0]
+    odir = os.path.basename(odir)
+    if not os.path.exists(odir):
+        os.makedirs(odir)
+
+    ppos = capp.get_ppos()
+    spos = capp.get_spos()
+
+    sw = ScarfXmlWriter(outputFile, 2, False)
+    initialData = \
+    {
+        "assess_fw": "N/A",
+        "assess_fw_version": "N/A",
+        "assessment_start_ts": time.time(),
+        "build_fw": "N/A",
+        "build_fw_version": "N/A",
+        "build_root_dir": capp.path[:capp.path.index("semantics")],
+        "package_name": odir,
+        "package_version": "N/A",
+        "package_root_dir": capp.path[:capp.path.index("semantics")],
+        "parser_fw": "KTAdvance SCARF Writer",
+        "parser_fw_version": "0.5",
+        "platform_name": platform.system() + "_" + platform.release(),
+        "tool_name": "KTAdvance",
+        "tool_version": "0.5",
+        "uuid": uuid.uuid4()
+    }
+
+    errors = sw.CheckStart(initialData)
+    if errors:
+        for error in errors:
+            print error
+        return
+
+    sw.AddStartTag(initialData)
+
+    for po in ppos + spos:
+        if includeSafeProofObligations or po.status != 'safe':
+            bug = \
+            {
+                #"BugGroup": None,
+                #"BugCode": None,
+                "BugMessage": po.explanation,
+                #"BugSeverity": None,
+                #"ResolutionSuggestion": None,
+                "AssessmentReportFile": capp.path + "/",
+                "BuildId": "1.0",
+                #"InstanceLocation":
+                #{
+                #    "Xpath": None,
+                #    "LineNum":
+                #    {
+                #        "Start": None,
+                #        "End": None
+                #    }
+                #},
+                #"CweIds": None,
+                #"ClassName": None,
+                #"Methods": None,
+                "BugLocations":
+                [
+                    {
+                        "SourceFile": po.location.get_file(),
+                        "StartLine": str(po.location.get_line()),
+                        "EndLine": str(po.location.get_line()),
+                        "StartColumn": str(po.location.get_byte()),
+                        "EndColumn": str(po.location.get_byte()),
+                        "primary": "true",
+                        "Explanation": po.location.__str__()
+                    }
+                ]
+            }
+
+            errors = sw.CheckBug(bug)
+            for error in errors:
+                print error
+
+            if not errors:
+                sw.AddBugInstance(bug)
+
+    sw.AddSummary()
+    sw.AddEndTag()
+    sw.Close()
+
 def file_proofobligation_stats_tostring(cfile,extradsmethods=[]):
     lines = []
     ppos = cfile.get_ppos()
