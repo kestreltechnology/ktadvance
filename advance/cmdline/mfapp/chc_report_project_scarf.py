@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# Script to run analysis on a full application
+# Access to the C Analyzer Analysis Results
 # Author: Henny Sipma
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
@@ -15,7 +15,7 @@
 #
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,18 +28,20 @@
 import argparse
 import os
 
-import advance.util.fileutil as UF
+import advance.reporting.ProofObligations as RP
 import advance.util.printutil as UP
 
-import advance.reporting.ProofObligations as RP
-
+from advance.util.IndexedTable import IndexedTableError
 from advance.app.CApplication import CApplication
 
+
 def parse():
-    usage = ('\nCall with the directory name that contains the semantics directory of a project')
-    description = ('Reports the analysis results for a project that has been analyzed')
-    parser = argparse.ArgumentParser(usage=usage,description=description)
-    parser.add_argument('path',help='name of one of the directory that holds the semantics directory')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('path', help='directory that holds the semantics directory')
+    parser.add_argument('file', help='name of the file to write the SCARF output to')
+    parser.add_argument('--includesafe',
+                        help='include proof obligations that were not found to be issues',
+                        action='store_true')
     args = parser.parse_args()
     return args
 
@@ -47,46 +49,21 @@ def parse():
 if __name__ == '__main__':
 
     args = parse()
-    cpath = args.path
 
+    cpath = args.path
     if not os.path.isdir(cpath):
         print(UP.cpath_not_found_err_msg(cpath))
         exit(1)
 
-    sempath = os.path.join(cpath,'semantics')
+    sempath = os.path.join(cpath, 'semantics')
 
     if not os.path.isdir(sempath):
         print(UP.semantics_not_found_err_msg(cpath))
         exit(1)
-   
+
     capp = CApplication(sempath)
-    fns = []
-    opencount = 0
-    violationcount = 0
-    def v(f):
-        global opencount
-        global violationcount
-        if len(f.get_violations()) > 0:
-            fns.append(f)
-            violationcount += len(f.get_violations())
-        opencount += len(f.get_open_ppos())
-    capp.iter_functions(v)
+    try:
+        RP.project_proofobligation_export_scarf(capp, args.file, args.includesafe)
+    except IndexedTableError as e:
+        print(e.msg)
 
-    print('~' * 80)
-    print('Violation report for application ' + args.path)
-    print('  - universal violations  : ' + str(violationcount))
-    print('  - open proof obligations: ' + str(opencount))
-    print('~' * 80)
-    print('\n')
-
-    if violationcount > 0:
-        print('Universal violations: ')
-        for f in fns:
-            print(RP.function_code_violation_tostring(f))
-
-    if opencount > 0:
-        print('>>>>> Note <<<<<')
-        print('>>> Any of the ' + str(opencount) + ' open proof obligations could indicate a violation.')
-        print('>>> A program is proven safe only if ALL proof obligations are proven safe.')
-        print('>>>>> Note <<<<<')
-    
