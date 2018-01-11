@@ -385,6 +385,74 @@ def project_proofobligation_export_scarf(capp, outputFile, includeSafeProofOblig
 
     for po in ppos + spos:
         if includeSafeProofObligations or po.status != 'safe':
+
+            cweId = []
+            tag = po.potype.get_predicate().get_tag()
+            if tag == 'not-null':
+                cweId.append('476')
+            #elif tag == 'null':
+            #    cweId.append('?')
+            elif tag == 'valid-mem':
+                cweId.append('825')
+            #elif tag == 'global-mem':
+            #    cweId.append('?')
+            elif tag == 'allocation-base':
+                cweId.append('822')
+            #elif tag == 'type-at-offset':
+            #    cweId.append('?')
+            elif tag == 'lower-bound':
+                cweId.append('823')
+            elif tag == 'upper-bound':
+                cweId.append('823')
+            elif tag == 'index-lower-bound':
+                cweId.append('125')
+            elif tag == 'index-upper-bound':
+                cweId.append('125')
+            elif tag == 'initialized':
+                cweId.append('665')
+            elif tag == 'initialized-range':
+                cweId.append('131')
+            elif tag == 'cast':
+                cweId.append('704')
+            elif tag == 'pointer-cast':
+                cweId.append('704')
+            elif tag == 'signed-to-unsigned-cast':
+                cweId.append('195')
+            elif tag == 'unsigned-to-signed-cast':
+                cweId.append('196')
+            elif tag == 'not-zero':
+                cweId.append('369')
+            elif tag == 'null-terminated':
+                cweId.append('170')
+            #elif tag == 'non-negative':
+            #    cweId.append('?')
+            elif tag == 'int-underflow':
+                cweId.append('191')
+            elif tag == 'int-overflow':
+                cweId.append('190')
+            #elif tag == 'width-overflow':
+            #    cweId.append('?')
+            elif tag == 'ptr-lower-bound':
+                cweId.append('786')
+            elif tag == 'ptr-upper-bound':
+                cweId.append('788')
+            elif tag == 'ptr-upper-bound-deref':
+                cweId.append('788')
+            #elif tag == 'common-base':
+            #    cweId.append('?')
+            #elif tag == 'common-base-type':
+            #    cweId.append('?')
+            elif tag == 'format-string':
+                cweId.append('133')
+            #elif tag == 'no-overlap':
+            #    cweId.append('?')
+            #elif tag == 'global-mem':
+            #   cweId.append('?')
+            #elif tag == 'value-constraint':
+            #    cweId.append('?')
+            #elif tag == 'precondition':
+            #    cweId.append('?')
+
             bug = \
             {
                 #"BugGroup": None,
@@ -403,7 +471,7 @@ def project_proofobligation_export_scarf(capp, outputFile, includeSafeProofOblig
                 #        "End": None
                 #    }
                 #},
-                #"CweIds": None,
+                "CweIds": cweId,
                 #"ClassName": None,
                 #"Methods": None,
                 "BugLocations":
