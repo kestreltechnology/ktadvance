@@ -65,7 +65,7 @@ if __name__ == '__main__':
     cfile = cfapp.get_cfile()
 
     if not cfile.has_function_by_name(args.cfunction):
-        print(UP.cfunction_not_found_err_sg(cpath,args.cfile,args.cfunction))
+        print(UP.cfunction_not_found_err_msg(cpath,args.cfile,args.cfunction))
         exit(1)
 
     cfunction = cfile.get_function_by_name(args.cfunction)
