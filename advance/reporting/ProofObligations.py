@@ -455,8 +455,8 @@ def project_proofobligation_export_scarf(capp, outputFile, includeSafeProofOblig
 
             bug = \
             {
-                #"BugGroup": None,
-                #"BugCode": None,
+                "BugGroup": po.status,
+                "BugCode": tag,
                 "BugMessage": po.explanation,
                 #"BugSeverity": None,
                 #"ResolutionSuggestion": None,
