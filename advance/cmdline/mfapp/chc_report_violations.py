@@ -70,7 +70,7 @@ if __name__ == '__main__':
             fns.append(f)
             violationcount += len(f.get_violations())
         opencount += len(f.get_open_ppos())
-    capp.functioniter(v)
+    capp.iter_functions(v)
 
     print('~' * 80)
     print('Violation report for application ' + args.path)
