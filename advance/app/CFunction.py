@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -98,7 +98,11 @@ class CFunction(object):
 
     def get_location(self): return self.svar.vdecl
 
-    def get_line(self): return self.get_location().get_line()
+    def get_source_code_file(self): return self.get_location().get_file()
+
+    def get_line_number(self):
+        if self.cfile.name + '.c' == self.get_source_code_file():
+            return self.get_location().get_line()
 
     def get_formals(self): return self.formals.values()
 
