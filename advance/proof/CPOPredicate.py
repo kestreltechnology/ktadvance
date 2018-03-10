@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -876,7 +876,7 @@ class CPOValueConstraint(CPOPredicate):
 
     def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
 
-    def get_tag(self): return CPOPredicate.get_tag(self) + ':' + str(self.get_exp())
+    def get_tag(self): return CPOPredicate.get_tag(self)  # + ':' + str(self.get_exp())
 
     def is_value_constraint(self): return True
 
