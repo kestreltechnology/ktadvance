@@ -44,5 +44,12 @@ testcases = [
     'CWE122/s06/CWE131_memmove',
     'CWE122/s06/CWE135',
     'CWE122/s06/c_CWE129_connect_socket',
-    'CWE122/s06/c_CWE129_fgets'
+    'CWE122/s06/c_CWE129_fgets',
+    'CWE122/s06/c_CWE129_large',
+    'CWE122/s06/c_CWE129_listen_socket',
+    'CWE122/s06/c_CWE129_rand',
+    'CWE122/s06/c_CWE193_char_cpy',
+    'CWE122/s06/c_CWE193_char_loop',
+    'CWE122/s06/c_CWE193_char_memcpy',
+    'CWE122/s07/c_CWE805_char_loop'
     ]
