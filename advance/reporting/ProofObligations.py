@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2016-2017 Kestrel Technology LLC
+# Copyright (c) 2016-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -171,8 +171,9 @@ def row_method_count_tostring(d,perc=False,extradsmethods=[],rhlen=25,header1=''
 
 class FunctionDisplay(object):
 
-    def __init__(self,cfunction):
+    def __init__(self,cfunction,sourcecodeavailable):
         self.cfunction = cfunction
+        self.sourcecodeavailable = sourcecodeavailable
         self.cfile = self.cfunction.cfile
         self.fline = self.cfunction.get_location().get_line()
         self.currentline = self.fline + 1
@@ -198,8 +199,15 @@ class FunctionDisplay(object):
                         lines.append(str(self._get_context_invariants(c)))
                         lines.append(' ')
                 lines.append('-' * 80)
-                for n in range(self.currentline,line+1):
-                    lines.append(self.get_source_line(n))
+                if self.sourcecodeavailable:
+                    for n in range(self.currentline,line+1):
+                        lines.append(self.get_source_line(n))
+                else:
+                    if self.currentline == line:
+                        lines.append('source line ' + str(line))
+                    else:
+                        lines.append('source lines ' + str(self.currentline) + ' - '
+                                        + str(line))
                 lines.append('-' * 80)
                 contexts = set([])
             self.currentline = line + 1
@@ -259,15 +267,20 @@ class FunctionDisplay(object):
 
 def function_code_tostring(fn,pofilter=lambda po:True,showinvs=False,showpreamble=True):
     lines = []
-    fd = FunctionDisplay(fn)
     ppos = fn.get_ppos()
     ppos = [ x for x in ppos if pofilter(x) ]
     spos = fn.get_spos()
-    fnloc = fn.get_location().get_line()
-    fnstartline = fn.cfile.get_source_line(fnloc).strip()
-    lines.append('\nFunction ' + fn.name)
-    lines.append('-' * 80)
-    lines.append(fnstartline)
+    fnstartline = fn.get_line_number()
+    if fnstartline is None:
+        lines.append('\nFunction ' + fn.name + ' (source code not available, included from '
+                         + str(fn.get_source_code_file()) + ')')
+        fd = FunctionDisplay(fn,False)
+    else:
+        fnstartline = fn.cfile.get_source_line(fnstartline)
+        lines.append('\nFunction ' + fn.name)
+        lines.append('-' * 80)
+        lines.append(fnstartline.strip())
+        fd = FunctionDisplay(fn,True)
     if showpreamble:
         lines.append('-' * 80)
         lines.append(str(fn.api))
