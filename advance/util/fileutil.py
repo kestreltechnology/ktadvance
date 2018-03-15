@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -58,6 +58,21 @@ def get_targetfiles_xnode(path):
 
 def get_global_definitions_filename(path):
     return os.path.join(path,'globaldefinitions.xml')
+
+def save_project_summary_results(path,d):
+    with open(os.path.join(path,'summaryresults.json'),'w') as fp:
+        json.dump(d,fp)
+
+def read_project_summary_results(path):
+    if os.path.isdir(path):
+        filename = os.path.join(path,'summaryresults.json')
+        if os.path.isfile(filename):
+            with open(filename) as fp:
+                d = json.load(fp)
+            return d
+    else:
+        print('Warning: ' + path + ' not found: please check path name')
+
 
 def get_global_declarations_xnode(path):
     filename = get_global_definitions_filename(path)
@@ -325,9 +340,16 @@ def save_juliet_test_summary(testname,d):
 
 def read_juliet_test_summary(testname):
     path = get_juliet_testpath(testname)
-    with open(os.path.join(path,'summaryresults.json')) as fp:
-        d = json.load(fp)
-    return d
+    if os.path.isdir(path):
+        filename = os.path.join(path,'summaryresults.json')
+        if os.path.isfile(filename):
+            with open(filename) as fp:
+                d = json.load(fp)
+            return d
+        else:
+            print('Warning: ' + filename + ' not found; please score results first')
+    else:
+        print('Warning: ' + path + ' not found: please check test name')
 
 def get_juliet_reference(testname):
     path = get_juliet_testpath(testname)
