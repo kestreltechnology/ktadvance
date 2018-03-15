@@ -236,11 +236,11 @@ class FunctionDisplay(object):
                 else:
                     lines.append((' ' * indent) + '---> no diagnostic found')
                 lines.append(' ')
-                '''
-                if (showinvs or (not po.has_diagnostic())):
+
+                if (showinvs and (not po.has_diagnostic())):
                     lines.append((' ' * 18) + '--')
                     lines.append(self._get_po_invariants(po.context,po.id))
-                '''
+
         if len(contexts) > 0 and showinvs:
                 lines.append('\n' + (' ' * indent) + '-------- context invariants --------')
                 for c in contexts:
@@ -348,7 +348,16 @@ def project_proofobligation_stats_tostring(capp,filefilter=lambda f:True,extrads
                                                     extradsmethods=extradsmethods))
 
     return '\n'.join(lines)
-    
+
+def project_proofobligation_stats_to_dict(capp,filefilter=lambda f:True,extradsmethods=[]):
+    ppos = capp.get_ppos()
+    spos = capp.get_spos()
+    tagpporesults = get_tag_method_count(ppos,filefilter=filefilter,extradsmethods=extradsmethods)
+    tagsporesults = get_tag_method_count(spos,filefilter=filefilter,extradsmethods=extradsmethods)
+    result = {}
+    result['ppos'] = tagpporesults
+    result['spos'] = tagsporesults
+    return result
     
 def file_proofobligation_stats_tostring(cfile,extradsmethods=[]):
     lines = []
