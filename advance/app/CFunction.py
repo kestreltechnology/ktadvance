@@ -164,13 +164,17 @@ class CFunction(object):
 
     def get_delegated(self): return self.proofs.get_delegated()
 
+    def frees_memory(self): return self.api.may_free_memory()
+
     def may_free_memory(self):
+        if self.frees_memory():
+            return True
         self.mayfreememory = False
         def f(cs):
-            if cs.mayfreememory:
+            if cs.may_free_memory():
                 self.mayfreememory = True
         self.iter_callsites(f)
-        return (self.mayfreememory or self.api.may_free_memory())
+        return self.mayfreememory
 
     def _initialize(self):
         for v in self.fdecls.get_formals():

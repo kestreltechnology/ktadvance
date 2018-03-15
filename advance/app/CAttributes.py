@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -289,6 +289,8 @@ class CAttributes(CD.CDictionaryRecord):
         CD.CDictionaryRecord.__init__(self,cd,index,tags,args)
 
     def get_attributes(self): return [ self.cd.get_attribute(int(i)) for i in self.args ]
+
+    def length(self): return len(self.get_attributes())
 
     def __str__(self):
         return ','.join([str(p) for p in self.get_attributes() ])
