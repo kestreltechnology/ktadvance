@@ -86,15 +86,18 @@ if __name__ == '__main__':
     ppotagtotals = {}       # tag -> dm -> dmtotal
     spotagtotals = {}
     nosummary = []
-
+    analysistimes = {}
+    
     dsmethods = RP.get_dsmethods([])
 
     for p in projects:
         path = os.path.join(testdir,p)
-        pd = UF.read_project_summary_results(path)
-        if pd is None:
+        results = UF.read_project_summary_results(path)
+        if results is None:
             nosummary.append(p)
             continue
+        analysistimes[p] = results[1]
+        pd = results[0]
         ppod = pd['ppos']
         spod = pd['spos']
         ppoprojecttotals[p] = {}
@@ -127,6 +130,11 @@ if __name__ == '__main__':
     print('\n'.join(totals_to_string(spotagtotals)))
 
     print('\n\nNo summary results found for:')
+    print('-' * 28)
     for p in nosummary:
         print('  ' + p)
-   
+
+    print('\n\nTime of analysis results:')
+    print('-' * 28)
+    for p in sorted(analysistimes,key=lambda p:analysistimes[p]):
+        print(str(analysistimes[p]) + '  ' + p)

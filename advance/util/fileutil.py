@@ -29,6 +29,7 @@ import os
 import subprocess
 import shutil
 import json
+import time
 import xml.etree.ElementTree as ET
 
 import advance.util.xmlutil as UX
@@ -66,9 +67,19 @@ def save_project_summary_results(path,d):
 def read_project_summary_results(path):
     if os.path.isdir(path):
         filename = os.path.join(path,'summaryresults.json')
+        semname = os.path.join(path,'semantics/ktadvance')
         if os.path.isfile(filename):
+            if os.path.isdir(semname):
+                stattime = os.stat(semname)
+            else:
+                stattime = os.stat(filename)
             with open(filename) as fp:
                 d = json.load(fp)
+                (mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os.stat(semname)
+                mtime = time.localtime(stattime[8])
+                mtime = time.strftime('%Y-%m-%d %H:%M',mtime)
+                return (d,mtime)
+
             return d
     else:
         print('Warning: ' + path + ' not found: please check path name')
