@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017-2018 Kestrel Technology LLC
+# Copyright (c) 2017 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -28,57 +28,36 @@
 import argparse
 import os
 
-import advance.util.printutil as UP
-import advance.util.fileutil as UF
 import advance.reporting.ProofObligations as RP
-
-from advance.util.Config import Config
-from advance.app.CApplication import CApplication
-from advance.app.CApplication import CFileNotFoundException
+import advance.util.fileutil as UF
 
 from advance.util.IndexedTable import IndexedTableError
-
+from advance.app.CApplication import CApplication
 
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('path',help='directory that holds the semantics directory')
-    parser.add_argument('cfile',help='name of c file that is part of the test')
-    parser.add_argument('--showcode',help='show proof obligations on code for entire file',
-                            action='store_true')
-    parser.add_argument('--open',help='show only proof obligions on code that are still open',
-                            action='store_true')
-    parser.add_argument('--showinvs',help='show context invariants',action='store_true')
     args = parser.parse_args()
     return args
 
 if __name__ == '__main__':
 
     args = parse()
-    cpath = args.path    
+
+    cpath = args.path
     if not os.path.isdir(cpath):
         print(UP.cpath_not_found_err_msg(cpath))
         exit(1)
 
     sempath = os.path.join(cpath,'semantics')
+
     if not os.path.isdir(sempath):
         print(UP.semantics_not_found_err_msg(cpath))
         exit(1)
-        
-    cfapp = CApplication(sempath,args.cfile)
+   
+    capp = CApplication(sempath)
     try:
-        cfile = cfapp.get_cfile()
-    except CFileNotFoundException as e:
-        print(e)
-        exit(0)
-
-    try:
-        if args.showcode:
-            if args.open:
-                print(RP.file_code_open_tostring(cfile,showinvs=args.showinvs))
-            else:
-                print(RP.file_code_tostring(cfile))
-
-        print(RP.file_proofobligation_stats_tostring(cfile))
+        UF.save_project_summary_results(cpath,RP.project_proofobligation_stats_to_dict(capp))
     except IndexedTableError as e:
         print(
             '\n' + ('*' * 80) + '\nThe analysis results format has changed'
@@ -86,4 +65,3 @@ if __name__ == '__main__':
             + '\n' + e.msg
             + '\n' + ('*' * 80))
 
-        
