@@ -17,8 +17,8 @@
 
 import sys
 import math
-from lxml import etree
-
+#from lxml import etree
+from xml.etree import ElementTree as etree
 
 ###################Handle errors#############################################################
 def error(error_level, message):
@@ -382,8 +382,8 @@ class ScarfXmlWriter:
                     summary_xml_element.set("code", code)
                     summary_xml_element.set("count", "%s" % summary["count"])
                     summary_xml_element.set("bytes", "%s" % summary["bytes"])
-            self._output_write(etree.tostring(summaries, encoding=self.encoding,
-                                              pretty_print=True))
+            self._output_write(etree.tostring(summaries, encoding=self.encoding))
+                                              #pretty_print=True))
 
         if self.metricSummaries:
             self.bodyType = "summary"
