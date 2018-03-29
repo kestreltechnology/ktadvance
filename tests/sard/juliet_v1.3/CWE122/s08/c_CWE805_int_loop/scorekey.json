@@ -1,0 +1,37 @@
+{
+    "test": "CWE122/s08/c_CWE805_int_loop",
+    "macros": {
+	"PPO1": {
+	    "P": "ptr-upper-bound-deref"
+	},
+	"PS1": [ "PPO1" ]
+    },
+    "tests": {
+	"01": {
+	    "cfiles": {
+		"x01.c": {
+		    "violations": {
+			"35": [ "PS1" ]
+		    },
+		    "safe-controls": {
+			"62": [ "PS1" ]
+		    }
+		}
+	    }
+	},
+	"02": {
+	    "cfiles": {
+		"x02.c": {
+		    "violations": {
+			"38": [ "PS1" ]
+		    },
+		    "safe-controls": {
+			"73": [ "PS1" ],
+			"99": [ "PS1" ]
+		    }
+		}
+	    }
+	}
+    }
+}
+
