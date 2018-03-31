@@ -27,6 +27,9 @@
 
 import os
 
+if os.path.isfile(os.path.join(os.path.dirname(os.path.abspath(__file__)), "ConfigLocal.py")):
+    import advance.util.ConfigLocal as ConfigLocal
+
 class Config(object):
 
     def __init__(self):
@@ -47,11 +50,9 @@ class Config(object):
         self.binariesdir = os.path.join(self.bindir,'binaries')
         self.cparser = os.path.join(self.binariesdir,'parseFile_linux')
         self.canalyzer = os.path.join(self.binariesdir,'ktadvance_linux')
-
         if self.platform == 'mac':
             self.cparser = os.path.join(self.binariesdir,'parseFile_mac')
             self.canalyzer = os.path.join(self.binariesdir,'ktadvance_mac')
 
-        '''other repositories'''
-        self.svcompdir = os.path.join(self.testdir,'svcomp')
-        
+        if os.path.isfile(os.path.join(os.path.dirname(os.path.abspath(__file__)), "ConfigLocal.py")):
+            ConfigLocal.getLocals(self)

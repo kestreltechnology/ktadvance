@@ -357,10 +357,6 @@ def read_juliet_test_summary(testname):
             with open(filename) as fp:
                 d = json.load(fp)
             return d
-        else:
-            print('Warning: ' + filename + ' not found; please score results first')
-    else:
-        print('Warning: ' + path + ' not found: please check test name')
 
 def get_juliet_reference(testname):
     path = get_juliet_testpath(testname)
