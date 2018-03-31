@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -72,6 +72,9 @@ if __name__ == '__main__':
                 stotals['safe-controls'][c] += totals['safe-controls'][c]
                 sppototals += totals['safe-controls'][c]
                 if c in shandled: sppohandled += totals['safe-controls'][c]
+        else:
+            print(t.ljust(tnamelength) + ('-'  * (44 - (tnamelength/2))) + ' not found ' +
+                      ('-' * (44 - (tnamelength/2))))
     print('-' * (tnamelength + 64))
     print('total'.ljust(tnamelength) +
               ''.join([str(stotals['violations'][c]).rjust(5) for c in violationcategories]) +

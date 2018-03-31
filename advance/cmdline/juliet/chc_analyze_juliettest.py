@@ -86,7 +86,7 @@ if __name__ == '__main__':
     # if (not os.path.isdir(sempath)) or args.deletesemantics:
     success = UF.unpack_tar_file(cpath,True)
     if not success:
-        print(UP.semantics_tar_ot_found_err_msg(cpath))
+        print(UP.semantics_tar_not_found_err_msg(cpath))
         exit(1)
 
     capp = CApplication(sempath)
