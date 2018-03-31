@@ -251,6 +251,18 @@ class CApplication(object):
                          + str(fctotal).rjust(12))
         return '\n'.join(lines)
 
+    def get_project_counts(self):
+        linecounts = []
+        clinecounts = []
+        cfuncounts = []
+        def f(cfile):
+            decls = cfile.declarations
+            linecounts.append(decls.get_max_line())
+            clinecounts.append(decls.get_code_line_count())
+            cfuncounts.append(decls.get_function_count())
+        self.iter_files(f)
+        return (sum(linecounts),sum(clinecounts),sum(cfuncounts))
+
     def get_missing_summaries(self):
         result = {}
         def f(cfun):
