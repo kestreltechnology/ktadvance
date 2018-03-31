@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -726,11 +726,10 @@ class CPOPtrUpperBound(CPOPredicate):
         return self.get_exp1().has_variable(vid) or self.get_exp2().has_variable(vid)
 
     def __str__(self):
-        return (self.get_tag() + '(' + str(self.get_exp1()) + ','
-                    + str(self.get_exp2()) + ',op:' + self.get_binop()
-                    + ',typ:' + str(self.get_type()) + ')' )
-
-
+        return (self.get_tag() + '(typ:' + str(self.get_type())
+                    + ',op:' + self.get_binop() + ','
+                    + str(self.get_exp1()) + ',' + str(self.get_exp2())
+                    + ')')
 
 class CPOPtrUpperBoundDeref(CPOPredicate):
     '''
@@ -760,12 +759,12 @@ class CPOPtrUpperBoundDeref(CPOPredicate):
         return self.get_exp1().has_variable(vid) or self.get_exp2().has_variable(vid)
 
     def __str__(self):
-        return (self.get_tag() + '(' + str(self.get_exp1()) + ','
-                    + str(self.get_exp2()) + ',op:' + self.get_binop()
-                    + ',typ:' + str(self.get_type()) + ')' )
+        return (self.get_tag() + '(typ:' + str(self.get_type())
+                    + ',op:' + self.get_binop() + ','
+                    + str(self.get_exp1()) + ',' + str(self.get_exp2())
+                    + ')')
 
- 
-    
+
 class CPOCommonBase(CPOPredicate):
     '''
     tags:
@@ -877,7 +876,7 @@ class CPOValueConstraint(CPOPredicate):
 
     def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
 
-    def get_tag(self): return CPOPredicate.get_tag(self) + ':' + str(self.get_exp())
+    def get_tag(self): return CPOPredicate.get_tag(self)  # + ':' + str(self.get_exp())
 
     def is_value_constraint(self): return True
 

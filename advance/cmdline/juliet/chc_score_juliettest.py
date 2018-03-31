@@ -34,6 +34,8 @@ import advance.cmdline.juliet.JulietTestScoring as JTS
 
 from advance.app.CApplication import CApplication
 
+from advance.util.IndexedTable import IndexedTableError
+
 from advance.cmdline.juliet.JulietTestSetRef import JulietTestSetRef
 
 def parse():
@@ -69,10 +71,18 @@ if __name__ == '__main__':
         exit(1)
 
     testset = JulietTestSetRef(d)
-    julietppos = JTS.get_julietppos(testset)
+
+    try:
+        julietppos = JTS.get_julietppos(testset)
     
-    ppopairs = JTS.get_ppo_pairs(julietppos,capp)
-    print(JTS.testppo_results_tostring(ppopairs,capp))
+        ppopairs = JTS.get_ppo_pairs(julietppos,capp)
+        print(JTS.testppo_results_tostring(ppopairs,capp))
+    except IndexedTableError as e:
+        print(
+            '\n' + ('*' * 80) + '\nThe format of the analysis results has changed'
+            + '\nPlease re-run the analysis first'
+            + '\n' + ('*' * 80))
+        exit(1)
     
     testsummary = {}
     JTS.initialize_testsummary(testset,testsummary)

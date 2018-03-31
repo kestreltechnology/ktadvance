@@ -77,7 +77,7 @@ if __name__ == '__main__':
             def pofilter(po):return po.is_violated()
         else:
             def pofilter(po):return True
-        print(RP.file_code_tostring(cfile,pofilter=pofilter))
+        print(RP.file_code_tostring(cfile,pofilter=pofilter,showinvs=True))
 
 
     print(RP.file_proofobligation_stats_tostring(cfile))

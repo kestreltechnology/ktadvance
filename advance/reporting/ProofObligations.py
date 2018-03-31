@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2016-2017 Kestrel Technology LLC
+# Copyright (c) 2016-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -171,8 +171,9 @@ def row_method_count_tostring(d,perc=False,extradsmethods=[],rhlen=25,header1=''
 
 class FunctionDisplay(object):
 
-    def __init__(self,cfunction):
+    def __init__(self,cfunction,sourcecodeavailable):
         self.cfunction = cfunction
+        self.sourcecodeavailable = sourcecodeavailable
         self.cfile = self.cfunction.cfile
         self.fline = self.cfunction.get_location().get_line()
         self.currentline = self.fline + 1
@@ -185,14 +186,30 @@ class FunctionDisplay(object):
 
     def pos_on_code_tostring(self,pos,pofilter=lambda po:True,showinvs=False):
         lines = []
+        contexts = set([])
         for po in sorted(pos,key=lambda po:po.get_line()):
             if not pofilter(po): continue
             line = po.get_line()
             if line >= self.currentline:
+                if len(contexts) > 0 and showinvs:
+                    lines.append('\n' + (' ' * indent) + '-------- context invariants --------')
+                    for c in contexts:
+                        lines.append((' ' * indent) + str(c))
+                        lines.append((' ' * indent) + ('-' * len(str(c))))
+                        lines.append(str(self._get_context_invariants(c)))
+                        lines.append(' ')
                 lines.append('-' * 80)
-                for n in range(self.currentline,line+1):
-                    lines.append(self.get_source_line(n))
+                if self.sourcecodeavailable:
+                    for n in range(self.currentline,line+1):
+                        lines.append(self.get_source_line(n))
+                else:
+                    if self.currentline == line:
+                        lines.append('source line ' + str(line))
+                    else:
+                        lines.append('source lines ' + str(self.currentline) + ' - '
+                                        + str(line))
                 lines.append('-' * 80)
+                contexts = set([])
             self.currentline = line + 1
             delegated = ''
             indent = 18 if po.is_ppo() else 24
@@ -202,12 +219,35 @@ class FunctionDisplay(object):
                 lines.append(prefix + ' ' + str(po))
                 lines.append((' ' * indent) + expl)
             else:
+                contexts.add(po.context)
                 lines.append('\n<?> ' + str(po))
                 if po.has_diagnostic():
-                    lines.append((' ' * indent) + '---> ' + po.diagnostic)
-                if (showinvs or (not po.has_diagnostic())):
+                    amsgs = po.diagnostic.amsgs
+                    if len(amsgs) > 0:
+                        for arg in sorted(amsgs):
+                            for s in sorted(amsgs[arg]):
+                                lines.append((' ' * indent) + s)
+                    keys = po.diagnostic.get_argument_indices()
+                    for k in sorted(keys):
+                        invids = po.diagnostic.get_invariant_ids(k)
+                        for id in invids:
+                            inv = self.cfunction.invd.get_invariant_fact(id).get_non_relational_value()
+                            lines.append((' ' * indent) + str(k) + ': ' + str(inv))
+                else:
+                    lines.append((' ' * indent) + '---> no diagnostic found')
+                lines.append(' ')
+
+                if (showinvs and (not po.has_diagnostic())):
                     lines.append((' ' * 18) + '--')
                     lines.append(self._get_po_invariants(po.context,po.id))
+
+        if len(contexts) > 0 and showinvs:
+                lines.append('\n' + (' ' * indent) + '-------- context invariants --------')
+                for c in contexts:
+                        lines.append((' ' * indent) + '=== ' + str(c) + ' ===')
+                        lines.append(str(self._get_context_invariants(c)))
+                        lines.append(' ')
+
         self.currentline = self.fline + 1
         return '\n'.join(lines)
 
@@ -218,17 +258,29 @@ class FunctionDisplay(object):
             lines.append((' ' * 18) + str(inv))
         return '\n'.join(lines)
 
+    def _get_context_invariants(self,context):
+        lines = []
+        invs = self.cfunction.invtable.get_sorted_invariants(context)
+        for inv in invs:
+            lines.append((' ' * 18) + str(inv))
+        return '\n'.join(lines)
+
 def function_code_tostring(fn,pofilter=lambda po:True,showinvs=False,showpreamble=True):
     lines = []
-    fd = FunctionDisplay(fn)
     ppos = fn.get_ppos()
     ppos = [ x for x in ppos if pofilter(x) ]
     spos = fn.get_spos()
-    fnloc = fn.get_location().get_line()
-    fnstartline = fn.cfile.get_source_line(fnloc).strip()
-    lines.append('\nFunction ' + fn.name)
-    lines.append('-' * 80)
-    lines.append(fnstartline)
+    fnstartline = fn.get_line_number()
+    if fnstartline is None:
+        lines.append('\nFunction ' + fn.name + ' (source code not available, included from '
+                         + str(fn.get_source_code_file()) + ')')
+        fd = FunctionDisplay(fn,False)
+    else:
+        fnstartline = fn.cfile.get_source_line(fnstartline)
+        lines.append('\nFunction ' + fn.name)
+        lines.append('-' * 80)
+        lines.append(fnstartline.strip())
+        fd = FunctionDisplay(fn,True)
     if showpreamble:
         lines.append('-' * 80)
         lines.append(str(fn.api))
@@ -242,19 +294,19 @@ def function_code_tostring(fn,pofilter=lambda po:True,showinvs=False,showpreambl
         lines.append(fd.pos_on_code_tostring(spos,pofilter=pofilter,showinvs=showinvs))
     return '\n'.join(lines)
 
-def function_code_open_tostring(fn):
+def function_code_open_tostring(fn,showinvs=False):
 
     pofilter = lambda po:not po.is_closed()
-    return function_code_tostring(fn,pofilter=pofilter)
+    return function_code_tostring(fn,pofilter=pofilter,showinvs=showinvs)
 
-def function_code_violation_tostring(fn):
+def function_code_violation_tostring(fn,showinvs=False):
     pofilter = lambda po:po.is_violated()
 
-    return function_code_tostring(fn,pofilter=pofilter)
+    return function_code_tostring(fn,pofilter=pofilter,showinvs=showinvs)
 
-def function_code_predicate_tostring(fn,p):
+def function_code_predicate_tostring(fn,p,showinvs=False):
     pofilter = lambda po:po.predicatetag == p
-    return function_code_tostring(fn,pofilter=pofilter)
+    return function_code_tostring(fn,pofilter=pofilter,showinvs=showinvs)
     
 def file_code_tostring(cfile,pofilter=lambda po:True,showinvs=False):
     lines = []
@@ -262,9 +314,9 @@ def file_code_tostring(cfile,pofilter=lambda po:True,showinvs=False):
     cfile.iter_functions(f)
     return '\n'.join(lines)
 
-def file_code_open_tostring(fn):
+def file_code_open_tostring(fn,showinvs=False):
     pofilter = lambda po:not po.is_closed()
-    return file_code_tostring(fn,pofilter=pofilter)
+    return file_code_tostring(fn,pofilter=pofilter,showinvs=showinvs)
 
 def proofobligation_stats_tostring(pporesults,sporesults,rhlen=25,header1='',extradsmethods=[]):
     lines = []
@@ -296,7 +348,17 @@ def project_proofobligation_stats_tostring(capp,filefilter=lambda f:True,extrads
                                                     extradsmethods=extradsmethods))
 
     return '\n'.join(lines)
-    
+
+def project_proofobligation_stats_to_dict(capp,filefilter=lambda f:True,extradsmethods=[]):
+    ppos = capp.get_ppos()
+    spos = capp.get_spos()
+    tagpporesults = get_tag_method_count(ppos,filefilter=filefilter,extradsmethods=extradsmethods)
+    tagsporesults = get_tag_method_count(spos,filefilter=filefilter,extradsmethods=extradsmethods)
+    result = {}
+    result['stats'] = capp.get_project_counts()
+    result['ppos'] = tagpporesults
+    result['spos'] = tagsporesults
+    return result
     
 def file_proofobligation_stats_tostring(cfile,extradsmethods=[]):
     lines = []
@@ -380,7 +442,26 @@ def tag_file_function_pos_tostring(pos,filefilter=lambda f:True,pofilter=lambda 
             for ff in sorted(fundict[f]):
                 lines.append('    Function: ' + ff)
                 for po in sorted(fundict[f][ff],key=lambda po:po.get_line()):
+                    invd = po.cfun.invd
                     lines.append((' ' * 6) + str(po))
                     if po.has_diagnostic():
-                        lines.append((' ' * 8) + ' ---> ' + po.diagnostic)
+                        amsgs = po.diagnostic.amsgs
+                        if len(amsgs) > 0:
+                            for arg in sorted(amsgs):
+                                for s in sorted(amsgs[arg]):
+                                    lines.append((' ' * 14) + s)
+                        msgs = po.diagnostic.msgs
+                        if len(msgs) > 0:
+                            lines.append((' ' * 8) + ' ---> ' + msgs[0])
+                            for s in msgs[1:]:
+                                lines.append((' ' * 14) + s)
+                            lines.append(' ')
+                        keys = po.diagnostic.get_argument_indices()
+                        for k in keys:
+                            invids = po.diagnostic.get_invariant_ids(k)
+                            for id in invids:
+                                lines.append((' ' * 14) + str(k) + ': ' +
+                                                 str(invd.get_invariant_fact(id).get_non_relational_value()))
+                        lines.append(' ')
+
     return '\n'.join(lines)

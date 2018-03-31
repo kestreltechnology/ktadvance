@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -125,8 +125,10 @@ if __name__ == '__main__':
     am.create_app_primary_proofobligations(processes=args.maxprocesses)
 
     for i in range(2):
-        am.generate_and_check_app('llvisp', processes=args.maxprocesses)
+        am.generate_and_check_app('llrvisp', processes=args.maxprocesses)
+        capp.reinitialize_tables()
 
     for i in range(args.analysisrounds):
         capp.update_spos()
-        am.generate_and_check_app('llvisp', processes=args.maxprocesses)
+        am.generate_and_check_app('llrvisp', processes=args.maxprocesses)
+        capp.reinitialize_tables()

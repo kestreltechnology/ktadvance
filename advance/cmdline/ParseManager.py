@@ -152,10 +152,13 @@ class ParseManager(object):
         if self.verbose: print('***** ' + ccommand['file'] + ' *****')
         if self.verbose: print('=' * 80)
         for p in ccommand:
-            print(p + ': ' + ccommand[p])
-        command = shlex.split(ccommand['command'],self.posix)
+            print(p + ': ' + str(ccommand[p]))
+        if 'arguments' in ccommand:
+            command = ccommand['arguments']
+        else:
+            command = shlex.split(ccommand['command'],self.posix)
         ecommand = command[:]
-        cfilename = ccommand['file']
+        cfilename = os.path.join(ccommand['directory'], ccommand['file'])
         if cfilename.endswith('.c'):
             ifilename = cfilename[:-1] + 'i'
             try:

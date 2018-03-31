@@ -43,6 +43,13 @@ class CFunInvariantTable(object):
         else:
             return []
 
+    def get_sorted_invariants(self,context):
+        invs = self.get_invariants(context)
+        nrvinvs = [ inv for inv in invs if inv.is_nrv_fact() ]
+        otherinvs = [ inv for inv in invs if not inv.is_nrv_fact() ]
+        nrvinvs = sorted(nrvinvs,key=lambda i:str(i.get_variable()))
+        return otherinvs + nrvinvs
+
     def get_po_invariants(self,context,poId):
         invs = self.get_invariants(context)
         def filter(inv):

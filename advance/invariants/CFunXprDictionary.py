@@ -60,12 +60,16 @@ class CFunXprDictionary (object):
         self.variable_table = IT.IndexedTable('variable-table')
         self.xcst_table = IT.IndexedTable('xcst-table')
         self.xpr_table = IT.IndexedTable('xpr-table')
+        self.xpr_list_table = IT.IndexedTable('xpr-list-table')
+        self.xpr_list_list_table = IT.IndexedTable('xpr-list-list-table')
         self.tables = [
             (self.numerical_table,self._read_xml_numerical_table),
             (self.symbol_table,self._read_xml_symbol_table),
             (self.variable_table,self._read_xml_variable_table),
             (self.xcst_table,self._read_xml_xcst_table),
-            (self.xpr_table,self._read_xml_xpr_table) ]
+            (self.xpr_table,self._read_xml_xpr_table),
+            (self.xpr_list_table,self._read_xml_xpr_list_table),
+            (self.xpr_list_list_table,self._read_xml_xpr_list_list_table) ]
 
     # ------------- Retrieve items from dictionary tables ----------------------
 
@@ -80,6 +84,10 @@ class CFunXprDictionary (object):
     def get_xcst(self,ix): return self.xcst_table.retrieve(ix)
 
     def get_xpr(self,ix): return self.xpr_table.retrieve(ix)
+
+    def get_xpr_list(self,ix): return self.xpr_list_table.retrieve(ix)
+
+    def get_xpr_list_list(self,ix): return self.xpr_list_list_table.retrieve(ix)
 
     # ------------ Provide read_xml service ------------------------------------
 
@@ -144,4 +152,18 @@ class CFunXprDictionary (object):
             args = (self,) + rep
             return xpr_constructors[tag](args)
         self.xpr_table.read_xml(txnode,'n',get_value)
+
+    def _read_xml_xpr_list_table(self,txnode):
+        def get_value(node):
+            rep = IT.get_rep(node)
+            args = (self,) + rep
+            return CX.CXprList(*args)
+        self.xpr_list_table.read_xml(txnode,'n',get_value)
+
+    def _read_xml_xpr_list_list_table(self,txnode):
+        def get_value(node):
+            rep = IT.get_rep(node)
+            args = (self,) + rep
+            return CX.CXprListList(*args)
+        self.xpr_list_list_table.read_xml(txnode,'n',get_value)
             

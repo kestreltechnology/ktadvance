@@ -43,10 +43,14 @@ def parse():
     args = parser.parse_args()
     return args
 
+skips = [ 163, 363, 391 ]
+
 if __name__ == '__main__':
     args = parse()
 
     for id in range(115,403,4):
+
+        if id in skips: continue
 
         testname = 'id' + str(id) + 'Q'
         cpath = UF.get_kendra_testpath(testname)

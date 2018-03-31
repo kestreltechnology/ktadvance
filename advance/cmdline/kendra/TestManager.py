@@ -398,6 +398,7 @@ class TestManager(object):
                     raise XmlFileNotFoundError(cfilefilename)
                 capp = CApplication(self.sempath,cfilename=creffilename)
                 cappfile = capp.get_single_file()
+                cappfile.reinitialize_tables()
                 if creffile.has_domains():
                     for d in creffile.get_domains():
                         delegate_to_post = self.proofcheckcount > 200

@@ -36,6 +36,24 @@ po_status = {
 
 po_status_indicators = { v:k for (k,v) in po_status.items() }
 
+class CProofDiagnostic(object):
+
+    def __init__(self,invsmap,msgs,amsgs):
+        self.invsmap = invsmap
+        self.amsgs = amsgs      # arg -> string list (argument-specific messages) 
+        self.msgs = msgs        # string list
+
+    def get_argument_indices(self): return self.invsmap.keys()
+
+    def get_invariant_ids(self,index):
+        if (index in self.invsmap):
+            return self.invsmap[index]
+
+    def __str__(self):
+        if len(self.msgs) == 0:
+            return 'no diagnostic messages'
+        return '\n'.join(self.msgs)
+
 class CProofDependencies(object):
     '''Extent of dependency of a closed proof obligation.
 

@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -81,6 +81,15 @@ class CFunctionCallsiteSPOs(object):
     def get_line(self): return self.location.get_line()
 
     def get_cfg_context_string(self): return str(self.context)
+
+    def may_free_memory(self):
+        if not self.has_callee():
+            return True
+        cfile = self.cfile
+        calleefun = cfile.capp.resolve_vid_function(cfile.index,self.callee.get_vid())
+        if calleefun is None:
+            return True
+        return calleefun.mayfreememory
 
     def update(self):
         if not self.has_callee(): return

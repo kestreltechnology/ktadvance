@@ -31,6 +31,8 @@ testcases = [ 'id' + str(x) for x in range(1283,1311) ]
 if __name__ == '__main__':
 
     for testcase in testcases:
+        print('\nAnalyzing ' + testcase)
+        print('-------------------')
         cmd = [ 'python' , 'chc_analyze_zitser.py', testcase ]
         result = subprocess.call(cmd,stderr=subprocess.STDOUT)
         if result != 0:

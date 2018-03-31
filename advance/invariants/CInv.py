@@ -52,6 +52,7 @@ class NonRelationalValue(InvDictionaryRecord):
         InvDictionaryRecord.__init__(self,invd,index,tags,args)
 
     def is_symbolic_expr(self): return False
+    def is_symbolic_bound(self): return False
     def is_interval_value(self): return False
     def is_base_offset_value(self): return False
     def is_region_set(self): return False
@@ -72,6 +73,20 @@ class NRVSymbolicExpr(NonRelationalValue):
 
     def __str__(self): return 'sx:' + str(self.get_xpr())
 
+
+class NRVSymbolicBound(NonRelationalValue):
+
+    def __init__(self,invd,index,tags,args):
+        NonRelationalValue.__init__(self,invd,index,tags,args)
+
+    def get_bound(self): return self.xd.get_xpr_list_list(int(self.args[0]))
+
+    def get_bound_type(self): return self.tags[1]
+
+    def is_symbolic_bound(self): return True
+
+    def __str__(self):
+        return (self.get_bound_type() + ':' + str(self.get_bound()))
 
 
 class NRVIntervalValue(NonRelationalValue):
@@ -194,7 +209,7 @@ class NRVInitializedSet(NonRelationalValue):
 
     def get_symbols(self): return [ self.xd.get_symbol(int(i)) for i in self.args ]
 
-    def __str__(self): return 'syms:' + ','.join([str(a) for a in self.get_symbols()])
+    def __str__(self): return ','.join([str(a) for a in self.get_symbols()])
 
 
 class CInvariantFact(InvDictionaryRecord):
@@ -223,6 +238,15 @@ class CInvariantNRVFact(CInvariantFact):
     def __str__(self):
         return (str(self.get_variable()).rjust(32) + ' : '
                     + str(self.get_non_relational_value()) )
+
+class CParameterConstraintFact(CInvariantFact):
+
+    def __init__(self,invd,index,args,tags):
+        CInvariantFact.__init__(self,invd,index,args,tags)
+
+    def get_expr(self): return self.xd.get_xpr(int(self.args[0]))
+
+    def __str__(self): return (str(self.get_expr()))
 
 
 class UnreachableFact(CInvariantFact):

@@ -73,7 +73,7 @@ def doc_to_pretty (t):
     return ''.join(lines)
 
 def get_xml_header(filename,info):
-    root = ET.Element('kt-advance')
+    root = ET.Element('c-analysis')
     tree = ET.ElementTree(root)
     header = ET.Element('header')
     header.set('info',info)

@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -81,6 +81,13 @@ class CTypBase(CD.CDictionaryRecord):
         else:
             return self.cd.get_attributes(1)
 
+    def get_attributes_string(self):
+        attrs = self.get_attributes()
+        if attrs.length() > 0:
+            return '[' + str(attrs) + ']'
+        else:
+            return ''
+
     def equal(self,other):
         return self.expand().index == other.expand().index
 
@@ -141,7 +148,7 @@ class CTypInt(CTypBase):
     def get_kind(self): return self.tags[1]
 
     def __str__(self):
-        return (integernames[self.get_kind()] + '[' + str(self.get_attributes()) + ']')
+        return (integernames[self.get_kind()] + str(self.get_attributes_string()))
         
 
 class CTypFloat(CTypBase):
@@ -184,7 +191,7 @@ class CTypNamed(CTypBase):
     def is_named_type(self): return True
 
     def __str__(self):
-        return self.get_name() + '[' + str(self.get_attributes()) + ']'
+        return self.get_name() + str(self.get_attributes_string())
         
 
 class CTypComp(CTypBase):

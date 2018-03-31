@@ -55,7 +55,7 @@ def parse():
                             type=int, default=5)
     parser.add_argument('--wordsize',
                         help='wordsize of target platform (e.g., 32 or 64)',
-                        type=int, default=0)
+                        type=int, default=32)
     args = parser.parse_args()
     return args
 
@@ -99,17 +99,12 @@ if __name__ == '__main__':
 
     # have to reinitialized capp to get linking info properly initialized
     capp = CApplication(sempath)
-    print(str(capp.declarations.get_stats()))
 
     filecounts = {}
     def f(cfile):
         decls = cfile.declarations
         filecounts[cfile.name] = (decls.get_max_line(),decls.get_code_line_count())
-    capp.iter_files(f)
-    for name in sorted(filecounts):
-        (maxline,count) = filecounts[name]
-        print(name.ljust(25) + str(maxline).rjust(10) + str(count).rjust(10))
-    
+    capp.iter_files(f)    
     
     am = AnalysisManager(capp,verbose=args.verbose,wordsize=args.wordsize)
 
@@ -122,9 +117,8 @@ if __name__ == '__main__':
     # userdata.distribute()
    
     for i in range(3):
-        am.generate_and_check_app('llvisp')
+        am.generate_and_check_app('llvisrp')
 
     for i in range(args.analysisrounds):
         capp.update_spos()
-        am.generate_and_check_app('llvisp')
-
+        am.generate_and_check_app('llvisrp')

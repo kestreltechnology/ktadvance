@@ -55,7 +55,7 @@ def parse():
                             help='Unpack a fresh version of the semantics files',
                             action='store_true')
     parser.add_argument('--wordsize',help='wordsize of target platform (e.g. 32 or 64)',
-                            type=int,default=0)
+                            type=int,default=32)
     parser.add_argument('--analysisrounds',type=int,default=3,
                             help='number of times to generate secondary proof obligations')
     parser.add_argument('--verbose',help='print out intermediate results',
@@ -105,7 +105,7 @@ if __name__ == '__main__':
         exit(1)
     
     am = AnalysisManager(capp,onefile=True,wordsize=int(args.wordsize),verbose=args.verbose,
-                             unreachability=True)
+                             unreachability=False)
 
     cfilename = args.cfile
 
@@ -113,12 +113,11 @@ if __name__ == '__main__':
         am.create_file_primary_proofobligations(cfilename)
         am.reset_tables(cfilename)
 
-    am.generate_and_check_file(cfilename,'llvisp')
+    am.generate_and_check_file(cfilename,'llrvisp')
     am.reset_tables(cfilename)
 
     for k in range(args.analysisrounds):
         capp.update_spos()
-        am.generate_and_check_file(cfilename,'llvisp')
+        am.generate_and_check_file(cfilename,'llrvisp')
         am.reset_tables(cfilename)
-
 
