@@ -355,6 +355,7 @@ def project_proofobligation_stats_to_dict(capp,filefilter=lambda f:True,extradsm
     tagpporesults = get_tag_method_count(ppos,filefilter=filefilter,extradsmethods=extradsmethods)
     tagsporesults = get_tag_method_count(spos,filefilter=filefilter,extradsmethods=extradsmethods)
     result = {}
+    result['stats'] = capp.get_project_counts()
     result['ppos'] = tagpporesults
     result['spos'] = tagsporesults
     return result
