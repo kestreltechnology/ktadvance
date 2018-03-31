@@ -46,12 +46,12 @@ projects = [
     'sate/2009/irssi-0.8.14',
     'sate/2010/dovecot-2.0.beta6' ]
 
-def totals_to_string(tagtotals):
+def totals_to_string(tagtotals,absolute=True):
     lines = []
     rhlen = 28
     header1 = ''
     dsmethods = RP.get_dsmethods([])
-    lines.append(RP.get_dsmethod_header(rhlen,dsmethods,header1=header1) + '    %proven')
+    lines.append(RP.get_dsmethod_header(rhlen,dsmethods,header1=header1) + '    %closed')
     barlen = 64 + rhlen
     lines.append('-' * barlen)
     for t in sorted(tagtotals):
@@ -59,8 +59,13 @@ def totals_to_string(tagtotals):
         rsum = sum(r)
         tagopenpct = (1.0 - (float(tagtotals[t]['open'])/float(rsum))) * 100.0
         tagopenpct = str('{:.1f}'.format(tagopenpct))
-        lines.append(t.ljust(rhlen) + ''.join([str(x).rjust(8) for x in r])
-                         + str(sum(r)).rjust(10) + tagopenpct.rjust(8))
+        if absolute:
+            lines.append(t.ljust(rhlen) + ''.join([str(x).rjust(8) for x in r])
+                            + str(sum(r)).rjust(10) + tagopenpct.rjust(8))
+        else:
+            lines.append(t.ljust(rhlen)
+                             + ''.join([str('{:.2f}'.format(float(x)/float(rsum) * 100.0)).rjust(8)
+                                            for x in r]))
     lines.append('-' * barlen )
     totals = {}
     for dm in dsmethods:
@@ -68,8 +73,9 @@ def totals_to_string(tagtotals):
     totalcount = sum(totals.values())
     tagopenpct = (1.0 - (float(totals['open'])/float(totalcount))) * 100.0
     tagopenpct = str('{:.1f}'.format(tagopenpct))
-    lines.append('total'.ljust(rhlen) + ''.join([str(totals[dm]).rjust(8) for dm in dsmethods])
-                     + str(totalcount).rjust(10) + tagopenpct.rjust(8))
+    if absolute:
+        lines.append('total'.ljust(rhlen) + ''.join([str(totals[dm]).rjust(8) for dm in dsmethods])
+                        + str(totalcount).rjust(10) + tagopenpct.rjust(8))
     scale = float(totalcount)/100.0
     lines.append('percent'.ljust(rhlen) +
                      ''.join([str('{:.2f}'.format(float(totals[dm])/scale)).rjust(8)
@@ -80,6 +86,8 @@ def totals_to_string(tagtotals):
 if __name__ == '__main__':
 
     testdir = Config().testdir
+
+    projectstats = {}   # project -> (linecount, clinecount, cfuncount)
 
     ppoprojecttotals = {}   # project -> dm -> dmtotal
     spoprojecttotals = {}
@@ -102,6 +110,10 @@ if __name__ == '__main__':
         spod = pd['spos']
         ppoprojecttotals[p] = {}
         spoprojecttotals[p] = {}
+        if 'stats' in pd:
+            projectstats[p] = pd['stats']
+        else:
+            projectstats[p] = (0,0,0)
         
         for t in ppod:
             if not t in ppotagtotals: ppotagtotals[t] = {}
@@ -121,20 +133,41 @@ if __name__ == '__main__':
 
     print('Primary Proof Obligations')
     print('\n'.join(totals_to_string(ppoprojecttotals)))
+    print('\nPrimary Proof Obligations (in percentages)')
+    print('\n'.join(totals_to_string(ppoprojecttotals,False)))
     print('\nSupporting Proof Obligations')
     print('\n'.join(totals_to_string(spoprojecttotals)))
+    print('\nSupporting Proof Obligations (in percentages)')
+    print('\n'.join(totals_to_string(spoprojecttotals,False)))
 
     print('\n\nPrimary Proof Obligations')
     print('\n'.join(totals_to_string(ppotagtotals)))
     print('\nSupporting Proof Obligations')
     print('\n'.join(totals_to_string(spotagtotals)))
 
-    print('\n\nNo summary results found for:')
-    print('-' * 28)
-    for p in nosummary:
-        print('  ' + p)
+    if len(nosummary) > 0:
+        print('\n\nNo summary results found for:')
+        print('-' * 28)
+        for p in nosummary:
+            print('  ' + p)
+            print('-' * 28)
 
-    print('\n\nTime of analysis results:')
-    print('-' * 28)
+    print('\n\nProject statistics:')
+    print('analysis time'.ljust(16) + '  ' +  'project'.ljust(28)
+              +  'LOC '.rjust(10) + 'CLOC '.rjust(10)
+              + 'functions'.rjust(10))
+    print('-' * 80)
+    lctotal = 0
+    clctotal = 0
+    fctotal = 0
     for p in sorted(analysistimes,key=lambda p:analysistimes[p]):
-        print(str(analysistimes[p]) + '  ' + p)
+        (lc,clc,fc) = projectstats[p]
+        lctotal += lc
+        clctotal += clc
+        fctotal += fc
+        print(str(analysistimes[p]) + '  ' + p.ljust(28) + str(lc).rjust(10) + str(clc).rjust(10)
+                  + str(fc).rjust(10))
+    print('-' * 80)
+    print('Total'.ljust(46) + str(lctotal).rjust(10) + str(clctotal).rjust(10)
+              + str(fctotal).rjust(10))
+        
