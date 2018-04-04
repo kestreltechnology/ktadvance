@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
     for t in JTC.testcases:
         totals = UF.read_juliet_test_summary(t)
-        if not totals is None:
+        if not (totals is None):
             print(t.ljust(tnamelength) +
                     ''.join([str(totals['violations'][c]).rjust(5) for c in violationcategories]) +
                     '   |  ' +              
@@ -75,6 +75,7 @@ if __name__ == '__main__':
         else:
             print(t.ljust(tnamelength) + ('-'  * (44 - (tnamelength/2))) + ' not found ' +
                       ('-' * (44 - (tnamelength/2))))
+
     print('-' * (tnamelength + 64))
     print('total'.ljust(tnamelength) +
               ''.join([str(stotals['violations'][c]).rjust(5) for c in violationcategories]) +
@@ -84,9 +85,18 @@ if __name__ == '__main__':
     ppototals = vppototals + sppototals
     ppohandled = vppohandled + sppohandled
 
-    vperc = float(vppohandled)/float(vppototals) * 100.0
-    sperc = float(sppohandled)/float(sppototals) * 100.0
-    perc = float(ppohandled)/float(ppototals) * 100.0
+    if vppototals > 0:
+        vperc = float(vppohandled)/float(vppototals) * 100.0
+    else:
+        vperc = 0.0
+    if sppototals > 0:
+        sperc = float(sppohandled)/float(sppototals) * 100.0
+    else:
+        sperc = 0.0
+    if ppototals > 0:
+        perc = float(ppohandled)/float(ppototals) * 100.0
+    else:
+        perc = 0.0
     print('\n\n                  violation      safe-control     total')
     print('-' * 80)
     print('ppos'.ljust(10) + str(vppototals).rjust(15) + str(sppototals).rjust(15) + str(ppototals).rjust(15))
