@@ -80,7 +80,7 @@ class ParseManager(object):
         gzipcmd = [ 'gzip', tarfilename ]
         subprocess.call(gzipcmd,cwd=self.cpath,stderr=subprocess.STDOUT) if self.verbose else subprocess.call(gzipcmd,cwd=self.cpath,stdout=open(os.devnull,'w'), stderr=subprocess.STDOUT)
 
-    def preprocess_file_with_gcc(self,cfilename,copyfiles=True):
+    def preprocess_file_with_gcc(self,cfilename,copyfiles=True,moreoptions=[]):
         '''Invoke gcc preprocessor on c source file.
 
         Args:
@@ -99,6 +99,7 @@ class ParseManager(object):
         cmd = [ 'gcc', '-fno-inline', '-fno-builtin', '-E', '-g', self.tgtplatform ,
                 '-o', ifilename, cfilename ]
         if mac: cmd = cmd[:1] + macoptions + cmd[1:]
+        cmd = cmd[:1] + moreoptions + cmd[1:]
         if self.verbose: print('Preprocess file: ' + str(cmd))
         p = subprocess.call(cmd,cwd=self.cpath,stderr=subprocess.STDOUT) if self.verbose else subprocess.call(cmd,cwd=self.cpath,stdout=open(os.devnull,'w'),stderr=subprocess.STDOUT)
         if self.verbose: print('Result: ' + str(p))
@@ -264,10 +265,16 @@ class ParseManager(object):
             of the semantics of the file
         '''
         ifilename = os.path.join(self.cpath,ifilename)
-        cmd = [ self.config.cparser, '-projectpath', self.cpath,
-                '-targetdirectory', self.tgtxpath, ifilename ]
+        cmd = [ self.config.cparser, '-projectpath', self.cpath, '-targetdirectory',
+                    self.tgtxpath ]
+        if not self.filter:
+            command.append('-nofilter')
+        cmd.append(ilename)
         if self.verbose: print('Parse file: ' + str(cmd))
-        p = subprocess.call(cmd,stderr=subprocess.STDOUT) if self.verbose else subprocess.call(cmd,stdout=open(os.devnull,'w'),stderr=subprocess.STDOUT)
+        if self.verbose:
+            p = subprocess.call(cmd,stderr=subprocess.STDOUT)
+        else:
+            p = subprocess.call(cmd,stdout=open(os.devnull,'w'),stderr=subprocess.STDOUT)
         return p
         
 
