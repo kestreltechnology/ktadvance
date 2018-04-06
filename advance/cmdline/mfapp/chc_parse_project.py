@@ -50,6 +50,7 @@ def parse():
                         action='store_true')
     parser.add_argument('--removesemantics',help='remove semantics directory if present',
                         action='store_true')
+    parser.add_argument('--libear',help='location of libear.so to be passed to bear')
     args = parser.parse_args()
     return args
 
@@ -126,7 +127,9 @@ if __name__ == '__main__':
             print('*' * 80)
             exit(1)
 
-    bearcmd = [ 'bear', 'make' ]
+    bearcmd = [ 'bear' ]
+    if args.libear: bearcmd.extend(['--libear', args.libear])   
+    bearcmd.append('make')
     if not args.maketarget is None: bearcmd.append(args.maketarget)
     p = subprocess.call(bearcmd, cwd=cpath,stderr=subprocess.STDOUT)
     if p != 0:
