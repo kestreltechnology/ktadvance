@@ -50,6 +50,8 @@ class Config(object):
         self.binariesdir = os.path.join(self.bindir,'binaries')
         self.cparser = os.path.join(self.binariesdir,'parseFile_linux')
         self.canalyzer = os.path.join(self.binariesdir,'ktadvance_linux')
+        self.bear = None
+        self.libear = None
         if self.platform == 'mac':
             self.cparser = os.path.join(self.binariesdir,'parseFile_mac')
             self.canalyzer = os.path.join(self.binariesdir,'ktadvance_mac')
