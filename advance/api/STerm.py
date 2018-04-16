@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -138,9 +138,9 @@ class STArgAddressedValue(STerm):
     def __init__(self,cd,index,tags,args):
         STerm.__init__(self,cd,index,tags,args)
 
-    def get_base_term(self): return get_iterm(0)
+    def get_base_term(self): return self.get_iterm(0)
 
-    def get_offset_term(self): return get_iterm(1)
+    def get_offset_term(self): return self.get_iterm(1)
 
     def is_arg_addressed_value(self): return True
 

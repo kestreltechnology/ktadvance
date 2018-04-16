@@ -64,6 +64,9 @@ class CFunctionApi(object):
     def get_postcondition_guarantees(self):
         return self.postconditionguarantees.values()
 
+    def get_global_assumptions(self):
+        return self.globalassumptions.values()
+
     def get_global_assignments(self):
         self._get_global_assignments()
         return self.globalassignments
@@ -89,6 +92,10 @@ class CFunctionApi(object):
         lines.append('  parameters:')
         for n in self.get_parameters():
             lines.append('    ' + str(n).rjust(2))
+        if len(self.globalassumptions) > 0:
+            lines.append('\n  global assumptions')
+            for g in self.get_global_assumptions():
+                lines.append('  ' + str(g))
         if len(self.apiassumptions) > 0:
             lines.append('\n  api assumptions')
             for a in self.get_api_assumptions():
@@ -128,12 +135,12 @@ class CFunctionApi(object):
             ppos = [ int(i) for i in x.get('ppos').split(',') ] if 'ppos' in x.attrib else []
             spos = [ int(i) for i in x.get('spos').split(',') ] if 'spos' in x.attrib else []
             self.apiassumptions[id] = ApiAssumption(self,id,predicate,ppos,spos)
-        for x in self.xnode.find('api').find('global-assumptions').findall('ga'):
+        for x in self.xnode.find('api').find('global-assumptions').findall('hh'):
             predicate = self.cfile.predicatedictionary.read_xml_predicate(x)
             id = int(x.get('ipr'))
             ppos = [ int(i) for i in x.get('ppos').split(',') ] if 'ppos' in x.attrib else []
             spos = [ int(i) for i in x.get('spos').split(',') ] if 'spos' in x.attrib else []
-            self.globalassumptions[id] = GlobalAssumptions(self,id,predicate,ppos,spos)
+            self.globalassumptions[id] = GlobalAssumption(self,id,predicate,ppos,spos)
         for x in self.xnode.find('api').find('postcondition-requests').findall('rr'):
             postrequest = self.cfile.interfacedictionary.read_xml_postrequest(x)
             ppos = [ int(i) for i in x.get('ppos').split(',') ] if 'ppos' in x.attrib else []

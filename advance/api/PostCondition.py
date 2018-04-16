@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -106,12 +106,10 @@ class PostInitialized(PostCondition):
 
     def get_term(self): return self.get_iterm(0)
 
-    def get_field(self): return self.tags[1]
-
     def is_post_initialized(self): return True
 
     def __str__(self):
-        return ('initialized(' + str(self.get_term()) + '.' + self.get_field() + ')')
+        return ('initialized(' + str(self.get_term()))
 
 
 class PostInitializedRange(PostCondition):

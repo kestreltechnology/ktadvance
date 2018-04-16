@@ -62,6 +62,7 @@ postcondition_constructors = {
     'nm': lambda x:PC.PostNewMemory(*x),
     'ab': lambda x:PC.PostAllocationBase(*x),
     'null': lambda x:PC.PostNull(*x),
+    'nn': lambda x:PC.PostNotNull(*x),
     'iz': lambda x:PC.PostInitialized(*x),
     'ir': lambda x:PC.PostInitializedRange(*x),
     'nt': lambda x:PC.PostNullTerminated(*x),
