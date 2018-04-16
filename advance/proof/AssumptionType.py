@@ -41,6 +41,7 @@ class ATDictionaryRecord(object):
     def is_api_assumption(self): return False
     def is_user_assumption(self): return False
     def is_postcondition_assumption(self): return False
+    def is_global_assumption(self): return False
 
     def write_xml(self,node):
         (tagstr,argstr) = self.get_key()
@@ -68,6 +69,8 @@ class ATUserAssumptionType(ATDictionaryRecord):
     def __init__(self,pod,index,tags,args):
         ATDictionaryRecord.__init__(self,pod,index,tags,args)
 
+    def is_user_assumption(self): return True
+
     def get_predicate(self): return self.pd.get_predicate(int(self.args[0]))
 
     def __str__(self): return 'user:' + str(self.get_predicate())
@@ -78,6 +81,20 @@ class ATPostconditionType(ATDictionaryRecord):
     def __init__(self,pod,index,tags,args):
         ATDictionaryRecord.__init__(self,pod,index,tags,args)
 
+    def is_postcondition_assumption(self): return True
+
     def get_postrequest(self): return self.id.get_postrequest(int(self.args[0]))
 
     def __str__(self): return 'pc:' + str(self.get_postrequest())
+
+
+class ATGlobalAssumptionType(ATDictionaryRecord):
+
+    def __init__(self,pod,index,tags,args):
+        ATDictionaryRecord.__init__(self,pod,index,tags,args)
+
+    def get_predicate(self): return self.pd.get_predicate(int(self.args[0]))
+
+    def is_global_assumption(self): return True
+
+    def __str__(self): return 'ga:' + str(self.get_predicate())

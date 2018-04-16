@@ -61,6 +61,7 @@ class CProofDependencies(object):
        's': dependent on statement itself only
        'f': dependent on function context
        'a': dependent on other functions in the application
+       'g': dependent on global variable
        'x': dead code
 
     ids: list of api assumption id's on which the proof is dependent
@@ -125,6 +126,33 @@ class CFunctionPO(object):
             False
 
     def has_dependencies(self): return (not self.dependencies is None)
+
+    def get_dependencies(self):
+        if self.has_dependencies():
+            depids = self.dependencies.ids
+            return [ self.pod.get_assumption_type(id) for id in depids ]
+
+    def get_dependencies_type(self):
+        atypes = self.get_dependencies()
+        deptype = 'api'
+        for t in atypes:
+            if t.is_global_assumption(): deptype = 'global'
+            if t.is_postcondition_assumption(): deptype = 'post'
+        return deptype
+
+    def get_global_assumptions(self):
+        result = []
+        if self.has_dependencies():
+            for t in self.get_dependencies():
+                if t.is_global_assumption(): result.append(t)
+        return result
+
+    def get_postcondition_assumptions(self):
+        result = []
+        if self.has_dependencies():
+            for t in self.get_dependencies():
+                if t.is_postcondition_assumption(): result.append(t)
+        return result
 
     def has_variable(self,vid): return self.predicate.has_variable(vid)
 
