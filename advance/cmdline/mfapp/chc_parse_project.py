@@ -126,7 +126,9 @@ if __name__ == '__main__':
             print('*' * 80)
             exit(1)
 
-    bearcmd = [ 'bear', 'make' ]
+    bearcmd = [ 'bear' ] if config.bear == None else [ config.bear ]
+    if config.libear: bearcmd.extend(['--libear', config.libear])   
+    bearcmd.append('make')
     if not args.maketarget is None: bearcmd.append(args.maketarget)
     p = subprocess.call(bearcmd, cwd=cpath,stderr=subprocess.STDOUT)
     if p != 0:
