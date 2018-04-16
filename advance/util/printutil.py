@@ -98,4 +98,9 @@ def global_definitions_not_found_err_msg(cpath):
     return err_msg(['No globaldefinitions.xml file found in ', cpath,
                         ' Please run the linker first to produce a global definitions file and cross references.'])
 
+def my_cfiles_not_found_err_msg(testname):
+    msg = [ 'Test ' + test + ' not found in my cfiles. Tests available: ' ]
+    for t in Config().mycfiles: msg.append(t)
+    return err_msg(msg)
+
     

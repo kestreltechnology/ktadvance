@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,21 @@ import os
 if os.path.isfile(os.path.join(os.path.dirname(os.path.abspath(__file__)), "ConfigLocal.py")):
     import advance.util.ConfigLocal as ConfigLocal
 
+testprojects = {
+    "dnsmasq": "A/dnsmasq-2.76",
+    "file": "A/file",
+    "git": "A/git",
+    "hping": "A/hping",
+    "nginx": "A/nginx-1.2.9",
+    "openssl": "A/openssl-1.0.1f",
+    "cleanflight": "B/cleanflight",
+    "lighttpd": "sate/2008/lighttpd-1.4.18",
+    "nagios": "sate/2008/nagios-2.10/base",
+    "naim": "sate/2008/naim-0.11.8.3.1",
+    "irssi": "sate/2009/irssi-0.8.14",
+    "dovecot": "sate/2010/dovecot-2.0.beta6"
+    }
+
 class Config(object):
 
     def __init__(self):
@@ -53,6 +68,11 @@ class Config(object):
         if self.platform == 'mac':
             self.cparser = os.path.join(self.binariesdir,'parseFile_mac')
             self.canalyzer = os.path.join(self.binariesdir,'ktadvance_mac')
+
+        '''test cases'''
+        self.projects = testprojects
+        self.myprojects = {}
+        self.mycfiles = {}
 
         if os.path.isfile(os.path.join(os.path.dirname(os.path.abspath(__file__)), "ConfigLocal.py")):
             ConfigLocal.getLocals(self)

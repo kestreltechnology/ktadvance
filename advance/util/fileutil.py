@@ -60,7 +60,21 @@ def get_targetfiles_xnode(path):
 def get_global_definitions_filename(path):
     return os.path.join(path,'globaldefinitions.xml')
 
+def archive_project_summary_results(path):
+    if os.path.isdir(path):
+        filename = os.path.join(path,'summaryresults.json')
+        if os.path.isfile(filename):
+            with open(filename) as fp:
+                d = json.load(fp)
+            dtime = d['timestamp']
+            newfilename = 'summaryresults_' + str(dtime) + '.json'
+            newfilename = os.path.join(path,newfilename)
+            with open(newfilename,'w') as fp:
+                json.dump(d,fp)
+                
+
 def save_project_summary_results(path,d):
+    archive_project_summary_results(path)
     with open(os.path.join(path,'summaryresults.json'),'w') as fp:
         json.dump(d,fp)
 
@@ -83,7 +97,6 @@ def read_project_summary_results(path):
             return d
     else:
         print('Warning: ' + path + ' not found: please check path name')
-
 
 def get_global_declarations_xnode(path):
     filename = get_global_definitions_filename(path)
@@ -155,10 +168,6 @@ def get_cfile_directory(path,cfilename):
 def get_cfile_logfiles_directory(path,cfilename):
     logpath = os.path.join(path,'logfiles')
     return os.path.join(logpath,get_cfilenamebase(cfilename))
-
-def get_cfile_xnode(path,cfilename):
-    filename = get_cfile_filename(path,cfilename)
-    return get_xnode(filename,'c-file','C source file')
 
 def get_cxreffile_filename(path,cfilename):
     if cfilename.endswith('.c'):
@@ -365,6 +374,15 @@ def get_juliet_reference(testname):
         with open(scorekey,'r') as fp:
             d = json.load(fp)
         return d
+
+# ------------------------------------------------------------ my cfiles ------
+
+def get_my_cfiles(testname):
+    config = Config()
+    if testname in config.mycfiles:
+        testdata = config.mycfiles[testname]
+        return (testdata['path'],testdata['file'])
+    
 
 # ------------------------------------------------------------ svcomp ----------
 
