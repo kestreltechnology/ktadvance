@@ -56,8 +56,12 @@ if __name__ == '__main__':
         exit(1)
    
     capp = CApplication(sempath)
+    timestamp = os.stat(capp.path).st_ctime
+    print('ctime:' + str(timestamp))
     try:
-        UF.save_project_summary_results(cpath,RP.project_proofobligation_stats_to_dict(capp))
+        result = RP.project_proofobligation_stats_to_dict(capp)
+        result['timestamp'] = timestamp
+        UF.save_project_summary_results(cpath,result)
     except IndexedTableError as e:
         print(
             '\n' + ('*' * 80) + '\nThe analysis results format has changed'

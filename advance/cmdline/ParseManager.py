@@ -268,8 +268,8 @@ class ParseManager(object):
         cmd = [ self.config.cparser, '-projectpath', self.cpath, '-targetdirectory',
                     self.tgtxpath ]
         if not self.filter:
-            command.append('-nofilter')
-        cmd.append(ilename)
+            cmd.append('-nofilter')
+        cmd.append(ifilename)
         if self.verbose: print('Parse file: ' + str(cmd))
         if self.verbose:
             p = subprocess.call(cmd,stderr=subprocess.STDOUT)

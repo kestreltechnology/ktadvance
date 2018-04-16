@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -65,7 +65,7 @@ if __name__ == '__main__':
         print('Parser executable ' + config.cparser + ' not found')
         print('*' * 80)
         exit(1)
-        
+
     cfilename = os.path.abspath(args.filename)
     if not os.path.isfile(cfilename):
         print('*' * 80)
