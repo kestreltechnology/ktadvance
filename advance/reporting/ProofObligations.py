@@ -25,6 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import time
 
 '''
 Utility functions for reporting proof obligations and their statistics.
@@ -48,7 +49,8 @@ def classifypo(po,d):
     if po.is_closed():
         deps = po.dependencies
         if deps.has_external_dependencies():
-            d['api'] += 1
+            deptype = po.get_dependencies_type()
+            d[deptype] += 1
         elif deps.is_stmt():
             d['stmt'] += 1
         elif deps.is_local():
@@ -227,6 +229,10 @@ class FunctionDisplay(object):
                         for arg in sorted(amsgs):
                             for s in sorted(amsgs[arg]):
                                 lines.append((' ' * indent) + s)
+                    msgs = po.diagnostic.msgs
+                    if len(msgs) > 0:
+                        for m in msgs:
+                            lines.append((' ' * indent) + m)
                     keys = po.diagnostic.get_argument_indices()
                     for k in sorted(keys):
                         invids = po.diagnostic.get_invariant_ids(k)
@@ -352,12 +358,18 @@ def project_proofobligation_stats_tostring(capp,filefilter=lambda f:True,extrads
 def project_proofobligation_stats_to_dict(capp,filefilter=lambda f:True,extradsmethods=[]):
     ppos = capp.get_ppos()
     spos = capp.get_spos()
+    pporesults = get_file_method_count(ppos,extradsmethods=extradsmethods,filefilter=filefilter)
+    sporesults = get_file_method_count(spos,extradsmethods=extradsmethods,filefilter=filefilter)    
     tagpporesults = get_tag_method_count(ppos,filefilter=filefilter,extradsmethods=extradsmethods)
     tagsporesults = get_tag_method_count(spos,filefilter=filefilter,extradsmethods=extradsmethods)
     result = {}
+    result['tagresults'] = {}
+    result['fileresults'] = {}
     result['stats'] = capp.get_project_counts()
-    result['ppos'] = tagpporesults
-    result['spos'] = tagsporesults
+    result['tagresults']['ppos'] = tagpporesults
+    result['tagresults']['spos'] = tagsporesults
+    result['fileresults']['ppos'] = pporesults
+    result['fileresults']['spos'] = sporesults
     return result
     
 def file_proofobligation_stats_tostring(cfile,extradsmethods=[]):
@@ -380,6 +392,30 @@ def file_proofobligation_stats_tostring(cfile,extradsmethods=[]):
     lines.append(proofobligation_stats_tostring(tagpporesults,tagsporesults))
     
     return '\n'.join(lines)
+
+def file_global_assumptions_tostring(cfile):
+    lines = []
+    lines.append('\nGlobal assumptions')
+    lines.append(('-' * 80))
+    polines = set([])
+    ppos = cfile.get_ppos()
+    spos = cfile.get_spos()
+    for po in ppos + spos:
+        for a in po.get_global_assumptions():
+            polines.add(str(a))
+    return '\n'.join(sorted(lines) + sorted(list(polines)))
+
+def file_postcondition_assumptions_tostring(cfile):
+    lines = []
+    lines.append('\nPostcondition assumptions')
+    lines.append(('-' * 80))
+    polines = set([])
+    ppos = cfile.get_ppos()
+    spos = cfile.get_spos()
+    for po in ppos + spos:
+        for a in po.get_postcondition_assumptions():
+            polines.add(str(a))
+    return '\n'.join(lines + sorted(list(polines)))
 
 def function_proofobligation_stats_tostring(cfunction,extradsmethods=[]):
     lines = []
