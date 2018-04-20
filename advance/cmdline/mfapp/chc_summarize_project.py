@@ -30,6 +30,7 @@ import os
 
 import advance.reporting.ProofObligations as RP
 import advance.util.fileutil as UF
+import advance.util.printutil as UP
 
 from advance.util.IndexedTable import IndexedTableError
 from advance.app.CApplication import CApplication
@@ -61,6 +62,7 @@ if __name__ == '__main__':
     try:
         result = RP.project_proofobligation_stats_to_dict(capp)
         result['timestamp'] = timestamp
+        result['project'] = cpath
         UF.save_project_summary_results(cpath,result)
     except IndexedTableError as e:
         print(

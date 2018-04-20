@@ -27,6 +27,7 @@
 
 import argparse
 import os
+import time
 
 import advance.util.fileutil as UF
 import advance.reporting.ProofObligations as RP
@@ -57,6 +58,7 @@ def totals_to_string(tagtotals,absolute=True):
     for t in sorted(tagtotals):
         r = [ tagtotals[t][dm] for dm in dsmethods ]
         rsum = sum(r)
+        if rsum == 0: continue
         tagopenpct = (1.0 - (float(tagtotals[t]['open'])/float(rsum))) * 100.0
         tagopenpct = str('{:.1f}'.format(tagopenpct))
         if absolute:
@@ -104,14 +106,18 @@ if __name__ == '__main__':
         if results is None:
             nosummary.append(p)
             continue
-        analysistimes[p] = results[1]
-        pd = results[0]
-        ppod = pd['ppos']
-        spod = pd['spos']
-        ppoprojecttotals[p] = {}
-        spoprojecttotals[p] = {}
+        pd = results
+        try:
+            ppod = pd['tagresults']['ppos']
+            spod = pd['tagresults']['spos']
+            ppoprojecttotals[p] = {}
+            spoprojecttotals[p] = {}
+        except:
+            print('Problem with ' + str(p))
+            continue
         if 'stats' in pd:
             projectstats[p] = pd['stats']
+            analysistimes[p] = pd['timestamp']
         else:
             projectstats[p] = (0,0,0)
         
@@ -165,7 +171,8 @@ if __name__ == '__main__':
         lctotal += lc
         clctotal += clc
         fctotal += fc
-        print(str(analysistimes[p]) + '  ' + p.ljust(28) + str(lc).rjust(10) + str(clc).rjust(10)
+        print(time.strftime('%Y-%m-%d %H:%M',time.localtime(analysistimes[p]))
+                  + '  ' + p.ljust(28) + str(lc).rjust(10) + str(clc).rjust(10)
                   + str(fc).rjust(10))
     print('-' * 80)
     print('Total'.ljust(46) + str(lctotal).rjust(10) + str(clctotal).rjust(10)
