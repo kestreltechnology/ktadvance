@@ -66,11 +66,14 @@ def archive_project_summary_results(path):
         if os.path.isfile(filename):
             with open(filename) as fp:
                 d = json.load(fp)
-            dtime = d['timestamp']
-            newfilename = 'summaryresults_' + str(dtime) + '.json'
-            newfilename = os.path.join(path,newfilename)
-            with open(newfilename,'w') as fp:
-                json.dump(d,fp)
+                if 'timestamp' in d:
+                    dtime = d['timestamp']
+                else:
+                    dtime = 0
+                newfilename = 'summaryresults_' + str(dtime) + '.json'
+                newfilename = os.path.join(path,newfilename)
+                with open(newfilename,'w') as fp:
+                    json.dump(d,fp)
                 
 
 def save_project_summary_results(path,d):
@@ -81,22 +84,21 @@ def save_project_summary_results(path,d):
 def read_project_summary_results(path):
     if os.path.isdir(path):
         filename = os.path.join(path,'summaryresults.json')
-        semname = os.path.join(path,'semantics/ktadvance')
-        if os.path.isfile(filename):
-            if os.path.isdir(semname):
-                stattime = os.stat(semname)
-            else:
-                stattime = os.stat(filename)
-            with open(filename) as fp:
-                d = json.load(fp)
-                (mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os.stat(semname)
-                mtime = time.localtime(stattime[8])
-                mtime = time.strftime('%Y-%m-%d %H:%M',mtime)
-                return (d,mtime)
-
+        with open(filename) as fp:
+            d = json.load(fp)
             return d
     else:
         print('Warning: ' + path + ' not found: please check path name')
+
+def read_project_summary_results_history(path):
+    result = []
+    if os.path.isdir(path):
+        for fname in os.listdir(path):
+            if fname.startswith('summaryresults'):
+                fname = os.path.join(path,fname)
+                with open(fname) as fp:
+                    result.append(json.load(fp))
+    return result
 
 def get_global_declarations_xnode(path):
     filename = get_global_definitions_filename(path)
