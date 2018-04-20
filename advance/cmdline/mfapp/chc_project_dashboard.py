@@ -47,44 +47,6 @@ projects = [
     'sate/2009/irssi-0.8.14',
     'sate/2010/dovecot-2.0.beta6' ]
 
-def totals_to_string(tagtotals,absolute=True):
-    lines = []
-    rhlen = 28
-    header1 = ''
-    dsmethods = RP.get_dsmethods([])
-    lines.append(RP.get_dsmethod_header(rhlen,dsmethods,header1=header1) + '    %closed')
-    barlen = 64 + rhlen
-    lines.append('-' * barlen)
-    for t in sorted(tagtotals):
-        r = [ tagtotals[t][dm] for dm in dsmethods ]
-        rsum = sum(r)
-        if rsum == 0: continue
-        tagopenpct = (1.0 - (float(tagtotals[t]['open'])/float(rsum))) * 100.0
-        tagopenpct = str('{:.1f}'.format(tagopenpct))
-        if absolute:
-            lines.append(t.ljust(rhlen) + ''.join([str(x).rjust(8) for x in r])
-                            + str(sum(r)).rjust(10) + tagopenpct.rjust(8))
-        else:
-            lines.append(t.ljust(rhlen)
-                             + ''.join([str('{:.2f}'.format(float(x)/float(rsum) * 100.0)).rjust(8)
-                                            for x in r]))
-    lines.append('-' * barlen )
-    totals = {}
-    for dm in dsmethods:
-        totals[dm] = sum([ tagtotals[t][dm] for t in tagtotals ])
-    totalcount = sum(totals.values())
-    tagopenpct = (1.0 - (float(totals['open'])/float(totalcount))) * 100.0
-    tagopenpct = str('{:.1f}'.format(tagopenpct))
-    if absolute:
-        lines.append('total'.ljust(rhlen) + ''.join([str(totals[dm]).rjust(8) for dm in dsmethods])
-                        + str(totalcount).rjust(10) + tagopenpct.rjust(8))
-    scale = float(totalcount)/100.0
-    lines.append('percent'.ljust(rhlen) +
-                     ''.join([str('{:.2f}'.format(float(totals[dm])/scale)).rjust(8)
-                                  for dm in dsmethods]))
-    return lines
-    
-
 if __name__ == '__main__':
 
     testdir = Config().testdir
@@ -138,18 +100,18 @@ if __name__ == '__main__':
 
 
     print('Primary Proof Obligations')
-    print('\n'.join(totals_to_string(ppoprojecttotals)))
+    print('\n'.join(RP.totals_to_string(ppoprojecttotals)))
     print('\nPrimary Proof Obligations (in percentages)')
-    print('\n'.join(totals_to_string(ppoprojecttotals,False)))
+    print('\n'.join(RP.totals_to_string(ppoprojecttotals,False)))
     print('\nSupporting Proof Obligations')
-    print('\n'.join(totals_to_string(spoprojecttotals)))
+    print('\n'.join(RP.totals_to_string(spoprojecttotals)))
     print('\nSupporting Proof Obligations (in percentages)')
-    print('\n'.join(totals_to_string(spoprojecttotals,False)))
+    print('\n'.join(RP.totals_to_string(spoprojecttotals,False)))
 
     print('\n\nPrimary Proof Obligations')
-    print('\n'.join(totals_to_string(ppotagtotals)))
+    print('\n'.join(RP.totals_to_string(ppotagtotals)))
     print('\nSupporting Proof Obligations')
-    print('\n'.join(totals_to_string(spotagtotals)))
+    print('\n'.join(RP.totals_to_string(spotagtotals)))
 
     if len(nosummary) > 0:
         print('\n\nNo summary results found for:')

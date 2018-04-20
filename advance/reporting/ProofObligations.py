@@ -501,3 +501,44 @@ def tag_file_function_pos_tostring(pos,filefilter=lambda f:True,pofilter=lambda 
                         lines.append(' ')
 
     return '\n'.join(lines)
+
+
+def totals_to_string(tagtotals,absolute=True,totals=True):
+    lines = []
+    rhlen = 28
+    header1 = ''
+    dsmethods = get_dsmethods([])
+    lines.append(get_dsmethod_header(rhlen,dsmethods,header1=header1) + '    %closed')
+    barlen = 64 + rhlen
+    lines.append('-' * barlen)
+    for t in sorted(tagtotals):
+        r = [ tagtotals[t][dm] for dm in dsmethods ]
+        rsum = sum(r)
+        if rsum == 0: continue
+        tagopenpct = (1.0 - (float(tagtotals[t]['open'])/float(rsum))) * 100.0
+        tagopenpct = str('{:.1f}'.format(tagopenpct))
+        if absolute:
+            lines.append(t.ljust(rhlen) + ''.join([str(x).rjust(8) for x in r])
+                            + str(sum(r)).rjust(10) + tagopenpct.rjust(8))
+        else:
+            lines.append(t.ljust(rhlen)
+                             + ''.join([str('{:.2f}'.format(float(x)/float(rsum) * 100.0)).rjust(8)
+                                            for x in r]))
+    if totals:
+        lines.append('-' * barlen )
+        totals = {}
+        for dm in dsmethods:
+            totals[dm] = sum([ tagtotals[t][dm] for t in tagtotals ])
+        totalcount = sum(totals.values())
+        if totalcount > 0:
+            tagopenpct = (1.0 - (float(totals['open'])/float(totalcount))) * 100.0
+            tagopenpct = str('{:.1f}'.format(tagopenpct))
+            if absolute:
+                lines.append('total'.ljust(rhlen) + ''.join([str(totals[dm]).rjust(8) for dm in dsmethods])
+                                + str(totalcount).rjust(10) + tagopenpct.rjust(8))
+            scale = float(totalcount)/100.0
+            lines.append('percent'.ljust(rhlen) +
+                            ''.join([str('{:.2f}'.format(float(totals[dm])/scale)).rjust(8)
+                                        for dm in dsmethods]))
+    return lines
+
