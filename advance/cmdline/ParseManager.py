@@ -26,6 +26,7 @@
 # ------------------------------------------------------------------------------
 
 import os
+import sys
 import subprocess
 import shlex
 import shutil
@@ -120,6 +121,7 @@ class ParseManager(object):
         return i+1
 
     def normalize_filename(self,filename):
+        filename = os.path.normpath(filename)
         if filename.startswith(self.cpath):
             return filename[len(self.cpath)+1:]
         else:
@@ -275,6 +277,7 @@ class ParseManager(object):
             p = subprocess.call(cmd,stderr=subprocess.STDOUT)
         else:
             p = subprocess.call(cmd,stdout=open(os.devnull,'w'),stderr=subprocess.STDOUT)
+        sys.stdout.flush()
         return p
         
 
