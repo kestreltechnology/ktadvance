@@ -207,7 +207,7 @@ class ParseManager(object):
         targetfiles = TargetFiles()
         for c in compilecommands:
             (cfilename,ifilename) = self.preprocess(c,copyfiles)
-            if cfilename is None then: continue
+            if cfilename is None: continue
             cfilename = os.path.abspath(cfilename)
             ifilename = os.path.abspath(ifilename)
             command = [ self.config.cparser, '-projectpath', self.cpath,
