@@ -84,12 +84,22 @@ if __name__ == '__main__':
                 exit(1)
             else: doclean = False
         else:
-            print('*' * 80)
-            print('Project directory does not contain a Makefile')
-            print('Expected to find the file')
-            print('   ' + makefilename)
-            print('*' * 80)
-            exit(1)
+            configurefilename = os.path.join(cpath,'auto/configure')
+            if os.path.isfile(configurefilename):
+                p = subprocess.call(configurefilename, cwd=cpath,stderr=subprocess.STDOUT)
+                if p != 0:
+                    print('*' * 80)
+                    print('Error in running configure script')
+                    print('*' * 80)
+                    exit(1)
+                else: doclean = False                
+            else:
+                print('*' * 80)
+                print('Project directory does not contain a Makefile')
+                print('Expected to find the file')
+                print('   ' + makefilename)
+                print('*' * 80)
+                exit(1)
 
     if args.targetdir:
         tgtpath = os.path.abspath(args.targetdir)
