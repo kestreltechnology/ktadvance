@@ -199,13 +199,15 @@ class ParseManager(object):
                     shutil.copy(ifilename,tgtifilename)
             return (cfilename,ifilename)
         else:
-            print('\nFilename not recognized: ' + cfilename)
+            print('\nCCWarning: Filename not recognized: ' + cfilename)
+            return (None,None)
 
     def parse_with_ccommands(self,compilecommands,copyfiles=True):
         cfiles = {}
         targetfiles = TargetFiles()
         for c in compilecommands:
             (cfilename,ifilename) = self.preprocess(c,copyfiles)
+            if cfilename is None then: continue
             cfilename = os.path.abspath(cfilename)
             ifilename = os.path.abspath(ifilename)
             command = [ self.config.cparser, '-projectpath', self.cpath,
@@ -216,6 +218,7 @@ class ParseManager(object):
             cfilelen = self.get_file_length(cfilename)
             cfiles[cfilename] = cfilelen
             if self.verbose : print('\nRun the parser: ' + str(command) + '\n')
+            sys.stdout.flush()
             subprocess.call(command) if self.verbose else subprocess.call(command,stdout=open(os.devnull,'w'))
             if self.verbose: print('\n' + ('-' * 80) + '\n\n')
         if self.verbose:print('\n\nCollect c files')
