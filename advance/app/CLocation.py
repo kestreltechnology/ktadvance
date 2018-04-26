@@ -47,7 +47,7 @@ class CLocation(CD.CDeclarationsRecord):
 
     def get_line(self): return int(self.args[2])
 
-    def get_file(self): return self.decls.get_filename(self.args[0]).get_filename()
+    def get_file(self): return self.decls.get_filename(int(self.args[0]))
 
     def get_loc(self):
         return (self.get_file(), self.get_line(), self.get_byte())

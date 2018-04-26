@@ -78,4 +78,4 @@ class CIndexOffset(COffsetBase):
 
     def __str__(self):
         offset = str(self.get_offset()) if self.has_offset() else ''
-        return '[' + str(self.get_index_exp()) + ']'
+        return '[' + str(self.get_index_exp()) + ']' + offset

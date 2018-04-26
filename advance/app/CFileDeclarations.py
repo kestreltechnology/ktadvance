@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ import xml.etree.ElementTree as ET
 
 import advance.util.fileutil as UF
 import advance.util.IndexedTable as IT
+import advance.util.StringIndexedTable as SI
 
 import advance.app.CDictionaryRecord as CD
 import advance.app.CInitInfo as CI
@@ -100,9 +101,8 @@ class CFileDeclarations(object):
         self.enumitem_table = IT.IndexedTable('enumitem-table')
         self.enuminfo_table = IT.IndexedTable('enuminfo-table')
         self.location_table = IT.IndexedTable('location-table')
-        self.filename_table = IT.IndexedTable('filename-table')
+        self.filename_table = SI.StringIndexedTable('filename-table')
         self.dictionary_tables = [
-            (self.filename_table,self._read_xml_filename_table),
             (self.location_table,self._read_xml_location_table),
             (self.initinfo_table,self._read_xml_initinfo_table),
             (self.offset_init_table,self._read_xml_offset_init_table),
@@ -112,7 +112,9 @@ class CFileDeclarations(object):
             (self.compinfo_table,self._read_xml_compinfo_table),
             (self.enumitem_table,self._read_xml_enumitem_table),
             (self.enuminfo_table,self._read_xml_enuminfo_table) ]
-        
+        self.string_tables = [
+            (self.filename_table,self._read_xml_filename_table)
+            ]       
         self.initialize()
 
     # Retrieve definitions and declarations
@@ -179,10 +181,7 @@ class CFileDeclarations(object):
 
     # -------------------- Index items by category -----------------------------
 
-    def index_filename(self,name):
-        tags = [ name ]
-        def f(index,key): return CFilename(self,index,tags,[])
-        return self.filename_table.add(IT.get_key(tags,[]),f)
+    def index_filename(self,name): return self.filename_table.add(name)
 
     def index_location(self,loc):
         if (loc.get_line() == -1) and (loc.get_byte() == -1):
@@ -266,6 +265,10 @@ class CFileDeclarations(object):
             tnode = ET.Element(t.name)
             t.write_xml(tnode,f)
             declsnode.append(tnode)
+        for (t,_) in self.string_tables:
+            tnode = ET.Element(t.name)
+            t.write_xml(tnode)
+            declsnode.append(tnode)
         node.extend([dictnode, declsnode])
 
     # ---------------------- Initialization ------------------------------------
@@ -276,7 +279,7 @@ class CFileDeclarations(object):
         xnode = UF.get_cfile_dictionary_xnode(self.cfile.capp.path,self.cfile.name)
         xnode = xnode.find('c-declarations')
         if not xnode is None:
-            for (t,f) in self.dictionary_tables:
+            for (t,f) in self.dictionary_tables + self.string_tables:
                 t.reset()
                 f(xnode.find(t.name))
 
@@ -355,12 +358,7 @@ class CFileDeclarations(object):
             return CLocation(*args)
         self.location_table.read_xml(xnode,'n',get_value)
 
-    def _read_xml_filename_table(self,xnode):
-        def get_value(node):
-            rep = IT.get_rep(node)
-            args = (self,) + rep
-            return CFilename(*args)
-        self.filename_table.read_xml(xnode,'n',get_value)
+    def _read_xml_filename_table(self,xnode): self.filename_table.read_xml(xnode)
 
     def _initialize_gtypes(self,xnode):
         for t in xnode.findall('gtype'):

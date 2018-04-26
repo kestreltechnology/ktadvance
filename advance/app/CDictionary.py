@@ -29,6 +29,7 @@ import xml.etree.ElementTree as ET
 
 import advance.util.fileutil as UF
 import advance.util.IndexedTable as IT
+import advance.util.StringIndexedTable as SI
 
 import advance.app.CAttributes as CA
 import advance.app.CConstExp as CC
@@ -138,7 +139,7 @@ class CDictionary(object):
         self.typ_table = IT.IndexedTable('typ-table')
         self.typsig_table = IT.IndexedTable('typsig-table')
         self.typsiglist_table = IT.IndexedTable('typsiglist-table')
-        self.string_table = IT.IndexedTable ('string-table')
+        self.string_table = SI.StringIndexedTable ('string-table')
         self.tables = [
             (self.attrparam_table,self._read_xml_attrparam_table),
             (self.attribute_table,self._read_xml_attribute_table),
@@ -153,20 +154,22 @@ class CDictionary(object):
             (self.typ_table,self._read_xml_typ_table),
             (self.typsig_table,self._read_xml_typsig_table),
             (self.typsiglist_table,self._read_xml_typsiglist_table),
-            (self.string_table,self._read_xml_string_table)
-    ]
+        ]
+        self.string_tables = [
+            (self.string_table, self._read_xml_string_table)
+            ]
 
     # --------------- Statistics -----------------------------------------------
 
     def get_stats(self):
         lines = []
-        for (t,_) in self.tables:
+        for (t,_) in self.tables + self.string_tables:
             if t.size() > 0:
                 lines.append(t.name.ljust(25) + str(t.size()).rjust(4))
         return '\n'.join(lines)
 
     def get_table(self,n):
-        return next(x[0] for x in self.tables if x[0].name == (n + '-table'))
+        return next(x[0] for x in (self.tables + self.string_tables) if x[0].name == (n + '-table'))
 
     # create a count distribution for the objects in the table with name tname
     # that satisfy the respective case predicates
@@ -242,7 +245,7 @@ class CDictionary(object):
  
     def initialize(self,xnode,force=False):
         if xnode is None: return
-        for (t,f) in self.tables:
+        for (t,f) in self.tables + self.string_tables:
             t.reset()
             f(xnode.find(t.name))
 
@@ -473,15 +476,17 @@ class CDictionary(object):
 
     def index_typsiglist(self,t): return None       # TBD
 
-    def index_string(self,s):
-        def f(index,key): return CC.CStringConstant(self,index,s.tags,s.args)
-        return self.string_table.add(IT.get_key(s.tags,s.args),f)
+    def index_string(self,s): return self.string_table.add(s)
 
     def write_xml(self,node):
         def f(n,r):r.write_xml(n)
         for (t,_) in self.tables:
             tnode = ET.Element(t.name)
             t.write_xml(tnode,f)
+            node.append(tnode)
+        for (t,_) in self.string_tables:
+            tnode = ET.Element(t.name)
+            t.write_xml(tnode)
             node.append(tnode)
 
     def __str__(self):
@@ -589,9 +594,4 @@ class CDictionary(object):
             return CS.CTypsigList(*args)
         self.typsiglist_table.read_xml(txnode,'n',get_value)
 
-    def _read_xml_string_table(self,txnode):
-        def get_value(node):
-            rep = IT.get_rep(node)
-            args = (self,) + rep
-            return CC.CStringConstant(*args)
-        self.string_table.read_xml(txnode,'n',get_value)
+    def _read_xml_string_table(self,txnode): self.string_table.read_xml(txnode)
