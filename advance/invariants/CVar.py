@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -220,6 +220,7 @@ class ConstantValueVariable(VDictionaryRecord):
     def is_function_return_value(self): return False
     def is_exp_function_return_value(self): return False
     def is_sideeffect_value(self): return False
+    def is_exp_sideeffect_value(self): return False
     def is_symbolic_value(self): return False
     def is_memory_address(self): return False
 
@@ -249,11 +250,11 @@ class CVVFunctionReturnValue(ConstantValueVariable):
 
     def get_location(self): return self.cdecls.getlocation(int(self.args[0]))
 
-    def get_callee(self): return self.vd.fdecls.get_varinfo(int(self.args[1]))
+    def get_callee(self): return self.vd.fdecls.get_varinfo(int(self.args[2]))
 
     def get_args(self):
         result = []
-        for a in self.args[2:]:
+        for a in self.args[3:]:
             if int(a) == -1:
                 result.append(None)
             else:
@@ -274,11 +275,11 @@ class CVVExpFunctionReturnValue(ConstantValueVariable):
 
     def get_location(self): return self.cdecls.getlocation(int(self.args[0]))
 
-    def get_callee(self): return self.xd.get_xpr(int(self.args[1]))
+    def get_callee(self): return self.xd.get_xpr(int(self.args[2]))
 
     def get_args(self):
         result = []
-        for a in self.args[2:]:
+        for a in self.args[3:]:
             if int(a) == -1:
                 result.append(None)
             else:
@@ -300,15 +301,15 @@ class CVVSideEffectValue(ConstantValueVariable):
 
     def get_location(self): return self.cdecls.get_location(int(self.args[0]))
 
-    def get_callee(self): return self.vd.fdecls.get_varinfo(int(self.args[1]))
+    def get_callee(self): return self.vd.fdecls.get_varinfo(int(self.args[2]))
 
-    def get_argnr(self): return int(self.args[2])
+    def get_argnr(self): return int(self.args[3])
 
-    def get_type(self): return self.cd.get_typ(int(self.args[3]))
+    def get_type(self): return self.cd.get_typ(int(self.args[4]))
 
     def get_args(self):
         result = []
-        for a in self.args[4:]:
+        for a in self.args[5:]:
             if int(a) == -1:
                 result.append(None)
             else:
@@ -320,6 +321,34 @@ class CVVSideEffectValue(ConstantValueVariable):
                     + ','.join([ str(a) for a in self.get_args() ])
                     + ')')
 
+class CVVExpSideEffectValue(ConstantValueVariable):
+
+    def __init__(self,vd,index,tags,args):
+        ConstantValueVariable.__init__(self,cd,index,tags,args)
+
+    def is_exp_sideeffect_value(self): return True
+
+    def get_location(self): return self.cdecls.get_location(int(self.args[0]))
+
+    def get_callee(self): return self.vd.fdecls.get_varinfo(int(self.args[2]))
+
+    def get_argnr(self): return int(self.args[3])
+
+    def get_type(self): return self.cd.get_typ(int(self.args[4]))
+
+    def get_args(self):
+        result = []
+        for a in self.args[5:]:
+            if int(a) == -1:
+                result.append(None)
+            else:
+                result.append(self.xd.get_xpr(int(a)))
+        return result
+
+    def __str__(self):
+        return (str(self.get_callee()) + '('
+                    + ','.join([ str(a) for a in self.get_args() ])
+                    + ')')
 
 
 class CVVSymbolicValue(ConstantValueVariable):

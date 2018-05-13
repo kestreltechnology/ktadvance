@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -100,7 +100,7 @@ class CXVariable(XDictionaryRecord):
 
     def get_denotation(self): return self.vd.get_c_variable_denotation(self.get_seqnr())
 
-    def __str__(self): return (str(self.get_name()))
+    def __str__(self): return (str(self.get_name()) + '(' + str(self.get_seqnr()) + ')')
 
 
 class CXXCstBase(XDictionaryRecord):

@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -53,6 +53,7 @@ constant_value_variable_constructors = {
     'frv':lambda x:CV.CVVFunctionReturnValue(*x),
     'erv':lambda x:CV.CVVExpFunctionReturnValue(*x),
     'sev':lambda x:CV.CVVSideEffectValue(*x),
+    'esev':lambda x:CV.CVVExpSideEffectValue(*x),
     'sv':lambda x:CV.CVVSymbolicValue(*x),
     'ma':lambda x:CV.CVVMemoryAddress(*x)
     }
