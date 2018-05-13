@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -60,6 +60,7 @@ def parse():
                             help='number of times to generate secondary proof obligations')
     parser.add_argument('--verbose',help='print out intermediate results',
                             action='store_true')
+    parser.add_argument('--contractpath',help='path to contract files',default=None)
     args = parser.parse_args()
     return args
 
@@ -93,7 +94,12 @@ if __name__ == '__main__':
                                   '   or a file semantics_linux.tar.gz in ' + cpath]))
             exit(1)
 
-    capp = CApplication(sempath,args.cfile)
+    if args.contractpath is None:
+        contractpath = os.path.join(cpath,'ktacontracts')
+    else:
+        contractpath = args.contractpath    
+
+    capp = CApplication(sempath,args.cfile,contractpath=contractpath)
     ktadvpath = capp.path
     xfilename = UF.get_cfile_filename(ktadvpath,args.cfile)
 
@@ -109,12 +115,14 @@ if __name__ == '__main__':
 
     cfilename = args.cfile
 
-    if not args.continueanalysis:
+    if args.continueanalysis is None or (not args.continueanalysis):
         am.create_file_primary_proofobligations(cfilename)
         am.reset_tables(cfilename)
+        capp.collect_post_assumes()
 
     am.generate_and_check_file(cfilename,'llrvisp')
     am.reset_tables(cfilename)
+    capp.collect_post_assumes()
 
     for k in range(args.analysisrounds):
         capp.update_spos()

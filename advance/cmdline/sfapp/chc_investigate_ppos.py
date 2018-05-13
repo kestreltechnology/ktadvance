@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -68,7 +68,7 @@ if __name__ == '__main__':
 
     pofilter = lambda(p):True
     if args.predicates:
-        pofilter = lambda(p):p.getpredicatetag() in args.predicates
+        pofilter = lambda(p):p.get_predicate_tag() in args.predicates
 
     openppos = cfile.get_open_ppos()
     violations = cfile.get_violations()
