@@ -58,7 +58,6 @@ if __name__ == '__main__':
    
     capp = CApplication(sempath)
     timestamp = os.stat(capp.path).st_ctime
-    print('ctime:' + str(timestamp))
     try:
         result = RP.project_proofobligation_stats_to_dict(capp)
         result['timestamp'] = timestamp

@@ -46,10 +46,8 @@ if __name__ == '__main__':
     sempath = os.path.join(args.path,'semantics')
     
     if not os.path.isdir(sempath):
-        success = UF.unpack_tar_file(args.path)
-        if not success:
-            print('No file or directory found with semantics')
-            exit(1)
+        print('No semantics directory found to reset')
+        exit(0)
 
     capp = CApplication(sempath)
     am = AnalysisManager(capp)
