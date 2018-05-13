@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -71,7 +71,7 @@ def err_msg(lines):
 def missing_analyzer_err_msg():
     config = Config()
     return err_msg(['Analyzer not found at ' + config.canalyzer,
-                        '  Please et analyzer location in Config.py'])
+                        '  Please set analyzer location in Config.py'])
 
 def cpath_not_found_err_msg(cpath):
     return err_msg(['Directory ', '  ' + cpath, '  not found'])
@@ -104,3 +104,17 @@ def my_cfiles_not_found_err_msg(testname):
     return err_msg(msg)
 
     
+if __name__ == '__main__':
+
+    path = 'path'
+    filename = 'filename'
+    functionname = 'functionname'
+
+    print(missing_analyzer_err_msg())
+    print(cpath_not_found_err_msg(path))
+    print(cfile_not_found_err_msg(path,filename))
+    print(cfunction_not_found_err_msg(path,filename,functionname))
+    print(semantics_tar_not_found_err_msg(path))
+    print(semantics_not_found_err_msg(path))
+    print(global_definitions_not_found_err_msg(path))
+    print(cfile_not_found_err_msg(path,filename))
