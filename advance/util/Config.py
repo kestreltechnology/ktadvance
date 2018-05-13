@@ -42,8 +42,11 @@ testprojects = {
     "nagios": "sate/2008/nagios-2.10/base",
     "naim": "sate/2008/naim-0.11.8.3.1",
     "irssi": "sate/2009/irssi-0.8.14",
+    "pvm": "sate/2009/pvm3.4.6",
     "dovecot": "sate/2010/dovecot-2.0.beta6"
     }
+
+myprojects = {}
 
 class Config(object):
 
@@ -78,3 +81,33 @@ class Config(object):
 
         if os.path.isfile(os.path.join(os.path.dirname(os.path.abspath(__file__)), "ConfigLocal.py")):
             ConfigLocal.getLocals(self)
+
+    def __str__(self):
+        plen = 20
+        lines = []
+        lines.append('Configuration')
+        lines.append('-' * 64)
+        lines.append('platform'.ljust(plen) + ': ' + self.platform)
+        lines.append('top directory'.ljust(plen) + ': ' + self.topdir)
+        lines.append('test directory'.ljust(plen) + ': ' + self.testdir)
+        lines.append('binaries directory'.ljust(plen) + ': ' + self.binariesdir)
+        lines.append('parser'.ljust(plen) + ': ' + self.cparser)
+        lines.append('analyzer'.ljust(plen) + ': ' + self.canalyzer)
+        if not self.bear is None:
+            lines.append('bear'.ljust(plen) + ': ' + self.bear)
+            lines.append('libear'.ljust(plen) + ': ' + self.libear)
+        lines.append('summaries'.ljust(plen) + ': ' + self.summaries)
+        lines.append('projects'.ljust(plen) + ':')
+        for (p,d) in sorted(testprojects.items()):
+            lines.append(' '.ljust(3) + str(p).ljust(12) + ': ' + str(d))
+        if len(myprojects) > 0:
+            lines.append('my projects'.ljust(plen) + ':')
+            for (p,d) in sorted(myprojects.items()):
+                lines.append(' '.ljust(3) + str(p).ljust(12) + ': ' + str(d))
+        lines.append('-' * 64)
+        return '\n'.join(lines)
+
+
+if __name__ == '__main__':
+
+    print(Config())
