@@ -91,6 +91,9 @@ class StringIndexedTable(object):
         self.next = 1
 
     def add(self,s):
+        if s is None:
+            print('Attempt to index None in string table')
+            raise  IndexedTableError(self.name + ': Attempt to index None')
         if s in self.stringtable:
             return self.stringtable[s]
         else:
