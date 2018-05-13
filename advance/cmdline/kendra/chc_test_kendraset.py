@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -80,12 +80,14 @@ if __name__ == '__main__':
             testmanager.test_ppos()
             testmanager.test_ppo_proofs(delaytest=True)
             testmanager.test_spos(delaytest=True)
-            testmanager.test_sevs(delaytest=True)
+            testmanager.test_spo_proofs(delaytest=True)
             testmanager.test_spos(delaytest=True)
-            testmanager.test_sevs(delaytest=True)
+            testmanager.test_spo_proofs(delaytest=True)
             testmanager.test_ppo_proofs()
             testmanager.test_spos()
-            testmanager.test_sevs()
+            testmanager.test_spo_proofs(delaytest=True)
+            testmanager.test_spo_proofs(delaytest=True)
+            testmanager.test_spo_proofs()
             if testmanager.verbose:
                 testmanager.print_test_results()
             else:

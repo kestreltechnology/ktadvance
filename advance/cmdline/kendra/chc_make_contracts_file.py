@@ -27,18 +27,16 @@
 
 import argparse
 import os
+import xml.etree.ElementTree as ET
 
 import advance.util.fileutil as UF
-import advance.reporting.ProofObligations as RP
+import advance.util.xmlutil as UX
 
 from advance.app.CApplication import CApplication
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('cfilename',help='name of kendra c file (e.g., id115.c)')
-    parser.add_argument('--show_invariants',
-                            help='show invariants in addition to diagnostic',
-                            action='store_true')
+    parser.add_argument('cfilename',help='name of kendra c file (e.g. id115.c)')
     args = parser.parse_args()
     return args
 
@@ -58,7 +56,4 @@ if __name__ == '__main__':
     cfapp = CApplication(sempath,cfilename)
     cfile = cfapp.get_cfile()
 
-    print(RP.file_code_tostring(cfile,showinvs=args.show_invariants))
-    print(RP.file_proofobligation_stats_tostring(cfile))
-
-
+    cfile.create_contract(os.path.join(cpath,'ktacontracts'))
