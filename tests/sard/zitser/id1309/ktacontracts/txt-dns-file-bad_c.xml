@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-05-10 16:04:57.701153"/>
+  <cfile name="txt-dns-file-bad">
+    <data-structures/>
+    <functions>
+      <function name="main">
+        <parameters/>
+        <postconditions/>
+      </function>
+      <function name="create_dns_file">
+        <parameters/>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="read_record_from_file">
+        <parameters>
+          <par name="reply" nr="1"/>
+          <par name="size" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="dns_free_data">
+        <parameters>
+          <par name="r" nr="1"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="parse_dns_reply">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="dns_lookup_int">
+        <parameters>
+          <par name="domain" nr="1"/>
+          <par name="rr_class" nr="2"/>
+          <par name="rr_type" nr="3"/>
+          <par name="retrans" nr="4"/>
+          <par name="retry" nr="5"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
