@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-05-10 14:28:56.852741"/>
+  <cfile name="ns-lookup-bad">
+    <data-structures/>
+    <functions>
+      <function name="nlookup">
+        <parameters>
+          <par name="dname" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><not-null/><return/></apply></math></post>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="create_databuf_list">
+        <parameters>
+          <par name="num" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><not-null/><return/></apply></math></post>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="nslookupComplain">
+        <parameters>
+          <par name="sysloginfo" nr="1"/>
+          <par name="queryname" nr="2"/>
+          <par name="complaint" nr="3"/>
+          <par name="dname" nr="4"/>
+          <par name="a_rr" nr="5"/>
+          <par name="nsdp" nr="6"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="main">
+        <parameters>
+          <par name="argc" nr="1"/>
+          <par name="argv" nr="2"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="nslookup">
+        <parameters>
+          <par name="nsp" nr="1"/>
+          <par name="syslogdname" nr="2"/>
+          <par name="sysloginfo" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="data_inaddr">
+        <parameters>
+          <par name="data" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
