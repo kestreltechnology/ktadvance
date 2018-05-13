@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -37,10 +37,16 @@ from advance.util.Config import Config
 import advance.util.xmlutil as UX
 
 class ParseManager(object):
-    '''Utility functions to support preprocessing and parsing source code.'''
+    """Utility functions to support preprocessing and parsing source code.
+
+    Attributes:
+        sempath (string): absolute path to semantics directory
+        tgtxpath (string): absolute path to semantics/ktadvance directory
+        tgtspath (string): absolute path to semantics/sourcefiles directory
+    """
 
     def __init__(self,cpath,tgtpath,filter=False,posix=False,verbose=True,tgtplatform='-m64'):
-        '''Initialize paths to code, results, and parser executable.
+        """Initialize paths to code, results, and parser executable.
 
         Args:
             cpath: absolute path to toplevel C source directory
@@ -48,7 +54,7 @@ class ParseManager(object):
 
         Effects:
             creates tgtpath and subdirectories if necessary.
-        '''
+        """
         self.cpath = cpath
         self.tgtpath = tgtpath
         self.filter = filter
@@ -65,13 +71,8 @@ class ParseManager(object):
             self.tgtplatform = '-m64'
 
 
-    def get_sempath(self): return self.sempath
-
-    def get_tgt_xpath(self): return self.tgtxpath
-
-    def get_tgt_spath(self): return self.tgtspath
-
     def save_semantics(self):
+        """Save the semantics directory as a tar.gz file."""
         os.chdir(self.cpath)
         tarfilename = 'semantics_' + self.config.platform + '.tar'
         if os.path.isfile(tarfilename): os.remove(tarfilename)
@@ -82,16 +83,17 @@ class ParseManager(object):
         subprocess.call(gzipcmd,cwd=self.cpath,stderr=subprocess.STDOUT) if self.verbose else subprocess.call(gzipcmd,cwd=self.cpath,stdout=open(os.devnull,'w'), stderr=subprocess.STDOUT)
 
     def preprocess_file_with_gcc(self,cfilename,copyfiles=True,moreoptions=[]):
-        '''Invoke gcc preprocessor on c source file.
+        """Invoke gcc preprocessor on c source file.
 
         Args:
             cfilename: c source code filename relative to cpath
+            moreoptions: list of additional options to be given to the preprocessor
 
         Effects:
             invokes the gcc preprocessor on the c source file and optionally copies 
             the original source file and the generated .i file to the 
             tgtpath/sourcefiles directory
-        '''
+        """
         mac = self.config.platform == 'mac'
         ifilename = cfilename[:-1] + 'i'
         macoptions = [ '-U___BLOCKS___',
@@ -101,9 +103,12 @@ class ParseManager(object):
                 '-o', ifilename, cfilename ]
         if mac: cmd = cmd[:1] + macoptions + cmd[1:]
         cmd = cmd[:1] + moreoptions + cmd[1:]
-        if self.verbose: print('Preprocess file: ' + str(cmd))
-        p = subprocess.call(cmd,cwd=self.cpath,stderr=subprocess.STDOUT) if self.verbose else subprocess.call(cmd,cwd=self.cpath,stdout=open(os.devnull,'w'),stderr=subprocess.STDOUT)
-        if self.verbose: print('Result: ' + str(p))
+        if self.verbose:
+            print('Preprocess file: ' + str(cmd))
+            p = subprocess.call(cmd,cwd=self.cpath,stderr=subprocess.STDOUT)
+            print('Result: ' + str(p))
+        else:
+            subprocess.call(cmd,cwd=self.cpath,stdout=open(os.devnull,'w'),stderr=subprocess.STDOUT)
         if copyfiles:
             tgtcfilename = os.path.join(self.tgtspath,cfilename)
             tgtifilename = os.path.join(self.tgtspath,ifilename)
@@ -116,11 +121,14 @@ class ParseManager(object):
         return ifilename
 
     def get_file_length(self,fname):
+        """Return the number of lines in named file."""
         with open(fname) as f:
             for i,l in enumerate(f): pass
         return i+1
 
     def normalize_filename(self,filename):
+        """Make filename relative to application directory (if in application directory)."""
+
         filename = os.path.normpath(filename)
         if filename.startswith(self.cpath):
             return filename[len(self.cpath)+1:]
@@ -151,6 +159,8 @@ class ParseManager(object):
                 
         
     def preprocess(self,ccommand,copyfiles=True):
+        """Modify and replay compile_commands.json file produced by bear."""
+
         if self.verbose: print('\n\n' + ('=' * 80))
         if self.verbose: print('***** ' + ccommand['file'] + ' *****')
         if self.verbose: print('=' * 80)
@@ -181,12 +191,25 @@ class ParseManager(object):
             ecommand.append('-fno-builtin')
             ecommand.append('-fno-asm')
             self.set_platform(ecommand)
-            if self.verbose: print('\nIssue command: ' + str(ecommand) + '\n')
-            p = subprocess.call(ecommand,cwd=ccommand['directory'],stderr=subprocess.STDOUT) if self.verbose else subprocess.call(ecommand,cwd=ccommand['directory'],stdout=open(os.devnull, 'w'),stderr=subprocess.STDOUT)
-            if self.verbose: print('result: ' + str(p))
-            if self.verbose: print('\nIssue original command: ' + str(command) + '\n')
-            p = subprocess.call(command,cwd=ccommand['directory'],stderr=subprocess.STDOUT) if self.verbose else subprocess.call(command,cwd=ccommand['directory'],stdout=open(os.devnull, 'w'),stderr=subprocess.STDOUT)
-            if self.verbose: print('result: ' + str(p))
+
+            # issue modified command to produce i files
+            if self.verbose:
+                print('\nIssue command: ' + str(ecommand) + '\n')
+                p = subprocess.call(ecommand,cwd=ccommand['directory'],stderr=subprocess.STDOUT)
+                print('result: ' + str(p))
+            else:
+                subprocess.call(ecommand,cwd=ccommand['directory'],
+                                    stdout=open(os.devnull, 'w'),stderr=subprocess.STDOUT)
+
+            # issue original command
+            if self.verbose:
+                print('\nIssue original command: ' + str(command) + '\n')
+                p = subprocess.call(command,cwd=ccommand['directory'],stderr=subprocess.STDOUT)
+                print('result: ' + str(p))
+            else:
+                subprocess.call(command,cwd=ccommand['directory'],
+                                    stdout=open(os.devnull, 'w'),stderr=subprocess.STDOUT)
+
             if copyfiles:
                 tgtcfilename = os.path.join(self.tgtspath,self.normalize_filename(cfilename))
                 tgtifilename = os.path.join(self.tgtspath,self.normalize_filename(ifilename))
@@ -203,6 +226,8 @@ class ParseManager(object):
             return (None,None)
 
     def parse_with_ccommands(self,compilecommands,copyfiles=True):
+        """Preprocess and call KT Advance parser to produce xml semantics files."""
+
         cfiles = {}
         targetfiles = TargetFiles()
         for c in compilecommands:
@@ -219,8 +244,12 @@ class ParseManager(object):
             cfiles[cfilename] = cfilelen
             if self.verbose : print('\nRun the parser: ' + str(command) + '\n')
             sys.stdout.flush()
-            subprocess.call(command) if self.verbose else subprocess.call(command,stdout=open(os.devnull,'w'))
-            if self.verbose: print('\n' + ('-' * 80) + '\n\n')
+            if self.verbose:
+                subprocess.call(command)
+                print('\n' + ('-' * 80) + '\n\n')
+            else:
+                subprocess.call(command,stdout=open(os.devnull,'w'))
+
         if self.verbose:print('\n\nCollect c files')
         for n in cfiles:
             n = os.path.abspath(n)
@@ -234,6 +263,8 @@ class ParseManager(object):
         shutil.copy('compile_commands.json',self.tgtspath)
 
     def parse_ifiles(self,copyfiles=True):
+        """Run the KT Advance parser on all .i files in the directory."""
+
         os.chdir(self.cpath)
         targetfiles = TargetFiles()
         for d,dnames,fnames in os.walk(self.cpath):
@@ -246,6 +277,8 @@ class ParseManager(object):
         targetfiles.save_xml_file(self.tgtxpath)
 
     def parse_cfiles(self,copyfiles=True):
+        """Preprocess (with gcc) and run KT Advance parser on all .c files in the directory."""
+
         os.chdir(self.cpath)
         targetfiles = TargetFiles()
         for d,dnames,fnames in os.walk(self.cpath):
@@ -260,7 +293,7 @@ class ParseManager(object):
 
         
     def parse_ifile(self,ifilename):
-        '''Invoke kt advance parser frontend on preprocessed source file
+        """Invoke kt advance parser frontend on preprocessed source file
 
         Args:
             ifilename: preprocessed source code filename relative to cpath
@@ -268,7 +301,8 @@ class ParseManager(object):
         Effects:
             invokes the parser frontend to produce an xml representation
             of the semantics of the file
-        '''
+        """
+
         ifilename = os.path.join(self.cpath,ifilename)
         cmd = [ self.config.cparser, '-projectpath', self.cpath, '-targetdirectory',
                     self.tgtxpath ]
@@ -314,3 +348,20 @@ class TargetFiles(object):
         tgtfilename = os.path.join(tgtpath,'target_files.xml')
         with open(tgtfilename,'w') as fp:
             fp.write(UX.doc_to_pretty(ET.ElementTree(tgtroot)))
+
+
+if __name__ == '__main__':
+
+    # preprocess and parse single files with gcc
+    thisdir = os.path.dirname(os.path.abspath(__file__))
+    topdir = os.path.dirname(os.path.dirname(thisdir))
+    testsdir = os.path.join(topdir,'tests')
+    kendradir = os.path.join(os.path.join(testsdir,'sard'),'kendra')
+    id115dir = os.path.join(kendradir,'id115Q')
+    pm = ParseManager(id115dir,id115dir)
+    pm.initialize_paths()
+    for f in [ 'id115.c', 'id116.c', 'id117.c', 'id118.c' ]:
+        ifilename = pm.preprocess_file_with_gcc(f)
+        pm.parse_ifile(ifilename)
+
+    
