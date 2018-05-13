@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,19 @@ import advance.util.fileutil as UF
 
 from advance.app.CDictionary import CDictionary
 
+class CKeyLookupError(Exception):
+
+    def __init__(self,thisfid,tgtfid,ckey):
+        self.thisfid = thisfid
+        self.tgtfid = tgtfid
+        self.ckey = ckey
+
+    def __str__(self):
+        return ('Unable to find corresponding compinfo key for ' + str(self.ckey)
+                    + ' from file ' + str(self.tgtfid) + ' in file '
+                    + str(self.thisfid))
+    
+
 class CFileDictionary(CDictionary):
 
     def __init__(self,decls):
@@ -49,7 +62,7 @@ class CFileDictionary(CDictionary):
         if not (cfid == fid):
             tgtkey = self.cfile.capp.indexmanager.convert_ckey(cfid,ckey,fid)
             if tgtkey is None:
-                raise LookupError('Unable to find key for ' + str(ckey)
+                raise LookupError('Index_compinfo: Unable to find key for ' + str(ckey)
                                       + ' from file ' + str(cfid)
                                       + ' in file ' + str(fid))
             else:
@@ -63,9 +76,7 @@ class CFileDictionary(CDictionary):
         if not (thisfid == fid):
             tgtkey = self.cfile.capp.indexmanager.convert_ckey(fid,ckey,thisfid)
             if tgtkey is None:
-                raise LookupError('Unable to find key for ' + str(ckey)
-                                      + ' from file ' + str(fid)
-                                      + ' in file ' + str(thisfid))
+                raise CKeyLookupError(thisfid,fid,ckey)
             else:
                 return tgtkey
         else:

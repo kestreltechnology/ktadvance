@@ -44,6 +44,7 @@ class CFunction(object):
 
     def __init__(self,cfile,xnode):
         self.cfile = cfile
+        self.capp = self.cfile.capp
         self.xnode = xnode
         self.fdecls = CFunDeclarations(self,xnode.find('declarations'))
         self.svar = self.cfile.declarations.get_varinfo(int(xnode.find('svar').get('ivinfo')))
@@ -59,18 +60,12 @@ class CFunction(object):
         self.invd = CFunInvDictionary(self.vard)
         self.invtable = CFunInvariantTable(self.invd)
         self.invariants = None                       # CFunctionInvariants object
-        self.mayfreememory = True
         self._initialize()
 
     def reinitialize_tables(self):
         self.api = CFunctionApi(self)
         self.podictionary.initialize()
         self.vard.initialize(force=True)
-        self.mayfreememory = False
-        def f(cs):
-            if cs.mayfreememory: self.mayfreememory = True
-        self.iter_callsites(f)
-        if self.api.may_free_memory(): self.mayfreememory = True
 
     def get_formal_vid(self,name):
         for v in self.formals:
@@ -89,8 +84,6 @@ class CFunction(object):
     def get_ppo(self,index): return self.proofs.get_ppo(index)
 
     def iter_callsites(self,f): self.proofs.iter_callsites(f)
-
-    def getcapp(self): return self.cfile.capp
 
     def get_vid(self): return self.svar.get_vid()
 
@@ -126,21 +119,30 @@ class CFunction(object):
 
     def update_spos(self): self.proofs.update_spos()
 
-    def accept_post_request(self,postcondition):
-        self.proofs.add_returnsite_postcondition(postcondition)
+    def collect_post_assumes(self):
+        """For all call sites collect postconditions from callee's contracts and add as assume."""
 
-    def request_postconditions(self):
+        self.proofs.collect_post_assumes()
+        self.save_spos()
+
+    def distribute_post_guarantees(self): self.proofs.distribute_post_guarantees()
+
+    def collect_post(self):
+        '''Add postcondition requests to the contract of the callee'''
         for r in self.get_api().get_postcondition_requests():
             tgtfid = r.callee.get_vid()
-            tgtfun = self.getcapp().resolve_vid_function(self.cfile.index,tgtfid)
+            tgtfun = self.capp.resolve_vid_function(self.cfile.index,tgtfid)
             if tgtfun is None:
                 print('No function found to register post request in function ' +
                           self.cfile.name + ':' + self.name)
             else:
-                postcondition = r.postcondition
-                tgtpostconditionix = tgtfun.cfile.interfacedictionary.index_postcondition(postcondition)
-                tgtpostcondition = tgtfun.cfile.interfacedictionary.get_postcondition(tgtpostconditionix)
-                tgtfun.accept_post_request(tgtpostcondition)
+                tgtcfile = tgtfun.cfile
+                if tgtfun.cfile.has_function_contract(tgtfun.name):
+                    tgtifx = tgtfun.cfile.interfacedictionary
+                    tgtpostconditionix = tgtifx.index_xpredicate(r.postcondition)
+                    tgtpostcondition = tgtifx.get_xpredicate(tgtpostconditionix)
+                    cfuncontract = tgtcfile.get_function_contract(tgtfun.name)
+                    cfuncontract.add_postrequest(tgtpostcondition)
 
     def save_spos(self): self.proofs.save_spos()
 
@@ -164,29 +166,12 @@ class CFunction(object):
 
     def get_delegated(self): return self.proofs.get_delegated()
 
-    def frees_memory(self): return self.api.may_free_memory()
-
-    def may_free_memory(self):
-        if self.frees_memory():
-            return True
-        self.mayfreememory = False
-        def f(cs):
-            if cs.may_free_memory():
-                self.mayfreememory = True
-        self.iter_callsites(f)
-        return self.mayfreememory
-
     def _initialize(self):
         for v in self.fdecls.get_formals():
             self.formals[v.get_vid()] = v
         for v in self.fdecls.get_locals(): self.locals[v.get_vid()] = v
         self.vard.initialize()
         self.invtable.initialize()
-        self.mayfreememory = False
-        def f(cs):
-            if cs.mayfreememory: self.mayfreememory = True
-        self.iter_callsites(f)
-        if self.api.may_free_memory(): self.mayfreememory = True
 
     def _read_invariants(self):
         if not self.invariants is None: return

@@ -53,33 +53,17 @@ class CFileNotFoundException(Exception):
         lines.append('*' * 80)
         return '\n'.join(lines)
 
-class CFunctionNotFoundException(Exception):
-
-    def __init__(self,cfile,functionname):
-        self.cfile = cfile
-        self.functionname = functionname
-
-    def __str__(self):
-        lines = []
-        lines.append('*' * 80)
-        lines.append(('Function ' + functionname + ' not found in file '
-                          + cfile.name + '; function names available:'))
-        lines.append('-' * 80)
-        for n in cfile.functionnames:
-            lines.append('  ' + n)
-        lines.append('*' * 80)
-        return '\n'.join(lines)
-        
-        
-
 
 class CApplication(object):
-    '''Primary access point for source code and analysis results.'''
+    """Primary access point for source code and analysis results."""
 
-    def __init__(self,path,cfilename=None,srcpath=None):
+    def __init__(self,path,cfilename=None,srcpath=None,contractpath=None,
+                     candidate_contractpath=None):
         self.singlefile = not (cfilename is None)
         self.path = os.path.join(path,'ktadvance')
         self.srcpath = os.path.join(path,'sourcefiles') if srcpath is None else srcpath
+        self.contractpath = contractpath
+        self.candidate_contractpath = candidate_contractpath
         self.filenames = {}          # file index -> filename
         self.files = {}              # filename -> CFile
         if self.singlefile:
@@ -133,7 +117,7 @@ class CApplication(object):
         srcfile = os.path.join(self.srcpath,fname)
         return CSrcFile(self,srcfile)
 
-    '''return a list of ((fid,vid),callsitespos). '''
+    # return a list of ((fid,vid),callsitespos).
     def get_callsites(self,fid,vid):
         self._initialize_callgraphs()
         if (fid,vid) in self.revcallgraph:
@@ -271,29 +255,39 @@ class CApplication(object):
                 result[s] += 1
         self.iter_functions(f)
         return result
-        
 
-    '''Create secondary proof obligations for all call sites and return sites.
-
-    Save spo files only after all secondary proof obligations have been created,
-    as postcondition requests are created for remote functions.
-    Note: this step cannot be parallelized because of the post conditions.
-    '''
     def update_spos(self):
+        """Create supporting proof obligations for all call sites."""
+
         def f(fn):
             fn.update_spos()
-            fn.request_postconditions()
-        def g(fn):
             fn.save_spos()
             fn.save_pod()
-        def h(cfile): cfile.iter_functions(f)
-        def k(cfile):
-            cfile.iter_functions(g)
+        def h(cfile):
+            cfile.iter_functions(f)
             cfile.save_predicate_dictionary()
             cfile.save_interface_dictionary()
             cfile.save_declarations()
         self.iter_files(h)
-        self.iter_files(k)
+
+    def collect_post_assumes(self):
+        """For all call sites collect postconditions from callee's contracts and add as assume."""
+
+        self.iter_files(lambda f:f.collect_post_assumes())
+
+    def distribute_post_guarantees(self):
+        '''add callee postcondition guarantees to call sites as assumptions'''
+        if self.contractpath is None: return              # no contracts provided
+        def f(fn):
+            fn.distribute_post_guarantees()
+            fn.save_spos()
+            fn.save_pod()
+        def h(cfile):
+            cfile.iter_functions(f)
+            cfile.save_predicate_dictionary()
+            cfile.save_interface_dictionary()
+            cfile.save_declarations()
+        self.iter_files(h)
 
     def reinitialize_tables(self):
         def f(fi):fi.reinitialize_tables()

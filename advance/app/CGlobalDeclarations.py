@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -345,20 +345,24 @@ class CGlobalDeclarations(object):
     # -------------------- Indexing varinfos -----------------------------------
     
     def index_init(self,init,fid=-1):
-        if init.is_single():
-            tags = [ 'single' ]
-            args = [ self.dictionary.index_exp(init.get_exp()) ]
-            def f(index,key): return CI.CSingleInitInfo(self,index,tags,args)
-            return self.initinfo_table.add(IT.get_key(tags,args),f)
-        if init.is_compound():
-            tags = [ 'compound' ]
-            gtype = self.dictionary.index_typ(init.get_typ())
-            oinits = [ self.index_offset_init(x)
-                           for x in init.get_offset_initializers() ]
-            args = [ gtype ] + oinits
-            def f(index,key): return CI.CCompoundInitInfo(self,index,tags,args)
-            return self.initinfo_table.add(IT.get_key(tags,args),f)
-        raise InvalidArgumentError('indexinit: ' + str(init))
+        try:
+            if init.is_single():
+                tags = [ 'single' ]
+                args = [ self.dictionary.index_exp(init.get_exp()) ]
+                def f(index,key): return CI.CSingleInitInfo(self,index,tags,args)
+                return self.initinfo_table.add(IT.get_key(tags,args),f)
+            if init.is_compound():
+                tags = [ 'compound' ]
+                gtype = self.dictionary.index_typ(init.get_typ())
+                oinits = [ self.index_offset_init(x)
+                            for x in init.get_offset_initializers() ]
+                args = [ gtype ] + oinits
+                def f(index,key): return CI.CCompoundInitInfo(self,index,tags,args)
+                return self.initinfo_table.add(IT.get_key(tags,args),f)
+            raise InvalidArgumentError('indexinit: ' + str(init))
+        except IndexedTableError as e:
+            print('Error in indexing ' + str(init) + ': ' + str(e))
+            
         
     def index_offset_init(self,oinit,fid=-1):
         args = [ self.dictionary.index_offset(oinit.get_offset()),

@@ -116,6 +116,8 @@ class CFileDeclarations(object):
             (self.filename_table,self._read_xml_filename_table)
             ]       
         self.initialize()
+        for (key,g) in self.gcomptagdefs.items() + self.gcomptagdecls.items():
+            print(str(key) + ': ' + g.get_name())
 
     # Retrieve definitions and declarations
 
@@ -218,6 +220,22 @@ class CFileDeclarations(object):
             return "struct " + str(ckey)
         else:
             return compinfo.get_name()
+
+    def get_structkey(self,name):
+        d = {}
+        r = {}
+        for (key,g) in self.gcomptagdefs.items() + self.gcomptagdecls.items():
+            if key in d:
+                if g.get_name() == d[key]:
+                    continue
+                else:
+                    print('Multiple names for key ' + str(key) + ': ' + str(d[key])
+                              + ' and ' + g.get_name())
+            else:
+                d[key] = g.get_name()
+                r[get_name()] = key
+        if name in r:
+            return r[name]
 
     def is_struct(self,ckey): return self.get_struct(ckey).isstruct
 

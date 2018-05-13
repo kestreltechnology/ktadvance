@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -241,6 +241,16 @@ class CDictionary(object):
     def read_xml_exp(self,node,tag='iexp'):
         return self.get_exp(int(node.get(tag)))
 
+    def write_xml_exp_opt(self,node,exp,tag='iexp'):
+        if exp is None: return
+        self.write_xml_exp(node,exp)
+
+    def read_xml_exp_opt(self,node,tag='iexp'):
+        if tag in node.attrib:
+            return self.get_exp_opt(int(node.get(tag)))
+        else:
+            return None
+
     # ----------------------- Initialize dictionary from file ------------------
  
     def initialize(self,xnode,force=False):
@@ -304,6 +314,15 @@ class CDictionary(object):
         def f(index,key): return exp_constructors[tags[0]]((self,index,tags,args))
         return self.exp_table.add(IT.get_key(tags,args),f)
 
+    def index_s_term(self,t,subst={},fid=-1):
+        if t.is_return_value():
+            if 'return' in subst:
+                return self.index_exp(subst['return'])
+            else:
+                raise Exception('Error in index_s_term: no return found')
+        print('cdict:index_s_term: ' + t.tags[0])
+        exit(1)
+
     def index_exp(self,e,subst={},fid=-1):                            # TBF
         if e.is_constant():
             args = [ self.index_constant(e.get_constant()) ]
@@ -349,7 +368,8 @@ class CDictionary(object):
             args = [ self.index_lval(e.get_lval(),subst=subst,fid=fid) ]
             def f(index,key): return CE.CExpLval(self,index,e.tags,args)
             return self.exp_table.add(IT.get_key(e.tags,args),f)
-        print('No case yet for exp ' + str(e))
+        print('cdict:no case yet for exp ' + str(e))
+        exit(1)
 
     def index_funarg(self,funarg):
         tags = [ funarg.get_name() ]
@@ -470,7 +490,8 @@ class CDictionary(object):
             def f(index,key): return CT.CTypBuiltinVaargs(self,index,tags,args)
             return self.typ_table.add(IT.get_key(tags,args),f)
         else:
-            print('No case yet for ' + str(t))
+            print('cdict: no case yet for ' + str(t))
+            exit(1)
 
     def index_typsig(self,t): return None           # TBD
 
