@@ -38,9 +38,9 @@ memory_free_functions = [ 'free', 'realloc' ]
 class CFunctionApi(object):
 
     def __init__(self,cfun):
-        self.cfun = cfun
-        self.cfile = self.cfun.cfile
-        self.capp = self.cfile.capp
+        self.cfun = cfun                  # app/CFunction
+        self.cfile = self.cfun.cfile      # app/CFile
+        self.capp = self.cfile.capp       # app/CApplication
         self.xnode = None
         self.parameters = {}              # nr -> (vid,vname)
         self.apiassumptions = {}          # id -> ApiAssumption
@@ -70,13 +70,6 @@ class CFunctionApi(object):
     def get_global_assignments(self):
         self._get_global_assignments()
         return self.globalassignments
-
-    def may_free_memory(self):
-        for (_,fname) in self.librarycalls:
-            if fname in memory_free_functions:
-                return True
-        else:
-            return False
 
     def get_parameters(self): return self.cfun.ftype.get_args().get_args()
 

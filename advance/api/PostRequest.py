@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ class PostRequest(CD.CDictionaryRecord):
         return self.cd.cfile.declarations.get_global_varinfo(int(self.args[0]))
 
     def get_postcondition(self):
-        return self.cd.get_postcondition(int(self.args[1]))
+        return self.cd.get_xpredicate(int(self.args[1]))
 
     def __str__(self):
         return str(self.get_callee()) + ':' + str(self.get_postcondition())

@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@ class ApiAssumption(object):
 
     def __init__(self,capi,id,predicate,ppos,spos):
         self.id = id
-        self.capi = capi
-        self.cfun = self.capi.cfun
-        self.predicate = predicate
+        self.capi = capi                # api/CFunctionAPI
+        self.cfun = self.capi.cfun      # app/CFunction
+        self.predicate = predicate      # proof/CPOPredicate
         self.ppos = ppos
         self.spos = spos
 
