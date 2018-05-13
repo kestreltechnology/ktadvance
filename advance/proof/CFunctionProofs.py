@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -69,6 +69,16 @@ class CFunctionProofs(object):
     def update_spos(self):
         self._get_spos()
         self.spos.update()
+
+    def distribute_post_guarantees(self):
+        self._get_spos()
+        self.spos.distribute_post_guarantees()
+
+    def collect_post_assumes(self):
+        """For all call sites collect postconditions from callee's contracts and add as assume."""
+
+        self._get_spos()
+        self.spos.collect_post_assumes()
 
     def reset_spos(self): self.spos = None
 

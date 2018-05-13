@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -63,6 +63,7 @@ po_predicate_constructors = {
     'ft': lambda x:PO.CPOFormatString(*x),
     'no': lambda x:PO.CPONoOverlap(*x),
     'vc': lambda x:PO.CPOValueConstraint(*x),
+    'prm': lambda x:PO.CPOPreservedAllMemory(*x),
     'pre': lambda x:PO.CPOPredicate(*x)
     }
 
@@ -82,6 +83,15 @@ class CFilePredicateDictionary(object):
     def mk_predicate_index(self,tags,args):
         def f(index,key): return po_predicate_constructors[tags[0]]((self,index,tags,args))
         return self.po_predicate_table.add(IT.get_key(tags,args),f)
+
+    def index_xpredicate(self,p,subst={}):
+        if p.is_not_null():
+            args = [ self.dictionary.index_s_term(p.get_term(),subst=subst) ]
+            tags = [ 'nn' ]
+            def f(index,key): return PO.CPONotNull(self,index,tags,args)
+            return self.po_predicate_table.add(IT.get_key(tags,args),f)
+        print('Index xpredicate missing: ' + tags[0])
+        exit(1)
 
     def index_predicate(self,p,subst={}):
         if p.is_not_null():
@@ -216,6 +226,7 @@ class CFilePredicateDictionary(object):
             def f(index,key): return PO.CPOCommonBase(self,index,p.tags,args)
             return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
         print('***** Predicate without indexing: ' + str(p))
+        exit(1)
 
     def read_xml_predicate(self,xnode,tag='ipr'):
         return self.get_predicate(int(xnode.get(tag)))

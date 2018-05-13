@@ -59,6 +59,7 @@ po_predicate_names = {
     'ft': 'format-string',
     'no': 'no-overlap',
     'vc': 'value-constraint',
+    'prm': 'preserved-all-memory',
     'pre': 'precondition' }
 
 def get_predicate_tag(name):
@@ -92,6 +93,7 @@ class CPOPredicate(CD.CDictionaryRecord):
     def is_null(self): return False
     def is_null_terminated(self): return False
     def is_pointer_cast(self): return False
+    def is_preserved_all_memory(self): return False
     def is_ptr_lower_bound(self): return False
     def is_ptr_upper_bound(self): return False
     def is_ptr_upper_bound_deref(self): return False
@@ -881,5 +883,18 @@ class CPOValueConstraint(CPOPredicate):
     def is_value_constraint(self): return True
 
     def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
+    def __str__(self): return self.get_tag()
+
+
+class CPOPreservedAllMemory(CPOPredicate):
+    '''
+    tags:
+       0: 'prm'
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def is_preserved_all_memory(self): return True
 
     def __str__(self): return self.get_tag()

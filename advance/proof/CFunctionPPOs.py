@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -65,8 +65,8 @@ class CFunctionPPOs(CFunctionPOs):
 
     def _initialize(self):
         for p in self.xnode.find('ppos').findall('ppo'):
-            id = int(p.get('id'))
             ppotype = self.cfun.podictionary.read_xml_ppo_type(p)
+            id = ppotype.index
             deps = None
             status = po_status[p.get('s','o')]
             if 'deps' in p.attrib:
@@ -98,4 +98,4 @@ class CFunctionPPOs(CFunctionPOs):
                     msgs = [ x.get('t') for x in n.findall('msg') ]
                     amsgs[arg] = msgs
                 diag = CProofDiagnostic(pinvs,pmsgs,amsgs)
-            self.ppos[id] = CFunctionPPO(self,id,ppotype,status,deps,expl,diag)
+            self.ppos[id] = CFunctionPPO(self,ppotype,status,deps,expl,diag)

@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -32,6 +32,10 @@ import advance.proof.CFunctionPO as PO
 from advance.app.CLocation import CLocation
 from advance.proof.CFunctionReturnsiteSPO import CFunctionReturnsiteSPO
 
+from advance.proof.CFunctionPO import CProofDependencies
+from advance.proof.CFunctionPO import CProofDiagnostic
+
+
 po_status = {
     'g': 'safe',
     'o': 'open',
@@ -41,11 +45,11 @@ po_status = {
 
 
 class CFunctionReturnsiteSPOs(object):
-    '''Represents the secondary proof obligations associated with a return site.
+    """Represents the secondary proof obligations associated with a return site.
 
     The secondary proof obligations at a return site are generated from the post
     expectations submitted by other functions. 
-    '''
+    """
 
     def __init__(self,cspos,xnode):
         self.cspos = cspos
@@ -53,16 +57,23 @@ class CFunctionReturnsiteSPOs(object):
         self.context = self.cfile.contexttable.read_xml_context(xnode)
         self.cfun = self.cspos.cfun
         self.location = self.cfile.declarations.read_xml_location(xnode)
-        self.returnexp = self.cfile.declarations.dictionary.read_xml_exp(xnode)
+        self.returnexp = self.cfile.declarations.dictionary.read_xml_exp_opt(xnode)
         self.spos = {}     # pcid -> CFunctionReturnsiteSPO list
         self._initialize(xnode)
 
     def get_line(self): return self.location.getline()
 
+    def update_spos(self,fcontract):
+        for pc in fcontract.postconditions.values():
+            self.add_postcondition(pc)
+
     def add_postcondition(self,postcondition):
-        pcid = self.cfun.cfile.interfacedictionary.index_postcondition(postcondition)
+        pcid = self.cfun.cfile.interfacedictionary.index_xpredicate(postcondition)
         if not pcid in self.spos:
             self.spos[pcid] = []
+            print('Index xpredicate ' + str(postcondition))
+            ipr = self.cfile.predicatedictionary.index_xpredicate(postcondition)
+            print('ipr: ' + str(ipr))
 
     def get_cfg_context_string(self): return str(self.context)
 
@@ -74,8 +85,8 @@ class CFunctionReturnsiteSPOs(object):
     def write_xml(self,cnode):
         self.cfile.declarations.write_xml_location(cnode,self.location)
         self.cfile.contexttable.write_xml_context(cnode,self.context)
-        self.cfile.declarations.dictionary.write_xml_exp(cnode,self.returnexp)
-        oonode = ET.Element('postconditions')
+        self.cfile.declarations.dictionary.write_xml_exp_opt(cnode,self.returnexp)
+        oonode = ET.Element('post-guarantees')
         for pcid in self.spos:
             pcnode = ET.Element('pc')
             pcnode.set('iipc',str(pcid))
@@ -87,7 +98,7 @@ class CFunctionReturnsiteSPOs(object):
         cnode.extend([oonode] )
 
     def _initialize(self,xnode):
-        for p in xnode.find('postconditions').findall('pc'):
+        for p in xnode.find('post-guarantees').findall('pc'):
             iipc = int(p.get('iipc'))
             self.spos[iipc] = []
             for po in p.findall('po'):
@@ -106,8 +117,18 @@ class CFunctionReturnsiteSPOs(object):
                         deps = PO.CProofDependencies(self,level,ids,invs)
                     else:
                         deps = PO.CProofDependencies(self,level)
-                expl = None
-                enode = po.find('e')
-                if not enode is None:
-                    expl = enode.get('txt')
-                self.spos[iipc].append(CFunctionReturnsiteSPO(self,spotype,status,deps,expl))
+                expl = None if po.find('e') is None else po.find('e').get('txt')
+                diag = None
+                dnode = po.find('d')
+                if not dnode is None:
+                    pinvs = {}
+                    amsgs = {}
+                    for n in dnode.find('invs').findall('arg'):
+                        pinvs[int(n.get('a'))] = [ int(x) for x in n.get('i').split(',') ]
+                    pmsgs = [ x.get('t') for x in dnode.find('msgs').findall('msg') ]
+                    for n in dnode.find('amsgs').findall('arg'):
+                        arg = int(n.get('a'))
+                        msgs = [ x.get('t') for x in n.findall('msg') ]
+                        amsgs[arg] = msgs
+                    diag = CProofDiagnostic(pinvs,pmsgs,amsgs)
+                self.spos[iipc].append(CFunctionReturnsiteSPO(self,spotype,status,deps,expl,diag))

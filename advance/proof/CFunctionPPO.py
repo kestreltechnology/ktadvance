@@ -32,7 +32,7 @@ import advance.proof.CFunctionPO as S
 class CFunctionPPO(S.CFunctionPO):
     '''Represents a primary proof obligation within a function.'''
 
-    def __init__(self,cpos,id,ppotype,status,deps,expl,diag):
+    def __init__(self,cpos,ppotype,status,deps,expl,diag):
         S.CFunctionPO.__init__(self,cpos,ppotype,status,deps,expl,diag)
 
     def is_ppo(self): return True

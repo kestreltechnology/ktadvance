@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -34,8 +34,8 @@ from advance.proof.CFunctionPO import CFunctionPO
 class CFunctionReturnsiteSPO(CFunctionPO):
     '''Represents a secondary proof obligation associated with a return site.'''
 
-    def __init__(self,crspos,potype,status='open',deps=None,expl=None):
-        CFunctionPO.__init__(self,crspos.cspos,potype,status,deps,expl)
+    def __init__(self,crspos,potype,status='open',deps=None,expl=None,diag=None):
+        CFunctionPO.__init__(self,crspos.cspos,potype,status,deps,expl,diag)
         self.crspos = crspos      # CFunctionReturnsiteSPOs
         self.external_id = self.potype.get_external_id()
 

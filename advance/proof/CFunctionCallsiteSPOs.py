@@ -33,12 +33,15 @@ import advance.util.xmlutil as UX
 
 
 from advance.app.CLocation import CLocation
+from advance.app.CFileDictionary import CKeyLookupError
+
 from advance.proof.CFunctionCallsiteSPO import CFunctionCallsiteSPO
 from advance.proof.CFunctionPO import CProofDependencies
 from advance.proof.CFunctionPO import po_status
 
+
 class CFunctionCallsiteSPOs(object):
-    '''Represents the supporting proof obligations associated with a call site.'''
+    """Represents the supporting proof obligations associated with a call site."""
 
     def __init__(self,cspos,xnode):
         self.cspos = cspos
@@ -46,14 +49,17 @@ class CFunctionCallsiteSPOs(object):
         self.context = self.cfile.contexttable.read_xml_context(xnode)
         self.cfun = self.cspos.cfun
         self.location = self.cfile.declarations.read_xml_location(xnode)
+        # direct call
         if 'ivinfo' in xnode.attrib:
             self.callee = self.cfile.declarations.read_xml_varinfo(xnode)
         else:
             self.callee = None
+        # indirect call
         if 'iexp' in xnode.attrib:
             self.callee_exp = self.cfile.declarations.dictionary.read_xml_exp(xnode)
         else:
             self.callee_exp = None
+        # resolved targets from indirect call
         if 'icallees' in xnode.attrib:
             self.icallees = xnode.get('icallees')
             self.callees = [ self.cfile.declarations.get_varinfo(int(i))
@@ -61,10 +67,13 @@ class CFunctionCallsiteSPOs(object):
         else:
             self.icallees = None
             self.callees = None
-        self.spos = {}             # api-id -> CFunctionCallsiteSPO
-        self.postguarantees = {}
+
+        # supporting proof obligations and post condition assumptions
+        self.spos = {}                  # api-id -> CFunctionCallsiteSPO
+        self.postassumes = []           # xpredicate id's
+
+        # arguments to the call
         self.iargs = xnode.get('iargs')
-        self.mayfreememory = True
         if self.iargs == "":
             self.args = []
         else:
@@ -82,24 +91,20 @@ class CFunctionCallsiteSPOs(object):
 
     def get_cfg_context_string(self): return str(self.context)
 
-    def may_free_memory(self):
-        if not self.has_callee():
-            return True
-        cfile = self.cfile
-        calleefun = cfile.capp.resolve_vid_function(cfile.index,self.callee.get_vid())
-        if calleefun is None:
-            return True
-        return calleefun.mayfreememory
-
     def update(self):
+        """Update the spo's associated with the call site."""
+
         if not self.has_callee(): return
+
+        # retrieve callee information
         cfile = self.cfile
         calleefun = cfile.capp.resolve_vid_function(cfile.index,self.callee.get_vid())
         if calleefun is None:
             logging.warning('Missing external function in ' + self.cfile.name + ' - ' +
                                 self.cfun.name + ': ' + str(self.callee))
             return
-        self.mayfreememory = calleefun.may_free_memory()
+
+        # retrieve callee's api assumptions and substitute parameters by arguments
         api = calleefun.get_api()
         if len(api.get_api_assumptions()) > 0:
             pars = api.get_parameters()
@@ -118,28 +123,63 @@ class CFunctionCallsiteSPOs(object):
                 print('*' * 80)
                 return
             for a in api.get_api_assumptions():
+                if a.id in self.spos: continue
                 try:
                     pid = self.cfile.predicatedictionary.index_predicate(a.predicate,subst=subst)
                     apiid = a.id
-                    if not apiid in self.spos:
-                        self.spos[apiid] = []
-                        ictxt = self.cfile.contexttable.index_context(self.context)
-                        iloc = self.cfile.declarations.index_location(self.location)
-                        ispotype = self.cfun.podictionary.index_spo_type(['cs'],[iloc,ictxt,pid,apiid])
-                        spotype = self.cfun.podictionary.get_spo_type(ispotype)
-                        self.spos[apiid].append(CFunctionCallsiteSPO(self,spotype))
-                except:
+                    self.spos[apiid] = []
+                    ictxt = self.cfile.contexttable.index_context(self.context)
+                    iloc = self.cfile.declarations.index_location(self.location)
+                    ispotype = self.cfun.podictionary.index_spo_type(['cs'],[iloc,ictxt,pid,apiid])
+                    spotype = self.cfun.podictionary.get_spo_type(ispotype)
+                    self.spos[apiid].append(CFunctionCallsiteSPO(self,spotype))
+                except CKeyLookupError as e:
+                    print('Key not found')
+                    if calleefun.cfile.has_file_candidate_contracts():
+                        calleecfilecontracts = calleefun.cfile.contracts
+                        if calleecfilecontracts.has_function_contract(calleefun.name):
+                            calleefuncontract = calleecfilecontracts.get_function_contract(calleefun.name)
+                            calleefuncontract.add_datastructure_request(e.ckey,a.predicate)
+                            print('request datastructure condition for ' + str(a.predicate)
+                                    + ' for ckey ' + str(e.ckey))
+                    else:
+                        print('*' * 80)
+                        print('******** Warning: Unable to create spo for assumption ')
+                        print(str(a))
+                        print('from function ' + calleefun.name + ' in file '
+                                + calleefun.cfile.name)
+                        print('No contract found')
+                        print(str(e))
+                        print('*' * 80)
+                except Exception as e:
                     print('*' * 80)
                     print('******** Warning: Unable to create spo for assumption ')
                     print(str(a))
                     print('from function ' + calleefun.name + ' in file '
                               + calleefun.cfile.name)
+                    print(str(e))
                     print('*' * 80)
-                    
-        for g in api.get_postcondition_guarantees():
-            iipc = self.cfile.interfacedictionary.index_postcondition(g)
-            if not iipc in self.postguarantees:
-                self.postguarantees[iipc] = g
+
+
+    def collect_post_assumes(self):
+        """Collect postconditions from callee's contract and add as assume."""
+
+        if not self.has_callee(): return
+        # retrieve callee information
+        cfile = self.cfile
+        calleefun = cfile.capp.resolve_vid_function(cfile.index,self.callee.get_vid())
+        if calleefun is None: return
+
+        # retrieve postconditions from the contract of the callee
+        if calleefun.cfile.has_function_contract(calleefun.name):
+            fcontract = calleefun.cfile.get_function_contract(calleefun.name)
+            for p in fcontract.postconditions.values():
+                iipc = self.cfile.interfacedictionary.index_xpredicate(p)
+                if not iipc in self.postassumes:
+                    self.postassumes.append(iipc)
+        else:
+            print('No contract found for ' + calleefun.name)
+
 
     def get_context_string(self): return self.context.context_strings()
 
@@ -154,23 +194,22 @@ class CFunctionCallsiteSPOs(object):
 
     def has_spo(self,id): return id in self.spos
 
-    def get_spo(self,id):
-        if id in self.spos:
-            return self.spos[id]
-
     def write_xml(self,cnode):
+        # write location
         self.cfile.declarations.write_xml_location(cnode,self.location)
         self.cfile.contexttable.write_xml_context(cnode,self.context)
+
+        # write information about the callee
         if not self.callee is None:
             self.cfile.declarations.write_xml_varinfo(cnode,self.callee)
             calleefun = self.cfile.capp.resolve_vid_function(self.cfile.index,self.callee.get_vid())
-            if not calleefun is None:
-                self.mayfreememory = calleefun.may_free_memory()
         if not self.callee_exp is None:
             self.cfile.declarations.dictionary.write_xml_exp(cnode,self.callee_exp)
         if not self.icallees is None:
             cnode.set('icallees',self.icallees)
         cnode.set('iargs',self.iargs)
+
+        # write api assumptions associated with the callee at the call site
         oonode = ET.Element('api-conditions')
         for apiid in self.spos:
             apinode = ET.Element('api-c')
@@ -180,19 +219,18 @@ class CFunctionCallsiteSPOs(object):
                 spo.write_xml(onode)
                 apinode.append(onode)
             oonode.append(apinode)
-        ggnode = ET.Element('post-guarantees')
-        for g in self.postguarantees.values():
-            gnode = ET.Element('pg')
-            self.cfile.interfacedictionary.write_xml_postcondition(gnode,g)
-            ggnode.append(gnode)
-        ffnode = ET.Element('frees')
-        if self.mayfreememory:
-            ffnode.set('v','yes')
-        else:
-            ffnode.set('v','no')
-        cnode.extend([oonode, ggnode, ffnode] )
+        cnode.append(oonode)
+
+        # write assumptions about the post conditions of the callee
+        if len(self.postassumes) > 0:
+            print('Post assumes for ' + self.cfun.name + ': ' + str(self.postassumes))
+            panode = ET.Element('post-assumes')
+            panode.set('iipcs',','.join([ str(i) for i in sorted(self.postassumes) ]))
+            cnode.append(panode)
+
 
     def _initialize(self,xnode):
+        # read in api assumptions associated with the call site
         oonode = xnode.find('api-conditions')
         if not oonode is None:
             for p in oonode.findall('api-c'):
@@ -223,10 +261,9 @@ class CFunctionCallsiteSPOs(object):
                     if not dnode is None:
                         diag = dnode.get('txt')
                     self.spos[apiid].append(CFunctionCallsiteSPO(self,spotype,status,deps,expl,diag))
-        ggnode = xnode.find('post-guarantees')
-        if not ggnode is None:
-            for p in ggnode.findall('pg'):
-                g = self.cfile.interfacedictionary.read_xml_postcondition(p)
-                ig = self.cfile.interfacedictionary.index_postcondition(g)
-                self.postguarantees[ig] = g
-        self.mayfreememory = xnode.find('frees').get('v') == 'yes'
+
+        # read in assumptions about the post conditions of the callee
+        ppnode = xnode.find('post-assumes')
+        if not ppnode is None:
+            self.postassumes = [ int(x) for x in ppnode.get('iipcs').split(',') ]
+

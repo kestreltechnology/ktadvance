@@ -28,7 +28,7 @@
 from advance.util.IndexedTable import IndexedTableError
 
 class POTypeDictionaryRecord(object):
-    '''Base class for proof obligation types in the PODictionary.'''
+    """Base class for proof obligation types in the PODictionary."""
 
     def __init__(self,pod,index,tags,args):
         self.pod = pod
@@ -71,7 +71,7 @@ class PPOType(POTypeDictionaryRecord):
         return ('ppo(' + str(self.get_location()) + ',' + str(self.get_context())
                     + ',' + str(self.get_predicate()) + ')')
 
-def PPOLibType(POTypeDictionaryRecord):
+class PPOLibType(POTypeDictionaryRecord):
 
     def __init__(self,pod,index,tags,args):
         POTypeDictionaryRecord.__init__(self,pod,index,tags,args)
@@ -122,7 +122,7 @@ class ReturnsiteSPOType(POTypeDictionaryRecord):
 
     def get_predicate(self): return self.pd.get_predicate(int(self.args[2]))
 
-    def get_postcondition(self): return self.id.get_postcondition(int(self.args[3]))
+    def get_postcondition(self): return self.id.get_xpredicate(int(self.args[3]))
 
     def get_external_id(self): return int(self.args[3])
 

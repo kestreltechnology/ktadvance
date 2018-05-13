@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -51,12 +51,16 @@ class CFunctionSPOs(CFunctionPOs):
         for r in self.returnsitespos.values():
             r.add_postcondition(postcondition)
 
-    def get_new_id(self):
-        self.spocounter += 1
-        return self.spocounter
-
     def update(self):
         for cs in self.callsitespos.values(): cs.update()
+
+    def collect_post_assumes(self):
+        """for all call sites collect postconditions from callee's contracts and add as assume."""
+
+        for cs in self.callsitespos.values(): cs.collect_post_assumes()
+
+    def distribute_post_guarantees(self):
+        for cs in self.callsitespos.values(): cs.distribute_post_guarantees()
 
     def get_spo(self,id):
         for cs in self.callsitespos.values():
