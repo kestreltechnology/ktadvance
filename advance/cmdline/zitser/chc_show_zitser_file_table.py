@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +33,7 @@ import advance.util.fileutil as UF
 import advance.reporting.DictionaryTables as DT
 
 from advance.app.CApplication import CApplication
+from advance.app.CApplication import CFileNotFoundException
 
 
 def parse():
@@ -53,16 +54,20 @@ if __name__ == '__main__':
         print(UP.cpath_not_found_err_msg(cpath))
         exit(1)
 
-    if not os.path.isfile(os.path.join(cpath,args.cfile)):
-        print(UP.cfile_not_found_err_msg(cpath,args.cfile))
-        exit(1)
-
     sempath = os.path.join(cpath,'semantics')
     if not os.path.isdir(sempath):
         print(UP.semantics_not_found_err_msg(cpath))
         exit(1)
         
     cfapp = CApplication(sempath,args.cfile)
+
+    try:
+        cfapp = CApplication(sempath,args.cfile)
+        cfile = cfapp.get_cfile()
+    except CFileNotFoundException as e:
+        print(str(e))
+        exit(1)
+
     cfile = cfapp.get_cfile()
 
     print(DT.get_file_table(cfile,args.tablename))

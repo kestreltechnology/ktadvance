@@ -31,6 +31,8 @@ import time
 import os
 import subprocess
 
+from contextlib import contextmanager
+
 import advance.util.fileutil as UF
 import advance.util.printutil as UP
 
@@ -56,8 +58,17 @@ def parse():
     parser.add_argument('--wordsize',
                         help='wordsize of target platform (e.g., 32 or 64)',
                         type=int, default=32)
+    parser.add_argument('--contractpath',help='path to save the contracts file',default=None)
     args = parser.parse_args()
     return args
+
+@contextmanager
+def timing(activity):
+    t0 = time.time()
+    yield
+    print('\n' + ('=' * 80) + 
+          '\nCompleted ' + activity + ' in ' + str(time.time() - t0) + ' secs' +
+          '\n' + ('=' * 80))
 
 def save_xrefs(f):
     capp.indexmanager.save_xrefs(capp.path,f.name,f.index)
@@ -79,13 +90,18 @@ if __name__ == '__main__':
         exit(1)
         
     sempath = os.path.join(cpath,'semantics')
-    #if (not os.path.isdir(sempath)) or args.deletesemantics:
+
     success = UF.unpack_tar_file(cpath,True)
     if not success:
         print(UP.semantics_tar_not_found_err_msg(cpath))
         exit(1)
 
-    capp = CApplication(sempath)
+    if args.contractpath is None:
+        contractpath = os.path.join(cpath,'ktacontracts')
+    else:
+        contractpath = args.contractpath
+
+    capp = CApplication(sempath,contractpath=contractpath)
 
     # check linkinfo
     globaldefs = os.path.join(sempath,os.path.join('ktadvance','globaldefinitions.xml'))
@@ -98,7 +114,7 @@ if __name__ == '__main__':
         linker.save_global_compinfos()
 
     # have to reinitialized capp to get linking info properly initialized
-    capp = CApplication(sempath)
+    capp = CApplication(sempath,contractpath=contractpath)
 
     filecounts = {}
     def f(cfile):
@@ -108,17 +124,19 @@ if __name__ == '__main__':
     
     am = AnalysisManager(capp,verbose=args.verbose,wordsize=args.wordsize)
 
-    am.create_app_primary_proofobligations()
-    capp.iter_files(lambda f:f.reinitialize_tables())
-    
-    # xuserdata = UF.get_zitser_globaluserfile_xnode(args.path)
-    # userdata = UserData(xuserdata,capp)
-    # print(str(userdata))
-    # userdata.distribute()
-   
-    for i in range(3):
-        am.generate_and_check_app('llvisrp')
+    with timing('analysis'):
 
-    for i in range(args.analysisrounds):
-        capp.update_spos()
-        am.generate_and_check_app('llvisrp')
+        am.create_app_primary_proofobligations()
+        capp.iter_files(lambda f:f.reinitialize_tables())
+
+        for i in range(2):
+            am.generate_and_check_app('llvisrp')
+            capp.reinitialize_tables()
+            capp.collect_post_assumes()
+
+
+        for i in range(args.analysisrounds):
+            capp.reinitialize_tables()
+            capp.update_spos()
+            am.generate_and_check_app('llvisrp')
+

@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@
 # ------------------------------------------------------------------------------
 
 import os
+import time
 
 import advance.util.fileutil as UF
 import advance.reporting.ProofObligations as RP
@@ -35,39 +36,92 @@ from advance.app.CApplication import CApplication
 testcases = [ 'id' + str(i) for i in range(1283,1311) ]
 
 if __name__ == '__main__':
-    
-    missing = []
 
-    print('~' * 80)
-    print('Zitser test cases: ' + testcases[0] + ' - ' + testcases[-1])
-    print('~' * 80)
-    print('\nPrimary proof obligations\n')
+    projectstats = {}   # project -> (linecount, clinecount, cfuncount)
 
-    allppos = []
-    allspos = []
+    ppoprojecttotals = {}   # project -> dm -> dmtotal
+    spoprojecttotals = {}
+    ppotagtotals = {}       # tag -> dm -> dmtotal
+    spotagtotals = {}
+    nosummary = []
+    analysistimes = {}
 
-    sumppos = {}
-    sumspos = {}
-    for t in sorted(testcases):
-        cpath = UF.get_zitser_testpath(t)
-        sempath = os.path.join(cpath,'semantics')
-        if not os.path.isdir(sempath):
-            missing.append(t)
+    dsmethods = RP.get_dsmethods([])
+
+    for p in testcases:
+        path = UF.get_zitser_testpath(p)
+        results = UF.read_project_summary_results(path)
+        if results is None:
+            nosummary.append(p)
             continue
-        capp = CApplication(sempath)
-        ppos = capp.get_ppos()
-        spos = capp.get_spos()
-        allppos.extend(ppos)
-        allspos.extend(spos)
-        sumppos[t] = RP.get_method_count(ppos)
-        sumspos[t] = RP.get_method_count(spos)
+        pd = results
+        try:
+            ppod = pd['tagresults']['ppos']
+            spod = pd['tagresults']['spos']
+            ppoprojecttotals[p] = {}
+            spoprojecttotals[p] = {}
+        except:
+            print('Problem with ' + str(p))
+            continue
+        if 'stats' in pd:
+            projectstats[p] = pd['stats']
+            analysistimes[p] = pd['timestamp']
+        else:
+            projectstats[p] = (0,0,0)
 
-    print(RP.row_method_count_tostring(sumppos,perc=True,header1='zitser testcase'))
-    print('\nSecondary proof obligations\n')
-    print(RP.row_method_count_tostring(sumspos,perc=True,header1='zitser testcase'))
+        for t in ppod:
+            if not t in ppotagtotals: ppotagtotals[t] = {}
+            for dm in ppod[t]:
+                if not dm in ppotagtotals[t]: ppotagtotals[t][dm] = 0
+                ppotagtotals[t][dm] += ppod[t][dm]
+        for dm in dsmethods:
+            ppoprojecttotals[p][dm] = sum([ppod[t][dm] for t in ppod])
+        for t in spod:
+            if not t in spotagtotals: spotagtotals[t] = {}
+            for dm in spod[t]:
+                if not dm in spotagtotals[t]: spotagtotals[t][dm] = 0
+                spotagtotals[t][dm] += spod[t][dm]
+        for dm in dsmethods:
+            spoprojecttotals[p][dm] = sum([spod[t][dm] for t in spod])
 
-    print('\nProof obligation types')
-    print('\nPrimary proof obligations')
-    print(RP.row_method_count_tostring(RP.get_tag_method_count(allppos),perc=True))
-    print('\nSecondary proof obligations')
-    print(RP.row_method_count_tostring(RP.get_tag_method_count(allspos),perc=True))
+
+    print('Primary Proof Obligations')
+    print('\n'.join(RP.totals_to_string(ppoprojecttotals)))
+    print('\nPrimary Proof Obligations (in percentages)')
+    print('\n'.join(RP.totals_to_string(ppoprojecttotals,False)))
+    print('\nSupporting Proof Obligations')
+    print('\n'.join(RP.totals_to_string(spoprojecttotals)))
+    print('\nSupporting Proof Obligations (in percentages)')
+    print('\n'.join(RP.totals_to_string(spoprojecttotals,False)))
+
+    print('\n\nPrimary Proof Obligations')
+    print('\n'.join(RP.totals_to_string(ppotagtotals)))
+    print('\nSupporting Proof Obligations')
+    print('\n'.join(RP.totals_to_string(spotagtotals)))
+
+    if len(nosummary) > 0:
+        print('\n\nNo summary results found for:')
+        print('-' * 28)
+        for p in nosummary:
+            print('  ' + p)
+            print('-' * 28)
+
+    print('\n\nProject statistics:')
+    print('analysis time'.ljust(16) + '  ' +  'project'.ljust(28)
+              +  'LOC '.rjust(10) + 'CLOC '.rjust(10)
+              + 'functions'.rjust(10))
+    print('-' * 80)
+    lctotal = 0
+    clctotal = 0
+    fctotal = 0
+    for p in sorted(analysistimes,key=lambda p:analysistimes[p]):
+        (lc,clc,fc) = projectstats[p]
+        lctotal += lc
+        clctotal += clc
+        fctotal += fc
+        print(time.strftime('%Y-%m-%d %H:%M',time.localtime(analysistimes[p]))
+                  + '  ' + p.ljust(28) + str(lc).rjust(10) + str(clc).rjust(10)
+                  + str(fc).rjust(10))
+    print('-' * 80)
+    print('Total'.ljust(46) + str(lctotal).rjust(10) + str(clctotal).rjust(10)
+              + str(fctotal).rjust(10))
