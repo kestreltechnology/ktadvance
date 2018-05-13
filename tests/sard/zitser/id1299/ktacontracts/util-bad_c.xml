@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-05-10 15:16:19.572940"/>
+  <cfile name="util-bad">
+    <data-structures/>
+    <functions>
+      <function name="buildfname">
+        <parameters>
+          <par name="gecos" nr="1"/>
+          <par name="login" nr="2"/>
+          <par name="buf" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="xalloc">
+        <parameters>
+          <par name="sz" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><not-null/><return/></apply></math></post>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
