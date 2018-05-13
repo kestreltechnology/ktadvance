@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -82,15 +82,15 @@ from advance.cmdline.kendra.TestResults import TestResults
 from advance.cmdline.kendra.TestSetRef import TestSetRef
 
 class TestManager(object):
-    '''Provides utility functions to support regression and platform tests.
-    
+    """Provide utility functions to support regression and platform tests.
+
     Args:
         cpath: directory that holds the source code
         tgtpath: directory that holds the ktadvance directory
         testname: name of the test directory
         saveref: adds missing ppos to functions in the json spec file and 
                  overwrites the json file with the result
-    '''
+    """
 
     def __init__(self,cpath,tgtpath,testname,saveref=False,verbose=True):
         self.cpath = cpath
@@ -99,14 +99,14 @@ class TestManager(object):
         self.config = Config()
         self.ismac = self.config.platform == 'mac'
         self.verbose = verbose
+        self.contractpath = os.path.join(self.cpath,'ktacontracts')
         self.parsemanager = ParseManager(self.cpath,self.tgtpath,verbose=self.verbose)
-        self.sempath = self.parsemanager.get_sempath()
-        self.tgtxpath = self.parsemanager.get_tgt_xpath()
-        self.tgtspath = self.parsemanager.get_tgt_spath()
+        self.sempath = self.parsemanager.sempath
+        self.tgtxpath = self.parsemanager.tgtxpath
+        self.tgtspath = self.parsemanager.tgtspath
         testfilename = os.path.join(self.cpath,testname + '.json')
         self.testsetref = TestSetRef(testfilename)
         self.testresults = TestResults(self.testsetref)
-        self.proofcheckcount = 0   # used to decide when to switch on post delegation
 
     def get_test_results(self): return self.testresults
 
@@ -115,8 +115,17 @@ class TestManager(object):
     def print_test_results_summary(self): print(str(self.testresults.get_summary()))
  
     def test_parser(self,savesemantics=False):
+        """Parse the source code and optionally save the semantics files in a tar file.
+
+        Check if the required semantic artifacts are produced for all files and functions.
+
+        Note: if the test set is labeled as linux-only and this is run on a mac, no 
+            parsing is performed.
+        """
+
         if self.ismac and self.testsetref.is_linux_only():
             return False
+        
         self.testresults.set_parsing()
         self.clean()
         self.parsemanager.initialize_paths()
@@ -145,11 +154,16 @@ class TestManager(object):
         return True
 
     def check_ppos(self,cfilename,cfun,ppos,refppos):
+        """Check if all required primary proof obligations are created."""
+
         d = {}
+        # collect ppos produced
         for ppo in ppos:
             context = ppo.get_context_strings()
             if not context in d: d[context] = []
             d[context].append(ppo.get_predicate_tag())
+
+        # compare with reference ppos
         for ppo in refppos:
             p = ppo.get_predicate()
             context = ppo.get_context_string()
@@ -165,8 +179,10 @@ class TestManager(object):
                     self.testresults.add_missing_ppo(cfilename,cfun,context,p)
                     raise FunctionPPOError(
                         cfilename + ':' + cfun + ':' + str(context) + ':' + p)
-                
+
     def create_reference_ppos(self,cfilename,fname,ppos):
+        """Create reference ppos from actual analysis results."""
+
         result = []
         for ppo in ppos:
             ctxt = ppo.context
@@ -181,6 +197,8 @@ class TestManager(object):
         self.testsetref.set_ppos(cfilename,fname,result)
 
     def create_reference_spos(self,cfilename,fname,spos):
+        """Create reference spos from actual analysis results."""
+
         result = []
         if len(spos) > 0:
             for spo in spos:
@@ -193,6 +211,8 @@ class TestManager(object):
             self.testsetref.set_spos(cfilename,fname,result)
 
     def test_ppos(self):
+        """Create primary proof obligations and check if created as expected."""
+
         if not os.path.isfile(self.config.canalyzer):
             raise AnalyzerMissingError(self.config.canalyzer)
         self.testresults.set_ppos()
@@ -203,7 +223,7 @@ class TestManager(object):
                 creffilefilename = UF.get_cfile_filename(self.tgtxpath,creffilename)
                 if not os.path.isfile(creffilefilename):
                     raise XmlFileNotFoundError(creffilefilename)
-                capp = CApplication(self.sempath,cfilename=creffilename)
+                capp = CApplication(self.sempath,cfilename=creffilename,contractpath=self.contractpath)
                 am = AnalysisManager(capp,onefile=True,verbose=self.verbose)
                 am.create_file_primary_proofobligations(creffilename)
                 cfile = capp.get_single_file()
@@ -236,26 +256,35 @@ class TestManager(object):
             exit()
 
     def check_spos(self,cfilename,cfun,spos,refspos):
+        """Check if spos created match reference spos."""
+
         d = {}
+        # collect spos produced
         for spo in spos:
             context = spo.cfg_context_string
             if not context in d: d[context] = []
             d[context].append(spo.predicatetag)
+
+        # compare with reference spos
         for spo in refspos:
             context = spo.get_context()
             if not context in d:
+                p = spo.get_predicate()
                 self.testresults.add_missing_spo(cfilename,cfun,context,p)
                 for c in d:
                     if self.verbose: print(str(c))
-                raise FunctionSPOError(cfilename + ':' + cfun + ':' + ' Missing spo: ' + str(context))
+                raise FunctionSPOError(cfilename + ':' + cfun + ':' + ' Missing spo: '
+                                           + str(context) + ' (' + str(d) + ')')
             else:
                 p = spo.get_predicate()
                 if not p in d[context]:
                     self.testresults.add_missing_spo(cfilename,cfun,context,p)
                     raise FunctionSPOError(
-                        cfilename + ':' + cfun + ':' + str(context) + ':' + p)
+                        cfilename + ':' + cfun + ':' + str(context) + ':' + p + str(d[context]))
 
     def test_spos(self,delaytest=False):
+        """Run analysis and check if all expected spos are created."""
+
         try:
             for creffile in self.get_cref_files():
                 self.testresults.set_spos()
@@ -263,17 +292,10 @@ class TestManager(object):
                 cfilefilename = UF.get_cfile_filename(self.tgtxpath,cfilename)
                 if not os.path.isfile(cfilefilename):
                     raise XmlFileNotFoundError(xfilefilename)
-                cappfile = CApplication(self.sempath,cfilename=cfilename).get_single_file()
-                def f(fn):
-                    fn.update_spos()
-                    fn.request_postconditions()
-                cappfile.iter_functions(f)
-                def g(fn):
-                    fn.save_spos()
-                    fn.save_pod()
-                cappfile.iter_functions(g)
-                cappfile.save_predicate_dictionary()
-                cappfile.save_declarations()
+                capp = CApplication(self.sempath,cfilename=cfilename,contractpath=self.contractpath)
+                cappfile = capp.get_single_file()
+                capp.update_spos()
+                capp.collect_post_assumes()
                 spos = cappfile.get_spos()
                 if delaytest: continue
                 for cfun in creffile.get_functions():
@@ -309,8 +331,11 @@ class TestManager(object):
             exit()
 
     def check_ppo_proofs(self,cfilename,cfun,funppos,refppos):
+        """Check if ppo analysis results match the expected results."""
+
         d = {}
         fname = cfun.name
+        # collect actual analysis results
         for ppo in funppos:
             context = ppo.get_context_strings()
             if not context in d: d[context] = {}
@@ -323,6 +348,8 @@ class TestManager(object):
                 status = ppo.status
                 if ppo.is_delegated(): status += ':delegated'
                 d[context][p] = status
+
+        # compare with reference results
         for ppo in refppos:
             context = ppo.get_context_string()
             p = ppo.get_predicate()
@@ -335,25 +362,27 @@ class TestManager(object):
                         cfilename,cfun,ppo,d[context][p])
 
     def test_ppo_proofs(self,delaytest=False):
+        """Run analysis and check if analysis results match expected results.
+
+        Skip checking results if delaytest is true.
+        """
+
         if not os.path.isfile(self.config.canalyzer):
             raise AnalyzerMissingError(self.config.canalyzer)
+        
         self.testresults.set_pevs()
         for creffile in self.get_cref_files():
             cfilename = creffile.name
             cfilefilename = UF.get_cfile_filename(self.tgtxpath,cfilename)
             if not os.path.isfile(cfilefilename):
                 raise XmlFileNotFoundError(cfilefilename)
-            capp = CApplication(self.sempath,cfilename=cfilename)
+            capp = CApplication(self.sempath,cfilename=cfilename,contractpath=self.contractpath)
+            cfile = capp.get_single_file()
             # only generate invariants if required
             if creffile.has_domains():
                 for d in creffile.get_domains():
-                    delegate_to_post = self.proofcheckcount > 200
-                    am = AnalysisManager(capp,onefile=True,verbose=self.verbose,
-                                             delegate_to_post=delegate_to_post)
-                    am.generate_file_local_invariants(cfilename,d)
-                    am.check_file_proofobligations(cfilename)
-                self.proofcheckcount += 1
-            cfile = capp.get_single_file()
+                    am = AnalysisManager(capp,onefile=True,verbose=self.verbose)
+                    am.generate_and_check_file(cfilename,d)
             cfile.reinitialize_tables()
             ppos = cfile.get_ppos()
             if delaytest: continue
@@ -363,7 +392,9 @@ class TestManager(object):
                 refppos = cfun.get_ppos()
                 self.check_ppo_proofs(cfilename,cfun,funppos,refppos)
 
-    def check_sevs(self,cfilename,cfun,funspos,refspos):
+    def check_spo_proofs(self,cfilename,cfun,funspos,refspos):
+        """Check if spo analysis results match the expected results."""
+
         d = {}
         fname = cfun.name
         for spo in funspos:
@@ -389,31 +420,32 @@ class TestManager(object):
                     self.testresults.add_sev_discrepancy(
                         cfilename,cfun,spo,d[context][p])
                     
-    def test_sevs(self,delaytest=False):
+    def test_spo_proofs(self,delaytest=False):
+        """Run analysis and check if the analysis results match the expected results.
+
+        Skip the checking if delaytest is True.
+        """
+
         self.testresults.set_sevs()
         for creffile in self.get_cref_files():
-                creffilename = creffile.name
-                cfilefilename = UF.get_cfile_filename(self.tgtxpath,creffilename)
-                if not os.path.isfile(cfilefilename):
-                    raise XmlFileNotFoundError(cfilefilename)
-                capp = CApplication(self.sempath,cfilename=creffilename)
-                cappfile = capp.get_single_file()
-                cappfile.reinitialize_tables()
-                if creffile.has_domains():
-                    for d in creffile.get_domains():
-                        delegate_to_post = self.proofcheckcount > 200
-                        am = AnalysisManager(capp,onefile=True,verbose=self.verbose,
-                                                 delegate_to_post=delegate_to_post)
-                        am.generate_file_local_invariants(creffilename,d)
-                        am.check_file_proofobligations(creffilename)
-                    self.proofcheckcount += 1    
-                spos = cappfile.get_spos()
-                if delaytest: continue
-                for cfun in creffile.get_functions():
-                    fname = cfun.name
-                    funspos = [ spo for spo in spos if spo.cfun.name == fname ]
-                    refspos = cfun.get_spos()
-                    self.check_sevs(creffilename,cfun,funspos,refspos)
+            creffilename = creffile.name
+            cfilefilename = UF.get_cfile_filename(self.tgtxpath,creffilename)
+            if not os.path.isfile(cfilefilename):
+                raise XmlFileNotFoundError(cfilefilename)
+            capp = CApplication(self.sempath,cfilename=creffilename,contractpath=self.contractpath)
+            cappfile = capp.get_single_file()
+            if creffile.has_domains():
+                for d in creffile.get_domains():
+                    am = AnalysisManager(capp,onefile=True,verbose=self.verbose)
+                    am.generate_and_check_file(creffilename,d)
+            cappfile.reinitialize_tables()
+            spos = cappfile.get_spos()
+            if delaytest: continue
+            for cfun in creffile.get_functions():
+                fname = cfun.name
+                funspos = [ spo for spo in spos if spo.cfun.name == fname ]
+                refspos = cfun.get_spos()
+                self.check_spo_proofs(creffilename,cfun,funspos,refspos)
                     
 
     def get_cref_filenames(self): return self.testsetref.get_cfilenames()
@@ -423,6 +455,8 @@ class TestManager(object):
     def get_cref_file(self,cfilename): self.testsetref.get_cfile(cfilename)
 
     def clean(self):
+        """Remove semantics directory and .i files."""
+
         for cfilename in self.get_cref_filenames():
             cfilename = os.path.join(self.cpath,cfilename)[:-2] + '.i'
             if os.path.isfile(cfilename):
@@ -433,12 +467,12 @@ class TestManager(object):
             shutil.rmtree(self.sempath)
 
     def xcfile_exists(self,cfilename):
-        '''Checks existence of xml file for cfilename.'''
+        """Checks existence of xml file for cfilename."""
         xfilename = UF.get_cfile_filename(self.tgtxpath,cfilename)
         return os.path.isfile(xfilename)
 
     def xffile_exists(self,cfilename,funname):
-        '''Checks existence of xml file for function funname in cfilename.'''
+        """Checks existence of xml file for function funname in cfilename."""
         xfilename = UF.get_cfun_filename(self.tgtxpath,cfilename,funname)
         return os.path.isfile(xfilename)
 
