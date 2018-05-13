@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-05-12 00:12:51.843034"/>
+  <cfile name="ars">
+    <data-structures/>
+    <functions>
+      <function name="ars_bsd_fix">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="packet" nr="2"/>
+          <par name="size" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_set_flags">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="layer" nr="2"/>
+          <par name="flags" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_relative_size">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="layer_nr" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_send">
+        <parameters>
+          <par name="s" nr="1"/>
+          <par name="pkt" nr="2"/>
+          <par name="sa" nr="3"/>
+          <par name="slen" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_init">
+        <parameters>
+          <par name="pkt" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_resolve">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="dest" nr="2"/>
+          <par name="hostname" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_destroy">
+        <parameters>
+          <par name="pkt" nr="1"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="ars_nospace">
+        <parameters>
+          <par name="pkt" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_set_error">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="fmt" nr="2"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="ars_add_generic">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="type" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_valid_layer">
+        <parameters>
+          <par name="layer" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_compiler_ip">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="layer" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_add_iphdr">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="unused" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_compiler_ipopt">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="layer" nr="2"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="ars_add_ipopt">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="option" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_compiler_tcp">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="layer" nr="2"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="ars_add_udphdr">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="unused" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_compiler_tcpopt">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="layer" nr="2"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="ars_remove_layer">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="layer" nr="2"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="ars_compiler_udp">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="layer" nr="2"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="ars_add_tcpopt">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="option" nr="2"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="ars_compiler_icmp">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="layer" nr="2"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="ars_add_icmphdr">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="unused" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_compiler_igrp">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="layer" nr="2"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="ars_compiler_abort">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="layer" nr="2"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="ars_add_igrphdr">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="unused" nr="2"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="ars_add_igrpentry">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="unused" nr="2"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="ars_add_data">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="size" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_add_tcphdr">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="unused" nr="2"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="ars_packet_size">
+        <parameters>
+          <par name="pkt" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_set_default">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="layer_type" nr="2"/>
+          <par name="def" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_cksum">
+        <parameters>
+          <par name="vbuf" nr="1"/>
+          <par name="nbytes" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_multi_cksum">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="op" nr="2"/>
+          <par name="vbuf" nr="3"/>
+          <par name="nbytes" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_compile">
+        <parameters>
+          <par name="pkt" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_udptcp_cksum">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="layer" nr="2"/>
+          <par name="sum" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_open_rawsocket">
+        <parameters>
+          <par name="pkt" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ars_build_packet">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="packet" nr="2"/>
+          <par name="size" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
