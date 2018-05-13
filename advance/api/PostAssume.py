@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,46 +27,17 @@
 
 import advance.app.CDictionaryRecord as CD
 
-class LVProperty(CD.CDictionaryRecord):
-
-    def __init__(self,id,index,tags,args):
-        CD.CDictionaryRecord.__init__(self,cd,index,tags,args)
-
-    def is_not_null(self): return False
-    def is_initialized(self): return False
-
-    def __str__(self): return 'lv-property ' + self.tags[0]
-
-
-class LVNotNull(LVProperty):
-
-    def __init__(self,id,index,tags,args):
-        CD.CDictionaryRecord.__init__(self,id,index,tags,args)
-
-    def is_not_null(self): return True
-
-    def get_comment(self): return self.cd.dictionary.get_string(args[0])
-
-    def __str__(self): return 'not-null: ' + self.get_comment()
-
-class LVInitialized(LVProperty):
-
-    def __init__(self,id,index,tags,args):
-        CD.CDictionaryRecord.__init__(self,id,index,tags,args)
-
-    def is_not_null(self): return True
-
-    def get_comment(self): return self.cd.dictionary.get_string(args[0])
-
-    def __str__(self): return 'not-null: ' + self.get_comment()
-
-        
-    
-class LibraryVariable(CD.CDictionaryRecord):
+class PostAssume(CD.CDictionaryRecord):
 
     def __init__(self,cd,index,tags,args):
         CD.CDictionaryRecord.__init__(self,cd,index,tags,args)
 
-    def get_name(self): return self.tags[1]
+    def get_callee(self):
+        return self.cd.cfile.declarations.get_global_varinfo(int(self.args[0]))
 
-    def __str__(self): return 'lv: ' + self.get_name()
+    def get_postcondition(self):
+        return self.cd.get_xpredicate(int(self.args[1]))
+
+    def __str__(self):
+        return str(self.get_callee()) + ':' + str(self.get_postcondition())
+
