@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # ------------------------------------------------------------------------------
+import os
 import xml.etree.ElementTree as ET
 
 import advance.util.fileutil as UF
@@ -38,7 +39,8 @@ from advance.app.CGVarDecl import CGVarDecl
 from advance.app.CGVarDef import CGVarDef
 
 from advance.api.InterfaceDictionary import InterfaceDictionary
-
+from advance.api.CFileContracts import CFileContracts
+from advance.api.CFileCandidateContracts import CFileCandidateContracts  
 from advance.app.CGXrefs import CGXrefs
 from advance.source.CSrcFile import CSrcFile
 from advance.app.CContextTable import CContextTable
@@ -46,7 +48,25 @@ from advance.app.CFileDictionary import CFileDictionary
 from advance.app.CFileDeclarations import CFileDeclarations
 from advance.app.CFileAssignmentDictionary import CFileAssignmentDictionary
 
+
 from advance.proof.CFilePredicateDictionary import CFilePredicateDictionary
+
+class CFunctionNotFoundException(Exception):
+
+    def __init__(self,cfile,functionname):
+        self.cfile = cfile
+        self.functionname = functionname
+
+    def __str__(self):
+        lines = []
+        lines.append('*' * 80)
+        lines.append(('Function ' + self.functionname + ' not found in file '
+                          + self.cfile.name + '; function names available:'))
+        lines.append('-' * 80)
+        for n in self.cfile.functionnames:
+            lines.append('  ' + n)
+        lines.append('*' * 80)
+        return '\n'.join(lines)
 
 class CFile(object):
     '''C File level declarations.'''
@@ -65,6 +85,39 @@ class CFile(object):
         self.functionnames = {}     # functionname -> vid
         self.strings = {}           # string-index -> (len,string)
         self.sourcefile = None      # CSrcFile
+        self.contracts = None
+        self.candidate_contracts = None
+        if not (self.capp.contractpath is None) and UF.has_contracts(self.capp.contractpath,self.name):
+            self.contracts = CFileContracts(self,self.capp.contractpath)
+        if (not (self.capp.candidate_contractpath is None) and
+                    UF.has_candidate_contracts(self.capp.candidate_contractpath,self.name)):
+            self.candidate_contracts = CFileCandidateContracts(self,self.capp.candidate_contractpath)
+
+    def collect_post_assumes(self):
+        """For all call sites collect postconditions from callee's contracts and add as assume."""
+        
+        self.iter_functions(lambda fn:fn.collect_post_assumes())
+        self.save_interface_dictionary()
+        self.save_predicate_dictionary()
+        self.save_declarations()
+
+    def save_candidate_contracts(self):
+        if not self.contracts is None:
+            self.contracts.save_mathml_contract()
+        self.save_predicate_dictionary()
+        self.save_interface_dictionary()
+
+    def has_file_contracts(self): return not (self.contracts is None)
+
+    def has_file_candidate_contracts(self):
+        return not (self.candidate_contracts is None)
+
+    def has_function_contract(self,name):
+        return (not (self.contracts is None)) and (self.contracts.has_function_contract(name))
+
+    def get_function_contract(self,name):
+        if not (self.contracts is None):
+            return self.contracts.get_function_contract(name)
 
     def get_max_functionname_length(self):
         return max([ len(x) for x in self.functionnames ])
@@ -95,8 +148,7 @@ class CFile(object):
             vid = self.functionnames[fname]
             return self.functions[vid]
         else:
-            print('Function name ' + fname + ' not found in ' + self.name())
-            print('Names: ' + str(self.functionnames.keys()))
+            raise CFunctionNotFoundException(self,fname)
 
     def get_function_by_index(self,index):
         self._initialize_functions()
@@ -215,6 +267,58 @@ class CFile(object):
         filename = UF.get_cfile_usr_filename(path,self.name)
         with open(filename,'w') as fp:
             fp.write(UX.doc_to_pretty(ET.ElementTree(xroot)))
+
+    def create_contract(self,contractpath,preservesmemory=False):
+        cnode = ET.Element('cfile')
+        cnode.set('name',self.name)
+        ffnode = ET.Element('functions')
+        dnode = ET.Element('data-structures')
+        cnode.extend([ dnode, ffnode ])
+        for fn in self.get_functions():
+            fnode = ET.Element('function')
+            fnode.set('name',fn.name)
+            ppnode = ET.Element('parameters')
+            for fid in sorted(fn.formals,key=lambda fid:fn.formals[fid].vparam):
+                pnode = ET.Element('par')
+                pnode.set('name',fn.formals[fid].vname)
+                pnode.set('nr',str(fn.formals[fid].vparam))
+                ppnode.append(pnode)
+            fnode.append(ppnode)
+            pcnode = ET.Element('postconditions')
+            fnode.append(pcnode)
+            if preservesmemory:
+                prmnode = ET.Element('preserves-all-memory')
+                apnode = ET.Element('apply')
+                mnode = ET.Element('math')
+                pnode = ET.Element('post')
+                pnode.append(mnode)
+                mnode.append(apnode)
+                apnode.append(prmnode)
+                pcnode.append(pnode)
+            ffnode.append(fnode)
+        UF.save_contracts_file(contractpath,self.name,cnode)
+
+    def create_candidate_contract(self,contractpath):
+        cnode = ET.Element('cfile')
+        cnode.set('name',self.name)
+        ffnode = ET.Element('functions')
+        dnode = ET.Element('data-structures')
+        cnode.extend([ dnode, ffnode ])
+        for fn in self.get_functions():
+            fnode = ET.Element('function')
+            fnode.set('name',fn.name)
+            ppnode = ET.Element('parameters')
+            for fid in sorted(fn.formals,key=lambda fid:fn.formals[fid].vparam):
+                pnode = ET.Element('par')
+                pnode.set('name',fn.formals[fid].vname)
+                pnode.set('nr',str(fn.formals[fid].vparam))
+                ppnode.append(pnode)
+            fnode.append(ppnode)
+            fnode.append(ET.Element('postconditions'))
+            fnode.append(ET.Element('data-structure-requests'))
+            ffnode.append(fnode)
+        UF.save_candidate_contracts_file(contractpath,self.name,cnode)
+
         
     def _initialize_gtypes(self):
         if len(self.gtypes) > 0: return
