@@ -42,7 +42,7 @@ def get_xnode(filename,rootnode,desc,show=True):
             tree = ET.parse(filename)
             root = tree.getroot()
             return root.find(rootnode)
-        except (ET.ParseError, args):
+        except ET.ParseError as args:
             print('Problem in ' + filename)
             print(args)
     else:
@@ -56,6 +56,14 @@ def get_targetfiles_filename(path):
 def get_targetfiles_xnode(path):
     filename = get_targetfiles_filename(path)
     return get_xnode(filename,'c-files','File that holds the names of source files')
+
+def get_targetfiles_list(path):
+    result = []
+    node = get_targetfiles_xnode(path)
+    if not node is None:
+        for f in node.findall('c-file'):
+            lines.append((f.get('id'),f.get('name')))
+    return result
 
 def get_global_definitions_filename(path):
     return os.path.join(path,'globaldefinitions.xml')
@@ -84,9 +92,12 @@ def save_project_summary_results(path,d):
 def read_project_summary_results(path):
     if os.path.isdir(path):
         filename = os.path.join(path,'summaryresults.json')
-        with open(filename) as fp:
-            d = json.load(fp)
-            return d
+        if os.path.isfile(filename):
+            with open(filename) as fp:
+                d = json.load(fp)
+                return d
+        else:
+            print('Warning: ' + filename + ' not found: summarize results first')
     else:
         print('Warning: ' + path + ' not found: please check path name')
 
@@ -280,6 +291,42 @@ def get_srcfile_lines(path,cfilename):
     with open(filename,'r') as fp:
         return fp.readlines()
 
+# --------------------------------------------------------------- contracts ----
+
+def has_contracts(path,cfilename):
+    filename = os.path.join(path,cfilename + '_c.xml')
+    return os.path.isfile(filename)
+
+def has_candidate_contracts(path,cfilename):
+    filename = os.path.join(path,cfilename + '_cc.xml')
+    return os.path.isfile(filename)
+
+def get_contracts(path,cfilename):
+    filename = os.path.join(path,cfilename + '_c.xml')
+    return get_xnode(filename,'cfile','Contract file',show=True)
+
+def get_candidate_contracts(path,cfilename):
+    filename = os.path.join(path,cfilename + '_cc.xml')
+    return get_xnode(filename,'cfile','Contract file',show=True)
+
+def _save_contracts_file_aux(path,filename,cnode):
+    filedir = os.path.dirname(filename)
+    if not os.path.isdir(filedir):
+        os.makedirs(filedir)
+    root = UX.get_xml_header('cfile','cfile')
+    root.append(cnode)
+    with open(filename,'w') as fp:
+        fp.write(UX.doc_to_pretty(ET.ElementTree(root)))
+
+def save_contracts_file(path,cfilename,cnode):
+    filename = os.path.join(path,cfilename + '_c.xml')
+    _save_contracts_file_aux(path,filename,cnode)
+
+def save_candidate_cotracts_file(path,cfilename,cnode):
+    filename = os.path.join(path,cfilename + '_cc.xml')
+    _save_contracts_file_aux(path,filename,cnode)
+
+
 # ------------------------------------------------------------ kendra tests ----
 
 def get_kendra_path():
@@ -324,21 +371,6 @@ def get_zitser_summaries():
 
 def get_zitser_testpath(testname):
     return os.path.join(get_zitser_path(),testname)
-
-def get_zitser_userpath(testname):
-    return os.path.join(get_zitser_testpath(testname),'ktadvanceuser')
-
-def get_zitser_globaluserfile(testname):
-    return os.path.join(get_zitser_userpath(testname),'advanceuserglobal.xml')
-
-def get_zitser_globaluserfile_xnode(testname):
-    filename = get_zitser_globaluserfile(testname)
-    return get_xnode(filename,'user-data','user-data',show=True)
-
-def get_zitser_cfile_userdata(testname,cfilename):
-    path = get_zitser_userpath(testname)
-    filename = get_cfilenamebase(path,cfilename)
-    return filename ^ "_user.xml"
 
 # ------------------------------------------------------------ juliet tests ----
 
@@ -448,3 +480,24 @@ def unpack_tar_file(path,deletesemantics=False):
             print('Successfully extracted ' + targzfile)
     return os.path.isdir('semantics')
         
+
+if __name__ == '__main__':
+
+    config = Config()
+
+    testdir = config.testdir
+
+    print('kendra paths:')
+    for id in range(115,119):
+        id = 'id' + str(id) + '.c'
+        print('  ' + id + ': ' + get_kendra_cpath(id))
+
+    print('zitser paths:')
+    for id in [ 'id1283', 'id1310' ]:
+        print('  ' + id + get_zitser_testpath(id))
+
+    print('juliet paths:')
+    for cwe in [ 'CWE121/s01/CWE129_fgets',
+                     'CWE122/s01/char_type_overrun_memcpy' ]:
+        print('  ' + cwe + ': ' + get_juliet_testpath(cwe))
+
