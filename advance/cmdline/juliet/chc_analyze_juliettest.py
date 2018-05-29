@@ -58,6 +58,7 @@ def parse():
     parser.add_argument('--analysisrounds',
                             help='Number of times to generate secondary proof obligations',
                             type=int,default=5)
+    parser.add_argument('--contractpath',help='path to save the contracts file',default=None)
     args = parser.parse_args()
     return args
 
@@ -83,7 +84,6 @@ if __name__ == '__main__':
         exit()
 
     sempath = os.path.join(testpath,'semantics')
-    # if (not os.path.isdir(sempath)) or args.deletesemantics:
     success = UF.unpack_tar_file(cpath,True)
     if not success:
         print(UP.semantics_tar_not_found_err_msg(cpath))
@@ -96,19 +96,29 @@ if __name__ == '__main__':
     capp.iter_files(save_xrefs)
     linker.save_global_compinfos()
 
+    if args.contractpath is None:
+        contractpath = os.path.join(cpath,'ktacontracts')
+    else:
+        contractpath = args.contractpath
+
     # have to reinitialize capp to get linking info properly initialized
-    capp = CApplication(sempath)
+    capp = CApplication(sempath,contractpath=contractpath)
 
     # assume wordsize of 64
     # use unreachability as a means of proof obligation discharge
-    am = AnalysisManager(capp,wordsize=64,unreachability=True,delegate_to_post=False,
+    am = AnalysisManager(capp,wordsize=64,unreachability=True,
                              thirdpartysummaries=[UF.get_juliet_summaries()])
 
-    am.create_app_primary_proofobligations(processes=args.maxprocesses)
+    with timing('analysis'):
 
-    for i in range(2):
-        am.generate_and_check_app('llvisp',processes=args.maxprocesses)
+        am.create_app_primary_proofobligations(processes=args.maxprocesses)
 
-    for i in range(5):
-        capp.update_spos()
-        am.generate_and_check_app('llvisp',processes=args.maxprocesses)
+        for i in range(1):
+            am.generate_and_check_app('llrvisp',processes=args.maxprocesses)
+            capp.reinitialize_tables()
+            capp.update_spos()
+
+        for i in range(5):
+            capp.update_spos()
+            am.generate_and_check_app('llrvisp',processes=args.maxprocesses)
+            capp.reinitialize_tables()
