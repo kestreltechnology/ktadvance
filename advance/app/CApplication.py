@@ -82,7 +82,7 @@ class CApplication(object):
 
     def get_files(self):
         self._initialize_files()
-        return self.files.values()
+        return sorted(self.files.values(),key=lambda x:x.name)
 
     def has_single_file(self): return 0 in self.filenames
 

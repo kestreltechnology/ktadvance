@@ -54,6 +54,9 @@ class CFunDeclarations(object):
             return self.varinfos[vid]
         return self.cfun.cfile.declarations.get_global_varinfo(vid)
 
+    def get_global_varinfo_by_name(self,name):
+        return self.cfun.cfile.declarations.get_global_varinfo_by_name(name)
+
     def get_location(self,ix): return self.cfun.cfile.declarations.get_location(ix)
 
     def __str__(self):

@@ -249,7 +249,7 @@ class CExpUnOp(CExpBase):
     
 
 class CExpBinOp(CExpBase):
-    ''''
+    '''
     tags:
         0: 'binop'
         1: binop operator

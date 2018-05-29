@@ -314,14 +314,64 @@ class CDictionary(object):
         def f(index,key): return exp_constructors[tags[0]]((self,index,tags,args))
         return self.exp_table.add(IT.get_key(tags,args),f)
 
-    def index_s_term(self,t,subst={},fid=-1):
+    def mk_constant_index(self,tags,args):
+        def f(index,key): return constant_constructors[tags[0]]((self,index,tags,args))
+        return self.constant_table.add(IT.get_key(tags,args),f)
+
+    def mk_typ_index(self,tags,args):
+        def f(index,key): return typ_constructors[tags[0]]((self,index,tags,args))
+        return self.typ_table.add(IT.get_key(tags,args),f)
+
+    def mk_lhost_index(self,tags,args):
+        def f(index,key): return lhost_constructors[tags[0]]((self,index,tags,args))
+        return self.lhost_table.add(IT.get_key(tags,args),f)
+
+    def mk_lval_index(self,tags,args):
+        def f(index,key): return CV.CLval(self,index,tags,args)
+        return self.lval_table.add(IT.get_key(tags,args),f)
+
+    def mk_offset_index(self,tags,args):
+        def f(index,key): return offset_constructors[tags[0]]((self,index,tags,args))
+        return self.offset_table_add(IT.get_key(tags,args),f)
+
+    def varinfo_to_exp_index(self,vinfo):
+        lhostix = self.mk_lhost_index([ 'var', vinfo.vname ],[ vinfo.get_vid() ])
+        offsetix = self.mk_offset_index([ 'n' ],[])
+        lvalix = self.mk_lval_index([],[ lhostix, offsetix ])
+        return self.mk_exp_index([ 'lval' ],[ lvalix ])
+
+    def s_term_to_exp_index(self,t,subst={},fid=-1):
+        """Create exp index from interface s_term"""
         if t.is_return_value():
             if 'return' in subst:
                 return self.index_exp(subst['return'])
             else:
                 raise Exception('Error in index_s_term: no return found')
-        print('cdict:index_s_term: ' + t.tags[0])
+        if t.is_num_constant():
+            c = t.get_constant()
+            ctags = [ 'int', str(c), 'iint' ]
+            tags = [ 'const' ]
+            args = [ self.mk_constant_index(ctags,[]) ]
+            return self.mk_exp_index(tags,args)
+        if t.is_arg_value():
+            par = t.get_parameter()
+            if par.is_global():
+                gname = par.get_name()
+                if gname in subst:
+                    return self.index_exp(subst[gname])
+                else:
+                    raise Exception('Error in index_s_term: global variable ' + gname + ' not found')
+        print('cdict missing:index_s_term: ' + t.tags[0])
         exit(1)
+
+    def s_term_bool_expr_to_exp_index(self,op,t1,t2,subst={}):
+        """Create exp index from interface s_term expression"""
+        typtags = [ 'tint', 'ibool' ]
+        typix = self.mk_typ_index(typtags,[])
+        tags = [ 'binop', op ]
+        args = [ self.s_term_to_exp_index(t1,subst),
+                     self.s_term_to_exp_index(t2,subst), typix ]
+        return self.mk_exp_index(tags,args)
 
     def index_exp(self,e,subst={},fid=-1):                            # TBF
         if e.is_constant():

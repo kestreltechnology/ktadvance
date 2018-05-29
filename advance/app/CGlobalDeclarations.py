@@ -55,7 +55,7 @@ class ConjectureFailure(Exception):
 
 
 class CGlobalDeclarations(object):
-    '''Dictionary that indexes global variables and struct definitions from all files.
+    """Dictionary that indexes global variables and struct definitions from all files.
 
     The indexing of struct definitions may involve backtracking in the case of
     structs that contain pointer references to itself, or circular references that 
@@ -82,7 +82,7 @@ class CGlobalDeclarations(object):
           the indexed table to the file checkpoint, and re-index all compinfos
           in the file.
 
-    '''
+    """
     
 
     def __init__(self,capp):
