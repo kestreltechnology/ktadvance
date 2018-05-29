@@ -68,7 +68,7 @@ po_predicate_constructors = {
     }
 
 class CFilePredicateDictionary(object):
-    '''Dictionary that encodes proof obligation predicates.'''
+    """Dictionary that encodes proof obligation predicates."""
 
     def __init__(self,cfile):
         self.cfile = cfile
@@ -85,12 +85,23 @@ class CFilePredicateDictionary(object):
         return self.po_predicate_table.add(IT.get_key(tags,args),f)
 
     def index_xpredicate(self,p,subst={}):
+        def gett(t): return self.dictionary.s_term_to_exp_index(t,subst=subst)
         if p.is_not_null():
-            args = [ self.dictionary.index_s_term(p.get_term(),subst=subst) ]
+            args = [ gett(p.get_term()) ]
             tags = [ 'nn' ]
             def f(index,key): return PO.CPONotNull(self,index,tags,args)
             return self.po_predicate_table.add(IT.get_key(tags,args),f)
-        print('Index xpredicate missing: ' + tags[0])
+        if p.is_relational_expr():
+            expsubst = {}
+            for name in subst:
+                expix = self.dictionary.varinfo_to_exp_index(subst[name])
+                expsubst[name] = self.dictionary.get_exp(expix)
+            expix = self.dictionary.s_term_bool_expr_to_exp_index(p.get_op(),p.get_term1(),p.get_term2(),expsubst)
+            args = [ expix ]
+            tags = [ 'vc' ]
+            def f(index,key): return PO.CPOValueConstraint(self,index,tags,args)
+            return self.po_predicate_table.add(IT.get_key(tags,args),f)
+        print('Index xpredicate missing: ' + str(p))
         exit(1)
 
     def index_predicate(self,p,subst={}):

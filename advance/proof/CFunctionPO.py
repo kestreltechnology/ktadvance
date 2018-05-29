@@ -136,7 +136,10 @@ class CFunctionPO(object):
         atypes = self.get_dependencies()
         deptype = 'api'
         for t in atypes:
-            if t.is_global_assumption(): deptype = 'global'
+            if t.is_api_assumption():
+                api = self.cfun.api
+                if api.apiassumptions[t.get_apiid()].isglobal:
+                    deptype = 'global'
             if t.is_postcondition_assumption(): deptype = 'post'
         return deptype
 
