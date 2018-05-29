@@ -92,6 +92,11 @@ class CFile(object):
         if (not (self.capp.candidate_contractpath is None) and
                     UF.has_candidate_contracts(self.capp.candidate_contractpath,self.name)):
             self.candidate_contracts = CFileCandidateContracts(self,self.capp.candidate_contractpath)
+        if self.contracts is not None:
+            xnode = ET.Element('interface-dictionary')
+            self.interfacedictionary.write_xml(xnode)
+            UF.save_cfile_interface_dictionary(self.capp.path,self.name,xnode)
+
 
     def collect_post_assumes(self):
         """For all call sites collect postconditions from callee's contracts and add as assume."""
@@ -284,9 +289,9 @@ class CFile(object):
                 pnode.set('nr',str(fn.formals[fid].vparam))
                 ppnode.append(pnode)
             fnode.append(ppnode)
-            pcnode = ET.Element('postconditions')
-            fnode.append(pcnode)
             if preservesmemory:
+                pcnode = ET.Element('postconditions')
+                fnode.append(pcnode)
                 prmnode = ET.Element('preserves-all-memory')
                 apnode = ET.Element('apply')
                 mnode = ET.Element('math')
