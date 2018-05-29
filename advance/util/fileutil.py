@@ -167,6 +167,13 @@ def get_cfile_interface_dictionary_xnode(path,cfilename):
     filename = get_cfile_interface_dictionaryname(path,cfilename)
     return get_xnode(filename,'interface-dictionary','Interface objects dictionary file',show=False)
 
+def save_cfile_interface_dictionary(path,cfilename,xnode):
+    filename = get_cfile_interface_dictionaryname(path,cfilename)
+    header = UX.get_xml_header(filename,'interfacedictionary')
+    header.append(xnode)
+    with open(filename,'w') as fp:
+        fp.write(UX.doc_to_pretty(ET.ElementTree(header)))
+
 def get_cfile_contexttablename(path,cfilename):
     cfilename = get_cfilenamebase(cfilename)
     return os.path.join(path,cfilename + '_ctxt.xml')
@@ -220,7 +227,14 @@ def get_api_filename(path,cfilename,fname):
 
 def get_api_xnode(path,cfilename,fname):
     filename = get_api_filename(path,cfilename,fname)
-    return get_xnode(filename,'function','Function api file')
+    return get_xnode(filename,'function','Function api file',show=False)
+
+def save_api(path,cfilename,fname,xnode):
+    filename = get_api_filename(path,cfilename,fname)
+    header = UX.get_xml_header(filename,'api')
+    header.append(xnode)
+    with open(filename,'w') as fp:
+        fp.write(UX.doc_to_pretty(ET.ElementTree(header)))
 
 def get_vars_filename(path,cfilename,fname):
     return (get_cfun_basename(path,cfilename,fname) + '_vars.xml')
