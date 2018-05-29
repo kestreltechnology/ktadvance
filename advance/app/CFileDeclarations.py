@@ -116,8 +116,8 @@ class CFileDeclarations(object):
             (self.filename_table,self._read_xml_filename_table)
             ]       
         self.initialize()
-        for (key,g) in self.gcomptagdefs.items() + self.gcomptagdecls.items():
-            print(str(key) + ': ' + g.get_name())
+        # for (key,g) in self.gcomptagdefs.items() + self.gcomptagdecls.items():
+        #     print(str(key) + ': ' + g.get_name())
 
     # Retrieve definitions and declarations
 
@@ -146,6 +146,14 @@ class CFileDeclarations(object):
             return self.gvardecls[vid].varinfo
         if vid in self.gfunctions:
             return self.gfunctions[vid].varinfo
+
+    def get_global_varinfo_by_name(self,name):
+        gvarinfos = self.get_global_varinfos()
+        for v in gvarinfos:
+            if v.vname == name:
+                return v
+        print('Global variable ' + name + ' not found in file ' + cfile.name)
+        exit(1)
 
     # ------------------ Retrieve items from file definitions dictionary -------
 
