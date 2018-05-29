@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -50,7 +50,7 @@ def keymatches(tppo,ppo):
                     (tppo.has_variable_names() and
                          any([ ppo.has_variable_name(vname) for vname in tppo.variablename]))):
                 if ((not tppo.has_target_type()) or
-                        (tppo.has_target_type() and ppo.has_target_type(tppo.get_target_type()))):
+                        (tppo.has_target_type() and str(ppo.predicate.get_tgt_type()) == tppo.targettype)):
                     return True
     return False
 
