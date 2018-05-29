@@ -179,6 +179,8 @@ class AnalysisManager(object):
                     '-domains', domains ]
         for s in self.thirdpartysummaries:
             cmd.extend(['-summaries',s])
+        if not (self.contractpath is None):
+            cmd.extend(['-contractpath',self.contractpath])
         if self.nofilter: cmd.append('-nofilter')
         if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
         if self.unreachability: cmd.append('-unreachability')
