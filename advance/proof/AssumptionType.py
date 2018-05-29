@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,6 @@ class ATDictionaryRecord(object):
     def get_key(self): return (','.join(self.tags), ','.join([str(x) for x in self.args]))
 
     def is_api_assumption(self): return False
-    def is_user_assumption(self): return False
     def is_postcondition_assumption(self): return False
     def is_global_assumption(self): return False
 
@@ -62,19 +61,6 @@ class ATApiAssumptionType(ATDictionaryRecord):
     def is_api_assumption(self): return True
 
     def __str__(self): return 'api:' + str(self.get_predicate())
-
-
-class ATUserAssumptionType(ATDictionaryRecord):
-
-    def __init__(self,pod,index,tags,args):
-        ATDictionaryRecord.__init__(self,pod,index,tags,args)
-
-    def is_user_assumption(self): return True
-
-    def get_predicate(self): return self.pd.get_predicate(int(self.args[0]))
-
-    def __str__(self): return 'user:' + str(self.get_predicate())
-
 
 class ATPostconditionType(ATDictionaryRecord):
 
