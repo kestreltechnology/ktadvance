@@ -38,6 +38,7 @@ from advance.app.CFileDictionary import CKeyLookupError
 from advance.proof.CFunctionCallsiteSPO import CFunctionCallsiteSPO
 from advance.proof.CFunctionPO import CProofDependencies
 from advance.proof.CFunctionPO import po_status
+from advance.proof.CFunctionPO import CProofDiagnostic
 
 
 class CFunctionCallsiteSPOs(object):
@@ -177,9 +178,6 @@ class CFunctionCallsiteSPOs(object):
                 iipc = self.cfile.interfacedictionary.index_xpredicate(p)
                 if not iipc in self.postassumes:
                     self.postassumes.append(iipc)
-        else:
-            print('No contract found for ' + calleefun.name)
-
 
     def get_context_string(self): return self.context.context_strings()
 
@@ -223,7 +221,6 @@ class CFunctionCallsiteSPOs(object):
 
         # write assumptions about the post conditions of the callee
         if len(self.postassumes) > 0:
-            print('Post assumes for ' + self.cfun.name + ': ' + str(self.postassumes))
             panode = ET.Element('post-assumes')
             panode.set('iipcs',','.join([ str(i) for i in sorted(self.postassumes) ]))
             cnode.append(panode)
@@ -259,7 +256,24 @@ class CFunctionCallsiteSPOs(object):
                     diag = None
                     dnode = po.find('d')
                     if not dnode is None:
-                        diag = dnode.get('txt')
+                        pinvs = {}
+                        amsgs = {}
+                        inode = dnode.find('invs')
+                        if not inode is None:
+                            for n in dnode.find('invs').findall('arg'):
+                                pinvs[int(n.get('a'))] = [ int(x) for x in n.get('i').split(',') ]
+                        mnode = dnode.find('msgs')
+                        if not mnode is None:
+                            pmsgs =  [ x.get('t') for x in dnode.find('msgs').findall('msg') ]
+                        else:
+                            pmsgs = []
+                        mnode = dnode.find('amsgs')
+                        if not mnode is None:
+                            for n in dnode.find('amsgs').findall('arg'):
+                                arg = int(n.get('a'))
+                                msgs = [ x.get('t') for x in n.findall('msg') ]
+                                amsgs[arg] = msgs
+                        diag = CProofDiagnostic(pinvs,pmsgs,amsgs)
                     self.spos[apiid].append(CFunctionCallsiteSPO(self,spotype,status,deps,expl,diag))
 
         # read in assumptions about the post conditions of the callee
