@@ -82,7 +82,7 @@ class PPOLibType(POTypeDictionaryRecord):
 
     def get_predicate(self): return self.pd.get_predicate(int(self.args[2]))
 
-    def get_precondition(self): return self.id.get_precondition(int(self.args[3]))
+    def get_precondition(self): return self.id.get_xpredicate(int(self.args[3]))
 
     def get_lib_function_name(self): return self.tags[1]
 
