@@ -31,6 +31,7 @@ import advance.util.fileutil as UF
 import advance.util.IndexedTable as IT
 
 import advance.api.ApiParameter as AP
+import advance.api.GlobalAssumption as GA
 import advance.api.PostRequest as PR
 import advance.api.PostAssume as PA
 import advance.api.STerm as ST
@@ -253,16 +254,24 @@ class InterfaceDictionary(object):
         print('Index xpredicate not found for ' + p.tags[0])
         exit(1)
         
-    def parse_mathml_api_parameter(self,name,pars):
-        if not name in pars:
+    def parse_mathml_api_parameter(self,name,pars,gvars=[]):
+        if (not name in pars) and (not name in gvars):
             print('Error in reading user data: ' + name)
-        tags = [ 'pf' ]
-        args = [ pars[name] ]
-        def f(index,key): return AP.APFormal(self,index,tags,args)
-        return self.api_parameter_table.add(IT.get_key(tags,args),f)
+        if name in pars:
+            tags = [ 'pf' ]
+            args = [ pars[name] ]
+            def f(index,key): return AP.APFormal(self,index,tags,args)
+            return self.api_parameter_table.add(IT.get_key(tags,args),f)
+        if name in gvars:
+            tags = ['pg', name ]
+            args = []
+            def f(index,key): return AP.APGlobal(self,index,tags,args)
+            return self.api_parameter_table.add(IT.get_key(tags,args),f)
+        print('Api parameter name ' + name + ' not found in parameters or global variables')
+        exit(1)
         
 
-    def parse_mathml_term(self,tnode,pars):
+    def parse_mathml_term(self,tnode,pars,gvars=[]):
         if tnode.tag in [ 'return', 'return-value' ]:
             tags = [ 'rv' ]
             args = []
@@ -270,7 +279,7 @@ class InterfaceDictionary(object):
             return self.s_term_table.add(IT.get_key(tags,args),f)
         if tnode.tag == 'ci':
             tags = [ 'av' ]
-            args = [ self.parse_mathml_api_parameter(tnode.text,pars) ]
+            args = [ self.parse_mathml_api_parameter(tnode.text,pars,gvars=gvars) ]
             def f(index,key): return ST.STArgValue(self,index,tags,args)
             return self.s_term_table.add(IT.get_key(tags,args),f)
         if tnode.tag == 'cn':
@@ -278,21 +287,37 @@ class InterfaceDictionary(object):
             args = [ int(tnode.text) ]
             def f(index,key): return ST.STNumConstant(self,index,tags,args)
             return self.s_term_table.add(IT.get_key(tags,args),f)
+        if tnode.tag == 'field':
+            tags = [ 'fo' , tnode.get('fname') ]
+            args = []
+            def f(index,key): return ST.STFieldOffset(self,index,tags,args)
+            return self.s_term_table.add(IT.get_key(tags,args),f)            
+        if tnode.tag == 'apply':
+            (op,terms) = (tnode[0].tag,tnode[1:])
+            if op == 'addressed-value':
+                args = [ self.parse_mathml_term(terms[0],pars), self.parse_mathml_term(terms[1],pars) ]
+                tags = [ 'aa' ]
+                def f(index,key): return ST.STArgAddressedValue(self,index,tags,args)
+                return self.s_term_table.add(IT.get_key(tags,args),f)
+            else:
+                print('Parse mathml s-term apply not found for ' + op)
+                exit(1)
         else:
             print('Parse mathml s-term not found for ' + tnode.tag)
             exit(1)
             
-    def parse_mathml_xpredicate(self,pcnode,pars):
+    def parse_mathml_xpredicate(self,pcnode,pars,gvars=[]):
         mnode = pcnode.find('math')
         anode = mnode.find('apply')
+        def pt(t): return self.parse_mathml_term(t,pars,gvars=gvars)
         (op,terms) = (anode[0].tag,anode[1:])
         if op in ['eq','neq','gt','lt','ge','le']:
-            args = [ self.parse_mathml_term(t,pars) for t in terms ]
+            args = [ pt(t) for t in terms ]
             tags = [ 'x', op ]
             def f(index,key): return XP.XRelationalExpr(self,index,tags,args)
             return self.xpredicate_table.add(IT.get_key(tags,args),f)
         if op == 'not-null':
-            args = [ self.parse_mathml_term(terms[0],pars) ]
+            args = [ pt(terms[0]) ]
             tags = [ 'nn' ]
             def f(index,key): return XP.XNotNull(self,index,tags,args)
             return self.xpredicate_table.add(IT.get_key(tags,args),f)
@@ -306,11 +331,19 @@ class InterfaceDictionary(object):
             tags = [ 'f' ]
             def f(index,key): return XP.XFalse(self,index,tags,args)
             return self.xpredicate_table.add(IT.get_key(tags,args),f)
+        if op == 'initialized':
+            args = [ pt(terms[0]) ]
+            tags = [ 'i' ]
+            def f(index,key): return XP.XInitialized(self,index,tags,args)
+            return self.xpredicate_table.add(IT.get_key(tags,args),f)
         else:
             print('Parse mathml xpredicate not found for ' + op)
             exit(1)
 
     # ------------------------ Read/write xml services -------------------------
+
+    def read_xml_xpredicate(self,node,tag='ipr'):
+        return self.get_xpredicate(int(node.get(tag)))
 
     def read_xml_postcondition(self,node,tag='ixpre'):
         return self.get_xpredicate(int(node.get(tag)))
@@ -320,6 +353,9 @@ class InterfaceDictionary(object):
     
     def read_xml_postrequest(self,node,tag='iipr'):
         return self.get_postrequest(int(node.get(tag)))
+
+    def read_xml_global_assumption_request(self,node,tag='ipr'):
+        return self.get_global_assumption_request(int(node.get(tag)))
 
 
     # ------------------- Initialize dictionary --------------------------------
@@ -370,6 +406,13 @@ class InterfaceDictionary(object):
             args = (self,) + rep
             return PR.PostRequest(*args)
         self.postrequest_table.read_xml(txnode,'n',get_value)
+
+    def _read_xml_global_assumption_request_table(self,txnode):
+        def get_value(node):
+            rep = IT.get_rep(node)
+            args = (self,) + rep
+            return GA.GlobalAssumption(*args)
+        self.global_assumption_request_table.read_xml(txnode,'n',get_value)
 
     def _read_xml_postassume_table(self,txnode):
         def get_value(node):

@@ -34,7 +34,12 @@ class XPredicate(CD.CDictionaryRecord):
     def __init__(self,cd,index,tags,args):
         CD.CDictionaryRecord.__init__(self,cd,index,tags,args)
 
-    def get_iterm(self,argix): return self.cd.get_s_term(int(self.args[argix]))
+    def get_iterm(self,argix):
+        if len(self.args) >= argix:
+            return self.cd.get_s_term(int(self.args[argix]))
+        print('Term index ' + str(argix) + ' out of range ('
+                  + str(len(args)) + ' args found)')
+        exit(1)
 
     def is_allocation_base(self): return False
     def is_buffer(self): return False

@@ -39,9 +39,8 @@ class CFileContracts(object):
         self.contractpath = contractpath
         self.xnode = UF.get_contracts(self.contractpath,self.cfile.name)
         self.functions = {}       #  function name -> CFunctionContract
+        self.globalvariables = {}     # name -> CVarInfo
         self._initialize(self.xnode)
-        print('Function contract for ' + self.cfile.name)
-        print(str(self))
 
     def get_function_contract(self,name):
         if name in self.functions:
@@ -60,6 +59,12 @@ class CFileContracts(object):
 
     def _initialize(self,xnode):
         if xnode is None: return
+        gvnode = xnode.find('global-variables')
+        if not gvnode is None:
+            for gnode in gvnode.findall('gvar'):
+                name = gnode.get('name')
+                gvinfo = self.cfile.declarations.get_global_varinfo_by_name(name)
+                self.globalvariables[name] = gvinfo
         for fnode in xnode.find('functions').findall('function'):
             fn = CFunctionContract(self,fnode)
             self.functions[fn.name] = fn

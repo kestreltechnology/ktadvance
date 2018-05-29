@@ -41,6 +41,7 @@ class CFunctionContract(object):
         self.signature = {}                   # name -> index nr
         self.rsignature = {}                  # index nr -> name
         self.postconditions = {}              # index -> XPredicate
+        self.preconditions = {}               # index -> XPredicate
         self._initialize(self.xnode)
         
     def _initialize_signature(self,ppnode):
@@ -52,16 +53,24 @@ class CFunctionContract(object):
             self.rsignature[int(pnode.get('nr'))] = pnode.get('name')
 
     def _initialize_postconditions(self,pcsnode):
+        if pcsnode is None: return
         for pcnode in pcsnode.findall('post'):
             ipc = self.ixd.parse_mathml_xpredicate(pcnode,self.signature)
             pc = self.ixd.get_xpredicate(ipc)
             self.postconditions[ipc] = pc
-            print('Postcondition: ')
-            print(str(self))
+
+    def _initialize_preconditions(self,prenode):
+        if prenode is None: return
+        gvars = self.cfilecontracts.globalvariables
+        for pnode in prenode.findall('pre'):
+            ipre = self.ixd.parse_mathml_xpredicate(pnode,self.signature,gvars=gvars)
+            pre = self.ixd.get_xpredicate(ipre)
+            self.preconditions[ipre] = pre
 
     def _initialize(self,xnode):
         self._initialize_signature(xnode.find('parameters'))
         self._initialize_postconditions(xnode.find('postconditions'))
+        self._initialize_preconditions(xnode.find('preconditions'))
 
     def __str__(self):
         lines = []

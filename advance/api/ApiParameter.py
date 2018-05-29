@@ -53,7 +53,7 @@ class APFormal(ApiParameter):
 class APGlobal(ApiParameter):
 
     def __init__(self,cd,index,tags,args):
-        ApiParmaeter.__init__(self,cd,index,tags,args)
+        ApiParameter.__init__(self,cd,index,tags,args)
 
     def get_name(self): return self.tags[1]
 

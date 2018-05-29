@@ -27,13 +27,14 @@
 
 class ApiAssumption(object):
 
-    def __init__(self,capi,id,predicate,ppos,spos):
+    def __init__(self,capi,id,predicate,ppos,spos,isglobal=False):
         self.id = id
         self.capi = capi                # api/CFunctionAPI
         self.cfun = self.capi.cfun      # app/CFunction
         self.predicate = predicate      # proof/CPOPredicate
         self.ppos = ppos
         self.spos = spos
+        self.isglobal = isglobal
 
     def __str__(self):
         strppos = ''
@@ -42,4 +43,8 @@ class ApiAssumption(object):
             strppos = "\n      --Dependent ppo's: [" + ','.join(str(i) for i in self.ppos) + ']'
         if len(self.spos) > 0:
             strspos = "\n      --Dependent spo's: [" + ','.join(str(i) for i in self.spos) + ']'
-        return (str(self.id) + '  ' + str(self.predicate) + strppos + strspos)
+        if self.isglobal:
+            isglobal = ' (global)'
+        else:
+            isglobal = ''
+        return (str(self.id) + '  ' + str(self.predicate) + isglobal + strppos + strspos)

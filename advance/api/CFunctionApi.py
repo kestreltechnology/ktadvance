@@ -44,7 +44,7 @@ class CFunctionApi(object):
         self.xnode = None
         self.parameters = {}              # nr -> (vid,vname)
         self.apiassumptions = {}          # id -> ApiAssumption
-        self.globalassumptions = {}       # id -> GlobalAssumption
+        self.globalassumptionrequests = {}         # id -> GlobalAssumption
         self.postconditionrequests = {}            # id -> PostConditionRequest
         self.postconditionguarantees = {}  # id -> PostCondition
         self.dsassumptions = {}
@@ -64,8 +64,8 @@ class CFunctionApi(object):
     def get_postcondition_guarantees(self):
         return self.postconditionguarantees.values()
 
-    def get_global_assumptions(self):
-        return self.globalassumptions.values()
+    def get_global_assumption_requests(self):
+        return self.globalassumptionrequests.values()
 
     def get_global_assignments(self):
         self._get_global_assignments()
@@ -85,10 +85,13 @@ class CFunctionApi(object):
         lines.append('  parameters:')
         for n in self.get_parameters():
             lines.append('    ' + str(n).rjust(2))
-        if len(self.globalassumptions) > 0:
-            lines.append('\n  global assumptions')
-            for g in self.get_global_assumptions():
+        if len(self.globalassumptionrequests) > 0:
+            lines.append('\n  global assumption requests')
+            for g in self.get_global_assumption_requests():
                 lines.append('  ' + str(g))
+        else:
+            lines.append('\n  -- no global assumption requests')
+
         if len(self.apiassumptions) > 0:
             lines.append('\n  api assumptions')
             for a in self.get_api_assumptions():
@@ -119,7 +122,6 @@ class CFunctionApi(object):
         path = self.capp.path
         xnode = UF.get_api_xnode(path,self.cfile.name,self.cfun.name)
         if xnode is None:
-            print('Unable to load api file for ' + self.cfun.name)
             return
         self.xnode = xnode
         for x in self.xnode.find('api').find('api-assumptions').findall('aa'):
@@ -127,13 +129,16 @@ class CFunctionApi(object):
             id = int(x.get('ipr'))
             ppos = [ int(i) for i in x.get('ppos').split(',') ] if 'ppos' in x.attrib else []
             spos = [ int(i) for i in x.get('spos').split(',') ] if 'spos' in x.attrib else []
-            self.apiassumptions[id] = ApiAssumption(self,id,predicate,ppos,spos)
-        for x in self.xnode.find('api').find('global-assumptions').findall('hh'):
-            predicate = self.cfile.predicatedictionary.read_xml_predicate(x)
-            id = int(x.get('ipr'))
-            ppos = [ int(i) for i in x.get('ppos').split(',') ] if 'ppos' in x.attrib else []
-            spos = [ int(i) for i in x.get('spos').split(',') ] if 'spos' in x.attrib else []
-            self.globalassumptions[id] = GlobalAssumption(self,id,predicate,ppos,spos)
+            isglobal = 'global' in x.attrib and x.get('global') == 'yes'
+            self.apiassumptions[id] = ApiAssumption(self,id,predicate,ppos,spos,isglobal=isglobal)
+        xganode = self.xnode.find('api').find('global-assumption-requests')
+        if not xganode is None:
+            for x in self.xnode.find('api').find('global-assumption-requests').findall('hh'):
+                predicate = self.cfile.interfacedictionary.read_xml_xpredicate(x)
+                id = int(x.get('ipr'))
+                ppos = [ int(i) for i in x.get('ppos').split(',') ] if 'ppos' in x.attrib else []
+                spos = [ int(i) for i in x.get('spos').split(',') ] if 'spos' in x.attrib else []
+                self.globalassumptionrequests[id] = GlobalAssumption(self,id,predicate,ppos,spos)
         for x in self.xnode.find('api').find('postcondition-requests').findall('rr'):
             postrequest = self.cfile.interfacedictionary.read_xml_postrequest(x)
             ppos = [ int(i) for i in x.get('ppos').split(',') ] if 'ppos' in x.attrib else []
@@ -150,7 +155,6 @@ class CFunctionApi(object):
             self.librarycalls[(header,fname)] = count
         for x in self.xnode.find('api').find('missing-summaries').findall('ms'):
             self.missingsummaries.append(x.get('n'))
-
 
     def _get_global_assignments(self):
         if len(self.globalassignments) > 0: return
