@@ -33,7 +33,8 @@ testcases = {
         ],
     "CWE126": [
         "s01/char_alloca_memcpy",
-        "s01/CWE129_connect_socket"
+        "s01/CWE129_connect_socket",
+        "s01/CWE129_large"
         ]
     }
     
