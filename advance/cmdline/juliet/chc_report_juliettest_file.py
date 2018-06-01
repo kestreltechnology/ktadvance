@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,9 @@ def parse():
     parser.add_argument('--showcode',help='show proof obligations on code for entire file',
                             action='store_true')
     parser.add_argument('--open',help='show only proof obligions on code that are still open',
-                            action='store_true')    
+                            action='store_true')
+    parser.add_argument('--showinvariants',help='show invariants for open proof obligations',
+                            action='store_true')
     args = parser.parse_args()
     return args
 
@@ -69,9 +71,9 @@ if __name__ == '__main__':
 
     if args.showcode:
         if args.open:
-            print(RP.file_code_open_tostring(cfile))
+            print(RP.file_code_open_tostring(cfile,showinvs=args.showinvariants))
         else:
-            print(RP.file_code_tostring(cfile))
+            print(RP.file_code_tostring(cfile,showinvs=args.showinvariants))
 
     print(RP.file_proofobligation_stats_tostring(cfile,extradsmethods=dc))
                       

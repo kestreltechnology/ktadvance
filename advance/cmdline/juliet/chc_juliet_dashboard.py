@@ -50,34 +50,56 @@ if __name__ == '__main__':
     vppohandled = 0
     sppohandled = 0
 
-    tnamelength = max(len(t) for t in JTC.testcases) + 2
+    tnamelength = 0
+    for cwe in JTC.testcases:
+        maxlen = max(len(t) for t in JTC.testcases[cwe]) + 3
+        if maxlen > tnamelength:
+            tnamelength = maxlen
+
     print('\n\nSummary')
     print('\n')
     print('test'.ljust(tnamelength + 10) +    'violations                       safe-controls')
     print(' '.ljust(tnamelength + 4) + 'V    S    D    U    O          S    L    D    X    U    O')
     print('-' * (tnamelength + 64))
 
-    for t in JTC.testcases:
-        totals = UF.read_juliet_test_summary(t)
-        if not (totals is None):
-            print(t.ljust(tnamelength) +
-                    ''.join([str(totals['violations'][c]).rjust(5) for c in violationcategories]) +
-                    '   |  ' +              
-                    ''.join([str(totals['safe-controls'][c]).rjust(5) for c in safecontrolcategories]))
-            for c in violationcategories:
-                stotals['violations'][c] += totals['violations'][c]
-                vppototals += totals['violations'][c]
-                if c in vhandled: vppohandled += totals['violations'][c]
-            for c in safecontrolcategories:
-                stotals['safe-controls'][c] += totals['safe-controls'][c]
-                sppototals += totals['safe-controls'][c]
-                if c in shandled: sppohandled += totals['safe-controls'][c]
-        else:
-            print(t.ljust(tnamelength) + ('-'  * (44 - (tnamelength/2))) + ' not found ' +
-                      ('-' * (44 - (tnamelength/2))))
+    for cwe in sorted(JTC.testcases):
+        print('\n'+cwe)
+        ctotals = {}
+        ctotals['violations'] = {}
+        ctotals['safe-controls'] = {}
+        for c in violationcategories: ctotals['violations'][c] = 0
+        for c in safecontrolcategories: ctotals['safe-controls'][c] = 0
+        for cc in JTC.testcases[cwe]:
+            t = os.path.join(cwe,cc)
+            totals = UF.read_juliet_test_summary(t)
+            if not (totals is None):
+                print(cc.ljust(tnamelength) +
+                        ''.join([str(totals['violations'][c]).rjust(5) for c in violationcategories]) +
+                        '   |  ' +
+                        ''.join([str(totals['safe-controls'][c]).rjust(5) for c in safecontrolcategories]))
+                for c in violationcategories:
+                    ctotals['violations'][c] += totals['violations'][c]
+                    stotals['violations'][c] += totals['violations'][c]
+                    vppototals += totals['violations'][c]
+                    if c in vhandled: vppohandled += totals['violations'][c]
+                for c in safecontrolcategories:
+                    ctotals['safe-controls'][c] += totals['safe-controls'][c]
+                    stotals['safe-controls'][c] += totals['safe-controls'][c]
+                    sppototals += totals['safe-controls'][c]
+                    if c in shandled: sppohandled += totals['safe-controls'][c]
+            else:
+                print(cc.ljust(tnamelength) + ('-'  * (44 - (tnamelength/2))) + ' not found ' +
+                        ('-' * (44 - (tnamelength/2))))
 
-    print('-' * (tnamelength + 64))
-    print('total'.ljust(tnamelength) +
+        print('-' * (tnamelength + 64))
+        print('total'.ljust(tnamelength) +
+                  ''.join([str(ctotals['violations'][c]).rjust(5) for c in violationcategories]) +
+                  '   |  ' +
+                  ''.join([str(ctotals['safe-controls'][c]).rjust(5) for c in safecontrolcategories]))
+
+    print('\n\n')
+    print('=' * (tnamelength + 64))
+    print('grand total'.ljust(tnamelength) +
               ''.join([str(stotals['violations'][c]).rjust(5) for c in violationcategories]) +
               '   |  ' +
               ''.join([str(stotals['safe-controls'][c]).rjust(5) for c in safecontrolcategories]))
@@ -97,9 +119,14 @@ if __name__ == '__main__':
         perc = float(ppohandled)/float(ppototals) * 100.0
     else:
         perc = 0.0
-    print('\n\n                  violation      safe-control     total')
+    print('\n\n' + ' '.ljust(28) + 'violation      safe-control     total')
     print('-' * 80)
-    print('ppos'.ljust(10) + str(vppototals).rjust(15) + str(sppototals).rjust(15) + str(ppototals).rjust(15))
-    print('handled'.ljust(10) + str(vppohandled).rjust(15) + str(sppohandled).rjust(15) + str(ppohandled).rjust(15))
-    print('perc'.ljust(10)  + str('{:.1f}'.format(vperc)).rjust(15) + str('{:.1f}'.format(sperc)).rjust(15) +
+    print('ppos'.ljust(20) + str(vppototals).rjust(15) + str(sppototals).rjust(15)
+              + str(ppototals).rjust(15))
+    print('reported'.ljust(20) + str(vppohandled).rjust(15)
+              + str(sppohandled).rjust(15) + str(ppohandled).rjust(15))
+    print('percent reported'.ljust(20)  + str('{:.1f}'.format(vperc)).rjust(15)
+              + str('{:.1f}'.format(sperc)).rjust(15) +
               str('{:.1f}'.format(perc)).rjust(15))
+    print('-' * 80)
+

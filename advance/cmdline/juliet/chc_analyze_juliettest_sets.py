@@ -2,7 +2,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,17 +25,44 @@
 
 import os
 import subprocess
+import time
+
+from contextlib import contextmanager
 
 import advance.cmdline.juliet.JulietTestCases as JTC
 
+def parse():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--maxprocesses',help='maximum number of processors to use',
+                            default='1')
+
+@contextmanager
+def timing(activity):
+    t0 = time.time()
+    yield
+    print('\n' + ('=' * 80) + 
+          '\nCompleted ' + activity + ' in ' + str(time.time() - t0) + ' secs' +
+          '\n' + ('=' * 80))
+
 if __name__ == '__main__':
 
-    for testcase in JTC.testcases:
-        cmd = [ 'python' , 'chc_analyze_juliettest.py', testcase ]
-        result = subprocess.call(cmd,stderr=subprocess.STDOUT)
-        if result != 0:
-            print('Error in testcase ' + testcase)
-            break
+    args = parse()
+    
+    for cwe in sorted(JTC.testcases):
+        print('Analyzing testcases for cwe ' + cwe)
+        for t in JTC.testcases[cwe]:
+            testcase = os.path.join(cwe,t)
+            cmd = [ 'python' , 'chc_analyze_juliettest.py', '--maxprocesses' ,
+                        args.maxprocesses, testcase ]
+            result = subprocess.call(cmd,stderr=subprocess.STDOUT)
+            if result != 0:
+                print('Error in testcase ' + testcase)
+                exit(1)
+        else:
+            print('\n\n' + ('=' * 80) + '\nAll Juliet test cases for ' + cwe
+                      + ' ran successfully.')
+            print(('=' * 80) + '\n')
     else:
         print('\n\n' + ('=' * 80) + '\nAll Juliet test cases ran successfully.')
         print(('=' * 80) + '\n')
+        

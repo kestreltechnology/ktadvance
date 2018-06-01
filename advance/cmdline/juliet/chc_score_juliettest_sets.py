@@ -2,7 +2,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -30,12 +30,13 @@ import advance.cmdline.juliet.JulietTestCases as JTC
 
 if __name__ == '__main__':
 
-    for testcase in JTC.testcases:
-        cmd = [ 'python' , 'chc_score_juliettest.py', testcase ]
-        result = subprocess.call(cmd,stderr=subprocess.STDOUT)
-        if result != 0:
-            print('Error in testcase ' + testcase)
-            break
+    for cwe in sorted(JTC.testcases):
+        for t in JTC.testcases[cwe]:
+            testcase = os.path.join(cwe,t)
+            cmd = [ 'python' , 'chc_score_juliettest.py', testcase ]
+            result = subprocess.call(cmd,stderr=subprocess.STDOUT)
+            if result != 0:
+                raise Exception('Error in testcase ' + testcase)
     else:
         cmd = [ 'python', 'chc_juliet_dashboard.py' ]
         result = subprocess.call(cmd,stderr=subprocess.STDOUT)

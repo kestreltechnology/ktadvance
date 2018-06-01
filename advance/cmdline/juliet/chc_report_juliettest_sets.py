@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -49,26 +49,28 @@ if __name__ == '__main__':
 
     sumppos = {}
     sumspos = {}
-    for t in JTC.testcases:
-        cpath = UF.get_juliet_testpath(t)
-        sempath = os.path.join(cpath,'semantics')
-        if not os.path.isdir(sempath):
-            missing.append(t)
-            continue
-        capp = CApplication(sempath)
-        ppos = capp.get_ppos()
-        spos = capp.get_spos()
-        allppos.extend(ppos)
-        allspos.extend(spos)
-        sumppos[t] = RP.get_method_count(ppos)
-        sumspos[t] = RP.get_method_count(spos)
+    for cwe in sorted(JTC.testcases):
+        for t in JTC.testcases[cwe]:
+            t = os.path.join(cwe,t)
+            cpath = UF.get_juliet_testpath(t)
+            sempath = os.path.join(cpath,'semantics')
+            if not os.path.isdir(sempath):
+                missing.append(t)
+                continue
+            capp = CApplication(sempath)
+            ppos = capp.get_ppos()
+            spos = capp.get_spos()
+            allppos.extend(ppos)
+            allspos.extend(spos)
+            sumppos[t] = RP.get_method_count(ppos)
+            sumspos[t] = RP.get_method_count(spos)
 
     print(RP.row_method_count_tostring(sumppos,perc=True,rhlen=rhlen,header1='juliet testcase'))
-    print('\nSecondary proof obligations\n')
+    print('\nSupporting proof obligations\n')
     print(RP.row_method_count_tostring(sumspos,perc=True,rhlen=rhlen,header1='juliet testcase'))
 
     print('\nProof obligation types')
     print('\nPrimary proof obligations')
     print(RP.row_method_count_tostring(RP.get_tag_method_count(allppos),perc=True))
-    print('\nSecondary proof obligations')
+    print('\nSupporting proof obligations')
     print(RP.row_method_count_tostring(RP.get_tag_method_count(allspos),perc=True))
