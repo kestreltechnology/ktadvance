@@ -76,12 +76,14 @@ xpredicate_constructors = {
     'nt': lambda x:XP.XNullTerminated(*x),
     'ofs': lambda x:XP.XOutputFormatString(*x),
     'pr': lambda x:XP.XPreservesMemory(*x),
+    'pv': lambda x:XP.XPreservesValue(*x),
     'prm': lambda x:XP.XPreservesAllMemory(*x),
     'prn': lambda x:XP.XPreservesNullTermination(*x),
     'prv': lambda x:XP.XPreservesValidity(*x),
     'rep': lambda x:XP.XRepositioned(*x),
     'x': lambda x:XP.XRelationalExpr(*x),
     'cf': lambda x:XP.XConfined(*x),
+    'tt': lambda x:XP.XTainted(*x),
     'up': lambda x:XP.XUniquePointer(*x)
     }
     
@@ -251,6 +253,10 @@ class InterfaceDictionary(object):
         if p.is_preserves_all_memory():
             def f(index,key): return XP.XPreservesAllMemory(self,index,p.tags,p.args)
             return self.xpredicate_table.add(IT.get_key(p.tags,p.args),f)
+        if p.is_tainted():
+            args = [ self.index_s_term(p.get_term()) ]
+            def f(index,key): return XP.XTainted(self,index,p.tags,args)
+            return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
         print('Index xpredicate not found for ' + p.tags[0])
         exit(1)
         
@@ -335,6 +341,11 @@ class InterfaceDictionary(object):
             args = [ pt(terms[0]) ]
             tags = [ 'i' ]
             def f(index,key): return XP.XInitialized(self,index,tags,args)
+            return self.xpredicate_table.add(IT.get_key(tags,args),f)
+        if op == 'tainted':
+            args = [ pt(terms[0]) ]
+            tags = [ 'tt' ]
+            def f(index,key): return XP.XTainted(self,index,tags,args)
             return self.xpredicate_table.add(IT.get_key(tags,args),f)
         else:
             print('Parse mathml xpredicate not found for ' + op)

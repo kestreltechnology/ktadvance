@@ -61,8 +61,10 @@ class XPredicate(CD.CDictionaryRecord):
     def is_preserves_memory(self): return False
     def is_preserves_null_termination(self): return False
     def is_preserves_validity(self): return False
+    def is_preserves_value(self): return False
     def is_relational_expr(self): return False
     def is_repositioned(self): return False
+    def is_tainted(self): return False
     def is_unique_pointer(self): return False
 
     def write_mathml(self,cnode,signature):
@@ -337,7 +339,19 @@ class XPreservesValidity(XPredicate):
 
     def is_preserves_validity(self): return True
 
-    def __str__(self): return 'preserves-validity(' + str(self.get_term()) + ')' 
+    def __str__(self): return 'preserves-validity(' + str(self.get_term()) + ')'
+
+
+class XPreservesValue(XPredicate):
+
+    def __init__(self,cd,index,tags,args):
+        XPredicate.__init__(self,cd,index,tags,args)
+
+    def get_term(self): return self.get_iterm(0)
+
+    def is_preserves_value(self): return True
+
+    def __str__(self): return 'preserves-value(' + str(self.get_term()) + ')'
 
 
 class XRelationalExpr(XPredicate):
@@ -376,6 +390,18 @@ class XRepositioned(XPredicate):
     def is_repositioned(self): return True
 
     def __str__(self): return 'repositioned(' + str(self.get_term()) + ')'
+
+
+class XTainted(XPredicate):
+
+    def __init__(self,cd,index,tags,args):
+        XPredicate.__init__(self,cd,index,tags,args)
+
+    def get_term(self): return self.get_iterm(0)
+
+    def is_tainted(self): return True
+
+    def __str__(self): return 'tainted(' + str(self.get_term()) + ')'
 
 
 class XUniquePointer(XPredicate):
