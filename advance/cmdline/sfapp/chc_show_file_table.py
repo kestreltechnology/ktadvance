@@ -28,27 +28,28 @@
 import argparse
 import os
 
-import advance.reporting.ProofObligations as RP
 import advance.util.printutil as UP
+import advance.util.fileutil as UF
+import advance.reporting.DictionaryTables as DT
 
 from advance.app.CApplication import CApplication
+from advance.app.CApplication import CFileNotFoundException
+
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('path',help='path to directory that holds the semantics directory')
-    parser.add_argument('cfile',help='filename of c file')
-    parser.add_argument('cfunction',help='name of function to report on')
-    parser.add_argument('--open',help='only show open proof obligations',action='store_true')
-    parser.add_argument('--violations',help='only show proof obligations that are violated',
-                            action='store_true')
+    parser.add_argument('path',help='directory that holds the semantics directory')
+    parser.add_argument('cfile',help='name of c file')
+    parser.add_argument('tablename',help='name of the table to be shown')
     args = parser.parse_args()
     return args
 
 if __name__ == '__main__':
 
     args = parse()
-    cpath = os.path.abspath(args.path)
 
+    cpath = os.path.abspath(args.path)
+    
     if not os.path.isdir(cpath):
         print(UP.cpath_not_found_err_msg(cpath))
         exit(1)
@@ -56,29 +57,20 @@ if __name__ == '__main__':
     if not os.path.isfile(os.path.join(cpath,args.cfile)):
         print(UP.cfile_not_found_err_msg(cpath,args.cfile))
         exit(1)
-        
-    sempath = os.path.join(args.path, 'semantics')
 
+    sempath = os.path.join(cpath,'semantics')
     if not os.path.isdir(sempath):
         print(UP.semantics_not_found_err_msg(cpath))
         exit(1)
         
-    cfapp = CApplication(sempath,args.cfile)
-    cfile = cfapp.get_cfile()
-
-    if not cfile.has_function_by_name(args.cfunction):
-        print(UP.cfunction_not_found_err_sg(cpath,args.cfile,args.cfunction))
+    try:
+        cfapp = CApplication(sempath,args.cfile)
+        cfile = cfapp.get_cfile()
+    except CFileNotFoundException as e:
+        print(str(e))
         exit(1)
 
-    cfunction = cfile.get_function_by_name(args.cfunction)
+    cfile = cfapp.get_cfile()
 
-    if args.open and args.violations:
-        def pofilter(po):return not po.is_closed() or po.is_violated()
-    elif args.open:
-        def pofilter(po):return not po.is_closed()
-    elif args.violations:
-        def pofilter(po):return po.is_violated()
-    else:
-        def pofilter(po):return True
+    print(DT.get_file_table(cfile,args.tablename))
 
-    print(RP.function_code_tostring(cfunction,pofilter=pofilter))
