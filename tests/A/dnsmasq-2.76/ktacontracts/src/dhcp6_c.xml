@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-05-18 17:30:53.235856"/>
+  <cfile name="src/dhcp6">
+    <data-structures/>
+    <functions>
+      <function name="complete_context6">
+        <parameters>
+          <par name="local" nr="1"/>
+          <par name="prefix" nr="2"/>
+          <par name="scope" nr="3"/>
+          <par name="if_index" nr="4"/>
+          <par name="flags" nr="5"/>
+          <par name="preferred" nr="6"/>
+          <par name="valid" nr="7"/>
+          <par name="vparam" nr="8"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="config_find_by_address6">
+        <parameters>
+          <par name="configs" nr="1"/>
+          <par name="net" nr="2"/>
+          <par name="prefix" nr="3"/>
+          <par name="addr" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply><addressed-value/><return/><field fname="flags"/></apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="make_duid">
+        <parameters>
+          <par name="now" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="config_valid">
+        <parameters>
+          <par name="config" nr="1"/>
+          <par name="context" nr="2"/>
+          <par name="addr" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="dhcp_construct_contexts">
+        <parameters>
+          <par name="now" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="dhcp6_init">
+        <parameters/>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="make_duid1">
+        <parameters>
+          <par name="index___0" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="mac" nr="3"/>
+          <par name="maclen" nr="4"/>
+          <par name="parm" nr="5"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="dhcp6_packet">
+        <parameters>
+          <par name="now" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="address6_available">
+        <parameters>
+          <par name="context" nr="1"/>
+          <par name="taddr" nr="2"/>
+          <par name="netids" nr="3"/>
+          <par name="plain_range" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="address6_allocate">
+        <parameters>
+          <par name="context" nr="1"/>
+          <par name="clid" nr="2"/>
+          <par name="clid_len" nr="3"/>
+          <par name="temp_addr" nr="4"/>
+          <par name="iaid" nr="5"/>
+          <par name="serial" nr="6"/>
+          <par name="netids" nr="7"/>
+          <par name="plain_range" nr="8"/>
+          <par name="ans" nr="9"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="construct_worker">
+        <parameters>
+          <par name="local" nr="1"/>
+          <par name="prefix" nr="2"/>
+          <par name="scope" nr="3"/>
+          <par name="if_index" nr="4"/>
+          <par name="flags" nr="5"/>
+          <par name="preferred" nr="6"/>
+          <par name="valid" nr="7"/>
+          <par name="vparam" nr="8"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="get_client_mac">
+        <parameters>
+          <par name="client" nr="1"/>
+          <par name="iface" nr="2"/>
+          <par name="mac" nr="3"/>
+          <par name="maclenp" nr="4"/>
+          <par name="mactypep" nr="5"/>
+          <par name="now" nr="6"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="address6_valid">
+        <parameters>
+          <par name="context" nr="1"/>
+          <par name="taddr" nr="2"/>
+          <par name="netids" nr="3"/>
+          <par name="plain_range" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

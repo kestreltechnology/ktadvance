@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-05-18 17:30:59.269520"/>
+  <cfile name="src/dhcp-common">
+    <data-structures/>
+    <functions>
+      <function name="bindtodevice">
+        <parameters>
+          <par name="device" nr="1"/>
+          <par name="fd" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="recv_dhcp_packet">
+        <parameters>
+          <par name="fd" nr="1"/>
+          <par name="msg" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="display_opts6">
+        <parameters/>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="run_tag_if">
+        <parameters>
+          <par name="tags" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="display_opts">
+        <parameters/>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="log_context">
+        <parameters>
+          <par name="family" nr="1"/>
+          <par name="context" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="dhcp_update_configs">
+        <parameters>
+          <par name="configs" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="option_filter">
+        <parameters>
+          <par name="tags" nr="1"/>
+          <par name="context_tags" nr="2"/>
+          <par name="opts" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lookup_dhcp_opt">
+        <parameters>
+          <par name="prot" nr="1"/>
+          <par name="name" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="log_relay">
+        <parameters>
+          <par name="family" nr="1"/>
+          <par name="relay" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="is_config_in_context">
+        <parameters>
+          <par name="context" nr="1"/>
+          <par name="config" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="find_config">
+        <parameters>
+          <par name="configs" nr="1"/>
+          <par name="context" nr="2"/>
+          <par name="clid" nr="3"/>
+          <par name="clid_len" nr="4"/>
+          <par name="hwaddr" nr="5"/>
+          <par name="hw_len" nr="6"/>
+          <par name="hw_type" nr="7"/>
+          <par name="hostname" nr="8"/>
+        </parameters>
+        <postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply><addressed-value/><return/><field fname="flags"/></apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply><addressed-value/><return/><field fname="hostname"/></apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply><addressed-value/><return/><field fname="addr"/></apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply><addressed-value/><return/><field fname="hwaddr"/></apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply><addressed-value/><return/><field fname="netid"/></apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply><addressed-value/><return/><field fname="domain"/></apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply><addressed-value/><return/><field fname="netid"/></apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lookup_dhcp_len">
+        <parameters>
+          <par name="prot" nr="1"/>
+          <par name="val" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="match_netid">
+        <parameters>
+          <par name="check" nr="1"/>
+          <par name="pool" nr="2"/>
+          <par name="tagnotneeded" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="option_string">
+        <parameters>
+          <par name="prot" nr="1"/>
+          <par name="opt" nr="2"/>
+          <par name="val" nr="3"/>
+          <par name="opt_len" nr="4"/>
+          <par name="buf" nr="5"/>
+          <par name="buf_len" nr="6"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="strip_hostname">
+        <parameters>
+          <par name="hostname" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="match_bytes">
+        <parameters>
+          <par name="o" nr="1"/>
+          <par name="p" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="config_has_mac">
+        <parameters>
+          <par name="config" nr="1"/>
+          <par name="hwaddr" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="type" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="log_tags">
+        <parameters>
+          <par name="netid" nr="1"/>
+          <par name="xid" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="whichdevice">
+        <parameters/>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="dhcp_common_init">
+        <parameters/>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

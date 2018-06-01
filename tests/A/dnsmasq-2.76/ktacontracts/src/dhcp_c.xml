@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-05-18 17:30:52.694909"/>
+  <cfile name="src/dhcp">
+    <data-structures/>
+    <functions>
+      <function name="config_find_by_address">
+        <parameters>
+          <par name="configs" nr="1"/>
+          <par name="addr" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply><addressed-value/><return/><field fname="flags"/></apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="host_from_dns">
+        <parameters>
+          <par name="addr" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="address_available">
+        <parameters>
+          <par name="context" nr="1"/>
+          <par name="taddr" nr="2"/>
+          <par name="netids" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="check_listen_addrs">
+        <parameters>
+          <par name="local" nr="1"/>
+          <par name="if_index" nr="2"/>
+          <par name="label" nr="3"/>
+          <par name="netmask" nr="4"/>
+          <par name="broadcast" nr="5"/>
+          <par name="vparam" nr="6"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="narrow_context">
+        <parameters>
+          <par name="context" nr="1"/>
+          <par name="taddr" nr="2"/>
+          <par name="netids" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="relay_upstream4">
+        <parameters>
+          <par name="relay" nr="1"/>
+          <par name="mess" nr="2"/>
+          <par name="sz" nr="3"/>
+          <par name="iface_index" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="relay_reply4">
+        <parameters>
+          <par name="mess" nr="1"/>
+          <par name="arrival_interface" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="make_fd">
+        <parameters>
+          <par name="port" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="dhcp_init">
+        <parameters/>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="address_allocate">
+        <parameters>
+          <par name="context" nr="1"/>
+          <par name="addrp" nr="2"/>
+          <par name="hwaddr" nr="3"/>
+          <par name="hw_len" nr="4"/>
+          <par name="netids" nr="5"/>
+          <par name="now" nr="6"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="complete_context">
+        <parameters>
+          <par name="local" nr="1"/>
+          <par name="if_index" nr="2"/>
+          <par name="label" nr="3"/>
+          <par name="netmask" nr="4"/>
+          <par name="broadcast" nr="5"/>
+          <par name="vparam" nr="6"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="dhcp_read_ethers">
+        <parameters/>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="dhcp_packet">
+        <parameters>
+          <par name="now" nr="1"/>
+          <par name="pxe_fd" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

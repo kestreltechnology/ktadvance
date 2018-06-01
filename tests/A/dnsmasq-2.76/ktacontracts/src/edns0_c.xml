@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-05-18 17:31:11.015136"/>
+  <cfile name="src/edns0">
+    <data-structures/>
+    <functions>
+      <function name="add_dns_client">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="plen" nr="2"/>
+          <par name="limit" nr="3"/>
+          <par name="l3" nr="4"/>
+          <par name="now" nr="5"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="check_source">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="plen" nr="2"/>
+          <par name="pseudoheader" nr="3"/>
+          <par name="peer" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="add_pseudoheader">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="plen" nr="2"/>
+          <par name="limit" nr="3"/>
+          <par name="udp_sz" nr="4"/>
+          <par name="optno" nr="5"/>
+          <par name="opt" nr="6"/>
+          <par name="optlen" nr="7"/>
+          <par name="set_do" nr="8"/>
+          <par name="replace" nr="9"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="find_pseudoheader">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="plen" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="p" nr="4"/>
+          <par name="is_sign" nr="5"/>
+          <par name="is_last" nr="6"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="add_do_bit">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="plen" nr="2"/>
+          <par name="limit" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="add_source_addr">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="plen" nr="2"/>
+          <par name="limit" nr="3"/>
+          <par name="source" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="char64">
+        <parameters>
+          <par name="c" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="add_mac">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="plen" nr="2"/>
+          <par name="limit" nr="3"/>
+          <par name="l3" nr="4"/>
+          <par name="now" nr="5"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="encoder">
+        <parameters>
+          <par name="in" nr="1"/>
+          <par name="out" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="add_edns0_config">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="plen" nr="2"/>
+          <par name="limit" nr="3"/>
+          <par name="source" nr="4"/>
+          <par name="now" nr="5"/>
+          <par name="check_subnet" nr="6"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="calc_subnet_opt">
+        <parameters>
+          <par name="opt" nr="1"/>
+          <par name="source" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="get_addrp">
+        <parameters>
+          <par name="addr" nr="1"/>
+          <par name="family" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

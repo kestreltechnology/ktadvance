@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-05-18 17:30:51.829369"/>
+  <cfile name="src/tftp">
+    <data-structures/>
+    <functions>
+      <function name="tftp_request">
+        <parameters>
+          <par name="listen___0" nr="1"/>
+          <par name="now" nr="2"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="check_tftp_listeners">
+        <parameters>
+          <par name="now" nr="1"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="get_block">
+        <parameters>
+          <par name="packet" nr="1"/>
+          <par name="transfer" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="do_tftp_script_run">
+        <parameters/>
+        <postconditions/>
+      </function>
+      <function name="next">
+        <parameters>
+          <par name="p" nr="1"/>
+          <par name="end" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="sanitise">
+        <parameters>
+          <par name="buf" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="check_tftp_fileperm">
+        <parameters>
+          <par name="len" nr="1"/>
+          <par name="prefix" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="tftp_err_oops">
+        <parameters>
+          <par name="packet" nr="1"/>
+          <par name="file" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="free_transfer">
+        <parameters>
+          <par name="transfer" nr="1"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="tftp_err">
+        <parameters>
+          <par name="err" nr="1"/>
+          <par name="packet" nr="2"/>
+          <par name="message" nr="3"/>
+          <par name="file" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-05-18 17:30:57.524562"/>
+  <cfile name="src/forward">
+    <data-structures/>
+    <functions>
+      <function name="receive_query">
+        <parameters>
+          <par name="listen___0" nr="1"/>
+          <par name="now" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="allocate_frec">
+        <parameters>
+          <par name="now" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="send_from">
+        <parameters>
+          <par name="fd" nr="1"/>
+          <par name="nowild" nr="2"/>
+          <par name="packet" nr="3"/>
+          <par name="len" nr="4"/>
+          <par name="to" nr="5"/>
+          <par name="source" nr="6"/>
+          <par name="iface" nr="7"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="resend_query">
+        <parameters/>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="allocate_rfd">
+        <parameters>
+          <par name="family" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="search_servers">
+        <parameters>
+          <par name="now" nr="1"/>
+          <par name="addrpp" nr="2"/>
+          <par name="qtype" nr="3"/>
+          <par name="qdomain" nr="4"/>
+          <par name="type" nr="5"/>
+          <par name="domain" nr="6"/>
+          <par name="norebind" nr="7"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="tcp_request">
+        <parameters>
+          <par name="confd" nr="1"/>
+          <par name="now" nr="2"/>
+          <par name="local_addr" nr="3"/>
+          <par name="netmask" nr="4"/>
+          <par name="auth_dns" nr="5"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="free_rfd">
+        <parameters>
+          <par name="rfd" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="process_reply">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="now" nr="2"/>
+          <par name="server" nr="3"/>
+          <par name="n" nr="4"/>
+          <par name="check_rebind" nr="5"/>
+          <par name="no_cache" nr="6"/>
+          <par name="cache_secure" nr="7"/>
+          <par name="bogusanswer" nr="8"/>
+          <par name="ad_reqd" nr="9"/>
+          <par name="do_bit" nr="10"/>
+          <par name="added_pheader" nr="11"/>
+          <par name="check_subnet" nr="12"/>
+          <par name="query_source" nr="13"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="server_gone">
+        <parameters>
+          <par name="server" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lookup_frec">
+        <parameters>
+          <par name="id" nr="1"/>
+          <par name="hash" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply><addressed-value/><return/><field fname="flags"/></apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply><addressed-value/><return/><field fname="sentto"/></apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply><addressed-value/><return/><field fname="orig_id"/></apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="get_new_frec">
+        <parameters>
+          <par name="now" nr="1"/>
+          <par name="wait___0" nr="2"/>
+          <par name="force" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lookup_frec_by_sender">
+        <parameters>
+          <par name="id" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="hash" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="forward_query">
+        <parameters>
+          <par name="udpfd" nr="1"/>
+          <par name="udpaddr" nr="2"/>
+          <par name="dst_addr" nr="3"/>
+          <par name="dst_iface" nr="4"/>
+          <par name="header" nr="5"/>
+          <par name="plen" nr="6"/>
+          <par name="now" nr="7"/>
+          <par name="forward" nr="8"/>
+          <par name="ad_reqd" nr="9"/>
+          <par name="do_bit" nr="10"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="get_id">
+        <parameters/>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="reply_query">
+        <parameters>
+          <par name="fd" nr="1"/>
+          <par name="family" nr="2"/>
+          <par name="now" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="free_frec">
+        <parameters>
+          <par name="f" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

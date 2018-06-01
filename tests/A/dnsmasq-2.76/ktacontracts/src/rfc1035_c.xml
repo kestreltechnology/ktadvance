@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-05-18 17:30:54.861271"/>
+  <cfile name="src/rfc1035">
+    <data-structures/>
+    <functions>
+      <function name="extract_name">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="plen" nr="2"/>
+          <par name="pp" nr="3"/>
+          <par name="name" nr="4"/>
+          <par name="isExtract" nr="5"/>
+          <par name="extrabytes" nr="6"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="find_soa">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="qlen" nr="2"/>
+          <par name="name" nr="3"/>
+          <par name="doctored" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="private_net">
+        <parameters>
+          <par name="addr" nr="1"/>
+          <par name="ban_localhost" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="check_for_ignored_address">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="qlen" nr="2"/>
+          <par name="baddr" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="in_arpa_name_2_addr">
+        <parameters>
+          <par name="namein" nr="1"/>
+          <par name="addrp" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="crec_ttl">
+        <parameters>
+          <par name="crecp" nr="1"/>
+          <par name="now" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="skip_name">
+        <parameters>
+          <par name="ansp" nr="1"/>
+          <par name="header" nr="2"/>
+          <par name="plen" nr="3"/>
+          <par name="extrabytes" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="check_for_local_domain">
+        <parameters>
+          <par name="name" nr="1"/>
+          <par name="now" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="setup_reply">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="qlen" nr="2"/>
+          <par name="addrp" nr="3"/>
+          <par name="flags" nr="4"/>
+          <par name="ttl" nr="5"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="skip_questions">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="plen" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="add_resource_record">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="limit" nr="2"/>
+          <par name="truncp" nr="3"/>
+          <par name="nameoffset" nr="4"/>
+          <par name="pp" nr="5"/>
+          <par name="ttl" nr="6"/>
+          <par name="offset" nr="7"/>
+          <par name="type" nr="8"/>
+          <par name="class" nr="9"/>
+          <par name="format" nr="10"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="questions_crc">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="plen" nr="2"/>
+          <par name="name" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="answer_request">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="limit" nr="2"/>
+          <par name="qlen" nr="3"/>
+          <par name="local_addr" nr="4"/>
+          <par name="local_netmask" nr="5"/>
+          <par name="now" nr="6"/>
+          <par name="ad_reqd" nr="7"/>
+          <par name="do_bit" nr="8"/>
+          <par name="have_pseudoheader" nr="9"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="do_doctor">
+        <parameters>
+          <par name="p" nr="1"/>
+          <par name="count" nr="2"/>
+          <par name="header" nr="3"/>
+          <par name="qlen" nr="4"/>
+          <par name="name" nr="5"/>
+          <par name="doctored" nr="6"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="skip_section">
+        <parameters>
+          <par name="ansp" nr="1"/>
+          <par name="count" nr="2"/>
+          <par name="header" nr="3"/>
+          <par name="plen" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="extract_request">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="qlen" nr="2"/>
+          <par name="name" nr="3"/>
+          <par name="typep" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="extract_addresses">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="qlen" nr="2"/>
+          <par name="name" nr="3"/>
+          <par name="now" nr="4"/>
+          <par name="ipsets" nr="5"/>
+          <par name="is_sign" nr="6"/>
+          <par name="check_rebind" nr="7"/>
+          <par name="no_cache_dnssec" nr="8"/>
+          <par name="secure" nr="9"/>
+          <par name="doctored" nr="10"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="resize_packet">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="plen" nr="2"/>
+          <par name="pheader" nr="3"/>
+          <par name="hlen" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="check_for_bogus_wildcard">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="qlen" nr="2"/>
+          <par name="name" nr="3"/>
+          <par name="baddr" nr="4"/>
+          <par name="now" nr="5"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-05-18 17:31:10.243413"/>
+  <cfile name="src/rfc2131">
+    <data-structures/>
+    <functions>
+      <function name="do_opt">
+        <parameters>
+          <par name="opt" nr="1"/>
+          <par name="p" nr="2"/>
+          <par name="context" nr="3"/>
+          <par name="null_term" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="option_find1">
+        <parameters>
+          <par name="p" nr="1"/>
+          <par name="end" nr="2"/>
+          <par name="opt" nr="3"/>
+          <par name="minsize" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="dhcp_packet_size">
+        <parameters>
+          <par name="mess" nr="1"/>
+          <par name="agent_id" nr="2"/>
+          <par name="real_end" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="dhcp_reply">
+        <parameters>
+          <par name="context" nr="1"/>
+          <par name="iface_name" nr="2"/>
+          <par name="int_index" nr="3"/>
+          <par name="sz" nr="4"/>
+          <par name="now" nr="5"/>
+          <par name="unicast_dest" nr="6"/>
+          <par name="is_inform" nr="7"/>
+          <par name="pxe" nr="8"/>
+          <par name="fallback" nr="9"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="clear_packet">
+        <parameters>
+          <par name="mess" nr="1"/>
+          <par name="end" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="option_find2">
+        <parameters>
+          <par name="opt" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply><addressed-value/><return/><field fname="val"/></apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply><addressed-value/><return/><field fname="flags"/></apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="in_list">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="opt" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="extended_hwaddr">
+        <parameters>
+          <par name="hwtype" nr="1"/>
+          <par name="hwlen" nr="2"/>
+          <par name="hwaddr" nr="3"/>
+          <par name="clid_len" nr="4"/>
+          <par name="clid" nr="5"/>
+          <par name="len_out" nr="6"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="dhcp_skip_opts">
+        <parameters>
+          <par name="start" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="find_overload">
+        <parameters>
+          <par name="mess" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="add_extradata_opt">
+        <parameters>
+          <par name="lease" nr="1"/>
+          <par name="opt" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="sanitise">
+        <parameters>
+          <par name="opt" nr="1"/>
+          <par name="buf" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="do_options">
+        <parameters>
+          <par name="context" nr="1"/>
+          <par name="mess" nr="2"/>
+          <par name="end" nr="3"/>
+          <par name="req_options" nr="4"/>
+          <par name="hostname" nr="5"/>
+          <par name="domain" nr="6"/>
+          <par name="netid" nr="7"/>
+          <par name="subnet_addr" nr="8"/>
+          <par name="fqdn_flags" nr="9"/>
+          <par name="null_term" nr="10"/>
+          <par name="pxe_arch" nr="11"/>
+          <par name="uuid" nr="12"/>
+          <par name="vendor_class_len" nr="13"/>
+          <par name="now" nr="14"/>
+          <par name="lease_time" nr="15"/>
+          <par name="fuzz" nr="16"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="server_id">
+        <parameters>
+          <par name="context" nr="1"/>
+          <par name="override" nr="2"/>
+          <par name="fallback" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="match_vendor_opts">
+        <parameters>
+          <par name="opt" nr="1"/>
+          <par name="dopt" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="calc_time">
+        <parameters>
+          <par name="context" nr="1"/>
+          <par name="config" nr="2"/>
+          <par name="opt" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="do_encap_opts">
+        <parameters>
+          <par name="opt" nr="1"/>
+          <par name="encap" nr="2"/>
+          <par name="flag" nr="3"/>
+          <par name="mess" nr="4"/>
+          <par name="end" nr="5"/>
+          <par name="null_term" nr="6"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="option_put">
+        <parameters>
+          <par name="mess" nr="1"/>
+          <par name="end" nr="2"/>
+          <par name="opt" nr="3"/>
+          <par name="len" nr="4"/>
+          <par name="val" nr="5"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="free_space">
+        <parameters>
+          <par name="mess" nr="1"/>
+          <par name="end" nr="2"/>
+          <par name="opt" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="pxe_misc">
+        <parameters>
+          <par name="mess" nr="1"/>
+          <par name="end" nr="2"/>
+          <par name="uuid" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="prune_vendor_opts">
+        <parameters>
+          <par name="netid" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="option_put_string">
+        <parameters>
+          <par name="mess" nr="1"/>
+          <par name="end" nr="2"/>
+          <par name="opt" nr="3"/>
+          <par name="string" nr="4"/>
+          <par name="null_term" nr="5"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="option_addr">
+        <parameters>
+          <par name="opt" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="pxe_opts">
+        <parameters>
+          <par name="pxe_arch" nr="1"/>
+          <par name="netid" nr="2"/>
+          <par name="local" nr="3"/>
+          <par name="now" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="find_boot">
+        <parameters>
+          <par name="netid" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="option_uint">
+        <parameters>
+          <par name="opt" nr="1"/>
+          <par name="offset" nr="2"/>
+          <par name="size" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="pxe_uefi_workaround">
+        <parameters>
+          <par name="pxe_arch" nr="1"/>
+          <par name="netid" nr="2"/>
+          <par name="mess" nr="3"/>
+          <par name="local" nr="4"/>
+          <par name="now" nr="5"/>
+          <par name="pxe" nr="6"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="log_packet">
+        <parameters>
+          <par name="type" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="ext_mac" nr="3"/>
+          <par name="mac_len" nr="4"/>
+          <par name="interface" nr="5"/>
+          <par name="string" nr="6"/>
+          <par name="err" nr="7"/>
+          <par name="xid" nr="8"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="log_options">
+        <parameters>
+          <par name="start" nr="1"/>
+          <par name="xid" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="option_find">
+        <parameters>
+          <par name="mess" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="opt_type" nr="3"/>
+          <par name="minsize" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-05-18 17:30:56.559963"/>
+  <cfile name="src/lease">
+    <data-structures/>
+    <functions>
+      <function name="lease6_find">
+        <parameters>
+          <par name="clid" nr="1"/>
+          <par name="clid_len" nr="2"/>
+          <par name="lease_type" nr="3"/>
+          <par name="iaid" nr="4"/>
+          <par name="addr" nr="5"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease6_reset">
+        <parameters/>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="kill_name">
+        <parameters>
+          <par name="lease" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease6_find_by_client">
+        <parameters>
+          <par name="first" nr="1"/>
+          <par name="lease_type" nr="2"/>
+          <par name="clid" nr="3"/>
+          <par name="clid_len" nr="4"/>
+          <par name="iaid" nr="5"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_init">
+        <parameters>
+          <par name="now" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease6_find_by_addr">
+        <parameters>
+          <par name="net" nr="1"/>
+          <par name="prefix" nr="2"/>
+          <par name="addr" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_find_max_addr6">
+        <parameters>
+          <par name="context" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_ping_reply">
+        <parameters>
+          <par name="sender" nr="1"/>
+          <par name="packet" nr="2"/>
+          <par name="interface" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease4_allocate">
+        <parameters>
+          <par name="addr" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_update_slaac">
+        <parameters>
+          <par name="now" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="find_interface_v4">
+        <parameters>
+          <par name="local" nr="1"/>
+          <par name="if_index" nr="2"/>
+          <par name="label" nr="3"/>
+          <par name="netmask" nr="4"/>
+          <par name="broadcast" nr="5"/>
+          <par name="vparam" nr="6"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_set_iaid">
+        <parameters>
+          <par name="lease" nr="1"/>
+          <par name="iaid" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_make_duid">
+        <parameters>
+          <par name="now" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="find_interface_v6">
+        <parameters>
+          <par name="local" nr="1"/>
+          <par name="prefix" nr="2"/>
+          <par name="scope" nr="3"/>
+          <par name="if_index" nr="4"/>
+          <par name="flags" nr="5"/>
+          <par name="preferred" nr="6"/>
+          <par name="valid" nr="7"/>
+          <par name="vparam" nr="8"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_set_hwaddr">
+        <parameters>
+          <par name="lease" nr="1"/>
+          <par name="hwaddr" nr="2"/>
+          <par name="clid" nr="3"/>
+          <par name="hw_len" nr="4"/>
+          <par name="hw_type" nr="5"/>
+          <par name="clid_len" nr="6"/>
+          <par name="now" nr="7"/>
+          <par name="force" nr="8"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_set_hostname">
+        <parameters>
+          <par name="lease" nr="1"/>
+          <par name="name" nr="2"/>
+          <par name="auth" nr="3"/>
+          <par name="domain" nr="4"/>
+          <par name="config_domain" nr="5"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_set_expires">
+        <parameters>
+          <par name="lease" nr="1"/>
+          <par name="len" nr="2"/>
+          <par name="now" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_allocate">
+        <parameters/>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_set_interface">
+        <parameters>
+          <par name="lease" nr="1"/>
+          <par name="interface" nr="2"/>
+          <par name="now" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_find_by_client">
+        <parameters>
+          <par name="hwaddr" nr="1"/>
+          <par name="hw_len" nr="2"/>
+          <par name="hw_type" nr="3"/>
+          <par name="clid" nr="4"/>
+          <par name="clid_len" nr="5"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_find_by_addr">
+        <parameters>
+          <par name="addr" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_find_max_addr">
+        <parameters>
+          <par name="context" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_update_file">
+        <parameters>
+          <par name="now" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_prune">
+        <parameters>
+          <par name="target" nr="1"/>
+          <par name="now" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_update_from_configs">
+        <parameters/>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="ourprintf">
+        <parameters>
+          <par name="errp" nr="1"/>
+          <par name="format" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="do_script_run">
+        <parameters>
+          <par name="now" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="rerun_scripts">
+        <parameters/>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease6_allocate">
+        <parameters>
+          <par name="addrp" nr="1"/>
+          <par name="lease_type" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_find_interfaces">
+        <parameters>
+          <par name="now" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_update_dns">
+        <parameters>
+          <par name="force" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="lease_add_extradata">
+        <parameters>
+          <par name="lease" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="delim" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

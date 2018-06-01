@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-05-18 17:31:06.826745"/>
+  <cfile name="src/rfc3315">
+    <data-structures/>
+    <functions>
+      <function name="check_ia">
+        <parameters>
+          <par name="state" nr="1"/>
+          <par name="opt" nr="2"/>
+          <par name="endp" nr="3"/>
+          <par name="ia_option" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="build_ia">
+        <parameters>
+          <par name="state" nr="1"/>
+          <par name="t1cntr" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="end_ia">
+        <parameters>
+          <par name="t1cntr" nr="1"/>
+          <par name="min_time" nr="2"/>
+          <par name="do_fuzz" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="mark_context_used">
+        <parameters>
+          <par name="state" nr="1"/>
+          <par name="addr" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="mark_config_used">
+        <parameters>
+          <par name="context" nr="1"/>
+          <par name="addr" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="check_address">
+        <parameters>
+          <par name="state" nr="1"/>
+          <par name="addr" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="add_address">
+        <parameters>
+          <par name="state" nr="1"/>
+          <par name="context" nr="2"/>
+          <par name="lease_time" nr="3"/>
+          <par name="ia_option" nr="4"/>
+          <par name="min_time" nr="5"/>
+          <par name="addr" nr="6"/>
+          <par name="now" nr="7"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="dhcp6_maybe_relay">
+        <parameters>
+          <par name="state" nr="1"/>
+          <par name="inbuff" nr="2"/>
+          <par name="sz" nr="3"/>
+          <par name="client_addr" nr="4"/>
+          <par name="is_unicast" nr="5"/>
+          <par name="now" nr="6"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="add_local_addrs">
+        <parameters>
+          <par name="context" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="add_options">
+        <parameters>
+          <par name="state" nr="1"/>
+          <par name="do_refresh" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="dhcp6_no_relay">
+        <parameters>
+          <par name="state" nr="1"/>
+          <par name="msg_type" nr="2"/>
+          <par name="inbuff" nr="3"/>
+          <par name="sz" nr="4"/>
+          <par name="is_unicast" nr="5"/>
+          <par name="now" nr="6"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="calculate_times">
+        <parameters>
+          <par name="context" nr="1"/>
+          <par name="min_time" nr="2"/>
+          <par name="valid_timep" nr="3"/>
+          <par name="preferred_timep" nr="4"/>
+          <par name="lease_time" nr="5"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="log6_opts">
+        <parameters>
+          <par name="nest" nr="1"/>
+          <par name="xid" nr="2"/>
+          <par name="start_opts" nr="3"/>
+          <par name="end_opts" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="log6_packet">
+        <parameters>
+          <par name="state" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="string" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="update_leases">
+        <parameters>
+          <par name="state" nr="1"/>
+          <par name="context" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="lease_time" nr="4"/>
+          <par name="now" nr="5"/>
+        </parameters>
+        <postconditions/>
+      </function>
+      <function name="log6_quiet">
+        <parameters>
+          <par name="state" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="string" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="get_context_tag">
+        <parameters>
+          <par name="state" nr="1"/>
+          <par name="context" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="dhcp6_reply">
+        <parameters>
+          <par name="context" nr="1"/>
+          <par name="interface" nr="2"/>
+          <par name="iface_name" nr="3"/>
+          <par name="fallback" nr="4"/>
+          <par name="ll_addr" nr="5"/>
+          <par name="ula_addr" nr="6"/>
+          <par name="sz" nr="7"/>
+          <par name="client_addr" nr="8"/>
+          <par name="now" nr="9"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="opt6_find">
+        <parameters>
+          <par name="opts" nr="1"/>
+          <par name="end" nr="2"/>
+          <par name="search" nr="3"/>
+          <par name="minsize" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="opt6_next">
+        <parameters>
+          <par name="opts" nr="1"/>
+          <par name="end" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="relay_upstream6">
+        <parameters>
+          <par name="relay" nr="1"/>
+          <par name="sz" nr="2"/>
+          <par name="peer_address" nr="3"/>
+          <par name="scope_id" nr="4"/>
+          <par name="now" nr="5"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="opt6_uint">
+        <parameters>
+          <par name="opt" nr="1"/>
+          <par name="offset" nr="2"/>
+          <par name="size" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="relay_reply6">
+        <parameters>
+          <par name="peer" nr="1"/>
+          <par name="sz" nr="2"/>
+          <par name="arrival_interface" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
