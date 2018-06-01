@@ -273,13 +273,31 @@ class CFile(object):
         with open(filename,'w') as fp:
             fp.write(UX.doc_to_pretty(ET.ElementTree(xroot)))
 
-    def create_contract(self,contractpath,preservesmemory=False):
+    def create_contract(self,contractpath,preservesmemory=False,seed={}):
         cnode = ET.Element('cfile')
         cnode.set('name',self.name)
-        ffnode = ET.Element('functions')
         dnode = ET.Element('data-structures')
-        cnode.extend([ dnode, ffnode ])
-        for fn in self.get_functions():
+        cnode.append(dnode)
+        fseed = seed[self.name] if self.name in seed else None
+
+        # add seed global variables
+        if not fseed is None:
+            if 'globalvars' in fseed:
+                ggnode = ET.Element('global-variables')
+                cnode.append(ggnode)
+                for gvar in fseed['globalvars']:
+                    gnode = ET.Element('gvar')
+                    gnode.set('name',gvar)
+                    ggnode.append(gnode)
+                    for (gattr,gval) in fseed['globalvars'][gvar].items():
+                        gnode.set(gattr,gval)
+
+        ffnode = ET.Element('functions')
+        cnode.append(ffnode)
+        fseedfunctions = fseed['functions'] if (not fseed is None) and 'functions' in fseed else None
+
+        # add functions
+        for fn in sorted(self.get_functions(),key=lambda fn:fn.name):
             fnode = ET.Element('function')
             fnode.set('name',fn.name)
             ppnode = ET.Element('parameters')
@@ -289,6 +307,27 @@ class CFile(object):
                 pnode.set('nr',str(fn.formals[fid].vparam))
                 ppnode.append(pnode)
             fnode.append(ppnode)
+
+            # add pre/postconditions
+            if (not fseedfunctions is None) and fn.name in fseedfunctions:
+                fnseed = fseedfunctions[fn.name]
+                if 'postconditions' in fnseed:
+                    pcnode = ET.Element('postconditions')
+                    pcs = fnseed['postconditions']
+                    if 'value' in pcs:
+                        postnode = ET.Element('post')
+                        mathnode = ET.Element('math')
+                        applynode = ET.Element('apply')
+                        eqnode = ET.Element('eq')
+                        retnode = ET.Element('return')
+                        cnnode = ET.Element('cn')
+                        cnnode.text = pcs['value']
+                        applynode.extend( [eqnode, retnode,cnnode])
+                        mathnode.append(applynode)
+                        postnode.append(mathnode)
+                        pcnode.append(postnode)
+                fnode.append(pcnode)
+
             if preservesmemory:
                 pcnode = ET.Element('postconditions')
                 fnode.append(pcnode)
