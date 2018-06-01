@@ -60,6 +60,7 @@ po_predicate_names = {
     'no': 'no-overlap',
     'vc': 'value-constraint',
     'prm': 'preserved-all-memory',
+    'pv': 'preserves-value',
     'pre': 'precondition' }
 
 def get_predicate_tag(name):
@@ -898,3 +899,21 @@ class CPOPreservedAllMemory(CPOPredicate):
     def is_preserved_all_memory(self): return True
 
     def __str__(self): return self.get_tag()
+
+
+class CPOPreservedValue(CPOPredicate):
+    '''
+    tags:
+       0: 'pv'
+
+    args:
+       0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
+    def __str__(self): return 'preserves-value(' + str(self.get_exp()) + ')'

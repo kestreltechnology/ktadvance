@@ -64,7 +64,8 @@ po_predicate_constructors = {
     'no': lambda x:PO.CPONoOverlap(*x),
     'vc': lambda x:PO.CPOValueConstraint(*x),
     'prm': lambda x:PO.CPOPreservedAllMemory(*x),
-    'pre': lambda x:PO.CPOPredicate(*x)
+    'pre': lambda x:PO.CPOPredicate(*x),
+    'pv': lambda x:PO.CPOPreservedValue(*x)
     }
 
 class CFilePredicateDictionary(object):
