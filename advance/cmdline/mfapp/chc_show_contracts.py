@@ -30,6 +30,7 @@ import os
 import xml.etree.ElementTree as ET
 
 import advance.util.fileutil as UF
+import advance.util.printutil as UP
 import advance.util.xmlutil as UX
 
 from advance.app.CApplication import CApplication
