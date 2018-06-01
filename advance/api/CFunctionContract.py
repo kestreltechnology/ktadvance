@@ -43,6 +43,9 @@ class CFunctionContract(object):
         self.postconditions = {}              # index -> XPredicate
         self.preconditions = {}               # index -> XPredicate
         self._initialize(self.xnode)
+
+    def has_assertions(self):
+        return (len(self.postconditions) + len(self.preconditions)) > 0
         
     def _initialize_signature(self,ppnode):
         if ppnode is None:
@@ -74,13 +77,13 @@ class CFunctionContract(object):
 
     def __str__(self):
         lines = []
-        lines.append(' ')
         lines.append('Contract for ' + self.name)
         def add(t, pl):
             if len(pl) > 0:
                 lines.append(t)
                 for p in pl: lines.append('     ' + str(p))
         add('  Postconditions:', self.postconditions.values())
+        add('  Preconditions :', self.preconditions.values())
         return '\n'.join(lines)
                                             
 

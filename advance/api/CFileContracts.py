@@ -31,6 +31,20 @@ import advance.util.fileutil as UF
 
 from advance.api.CFunctionContract import CFunctionContract
 
+class CFileContractGlobalVar(object):
+    """User assertion about global variable."""
+
+    def __init__(self,gvinfo,gvalue=None,gconst=False):
+        self.gvinfo = gvinfo
+        self.gvalue = gvalue
+        self.gconst = gconst
+
+    def __str__(self):
+        pconst = ' (const)' if self.gconst else ''
+        pvalue = '' if self.gvalue is None else ': ' + str(self.gvalue) 
+        return self.gvinfo.vname + pvalue + pconst
+
+
 class CFileContracts(object):
     """User-provided contracts for the functions in a c-file."""
 
@@ -48,13 +62,25 @@ class CFileContracts(object):
 
     def has_function_contract(self,name): return name in self.functions
 
+    def has_assertions(self):
+        hasfns = any( [ f.has_assertions() for f in self.functions.values() ])
+        hasglobals = len(self.globalvariables) > 0
+        return hasfns or hasglobals
+
     def iter_functions(self,f):
         for fn in self.functions: f(self.functions[fn])
 
     def __str__(self):
         lines = []
-        for f in self.functions.values():
-            lines.append(str(f))
+        if self.has_assertions():
+            lines.append('\nFile: ' + self.cfile.name)
+            lines.append('-' * 80)
+            for cgv in self.globalvariables.values():
+                lines.append('  ' + str(cgv))
+            for f in self.functions.values():
+                if f.has_assertions():
+                    lines.append('\n' + str(f))
+            lines.append('-' * 80)
         return '\n'.join(lines)
 
     def _initialize(self,xnode):
@@ -64,7 +90,9 @@ class CFileContracts(object):
             for gnode in gvnode.findall('gvar'):
                 name = gnode.get('name')
                 gvinfo = self.cfile.declarations.get_global_varinfo_by_name(name)
-                self.globalvariables[name] = gvinfo
+                gconst = 'const' in gnode.attrib and gnode.get('const') == 'yes'
+                gvalue = int(gnode.get('value')) if 'value' in gnode.attrib else None
+                self.globalvariables[name] = CFileContractGlobalVar(gvinfo,gvalue,gconst)
         for fnode in xnode.find('functions').findall('function'):
             fn = CFunctionContract(self,fnode)
             self.functions[fn.name] = fn
