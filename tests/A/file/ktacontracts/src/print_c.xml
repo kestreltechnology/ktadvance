@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-05-13 18:05:25.853518"/>
+  <cfile name="src/print">
+    <data-structures/>
+    <functions>
+      <function name="file_mdump">
+        <parameters>
+          <par name="m" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="file_fmttime">
+        <parameters>
+          <par name="v" nr="1"/>
+          <par name="flags" nr="2"/>
+          <par name="buf" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><not-null/><return/></apply></math></post>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="file_magwarn">
+        <parameters>
+          <par name="ms" nr="1"/>
+          <par name="f" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

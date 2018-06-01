@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-05-13 18:05:33.900903"/>
+  <cfile name="src/ascmagic">
+    <data-structures/>
+    <functions>
+      <function name="encode_utf8">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="len" nr="2"/>
+          <par name="ubuf" nr="3"/>
+          <par name="ulen" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="file_ascmagic">
+        <parameters>
+          <par name="ms" nr="1"/>
+          <par name="buf" nr="2"/>
+          <par name="nbytes" nr="3"/>
+          <par name="text" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="file_ascmagic_with_encoding">
+        <parameters>
+          <par name="ms" nr="1"/>
+          <par name="buf" nr="2"/>
+          <par name="nbytes" nr="3"/>
+          <par name="ubuf" nr="4"/>
+          <par name="ulen" nr="5"/>
+          <par name="code" nr="6"/>
+          <par name="type" nr="7"/>
+          <par name="text" nr="8"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="trim_nuls">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="nbytes" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-05-13 18:05:33.591031"/>
+  <cfile name="src/compress">
+    <data-structures/>
+    <functions>
+      <function name="uncompressbuf">
+        <parameters>
+          <par name="fd" nr="1"/>
+          <par name="bytes_max" nr="2"/>
+          <par name="method" nr="3"/>
+          <par name="old" nr="4"/>
+          <par name="newch" nr="5"/>
+          <par name="n" nr="6"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="filter_error">
+        <parameters>
+          <par name="ubuf" nr="1"/>
+          <par name="n" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="closefd">
+        <parameters>
+          <par name="fd" nr="1"/>
+          <par name="i" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="sread">
+        <parameters>
+          <par name="fd" nr="1"/>
+          <par name="buf" nr="2"/>
+          <par name="n" nr="3"/>
+          <par name="canbepipe" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="closep">
+        <parameters>
+          <par name="fd" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="uncompresszlib">
+        <parameters>
+          <par name="old" nr="1"/>
+          <par name="newch" nr="2"/>
+          <par name="bytes_max" nr="3"/>
+          <par name="n" nr="4"/>
+          <par name="zlib" nr="5"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="file_zmagic">
+        <parameters>
+          <par name="ms" nr="1"/>
+          <par name="fd" nr="2"/>
+          <par name="name" nr="3"/>
+          <par name="buf" nr="4"/>
+          <par name="nbytes" nr="5"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="copydesc">
+        <parameters>
+          <par name="i" nr="1"/>
+          <par name="fd" nr="2"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="swrite">
+        <parameters>
+          <par name="fd" nr="1"/>
+          <par name="buf" nr="2"/>
+          <par name="n" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="uncompressgzipped">
+        <parameters>
+          <par name="old" nr="1"/>
+          <par name="newch" nr="2"/>
+          <par name="bytes_max" nr="3"/>
+          <par name="n" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="zlibcmp">
+        <parameters>
+          <par name="buf" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="writechild">
+        <parameters>
+          <par name="fdp" nr="1"/>
+          <par name="old" nr="2"/>
+          <par name="n" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="makeerror">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="len" nr="2"/>
+          <par name="fmt" nr="3"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="file_pipe2file">
+        <parameters>
+          <par name="ms" nr="1"/>
+          <par name="fd" nr="2"/>
+          <par name="startbuf" nr="3"/>
+          <par name="nbytes" nr="4"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="methodname">
+        <parameters>
+          <par name="method" nr="1"/>
+        </parameters>
+        <postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
