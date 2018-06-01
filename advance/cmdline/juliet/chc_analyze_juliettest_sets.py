@@ -36,6 +36,7 @@ def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('--maxprocesses',help='maximum number of processors to use',
                             default='1')
+    return args
 
 @contextmanager
 def timing(activity):

@@ -29,7 +29,8 @@ testcases = {
         "s01/char_type_overrun_memcpy",
         "s01/char_type_overrun_memmove",
         "s01/CWE129_large",
-        "s01/CWE129_rand"
+        "s01/CWE129_rand",
+        "s01/CWE131_loop"
         ],
     "CWE126": [
         "s01/char_alloca_memcpy",
