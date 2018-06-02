@@ -35,21 +35,19 @@ from advance.app.CApplication import CApplication
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('path',
-                            help='path to the juliet test case (relative to juliet_v1.3)' +
-                            ' (e.g., CWE121/s01/CWE129_large)')
+    parser.add_argument('path',help='directory that holds the semantics directory')
     args = parser.parse_args()
     return args
 
 if __name__ == '__main__':
 
     args = parse()
-    cpath = UF.get_juliet_testpath(args.path)
 
+    cpath = args.path
     if not os.path.isdir(cpath):
         print(UP.cpath_not_found_err_msg(cpath))
         exit(1)
-    
+
     sempath = os.path.join(cpath,'semantics')
     if not os.path.isdir(sempath):
         print(UP.semantics_not_found_err_msg(cpath))
