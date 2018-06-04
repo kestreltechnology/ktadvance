@@ -42,7 +42,7 @@ from advance.util.IndexedTable import IndexedTableError
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('path',help='directory that holds the semantics directory')
-    parser.add_argument('cfile',help='name of c file that is part of the test')
+    parser.add_argument('cfile',help='name of c file that is part of the project')
     parser.add_argument('--showcode',help='show proof obligations on code for entire file',
                             action='store_true')
     parser.add_argument('--open',help='show only proof obligions on code that are still open',

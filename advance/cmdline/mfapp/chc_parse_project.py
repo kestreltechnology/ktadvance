@@ -58,6 +58,7 @@ if __name__ == '__main__':
     args = parse()
     config = Config()
     cpath = os.path.abspath(args.projectdir)
+
     if config.platform == 'mac':
         print('*' * 80)
         print('Processing makefiles is not supported on the mac')
