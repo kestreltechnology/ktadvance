@@ -130,7 +130,9 @@ class CFunctionApi(object):
             ppos = [ int(i) for i in x.get('ppos').split(',') ] if 'ppos' in x.attrib else []
             spos = [ int(i) for i in x.get('spos').split(',') ] if 'spos' in x.attrib else []
             isglobal = 'global' in x.attrib and x.get('global') == 'yes'
-            self.apiassumptions[id] = ApiAssumption(self,id,predicate,ppos,spos,isglobal=isglobal)
+            isfile = 'file' in x.attrib and x.get('file') == 'yes'
+            self.apiassumptions[id] = ApiAssumption(self,id,predicate,ppos,spos,
+                                                        isglobal=isglobal,isfile=isfile)
         xganode = self.xnode.find('api').find('global-assumption-requests')
         if not xganode is None:
             for x in self.xnode.find('api').find('global-assumption-requests').findall('hh'):

@@ -27,7 +27,7 @@
 
 class ApiAssumption(object):
 
-    def __init__(self,capi,id,predicate,ppos,spos,isglobal=False):
+    def __init__(self,capi,id,predicate,ppos,spos,isglobal=False,isfile=False):
         self.id = id
         self.capi = capi                # api/CFunctionAPI
         self.cfun = self.capi.cfun      # app/CFunction
@@ -35,6 +35,7 @@ class ApiAssumption(object):
         self.ppos = ppos
         self.spos = spos
         self.isglobal = isglobal
+        self.isfile = isfile
 
     def __str__(self):
         strppos = ''
