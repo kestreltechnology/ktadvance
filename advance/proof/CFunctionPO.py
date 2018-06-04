@@ -39,7 +39,7 @@ po_status_indicators = { v:k for (k,v) in po_status.items() }
 class CProofDiagnostic(object):
 
     def __init__(self,invsmap,msgs,amsgs):
-        self.invsmap = invsmap
+        self.invsmap = invsmap  # arg -> int list
         self.amsgs = amsgs      # arg -> string list (argument-specific messages) 
         self.msgs = msgs        # string list
 
@@ -48,6 +48,29 @@ class CProofDiagnostic(object):
     def get_invariant_ids(self,index):
         if (index in self.invsmap):
             return self.invsmap[index]
+
+    def write_xml(self,dnode):
+        inode = ET.Element('invs')        # invariants
+        mmnode = ET.Element('msgs')       # general messages
+        aanode = ET.Element('amsgs')      # messages about individual arguments
+        for arg in self.invsmap:
+            anode = ET.Element('arg')
+            anode.set('a',str(arg))
+            anode.set('i',','.join([ str(i) for i in self.invsmap[arg]]))
+            inode.append(anode)
+        for arg in self.amsgs:
+            anode = ET.Element('arg')
+            anode.set('a',str(arg))
+            for t in self.amsgs[arg]:
+                tnode = ET.Element('msg')
+                tnode.set('t',t)
+                anode.append(tnode)
+            aanode.append(anode)
+        for t in self.msgs:
+            mnode = ET.Element('msg')
+            mnode.set('t',t)
+            mmnode.append(mnode)
+        dnode.extend([inode, mmnode, aanode])
 
     def __str__(self):
         if len(self.msgs) == 0:
@@ -202,7 +225,7 @@ class CFunctionPO(object):
             cnode.append(enode)
         if not self.diagnostic is None:
             dnode = ET.Element('d')
-            dnode.set('txt',self.diagnostic)
+            self.diagnostic.write_xml(dnode)
             cnode.append(dnode)
 
     def __str__(self):

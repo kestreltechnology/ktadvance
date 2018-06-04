@@ -125,6 +125,7 @@ class CFunctionCallsiteSPOs(object):
                 return
             for a in api.get_api_assumptions():
                 if a.id in self.spos: continue
+                if a.isfile: continue       # file_level assumption
                 try:
                     pid = self.cfile.predicatedictionary.index_predicate(a.predicate,subst=subst)
                     apiid = a.id
