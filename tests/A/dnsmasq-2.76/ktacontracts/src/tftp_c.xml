@@ -4,7 +4,7 @@
   <cfile name="src/tftp">
     <data-structures/>
     <global-variables>
-      <gvar name="dnsmasq_daemon"/>
+      <gvar name="dnsmasq_daemon" notnull="yes" finit="all-fields"/>
     </global-variables>
     <functions>
       <function name="tftp_request">
@@ -12,32 +12,12 @@
           <par name="listen___0" nr="1"/>
           <par name="now" nr="2"/>
         </parameters>
-	<preconditions>
-	  <pre>
-	    <math>
-	      <apply>
-		<not-null/>
-		<ci>dnsmasq_daemon</ci>
-	      </apply>
-	    </math>
-	  </pre>
-	</preconditions>
         <postconditions/>
       </function>
       <function name="check_tftp_listeners">
         <parameters>
           <par name="now" nr="1"/>
         </parameters>
-	<preconditions>
-	  <pre>
-	    <math>
-	      <apply>
-		<not-null/>
-		<ci>dnsmasq_daemon</ci>
-	      </apply>
-	    </math>
-	  </pre>
-	</preconditions>
         <postconditions/>
       </function>
       <function name="get_block">
@@ -51,16 +31,6 @@
       </function>
       <function name="do_tftp_script_run">
         <parameters/>
-	<preconditions>
-	  <pre>
-	    <math>
-	      <apply>
-		<not-null/>
-		<ci>dnsmasq_daemon</ci>
-	      </apply>
-	    </math>
-	  </pre>
-	</preconditions>
         <postconditions/>
       </function>
       <function name="next">
@@ -85,16 +55,6 @@
           <par name="len" nr="1"/>
           <par name="prefix" nr="2"/>
         </parameters>
-	<preconditions>
-	  <pre>
-	    <math>
-	      <apply>
-		<not-null/>
-		<ci>dnsmasq_daemon</ci>
-	      </apply>
-	    </math>
-	  </pre>
-	</preconditions>
         <postconditions>
 	  <post><math><apply><preserves-all-memory/></apply></math></post>
 	</postconditions>
@@ -104,16 +64,6 @@
           <par name="packet" nr="1"/>
           <par name="file" nr="2"/>
         </parameters>
-	<preconditions>
-	  <pre>
-	    <math>
-	      <apply>
-		<not-null/>
-		<ci>dnsmasq_daemon</ci>
-	      </apply>
-	    </math>
-	  </pre>
-	</preconditions>
         <postconditions>
 	  <post><math><apply><preserves-all-memory/></apply></math></post>
 	</postconditions>
