@@ -34,13 +34,15 @@ import advance.reporting.ProofObligations as RP
 from advance.util.Config import Config
 
 projects = [
+    'A/cairo-1.14.12',
     'A/dnsmasq-2.76',
     'A/file',
-    'A/git',
+    'A/git-2.17.0',
     'A/hping',
     'A/nginx-1.2.9',
+    'A/nginx-1.14.0',
     'A/openssl-1.0.1f',
-    'B/cleanflight',
+    'B/cleanflight-CLFL_v2.3.2',
     'sate/2008/lighttpd-1.4.18',
     'sate/2008/nagios-2.10/base',
     'sate/2008/naim-0.11.8.3.1',
