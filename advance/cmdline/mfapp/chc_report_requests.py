@@ -56,6 +56,12 @@ if __name__ == '__main__':
     capp = CApplication(sempath)
     lines = []
 
+    stats = {}
+    stats['npost'] = 0
+    stats['nglobal'] = 0
+    stats['ndepppo'] = 0
+    stats['ndepspo'] = 0
+
     def report_requests(fi):
         lines.append(fi.name)
         def f(fn):
@@ -65,16 +71,28 @@ if __name__ == '__main__':
                     lines.append('    postcondition requests:')
                     for p in fn.api.get_postcondition_requests():
                         lines.append('      ' + str(p))
+                        stats['npost'] += 1
+                        stats['ndepppo'] += len(p.ppos)
+                        stats['ndepspo'] += len(p.spos)
                 if len(fn.api.globalassumptionrequests) > 0:
                     lines.append('    global assumption requests:')
                     for p in fn.api.get_global_assumption_requests():
                         lines.append('      ' + str(p))
+                        stats['nglobal'] += 1
+                        stats['ndepppo'] += len(p.ppos)
+                        stats['ndepspo'] += len(p.spos)
         fi.iter_functions(f)
 
     capp.iter_files(report_requests)
 
     print('\n'.join(lines))
 
+    print('\n' + ('-' * 80))
+    print('Postcondition requests: ' + str(stats['npost']).rjust(4))
+    print('Global requests       : ' + str(stats['nglobal']).rjust(4))
+    print('Dependent ppos        : ' + str(stats['ndepppo']).rjust(4))
+    print('Dependent spos        : ' + str(stats['ndepspo']).rjust(4))
+    print('-' * 80)
     
 
     
