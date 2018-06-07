@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-06 23:16:05.981079"/>
+  <cfile name="apps/ocsp">
+    <data-structures/>
+    <functions>
+      <function name="add_ocsp_cert">
+        <parameters>
+          <par name="req" nr="1"/>
+          <par name="cert" nr="2"/>
+          <par name="cert_id_md" nr="3"/>
+          <par name="issuer" nr="4"/>
+          <par name="ids" nr="5"/>
+        </parameters>
+      </function>
+      <function name="add_ocsp_serial">
+        <parameters>
+          <par name="req" nr="1"/>
+          <par name="serial" nr="2"/>
+          <par name="cert_id_md" nr="3"/>
+          <par name="issuer" nr="4"/>
+          <par name="ids" nr="5"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="bcopy" src="string3.h">
+        <parameters>
+          <par name="__src" nr="1"/>
+          <par name="__dest" nr="2"/>
+          <par name="__len" nr="3"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="bzero" src="string3.h">
+        <parameters>
+          <par name="__dest" nr="1"/>
+          <par name="__len" nr="2"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="confstr" src="unistd.h">
+        <parameters>
+          <par name="__name" nr="1"/>
+          <par name="__buf" nr="2"/>
+          <par name="__len" nr="3"/>
+        </parameters>
+      </function>
+      <function name="do_responder">
+        <parameters>
+          <par name="preq" nr="1"/>
+          <par name="pcbio" nr="2"/>
+          <par name="acbio" nr="3"/>
+          <par name="port" nr="4"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="dprintf" src="stdio2.h">
+        <parameters>
+          <par name="__fd" nr="1"/>
+          <par name="__fmt" nr="2"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="fgets" src="stdio2.h">
+        <parameters>
+          <par name="__s" nr="1"/>
+          <par name="__n" nr="2"/>
+          <par name="__stream" nr="3"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="fprintf" src="stdio2.h">
+        <parameters>
+          <par name="__stream" nr="1"/>
+          <par name="__fmt" nr="2"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="fread" src="stdio2.h">
+        <parameters>
+          <par name="__ptr" nr="1"/>
+          <par name="__size" nr="2"/>
+          <par name="__n" nr="3"/>
+          <par name="__stream" nr="4"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="fread_unlocked" src="stdio2.h">
+        <parameters>
+          <par name="__ptr" nr="1"/>
+          <par name="__size" nr="2"/>
+          <par name="__n" nr="3"/>
+          <par name="__stream" nr="4"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="getcwd" src="unistd.h">
+        <parameters>
+          <par name="__buf" nr="1"/>
+          <par name="__size" nr="2"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="getdomainname" src="unistd.h">
+        <parameters>
+          <par name="__buf" nr="1"/>
+          <par name="__buflen" nr="2"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="getgroups" src="unistd.h">
+        <parameters>
+          <par name="__size" nr="1"/>
+          <par name="__list" nr="2"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="gethostname" src="unistd.h">
+        <parameters>
+          <par name="__buf" nr="1"/>
+          <par name="__buflen" nr="2"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="getlogin_r" src="unistd.h">
+        <parameters>
+          <par name="__buf" nr="1"/>
+          <par name="__buflen" nr="2"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="getwd" src="unistd.h">
+        <parameters>
+          <par name="__buf" nr="1"/>
+        </parameters>
+      </function>
+      <function name="init_responder">
+        <parameters>
+          <par name="port" nr="1"/>
+        </parameters>
+      </function>
+      <function name="lookup_serial">
+        <parameters>
+          <par name="db" nr="1"/>
+          <par name="ser" nr="2"/>
+        </parameters>
+      </function>
+      <function name="make_ocsp_response">
+        <parameters>
+          <par name="resp" nr="1"/>
+          <par name="req" nr="2"/>
+          <par name="db" nr="3"/>
+          <par name="ca" nr="4"/>
+          <par name="rcert" nr="5"/>
+          <par name="rkey" nr="6"/>
+          <par name="rother" nr="7"/>
+          <par name="flags" nr="8"/>
+          <par name="nmin" nr="9"/>
+          <par name="ndays" nr="10"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="mbstowcs" src="stdlib.h">
+        <parameters>
+          <par name="__dst" nr="1"/>
+          <par name="__src" nr="2"/>
+          <par name="__len" nr="3"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="memcpy" src="string3.h">
+        <parameters>
+          <par name="__dest" nr="1"/>
+          <par name="__src" nr="2"/>
+          <par name="__len" nr="3"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="memmove" src="string3.h">
+        <parameters>
+          <par name="__dest" nr="1"/>
+          <par name="__src" nr="2"/>
+          <par name="__len" nr="3"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="memset" src="string3.h">
+        <parameters>
+          <par name="__dest" nr="1"/>
+          <par name="__ch" nr="2"/>
+          <par name="__len" nr="3"/>
+        </parameters>
+      </function>
+      <function name="ocsp_main">
+        <parameters>
+          <par name="argc" nr="1"/>
+          <par name="argv" nr="2"/>
+        </parameters>
+      </function>
+      <function name="print_ocsp_summary">
+        <parameters>
+          <par name="out" nr="1"/>
+          <par name="bs" nr="2"/>
+          <par name="req" nr="3"/>
+          <par name="names" nr="4"/>
+          <par name="ids" nr="5"/>
+          <par name="nsec" nr="6"/>
+          <par name="maxage" nr="7"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="printf" src="stdio2.h">
+        <parameters>
+          <par name="__fmt" nr="1"/>
+        </parameters>
+      </function>
+      <function name="process_responder">
+        <parameters>
+          <par name="err" nr="1"/>
+          <par name="req" nr="2"/>
+          <par name="host" nr="3"/>
+          <par name="path" nr="4"/>
+          <par name="port" nr="5"/>
+          <par name="use_ssl" nr="6"/>
+          <par name="headers" nr="7"/>
+          <par name="req_timeout" nr="8"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="ptsname_r" src="stdlib.h">
+        <parameters>
+          <par name="__fd" nr="1"/>
+          <par name="__buf" nr="2"/>
+          <par name="__buflen" nr="3"/>
+        </parameters>
+      </function>
+      <function name="query_responder">
+        <parameters>
+          <par name="err" nr="1"/>
+          <par name="cbio" nr="2"/>
+          <par name="path" nr="3"/>
+          <par name="headers" nr="4"/>
+          <par name="req" nr="5"/>
+          <par name="req_timeout" nr="6"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="read" src="unistd.h">
+        <parameters>
+          <par name="__fd" nr="1"/>
+          <par name="__buf" nr="2"/>
+          <par name="__nbytes" nr="3"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="readlink" src="unistd.h">
+        <parameters>
+          <par name="__path" nr="1"/>
+          <par name="__buf" nr="2"/>
+          <par name="__len" nr="3"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="readlinkat" src="unistd.h">
+        <parameters>
+          <par name="__fd" nr="1"/>
+          <par name="__path" nr="2"/>
+          <par name="__buf" nr="3"/>
+          <par name="__len" nr="4"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="realpath" src="stdlib.h">
+        <parameters>
+          <par name="__name" nr="1"/>
+          <par name="__resolved" nr="2"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="recv" src="socket2.h">
+        <parameters>
+          <par name="__fd" nr="1"/>
+          <par name="__buf" nr="2"/>
+          <par name="__n" nr="3"/>
+          <par name="__flags" nr="4"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="recvfrom" src="socket2.h">
+        <parameters>
+          <par name="__fd" nr="1"/>
+          <par name="__buf" nr="2"/>
+          <par name="__n" nr="3"/>
+          <par name="__flags" nr="4"/>
+          <par name="__addr" nr="5"/>
+          <par name="__addr_len" nr="6"/>
+        </parameters>
+      </function>
+      <function name="send_ocsp_response">
+        <parameters>
+          <par name="cbio" nr="1"/>
+          <par name="resp" nr="2"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="snprintf" src="stdio2.h">
+        <parameters>
+          <par name="__s" nr="1"/>
+          <par name="__n" nr="2"/>
+          <par name="__fmt" nr="3"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="sprintf" src="stdio2.h">
+        <parameters>
+          <par name="__s" nr="1"/>
+          <par name="__fmt" nr="2"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="stpncpy" src="string3.h">
+        <parameters>
+          <par name="__dest" nr="1"/>
+          <par name="__src" nr="2"/>
+          <par name="__n" nr="3"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="strcat" src="string3.h">
+        <parameters>
+          <par name="__dest" nr="1"/>
+          <par name="__src" nr="2"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="strcpy" src="string3.h">
+        <parameters>
+          <par name="__dest" nr="1"/>
+          <par name="__src" nr="2"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="strncat" src="string3.h">
+        <parameters>
+          <par name="__dest" nr="1"/>
+          <par name="__src" nr="2"/>
+          <par name="__len" nr="3"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="strncpy" src="string3.h">
+        <parameters>
+          <par name="__dest" nr="1"/>
+          <par name="__src" nr="2"/>
+          <par name="__len" nr="3"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="ttyname_r" src="unistd.h">
+        <parameters>
+          <par name="__fd" nr="1"/>
+          <par name="__buf" nr="2"/>
+          <par name="__buflen" nr="3"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="vdprintf" src="stdio2.h">
+        <parameters>
+          <par name="__fd" nr="1"/>
+          <par name="__fmt" nr="2"/>
+          <par name="__ap" nr="3"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="vfprintf" src="stdio2.h">
+        <parameters>
+          <par name="__stream" nr="1"/>
+          <par name="__fmt" nr="2"/>
+          <par name="__ap" nr="3"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="vprintf" src="stdio2.h">
+        <parameters>
+          <par name="__fmt" nr="1"/>
+          <par name="__ap" nr="2"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="vsnprintf" src="stdio2.h">
+        <parameters>
+          <par name="__s" nr="1"/>
+          <par name="__n" nr="2"/>
+          <par name="__fmt" nr="3"/>
+          <par name="__ap" nr="4"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="vsprintf" src="stdio2.h">
+        <parameters>
+          <par name="__s" nr="1"/>
+          <par name="__fmt" nr="2"/>
+          <par name="__ap" nr="3"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="wcstombs" src="stdlib.h">
+        <parameters>
+          <par name="__dst" nr="1"/>
+          <par name="__src" nr="2"/>
+          <par name="__len" nr="3"/>
+        </parameters>
+      </function>
+      <function ignore="yes" name="wctomb" src="stdlib.h">
+        <parameters>
+          <par name="__s" nr="1"/>
+          <par name="__wchar" nr="2"/>
+        </parameters>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
