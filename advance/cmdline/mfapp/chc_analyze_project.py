@@ -128,16 +128,18 @@ if __name__ == '__main__':
                             candidate_contractpath=args.candidate_contractpath)
     am = AnalysisManager(capp,verbose=args.verbose,wordsize=args.wordsize)
 
-    am.create_app_primary_proofobligations(processes=args.maxprocesses)
-    capp.collect_post_assumes()
+    with timing('analysis'):
 
-    for i in range(1):
-        am.generate_and_check_app('llrvisp', processes=args.maxprocesses)
-        capp.reinitialize_tables()
-        capp.update_spos()
+        am.create_app_primary_proofobligations(processes=args.maxprocesses)
+        capp.collect_post_assumes()
 
-    for i in range(args.analysisrounds):
-        capp.update_spos()
-        am.generate_and_check_app('llrvisp', processes=args.maxprocesses)
-        capp.reinitialize_tables()
+        for i in range(1):
+            am.generate_and_check_app('llrvisp', processes=args.maxprocesses)
+            capp.reinitialize_tables()
+            capp.update_spos()
+
+        for i in range(args.analysisrounds):
+            capp.update_spos()
+            am.generate_and_check_app('llrvisp', processes=args.maxprocesses)
+            capp.reinitialize_tables()
 
