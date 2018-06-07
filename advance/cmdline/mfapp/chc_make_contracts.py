@@ -26,6 +26,7 @@
 # ------------------------------------------------------------------------------
 
 import argparse
+import json
 import os
 import xml.etree.ElementTree as ET
 
@@ -38,6 +39,9 @@ def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('path',help='path to directory that holds the semantics directory')
     parser.add_argument('--contractpath',help='path to save the contracts file',default=None)
+    parser.add_argument('--preservesmemory',help='initialize with preserves-memory postcondition',
+                            action='store_true')
+    parser.add_argument('--ignorefile',help='json file that lists functions included from header files')
     args = parser.parse_args()
     return args
 
@@ -51,7 +55,7 @@ if __name__ == '__main__':
 
     sempath = os.path.join(cpath,'semantics')
     if not os.path.isdir(sempath):
-        success = UF.unpack_tar_file(cpath,args.deletesemantics)
+        success = UF.unpack_tar_file(cpath)
         if not success:
             print(UP.semantics_tar_not_found_err_msg(cpath))
             exit(1)
@@ -62,6 +66,16 @@ if __name__ == '__main__':
     else:
         contractpath = args.contractpath
 
-    capp.iter_files(lambda f:f.create_contract(contractpath))
+    ignorefns = {}
+
+    if not args.ignorefile is None:
+        if os.path.isfile(args.ignorefile):
+            with open(args.ignorefile,'r') as fp:
+                headers = json.load(fp)
+            for h in headers:
+                for fn in headers[h]['functions']:
+                    ignorefns[fn] = h
+
+    capp.iter_files(lambda f:f.create_contract(contractpath,args.preservesmemory,ignorefns=ignorefns))
         
 
