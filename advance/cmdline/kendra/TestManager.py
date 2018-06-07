@@ -227,6 +227,7 @@ class TestManager(object):
                 am = AnalysisManager(capp,onefile=True,verbose=self.verbose)
                 am.create_file_primary_proofobligations(creffilename)
                 cfile = capp.get_single_file()
+                capp.collect_post_assumes()
                 ppos = cfile.get_ppos()
                 for creffun in creffile.get_functions():
                     fname = creffun.name
