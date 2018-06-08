@@ -879,7 +879,7 @@ class CPOValueConstraint(CPOPredicate):
 
     def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
 
-    def get_tag(self): return CPOPredicate.get_tag(self)  + ':' + str(self.get_exp())
+    def get_tag(self): return CPOPredicate.get_tag(self)  # + ':' + str(self.get_exp())
 
     def is_value_constraint(self): return True
 
