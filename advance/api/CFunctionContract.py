@@ -38,6 +38,7 @@ class CFunctionContract(object):
         self.name  = self.xnode.get('name')
         self.cfun = self.cfilecontracts.cfile.get_function_by_name(self.name)
         self.api = self.cfun.api
+        self.ignore = self.xnode.get('ignore','no') == 'yes'
         self.signature = {}                   # name -> index nr
         self.rsignature = {}                  # index nr -> name
         self.postconditions = {}              # index -> XPredicate
