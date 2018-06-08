@@ -42,7 +42,8 @@ class CFunctionReturnsiteSPO(CFunctionPO):
 
     def write_xml(self,cnode):
         self.pod.write_xml_spo_type(cnode,self.potype)
-        cnode.set('id',str(self.id))
+        CFunctionPO.write_xml(self,cnode)
+        # cnode.set('id',str(self.id))
 
     def __str__(self):
         return (CFunctionPO.__str__(self) + ' (' + str(self.external_id) + ')')
