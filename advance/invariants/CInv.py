@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -57,6 +57,7 @@ class NonRelationalValue(InvDictionaryRecord):
     def is_base_offset_value(self): return False
     def is_region_set(self): return False
     def is_initialized_set(self): return False
+    def is_policy_state_set(self): return False
 
     def __str__(self): return 'nrv:' + self.tags[0]
 
@@ -206,6 +207,18 @@ class NRVInitializedSet(NonRelationalValue):
         NonRelationalValue.__init__(self,invd,index,args,tags)
 
     def is_initialized_set(self): return True
+
+    def get_symbols(self): return [ self.xd.get_symbol(int(i)) for i in self.args ]
+
+    def __str__(self): return ','.join([str(a) for a in self.get_symbols()])
+
+
+class NRVPolicyStateSet(NonRelationalValue):
+
+    def __init__(self,invd,index,args,tags):
+        NonRelationalValue.__init__(self,invd,index,args,tags)
+
+    def is_policy_state_set(self): return True
 
     def get_symbols(self): return [ self.xd.get_symbol(int(i)) for i in self.args ]
 

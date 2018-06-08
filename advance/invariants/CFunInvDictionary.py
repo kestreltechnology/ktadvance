@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,8 @@ non_relational_value_constructors = {
     'iv': lambda x:CI.NRVIntervalValue(*x),
     'bv': lambda x:CI.NRVBaseOffsetValue(*x),
     'rs': lambda x:CI.NRVRegionSet(*x),
-    'iz': lambda x:CI.NRVInitializedSet(*x)
+    'iz': lambda x:CI.NRVInitializedSet(*x),
+    'ps': lambda x:CI.NRVPolicyStateSet(*x)
     }
 
 inv_constructors = {
