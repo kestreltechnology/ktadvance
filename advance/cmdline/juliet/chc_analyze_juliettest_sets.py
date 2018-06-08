@@ -50,22 +50,27 @@ def timing(activity):
 if __name__ == '__main__':
 
     args = parse()
+    maxp = args.maxprocesses
+    maxptxt = '' if maxp == 1 else ' (with ' + str(maxp) + ' processors)'
+
+    with timing('analysis' + maxptxt):
     
-    for cwe in sorted(JTC.testcases):
-        print('Analyzing testcases for cwe ' + cwe)
-        for t in JTC.testcases[cwe]:
-            testcase = os.path.join(cwe,t)
-            cmd = [ 'python' , 'chc_analyze_juliettest.py', '--maxprocesses' ,
-                        args.maxprocesses, testcase ]
-            result = subprocess.call(cmd,stderr=subprocess.STDOUT)
-            if result != 0:
-                print('Error in testcase ' + testcase)
-                exit(1)
+        for cwe in sorted(JTC.testcases):
+            print('Analyzing testcases for cwe ' + cwe)
+            for t in JTC.testcases[cwe]:
+                testcase = os.path.join(cwe,t)
+                cmd = [ 'python' , 'chc_analyze_juliettest.py', '--maxprocesses' ,
+                            args.maxprocesses, testcase ]
+                result = subprocess.call(cmd,stderr=subprocess.STDOUT)
+                if result != 0:
+                    print('Error in testcase ' + testcase)
+                    exit(1)
+            else:
+                print('\n\n' + ('=' * 80) + '\nAll Juliet test cases for ' + cwe
+                        + ' ran successfully.')
+                print(('=' * 80) + '\n')
+
         else:
-            print('\n\n' + ('=' * 80) + '\nAll Juliet test cases for ' + cwe
-                      + ' ran successfully.')
+            print('\n\n' + ('=' * 80) + '\nAll Juliet test cases ran successfully.')
             print(('=' * 80) + '\n')
-    else:
-        print('\n\n' + ('=' * 80) + '\nAll Juliet test cases ran successfully.')
-        print(('=' * 80) + '\n')
         

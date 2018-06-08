@@ -26,6 +26,7 @@
 # ------------------------------------------------------------------------------
 
 import argparse
+import logging
 import os
 import time
 
@@ -74,6 +75,8 @@ def save_xrefs(f):
     capp.indexmanager.save_xrefs(capp.path,f.name,f.index)
 
 if __name__ == '__main__':
+
+    logging.basicConfig(filename='ktadvance_juliet.log',level=logging.INFO)
 
     args = parse()
     testpath = UF.get_juliet_testpath(args.path)
