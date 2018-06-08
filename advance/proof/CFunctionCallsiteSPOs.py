@@ -116,12 +116,10 @@ class CFunctionCallsiteSPOs(object):
                 for (vid,arg) in substitutions:
                     subst[vid] = arg
             else:
-                print('*' * 80)
-                print('Warning: Number of arguments (' + str(len(self.args))
+                logging.warning('Number of arguments (' + str(len(self.args))
                         + ') is not the same as the number of parameters (' + str(len(pars))
                         + ') in call to ' + calleefun.name + ' in function ' + self.cfun.name
                         + ' in file ' + cfile.name)
-                print('*' * 80)
                 return
             for a in api.get_api_assumptions():
                 if a.id in self.spos: continue
