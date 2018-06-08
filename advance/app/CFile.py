@@ -273,7 +273,7 @@ class CFile(object):
         with open(filename,'w') as fp:
             fp.write(UX.doc_to_pretty(ET.ElementTree(xroot)))
 
-    def create_contract(self,contractpath,preservesmemory=False,seed={}):
+    def create_contract(self,contractpath,preservesmemory=False,seed={},ignorefns={}):
         cnode = ET.Element('cfile')
         cnode.set('name',self.name)
         dnode = ET.Element('data-structures')
@@ -300,6 +300,9 @@ class CFile(object):
         for fn in sorted(self.get_functions(),key=lambda fn:fn.name):
             fnode = ET.Element('function')
             fnode.set('name',fn.name)
+            if fn.name in ignorefns:
+                fnode.set('ignore','yes')
+                fnode.set('src',ignorefns[fn.name])
             ppnode = ET.Element('parameters')
             for fid in sorted(fn.formals,key=lambda fid:fn.formals[fid].vparam):
                 pnode = ET.Element('par')

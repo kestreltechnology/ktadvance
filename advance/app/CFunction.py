@@ -79,6 +79,16 @@ class CFunction(object):
         for v in self.locals:
             if self.locals[v].vname == vname: return self.locals[v].get_vid()
 
+    def has_function_contract(self):
+        return self.cfile.has_function_contract(self.name)
+
+    def get_function_contract(self):
+        if self.has_function_contract():
+            return self.cfile.get_function_contract(self.name)
+
+    def selfignore(self):
+        return self.has_function_contract() and self.get_function_contract().ignore
+
     def iter_ppos(self,f): self.proofs.iter_ppos(f)
 
     def get_ppo(self,index): return self.proofs.get_ppo(index)
@@ -117,7 +127,9 @@ class CFunction(object):
 
     def get_callsite_spos(self): return self.proofs.getspos
 
-    def update_spos(self): self.proofs.update_spos()
+    def update_spos(self):
+        if self.selfignore(): return
+        self.proofs.update_spos()
 
     def collect_post_assumes(self):
         """For all call sites collect postconditions from callee's contracts and add as assume."""
