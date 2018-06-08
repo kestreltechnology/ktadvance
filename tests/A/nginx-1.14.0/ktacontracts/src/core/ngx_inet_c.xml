@@ -213,12 +213,18 @@
           <par name="pool" nr="1"/>
           <par name="u" nr="2"/>
         </parameters>
+	<postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
       </function>
       <function name="ngx_inet_set_port">
         <parameters>
           <par name="sa" nr="1"/>
           <par name="port" nr="2"/>
         </parameters>
+	<postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
       </function>
       <function name="ngx_parse_addr">
         <parameters>
@@ -274,6 +280,9 @@
           <par name="len" nr="4"/>
           <par name="port" nr="5"/>
         </parameters>
+	<postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
       </function>
       <function name="ngx_strlchr">
         <parameters>

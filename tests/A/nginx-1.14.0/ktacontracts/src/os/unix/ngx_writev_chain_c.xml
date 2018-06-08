@@ -162,12 +162,18 @@
           <par name="limit" nr="3"/>
           <par name="log" nr="4"/>
         </parameters>
+	<postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
       </function>
       <function name="ngx_writev">
         <parameters>
           <par name="c" nr="1"/>
           <par name="vec" nr="2"/>
         </parameters>
+	<postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
       </function>
       <function name="ngx_writev_chain">
         <parameters>
@@ -175,6 +181,9 @@
           <par name="in" nr="2"/>
           <par name="limit" nr="3"/>
         </parameters>
+	<postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
       </function>
       <function ignore="yes" name="obstack_printf" src="stdio2.h">
         <parameters>

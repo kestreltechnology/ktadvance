@@ -9,6 +9,9 @@
           <par name="__ptr" nr="1"/>
           <par name="__fmt" nr="2"/>
         </parameters>
+	<postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
       </function>
       <function ignore="yes" name="__mempcpy_inline" src="string.h">
         <parameters>
@@ -175,6 +178,9 @@
           <par name="ev" nr="1"/>
           <par name="timer" nr="2"/>
         </parameters>
+	<postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
       </function>
       <function name="ngx_event_del_timer">
         <parameters>
@@ -213,11 +219,17 @@
         <parameters>
           <par name="r" nr="1"/>
         </parameters>
+	<postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
       </function>
       <function name="ngx_http_file_cache_create_key">
         <parameters>
           <par name="r" nr="1"/>
         </parameters>
+	<postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
       </function>
       <function name="ngx_http_file_cache_delete">
         <parameters>
@@ -391,6 +403,9 @@
           <par name="cache_valid" nr="1"/>
           <par name="status" nr="2"/>
         </parameters>
+	<postconditions>
+	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	</postconditions>
       </function>
       <function name="ngx_http_file_cache_valid_set_slot">
         <parameters>
