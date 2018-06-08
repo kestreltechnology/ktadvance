@@ -25,6 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import logging
 import xml.etree.ElementTree as ET
 
 import advance.util.fileutil as UF
@@ -157,6 +158,7 @@ class CGlobalDeclarations(object):
     def get_structname(self,ckey):
         if ckey in self.compinfo_names:
             return list(self.compinfo_names[ckey])[0]
+        logging.warning('Compinfo name for ' + str(ckey) + ' not found')
         print('Compinfo name for ' + str(ckey) + ' not found ')
         print(str(self.compinfo_names))
 
@@ -422,8 +424,9 @@ class CGlobalDeclarations(object):
                 self.vid2gvid[fid][varinfo.get_vid()] = candidates[0][1].get_vid()
                 print('Resolved prototype for ' + varinfo.vname)
             else:
-                print('Unable to resolve prototype for ' + varinfo.vname + ': '
-                          + str(len(candidates)))
+                msg = ('Unable to resolve prototype for ' + varinfo.vname + ': '
+                           + str(len(candidates)))
+                logging.warning(msg)
 
     # -------------------- Writing xml -----------------------------------------
 
