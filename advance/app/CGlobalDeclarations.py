@@ -422,11 +422,19 @@ class CGlobalDeclarations(object):
             candidates = self.varinfo_table.retrieve_by_key(f)
             if len(candidates) == 1:
                 self.vid2gvid[fid][varinfo.get_vid()] = candidates[0][1].get_vid()
-                print('Resolved prototype for ' + varinfo.vname)
+                logging.info('Resolved prototype for ' + varinfo.vname)
             else:
-                msg = ('Unable to resolve prototype for ' + varinfo.vname + ': '
-                           + str(len(candidates)))
-                logging.warning(msg)
+                pcandidates = ','.join( [ c[1].vname for c in candidates ])
+                for (_,c) in candidates:
+                    if c.vname == varinfo.vname:
+                        self.vid2gvid[fid][varinfo.get_vid()] = c.get_vid()
+                        logging.warning('Selected prototype ' + c.vname + ' for ' + varinfo.vname
+                                            + ' from multiple candidates: ' + pcandidates)
+                        break
+                else:
+                    msg = ('Unable to resolve prototype for ' + varinfo.vname + ': '
+                            + str(len(candidates)) + ': ' + pcandidates)
+                    logging.warning(msg)
 
     # -------------------- Writing xml -----------------------------------------
 
