@@ -70,6 +70,8 @@ def parse():
     parser.add_argument('--contractpath',help='path to contract files to be used in analysis')
     parser.add_argument('--candidate_contractpath',
                             help='path to contract files to collect suggestions for conditions')
+    parser.add_argument('--logging',help='log level msgs to be recorded (default=WARNING)',
+                            default='WARNING',choices=['INFO','WARNING','ERROR','NONE'])
     args = parser.parse_args()
     return args
 
@@ -86,9 +88,18 @@ def save_xrefs(f):
 
 if __name__ == '__main__':
 
-    logging.basicConfig(filename='ktadvance_project.log',level=logging.INFO)
-    
     args = parse()
+
+    if args.logging is None:
+        loglevel = logging.WARNING
+    else:
+        if args.logging == 'INFO': loglevel = logging.INFO
+        elif args.logging == 'WARNING': loglevel = logging.WARNING
+        elif args.logging == 'ERROR': loglevel = logging.ERROR
+        elif args.logging == 'NONE': loglevel = logging.NOTSET
+
+    logging.basicConfig(filename='ktadvance_project.log',level=loglevel)
+
     cpath = os.path.abspath(args.path)
     config = Config()
 
@@ -132,6 +143,8 @@ if __name__ == '__main__':
 
         am.create_app_primary_proofobligations(processes=args.maxprocesses)
         capp.collect_post_assumes()
+        capp.reinitialize_tables()
+        capp.update_spos()
 
         for i in range(1):
             am.generate_and_check_app('llrvisp', processes=args.maxprocesses)
