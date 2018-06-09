@@ -25,6 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import logging
 import xml.etree.ElementTree as ET
 
 import advance.util.fileutil as UF
@@ -66,6 +67,7 @@ class IndexManager(object):
     def resolve_vid(self,fid,vid):
         if self.issinglefile:
             return (fid,vid)
+        msg = 'indexmgr:resolve-vid(' + str(fid) + ',' + str(vid) + '): '
         if fid in self.vid2gvid:
             if vid in self.vid2gvid[fid]:
                 gvid = self.vid2gvid[fid][vid]
@@ -74,6 +76,17 @@ class IndexManager(object):
                     if gvid in self.gvid2vid:
                         if tgtfid in self.gvid2vid[gvid]:
                             return (tgtfid,self.gvid2vid[gvid][tgtfid])
+                        logging.warning(msg + 'Target fid ' + str(tgtfid) + ' not found in gvid2vid['
+                                            + str(gvid) + ']')
+                        return None
+                    logging.warning(msg + 'Global vid ' + str(gvid) + ' not found in gvid2vid')
+                    return None
+                logging.warning(msg + 'Global vid ' + str(gvid) + ' not found in gviddefs')
+                return None
+            logging.warning(msg + 'Local vid ' + str(vid) + ' not found in vid2gvid[' + str(fid) + ']')
+            return None
+        logging.warning(msg + 'File id ' + str(fid) + ' not found in vid2gvid')
+        return None
 
     '''return a list of (fid,vid) pairs that refer to the same global variable.'''
     def get_gvid_references(self,gvid):
@@ -246,4 +259,6 @@ class IndexManager(object):
         for gfun in declarations.get_global_functions():
             gvid = self.get_gvid(fid,gfun.varinfo.get_vid())
             if not gvid is None:
+                logging.info('Set function ' + gfun.varinfo.vname + ' (' + str(gvid) + ')'
+                                 + ' to file ' + str(fid))
                 self.gviddefs[gvid] = fid

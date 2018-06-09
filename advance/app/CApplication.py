@@ -25,6 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 import os
+import logging
 import multiprocessing
 import sys
 
@@ -151,6 +152,7 @@ class CApplication(object):
         self.iter_files(g)
 
     def resolve_vid_function(self,fid,vid):
+        msg = 'resolve-vid-function(' + str(fid) + ',' + str(vid) + '):'
         result = self.indexmanager.resolve_vid(fid,vid)
         if not result is None:
             tgtfid = result[0]
@@ -160,6 +162,11 @@ class CApplication(object):
                 self._initialize_file(tgtfid,filename)
                 if not self.files[filename] is None:
                     return self.files[filename].get_function_by_index(tgtvid)
+                logging.warning(msg + 'Filename not found: ' + filename)
+                return None
+            logging.warning(msg + 'Target fid ' + str(tgtfid) + ' not found')
+            return None
+        logging.warning(msg + 'Unable to resolve')
 
     def convert_vid(self,fidsrc,vid,fidtgt):
         return self.indexmanager.convert_vid(fidsrc,vid,fidtgt)
