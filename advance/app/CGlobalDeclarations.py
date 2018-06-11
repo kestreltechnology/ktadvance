@@ -461,8 +461,7 @@ class CGlobalDeclarations(object):
             self.varinfo_storage_classes[gvid] += vstorageclass
         self.vid2gvid[fid][vid] = gvarinfo.get_vid()
         logging.debug('Fid: ' + str(fid) + ', vid: ' + str(vid) + ', gvid: '
-                         + str(gvarinfo.get_vid()) + ': ' + gvarinfo.vname
-                         + ' (' + str(gvarinfo.vtype) + ')')
+                         + str(gvarinfo.get_vid()) + ': ' + gvarinfo.vname)
         return gvarinfo
 
     def index_file_varinfos(self,fid,varinfos):
