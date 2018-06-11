@@ -43,7 +43,6 @@ initinfo_constructors = {
     'compound':lambda x:CI.CCompoundInitInfo(*x)
     }
 
-
 class ConjectureFailure(Exception):
     def __init__(self,ckey,gckey):
         self.ckey = ckey
@@ -119,8 +118,21 @@ class CGlobalDeclarations(object):
         self.reserved = {}                        # ckey -> gckey
         self.incompatibles = {}                   # ckey -> gckey set
         self.default_function_prototypes = []     # (fid,varinfo) list
+
+        self.globalcontract = self.capp.globalcontract
         
         self._initialize()
+        if self.compinfo_table.size() == 0: self.index_opaque_struct()
+
+    def is_hidden_field (self,compname,fieldname):
+        if self.globalcontract is not None:
+            return self.globalcontract.is_hidden_field(compname,fieldname)
+        return False
+
+    def is_hidden_struct(self,filename,compname):
+        if self.globalcontract is not None:
+            return self.globalcontract.is_hidden_struct(filename,compname)
+        return False
 
     def get_stats(self):
         lines = []
@@ -271,9 +283,12 @@ class CGlobalDeclarations(object):
 
     # ------------------- Indexing compinfos -----------------------------------
     
-    def index_fieldinfo(self,fieldinfo):
+    def index_fieldinfo(self,fieldinfo,compinfoname):
         tags = [ fieldinfo.fname ]
-        gftype = self.dictionary.index_typ(fieldinfo.ftype.expand())
+        if self.is_hidden_field(compinfoname, fieldinfo.fname):
+            gftype = self.index_opaque_struct_pointer()
+        else:
+            gftype = self.dictionary.index_typ(fieldinfo.ftype.expand().strip_attributes())
         args = [ -1, gftype, fieldinfo.bitfield, -1, -1  ]
         def f(index,key): return CFieldInfo(self,index,tags,args)
         gfieldinfo = self.fieldinfo_table.add(IT.get_key(tags,args),f)
@@ -282,20 +297,54 @@ class CGlobalDeclarations(object):
     def index_compinfo_key(self,compinfo,fid):    # only compinfo's from files should be indexed
         ckey = compinfo.get_ckey()
         gckey = self.get_gckey(fid,ckey)
+        logmsg = ('Compinfo ' + compinfo.get_name() + ' (fid,ckey: ' + str(fid)
+                      + ',' + str(ckey) + '): ')
         if not gckey is None: return gckey
-        if ckey in self.conjectured: return self.conjectured[ckey]
-        if ckey in self.reserved: return self.reserved[ckey]
-        if ckey in self.pending: return self.conjecture_key(fid,compinfo)
-        return self.index_compinfo(fid,compinfo).get_ckey()        
+        if ckey in self.conjectured:
+            logging.info(logmsg +  'conjectured key: ' + str(self.conjectured[ckey]))
+            return self.conjectured[ckey]
+        if ckey in self.reserved:
+            logging.info(logmsg + ' reserved key: ' + str(self.reserved[ckey]))
+            return self.reserved[ckey]
+        if ckey in self.pending:
+            pendingkey = self.conjecture_key(fid,compinfo)
+            logging.info(logmsg + 'new pending key: ' + str(pendingkey))
+            return pendingkey
+        return self.index_compinfo(fid,compinfo).get_ckey()
+
+    def index_opaque_struct(self):
+        tags = ['?']
+        args = [ -1, 1, -1 ]
+        def f(index,key):
+            if not index in self.compinfo_names: self.compinfo_names[index] = set([])
+            self.compinfo_names[index].add('opaque-struct')
+            return CCompInfo(self,index,tags,args)
+        return self.compinfo_table.add(IT.get_key(tags,args),f)
+
+    def get_opaque_struct(self):
+        return self.compinfo_table.retrieve(1)
+
+    def index_opaque_struct_pointer(self):
+        tags = ['tcomp']
+        args = [ 1 ]
+        comptypix = self.dictionary.mk_typ(tags,args)
+        tags = [ 'tptr' ]
+        args = [ comptypix ]
+        return self.dictionary.mk_typ(tags,args)
 
     def index_compinfo(self,fid,compinfo):
+        filename = self.capp.get_file_by_index(fid).name
         ckey = compinfo.get_ckey()
+        cname = compinfo.get_name()
+        if self.is_hidden_struct(filename,cname):
+            logging.info('Hide struct ' + cname + ' in file ' + filename)
+            return self.get_opaque_struct()
         gcompinfo = self.get_gcompinfo(fid,ckey)
         if not gcompinfo is None:
             return gcompinfo
         self.pending.append(compinfo.get_ckey())
         tags = ['?']
-        fields = [ self.index_fieldinfo(f) for f in compinfo.fields ]
+        fields = [ self.index_fieldinfo(f,cname) for f in compinfo.fields ]
         args = [ -1, 1 if compinfo.isstruct else 0, -1 ] + fields
         key = (','.join(tags),','.join([str(x) for x in args]))
         if ckey in self.reserved:
@@ -321,6 +370,10 @@ class CGlobalDeclarations(object):
                 self.conjectured.pop(ckey)
                 return gcompinfo
             else:
+                logging.info('Conjecture failure for ' + compinfo.get_name()
+                                 + ' (fid:' + str(fid) + ', ckey:' + str(ckey)
+                                 + ', gckey: ' + str(gckey)
+                                 + ', conjectured key: ' + str(conjecturedkey) + ')')
                 raise ConjectureFailure(ckey,conjecturedkey)
         else:
             self.register_gcompinfo(fid,ckey,gcompinfo)
@@ -386,7 +439,7 @@ class CGlobalDeclarations(object):
             vname = varinfo.vname + '__file__' + str(fid) + '__'
         else:
             vname = varinfo.vname
-        vtypeix = self.dictionary.index_typ(varinfo.vtype.expand())
+        vtypeix = self.dictionary.index_typ(varinfo.vtype.expand().strip_attributes())
         vtype = self.dictionary.get_typ(vtypeix)
         if varinfo.has_initializer():
             vinit = varinfo.get_initializer()
@@ -407,6 +460,9 @@ class CGlobalDeclarations(object):
         if not vstorageclass in self.varinfo_storage_classes[gvid]:
             self.varinfo_storage_classes[gvid] += vstorageclass
         self.vid2gvid[fid][vid] = gvarinfo.get_vid()
+        logging.debug('Fid: ' + str(fid) + ', vid: ' + str(vid) + ', gvid: '
+                         + str(gvarinfo.get_vid()) + ': ' + gvarinfo.vname
+                         + ' (' + str(gvarinfo.vtype) + ')')
         return gvarinfo
 
     def index_file_varinfos(self,fid,varinfos):

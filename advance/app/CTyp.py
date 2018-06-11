@@ -25,6 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import logging
 import advance.app.CDictionaryRecord as CD
 
 integernames = {
@@ -67,6 +68,22 @@ class CTypBase(CD.CDictionaryRecord):
         CD.CDictionaryRecord.__init__(self,cd,index,tags,args)
 
     def expand(self): return self
+
+    def strip_attributes(self):
+        aindex = attribute_index[self.tags[0]]
+        if aindex >= len(self.args):
+            return self
+        elif self.args[aindex] == 1:
+            return self
+        else:
+            newargs = self.args[:-1]
+            newtypix = self.cd.mk_typ(self.tags,newargs)
+            if newtypix != self.index:
+                newtyp = self.cd.get_typ(newtypix)
+                logging.info('Stripping attributes ' + self.get_attributes_string()
+                                 + ' ; changing type from ' + str(self) + ' to '
+                                 + str(newtyp))
+            return newtyp
 
     def get_typ(self,ix): return self.cd.get_typ(ix)
 
@@ -340,6 +357,19 @@ class CTypFun(CTypBase):
                         and all([x.get_name().startswith('$par$') for x in args]))
 
     def is_vararg(self): return (self.args[2] == 1)
+
+    def strip_attributes(self):
+        rtype = self.get_return_type().strip_attributes()
+        if rtype.index != self.get_return_type().index:
+            newargs = self.args[:]
+            newargs[0] = rtype.index
+            newtypix = self.cd.mk_typ(self.tags,newargs)
+            newtyp = self.cd.get_typ(newtypix)
+            logging.info('Change function type from ' + str(self) + ' to '
+                             + str(newtyp))
+            return newtyp
+        else:
+            return self
 
     def __str__(self):
         rtyp = self.get_return_type()

@@ -477,6 +477,10 @@ class CDictionary(object):
             def f(index,key): return CO.CIndexOffset(self,index,o.tags,args)
             return self.offset_table.add(IT.get_key(o.tags,args),f)
 
+    def mk_typ(self,tags,args):
+        def f(index,key): return typ_constructors[tags[0]]((self,index,tags,args))
+        return self.typ_table.add(IT.get_key(tags,args),f)
+
     def index_typ(self,t):                    # TBF
         # omit attributes argument if there are no attributes
         def ia(attrs):

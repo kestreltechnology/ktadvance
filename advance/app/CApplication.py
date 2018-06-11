@@ -31,6 +31,8 @@ import sys
 
 import advance.util.fileutil as UF
 
+from advance.api.CGlobalContract import CGlobalContract
+
 from advance.app.CCompInfo import CCompInfo
 from advance.app.CFile import CFile
 from advance.app.CVarInfo import CVarInfo
@@ -64,6 +66,9 @@ class CApplication(object):
         self.path = os.path.join(path,'ktadvance')
         self.srcpath = os.path.join(path,'sourcefiles') if srcpath is None else srcpath
         self.contractpath = contractpath
+        self.globalcontract = None
+        if not self.contractpath is None:
+            self.globalcontract = CGlobalContract(self)
         self.candidate_contractpath = candidate_contractpath
         self.filenames = {}          # file index -> filename
         self.files = {}              # filename -> CFile
