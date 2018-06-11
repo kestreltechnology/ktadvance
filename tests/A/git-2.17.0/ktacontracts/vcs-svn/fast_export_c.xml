@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-11 11:44:10.519717"/>
+  <cfile name="vcs-svn/fast_export">
+    <data-structures/>
+    <functions>
+      <function name="apply_delta">
+        <parameters>
+          <par name="len" nr="1"/>
+          <par name="input" nr="2"/>
+          <par name="old_data" nr="3"/>
+          <par name="old_mode" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="check_preimage_overflow">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="const_error">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="die_short_read">
+        <parameters>
+          <par name="input" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ends_with">
+        <parameters>
+          <par name="str" nr="1"/>
+          <par name="suffix" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fast_export_begin_commit">
+        <parameters>
+          <par name="revision" nr="1"/>
+          <par name="author" nr="2"/>
+          <par name="log" nr="3"/>
+          <par name="uuid" nr="4"/>
+          <par name="url" nr="5"/>
+          <par name="timestamp" nr="6"/>
+          <par name="local_ref" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fast_export_begin_note">
+        <parameters>
+          <par name="revision" nr="1"/>
+          <par name="author" nr="2"/>
+          <par name="log" nr="3"/>
+          <par name="timestamp" nr="4"/>
+          <par name="note_ref" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fast_export_blob_delta">
+        <parameters>
+          <par name="mode" nr="1"/>
+          <par name="old_mode" nr="2"/>
+          <par name="old_data" nr="3"/>
+          <par name="len" nr="4"/>
+          <par name="input" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fast_export_buf_to_data">
+        <parameters>
+          <par name="data" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fast_export_copy">
+        <parameters>
+          <par name="revision" nr="1"/>
+          <par name="src" nr="2"/>
+          <par name="dst" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fast_export_data">
+        <parameters>
+          <par name="mode" nr="1"/>
+          <par name="len" nr="2"/>
+          <par name="input" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fast_export_deinit">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fast_export_delete">
+        <parameters>
+          <par name="path" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fast_export_end_commit">
+        <parameters>
+          <par name="revision" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fast_export_init">
+        <parameters>
+          <par name="fd" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fast_export_ls">
+        <parameters>
+          <par name="path" nr="1"/>
+          <par name="mode" nr="2"/>
+          <par name="dataref" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fast_export_ls_rev">
+        <parameters>
+          <par name="rev" nr="1"/>
+          <par name="path" nr="2"/>
+          <par name="mode" nr="3"/>
+          <par name="dataref" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fast_export_modify">
+        <parameters>
+          <par name="path" nr="1"/>
+          <par name="mode" nr="2"/>
+          <par name="dataref" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fast_export_note">
+        <parameters>
+          <par name="committish" nr="1"/>
+          <par name="dataref" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fast_export_read_path">
+        <parameters>
+          <par name="path" nr="1"/>
+          <par name="mode_out" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fast_export_truncate">
+        <parameters>
+          <par name="path" nr="1"/>
+          <par name="mode" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_response_line">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="init_postimage">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ls_from_active_commit">
+        <parameters>
+          <par name="path" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ls_from_rev">
+        <parameters>
+          <par name="rev" nr="1"/>
+          <par name="path" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_cat_response_line">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_ls_response">
+        <parameters>
+          <par name="response" nr="1"/>
+          <par name="mode" nr="2"/>
+          <par name="dataref" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_addstr">
+        <parameters>
+          <par name="sb" nr="1"/>
+          <par name="s" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_setlen">
+        <parameters>
+          <par name="sb" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strip_suffix">
+        <parameters>
+          <par name="str" nr="1"/>
+          <par name="suffix" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strip_suffix_mem">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="len" nr="2"/>
+          <par name="suffix" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

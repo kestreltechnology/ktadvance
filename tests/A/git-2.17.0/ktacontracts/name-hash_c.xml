@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-11 11:43:59.854262"/>
+  <cfile name="name-hash">
+    <data-structures/>
+    <functions>
+      <function name="add_dir_entry">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="ce" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_name_hash">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="ce" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="adjust_dirname_case">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="name" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="cache_entry_cmp">
+        <parameters>
+          <par name="unused_cmp_data" nr="1"/>
+          <par name="entry" nr="2"/>
+          <par name="entry_or_key" nr="3"/>
+          <par name="remove___0" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="cleanup_dir_mutex">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="compute_dir_lock_nr">
+        <parameters>
+          <par name="map" nr="1"/>
+          <par name="hash" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dir_entry_cmp">
+        <parameters>
+          <par name="unused_cmp_data" nr="1"/>
+          <par name="entry" nr="2"/>
+          <par name="entry_or_key" nr="3"/>
+          <par name="keydata" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="find_dir_entry">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="name" nr="2"/>
+          <par name="namelen" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="find_dir_entry__hash">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="name" nr="2"/>
+          <par name="namelen" nr="3"/>
+          <par name="hash" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="free_name_hash">
+        <parameters>
+          <par name="istate" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="git_is_dir_sep">
+        <parameters>
+          <par name="c" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="handle_range_1">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="k_start" nr="2"/>
+          <par name="k_end" nr="3"/>
+          <par name="parent" nr="4"/>
+          <par name="prefix" nr="5"/>
+          <par name="lazy_entries" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="handle_range_dir">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="k_start" nr="2"/>
+          <par name="k_end" nr="3"/>
+          <par name="parent" nr="4"/>
+          <par name="prefix" nr="5"/>
+          <par name="lazy_entries" nr="6"/>
+          <par name="dir_new_out" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hash_dir_entry">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="ce" nr="2"/>
+          <par name="namelen" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hash_dir_entry_with_parent_and_prefix">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="parent" nr="2"/>
+          <par name="prefix" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hash_index_entry">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="ce" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hashmap_disable_item_counting">
+        <parameters>
+          <par name="map" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hashmap_enable_item_counting">
+        <parameters>
+          <par name="map" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hashmap_entry_init">
+        <parameters>
+          <par name="entry" nr="1"/>
+          <par name="hash" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hashmap_get_from_hash">
+        <parameters>
+          <par name="map" nr="1"/>
+          <par name="hash" nr="2"/>
+          <par name="keydata" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="index_dir_exists">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="name" nr="2"/>
+          <par name="namelen" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="index_file_exists">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="name" nr="2"/>
+          <par name="namelen" nr="3"/>
+          <par name="icase" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="init_dir_mutex">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="lazy_dir_thread_proc">
+        <parameters>
+          <par name="_data" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="lazy_init_name_hash">
+        <parameters>
+          <par name="istate" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="lazy_name_thread_proc">
+        <parameters>
+          <par name="_data" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="lazy_update_dir_ref_counts">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="lazy_entries" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="lock_dir_mutex">
+        <parameters>
+          <par name="j" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="lookup_lazy_params">
+        <parameters>
+          <par name="istate" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="remove_dir_entry">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="ce" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="remove_name_hash">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="ce" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="same_name">
+        <parameters>
+          <par name="ce" nr="1"/>
+          <par name="name" nr="2"/>
+          <par name="namelen" nr="3"/>
+          <par name="icase" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sane_case">
+        <parameters>
+          <par name="x" nr="1"/>
+          <par name="high" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="slow_same_name">
+        <parameters>
+          <par name="name1" nr="1"/>
+          <par name="len1" nr="2"/>
+          <par name="name2" nr="3"/>
+          <par name="len2" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="st_add">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_addch">
+        <parameters>
+          <par name="sb" nr="1"/>
+          <par name="c" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_avail">
+        <parameters>
+          <par name="sb" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_setlen">
+        <parameters>
+          <par name="sb" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="test_lazy_init_name_hash">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="try_threaded" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="threaded_lazy_init_name_hash">
+        <parameters>
+          <par name="istate" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="trace_pass_fl">
+        <parameters>
+          <par name="key" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="unlock_dir_mutex">
+        <parameters>
+          <par name="j" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-11 11:43:48.847280"/>
+  <cfile name="builtin/ls-tree">
+    <data-structures/>
+    <functions>
+      <function name="cmd_ls_tree">
+        <parameters>
+          <par name="argc" nr="1"/>
+          <par name="argv" nr="2"/>
+          <par name="prefix" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="show_recursive">
+        <parameters>
+          <par name="base" nr="1"/>
+          <par name="baselen" nr="2"/>
+          <par name="pathname" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="show_tree">
+        <parameters>
+          <par name="sha1" nr="1"/>
+          <par name="base" nr="2"/>
+          <par name="pathname" nr="3"/>
+          <par name="mode" nr="4"/>
+          <par name="stage" nr="5"/>
+          <par name="context" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_addstr">
+        <parameters>
+          <par name="sb" nr="1"/>
+          <par name="s" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_setlen">
+        <parameters>
+          <par name="sb" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

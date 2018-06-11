@@ -1,0 +1,985 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-11 11:43:53.444837"/>
+  <cfile name="convert">
+    <data-structures/>
+    <functions>
+      <function name="_">
+        <parameters>
+          <par name="msgid" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="apply_filter">
+        <parameters>
+          <par name="path" nr="1"/>
+          <par name="src" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="fd" nr="4"/>
+          <par name="dst" nr="5"/>
+          <par name="drv" nr="6"/>
+          <par name="wanted_capability" nr="7"/>
+          <par name="dco" nr="8"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="apply_multi_file_filter">
+        <parameters>
+          <par name="path" nr="1"/>
+          <par name="src" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="fd" nr="4"/>
+          <par name="dst" nr="5"/>
+          <par name="cmd" nr="6"/>
+          <par name="wanted_capability" nr="7"/>
+          <par name="dco" nr="8"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="apply_single_file_filter">
+        <parameters>
+          <par name="path" nr="1"/>
+          <par name="src" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="fd" nr="4"/>
+          <par name="dst" nr="5"/>
+          <par name="cmd" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="async_convert_to_working_tree">
+        <parameters>
+          <par name="path" nr="1"/>
+          <par name="src" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="dst" nr="4"/>
+          <par name="dco" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="async_query_available_blobs">
+        <parameters>
+          <par name="cmd" nr="1"/>
+          <par name="available_paths" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="cascade_filter">
+        <parameters>
+          <par name="one" nr="1"/>
+          <par name="two" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="cascade_filter_fn">
+        <parameters>
+          <par name="filter" nr="1"/>
+          <par name="input" nr="2"/>
+          <par name="isize_p" nr="3"/>
+          <par name="output" nr="4"/>
+          <par name="osize_p" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="cascade_free_fn">
+        <parameters>
+          <par name="filter" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="check_global_conv_flags_eol">
+        <parameters>
+          <par name="path" nr="1"/>
+          <par name="crlf_action" nr="2"/>
+          <par name="old_stats" nr="3"/>
+          <par name="new_stats" nr="4"/>
+          <par name="conv_flags" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="const_error">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="convert_attrs">
+        <parameters>
+          <par name="ca" nr="1"/>
+          <par name="path" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="convert_is_binary">
+        <parameters>
+          <par name="size" nr="1"/>
+          <par name="stats" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="convert_to_git">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="path" nr="2"/>
+          <par name="src" nr="3"/>
+          <par name="len" nr="4"/>
+          <par name="dst" nr="5"/>
+          <par name="conv_flags" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="convert_to_git_filter_fd">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="path" nr="2"/>
+          <par name="fd" nr="3"/>
+          <par name="dst" nr="4"/>
+          <par name="conv_flags" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="convert_to_working_tree">
+        <parameters>
+          <par name="path" nr="1"/>
+          <par name="src" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="dst" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="convert_to_working_tree_internal">
+        <parameters>
+          <par name="path" nr="1"/>
+          <par name="src" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="dst" nr="4"/>
+          <par name="normalizing" nr="5"/>
+          <par name="dco" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="count_ident">
+        <parameters>
+          <par name="cp" nr="1"/>
+          <par name="size" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crlf_to_git">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="path" nr="2"/>
+          <par name="src" nr="3"/>
+          <par name="len" nr="4"/>
+          <par name="buf" nr="5"/>
+          <par name="crlf_action" nr="6"/>
+          <par name="conv_flags" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crlf_to_worktree">
+        <parameters>
+          <par name="path" nr="1"/>
+          <par name="src" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="buf" nr="4"/>
+          <par name="crlf_action" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="filter_buffer_or_fd">
+        <parameters>
+          <par name="in" nr="1"/>
+          <par name="out" nr="2"/>
+          <par name="data" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="free_stream_filter">
+        <parameters>
+          <par name="filter" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gather_convert_stats">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="size" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gather_convert_stats_ascii">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="size" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gather_stats">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="stats" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_cached_convert_stats_ascii">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="path" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_convert_attr_ascii">
+        <parameters>
+          <par name="path" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_stream_filter">
+        <parameters>
+          <par name="path" nr="1"/>
+          <par name="sha1" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_wt_convert_stats_ascii">
+        <parameters>
+          <par name="path" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="git_path_check_convert">
+        <parameters>
+          <par name="check" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="git_path_check_crlf">
+        <parameters>
+          <par name="check" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="git_path_check_eol">
+        <parameters>
+          <par name="check" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="git_path_check_ident">
+        <parameters>
+          <par name="check" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="handle_filter_error">
+        <parameters>
+          <par name="filter_status" nr="1"/>
+          <par name="entry" nr="2"/>
+          <par name="wanted_capability" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="has_crlf_in_index">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="path" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ident_drain">
+        <parameters>
+          <par name="ident" nr="1"/>
+          <par name="output_p" nr="2"/>
+          <par name="osize_p" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ident_filter">
+        <parameters>
+          <par name="sha1" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ident_filter_fn">
+        <parameters>
+          <par name="filter" nr="1"/>
+          <par name="input" nr="2"/>
+          <par name="isize_p" nr="3"/>
+          <par name="output" nr="4"/>
+          <par name="osize_p" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ident_free_fn">
+        <parameters>
+          <par name="filter" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ident_to_git">
+        <parameters>
+          <par name="path" nr="1"/>
+          <par name="src" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="buf" nr="4"/>
+          <par name="ident" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ident_to_worktree">
+        <parameters>
+          <par name="path" nr="1"/>
+          <par name="src" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="buf" nr="4"/>
+          <par name="ident" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_foreign_ident">
+        <parameters>
+          <par name="str" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_null_stream_filter">
+        <parameters>
+          <par name="filter" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="lf_to_crlf_filter">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="lf_to_crlf_filter_fn">
+        <parameters>
+          <par name="filter" nr="1"/>
+          <par name="input" nr="2"/>
+          <par name="isize_p" nr="3"/>
+          <par name="output" nr="4"/>
+          <par name="osize_p" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="lf_to_crlf_free_fn">
+        <parameters>
+          <par name="filter" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="null_filter_fn">
+        <parameters>
+          <par name="filter" nr="1"/>
+          <par name="input" nr="2"/>
+          <par name="isize_p" nr="3"/>
+          <par name="output" nr="4"/>
+          <par name="osize_p" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="null_free_fn">
+        <parameters>
+          <par name="filter" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="output_eol">
+        <parameters>
+          <par name="crlf_action" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="read_convert_config">
+        <parameters>
+          <par name="var" nr="1"/>
+          <par name="value" nr="2"/>
+          <par name="cb" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="renormalize_buffer">
+        <parameters>
+          <par name="istate" nr="1"/>
+          <par name="path" nr="2"/>
+          <par name="src" nr="3"/>
+          <par name="len" nr="4"/>
+          <par name="dst" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="skip_prefix">
+        <parameters>
+          <par name="str" nr="1"/>
+          <par name="prefix" nr="2"/>
+          <par name="out" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="start_multi_file_filter_fn">
+        <parameters>
+          <par name="subprocess" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_addch">
+        <parameters>
+          <par name="sb" nr="1"/>
+          <par name="c" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_addstr">
+        <parameters>
+          <par name="sb" nr="1"/>
+          <par name="s" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_avail">
+        <parameters>
+          <par name="sb" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_setlen">
+        <parameters>
+          <par name="sb" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_swap">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="stream_filter">
+        <parameters>
+          <par name="filter" nr="1"/>
+          <par name="input" nr="2"/>
+          <par name="isize_p" nr="3"/>
+          <par name="output" nr="4"/>
+          <par name="osize_p" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="text_eol_is_crlf">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="will_convert_lf_to_crlf">
+        <parameters>
+          <par name="len" nr="1"/>
+          <par name="stats" nr="2"/>
+          <par name="crlf_action" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="would_convert_to_git_filter_fd">
+        <parameters>
+          <par name="path" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

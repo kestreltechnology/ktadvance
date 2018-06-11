@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-11 11:44:10.603832"/>
+  <cfile name="vcs-svn/svndiff">
+    <data-structures/>
+    <functions>
+      <function name="apply_one_window">
+        <parameters>
+          <par name="delta" nr="1"/>
+          <par name="delta_len" nr="2"/>
+          <par name="preimage" nr="3"/>
+          <par name="out" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="apply_window_in_core">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="const_error">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="copyfrom_data">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="data_pos" nr="2"/>
+          <par name="nbytes" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="copyfrom_source">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="instructions" nr="2"/>
+          <par name="nbytes" nr="3"/>
+          <par name="insns_end" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="copyfrom_target">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="instructions" nr="2"/>
+          <par name="nbytes" nr="3"/>
+          <par name="instructions_end" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="error_short_read">
+        <parameters>
+          <par name="input" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="execute_one_instruction">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="instructions" nr="2"/>
+          <par name="data_pos" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_first_operand">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="out" nr="2"/>
+          <par name="end" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_int">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="result" nr="2"/>
+          <par name="end" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="read_chunk">
+        <parameters>
+          <par name="delta" nr="1"/>
+          <par name="delta_len" nr="2"/>
+          <par name="buf" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="read_int">
+        <parameters>
+          <par name="in" nr="1"/>
+          <par name="result" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="read_length">
+        <parameters>
+          <par name="in" nr="1"/>
+          <par name="result" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="read_magic">
+        <parameters>
+          <par name="in" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="read_offset">
+        <parameters>
+          <par name="in" nr="1"/>
+          <par name="result" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_addch">
+        <parameters>
+          <par name="sb" nr="1"/>
+          <par name="c" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_avail">
+        <parameters>
+          <par name="sb" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_setlen">
+        <parameters>
+          <par name="sb" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="svndiff0_apply">
+        <parameters>
+          <par name="delta" nr="1"/>
+          <par name="delta_len" nr="2"/>
+          <par name="preimage" nr="3"/>
+          <par name="postimage" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="window_release">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="write_strbuf">
+        <parameters>
+          <par name="sb" nr="1"/>
+          <par name="out" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

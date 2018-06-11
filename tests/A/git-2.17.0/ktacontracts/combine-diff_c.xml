@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-11 11:43:52.453540"/>
+  <cfile name="combine-diff">
+    <data-structures/>
+    <functions>
+      <function name="adjust_hunk_tail">
+        <parameters>
+          <par name="sline" nr="1"/>
+          <par name="all_mask" nr="2"/>
+          <par name="hunk_begin" nr="3"/>
+          <par name="i" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="append_lost">
+        <parameters>
+          <par name="sline" nr="1"/>
+          <par name="n" nr="2"/>
+          <par name="line" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="canon_mode">
+        <parameters>
+          <par name="mode" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="coalesce_lines">
+        <parameters>
+          <par name="base" nr="1"/>
+          <par name="lenbase" nr="2"/>
+          <par name="newline" nr="3"/>
+          <par name="lennew" nr="4"/>
+          <par name="parent" nr="5"/>
+          <par name="flags" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="combine_diff">
+        <parameters>
+          <par name="parent" nr="1"/>
+          <par name="mode" nr="2"/>
+          <par name="result_file" nr="3"/>
+          <par name="sline" nr="4"/>
+          <par name="cnt" nr="5"/>
+          <par name="n" nr="6"/>
+          <par name="num_parent" nr="7"/>
+          <par name="result_deleted" nr="8"/>
+          <par name="textconv" nr="9"/>
+          <par name="path" nr="10"/>
+          <par name="flags" nr="11"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="combined_pair">
+        <parameters>
+          <par name="p" nr="1"/>
+          <par name="num_parent" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="compare_paths">
+        <parameters>
+          <par name="one" nr="1"/>
+          <par name="two" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="const_error">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="consume_line">
+        <parameters>
+          <par name="state_" nr="1"/>
+          <par name="line" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="diff_tree_combined">
+        <parameters>
+          <par name="oid" nr="1"/>
+          <par name="parents" nr="2"/>
+          <par name="dense" nr="3"/>
+          <par name="rev" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="diff_tree_combined_merge">
+        <parameters>
+          <par name="commit" nr="1"/>
+          <par name="dense" nr="2"/>
+          <par name="rev" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dump_quoted_path">
+        <parameters>
+          <par name="head" nr="1"/>
+          <par name="prefix" nr="2"/>
+          <par name="path" nr="3"/>
+          <par name="line_prefix" nr="4"/>
+          <par name="c_meta" nr="5"/>
+          <par name="c_reset" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dump_sline">
+        <parameters>
+          <par name="sline" nr="1"/>
+          <par name="line_prefix" nr="2"/>
+          <par name="cnt" nr="3"/>
+          <par name="num_parent" nr="4"/>
+          <par name="use_color" nr="5"/>
+          <par name="result_deleted" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="find_next">
+        <parameters>
+          <par name="sline" nr="1"/>
+          <par name="mark" nr="2"/>
+          <par name="i" nr="3"/>
+          <par name="cnt" nr="4"/>
+          <par name="look_for_uninteresting" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="find_paths_generic">
+        <parameters>
+          <par name="oid" nr="1"/>
+          <par name="parents" nr="2"/>
+          <par name="opt" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="find_paths_multitree">
+        <parameters>
+          <par name="oid" nr="1"/>
+          <par name="parents" nr="2"/>
+          <par name="opt" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="free_combined_pair">
+        <parameters>
+          <par name="pair" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="give_context">
+        <parameters>
+          <par name="sline" nr="1"/>
+          <par name="cnt" nr="2"/>
+          <par name="num_parent" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="grab_blob">
+        <parameters>
+          <par name="oid" nr="1"/>
+          <par name="mode" nr="2"/>
+          <par name="size" nr="3"/>
+          <par name="textconv" nr="4"/>
+          <par name="path" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="handle_combined_callback">
+        <parameters>
+          <par name="opt" nr="1"/>
+          <par name="paths" nr="2"/>
+          <par name="num_parent" nr="3"/>
+          <par name="num_paths" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hashcmp">
+        <parameters>
+          <par name="sha1" nr="1"/>
+          <par name="sha2" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hashcpy">
+        <parameters>
+          <par name="sha_dst" nr="1"/>
+          <par name="sha_src" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hunk_comment_line">
+        <parameters>
+          <par name="bol" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="interesting">
+        <parameters>
+          <par name="sline" nr="1"/>
+          <par name="all_mask" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="intersect_paths">
+        <parameters>
+          <par name="curr" nr="1"/>
+          <par name="n" nr="2"/>
+          <par name="num_parent" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_null_oid">
+        <parameters>
+          <par name="oid" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="make_hunks">
+        <parameters>
+          <par name="sline" nr="1"/>
+          <par name="cnt" nr="2"/>
+          <par name="num_parent" nr="3"/>
+          <par name="dense" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="match_string_spaces">
+        <parameters>
+          <par name="line1" nr="1"/>
+          <par name="len1" nr="2"/>
+          <par name="line2" nr="3"/>
+          <par name="len2" nr="4"/>
+          <par name="flags" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="oidcmp">
+        <parameters>
+          <par name="oid1" nr="1"/>
+          <par name="oid2" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="oidcpy">
+        <parameters>
+          <par name="dst" nr="1"/>
+          <par name="src" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="path_path">
+        <parameters>
+          <par name="obj" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="read_sha1_file">
+        <parameters>
+          <par name="sha1" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="reuse_combine_diff">
+        <parameters>
+          <par name="sline" nr="1"/>
+          <par name="cnt" nr="2"/>
+          <par name="i" nr="3"/>
+          <par name="j" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="show_combined_diff">
+        <parameters>
+          <par name="p" nr="1"/>
+          <par name="num_parent" nr="2"/>
+          <par name="dense" nr="3"/>
+          <par name="rev" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="show_combined_header">
+        <parameters>
+          <par name="elem" nr="1"/>
+          <par name="num_parent" nr="2"/>
+          <par name="dense" nr="3"/>
+          <par name="rev" nr="4"/>
+          <par name="line_prefix" nr="5"/>
+          <par name="mode_differs" nr="6"/>
+          <par name="show_file_header" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="show_line_to_eol">
+        <parameters>
+          <par name="line" nr="1"/>
+          <par name="len" nr="2"/>
+          <par name="reset" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="show_parent_lno">
+        <parameters>
+          <par name="sline" nr="1"/>
+          <par name="l0" nr="2"/>
+          <par name="l1" nr="3"/>
+          <par name="n" nr="4"/>
+          <par name="null_context" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="show_patch_diff">
+        <parameters>
+          <par name="elem" nr="1"/>
+          <par name="num_parent" nr="2"/>
+          <par name="dense" nr="3"/>
+          <par name="working_tree_file" nr="4"/>
+          <par name="rev" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="show_raw_diff">
+        <parameters>
+          <par name="p" nr="1"/>
+          <par name="num_parent" nr="2"/>
+          <par name="rev" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="st_add">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="st_mult">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_addstr">
+        <parameters>
+          <par name="sb" nr="1"/>
+          <par name="s" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_setlen">
+        <parameters>
+          <par name="sb" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="xsize_t">
+        <parameters>
+          <par name="len" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

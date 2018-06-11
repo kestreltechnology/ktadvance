@@ -1,0 +1,957 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-11 11:44:00.001528"/>
+  <cfile name="notes">
+    <data-structures/>
+    <functions>
+      <function name="add_non_note">
+        <parameters>
+          <par name="t" nr="1"/>
+          <par name="path" nr="2"/>
+          <par name="mode" nr="3"/>
+          <par name="sha1" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_note">
+        <parameters>
+          <par name="t" nr="1"/>
+          <par name="object_oid" nr="2"/>
+          <par name="note_oid" nr="3"/>
+          <par name="combine_notes" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="combine_notes_cat_sort_uniq">
+        <parameters>
+          <par name="cur_oid" nr="1"/>
+          <par name="new_oid" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="combine_notes_concatenate">
+        <parameters>
+          <par name="cur_oid" nr="1"/>
+          <par name="new_oid" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="combine_notes_ignore">
+        <parameters>
+          <par name="cur_oid" nr="1"/>
+          <par name="new_oid" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="combine_notes_overwrite">
+        <parameters>
+          <par name="cur_oid" nr="1"/>
+          <par name="new_oid" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="const_error">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="construct_path_with_fanout">
+        <parameters>
+          <par name="sha1" nr="1"/>
+          <par name="fanout" nr="2"/>
+          <par name="path" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="copy_note">
+        <parameters>
+          <par name="t" nr="1"/>
+          <par name="from_obj" nr="2"/>
+          <par name="to_obj" nr="3"/>
+          <par name="force" nr="4"/>
+          <par name="combine_notes" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="default_notes_ref">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="determine_fanout">
+        <parameters>
+          <par name="tree" nr="1"/>
+          <par name="n" nr="2"/>
+          <par name="fanout" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="expand_loose_notes_ref">
+        <parameters>
+          <par name="sb" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="expand_notes_ref">
+        <parameters>
+          <par name="sb" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="for_each_note">
+        <parameters>
+          <par name="t" nr="1"/>
+          <par name="flags" nr="2"/>
+          <par name="fn" nr="3"/>
+          <par name="cb_data" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="for_each_note_helper">
+        <parameters>
+          <par name="t" nr="1"/>
+          <par name="tree" nr="2"/>
+          <par name="n" nr="3"/>
+          <par name="fanout" nr="4"/>
+          <par name="flags" nr="5"/>
+          <par name="fn" nr="6"/>
+          <par name="cb_data" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="format_display_notes">
+        <parameters>
+          <par name="object_oid" nr="1"/>
+          <par name="sb" nr="2"/>
+          <par name="output_encoding" nr="3"/>
+          <par name="raw" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="format_note">
+        <parameters>
+          <par name="t" nr="1"/>
+          <par name="object_oid" nr="2"/>
+          <par name="sb" nr="3"/>
+          <par name="output_encoding" nr="4"/>
+          <par name="raw" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="free_notes">
+        <parameters>
+          <par name="t" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_note">
+        <parameters>
+          <par name="t" nr="1"/>
+          <par name="oid" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="has_glob_specials">
+        <parameters>
+          <par name="pattern" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hashcmp">
+        <parameters>
+          <par name="sha1" nr="1"/>
+          <par name="sha2" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hashcpy">
+        <parameters>
+          <par name="sha_dst" nr="1"/>
+          <par name="sha_src" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="init_display_notes">
+        <parameters>
+          <par name="opt" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="init_notes">
+        <parameters>
+          <par name="t" nr="1"/>
+          <par name="notes_ref" nr="2"/>
+          <par name="combine_notes" nr="3"/>
+          <par name="flags" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_null_oid">
+        <parameters>
+          <par name="oid" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="load_notes_trees">
+        <parameters>
+          <par name="refs" nr="1"/>
+          <par name="flags" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="load_subtree">
+        <parameters>
+          <par name="t" nr="1"/>
+          <par name="subtree" nr="2"/>
+          <par name="node" nr="3"/>
+          <par name="n" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="matches_tree_write_stack">
+        <parameters>
+          <par name="tws" nr="1"/>
+          <par name="full_path" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="non_note_cmp">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="note_tree_consolidate">
+        <parameters>
+          <par name="tree" nr="1"/>
+          <par name="parent" nr="2"/>
+          <par name="index___0" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="note_tree_find">
+        <parameters>
+          <par name="t" nr="1"/>
+          <par name="tree" nr="2"/>
+          <par name="n" nr="3"/>
+          <par name="key_sha1" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="note_tree_free">
+        <parameters>
+          <par name="tree" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="note_tree_insert">
+        <parameters>
+          <par name="t" nr="1"/>
+          <par name="tree" nr="2"/>
+          <par name="n" nr="3"/>
+          <par name="entry" nr="4"/>
+          <par name="type" nr="5"/>
+          <par name="combine_notes" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="note_tree_remove">
+        <parameters>
+          <par name="t" nr="1"/>
+          <par name="tree" nr="2"/>
+          <par name="n" nr="3"/>
+          <par name="entry" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="note_tree_search">
+        <parameters>
+          <par name="t" nr="1"/>
+          <par name="tree" nr="2"/>
+          <par name="n" nr="3"/>
+          <par name="key_sha1" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="notes_display_config">
+        <parameters>
+          <par name="k" nr="1"/>
+          <par name="v" nr="2"/>
+          <par name="cb" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="oidclr">
+        <parameters>
+          <par name="oid" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="oidcmp">
+        <parameters>
+          <par name="oid1" nr="1"/>
+          <par name="oid2" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="oidcpy">
+        <parameters>
+          <par name="dst" nr="1"/>
+          <par name="src" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="prune_notes">
+        <parameters>
+          <par name="t" nr="1"/>
+          <par name="flags" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="prune_notes_helper">
+        <parameters>
+          <par name="object_oid" nr="1"/>
+          <par name="note_oid" nr="2"/>
+          <par name="note_path" nr="3"/>
+          <par name="cb_data" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="read_sha1_file">
+        <parameters>
+          <par name="sha1" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="reencode_string">
+        <parameters>
+          <par name="in" nr="1"/>
+          <par name="out_encoding" nr="2"/>
+          <par name="in_encoding" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="remove_note">
+        <parameters>
+          <par name="t" nr="1"/>
+          <par name="object_sha1" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="st_mult">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_addch">
+        <parameters>
+          <par name="sb" nr="1"/>
+          <par name="c" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_addstr">
+        <parameters>
+          <par name="sb" nr="1"/>
+          <par name="s" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strbuf_avail">
+        <parameters>
+          <par name="sb" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="string_list_add_note_lines">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="oid" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="string_list_add_one_ref">
+        <parameters>
+          <par name="refname" nr="1"/>
+          <par name="oid" nr="2"/>
+          <par name="flag" nr="3"/>
+          <par name="cb" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="string_list_add_refs_by_glob">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="glob" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="string_list_add_refs_from_colon_sep">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="globs" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="string_list_join_lines_helper">
+        <parameters>
+          <par name="item" nr="1"/>
+          <par name="cb_data" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tree_write_stack_finish_subtree">
+        <parameters>
+          <par name="tws" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tree_write_stack_init_subtree">
+        <parameters>
+          <par name="tws" nr="1"/>
+          <par name="path___0" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="write_each_non_note_until">
+        <parameters>
+          <par name="note_path" nr="1"/>
+          <par name="d" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="write_each_note">
+        <parameters>
+          <par name="object_oid" nr="1"/>
+          <par name="note_oid" nr="2"/>
+          <par name="note_path" nr="3"/>
+          <par name="cb_data" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="write_each_note_helper">
+        <parameters>
+          <par name="tws" nr="1"/>
+          <par name="path___0" nr="2"/>
+          <par name="mode" nr="3"/>
+          <par name="oid" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="write_notes_tree">
+        <parameters>
+          <par name="t" nr="1"/>
+          <par name="result" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="write_tree_entry">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="mode" nr="2"/>
+          <par name="path___0" nr="3"/>
+          <par name="path_len" nr="4"/>
+          <par name="sha1" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="xstrdup_or_null">
+        <parameters>
+          <par name="str" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
