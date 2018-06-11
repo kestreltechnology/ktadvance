@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -77,9 +77,7 @@ class CLinker(object):
 
     def link_compinfos(self):
         def f(cfile):
-            print('-' * 80)
             print('Linking ' + cfile.name)
-            print('-' * 80)
             compinfos = cfile.declarations.get_compinfos()
             self.declarations.index_file_compinfos(cfile.index,compinfos)
         self.capp.iter_files(f)
