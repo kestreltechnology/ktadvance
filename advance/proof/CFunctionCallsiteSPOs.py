@@ -137,31 +137,16 @@ class CFunctionCallsiteSPOs(object):
                     spotype = self.cfun.podictionary.get_spo_type(ispotype)
                     self.spos[apiid].append(CFunctionCallsiteSPO(self,spotype))
                 except CKeyLookupError as e:
-                    print('Key not found')
-                    if calleefun.cfile.has_file_candidate_contracts():
-                        calleecfilecontracts = calleefun.cfile.contracts
-                        if calleecfilecontracts.has_function_contract(calleefun.name):
-                            calleefuncontract = calleecfilecontracts.get_function_contract(calleefun.name)
-                            calleefuncontract.add_datastructure_request(e.ckey,a.predicate)
-                            print('request datastructure condition for ' + str(a.predicate)
-                                    + ' for ckey ' + str(e.ckey))
-                    else:
-                        print('*' * 80)
-                        print('******** Warning: Unable to create spo for assumption ')
-                        print(str(a))
-                        print('from function ' + calleefun.name + ' in file '
-                                + calleefun.cfile.name)
-                        print('No contract found')
-                        print(str(e))
-                        print('*' * 80)
+                    logging.warning(cfile.name + ': ' + self.cfun.name + ' call to '
+                                        + calleefun.name + ' (' + str(calleefun.cfile.name)
+                                        + ') request datastructure condition for '
+                                        + str(a.predicate) + ' for key ' + str(e.ckey)
+                                        + ' to handle api assumption')
                 except Exception as e:
-                    print('*' * 80)
-                    print('******** Warning: Unable to create spo for assumption ')
-                    print(str(a))
-                    print('from function ' + calleefun.name + ' in file '
-                              + calleefun.cfile.name)
-                    print(str(e))
-                    print('*' * 80)
+                    logging.warning(cfile.name + ': ' + self.cfun.name + ' call to '
+                                        + calleefun.name + ' (' + str(calleefun.cfile.name)
+                                        + '): unable to create spo for assumption '
+                                        + str(a) + ': ' + str(e))
 
 
     def collect_post_assumes(self):
