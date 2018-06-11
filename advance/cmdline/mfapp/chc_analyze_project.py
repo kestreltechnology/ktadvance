@@ -71,7 +71,8 @@ def parse():
     parser.add_argument('--candidate_contractpath',
                             help='path to contract files to collect suggestions for conditions')
     parser.add_argument('--logging',help='log level msgs to be recorded (default=WARNING)',
-                            default='WARNING',choices=['INFO','WARNING','ERROR','NONE'])
+                            default='WARNING',
+                            choices=['DEBUG','INFO','WARNING','ERROR','CRITICAL'])
     args = parser.parse_args()
     return args
 
@@ -93,10 +94,11 @@ if __name__ == '__main__':
     if args.logging is None:
         loglevel = logging.WARNING
     else:
-        if args.logging == 'INFO': loglevel = logging.INFO
+        if args.logging == 'DEBUG': loglevel = logging.DEBUG
+        elif args.logging == 'INFO': loglevel = logging.INFO
         elif args.logging == 'WARNING': loglevel = logging.WARNING
         elif args.logging == 'ERROR': loglevel = logging.ERROR
-        elif args.logging == 'NONE': loglevel = logging.NOTSET
+        elif args.logging == 'CRITICAL': loglevel = logging.CRITICAL
 
     logging.basicConfig(filename='ktadvance_project.log',level=loglevel)
 
@@ -118,21 +120,21 @@ if __name__ == '__main__':
             print(UP.semantics_tar_not_found_err_msg(cpath))
             exit(1)
 
+    if args.contractpath is None:
+        contractpath = os.path.join(cpath,'ktacontracts')
+    else:
+        contractpath = args.contractpath
+
     # check linkinfo
     globaldefs = os.path.join(sempath,os.path.join('ktadvance','globaldefinitions.xml'))
     if not os.path.isfile(globaldefs):
-        capp = CApplication(sempath)
+        capp = CApplication(sempath,contractpath=contractpath)
         linker = CLinker(capp)
         linker.link_compinfos()
         linker.link_varinfos()
         capp.iter_files(save_xrefs)
 
         linker.save_global_compinfos()
-
-    if args.contractpath is None:
-        contractpath = os.path.join(cpath,'ktacontracts')
-    else:
-        contractpath = args.contractpath
         
     # have to reinitialize capp to get linking info properly initialized
     capp = CApplication(sempath,contractpath=contractpath,
