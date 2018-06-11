@@ -323,6 +323,17 @@ def get_candidate_contracts(path,cfilename):
     filename = os.path.join(path,cfilename + '_cc.xml')
     return get_xnode(filename,'cfile','Contract file',show=True)
 
+def has_global_contract(path):
+    filename = os.path.join(path,'globaldefs.json')
+    return os.path.isfile(filename)
+
+def get_global_contract(path):
+    filename = os.path.join(path,'globaldefs.json')
+    if os.path.isfile(filename):
+        with open(filename,'r') as fp:
+            return json.load(fp)
+    return {}
+
 def _save_contracts_file_aux(path,filename,cnode):
     filedir = os.path.dirname(filename)
     if not os.path.isdir(filedir):
