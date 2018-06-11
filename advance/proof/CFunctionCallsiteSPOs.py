@@ -95,7 +95,10 @@ class CFunctionCallsiteSPOs(object):
     def update(self):
         """Update the spo's associated with the call site."""
 
-        if not self.has_callee(): return
+        if not self.has_callee():
+            logging.warning('Missing callee in ' + self.cfile.name + ' - ' +
+                                self.cfun.name)
+            return
 
         # retrieve callee information
         cfile = self.cfile
