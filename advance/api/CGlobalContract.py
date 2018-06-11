@@ -52,9 +52,11 @@ class CGlobalContract(object):
         return compname in self.hiddenfields and fieldname in self.hiddenfields[compname]
 
     def _initialize(self):
+        globalcontract = None
         if UF.has_global_contract(self.contractpath):
             logging.info('Load globaldefs.json contract file')
             globalcontract = UF.get_global_contract(self.contractpath)
+        if globalcontract is None: return
         if 'hidden-structs' in globalcontract:
             self.hiddenstructs = globalcontract['hidden-structs']
         if 'hidden-fields' in globalcontract:
