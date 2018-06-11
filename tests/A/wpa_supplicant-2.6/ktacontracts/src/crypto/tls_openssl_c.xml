@@ -1,0 +1,1418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-10 21:48:16.854265"/>
+  <cfile name="src/crypto/tls_openssl">
+    <data-structures/>
+    <functions>
+      <function name="SSL_get_client_random">
+        <parameters>
+          <par name="ssl" nr="1"/>
+          <par name="out" nr="2"/>
+          <par name="outlen" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="SSL_get_server_random">
+        <parameters>
+          <par name="ssl" nr="1"/>
+          <par name="out" nr="2"/>
+          <par name="outlen" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="WPA_GET_BE16">
+        <parameters>
+          <par name="a" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="debug_print_cert">
+        <parameters>
+          <par name="cert" nr="1"/>
+          <par name="title" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="domain_suffix_match">
+        <parameters>
+          <par name="val" nr="1"/>
+          <par name="len" nr="2"/>
+          <par name="match" nr="3"/>
+          <par name="full" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_x509_cert">
+        <parameters>
+          <par name="cert" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ocsp_debug_print_resp">
+        <parameters>
+          <par name="rsp" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ocsp_resp_cb">
+        <parameters>
+          <par name="s" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ocsp_status_cb">
+        <parameters>
+          <par name="s" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="openssl_connection_handshake">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="in_data" nr="2"/>
+          <par name="appl_data" nr="3"/>
+          <par name="server" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="openssl_content_type">
+        <parameters>
+          <par name="content_type" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="openssl_get_appl_data">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="max_len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="openssl_handshake">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="in_data" nr="2"/>
+          <par name="server" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="openssl_handshake_type">
+        <parameters>
+          <par name="content_type" nr="1"/>
+          <par name="buf" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="openssl_tls_cert_event">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="err_cert" nr="2"/>
+          <par name="depth" nr="3"/>
+          <par name="subject" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="openssl_tls_fail_event">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="err_cert" nr="2"/>
+          <par name="err" nr="3"/>
+          <par name="depth" nr="4"/>
+          <par name="subject" nr="5"/>
+          <par name="err_str" nr="6"/>
+          <par name="reason" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="openssl_tls_fail_reason">
+        <parameters>
+          <par name="err" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="os_snprintf_error">
+        <parameters>
+          <par name="size" nr="1"/>
+          <par name="res" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="remove_session_cb">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="sess" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssl_info_cb">
+        <parameters>
+          <par name="ssl" nr="1"/>
+          <par name="where" nr="2"/>
+          <par name="ret" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_ca_cert">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="conn" nr="2"/>
+          <par name="ca_cert" nr="3"/>
+          <par name="ca_cert_blob" nr="4"/>
+          <par name="ca_cert_blob_len" nr="5"/>
+          <par name="ca_path" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_client_cert">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="client_cert" nr="2"/>
+          <par name="client_cert_blob" nr="3"/>
+          <par name="client_cert_blob_len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_decrypt">
+        <parameters>
+          <par name="tls_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+          <par name="in_data" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_deinit">
+        <parameters>
+          <par name="ssl_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_dh">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="dh_file" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_enable_workaround">
+        <parameters>
+          <par name="ssl_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_encrypt">
+        <parameters>
+          <par name="tls_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+          <par name="in_data" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_engine_ca_cert">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="conn" nr="2"/>
+          <par name="ca_cert_id" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_engine_client_cert">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="cert_id" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_engine_private_key">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_established">
+        <parameters>
+          <par name="ssl_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_export_key">
+        <parameters>
+          <par name="tls_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+          <par name="label" nr="3"/>
+          <par name="out" nr="4"/>
+          <par name="out_len" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_get_eap_fast_key">
+        <parameters>
+          <par name="tls_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+          <par name="out" nr="3"/>
+          <par name="out_len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_get_failed">
+        <parameters>
+          <par name="ssl_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_get_random">
+        <parameters>
+          <par name="ssl_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+          <par name="keys" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_get_read_alerts">
+        <parameters>
+          <par name="ssl_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_get_success_data">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_get_write_alerts">
+        <parameters>
+          <par name="ssl_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_handshake">
+        <parameters>
+          <par name="ssl_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+          <par name="in_data" nr="3"/>
+          <par name="appl_data" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_init">
+        <parameters>
+          <par name="ssl_ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_private_key">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="conn" nr="2"/>
+          <par name="private_key" nr="3"/>
+          <par name="private_key_passwd" nr="4"/>
+          <par name="private_key_blob" nr="5"/>
+          <par name="private_key_blob_len" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_remove_session">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_resumed">
+        <parameters>
+          <par name="ssl_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_server_handshake">
+        <parameters>
+          <par name="tls_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+          <par name="in_data" nr="3"/>
+          <par name="appl_data" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_set_cipher_list">
+        <parameters>
+          <par name="tls_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+          <par name="ciphers" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_set_params">
+        <parameters>
+          <par name="tls_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+          <par name="params" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_set_session_ticket_cb">
+        <parameters>
+          <par name="tls_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+          <par name="cb" nr="3"/>
+          <par name="ctx" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_set_subject_match">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="subject_match" nr="2"/>
+          <par name="altsubject_match" nr="3"/>
+          <par name="suffix_match" nr="4"/>
+          <par name="domain_match" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_set_success_data">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="data" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_set_success_data_resumed">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_set_verify">
+        <parameters>
+          <par name="ssl_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+          <par name="verify_peer" nr="3"/>
+          <par name="flags" nr="4"/>
+          <par name="initial_ctx" nr="5"/>
+          <par name="session_ctx_len" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_connection_shutdown">
+        <parameters>
+          <par name="ssl_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_context_new">
+        <parameters>
+          <par name="conf" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_cryptoapi_cert">
+        <parameters>
+          <par name="ssl" nr="1"/>
+          <par name="name" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_deinit">
+        <parameters>
+          <par name="ssl_ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_engine_deinit">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_engine_get_cert">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="cert_id" nr="2"/>
+          <par name="cert" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_engine_init">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="engine_id" nr="2"/>
+          <par name="pin" nr="3"/>
+          <par name="key_id" nr="4"/>
+          <par name="cert_id" nr="5"/>
+          <par name="ca_cert_id" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_engine_load_dynamic_generic">
+        <parameters>
+          <par name="pre" nr="1"/>
+          <par name="post" nr="2"/>
+          <par name="id" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_engine_load_dynamic_opensc">
+        <parameters>
+          <par name="opensc_so_path" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_engine_load_dynamic_pkcs11">
+        <parameters>
+          <par name="pkcs11_so_path" nr="1"/>
+          <par name="pkcs11_module_path" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_get_cipher">
+        <parameters>
+          <par name="ssl_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+          <par name="buf" nr="3"/>
+          <par name="buflen" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_get_errors">
+        <parameters>
+          <par name="ssl_ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_get_library_version">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="buf_len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_get_version">
+        <parameters>
+          <par name="ssl_ctx" nr="1"/>
+          <par name="conn" nr="2"/>
+          <par name="buf" nr="3"/>
+          <par name="buflen" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_global_ca_cert">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="ca_cert" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_global_client_cert">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="client_cert" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_global_dh">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="dh_file" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_global_private_key">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="private_key" nr="2"/>
+          <par name="private_key_passwd" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_global_set_params">
+        <parameters>
+          <par name="tls_ctx" nr="1"/>
+          <par name="params" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_global_set_verify">
+        <parameters>
+          <par name="ssl_ctx" nr="1"/>
+          <par name="check_crl" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_init">
+        <parameters>
+          <par name="conf" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_is_pin_error">
+        <parameters>
+          <par name="err" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_load_ca_der">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="ca_cert" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_match_altsubject">
+        <parameters>
+          <par name="cert" nr="1"/>
+          <par name="match" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_match_altsubject_component">
+        <parameters>
+          <par name="cert" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="value" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_match_suffix">
+        <parameters>
+          <par name="cert" nr="1"/>
+          <par name="match" nr="2"/>
+          <par name="full" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_msg_cb">
+        <parameters>
+          <par name="write_p" nr="1"/>
+          <par name="version" nr="2"/>
+          <par name="content_type" nr="3"/>
+          <par name="buf" nr="4"/>
+          <par name="len" nr="5"/>
+          <par name="ssl" nr="6"/>
+          <par name="arg" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_parse_pkcs12">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="ssl" nr="2"/>
+          <par name="p12" nr="3"/>
+          <par name="passwd" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_passwd_cb">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="rwflag" nr="3"/>
+          <par name="password" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_read_pkcs12">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="ssl" nr="2"/>
+          <par name="private_key" nr="3"/>
+          <par name="passwd" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_read_pkcs12_blob">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="ssl" nr="2"/>
+          <par name="blob" nr="3"/>
+          <par name="len" nr="4"/>
+          <par name="passwd" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_set_conn_flags">
+        <parameters>
+          <par name="ssl" nr="1"/>
+          <par name="flags" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_show_errors">
+        <parameters>
+          <par name="level" nr="1"/>
+          <par name="func" nr="2"/>
+          <par name="txt" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tls_verify_cb">
+        <parameters>
+          <par name="preverify_ok" nr="1"/>
+          <par name="x509_ctx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_hexdump_buf_key">
+        <parameters>
+          <par name="level" nr="1"/>
+          <par name="title" nr="2"/>
+          <par name="buf" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpabuf_head">
+        <parameters>
+          <par name="buf" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpabuf_len">
+        <parameters>
+          <par name="buf" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpabuf_mhead">
+        <parameters>
+          <par name="buf" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpabuf_size">
+        <parameters>
+          <par name="buf" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

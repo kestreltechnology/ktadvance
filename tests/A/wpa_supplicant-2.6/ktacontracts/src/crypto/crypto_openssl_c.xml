@@ -1,0 +1,1014 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-10 21:48:16.307005"/>
+  <cfile name="src/crypto/crypto_openssl">
+    <data-structures/>
+    <functions>
+      <function name="EVP_MD_CTX_free">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="EVP_MD_CTX_new">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="HMAC_CTX_free">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="HMAC_CTX_new">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="aes_128_cbc_decrypt">
+        <parameters>
+          <par name="key" nr="1"/>
+          <par name="iv" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="data_len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="aes_128_cbc_encrypt">
+        <parameters>
+          <par name="key" nr="1"/>
+          <par name="iv" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="data_len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="aes_decrypt">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="crypt" nr="2"/>
+          <par name="plain" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="aes_decrypt_deinit">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="aes_decrypt_init">
+        <parameters>
+          <par name="key" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="aes_encrypt">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="plain" nr="2"/>
+          <par name="crypt" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="aes_encrypt_deinit">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="aes_encrypt_init">
+        <parameters>
+          <par name="key" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="aes_get_evp_cipher">
+        <parameters>
+          <par name="keylen" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="aes_unwrap">
+        <parameters>
+          <par name="kek" nr="1"/>
+          <par name="kek_len" nr="2"/>
+          <par name="n" nr="3"/>
+          <par name="cipher" nr="4"/>
+          <par name="plain" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="aes_wrap">
+        <parameters>
+          <par name="kek" nr="1"/>
+          <par name="kek_len" nr="2"/>
+          <par name="n" nr="3"/>
+          <par name="plain" nr="4"/>
+          <par name="cipher" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_bignum_add">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+          <par name="c" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_bignum_bits">
+        <parameters>
+          <par name="a" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_bignum_cmp">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_bignum_deinit">
+        <parameters>
+          <par name="n" nr="1"/>
+          <par name="clear" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_bignum_div">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+          <par name="c" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_bignum_exptmod">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+          <par name="c" nr="3"/>
+          <par name="d" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_bignum_init">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_bignum_init_set">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_bignum_inverse">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+          <par name="c" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_bignum_is_one">
+        <parameters>
+          <par name="a" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_bignum_is_zero">
+        <parameters>
+          <par name="a" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_bignum_legendre">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="p" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_bignum_mod">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+          <par name="c" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_bignum_mulmod">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+          <par name="c" nr="3"/>
+          <par name="d" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_bignum_sub">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+          <par name="c" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_bignum_to_bin">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="buf" nr="2"/>
+          <par name="buflen" nr="3"/>
+          <par name="padlen" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_cipher_decrypt">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="crypt" nr="2"/>
+          <par name="plain" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_cipher_deinit">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_cipher_encrypt">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="plain" nr="2"/>
+          <par name="crypt" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_cipher_init">
+        <parameters>
+          <par name="alg" nr="1"/>
+          <par name="iv" nr="2"/>
+          <par name="key" nr="3"/>
+          <par name="key_len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_get_random">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_hash_finish">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="mac" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_hash_init">
+        <parameters>
+          <par name="alg" nr="1"/>
+          <par name="key" nr="2"/>
+          <par name="key_len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_hash_update">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="crypto_mod_exp">
+        <parameters>
+          <par name="base" nr="1"/>
+          <par name="base_len" nr="2"/>
+          <par name="power" nr="3"/>
+          <par name="power_len" nr="4"/>
+          <par name="modulus" nr="5"/>
+          <par name="modulus_len" nr="6"/>
+          <par name="result" nr="7"/>
+          <par name="result_len" nr="8"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="des_encrypt">
+        <parameters>
+          <par name="clear" nr="1"/>
+          <par name="key" nr="2"/>
+          <par name="cypher" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dh5_derive_shared">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="peer_public" nr="2"/>
+          <par name="own_private" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dh5_free">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dh5_init">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="publ" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dh5_init_fixed">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="publ" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_group5_prime">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hmac_md5">
+        <parameters>
+          <par name="key" nr="1"/>
+          <par name="key_len" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="data_len" nr="4"/>
+          <par name="mac" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hmac_md5_vector">
+        <parameters>
+          <par name="key" nr="1"/>
+          <par name="key_len" nr="2"/>
+          <par name="num_elem" nr="3"/>
+          <par name="addr" nr="4"/>
+          <par name="len" nr="5"/>
+          <par name="mac" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hmac_sha1">
+        <parameters>
+          <par name="key" nr="1"/>
+          <par name="key_len" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="data_len" nr="4"/>
+          <par name="mac" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hmac_sha1_vector">
+        <parameters>
+          <par name="key" nr="1"/>
+          <par name="key_len" nr="2"/>
+          <par name="num_elem" nr="3"/>
+          <par name="addr" nr="4"/>
+          <par name="len" nr="5"/>
+          <par name="mac" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hmac_sha256">
+        <parameters>
+          <par name="key" nr="1"/>
+          <par name="key_len" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="data_len" nr="4"/>
+          <par name="mac" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hmac_sha256_vector">
+        <parameters>
+          <par name="key" nr="1"/>
+          <par name="key_len" nr="2"/>
+          <par name="num_elem" nr="3"/>
+          <par name="addr" nr="4"/>
+          <par name="len" nr="5"/>
+          <par name="mac" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="md4_vector">
+        <parameters>
+          <par name="num_elem" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="mac" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="md5_vector">
+        <parameters>
+          <par name="num_elem" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="mac" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="openssl_digest_vector">
+        <parameters>
+          <par name="type" nr="1"/>
+          <par name="num_elem" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="len" nr="4"/>
+          <par name="mac" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="openssl_hmac_vector">
+        <parameters>
+          <par name="type" nr="1"/>
+          <par name="key" nr="2"/>
+          <par name="key_len" nr="3"/>
+          <par name="num_elem" nr="4"/>
+          <par name="addr" nr="5"/>
+          <par name="len" nr="6"/>
+          <par name="mac" nr="7"/>
+          <par name="mdlen" nr="8"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="pbkdf2_sha1">
+        <parameters>
+          <par name="passphrase" nr="1"/>
+          <par name="ssid" nr="2"/>
+          <par name="ssid_len" nr="3"/>
+          <par name="iterations" nr="4"/>
+          <par name="buf" nr="5"/>
+          <par name="buflen" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="rc4_skip">
+        <parameters>
+          <par name="key" nr="1"/>
+          <par name="keylen" nr="2"/>
+          <par name="skip" nr="3"/>
+          <par name="data" nr="4"/>
+          <par name="data_len" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sha1_vector">
+        <parameters>
+          <par name="num_elem" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="mac" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sha256_vector">
+        <parameters>
+          <par name="num_elem" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="mac" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpabuf_head">
+        <parameters>
+          <par name="buf" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpabuf_len">
+        <parameters>
+          <par name="buf" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpabuf_mhead">
+        <parameters>
+          <par name="buf" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

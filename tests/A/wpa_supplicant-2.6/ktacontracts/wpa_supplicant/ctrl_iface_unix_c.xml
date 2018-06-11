@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-10 21:48:26.896678"/>
+  <cfile name="wpa_supplicant/ctrl_iface_unix">
+    <data-structures/>
+    <functions>
+      <function name="dl_list_add">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="item" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dl_list_add_tail">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="item" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dl_list_del">
+        <parameters>
+          <par name="item" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dl_list_empty">
+        <parameters>
+          <par name="list" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dl_list_init">
+        <parameters>
+          <par name="list" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="os_snprintf_error">
+        <parameters>
+          <par name="size" nr="1"/>
+          <par name="res" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_ctrl_iface_attach">
+        <parameters>
+          <par name="ctrl_dst" nr="1"/>
+          <par name="from" nr="2"/>
+          <par name="fromlen" nr="3"/>
+          <par name="global" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_ctrl_iface_deinit">
+        <parameters>
+          <par name="priv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_ctrl_iface_detach">
+        <parameters>
+          <par name="ctrl_dst" nr="1"/>
+          <par name="from" nr="2"/>
+          <par name="fromlen" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_ctrl_iface_init">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_ctrl_iface_level">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="from" nr="2"/>
+          <par name="fromlen" nr="3"/>
+          <par name="level" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_ctrl_iface_msg_cb">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="level" nr="2"/>
+          <par name="type" nr="3"/>
+          <par name="txt" nr="4"/>
+          <par name="len" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_ctrl_iface_path">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_ctrl_iface_receive">
+        <parameters>
+          <par name="sock" nr="1"/>
+          <par name="eloop_ctx" nr="2"/>
+          <par name="sock_ctx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_ctrl_iface_send">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="ifname" nr="2"/>
+          <par name="sock" nr="3"/>
+          <par name="ctrl_dst" nr="4"/>
+          <par name="level" nr="5"/>
+          <par name="buf" nr="6"/>
+          <par name="len" nr="7"/>
+          <par name="priv" nr="8"/>
+          <par name="gp" nr="9"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_ctrl_iface_wait">
+        <parameters>
+          <par name="priv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_global_ctrl_iface_deinit">
+        <parameters>
+          <par name="priv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_global_ctrl_iface_init">
+        <parameters>
+          <par name="global" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_global_ctrl_iface_receive">
+        <parameters>
+          <par name="sock" nr="1"/>
+          <par name="eloop_ctx" nr="2"/>
+          <par name="sock_ctx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpas_ctrl_iface_global_reinit">
+        <parameters>
+          <par name="global" nr="1"/>
+          <par name="priv" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpas_ctrl_iface_open_sock">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="priv" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpas_ctrl_iface_reinit">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="priv" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpas_ctrl_iface_throttle">
+        <parameters>
+          <par name="sock" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpas_ctrl_msg_queue">
+        <parameters>
+          <par name="queue" nr="1"/>
+          <par name="wpa_s" nr="2"/>
+          <par name="level" nr="3"/>
+          <par name="type" nr="4"/>
+          <par name="txt" nr="5"/>
+          <par name="len" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpas_ctrl_msg_queue_limit">
+        <parameters>
+          <par name="throttle_count" nr="1"/>
+          <par name="queue" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpas_ctrl_msg_queue_timeout">
+        <parameters>
+          <par name="eloop_ctx" nr="1"/>
+          <par name="timeout_ctx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpas_ctrl_msg_send_pending_global">
+        <parameters>
+          <par name="global" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpas_ctrl_msg_send_pending_iface">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpas_ctrl_sock_debug">
+        <parameters>
+          <par name="title" nr="1"/>
+          <par name="sock" nr="2"/>
+          <par name="buf" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpas_global_ctrl_iface_open_sock">
+        <parameters>
+          <par name="global" nr="1"/>
+          <par name="priv" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

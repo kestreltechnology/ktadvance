@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-10 21:48:22.222967"/>
+  <cfile name="src/l2_packet/l2_packet_linux">
+    <data-structures/>
+    <functions>
+      <function name="l2_packet_deinit">
+        <parameters>
+          <par name="l2" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="l2_packet_get_ip_addr">
+        <parameters>
+          <par name="l2" nr="1"/>
+          <par name="buf" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="l2_packet_get_own_addr">
+        <parameters>
+          <par name="l2" nr="1"/>
+          <par name="addr" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="l2_packet_init">
+        <parameters>
+          <par name="ifname" nr="1"/>
+          <par name="own_addr" nr="2"/>
+          <par name="protocol" nr="3"/>
+          <par name="rx_callback" nr="4"/>
+          <par name="rx_callback_ctx" nr="5"/>
+          <par name="l2_hdr" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="l2_packet_init_bridge">
+        <parameters>
+          <par name="br_ifname" nr="1"/>
+          <par name="ifname" nr="2"/>
+          <par name="own_addr" nr="3"/>
+          <par name="protocol" nr="4"/>
+          <par name="rx_callback" nr="5"/>
+          <par name="rx_callback_ctx" nr="6"/>
+          <par name="l2_hdr" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="l2_packet_notify_auth_start">
+        <parameters>
+          <par name="l2" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="l2_packet_receive">
+        <parameters>
+          <par name="sock" nr="1"/>
+          <par name="eloop_ctx" nr="2"/>
+          <par name="sock_ctx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="l2_packet_receive_br">
+        <parameters>
+          <par name="sock" nr="1"/>
+          <par name="eloop_ctx" nr="2"/>
+          <par name="sock_ctx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="l2_packet_send">
+        <parameters>
+          <par name="l2" nr="1"/>
+          <par name="dst_addr" nr="2"/>
+          <par name="proto" nr="3"/>
+          <par name="buf" nr="4"/>
+          <par name="len" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="l2_packet_set_packet_filter">
+        <parameters>
+          <par name="l2" nr="1"/>
+          <par name="type" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

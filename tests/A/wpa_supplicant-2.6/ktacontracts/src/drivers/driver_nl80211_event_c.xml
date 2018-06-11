@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-10 21:48:19.564856"/>
+  <cfile name="src/drivers/driver_nl80211_event">
+    <data-structures/>
+    <functions>
+      <function name="calculate_chan_offset">
+        <parameters>
+          <par name="width" nr="1"/>
+          <par name="freq" nr="2"/>
+          <par name="cf1" nr="3"/>
+          <par name="cf2" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="do_process_drv_event">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="cmd" nr="2"/>
+          <par name="tb" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="drv_event_assoc">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="ie" nr="3"/>
+          <par name="ielen" nr="4"/>
+          <par name="reassoc" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="drv_event_disassoc">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="addr" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mlme_event">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="cmd" nr="2"/>
+          <par name="frame" nr="3"/>
+          <par name="addr" nr="4"/>
+          <par name="timed_out" nr="5"/>
+          <par name="freq" nr="6"/>
+          <par name="ack" nr="7"/>
+          <par name="cookie" nr="8"/>
+          <par name="sig" nr="9"/>
+          <par name="wmm" nr="10"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mlme_event_assoc">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="frame" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="wmm" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mlme_event_auth">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="frame" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mlme_event_ch_switch">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="ifindex" nr="2"/>
+          <par name="freq" nr="3"/>
+          <par name="type" nr="4"/>
+          <par name="bw" nr="5"/>
+          <par name="cf1" nr="6"/>
+          <par name="cf2" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mlme_event_connect">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="cmd" nr="2"/>
+          <par name="status" nr="3"/>
+          <par name="addr" nr="4"/>
+          <par name="req_ie" nr="5"/>
+          <par name="resp_ie" nr="6"/>
+          <par name="timed_out" nr="7"/>
+          <par name="authorized" nr="8"/>
+          <par name="key_replay_ctr" nr="9"/>
+          <par name="ptk_kck" nr="10"/>
+          <par name="ptk_kek" nr="11"/>
+          <par name="subnet_status" nr="12"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mlme_event_deauth_disassoc">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="frame" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mlme_event_disconnect">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="reason" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="by_ap" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mlme_event_ft_event">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="tb" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mlme_event_join_ibss">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="tb" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mlme_event_mgmt">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="freq" nr="2"/>
+          <par name="sig" nr="3"/>
+          <par name="frame" nr="4"/>
+          <par name="len" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mlme_event_mgmt_tx_status">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="cookie" nr="2"/>
+          <par name="frame" nr="3"/>
+          <par name="len" nr="4"/>
+          <par name="ack" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mlme_event_michael_mic_failure">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="tb" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mlme_event_remain_on_channel">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="cancel_event" nr="2"/>
+          <par name="tb" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mlme_event_unprot_disconnect">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="frame" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mlme_timeout_event">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="cmd" nr="2"/>
+          <par name="addr" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_client_probe_event">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="tb" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_command_to_string">
+        <parameters>
+          <par name="cmd" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_connect_failed_event">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="tb" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_cqm_event">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="tb" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_del_station_event">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="bss" nr="2"/>
+          <par name="tb" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_new_peer_candidate">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="tb" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_new_station_event">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="bss" nr="2"/>
+          <par name="tb" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_parse_wmm_params">
+        <parameters>
+          <par name="wmm_attr" nr="1"/>
+          <par name="wmm_params" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_pmksa_candidate_event">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="tb" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_radar_event">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="tb" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_reg_change_event">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="tb" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_rekey_offload_event">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="tb" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_spurious_frame">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="tb" nr="2"/>
+          <par name="wds" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_stop_ap">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="tb" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_tdls_oper_event">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="tb" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_vendor_event">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="tb" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_vendor_event_qca">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="subcmd" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="os_snprintf_error">
+        <parameters>
+          <par name="size" nr="1"/>
+          <par name="res" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="process_bss_event">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="process_global_event">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="send_scan_event">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="aborted" nr="2"/>
+          <par name="tb" nr="3"/>
+          <par name="external_scan" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

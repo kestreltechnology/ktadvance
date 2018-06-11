@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-10 21:48:21.560745"/>
+  <cfile name="src/eap_peer/eap_tls_common">
+    <data-structures/>
+    <functions>
+      <function name="WPA_GET_BE32">
+        <parameters>
+          <par name="a" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="WPA_PUT_BE32">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="val" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_peer_select_phase2_methods">
+        <parameters>
+          <par name="config" nr="1"/>
+          <par name="prefix" nr="2"/>
+          <par name="types" nr="3"/>
+          <par name="num_types" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_peer_tls_build_ack">
+        <parameters>
+          <par name="id" nr="1"/>
+          <par name="eap_type" nr="2"/>
+          <par name="peap_version" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_peer_tls_data_reassemble">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="in_data" nr="2"/>
+          <par name="need_more_input" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_peer_tls_decrypt">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="in_data" nr="3"/>
+          <par name="in_decrypted" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_peer_tls_derive_key">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="label" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_peer_tls_derive_session_id">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="eap_type" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_peer_tls_encrypt">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="eap_type" nr="3"/>
+          <par name="peap_version" nr="4"/>
+          <par name="id" nr="5"/>
+          <par name="in_data" nr="6"/>
+          <par name="out_data" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_peer_tls_phase2_nak">
+        <parameters>
+          <par name="types" nr="1"/>
+          <par name="num_types" nr="2"/>
+          <par name="hdr" nr="3"/>
+          <par name="resp" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_peer_tls_process_helper">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="eap_type" nr="3"/>
+          <par name="peap_version" nr="4"/>
+          <par name="id" nr="5"/>
+          <par name="in_data" nr="6"/>
+          <par name="out_data" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_peer_tls_process_init">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="eap_type" nr="3"/>
+          <par name="ret" nr="4"/>
+          <par name="reqData" nr="5"/>
+          <par name="len" nr="6"/>
+          <par name="flags" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_peer_tls_reassemble_fragment">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="in_data" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_peer_tls_reauth_init">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="data" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_peer_tls_reset_input">
+        <parameters>
+          <par name="data" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_peer_tls_reset_output">
+        <parameters>
+          <par name="data" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_peer_tls_ssl_deinit">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="data" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_peer_tls_ssl_init">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="config" nr="3"/>
+          <par name="eap_type" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_peer_tls_status">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="buf" nr="3"/>
+          <par name="buflen" nr="4"/>
+          <par name="verbose" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_tls_check_blob">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="name" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="data_len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_tls_init_connection">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="config" nr="3"/>
+          <par name="params" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_tls_msg_alloc">
+        <parameters>
+          <par name="type" nr="1"/>
+          <par name="payload_len" nr="2"/>
+          <par name="code" nr="3"/>
+          <par name="identifier" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_tls_params_flags">
+        <parameters>
+          <par name="params" nr="1"/>
+          <par name="txt" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_tls_params_from_conf">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="params" nr="3"/>
+          <par name="config" nr="4"/>
+          <par name="phase2" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_tls_params_from_conf1">
+        <parameters>
+          <par name="params" nr="1"/>
+          <par name="config" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_tls_params_from_conf2">
+        <parameters>
+          <par name="params" nr="1"/>
+          <par name="config" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_tls_process_input">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="in_data" nr="3"/>
+          <par name="out_data" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="eap_tls_process_output">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="eap_type" nr="2"/>
+          <par name="peap_version" nr="3"/>
+          <par name="id" nr="4"/>
+          <par name="ret" nr="5"/>
+          <par name="out_data" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="os_realloc_array">
+        <parameters>
+          <par name="ptr" nr="1"/>
+          <par name="nmemb" nr="2"/>
+          <par name="size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="os_snprintf_error">
+        <parameters>
+          <par name="size" nr="1"/>
+          <par name="res" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_hexdump_buf_key">
+        <parameters>
+          <par name="level" nr="1"/>
+          <par name="title" nr="2"/>
+          <par name="buf" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpabuf_head">
+        <parameters>
+          <par name="buf" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpabuf_head_u8">
+        <parameters>
+          <par name="buf" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpabuf_len">
+        <parameters>
+          <par name="buf" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpabuf_put_be32">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="data" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpabuf_put_buf">
+        <parameters>
+          <par name="dst" nr="1"/>
+          <par name="src" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpabuf_put_data">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpabuf_put_u8">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="data" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

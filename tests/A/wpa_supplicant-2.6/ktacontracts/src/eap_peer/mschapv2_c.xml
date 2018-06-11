@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-10 21:48:21.850618"/>
+  <cfile name="src/eap_peer/mschapv2">
+    <data-structures/>
+    <functions>
+      <function name="mschapv2_derive_response">
+        <parameters>
+          <par name="identity" nr="1"/>
+          <par name="identity_len" nr="2"/>
+          <par name="password" nr="3"/>
+          <par name="password_len" nr="4"/>
+          <par name="pwhash" nr="5"/>
+          <par name="auth_challenge" nr="6"/>
+          <par name="peer_challenge" nr="7"/>
+          <par name="nt_response" nr="8"/>
+          <par name="auth_response" nr="9"/>
+          <par name="master_key" nr="10"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mschapv2_remove_domain">
+        <parameters>
+          <par name="username" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mschapv2_verify_auth_response">
+        <parameters>
+          <par name="auth_response" nr="1"/>
+          <par name="buf" nr="2"/>
+          <par name="buf_len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

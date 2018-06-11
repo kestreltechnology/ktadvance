@@ -1,0 +1,3979 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-10 21:48:18.936487"/>
+  <cfile name="src/drivers/driver_nl80211">
+    <data-structures/>
+    <functions>
+      <function name="WPA_GET_LE16">
+        <parameters>
+          <par name="a" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="WPA_PUT_BE16">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="val" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ack_handler">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_ifidx">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="ifidx" nr="2"/>
+          <par name="ifidx_reason" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_survey">
+        <parameters>
+          <par name="sinfo" nr="1"/>
+          <par name="ifidx" nr="2"/>
+          <par name="survey_list" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="check_survey_ok">
+        <parameters>
+          <par name="sinfo" nr="1"/>
+          <par name="surveyed_freq" nr="2"/>
+          <par name="freq_filter" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="clean_survey_results">
+        <parameters>
+          <par name="survey_results" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="convert2width">
+        <parameters>
+          <par name="width" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="cookie_handler">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="del_ifidx">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="ifidx" nr="2"/>
+          <par name="ifidx_reason" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dl_list_add">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="item" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dl_list_add_tail">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="item" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dl_list_del">
+        <parameters>
+          <par name="item" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dl_list_empty">
+        <parameters>
+          <par name="list" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dl_list_init">
+        <parameters>
+          <par name="list" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dl_list_len">
+        <parameters>
+          <par name="list" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_nl80211_authenticate">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="params" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_nl80211_deauthenticate">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="reason_code" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_nl80211_deinit">
+        <parameters>
+          <par name="priv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_nl80211_if_remove">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="ifname" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_nl80211_probe_req_report">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="report" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_nl80211_read_sta_data">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="addr" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_nl80211_scan2">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="params" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_nl80211_send_action">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="freq" nr="2"/>
+          <par name="wait_time" nr="3"/>
+          <par name="dst" nr="4"/>
+          <par name="src" nr="5"/>
+          <par name="bssid" nr="6"/>
+          <par name="data" nr="7"/>
+          <par name="data_len" nr="8"/>
+          <par name="no_cck" nr="9"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_nl80211_send_mlme">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="data_len" nr="3"/>
+          <par name="noack" nr="4"/>
+          <par name="freq" nr="5"/>
+          <par name="csa_offs" nr="6"/>
+          <par name="csa_offs_len" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_nl80211_set_key">
+        <parameters>
+          <par name="ifname" nr="1"/>
+          <par name="priv" nr="2"/>
+          <par name="alg" nr="3"/>
+          <par name="addr" nr="4"/>
+          <par name="key_idx" nr="5"/>
+          <par name="set_tx" nr="6"/>
+          <par name="seq" nr="7"/>
+          <par name="seq_len" nr="8"/>
+          <par name="key" nr="9"/>
+          <par name="key_len" nr="10"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_nl80211_set_sta_vlan">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="ifname" nr="3"/>
+          <par name="vlan_id" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_nl80211_sta_remove">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="addr" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="drv_br_net_param_str">
+        <parameters>
+          <par name="param" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="drv_br_port_attr_str">
+        <parameters>
+          <par name="attr" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="drv_event_eapol_rx">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="src" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="data_len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dump_ifidx">
+        <parameters>
+          <par name="drv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="error_handler">
+        <parameters>
+          <par name="nla" nr="1"/>
+          <par name="err" nr="2"/>
+          <par name="arg" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="family_handler">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="finish_handler">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_bss_ifindex">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="ifindex" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_channel_width">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_key_handler">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_link_noise">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_link_signal">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_sta_handler">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="handle_eapol">
+        <parameters>
+          <par name="sock" nr="1"/>
+          <par name="eloop_ctx" nr="2"/>
+          <par name="sock_ctx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="have_ifidx">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="ifidx" nr="2"/>
+          <par name="ifidx_reason" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="i802_check_bridge">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="bss" nr="2"/>
+          <par name="brname" nr="3"/>
+          <par name="ifname" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="i802_deinit">
+        <parameters>
+          <par name="priv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="i802_flush">
+        <parameters>
+          <par name="priv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="i802_get_inact_sec">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="addr" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="i802_get_seqnum">
+        <parameters>
+          <par name="iface" nr="1"/>
+          <par name="priv" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="idx" nr="4"/>
+          <par name="seq" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="i802_init">
+        <parameters>
+          <par name="hapd" nr="1"/>
+          <par name="params" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="i802_read_sta_data">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="addr" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="i802_set_frag">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="frag" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="i802_set_freq">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="freq" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="i802_set_iface_flags">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="up" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="i802_set_rts">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="rts" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="i802_set_sta_vlan">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="ifname" nr="3"/>
+          <par name="vlan_id" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="i802_set_tx_queue_params">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="queue" nr="2"/>
+          <par name="aifs" nr="3"/>
+          <par name="cw_min" nr="4"/>
+          <par name="cw_max" nr="5"/>
+          <par name="burst_time" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="i802_set_wds_sta">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="aid" nr="3"/>
+          <par name="val" nr="4"/>
+          <par name="bridge_ifname" nr="5"/>
+          <par name="ifname_wds" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="i802_sta_clear_stats">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="addr" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="i802_sta_deauth">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="own_addr" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="reason" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="i802_sta_disassoc">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="own_addr" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="reason" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_ap_interface">
+        <parameters>
+          <par name="nlmode" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_broadcast_ether_addr">
+        <parameters>
+          <par name="a" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_mesh_interface">
+        <parameters>
+          <par name="nlmode" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_p2p_net_interface">
+        <parameters>
+          <par name="nlmode" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_sta_interface">
+        <parameters>
+          <par name="nlmode" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_zero_ether_addr">
+        <parameters>
+          <par name="a" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="linux_write_system_file">
+        <parameters>
+          <par name="path" nr="1"/>
+          <par name="val" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="min_int">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="netdev_info_handler">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_action_subscribe_ap">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_add_pmkid">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="bssid" nr="2"/>
+          <par name="pmkid" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_add_ts">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="tsid" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="user_priority" nr="4"/>
+          <par name="admitted_time" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_addr_in_use">
+        <parameters>
+          <par name="global" nr="1"/>
+          <par name="addr" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_alloc_mgmt_handle">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_bss_msg">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="flags" nr="2"/>
+          <par name="cmd" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_check_global">
+        <parameters>
+          <par name="global" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_cmd">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="msg" nr="2"/>
+          <par name="flags" nr="3"/>
+          <par name="cmd" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_cmd_msg">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="flags" nr="2"/>
+          <par name="cmd" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_configure_data_frame_filters">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="filter_flags" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_connect_common">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="params" nr="2"/>
+          <par name="msg" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_copy_auth_params">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="params" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_create_iface">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="ifname" nr="2"/>
+          <par name="iftype" nr="3"/>
+          <par name="addr" nr="4"/>
+          <par name="wds" nr="5"/>
+          <par name="handler" nr="6"/>
+          <par name="arg" nr="7"/>
+          <par name="use_existing" nr="8"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_create_iface_once">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="ifname" nr="2"/>
+          <par name="iftype" nr="3"/>
+          <par name="addr" nr="4"/>
+          <par name="wds" nr="5"/>
+          <par name="handler" nr="6"/>
+          <par name="arg" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_del_p2pdev">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_del_ts">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="tsid" nr="2"/>
+          <par name="addr" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_destroy_bss">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_destroy_eloop_handle">
+        <parameters>
+          <par name="handle" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_disable_11b_rates">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="ifindex" nr="2"/>
+          <par name="disabled" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_drv_msg">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="flags" nr="2"/>
+          <par name="cmd" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_find_drv">
+        <parameters>
+          <par name="global" nr="1"/>
+          <par name="idx" nr="2"/>
+          <par name="buf" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_flush_pmkid">
+        <parameters>
+          <par name="priv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_frame_wait_cancel">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="cookie" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_get_assoc_freq">
+        <parameters>
+          <par name="drv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_get_channel_width">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="sig" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_get_country">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_get_ext_capab">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="ext_capa" nr="3"/>
+          <par name="ext_capa_mask" nr="4"/>
+          <par name="ext_capa_len" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_get_ifindex">
+        <parameters>
+          <par name="priv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_get_ifmode">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_get_link_noise">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="sig_change" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_get_link_signal">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="sig" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_get_macaddr">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_get_radio_name">
+        <parameters>
+          <par name="priv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_get_wiphy_data_ap">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_get_wiphy_index">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_global_deinit">
+        <parameters>
+          <par name="priv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_global_init">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_ht_vht_overrides">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="params" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_ifindex_msg">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="ifindex" nr="2"/>
+          <par name="flags" nr="3"/>
+          <par name="cmd" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_iftype_str">
+        <parameters>
+          <par name="mode" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_init_bss">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_leave_ibss">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="reset_mode" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_mark_disconnected">
+        <parameters>
+          <par name="drv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_mgmt_handle_register_eloop">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_mgmt_subscribe_ap">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_mgmt_subscribe_ap_dev_sme">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_mgmt_subscribe_mesh">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_mgmt_subscribe_non_ap">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_mgmt_unsubscribe">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="reason" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_nlmsg_clear">
+        <parameters>
+          <par name="msg" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_pmkid">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="cmd" nr="2"/>
+          <par name="bssid" nr="3"/>
+          <par name="pmkid" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_poll_client">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="own_addr" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="qos" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_put_basic_rates">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="basic_rates" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_put_beacon_int">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="beacon_int" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_put_dtim_period">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="dtim_period" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_put_freq_params">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="freq" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_put_wiphy_data_ap">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_recv_beacons">
+        <parameters>
+          <par name="sock" nr="1"/>
+          <par name="eloop_ctx" nr="2"/>
+          <par name="handle" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_register_action_frame">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="match" nr="2"/>
+          <par name="match_len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_register_beacons">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="w" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_register_eloop_read">
+        <parameters>
+          <par name="handle" nr="1"/>
+          <par name="handler" nr="2"/>
+          <par name="eloop_data" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_register_frame">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="nl_sock" nr="2"/>
+          <par name="type" nr="3"/>
+          <par name="match" nr="4"/>
+          <par name="match_len" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_register_spurious_class3">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_remove_iface">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="ifidx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_remove_pmkid">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="bssid" nr="2"/>
+          <par name="pmkid" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_send_eapol_data">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="data_len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_send_frame">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="data_len" nr="3"/>
+          <par name="encrypt" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_send_frame_cmd">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="freq" nr="2"/>
+          <par name="wait" nr="3"/>
+          <par name="buf" nr="4"/>
+          <par name="buf_len" nr="5"/>
+          <par name="cookie_out" nr="6"/>
+          <par name="no_cck" nr="7"/>
+          <par name="no_ack" nr="8"/>
+          <par name="offchanok" nr="9"/>
+          <par name="csa_offs" nr="10"/>
+          <par name="csa_offs_len" nr="11"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_send_null_frame">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="own_addr" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="qos" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_set_bss">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="cts" nr="2"/>
+          <par name="preamble" nr="3"/>
+          <par name="slot" nr="4"/>
+          <par name="ht_opmode" nr="5"/>
+          <par name="ap_isolate" nr="6"/>
+          <par name="basic_rates" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_set_channel">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="freq" nr="2"/>
+          <par name="set_chan" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_set_conn_keys">
+        <parameters>
+          <par name="params" nr="1"/>
+          <par name="msg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_set_iface_id">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="bss" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_set_mac_addr">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="addr" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_set_mode">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="ifindex" nr="2"/>
+          <par name="mode" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_set_p2p_powersave">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="legacy_ps" nr="2"/>
+          <par name="opp_ps" nr="3"/>
+          <par name="ctwindow" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_set_p2pdev">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="start" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_set_param">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="param" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_set_power_save">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="enabled" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_set_qos_map">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="qos_map_set" nr="2"/>
+          <par name="qos_map_set_len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_set_rekey_info">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="kek" nr="2"/>
+          <par name="kek_len" nr="3"/>
+          <par name="kck" nr="4"/>
+          <par name="kck_len" nr="5"/>
+          <par name="replay_ctr" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_set_wowlan">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="triggers" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_setup_ap">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_signal_monitor">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="threshold" nr="2"/>
+          <par name="hysteresis" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_signal_poll">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="si" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_start_radar_detection">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="freq" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_switch_channel">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="settings" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_teardown_ap">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_unmask_11b_rates">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_vendor_cmd">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="vendor_id" nr="2"/>
+          <par name="subcmd" nr="3"/>
+          <par name="data" nr="4"/>
+          <par name="data_len" nr="5"/>
+          <par name="buf" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_vif_addr">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="new_addr" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_wdev_handler">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl80211_write_to_file">
+        <parameters>
+          <par name="name" nr="1"/>
+          <par name="val" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl_add_key">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="alg" nr="2"/>
+          <par name="key_idx" nr="3"/>
+          <par name="defkey" nr="4"/>
+          <par name="seq" nr="5"/>
+          <par name="seq_len" nr="6"/>
+          <par name="key" nr="7"/>
+          <par name="key_len" nr="8"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl_create_handle">
+        <parameters>
+          <par name="cb" nr="1"/>
+          <par name="dbg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl_destroy_handles">
+        <parameters>
+          <par name="handle" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nl_get_multicast_id">
+        <parameters>
+          <par name="global" nr="1"/>
+          <par name="family" nr="2"/>
+          <par name="group" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="no_seq_check">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="os_realloc_array">
+        <parameters>
+          <par name="ptr" nr="1"/>
+          <par name="nmemb" nr="2"/>
+          <par name="size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="os_snprintf_error">
+        <parameters>
+          <par name="size" nr="1"/>
+          <par name="res" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="process_beacon_event">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="qca_vendor_test">
+        <parameters>
+          <par name="drv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="rtnl_neigh_delete_fdb_entry">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="addr" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="scan_state_str">
+        <parameters>
+          <par name="scan_state" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="send_and_recv">
+        <parameters>
+          <par name="global" nr="1"/>
+          <par name="nl_sock" nr="2"/>
+          <par name="msg" nr="3"/>
+          <par name="valid_handler" nr="4"/>
+          <par name="valid_data" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="send_and_recv_msgs">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="msg" nr="2"/>
+          <par name="valid_handler" nr="3"/>
+          <par name="valid_data" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="set_beacon_data">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="settings" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sta_flags_nl80211">
+        <parameters>
+          <par name="flags" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="survey_handler">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="vendor_reply_handler">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_alg_to_cipher_suite">
+        <parameters>
+          <par name="alg" nr="1"/>
+          <par name="key_len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_cipher_to_cipher_suite">
+        <parameters>
+          <par name="cipher" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_cipher_to_cipher_suites">
+        <parameters>
+          <par name="ciphers" nr="1"/>
+          <par name="suites" nr="2"/>
+          <par name="max_suites" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_br_add_ip_neigh">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="version" nr="2"/>
+          <par name="ipaddr" nr="3"/>
+          <par name="prefixlen" nr="4"/>
+          <par name="addr" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_br_delete_ip_neigh">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="version" nr="2"/>
+          <par name="ipaddr" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_br_port_set_attr">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="attr" nr="2"/>
+          <par name="val" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_br_set_net_param">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="param" nr="2"/>
+          <par name="val" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_ap">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="params" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_associate">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="params" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_authenticate">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="params" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_authenticate_retry">
+        <parameters>
+          <par name="drv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_cancel_remain_on_channel">
+        <parameters>
+          <par name="priv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_connect">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="params" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_deauthenticate">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="reason_code" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_deinit">
+        <parameters>
+          <par name="bss" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_deinit_ap">
+        <parameters>
+          <par name="priv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_deinit_p2p_cli">
+        <parameters>
+          <par name="priv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_del_beacon">
+        <parameters>
+          <par name="drv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_disconnect">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="reason_code" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_drv_init">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="ifname" nr="2"/>
+          <par name="global_priv" nr="3"/>
+          <par name="hostapd" nr="4"/>
+          <par name="set_addr" nr="5"/>
+          <par name="driver_params" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_drv_init_rfkill">
+        <parameters>
+          <par name="drv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_event_dellink">
+        <parameters>
+          <par name="global" nr="1"/>
+          <par name="drv" nr="2"/>
+          <par name="ifindex" nr="3"/>
+          <par name="ifname" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_event_newlink">
+        <parameters>
+          <par name="global" nr="1"/>
+          <par name="drv" nr="2"/>
+          <par name="ifindex" nr="3"/>
+          <par name="ifname" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_event_receive">
+        <parameters>
+          <par name="sock" nr="1"/>
+          <par name="eloop_ctx" nr="2"/>
+          <par name="handle" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_event_rtm_dellink">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="ifi" nr="2"/>
+          <par name="buf" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_event_rtm_newlink">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="ifi" nr="2"/>
+          <par name="buf" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_finish_drv_init">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="set_addr" nr="2"/>
+          <par name="first" nr="3"/>
+          <par name="driver_params" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_get_bssid">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="bssid" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_get_capa">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="capa" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_get_country">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="alpha2" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_get_macaddr">
+        <parameters>
+          <par name="priv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_get_ssid">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="ssid" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_get_survey">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="freq" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_handle_eapol_tx_status">
+        <parameters>
+          <par name="sock" nr="1"/>
+          <par name="eloop_ctx" nr="2"/>
+          <par name="handle" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_hapd_send_eapol">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="data_len" nr="4"/>
+          <par name="encrypt" nr="5"/>
+          <par name="own_addr" nr="6"/>
+          <par name="flags" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_ibss">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="params" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_if_add">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="ifname" nr="3"/>
+          <par name="addr" nr="4"/>
+          <par name="bss_ctx" nr="5"/>
+          <par name="drv_priv" nr="6"/>
+          <par name="force_ifname" nr="7"/>
+          <par name="if_addr" nr="8"/>
+          <par name="bridge" nr="9"/>
+          <par name="use_existing" nr="10"/>
+          <par name="setup_ap" nr="11"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_if_remove">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="ifname" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_if_type">
+        <parameters>
+          <par name="type" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_init">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="ifname" nr="2"/>
+          <par name="global_priv" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_init_nl_global">
+        <parameters>
+          <par name="global" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_mlme">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="cmd" nr="3"/>
+          <par name="reason_code" nr="4"/>
+          <par name="local_state_change" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_own_ifindex">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="ifindex" nr="2"/>
+          <par name="buf" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_own_ifname">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="buf" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_probe_req_report">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="report" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_remain_on_channel">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="freq" nr="2"/>
+          <par name="duration" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_resume">
+        <parameters>
+          <par name="priv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_rfkill_blocked">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_rfkill_unblocked">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_send_action">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="freq" nr="2"/>
+          <par name="wait_time" nr="3"/>
+          <par name="dst" nr="4"/>
+          <par name="src" nr="5"/>
+          <par name="bssid" nr="6"/>
+          <par name="data" nr="7"/>
+          <par name="data_len" nr="8"/>
+          <par name="no_cck" nr="9"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_send_action_cancel_wait">
+        <parameters>
+          <par name="priv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_send_frame">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="encrypt" nr="4"/>
+          <par name="noack" nr="5"/>
+          <par name="freq" nr="6"/>
+          <par name="no_cck" nr="7"/>
+          <par name="offchanok" nr="8"/>
+          <par name="wait_time" nr="9"/>
+          <par name="csa_offs" nr="10"/>
+          <par name="csa_offs_len" nr="11"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_send_mlme">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="data_len" nr="3"/>
+          <par name="noack" nr="4"/>
+          <par name="freq" nr="5"/>
+          <par name="no_cck" nr="6"/>
+          <par name="offchanok" nr="7"/>
+          <par name="wait_time" nr="8"/>
+          <par name="csa_offs" nr="9"/>
+          <par name="csa_offs_len" nr="10"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_send_rfkill">
+        <parameters>
+          <par name="eloop_ctx" nr="1"/>
+          <par name="timeout_ctx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_set_acl">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="params" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_set_ap">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="params" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_set_country">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="alpha2_arg" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_set_key">
+        <parameters>
+          <par name="ifname" nr="1"/>
+          <par name="bss" nr="2"/>
+          <par name="alg" nr="3"/>
+          <par name="addr" nr="4"/>
+          <par name="key_idx" nr="5"/>
+          <par name="set_tx" nr="6"/>
+          <par name="seq" nr="7"/>
+          <par name="seq_len" nr="8"/>
+          <par name="key" nr="9"/>
+          <par name="key_len" nr="10"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_set_mode">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="nlmode" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_set_mode_ibss">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="freq" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_set_mode_impl">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="nlmode" nr="2"/>
+          <par name="desired_freq_params" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_set_operstate">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="state" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_set_supp_port">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="authorized" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_sta_add">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="params" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_sta_remove">
+        <parameters>
+          <par name="bss" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="deauth" nr="3"/>
+          <par name="reason_code" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_sta_set_flags">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="total_flags" nr="3"/>
+          <par name="flags_or" nr="4"/>
+          <par name="flags_and" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_status">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="buf" nr="2"/>
+          <par name="buflen" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_stop_ap">
+        <parameters>
+          <par name="priv" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_try_connect">
+        <parameters>
+          <par name="drv" nr="1"/>
+          <par name="params" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_driver_nl80211_update_ft_ies">
+        <parameters>
+          <par name="priv" nr="1"/>
+          <par name="md" nr="2"/>
+          <par name="ies" nr="3"/>
+          <par name="ies_len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_hexdump_buf">
+        <parameters>
+          <par name="level" nr="1"/>
+          <par name="title" nr="2"/>
+          <par name="buf" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpabuf_head">
+        <parameters>
+          <par name="buf" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpabuf_len">
+        <parameters>
+          <par name="buf" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpabuf_put_data">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpabuf_tailroom">
+        <parameters>
+          <par name="buf" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

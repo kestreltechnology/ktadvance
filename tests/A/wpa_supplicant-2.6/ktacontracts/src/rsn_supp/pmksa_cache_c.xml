@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-10 21:48:22.549592"/>
+  <cfile name="src/rsn_supp/pmksa_cache">
+    <data-structures/>
+    <functions>
+      <function name="_pmksa_cache_free_entry">
+        <parameters>
+          <par name="entry" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="os_snprintf_error">
+        <parameters>
+          <par name="size" nr="1"/>
+          <par name="res" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="pmksa_cache_add">
+        <parameters>
+          <par name="pmksa" nr="1"/>
+          <par name="pmk" nr="2"/>
+          <par name="pmk_len" nr="3"/>
+          <par name="pmkid" nr="4"/>
+          <par name="kck" nr="5"/>
+          <par name="kck_len" nr="6"/>
+          <par name="aa" nr="7"/>
+          <par name="spa" nr="8"/>
+          <par name="network_ctx" nr="9"/>
+          <par name="akmp" nr="10"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="pmksa_cache_clear_current">
+        <parameters>
+          <par name="sm" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="pmksa_cache_clone_entry">
+        <parameters>
+          <par name="pmksa" nr="1"/>
+          <par name="old_entry" nr="2"/>
+          <par name="aa" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="pmksa_cache_deinit">
+        <parameters>
+          <par name="pmksa" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="pmksa_cache_expire">
+        <parameters>
+          <par name="eloop_ctx" nr="1"/>
+          <par name="timeout_ctx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="pmksa_cache_flush">
+        <parameters>
+          <par name="pmksa" nr="1"/>
+          <par name="network_ctx" nr="2"/>
+          <par name="pmk" nr="3"/>
+          <par name="pmk_len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="pmksa_cache_free_entry">
+        <parameters>
+          <par name="pmksa" nr="1"/>
+          <par name="entry" nr="2"/>
+          <par name="reason" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="pmksa_cache_get">
+        <parameters>
+          <par name="pmksa" nr="1"/>
+          <par name="aa" nr="2"/>
+          <par name="pmkid" nr="3"/>
+          <par name="network_ctx" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="pmksa_cache_get_current">
+        <parameters>
+          <par name="sm" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="pmksa_cache_get_opportunistic">
+        <parameters>
+          <par name="pmksa" nr="1"/>
+          <par name="network_ctx" nr="2"/>
+          <par name="aa" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="pmksa_cache_init">
+        <parameters>
+          <par name="free_cb" nr="1"/>
+          <par name="ctx" nr="2"/>
+          <par name="sm" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="pmksa_cache_list">
+        <parameters>
+          <par name="pmksa" nr="1"/>
+          <par name="buf" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="pmksa_cache_reauth">
+        <parameters>
+          <par name="eloop_ctx" nr="1"/>
+          <par name="timeout_ctx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="pmksa_cache_set_current">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="pmkid" nr="2"/>
+          <par name="bssid" nr="3"/>
+          <par name="network_ctx" nr="4"/>
+          <par name="try_opportunistic" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="pmksa_cache_set_expiration">
+        <parameters>
+          <par name="pmksa" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="rsn_pmkid_suite_b">
+        <parameters>
+          <par name="kck" nr="1"/>
+          <par name="kck_len" nr="2"/>
+          <par name="aa" nr="3"/>
+          <par name="spa" nr="4"/>
+          <par name="pmkid" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="rsn_pmkid_suite_b_192">
+        <parameters>
+          <par name="kck" nr="1"/>
+          <par name="kck_len" nr="2"/>
+          <par name="aa" nr="3"/>
+          <par name="spa" nr="4"/>
+          <par name="pmkid" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_key_mgmt_sha256">
+        <parameters>
+          <par name="akm" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_key_mgmt_suite_b">
+        <parameters>
+          <par name="akm" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_sm_add_pmkid">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="bssid" nr="2"/>
+          <par name="pmkid" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_sm_remove_pmkid">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="bssid" nr="2"/>
+          <par name="pmkid" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

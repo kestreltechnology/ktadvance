@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-10 21:48:22.447512"/>
+  <cfile name="src/rsn_supp/peerkey">
+    <data-structures/>
+    <functions>
+      <function name="WPA_GET_BE16">
+        <parameters>
+          <par name="a" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="WPA_GET_BE32">
+        <parameters>
+          <par name="a" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="WPA_PUT_BE16">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="val" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="WPA_PUT_BE32">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="val" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="WPA_PUT_LE16">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="val" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="__bswap_32">
+        <parameters>
+          <par name="__bsx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="peerkey_deinit">
+        <parameters>
+          <par name="sm" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="peerkey_rx_eapol_4way">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="peerkey" nr="2"/>
+          <par name="key" nr="3"/>
+          <par name="key_info" nr="4"/>
+          <par name="ver" nr="5"/>
+          <par name="key_data" nr="6"/>
+          <par name="key_data_len" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="peerkey_rx_eapol_smk">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="src_addr" nr="2"/>
+          <par name="key" nr="3"/>
+          <par name="extra_len" nr="4"/>
+          <par name="key_info" nr="5"/>
+          <par name="ver" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="peerkey_verify_eapol_key_mic">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="peerkey" nr="2"/>
+          <par name="key" nr="3"/>
+          <par name="ver" nr="4"/>
+          <par name="buf" nr="5"/>
+          <par name="len" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="rsn_smkid">
+        <parameters>
+          <par name="smk" nr="1"/>
+          <par name="pnonce" nr="2"/>
+          <par name="mac_p" nr="3"/>
+          <par name="inonce" nr="4"/>
+          <par name="mac_i" nr="5"/>
+          <par name="smkid" nr="6"/>
+          <par name="akmp" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_add_ie">
+        <parameters>
+          <par name="pos" nr="1"/>
+          <par name="ie" nr="2"/>
+          <par name="ie_len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_add_kde">
+        <parameters>
+          <par name="pos" nr="1"/>
+          <par name="kde" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="data_len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_sm_alloc_eapol">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="data_len" nr="4"/>
+          <par name="msg_len" nr="5"/>
+          <par name="data_pos" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_sm_get_bssid">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="bssid" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_sm_set_key">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="alg" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="key_idx" nr="4"/>
+          <par name="set_tx" nr="5"/>
+          <par name="seq" nr="6"/>
+          <par name="seq_len" nr="7"/>
+          <par name="key" nr="8"/>
+          <par name="key_len" nr="9"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_sm_stkstart">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="peer" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_peerkey_free">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="peerkey" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_process_smk_error">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="src_addr" nr="2"/>
+          <par name="key" nr="3"/>
+          <par name="extra_len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_process_smk_m2">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="src_addr" nr="2"/>
+          <par name="key" nr="3"/>
+          <par name="extra_len" nr="4"/>
+          <par name="ver" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_process_smk_m4">
+        <parameters>
+          <par name="peerkey" nr="1"/>
+          <par name="kde" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_process_smk_m45">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="src_addr" nr="2"/>
+          <par name="key" nr="3"/>
+          <par name="extra_len" nr="4"/>
+          <par name="ver" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_process_smk_m5">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="src_addr" nr="2"/>
+          <par name="key" nr="3"/>
+          <par name="ver" nr="4"/>
+          <par name="peerkey" nr="5"/>
+          <par name="kde" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_process_stk_1_of_4">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="peerkey" nr="2"/>
+          <par name="key" nr="3"/>
+          <par name="ver" nr="4"/>
+          <par name="key_data" nr="5"/>
+          <par name="key_data_len" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_process_stk_2_of_4">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="peerkey" nr="2"/>
+          <par name="key" nr="3"/>
+          <par name="ver" nr="4"/>
+          <par name="key_data" nr="5"/>
+          <par name="key_data_len" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_process_stk_3_of_4">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="peerkey" nr="2"/>
+          <par name="key" nr="3"/>
+          <par name="ver" nr="4"/>
+          <par name="key_data" nr="5"/>
+          <par name="key_data_len" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_process_stk_4_of_4">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="peerkey" nr="2"/>
+          <par name="key" nr="3"/>
+          <par name="ver" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_send_smk_error">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="dst" nr="2"/>
+          <par name="peer" nr="3"/>
+          <par name="mui" nr="4"/>
+          <par name="error_type" nr="5"/>
+          <par name="ver" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_send_smk_m3">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="src_addr" nr="2"/>
+          <par name="key" nr="3"/>
+          <par name="ver" nr="4"/>
+          <par name="peerkey" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_send_stk_1_of_4">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="peerkey" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_send_stk_3_of_4">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="peerkey" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_smk_timeout">
+        <parameters>
+          <par name="eloop_ctx" nr="1"/>
+          <par name="timeout_ctx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_update_smk_lifetime">
+        <parameters>
+          <par name="sm" nr="1"/>
+          <par name="peerkey" nr="2"/>
+          <par name="kde" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

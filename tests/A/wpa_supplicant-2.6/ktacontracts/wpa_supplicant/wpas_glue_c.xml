@@ -1,0 +1,834 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-10 21:48:31.205420"/>
+  <cfile name="wpa_supplicant/wpas_glue">
+    <data-structures/>
+    <functions>
+      <function name="_wpa_alloc_eapol">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="data_len" nr="4"/>
+          <par name="msg_len" nr="5"/>
+          <par name="data_pos" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="_wpa_ether_send">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="dest" nr="2"/>
+          <par name="proto" nr="3"/>
+          <par name="buf" nr="4"/>
+          <par name="len" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="_wpa_supplicant_cancel_auth_timeout">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="_wpa_supplicant_deauthenticate">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="reason_code" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="_wpa_supplicant_get_state">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="_wpa_supplicant_set_state">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="state" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ieee802_1x_notify_create_actor">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="peer_addr" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_zero_ether_addr">
+        <parameters>
+          <par name="a" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="os_snprintf_error">
+        <parameters>
+          <par name="size" nr="1"/>
+          <par name="res" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="result_str">
+        <parameters>
+          <par name="result" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_alloc_eapol">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="data_len" nr="4"/>
+          <par name="msg_len" nr="5"/>
+          <par name="data_pos" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_drv_add_pmkid">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="bssid" nr="2"/>
+          <par name="pmkid" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_drv_get_bssid">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="bssid" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_drv_mlme_setprotection">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="protect_type" nr="3"/>
+          <par name="key_type" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_drv_remove_pmkid">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="bssid" nr="2"/>
+          <par name="pmkid" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_drv_set_key">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="alg" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="key_idx" nr="4"/>
+          <par name="set_tx" nr="5"/>
+          <par name="seq" nr="6"/>
+          <par name="seq_len" nr="7"/>
+          <par name="key" nr="8"/>
+          <par name="key_len" nr="9"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_drv_set_rekey_info">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="kek" nr="2"/>
+          <par name="kek_len" nr="3"/>
+          <par name="kck" nr="4"/>
+          <par name="kck_len" nr="5"/>
+          <par name="replay_ctr" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_drv_set_supp_port">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="authorized" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_eapol_set_wep_key">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="unicast" nr="2"/>
+          <par name="keyidx" nr="3"/>
+          <par name="key" nr="4"/>
+          <par name="keylen" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_ether_send">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="dest" nr="2"/>
+          <par name="proto" nr="3"/>
+          <par name="buf" nr="4"/>
+          <par name="len" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_get_beacon_ie">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_key_mgmt_ft">
+        <parameters>
+          <par name="akm" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_key_mgmt_wpa_ieee8021x">
+        <parameters>
+          <par name="akm" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_key_mgmt_wpa_psk">
+        <parameters>
+          <par name="akm" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_aborted_cached">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_add_pmkid">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="bssid" nr="2"/>
+          <par name="pmkid" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_cert_cb">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="depth" nr="2"/>
+          <par name="subject" nr="3"/>
+          <par name="altsubject" nr="4"/>
+          <par name="num_altsubject" nr="5"/>
+          <par name="cert_hash" nr="6"/>
+          <par name="cert" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_ctrl_req_from_string">
+        <parameters>
+          <par name="field" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_ctrl_req_to_string">
+        <parameters>
+          <par name="field" nr="1"/>
+          <par name="default_txt" nr="2"/>
+          <par name="txt" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_eap_param_needed">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="field" nr="2"/>
+          <par name="default_txt" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_eapol_cb">
+        <parameters>
+          <par name="eapol" nr="1"/>
+          <par name="result" nr="2"/>
+          <par name="ctx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_eapol_send">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="buf" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_get_beacon_ie">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_get_bssid">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="bssid" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_get_config_blob">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="name" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_get_network_ctx">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_get_state">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_init_eapol">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_init_wpa">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_key_mgmt_set_pmk">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="pmk" nr="2"/>
+          <par name="pmk_len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_mlme_setprotection">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="protection_type" nr="3"/>
+          <par name="key_type" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_notify_eapol_done">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_port_cb">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="authorized" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_remove_pmkid">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="bssid" nr="2"/>
+          <par name="pmkid" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_rsn_supp_set_config">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="ssid" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_set_anon_id">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="id" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_set_config_blob">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="blob" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_set_key">
+        <parameters>
+          <par name="_wpa_s" nr="1"/>
+          <par name="alg" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="key_idx" nr="4"/>
+          <par name="set_tx" nr="5"/>
+          <par name="seq" nr="6"/>
+          <par name="seq_len" nr="7"/>
+          <par name="key" nr="8"/>
+          <par name="key_len" nr="9"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_set_rekey_offload">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="kek" nr="2"/>
+          <par name="kek_len" nr="3"/>
+          <par name="kck" nr="4"/>
+          <par name="kck_len" nr="5"/>
+          <par name="replay_ctr" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpa_supplicant_status_cb">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="status" nr="2"/>
+          <par name="parameter" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpas_send_ctrl_req">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+          <par name="ssid" nr="2"/>
+          <par name="field_name" nr="3"/>
+          <par name="txt" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="wpas_wps_eapol_cb">
+        <parameters>
+          <par name="wpa_s" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

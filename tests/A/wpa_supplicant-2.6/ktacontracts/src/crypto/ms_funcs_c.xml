@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-10 21:48:16.357688"/>
+  <cfile name="src/crypto/ms_funcs">
+    <data-structures/>
+    <functions>
+      <function name="WPA_PUT_LE16">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="val" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="challenge_hash">
+        <parameters>
+          <par name="peer_challenge" nr="1"/>
+          <par name="auth_challenge" nr="2"/>
+          <par name="username" nr="3"/>
+          <par name="username_len" nr="4"/>
+          <par name="challenge" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="challenge_response">
+        <parameters>
+          <par name="challenge" nr="1"/>
+          <par name="password_hash" nr="2"/>
+          <par name="response" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="encrypt_pw_block_with_password_hash">
+        <parameters>
+          <par name="password" nr="1"/>
+          <par name="password_len" nr="2"/>
+          <par name="password_hash" nr="3"/>
+          <par name="pw_block" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="generate_authenticator_response">
+        <parameters>
+          <par name="password" nr="1"/>
+          <par name="password_len" nr="2"/>
+          <par name="peer_challenge" nr="3"/>
+          <par name="auth_challenge" nr="4"/>
+          <par name="username" nr="5"/>
+          <par name="username_len" nr="6"/>
+          <par name="nt_response" nr="7"/>
+          <par name="response" nr="8"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="generate_authenticator_response_pwhash">
+        <parameters>
+          <par name="password_hash" nr="1"/>
+          <par name="peer_challenge" nr="2"/>
+          <par name="auth_challenge" nr="3"/>
+          <par name="username" nr="4"/>
+          <par name="username_len" nr="5"/>
+          <par name="nt_response" nr="6"/>
+          <par name="response" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="generate_nt_response">
+        <parameters>
+          <par name="auth_challenge" nr="1"/>
+          <par name="peer_challenge" nr="2"/>
+          <par name="username" nr="3"/>
+          <par name="username_len" nr="4"/>
+          <par name="password" nr="5"/>
+          <par name="password_len" nr="6"/>
+          <par name="response" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="generate_nt_response_pwhash">
+        <parameters>
+          <par name="auth_challenge" nr="1"/>
+          <par name="peer_challenge" nr="2"/>
+          <par name="username" nr="3"/>
+          <par name="username_len" nr="4"/>
+          <par name="password_hash" nr="5"/>
+          <par name="response" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_asymetric_start_key">
+        <parameters>
+          <par name="master_key" nr="1"/>
+          <par name="session_key" nr="2"/>
+          <par name="session_key_len" nr="3"/>
+          <par name="is_send" nr="4"/>
+          <par name="is_server" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_master_key">
+        <parameters>
+          <par name="password_hash_hash" nr="1"/>
+          <par name="nt_response" nr="2"/>
+          <par name="master_key" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hash_nt_password_hash">
+        <parameters>
+          <par name="password_hash" nr="1"/>
+          <par name="password_hash_hash" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="new_password_encrypted_with_old_nt_password_hash">
+        <parameters>
+          <par name="new_password" nr="1"/>
+          <par name="new_password_len" nr="2"/>
+          <par name="old_password" nr="3"/>
+          <par name="old_password_len" nr="4"/>
+          <par name="encrypted_pw_block" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nt_challenge_response">
+        <parameters>
+          <par name="challenge" nr="1"/>
+          <par name="password" nr="2"/>
+          <par name="password_len" nr="3"/>
+          <par name="response" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nt_password_hash">
+        <parameters>
+          <par name="password" nr="1"/>
+          <par name="password_len" nr="2"/>
+          <par name="password_hash" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nt_password_hash_encrypted_with_block">
+        <parameters>
+          <par name="password_hash" nr="1"/>
+          <par name="block" nr="2"/>
+          <par name="cypher" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="old_nt_password_hash_encrypted_with_new_nt_password_hash">
+        <parameters>
+          <par name="new_password" nr="1"/>
+          <par name="new_password_len" nr="2"/>
+          <par name="old_password" nr="3"/>
+          <par name="old_password_len" nr="4"/>
+          <par name="encrypted_password_hash" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="utf8_to_ucs2">
+        <parameters>
+          <par name="utf8_string" nr="1"/>
+          <par name="utf8_string_len" nr="2"/>
+          <par name="ucs2_buffer" nr="3"/>
+          <par name="ucs2_buffer_size" nr="4"/>
+          <par name="ucs2_string_size" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
