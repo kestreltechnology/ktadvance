@@ -76,16 +76,16 @@ class IndexManager(object):
                     if gvid in self.gvid2vid:
                         if tgtfid in self.gvid2vid[gvid]:
                             return (tgtfid,self.gvid2vid[gvid][tgtfid])
-                        logging.warning(msg + 'Target fid ' + str(tgtfid) + ' not found in gvid2vid['
+                        logging.debug(msg + 'Target fid ' + str(tgtfid) + ' not found in gvid2vid['
                                             + str(gvid) + ']')
                         return None
-                    logging.warning(msg + 'Global vid ' + str(gvid) + ' not found in gvid2vid')
+                    logging.debug(msg + 'Global vid ' + str(gvid) + ' not found in gvid2vid')
                     return None
-                logging.warning(msg + 'Global vid ' + str(gvid) + ' not found in gviddefs')
+                logging.debug(msg + 'Global vid ' + str(gvid) + ' not found in gviddefs')
                 return None
-            logging.warning(msg + 'Local vid ' + str(vid) + ' not found in vid2gvid[' + str(fid) + ']')
+            logging.debug(msg + 'Local vid ' + str(vid) + ' not found in vid2gvid[' + str(fid) + ']')
             return None
-        logging.warning(msg + 'File id ' + str(fid) + ' not found in vid2gvid')
+        logging.debug(msg + 'File id ' + str(fid) + ' not found in vid2gvid')
         return None
 
     '''return a list of (fid,vid) pairs that refer to the same global variable.'''
@@ -165,11 +165,11 @@ class IndexManager(object):
                 if fidtgt in self.gckey2ckey[gckey]:
                     return self.gckey2ckey[gckey][fidtgt]
                 else:
-                    print('Target fid ' + str(fidtgt) + ' not found for global key ' + str(gckey))
+                    logging.debug('Target fid ' + str(fidtgt) + ' not found for global key ' + str(gckey))
             else:
-                print('Global key ' + str(gckey) + ' not found in converter')
+                logging.debug('Global key ' + str(gckey) + ' not found in converter')
         else:
-            print('Local key ' + str(ckey) + ' not found for source file ' + str(fidsrc))
+            logging.debug('Local key ' + str(ckey) + ' not found for source file ' + str(fidsrc))
 
     def add_ckey2gckey(self,fid,ckey,gckey):
         if not fid in self.ckey2gckey:
