@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-11 08:55:48.815597"/>
+  <cfile name="pvmgs/pvmgs_func">
+    <data-structures/>
+    <functions>
+      <function name="gs_barrier">
+        <parameters>
+          <par name="gname" nr="1"/>
+          <par name="msgtag" nr="2"/>
+          <par name="cnt" nr="3"/>
+          <par name="tid" nr="4"/>
+          <par name="hash_list" nr="5"/>
+          <par name="ngroups" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_binsearch">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="nitems" nr="2"/>
+          <par name="target" nr="3"/>
+          <par name="mapfunc" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_delete_group">
+        <parameters>
+          <par name="groupname" nr="1"/>
+          <par name="hash_list" nr="2"/>
+          <par name="ngroups" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_delhost">
+        <parameters>
+          <par name="group" nr="1"/>
+          <par name="index___0" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_getinst">
+        <parameters>
+          <par name="gname" nr="1"/>
+          <par name="tid" nr="2"/>
+          <par name="hash_list" nr="3"/>
+          <par name="ngroups" nr="4"/>
+          <par name="gstate" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_gettid">
+        <parameters>
+          <par name="gname" nr="1"/>
+          <par name="inst" nr="2"/>
+          <par name="hash_list" nr="3"/>
+          <par name="ngroups" nr="4"/>
+          <par name="gstate" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_group">
+        <parameters>
+          <par name="groupname" nr="1"/>
+          <par name="hash_list" nr="2"/>
+          <par name="ngroups" nr="3"/>
+          <par name="create" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_gsize">
+        <parameters>
+          <par name="gname" nr="1"/>
+          <par name="hash_list" nr="2"/>
+          <par name="ngroups" nr="3"/>
+          <par name="gstate" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_hash_clear">
+        <parameters>
+          <par name="hash_list" nr="1"/>
+          <par name="ngroups" nr="2"/>
+          <par name="size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_hash_init">
+        <parameters>
+          <par name="hash_list" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_hash_name">
+        <parameters>
+          <par name="name" nr="1"/>
+          <par name="hash_list" nr="2"/>
+          <par name="ngroups" nr="3"/>
+          <par name="create" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_host_all">
+        <parameters>
+          <par name="gname" nr="1"/>
+          <par name="hash_list" nr="2"/>
+          <par name="ngroups" nr="3"/>
+          <par name="pcoordv" nr="4"/>
+          <par name="nmem_onhostv" nr="5"/>
+          <par name="nhosts" nr="6"/>
+          <par name="gstate" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_host_char">
+        <parameters>
+          <par name="gname" nr="1"/>
+          <par name="hash_list" nr="2"/>
+          <par name="ngroups" nr="3"/>
+          <par name="hosttid" nr="4"/>
+          <par name="pcoord" nr="5"/>
+          <par name="nmem_onhost" nr="6"/>
+          <par name="nhosts" nr="7"/>
+          <par name="gstate" nr="8"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_join">
+        <parameters>
+          <par name="gname" nr="1"/>
+          <par name="tid" nr="2"/>
+          <par name="hash_list" nr="3"/>
+          <par name="ngroups" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_leave">
+        <parameters>
+          <par name="gname" nr="1"/>
+          <par name="tid" nr="2"/>
+          <par name="hash_list" nr="3"/>
+          <par name="ngroups" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_list_insert">
+        <parameters>
+          <par name="group" nr="1"/>
+          <par name="prev" nr="2"/>
+          <par name="current" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_newhost">
+        <parameters>
+          <par name="group" nr="1"/>
+          <par name="index___0" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_newstaticcache">
+        <parameters>
+          <par name="tid" nr="1"/>
+          <par name="groupname" nr="2"/>
+          <par name="hash_list" nr="3"/>
+          <par name="ngroups" nr="4"/>
+          <par name="caller" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_pkstaticinfo">
+        <parameters>
+          <par name="group" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_realloc_int_array">
+        <parameters>
+          <par name="nelems" nr="1"/>
+          <par name="maxelems" nr="2"/>
+          <par name="array" nr="3"/>
+          <par name="inc" nr="4"/>
+          <par name="init" nr="5"/>
+          <par name="caller" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_register">
+        <parameters>
+          <par name="name" nr="1"/>
+          <par name="tid" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_retint">
+        <parameters>
+          <par name="arg" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_static">
+        <parameters>
+          <par name="gname" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="tid" nr="3"/>
+          <par name="hash_list" nr="4"/>
+          <par name="ngroups" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_struct_destroy">
+        <parameters>
+          <par name="group" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_struct_init">
+        <parameters>
+          <par name="groupname" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_tidlist">
+        <parameters>
+          <par name="gname" nr="1"/>
+          <par name="holes_not_allowed" nr="2"/>
+          <par name="hash_list" nr="3"/>
+          <par name="ngroups" nr="4"/>
+          <par name="gstate" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gs_tidtohost">
+        <parameters>
+          <par name="tid" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
