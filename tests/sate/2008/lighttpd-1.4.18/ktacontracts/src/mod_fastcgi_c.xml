@@ -1,0 +1,667 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-12 16:01:27.368152"/>
+  <cfile name="src/mod_fastcgi">
+    <data-structures/>
+    <functions>
+      <function name="env_add">
+        <parameters>
+          <par name="env" nr="1"/>
+          <par name="key" nr="2"/>
+          <par name="key_len" nr="3"/>
+          <par name="val" nr="4"/>
+          <par name="val_len" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fastcgi_extension_insert">
+        <parameters>
+          <par name="ext" nr="1"/>
+          <par name="key" nr="2"/>
+          <par name="fh" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fastcgi_extensions_free">
+        <parameters>
+          <par name="f" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fastcgi_extensions_init">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fastcgi_get_packet">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="hctx" nr="2"/>
+          <par name="packet" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fastcgi_host_free">
+        <parameters>
+          <par name="h" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fastcgi_host_init">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fastcgi_process_free">
+        <parameters>
+          <par name="f" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fastcgi_process_init">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fastcgi_status_copy_procname">
+        <parameters>
+          <par name="b" nr="1"/>
+          <par name="host" nr="2"/>
+          <par name="proc" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fastcgi_status_init">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="b" nr="2"/>
+          <par name="host" nr="3"/>
+          <par name="proc" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_check_extension">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="con" nr="2"/>
+          <par name="p_d" nr="3"/>
+          <par name="uri_path_handler" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_check_extension_1">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="con" nr="2"/>
+          <par name="p_d" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_check_extension_2">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="con" nr="2"/>
+          <par name="p_d" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_connection_close">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="hctx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_connection_close_callback">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="con" nr="2"/>
+          <par name="p_d" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_connection_reset">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="con" nr="2"/>
+          <par name="p_d" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_create_env">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="hctx" nr="2"/>
+          <par name="request_id" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_demux_response">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="hctx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_env_add">
+        <parameters>
+          <par name="env" nr="1"/>
+          <par name="key" nr="2"/>
+          <par name="key_len" nr="3"/>
+          <par name="val" nr="4"/>
+          <par name="val_len" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_env_add_request_headers">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="con" nr="2"/>
+          <par name="p" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_establish_connection">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="hctx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_handle_fdevent">
+        <parameters>
+          <par name="s" nr="1"/>
+          <par name="ctx" nr="2"/>
+          <par name="revents" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_header">
+        <parameters>
+          <par name="header" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="request_id" nr="3"/>
+          <par name="contentLength" nr="4"/>
+          <par name="paddingLength" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_patch_connection">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="con" nr="2"/>
+          <par name="p" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_reconnect">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="hctx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_requestid_del">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="p" nr="2"/>
+          <par name="request_id" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_requestid_new">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="p" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_response_parse">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="con" nr="2"/>
+          <par name="p" nr="3"/>
+          <par name="in" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_restart_dead_procs">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="p" nr="2"/>
+          <par name="host" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_set_state">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="hctx" nr="2"/>
+          <par name="state" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_spawn_connection">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="p" nr="2"/>
+          <par name="host" nr="3"/>
+          <par name="proc" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fcgi_write_request">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="hctx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="handler_ctx_free">
+        <parameters>
+          <par name="hctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="handler_ctx_init">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mod_fastcgi_free">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="p_d" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mod_fastcgi_handle_joblist">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="con" nr="2"/>
+          <par name="p_d" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mod_fastcgi_handle_subrequest">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="con" nr="2"/>
+          <par name="p_d" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mod_fastcgi_handle_trigger">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="p_d" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mod_fastcgi_init">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mod_fastcgi_plugin_init">
+        <parameters>
+          <par name="p" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mod_fastcgi_set_defaults">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="p_d" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_binpath">
+        <parameters>
+          <par name="env" nr="1"/>
+          <par name="b" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

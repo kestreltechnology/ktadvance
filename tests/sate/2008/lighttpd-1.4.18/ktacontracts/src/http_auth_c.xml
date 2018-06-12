@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-12 16:01:26.178172"/>
+  <cfile name="src/http_auth">
+    <data-structures/>
+    <functions>
+      <function name="apr_md5_encode">
+        <parameters>
+          <par name="pw" nr="1"/>
+          <par name="salt" nr="2"/>
+          <par name="result" nr="3"/>
+          <par name="nbytes" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="base64_decode">
+        <parameters>
+          <par name="out" nr="1"/>
+          <par name="in" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="http_auth_basic_check">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="con" nr="2"/>
+          <par name="p" nr="3"/>
+          <par name="req" nr="4"/>
+          <par name="url" nr="5"/>
+          <par name="realm_str" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="http_auth_basic_password_compare">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="p" nr="2"/>
+          <par name="req" nr="3"/>
+          <par name="username" nr="4"/>
+          <par name="realm" nr="5"/>
+          <par name="password" nr="6"/>
+          <par name="pw" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="http_auth_digest_check">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="con" nr="2"/>
+          <par name="p" nr="3"/>
+          <par name="req" nr="4"/>
+          <par name="url" nr="5"/>
+          <par name="realm_str" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="http_auth_digest_generate_nonce">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="p" nr="2"/>
+          <par name="fn" nr="3"/>
+          <par name="out" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="http_auth_get_password">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="p" nr="2"/>
+          <par name="username" nr="3"/>
+          <par name="realm" nr="4"/>
+          <par name="password" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="http_auth_match_rules">
+        <parameters>
+          <par name="srv" nr="1"/>
+          <par name="p" nr="2"/>
+          <par name="url" nr="3"/>
+          <par name="username" nr="4"/>
+          <par name="group" nr="5"/>
+          <par name="host" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="to64">
+        <parameters>
+          <par name="s" nr="1"/>
+          <par name="v" nr="2"/>
+          <par name="n" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
