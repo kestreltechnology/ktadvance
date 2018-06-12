@@ -1,0 +1,1323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-12 13:16:39.547736"/>
+  <cfile name="common/objects">
+    <data-structures/>
+    <functions>
+      <function name="add_command">
+        <parameters>
+          <par name="name" nr="1"/>
+          <par name="value" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_command_to_hashlist">
+        <parameters>
+          <par name="new_command" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_contact">
+        <parameters>
+          <par name="name" nr="1"/>
+          <par name="alias" nr="2"/>
+          <par name="email" nr="3"/>
+          <par name="pager" nr="4"/>
+          <par name="addresses" nr="5"/>
+          <par name="svc_notification_period" nr="6"/>
+          <par name="host_notification_period" nr="7"/>
+          <par name="notify_service_ok" nr="8"/>
+          <par name="notify_service_critical" nr="9"/>
+          <par name="notify_service_warning" nr="10"/>
+          <par name="notify_service_unknown" nr="11"/>
+          <par name="notify_service_flapping" nr="12"/>
+          <par name="notify_host_up" nr="13"/>
+          <par name="notify_host_down" nr="14"/>
+          <par name="notify_host_unreachable" nr="15"/>
+          <par name="notify_host_flapping" nr="16"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_contact_to_contactgroup">
+        <parameters>
+          <par name="grp" nr="1"/>
+          <par name="contact_name" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_contact_to_hashlist">
+        <parameters>
+          <par name="new_contact" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_contactgroup">
+        <parameters>
+          <par name="name" nr="1"/>
+          <par name="alias" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_contactgroup_to_hashlist">
+        <parameters>
+          <par name="new_contactgroup" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_contactgroup_to_host">
+        <parameters>
+          <par name="hst" nr="1"/>
+          <par name="group_name" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_contactgroup_to_hostescalation">
+        <parameters>
+          <par name="he" nr="1"/>
+          <par name="group_name" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_contactgroup_to_service">
+        <parameters>
+          <par name="svc" nr="1"/>
+          <par name="group_name" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_contactgroup_to_serviceescalation">
+        <parameters>
+          <par name="se" nr="1"/>
+          <par name="group_name" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_host">
+        <parameters>
+          <par name="name" nr="1"/>
+          <par name="alias" nr="2"/>
+          <par name="address" nr="3"/>
+          <par name="check_period" nr="4"/>
+          <par name="check_interval" nr="5"/>
+          <par name="max_attempts" nr="6"/>
+          <par name="notify_up" nr="7"/>
+          <par name="notify_down" nr="8"/>
+          <par name="notify_unreachable" nr="9"/>
+          <par name="notify_flapping" nr="10"/>
+          <par name="notification_interval" nr="11"/>
+          <par name="notification_period" nr="12"/>
+          <par name="notifications_enabled" nr="13"/>
+          <par name="check_command" nr="14"/>
+          <par name="checks_enabled" nr="15"/>
+          <par name="accept_passive_checks" nr="16"/>
+          <par name="event_handler" nr="17"/>
+          <par name="event_handler_enabled" nr="18"/>
+          <par name="flap_detection_enabled" nr="19"/>
+          <par name="low_flap_threshold" nr="20"/>
+          <par name="high_flap_threshold" nr="21"/>
+          <par name="stalk_up" nr="22"/>
+          <par name="stalk_down" nr="23"/>
+          <par name="stalk_unreachable" nr="24"/>
+          <par name="process_perfdata" nr="25"/>
+          <par name="failure_prediction_enabled" nr="26"/>
+          <par name="failure_prediction_options" nr="27"/>
+          <par name="check_freshness" nr="28"/>
+          <par name="freshness_threshold" nr="29"/>
+          <par name="retain_status_information" nr="30"/>
+          <par name="retain_nonstatus_information" nr="31"/>
+          <par name="obsess_over_host" nr="32"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_host_dependency">
+        <parameters>
+          <par name="dependent_host_name" nr="1"/>
+          <par name="host_name" nr="2"/>
+          <par name="dependency_type" nr="3"/>
+          <par name="inherits_parent" nr="4"/>
+          <par name="fail_on_up" nr="5"/>
+          <par name="fail_on_down" nr="6"/>
+          <par name="fail_on_unreachable" nr="7"/>
+          <par name="fail_on_pending" nr="8"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_host_notification_command_to_contact">
+        <parameters>
+          <par name="cntct" nr="1"/>
+          <par name="command_name" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_host_to_hashlist">
+        <parameters>
+          <par name="new_host" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_host_to_hostgroup">
+        <parameters>
+          <par name="temp_hostgroup" nr="1"/>
+          <par name="host_name" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_hostdependency_to_hashlist">
+        <parameters>
+          <par name="new_hostdependency" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_hostescalation">
+        <parameters>
+          <par name="host_name" nr="1"/>
+          <par name="first_notification" nr="2"/>
+          <par name="last_notification" nr="3"/>
+          <par name="notification_interval" nr="4"/>
+          <par name="escalation_period" nr="5"/>
+          <par name="escalate_on_down" nr="6"/>
+          <par name="escalate_on_unreachable" nr="7"/>
+          <par name="escalate_on_recovery" nr="8"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_hostescalation_to_hashlist">
+        <parameters>
+          <par name="new_hostescalation" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_hostextinfo">
+        <parameters>
+          <par name="host_name" nr="1"/>
+          <par name="notes" nr="2"/>
+          <par name="notes_url" nr="3"/>
+          <par name="action_url" nr="4"/>
+          <par name="icon_image" nr="5"/>
+          <par name="vrml_image" nr="6"/>
+          <par name="statusmap_image" nr="7"/>
+          <par name="icon_image_alt" nr="8"/>
+          <par name="x_2d" nr="9"/>
+          <par name="y_2d" nr="10"/>
+          <par name="x_3d" nr="11"/>
+          <par name="y_3d" nr="12"/>
+          <par name="z_3d" nr="13"/>
+          <par name="have_2d_coords" nr="14"/>
+          <par name="have_3d_coords" nr="15"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_hostextinfo_to_hashlist">
+        <parameters>
+          <par name="new_hostextinfo" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_hostgroup">
+        <parameters>
+          <par name="name" nr="1"/>
+          <par name="alias" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_hostgroup_to_hashlist">
+        <parameters>
+          <par name="new_hostgroup" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_parent_host_to_host">
+        <parameters>
+          <par name="hst" nr="1"/>
+          <par name="host_name" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_service">
+        <parameters>
+          <par name="host_name" nr="1"/>
+          <par name="description" nr="2"/>
+          <par name="check_period" nr="3"/>
+          <par name="max_attempts" nr="4"/>
+          <par name="parallelize" nr="5"/>
+          <par name="accept_passive_checks" nr="6"/>
+          <par name="check_interval" nr="7"/>
+          <par name="retry_interval" nr="8"/>
+          <par name="notification_interval" nr="9"/>
+          <par name="notification_period" nr="10"/>
+          <par name="notify_recovery" nr="11"/>
+          <par name="notify_unknown" nr="12"/>
+          <par name="notify_warning" nr="13"/>
+          <par name="notify_critical" nr="14"/>
+          <par name="notify_flapping" nr="15"/>
+          <par name="notifications_enabled" nr="16"/>
+          <par name="is_volatile" nr="17"/>
+          <par name="event_handler" nr="18"/>
+          <par name="event_handler_enabled" nr="19"/>
+          <par name="check_command" nr="20"/>
+          <par name="checks_enabled" nr="21"/>
+          <par name="flap_detection_enabled" nr="22"/>
+          <par name="low_flap_threshold" nr="23"/>
+          <par name="high_flap_threshold" nr="24"/>
+          <par name="stalk_ok" nr="25"/>
+          <par name="stalk_warning" nr="26"/>
+          <par name="stalk_unknown" nr="27"/>
+          <par name="stalk_critical" nr="28"/>
+          <par name="process_perfdata" nr="29"/>
+          <par name="failure_prediction_enabled" nr="30"/>
+          <par name="failure_prediction_options" nr="31"/>
+          <par name="check_freshness" nr="32"/>
+          <par name="freshness_threshold" nr="33"/>
+          <par name="retain_status_information" nr="34"/>
+          <par name="retain_nonstatus_information" nr="35"/>
+          <par name="obsess_over_service" nr="36"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_service_dependency">
+        <parameters>
+          <par name="dependent_host_name" nr="1"/>
+          <par name="dependent_service_description" nr="2"/>
+          <par name="host_name" nr="3"/>
+          <par name="service_description" nr="4"/>
+          <par name="dependency_type" nr="5"/>
+          <par name="inherits_parent" nr="6"/>
+          <par name="fail_on_ok" nr="7"/>
+          <par name="fail_on_warning" nr="8"/>
+          <par name="fail_on_unknown" nr="9"/>
+          <par name="fail_on_critical" nr="10"/>
+          <par name="fail_on_pending" nr="11"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_service_notification_command_to_contact">
+        <parameters>
+          <par name="cntct" nr="1"/>
+          <par name="command_name" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_service_to_hashlist">
+        <parameters>
+          <par name="new_service" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_service_to_servicegroup">
+        <parameters>
+          <par name="temp_servicegroup" nr="1"/>
+          <par name="host_name" nr="2"/>
+          <par name="svc_description" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_servicedependency_to_hashlist">
+        <parameters>
+          <par name="new_servicedependency" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_serviceescalation">
+        <parameters>
+          <par name="host_name" nr="1"/>
+          <par name="description" nr="2"/>
+          <par name="first_notification" nr="3"/>
+          <par name="last_notification" nr="4"/>
+          <par name="notification_interval" nr="5"/>
+          <par name="escalation_period" nr="6"/>
+          <par name="escalate_on_warning" nr="7"/>
+          <par name="escalate_on_unknown" nr="8"/>
+          <par name="escalate_on_critical" nr="9"/>
+          <par name="escalate_on_recovery" nr="10"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_serviceescalation_to_hashlist">
+        <parameters>
+          <par name="new_serviceescalation" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_serviceextinfo">
+        <parameters>
+          <par name="host_name" nr="1"/>
+          <par name="description" nr="2"/>
+          <par name="notes" nr="3"/>
+          <par name="notes_url" nr="4"/>
+          <par name="action_url" nr="5"/>
+          <par name="icon_image" nr="6"/>
+          <par name="icon_image_alt" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_serviceextinfo_to_hashlist">
+        <parameters>
+          <par name="new_serviceextinfo" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_servicegroup">
+        <parameters>
+          <par name="name" nr="1"/>
+          <par name="alias" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_servicegroup_to_hashlist">
+        <parameters>
+          <par name="new_servicegroup" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_timeperiod">
+        <parameters>
+          <par name="name" nr="1"/>
+          <par name="alias" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_timeperiod_to_hashlist">
+        <parameters>
+          <par name="new_timeperiod" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_timerange_to_timeperiod">
+        <parameters>
+          <par name="period" nr="1"/>
+          <par name="day" nr="2"/>
+          <par name="start_time" nr="3"/>
+          <par name="end_time" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="check_for_circular_hostdependency">
+        <parameters>
+          <par name="root_dep" nr="1"/>
+          <par name="dep" nr="2"/>
+          <par name="dependency_type" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="check_for_circular_path">
+        <parameters>
+          <par name="root_hst" nr="1"/>
+          <par name="hst" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="check_for_circular_servicedependency">
+        <parameters>
+          <par name="root_dep" nr="1"/>
+          <par name="dep" nr="2"/>
+          <par name="dependency_type" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="find_command">
+        <parameters>
+          <par name="name" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="find_contact">
+        <parameters>
+          <par name="name" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="find_contactgroup">
+        <parameters>
+          <par name="name" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="find_contactgroupmember">
+        <parameters>
+          <par name="name" nr="1"/>
+          <par name="grp" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="find_host">
+        <parameters>
+          <par name="name" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="find_hostextinfo">
+        <parameters>
+          <par name="host_name" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="find_hostgroup">
+        <parameters>
+          <par name="name" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="find_service">
+        <parameters>
+          <par name="host_name" nr="1"/>
+          <par name="svc_desc" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="find_serviceextinfo">
+        <parameters>
+          <par name="host_name" nr="1"/>
+          <par name="description" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="find_servicegroup">
+        <parameters>
+          <par name="name" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="find_timeperiod">
+        <parameters>
+          <par name="name" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="free_extended_data">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="free_object_data">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_first_hostdependency_by_dependent_host">
+        <parameters>
+          <par name="host_name" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_first_hostescalation_by_host">
+        <parameters>
+          <par name="host_name" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_first_servicedependency_by_dependent_service">
+        <parameters>
+          <par name="host_name" nr="1"/>
+          <par name="svc_description" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_first_serviceescalation_by_service">
+        <parameters>
+          <par name="host_name" nr="1"/>
+          <par name="svc_description" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_next_hostdependency_by_dependent_host">
+        <parameters>
+          <par name="host_name" nr="1"/>
+          <par name="start" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_next_hostescalation_by_host">
+        <parameters>
+          <par name="host_name" nr="1"/>
+          <par name="start" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_next_servicedependency_by_dependent_service">
+        <parameters>
+          <par name="host_name" nr="1"/>
+          <par name="svc_description" nr="2"/>
+          <par name="start" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_next_serviceescalation_by_service">
+        <parameters>
+          <par name="host_name" nr="1"/>
+          <par name="svc_description" nr="2"/>
+          <par name="start" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_contact_for_host">
+        <parameters>
+          <par name="hst" nr="1"/>
+          <par name="cntct" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_contact_for_hostgroup">
+        <parameters>
+          <par name="group" nr="1"/>
+          <par name="cntct" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_contact_for_service">
+        <parameters>
+          <par name="svc" nr="1"/>
+          <par name="cntct" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_contact_for_servicegroup">
+        <parameters>
+          <par name="group" nr="1"/>
+          <par name="cntct" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_contact_member_of_contactgroup">
+        <parameters>
+          <par name="group" nr="1"/>
+          <par name="cntct" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_escalated_contact_for_host">
+        <parameters>
+          <par name="hst" nr="1"/>
+          <par name="cntct" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_escalated_contact_for_service">
+        <parameters>
+          <par name="svc" nr="1"/>
+          <par name="cntct" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_host_immediate_child_of_host">
+        <parameters>
+          <par name="parent_host" nr="1"/>
+          <par name="child_host" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_host_immediate_parent_of_host">
+        <parameters>
+          <par name="child_host" nr="1"/>
+          <par name="parent_host" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_host_member_of_hostgroup">
+        <parameters>
+          <par name="group" nr="1"/>
+          <par name="hst" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_host_member_of_servicegroup">
+        <parameters>
+          <par name="group" nr="1"/>
+          <par name="hst" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_host_primary_immediate_child_of_host">
+        <parameters>
+          <par name="parent_host" nr="1"/>
+          <par name="child_host" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_service_member_of_servicegroup">
+        <parameters>
+          <par name="group" nr="1"/>
+          <par name="svc" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="number_of_immediate_child_hosts">
+        <parameters>
+          <par name="hst" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="number_of_immediate_parent_hosts">
+        <parameters>
+          <par name="hst" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="number_of_total_child_hosts">
+        <parameters>
+          <par name="hst" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="number_of_total_parent_hosts">
+        <parameters>
+          <par name="hst" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="read_object_config_data">
+        <parameters>
+          <par name="main_config_file" nr="1"/>
+          <par name="options" nr="2"/>
+          <par name="cache" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
