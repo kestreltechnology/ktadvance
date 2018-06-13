@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-06 16:06:06.923436"/>
+  <header info="cfile" name="cfile" time="2018-06-13 11:01:08.947844"/>
   <cfile name="src/http/ngx_http_variables">
     <data-structures/>
     <functions>
@@ -9,6 +9,15 @@
           <par name="__ptr" nr="1"/>
           <par name="__fmt" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="__mempcpy_inline" src="string.h">
         <parameters>
@@ -16,12 +25,30 @@
           <par name="__src" nr="2"/>
           <par name="__n" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="asprintf" src="stdio2.h">
         <parameters>
           <par name="__ptr" nr="1"/>
           <par name="__fmt" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="bcopy" src="string3.h">
         <parameters>
@@ -29,12 +56,30 @@
           <par name="__dest" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="bzero" src="string3.h">
         <parameters>
           <par name="__dest" nr="1"/>
           <par name="__len" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="confstr" src="unistd.h">
         <parameters>
@@ -42,12 +87,30 @@
           <par name="__buf" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="dprintf" src="stdio2.h">
         <parameters>
           <par name="__fd" nr="1"/>
           <par name="__fmt" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="fgets" src="stdio2.h">
         <parameters>
@@ -55,6 +118,15 @@
           <par name="__n" nr="2"/>
           <par name="__stream" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="fgets_unlocked" src="stdio2.h">
         <parameters>
@@ -62,12 +134,30 @@
           <par name="__n" nr="2"/>
           <par name="__stream" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="fprintf" src="stdio2.h">
         <parameters>
           <par name="__stream" nr="1"/>
           <par name="__fmt" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="fread" src="stdio2.h">
         <parameters>
@@ -76,6 +166,15 @@
           <par name="__n" nr="3"/>
           <par name="__stream" nr="4"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="fread_unlocked" src="stdio2.h">
         <parameters>
@@ -84,41 +183,104 @@
           <par name="__n" nr="3"/>
           <par name="__stream" nr="4"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="getcwd" src="unistd.h">
         <parameters>
           <par name="__buf" nr="1"/>
           <par name="__size" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="getdomainname" src="unistd.h">
         <parameters>
           <par name="__buf" nr="1"/>
           <par name="__buflen" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="getgroups" src="unistd.h">
         <parameters>
           <par name="__size" nr="1"/>
           <par name="__list" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="gethostname" src="unistd.h">
         <parameters>
           <par name="__buf" nr="1"/>
           <par name="__buflen" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="getlogin_r" src="unistd.h">
         <parameters>
           <par name="__buf" nr="1"/>
           <par name="__buflen" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="getwd" src="unistd.h">
         <parameters>
           <par name="__buf" nr="1"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="mbstowcs" src="stdlib.h">
         <parameters>
@@ -126,6 +288,15 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="memcpy" src="string3.h">
         <parameters>
@@ -133,6 +304,15 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="memmove" src="string3.h">
         <parameters>
@@ -140,6 +320,15 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="mempcpy" src="string3.h">
         <parameters>
@@ -147,6 +336,15 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="memset" src="string3.h">
         <parameters>
@@ -154,6 +352,15 @@
           <par name="__ch" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_array_init">
         <parameters>
@@ -162,9 +369,15 @@
           <par name="n" nr="3"/>
           <par name="size" nr="4"/>
         </parameters>
-	<postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_add_prefix_variable">
         <parameters>
@@ -172,6 +385,15 @@
           <par name="name" nr="2"/>
           <par name="flags" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_add_variable">
         <parameters>
@@ -179,18 +401,45 @@
           <par name="name" nr="2"/>
           <par name="flags" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_get_flushed_variable">
         <parameters>
           <par name="r" nr="1"/>
           <par name="index___0" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_get_indexed_variable">
         <parameters>
           <par name="r" nr="1"/>
           <par name="index___0" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_get_variable">
         <parameters>
@@ -198,12 +447,30 @@
           <par name="name" nr="2"/>
           <par name="key" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_get_variable_index">
         <parameters>
           <par name="cf" nr="1"/>
           <par name="name" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_map_find">
         <parameters>
@@ -211,12 +478,30 @@
           <par name="map" nr="2"/>
           <par name="match" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_regex_compile">
         <parameters>
           <par name="cf" nr="1"/>
           <par name="rc" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_regex_exec">
         <parameters>
@@ -224,6 +509,15 @@
           <par name="re" nr="2"/>
           <par name="s" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_argument">
         <parameters>
@@ -231,6 +525,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_binary_remote_addr">
         <parameters>
@@ -238,6 +541,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_body_bytes_sent">
         <parameters>
@@ -245,6 +557,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_bytes_sent">
         <parameters>
@@ -252,6 +573,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_connection">
         <parameters>
@@ -259,6 +589,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_connection_requests">
         <parameters>
@@ -266,6 +605,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_content_length">
         <parameters>
@@ -273,6 +621,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_cookie">
         <parameters>
@@ -280,6 +637,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_cookies">
         <parameters>
@@ -287,6 +653,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_document_root">
         <parameters>
@@ -294,6 +669,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_header">
         <parameters>
@@ -301,6 +685,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_headers">
         <parameters>
@@ -308,6 +701,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_headers_internal">
         <parameters>
@@ -316,6 +718,15 @@
           <par name="data" nr="3"/>
           <par name="sep" nr="4"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_host">
         <parameters>
@@ -323,6 +734,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_hostname">
         <parameters>
@@ -330,6 +750,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_https">
         <parameters>
@@ -337,6 +766,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_is_args">
         <parameters>
@@ -344,6 +782,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_msec">
         <parameters>
@@ -351,6 +798,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_nginx_version">
         <parameters>
@@ -358,6 +814,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_not_found">
         <parameters>
@@ -365,6 +830,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_pid">
         <parameters>
@@ -372,6 +846,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_pipe">
         <parameters>
@@ -379,6 +862,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_proxy_protocol_addr">
         <parameters>
@@ -386,6 +878,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_proxy_protocol_port">
         <parameters>
@@ -393,6 +894,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_realpath_root">
         <parameters>
@@ -400,6 +910,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_remote_addr">
         <parameters>
@@ -407,6 +926,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_remote_port">
         <parameters>
@@ -414,6 +942,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_remote_user">
         <parameters>
@@ -421,6 +958,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_request">
         <parameters>
@@ -428,6 +974,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_request_body">
         <parameters>
@@ -435,6 +990,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_request_body_file">
         <parameters>
@@ -442,6 +1006,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_request_completion">
         <parameters>
@@ -449,6 +1022,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_request_filename">
         <parameters>
@@ -456,6 +1038,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_request_get_size">
         <parameters>
@@ -463,6 +1054,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_request_id">
         <parameters>
@@ -470,6 +1070,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_request_length">
         <parameters>
@@ -477,6 +1086,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_request_line">
         <parameters>
@@ -484,6 +1102,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_request_method">
         <parameters>
@@ -491,6 +1118,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_request_set_size">
         <parameters>
@@ -498,6 +1134,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_request_time">
         <parameters>
@@ -505,6 +1150,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_scheme">
         <parameters>
@@ -512,6 +1166,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_sent_connection">
         <parameters>
@@ -519,6 +1182,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_sent_content_length">
         <parameters>
@@ -526,6 +1198,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_sent_content_type">
         <parameters>
@@ -533,6 +1214,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_sent_keep_alive">
         <parameters>
@@ -540,6 +1230,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_sent_last_modified">
         <parameters>
@@ -547,6 +1246,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_sent_location">
         <parameters>
@@ -554,6 +1262,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_sent_transfer_encoding">
         <parameters>
@@ -561,6 +1278,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_server_addr">
         <parameters>
@@ -568,6 +1294,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_server_name">
         <parameters>
@@ -575,6 +1310,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_server_port">
         <parameters>
@@ -582,6 +1326,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_set_args">
         <parameters>
@@ -589,6 +1342,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_status">
         <parameters>
@@ -596,6 +1358,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_tcpinfo">
         <parameters>
@@ -603,6 +1374,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_time_iso8601">
         <parameters>
@@ -610,6 +1390,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_time_local">
         <parameters>
@@ -617,6 +1406,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_unknown_header">
         <parameters>
@@ -625,6 +1423,15 @@
           <par name="part" nr="3"/>
           <par name="prefix" nr="4"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_unknown_header_in">
         <parameters>
@@ -632,6 +1439,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_unknown_header_out">
         <parameters>
@@ -639,6 +1455,15 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variable_unknown_trailer_out">
         <parameters>
@@ -646,22 +1471,58 @@
           <par name="v" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variables_add_core_vars">
         <parameters>
           <par name="cf" nr="1"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ngx_http_variables_init_vars">
         <parameters>
           <par name="cf" nr="1"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="obstack_printf" src="stdio2.h">
         <parameters>
           <par name="__obstack" nr="1"/>
           <par name="__fmt" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="obstack_vprintf" src="stdio2.h">
         <parameters>
@@ -669,18 +1530,45 @@
           <par name="__fmt" nr="2"/>
           <par name="__ap" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="open" src="fcntl2.h">
         <parameters>
           <par name="__path" nr="1"/>
           <par name="__oflag" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="open64" src="fcntl2.h">
         <parameters>
           <par name="__path" nr="1"/>
           <par name="__oflag" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="openat" src="fcntl2.h">
         <parameters>
@@ -688,6 +1576,15 @@
           <par name="__path" nr="2"/>
           <par name="__oflag" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="openat64" src="fcntl2.h">
         <parameters>
@@ -695,6 +1592,15 @@
           <par name="__path" nr="2"/>
           <par name="__oflag" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="pread" src="unistd.h">
         <parameters>
@@ -703,6 +1609,15 @@
           <par name="__nbytes" nr="3"/>
           <par name="__offset" nr="4"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="pread64" src="unistd.h">
         <parameters>
@@ -711,11 +1626,29 @@
           <par name="__nbytes" nr="3"/>
           <par name="__offset" nr="4"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="printf" src="stdio2.h">
         <parameters>
           <par name="__fmt" nr="1"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="ptsname_r" src="stdlib.h">
         <parameters>
@@ -723,6 +1656,15 @@
           <par name="__buf" nr="2"/>
           <par name="__buflen" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="read" src="unistd.h">
         <parameters>
@@ -730,6 +1672,15 @@
           <par name="__buf" nr="2"/>
           <par name="__nbytes" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="readlink" src="unistd.h">
         <parameters>
@@ -737,6 +1688,15 @@
           <par name="__buf" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="readlinkat" src="unistd.h">
         <parameters>
@@ -745,12 +1705,30 @@
           <par name="__buf" nr="3"/>
           <par name="__len" nr="4"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="realpath" src="stdlib.h">
         <parameters>
           <par name="__name" nr="1"/>
           <par name="__resolved" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="recv" src="socket2.h">
         <parameters>
@@ -759,6 +1737,15 @@
           <par name="__n" nr="3"/>
           <par name="__flags" nr="4"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="recvfrom" src="socket2.h">
         <parameters>
@@ -769,6 +1756,15 @@
           <par name="__cil_tmp14" nr="5"/>
           <par name="__addr_len" nr="6"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="snprintf" src="stdio2.h">
         <parameters>
@@ -776,18 +1772,45 @@
           <par name="__n" nr="2"/>
           <par name="__fmt" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="sprintf" src="stdio2.h">
         <parameters>
           <par name="__s" nr="1"/>
           <par name="__fmt" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="stpcpy" src="string3.h">
         <parameters>
           <par name="__dest" nr="1"/>
           <par name="__src" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="stpncpy" src="string3.h">
         <parameters>
@@ -795,18 +1818,45 @@
           <par name="__src" nr="2"/>
           <par name="__n" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="strcat" src="string3.h">
         <parameters>
           <par name="__dest" nr="1"/>
           <par name="__src" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="strcpy" src="string3.h">
         <parameters>
           <par name="__dest" nr="1"/>
           <par name="__src" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="strncat" src="string3.h">
         <parameters>
@@ -814,6 +1864,15 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="strncpy" src="string3.h">
         <parameters>
@@ -821,6 +1880,15 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="ttyname_r" src="unistd.h">
         <parameters>
@@ -828,6 +1896,15 @@
           <par name="__buf" nr="2"/>
           <par name="__buflen" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="vasprintf" src="stdio2.h">
         <parameters>
@@ -835,6 +1912,15 @@
           <par name="__fmt" nr="2"/>
           <par name="__ap" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="vdprintf" src="stdio2.h">
         <parameters>
@@ -842,6 +1928,15 @@
           <par name="__fmt" nr="2"/>
           <par name="__ap" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="vfprintf" src="stdio2.h">
         <parameters>
@@ -849,12 +1944,30 @@
           <par name="__fmt" nr="2"/>
           <par name="__ap" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="vprintf" src="stdio2.h">
         <parameters>
           <par name="__fmt" nr="1"/>
           <par name="__ap" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="vsnprintf" src="stdio2.h">
         <parameters>
@@ -863,6 +1976,15 @@
           <par name="__fmt" nr="3"/>
           <par name="__ap" nr="4"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="vsprintf" src="stdio2.h">
         <parameters>
@@ -870,6 +1992,15 @@
           <par name="__fmt" nr="2"/>
           <par name="__ap" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="wcstombs" src="stdlib.h">
         <parameters>
@@ -877,12 +2008,30 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="wctomb" src="stdlib.h">
         <parameters>
           <par name="__s" nr="1"/>
           <par name="__wchar" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
     </functions>
   </cfile>
