@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-06 23:17:26.914198"/>
+  <header info="cfile" name="cfile" time="2018-06-13 01:40:34.870650"/>
   <cfile name="test/ssltest">
     <data-structures/>
     <functions>
@@ -9,6 +9,15 @@
           <par name="ctx" nr="1"/>
           <par name="arg" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="bcopy" src="string3.h">
         <parameters>
@@ -16,12 +25,30 @@
           <par name="__dest" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="bzero" src="string3.h">
         <parameters>
           <par name="__dest" nr="1"/>
           <par name="__len" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="confstr" src="unistd.h">
         <parameters>
@@ -29,9 +56,27 @@
           <par name="__buf" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="do_test_cipherlist">
         <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="doit">
         <parameters>
@@ -39,6 +84,15 @@
           <par name="c_ssl" nr="2"/>
           <par name="count" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="doit_biopair">
         <parameters>
@@ -48,12 +102,30 @@
           <par name="s_time" nr="4"/>
           <par name="c_time" nr="5"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="dprintf" src="stdio2.h">
         <parameters>
           <par name="__fd" nr="1"/>
           <par name="__fmt" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="fgets" src="stdio2.h">
         <parameters>
@@ -61,12 +133,30 @@
           <par name="__n" nr="2"/>
           <par name="__stream" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="fprintf" src="stdio2.h">
         <parameters>
           <par name="__stream" nr="1"/>
           <par name="__fmt" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="fread" src="stdio2.h">
         <parameters>
@@ -75,6 +165,15 @@
           <par name="__n" nr="3"/>
           <par name="__stream" nr="4"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="fread_unlocked" src="stdio2.h">
         <parameters>
@@ -83,56 +182,164 @@
           <par name="__n" nr="3"/>
           <par name="__stream" nr="4"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="free_tmp_rsa">
         <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="get_dh1024">
         <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="get_dh1024dsa">
         <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="get_dh512">
         <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="get_proxy_auth_ex_data_idx">
         <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="getcwd" src="unistd.h">
         <parameters>
           <par name="__buf" nr="1"/>
           <par name="__size" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="getdomainname" src="unistd.h">
         <parameters>
           <par name="__buf" nr="1"/>
           <par name="__buflen" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="getgroups" src="unistd.h">
         <parameters>
           <par name="__size" nr="1"/>
           <par name="__list" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="gethostname" src="unistd.h">
         <parameters>
           <par name="__buf" nr="1"/>
           <par name="__buflen" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="getlogin_r" src="unistd.h">
         <parameters>
           <par name="__buf" nr="1"/>
           <par name="__buflen" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="getwd" src="unistd.h">
         <parameters>
           <par name="__buf" nr="1"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="lock_dbg_cb">
         <parameters>
@@ -141,12 +348,30 @@
           <par name="file" nr="3"/>
           <par name="line" nr="4"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="main">
         <parameters>
           <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="mbstowcs" src="stdlib.h">
         <parameters>
@@ -154,6 +379,15 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="memcpy" src="string3.h">
         <parameters>
@@ -161,6 +395,15 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="memmove" src="string3.h">
         <parameters>
@@ -168,6 +411,15 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="memset" src="string3.h">
         <parameters>
@@ -175,17 +427,44 @@
           <par name="__ch" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="print_details">
         <parameters>
           <par name="c_ssl" nr="1"/>
           <par name="prefix" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="printf" src="stdio2.h">
         <parameters>
           <par name="__fmt" nr="1"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="process_proxy_cond">
         <parameters>
@@ -193,6 +472,15 @@
           <par name="cond" nr="2"/>
           <par name="cond_end" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="process_proxy_cond_adders">
         <parameters>
@@ -202,6 +490,15 @@
           <par name="pos" nr="4"/>
           <par name="indent" nr="5"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="process_proxy_cond_multipliers">
         <parameters>
@@ -211,6 +508,15 @@
           <par name="pos" nr="4"/>
           <par name="indent" nr="5"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="process_proxy_cond_val">
         <parameters>
@@ -220,12 +526,30 @@
           <par name="pos" nr="4"/>
           <par name="indent" nr="5"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="process_proxy_debug">
         <parameters>
           <par name="indent" nr="1"/>
           <par name="format" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="psk_client_callback">
         <parameters>
@@ -236,6 +560,15 @@
           <par name="psk" nr="5"/>
           <par name="max_psk_len" nr="6"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="psk_key2bn">
         <parameters>
@@ -243,6 +576,15 @@
           <par name="psk" nr="2"/>
           <par name="max_psk_len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="psk_server_callback">
         <parameters>
@@ -251,6 +593,15 @@
           <par name="psk" nr="3"/>
           <par name="max_psk_len" nr="4"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="ptsname_r" src="stdlib.h">
         <parameters>
@@ -258,6 +609,15 @@
           <par name="__buf" nr="2"/>
           <par name="__buflen" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="read" src="unistd.h">
         <parameters>
@@ -265,6 +625,15 @@
           <par name="__buf" nr="2"/>
           <par name="__nbytes" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="readlink" src="unistd.h">
         <parameters>
@@ -272,6 +641,15 @@
           <par name="__buf" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="readlinkat" src="unistd.h">
         <parameters>
@@ -280,12 +658,30 @@
           <par name="__buf" nr="3"/>
           <par name="__len" nr="4"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="realpath" src="stdlib.h">
         <parameters>
           <par name="__name" nr="1"/>
           <par name="__resolved" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="recv" src="socket2.h">
         <parameters>
@@ -294,6 +690,15 @@
           <par name="__n" nr="3"/>
           <par name="__flags" nr="4"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="recvfrom" src="socket2.h">
         <parameters>
@@ -304,6 +709,15 @@
           <par name="__addr" nr="5"/>
           <par name="__addr_len" nr="6"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="snprintf" src="stdio2.h">
         <parameters>
@@ -311,18 +725,45 @@
           <par name="__n" nr="2"/>
           <par name="__fmt" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="sprintf" src="stdio2.h">
         <parameters>
           <par name="__s" nr="1"/>
           <par name="__fmt" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ssl_give_srp_client_pwd_cb">
         <parameters>
           <par name="s" nr="1"/>
           <par name="arg" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="ssl_srp_server_param_cb">
         <parameters>
@@ -330,6 +771,15 @@
           <par name="ad" nr="2"/>
           <par name="arg" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="stpncpy" src="string3.h">
         <parameters>
@@ -337,18 +787,45 @@
           <par name="__src" nr="2"/>
           <par name="__n" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="strcat" src="string3.h">
         <parameters>
           <par name="__dest" nr="1"/>
           <par name="__src" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="strcpy" src="string3.h">
         <parameters>
           <par name="__dest" nr="1"/>
           <par name="__src" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="strncat" src="string3.h">
         <parameters>
@@ -356,6 +833,15 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="strncpy" src="string3.h">
         <parameters>
@@ -363,9 +849,27 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="sv_usage">
         <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="tmp_rsa_cb">
         <parameters>
@@ -373,6 +877,15 @@
           <par name="is_export" nr="2"/>
           <par name="keylength" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="ttyname_r" src="unistd.h">
         <parameters>
@@ -380,6 +893,15 @@
           <par name="__buf" nr="2"/>
           <par name="__buflen" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="vdprintf" src="stdio2.h">
         <parameters>
@@ -387,12 +909,30 @@
           <par name="__fmt" nr="2"/>
           <par name="__ap" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="verify_callback">
         <parameters>
           <par name="ok" nr="1"/>
           <par name="ctx" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="vfprintf" src="stdio2.h">
         <parameters>
@@ -400,12 +940,30 @@
           <par name="__fmt" nr="2"/>
           <par name="__ap" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="vprintf" src="stdio2.h">
         <parameters>
           <par name="__fmt" nr="1"/>
           <par name="__ap" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="vsnprintf" src="stdio2.h">
         <parameters>
@@ -414,6 +972,15 @@
           <par name="__fmt" nr="3"/>
           <par name="__ap" nr="4"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="vsprintf" src="stdio2.h">
         <parameters>
@@ -421,6 +988,15 @@
           <par name="__fmt" nr="2"/>
           <par name="__ap" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="wcstombs" src="stdlib.h">
         <parameters>
@@ -428,12 +1004,30 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="wctomb" src="stdlib.h">
         <parameters>
           <par name="__s" nr="1"/>
           <par name="__wchar" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
     </functions>
   </cfile>

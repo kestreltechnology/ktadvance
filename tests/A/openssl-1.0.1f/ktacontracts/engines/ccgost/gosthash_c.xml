@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-06 23:17:11.073466"/>
+  <header info="cfile" name="cfile" time="2018-06-13 01:40:17.048064"/>
   <cfile name="engines/ccgost/gosthash">
     <data-structures/>
     <functions>
@@ -10,6 +10,15 @@
           <par name="left" nr="2"/>
           <par name="right" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="bcopy" src="string3.h">
         <parameters>
@@ -17,29 +26,74 @@
           <par name="__dest" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="bzero" src="string3.h">
         <parameters>
           <par name="__dest" nr="1"/>
           <par name="__len" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="circle_xor8">
         <parameters>
           <par name="w" nr="1"/>
           <par name="k" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="done_gost_hash_ctx">
         <parameters>
           <par name="ctx" nr="1"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="finish_hash">
         <parameters>
           <par name="ctx" nr="1"/>
           <par name="hashval" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="hash_block">
         <parameters>
@@ -47,6 +101,15 @@
           <par name="block" nr="2"/>
           <par name="length" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="hash_step">
         <parameters>
@@ -54,12 +117,30 @@
           <par name="H" nr="2"/>
           <par name="M" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="init_gost_hash_ctx">
         <parameters>
           <par name="ctx" nr="1"/>
           <par name="subst_block" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="mbstowcs" src="stdlib.h">
         <parameters>
@@ -67,6 +148,15 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="memcpy" src="string3.h">
         <parameters>
@@ -74,6 +164,15 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="memmove" src="string3.h">
         <parameters>
@@ -81,6 +180,15 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="memset" src="string3.h">
         <parameters>
@@ -88,6 +196,15 @@
           <par name="__ch" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="ptsname_r" src="stdlib.h">
         <parameters>
@@ -95,17 +212,44 @@
           <par name="__buf" nr="2"/>
           <par name="__buflen" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="realpath" src="stdlib.h">
         <parameters>
           <par name="__name" nr="1"/>
           <par name="__resolved" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="start_hash">
         <parameters>
           <par name="ctx" nr="1"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="stpncpy" src="string3.h">
         <parameters>
@@ -113,18 +257,45 @@
           <par name="__src" nr="2"/>
           <par name="__n" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="strcat" src="string3.h">
         <parameters>
           <par name="__dest" nr="1"/>
           <par name="__src" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="strcpy" src="string3.h">
         <parameters>
           <par name="__dest" nr="1"/>
           <par name="__src" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="strncat" src="string3.h">
         <parameters>
@@ -132,6 +303,15 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="strncpy" src="string3.h">
         <parameters>
@@ -139,17 +319,44 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="swap_bytes">
         <parameters>
           <par name="w" nr="1"/>
           <par name="k" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="transform_3">
         <parameters>
           <par name="data" nr="1"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="wcstombs" src="stdlib.h">
         <parameters>
@@ -157,12 +364,30 @@
           <par name="__src" nr="2"/>
           <par name="__len" nr="3"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function ignore="yes" name="wctomb" src="stdlib.h">
         <parameters>
           <par name="__s" nr="1"/>
           <par name="__wchar" nr="2"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="xor_blocks">
         <parameters>
@@ -171,6 +396,15 @@
           <par name="b" nr="3"/>
           <par name="len" nr="4"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
     </functions>
   </cfile>
