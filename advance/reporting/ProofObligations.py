@@ -542,3 +542,66 @@ def totals_to_string(tagtotals,absolute=True,totals=True):
                                         for dm in dsmethods]))
     return lines
 
+def totals_to_presentation_string(ppototals,spototals,projectstats,absolute=True,totals=True):
+    lines = []
+    rhlen = 28
+    header1 = ''
+    dsmethods = get_dsmethods([])
+    lines.append(' '.rjust(rhlen) + 'line count'.rjust(10)
+                     + "total ppo's".rjust(15) + '%closed'.rjust(10)
+                     + "total spo'".rjust(15) + '%closed'.rjust(10))
+    barlen = 64 + rhlen
+    lines.append('-' * barlen)
+    for t in sorted(ppototals):
+        (lc,_,_) = projectstats[t]
+        rppo = [ ppototals[t][dm] for dm in dsmethods ]
+        rspo = [ spototals[t][dm] for dm in dsmethods ]
+        rpposum = sum(rppo)
+        rsposum = sum(rspo)
+        if rpposum == 0: continue
+        ppoopenpct = (1.0 - (float(ppototals[t]['open'])/float(rpposum))) * 100.0
+        ppoopenpct = str('{:.1f}'.format(ppoopenpct))
+        spoopenpct = (1.0 - (float(spototals[t]['open'])/float(rsposum))) * 100.0
+        spoopenpct = str('{:.1f}'.format(spoopenpct))
+        
+        if absolute:
+            lines.append(t.ljust(rhlen) + str(lc).rjust(10)
+                             + str(sum(rppo)).rjust(15) + ppoopenpct.rjust(10)
+                             + str(sum(rspo)).rjust(15) + spoopenpct.rjust(10))
+            '''
+            lines.append(t.ljust(rhlen) + ''.join([str(x).rjust(8) for x in r])
+                            + str(sum(r)).rjust(10) + ppoopenpct.rjust(8))
+            '''
+        else:
+            lines.append(t.ljust(rhlen)
+                             + ''.join([str('{:.2f}'.format(float(x)/float(rsum) * 100.0)).rjust(8)
+                                            for x in r]))
+    if totals:
+        lines.append('-' * barlen )
+        lctotal = sum( [ projectstats[t][0] for t in projectstats ])
+        dmppototals = {}
+        dmspototals = {}
+        for dm in dsmethods:
+            dmppototals[dm] = sum([ ppototals[t][dm] for t in ppototals ])
+            dmspototals[dm] = sum([ spototals[t][dm] for t in spototals ])
+        ppototalcount = sum(dmppototals.values())
+        spototalcount = sum(dmspototals.values())
+        if ppototalcount > 0:
+            ppotagopenpct = (1.0 - (float(dmppototals['open'])/float(ppototalcount))) * 100.0
+            ppotagopenpct = str('{:.1f}'.format(ppotagopenpct))
+            spotagopenpct = (1.0 - (float(dmspototals['open'])/float(spototalcount))) * 100.0
+            spotagopenpct = str('{:.1f}'.format(spotagopenpct))
+            if absolute:
+                lines.append('total'.ljust(rhlen)
+                                 + str(lctotal).rjust(10)
+                                 + str(ppototalcount).rjust(15)
+                                 + ppotagopenpct.rjust(10)
+                                 + str(spototalcount).rjust(15)
+                                 + spotagopenpct.rjust(10))
+            '''
+            scale = float(totalcount)/100.0
+            lines.append('percent'.ljust(rhlen) +
+                            ''.join([str('{:.2f}'.format(float(totals[dm])/scale)).rjust(8)
+                                        for dm in dsmethods]))
+            '''
+    return lines
