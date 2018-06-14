@@ -100,7 +100,6 @@ if __name__ == '__main__':
         for dm in dsmethods:
             spoprojecttotals[p][dm] = sum([spod[t][dm] for t in spod])
 
-
     print('Primary Proof Obligations')
     print('\n'.join(RP.totals_to_string(ppoprojecttotals)))
     print('\nPrimary Proof Obligations (in percentages)')
@@ -141,4 +140,11 @@ if __name__ == '__main__':
     print('-' * 80)
     print('Total'.ljust(46) + str(lctotal).rjust(10) + str(clctotal).rjust(10)
               + str(fctotal).rjust(10))
+
+    print('\n\nProof obligation transfer')
+
+    print('\n'.join(RP.totals_to_presentation_string(ppoprojecttotals,spoprojecttotals,projectstats)))
+
+
+    
         
