@@ -42,11 +42,13 @@ projects = [
     'A/nginx-1.2.9',
     'A/nginx-1.14.0',
     'A/openssl-1.0.1f',
+    'A/wpa_supplicant-2.6',
     'B/cleanflight-CLFL_v2.3.2',
     'sate/2008/lighttpd-1.4.18',
     'sate/2008/nagios-2.10/base',
     'sate/2008/naim-0.11.8.3.1',
     'sate/2009/irssi-0.8.14',
+    'sate/2009/pvm3.4.6',
     'sate/2010/dovecot-2.0.beta6' ]
 
 if __name__ == '__main__':
