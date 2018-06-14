@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-14 00:27:24.510968"/>
+  <cfile name="test/buffer-diff">
+    <data-structures/>
+    <functions>
+      <function name="buffer_diff_core">
+        <parameters>
+          <par name="_buf_a" nr="1"/>
+          <par name="stride_a" nr="2"/>
+          <par name="_buf_b" nr="3"/>
+          <par name="stride_b" nr="4"/>
+          <par name="_buf_diff" nr="5"/>
+          <par name="stride_diff" nr="6"/>
+          <par name="width" nr="7"/>
+          <par name="height" nr="8"/>
+          <par name="mask" nr="9"/>
+          <par name="result_ret" nr="10"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="buffer_diff_noalpha">
+        <parameters>
+          <par name="buf_a" nr="1"/>
+          <par name="buf_b" nr="2"/>
+          <par name="buf_diff" nr="3"/>
+          <par name="width" nr="4"/>
+          <par name="height" nr="5"/>
+          <par name="stride" nr="6"/>
+          <par name="result" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="compare_surfaces">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="surface_a" nr="2"/>
+          <par name="surface_b" nr="3"/>
+          <par name="surface_diff" nr="4"/>
+          <par name="result" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="image_diff">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="surface_a" nr="2"/>
+          <par name="surface_b" nr="3"/>
+          <par name="surface_diff" nr="4"/>
+          <par name="result" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="image_diff_is_failure">
+        <parameters>
+          <par name="result" nr="1"/>
+          <par name="tolerance" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="same_size">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

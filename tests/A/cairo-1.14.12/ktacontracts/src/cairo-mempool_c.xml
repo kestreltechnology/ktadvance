@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-14 00:27:14.531680"/>
+  <cfile name="src/cairo-mempool">
+    <data-structures/>
+    <functions>
+      <function name="__cairo_list_add">
+        <parameters>
+          <par name="entry" nr="1"/>
+          <par name="prev" nr="2"/>
+          <par name="next" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="__cairo_list_del">
+        <parameters>
+          <par name="prev" nr="1"/>
+          <par name="next" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="_cairo_list_del">
+        <parameters>
+          <par name="entry" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="_cairo_mempool_alloc">
+        <parameters>
+          <par name="pool" nr="1"/>
+          <par name="bytes" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="_cairo_mempool_fini">
+        <parameters>
+          <par name="pool" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="_cairo_mempool_free">
+        <parameters>
+          <par name="pool" nr="1"/>
+          <par name="storage" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="_cairo_mempool_init">
+        <parameters>
+          <par name="pool" nr="1"/>
+          <par name="base" nr="2"/>
+          <par name="bytes" nr="3"/>
+          <par name="min_bits" nr="4"/>
+          <par name="num_sizes" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="buddy_malloc">
+        <parameters>
+          <par name="pool" nr="1"/>
+          <par name="bits" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="cairo_list_add">
+        <parameters>
+          <par name="entry" nr="1"/>
+          <par name="head" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="cairo_list_del">
+        <parameters>
+          <par name="entry" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="cairo_list_init">
+        <parameters>
+          <par name="entry" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="cairo_list_is_empty">
+        <parameters>
+          <par name="head" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="clear_bits">
+        <parameters>
+          <par name="pool" nr="1"/>
+          <par name="first" nr="2"/>
+          <par name="last" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="free_bits">
+        <parameters>
+          <par name="pool" nr="1"/>
+          <par name="start" nr="2"/>
+          <par name="bits" nr="3"/>
+          <par name="clear" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="free_blocks">
+        <parameters>
+          <par name="pool" nr="1"/>
+          <par name="first" nr="2"/>
+          <par name="last" nr="3"/>
+          <par name="clear" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_buddy">
+        <parameters>
+          <par name="pool" nr="1"/>
+          <par name="offset" nr="2"/>
+          <par name="bits" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="merge_bits">
+        <parameters>
+          <par name="pool" nr="1"/>
+          <par name="max_bits" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="merge_buddies">
+        <parameters>
+          <par name="pool" nr="1"/>
+          <par name="block" nr="2"/>
+          <par name="max_bits" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
