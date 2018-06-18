@@ -23,6 +23,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+
 testcases = {
     "CWE121": [
         "s01/char_type_overrun_memcpy",
@@ -66,12 +67,99 @@ testcases = {
         "s08/c_CWE805_int64_t_memmove",
         "s08/c_CWE805_int_loop",
         "s08/c_CWE805_int_memcpy",
-        "s08/c_CWE805_int_memmove"
+        "s08/c_CWE805_int_memmove",
+        "s08/c_CWE805_struct_loop",
+        "s08/c_CWE805_struct_memcpy",
+        "s08/c_CWE805_struct_memmove",
+        "s09/c_CWE806_char_loop",
+        "s09/c_CWE806_char_memcpy",
+        "s09/c_CWE806_char_memmove",
+        "s09/c_CWE806_char_ncat",
+        "s09/c_CWE806_char_ncpy",
+        "s09/c_CWE806_char_snprintf",
+        "s10/c_dest_char_cat",
+        "s10/c_dest_char_cpy",
+        "s10/c_src_char_cat",
+        "s10/c_src_char_cpy"
+        ],
+    "CWE124": [
+        "s01/char_alloca_cpy",
+        "s01/char_alloca_loop",
+        "s01/char_alloca_memcpy",
+        "s01/char_alloca_memmove",
+        "s01/char_alloca_ncpy",
+        "s01/char_declare_cpy",
+        "s01/char_declare_loop",
+        "s01/char_declare_memcpy",
+        "s01/char_declare_memmove",
+        "s01/CWE839_connect_socket",
+        "s01/CWE839_fgets",
+        "s01/CWE839_fscanf",
+        "s02/CWE839_negative",
+        "s02/CWE839_rand",
+        "s02/malloc_char_cpy",
+        "s02/malloc_char_loop",
+        "s02/malloc_char_memcpy",
+        "s02/malloc_char_memmove",
+        "s02/malloc_char_ncpy"
         ],
     "CWE126": [
+        "s01/char_alloca_loop",
         "s01/char_alloca_memcpy",
+        "s01/char_alloca_memmove",
+        "s01/char_declare_loop",
+        "s01/char_declare_memcpy",
+        "s01/char_declare_memmove",
         "s01/CWE129_connect_socket",
-        "s01/CWE129_large"
+        "s01/CWE129_fgets",
+        "s01/CWE129_fscanf",
+        "s01/CWE129_large",
+        "s01/CWE129_rand",
+        "s01/CWE170_char_loop",
+        "s01/CWE170_char_memcpy",
+        "s01/CWE170_char_strncpy",
+        "s02/malloc_char_loop",
+        "s02/malloc_char_memcpy",
+        "s02/malloc_char_memmove"
+        ],
+    "CWE127": [
+        "s01/char_alloca_cpy",
+        "s01/char_alloca_loop",
+        "s01/char_alloca_memcpy",
+        "s01/char_alloca_memmove",
+        "s01/char_alloca_ncpy",
+        "s01/char_declare_cpy",
+        "s01/char_declare_loop",
+        "s01/char_declare_memcpy",
+        "s01/char_declare_memmove",
+        "s01/char_declare_ncpy",
+        "s01/CWE839_connect_socket",
+        "s01/CWE839_fgets",
+        "s01/CWE839_fscanf",
+        "s02/CWE839_negative",
+        "s02/CWE839_rand",
+        "s02/malloc_char_cpy",
+        "s02/malloc_char_loop",
+        "s02/malloc_char_memcpy",
+        "s02/malloc_char_memmove",
+        "s02/malloc_char_ncpy"
+        ],
+    "CWE190": [
+        "s01/char_fscanf_add",
+        "s01/char_fscanf_multiply",
+        "s01/char_fscanf_square",
+        "s01/char_max_add",
+        "s01/char_max_multiply",
+        "s01/char_max_square",
+        "s01/char_rand_add",
+        "s01/char_rand_multiply",
+        "s01/char_rand_square",
+        "s01/int64_t_fscanf_add",
+        "s01/int64_t_fscanf_multiply",
+        "s02/int64_t_fscanf_square",
+        "s02/int64_t_max_add",
+        "s02/int64_t_max_multiply",
+        "s02/int64_t_max_square",
+        "s02/int64_t_rand_add"
         ]
     }
-
