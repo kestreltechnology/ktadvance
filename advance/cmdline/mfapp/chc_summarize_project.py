@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -32,20 +32,35 @@ import advance.reporting.ProofObligations as RP
 import advance.util.fileutil as UF
 import advance.util.printutil as UP
 
+from advance.util.Config import Config
 from advance.util.IndexedTable import IndexedTableError
 from advance.app.CApplication import CApplication
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('path',help='directory that holds the semantics directory')
+    parser.add_argument('path',help=('directory that holds the semantics directory'
+                                         + ' or the name of a test application'))
+    parser.add_argument('--list_test_applications',
+                            help='list names of test applications provided',
+                            action='store_true')
     args = parser.parse_args()
     return args
 
 if __name__ == '__main__':
 
     args = parse()
+    config = Config()
 
-    cpath = args.path
+    if args.list_test_applications or args.path == '?':
+        print(UP.list_test_applications())
+        exit(0)
+
+    if args.path in config.projects:
+        pdir = config.projects[args.path]
+        cpath = os.path.join(config.testdir,pdir)
+    else:
+        cpath = os.path.abspath(args.path)
+
     if not os.path.isdir(cpath):
         print(UP.cpath_not_found_err_msg(cpath))
         exit(1)

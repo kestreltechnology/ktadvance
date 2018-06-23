@@ -31,8 +31,11 @@
 from advance.cmdline.juliet.JulietTestSetRef import JulietTestSetRef
 
 
-violationcategories = [ 'reported', 'found-safe', 'found-deferred', 'unknown', 'other' ]
-safecontrolcategories = [ 'stmt-safe', 'safe', 'deferred', 'deadcode', 'unknown', 'other']
+violationcategories = [ 'V', 'S', 'D', 'U', 'O' ]
+safecontrolcategories = [ 'S', 'D', 'X', 'U', 'O']
+
+violations = 'vs'
+safecontrols = 'sc'
 
 '''Return true if a ppo matches a ppo listed in the test set reference.
 
@@ -57,48 +60,47 @@ def keymatches(tppo,ppo):
 def initialize_testsummary(testset,d):
     def f(tindex,test):
         d[tindex] = {}
-        d[tindex]['violations'] = {}
+        d[tindex][violations] = {}
         for c in violationcategories:
-            d[tindex]['violations'][c] = 0
-        d[tindex]['safe-controls'] = {}
+            d[tindex][violations][c] = 0
+        d[tindex][safecontrols] = {}
         for c in safecontrolcategories:
-            d[tindex]['safe-controls'][c] = 0
+            d[tindex][safecontrols][c] = 0
     testset.iter(f)
 
 def classify_tgt_violation(ppo,capp):
-    if ppo is None: return 'unknown'
-    if ppo.is_violated(): return 'reported'
-    if ppo.dependencies is None: return 'unknown'
+    if ppo is None: return 'U'                                # unknown
+    if ppo.is_violated(): return 'V'                          # violation reported
+    if ppo.dependencies is None: return 'U'                   # unknown
     dm = ppo.dependencies.level
-    if dm == 'f' or dm == 's': return 'found-safe'
+    if dm == 'f' or dm == 's': return 'S'                     # found safe
     if ppo.is_delegated():
         spos = get_associated_spos(ppo,capp)
         if len(spos) > 0:
             classifications = [ classify_tgt_violation(spo,capp) for spo in spos ]
-            if 'reported' in classifications: return 'reported'
-            if all( [ x == 'found-safe' for x in classifications ] ): return 'found-safe'
+            if 'V' in classifications: return 'V'              # violation reported
+            if all( [ x == 'S' for x in classifications ] ): return 'S'     # found safe
         else:
-            return 'found-safe'
-        return 'found-deferred'
-    return 'other'
+            return 'S'
+        return 'D'                                             # found deferred
+    return 'O'                                                 # other
 
 def classify_tgt_safecontrol(ppo,capp):
-    if ppo is None: return 'unknown'
-    if ppo.is_violated(): return 'other'
-    if ppo.dependencies is None: return 'unknown'
+    if ppo is None: return 'U'                                 # unknown
+    if ppo.is_violated(): return 'O'                           # violation
+    if ppo.dependencies is None: return 'U'                    # unknown
     dm = ppo.dependencies.level
-    if dm == 's': return 'stmt-safe'
-    if dm == 'f':  return 'safe'
+    if dm == 's' or dm == 'f': return 'S'                      # safe
     if ppo.is_delegated():
         spos = get_associated_spos(ppo,capp)
         if len(spos) > 0:
             classifications = [ classify_tgt_safecontrol(spo,capp) for spo in spos ]
-            if all( [ x == 'safe' or x == 'stmt-safe' for x in classifications ]):
-                return 'safe'
-            if 'other' in classifications: return 'other'
-        return 'deferred'
-    if ppo.is_deadcode(): return 'deadcode'
-    return 'other'
+            if all( [ x == 'S' for x in classifications ]):
+                return 'S'                                      # safe
+            if 'O' in classifications: return 'O'
+        return 'D'                                              # deferred
+    if ppo.is_deadcode(): return 'X'                            # dead code
+    return 'O'                                                  # other
 
 def fill_testsummary(pairs,d,capp):
     for filename in pairs:
@@ -108,10 +110,10 @@ def fill_testsummary(pairs,d,capp):
                 tsummary = d[tindex]
                 if jppo.is_violation():
                     classification = classify_tgt_violation(ppo,capp)
-                    tsummary['violations'][classification] += 1
+                    tsummary[violations][classification] += 1
                 else:
                     classification = classify_tgt_safecontrol(ppo,capp)
-                    tsummary['safe-controls'][classification] += 1
+                    tsummary[safecontrols][classification] += 1
 
 def get_associated_spos(ppo,capp):
     result = []
@@ -173,20 +175,22 @@ def testsummary_tostring(d,totals):
     lines = []
     lines.append('\nSummary\n')
     lines.append('test              violations                    safe-controls')
-    lines.append('         V    S    D    U    O                S    L    D    X    U    O')
+    lines.append('         V    S    D    U    O                S    D    X    U    O')
     lines.append('-' * 80)
     for tindex in sorted(d):
-        sv = d[tindex]['violations']
-        ss = d[tindex]['safe-controls']
+        if tindex == 'total': continue
+        sv = d[tindex][violations]
+        ss = d[tindex][safecontrols]
         lines.append(tindex.ljust(5) +
                         ''.join([str(sv[c]).rjust(5) for c in violationcategories]) +
                         '       |    ' +
                         ''.join([str(ss[c]).rjust(5) for c in safecontrolcategories]))
     lines.append('-' * 80)
+    totals = d['total']
     lines.append('total' +
-              ''.join([str(totals['violations'][c]).rjust(5) for c in violationcategories]) +
+              ''.join([str(totals[violations][c]).rjust(5) for c in violationcategories]) +
               '       |    ' +
-              ''.join([str(totals['safe-controls'][c]).rjust(5) for c in safecontrolcategories]))
+              ''.join([str(totals[safecontrols][c]).rjust(5) for c in safecontrolcategories]))
     return '\n'.join(lines)
 
 
@@ -231,13 +235,14 @@ violation/safe-controls -> category -> total count over all files.
 '''
 def get_testsummarytotals(d):
     totals = {}
-    totals['violations'] = {}
-    totals['safe-controls'] = {}
+    totals[violations] = {}
+    totals[safecontrols] = {}
     for c in violationcategories:
-        totals['violations'][c] = sum([d[x]['violations'][c] for x in d ])
+        totals[violations][c] = sum([d[x][violations][c] for x in d ])
     for c in safecontrolcategories:
-        totals['safe-controls'][c] = sum([d[x]['safe-controls'][c] for x in d ])
-    return totals
+        totals[safecontrols][c] = sum([d[x][safecontrols][c] for x in d ])
+    d['total'] = totals
+    return d
     
 
     

@@ -49,7 +49,11 @@ def parse():
                        'produce the semantics file, if not yet available).')
     parser = argparse.ArgumentParser(usage=usage,description=description)
     parser.add_argument('path',
-                            help='directory that holds the semantics directory (or tar.gz file)')
+                            help=('directory that holds the semantics directory (or tar.gz file)'
+                                      + ' or the name of a test application'))
+    parser.add_argument('--list_test_applications',
+                            help='list names of test applications provided',
+                            action='store_true')
     parser.add_argument('--maxprocesses',
                             help='number of files to process in parallel',
                             type=int,
@@ -73,6 +77,8 @@ def parse():
     parser.add_argument('--logging',help='log level msgs to be recorded (default=WARNING)',
                             default='WARNING',
                             choices=['DEBUG','INFO','WARNING','ERROR','CRITICAL'])
+    parser.add_argument('--logfilename',help='name of file to collect log messages',
+                            default='ktadvance_project.log')
     args = parser.parse_args()
     return args
 
@@ -90,6 +96,11 @@ def save_xrefs(f):
 if __name__ == '__main__':
 
     args = parse()
+    config = Config()
+
+    if args.list_test_applications:
+        print(UP.list_test_applications())
+        exit(0)
 
     if args.logging is None:
         loglevel = logging.WARNING
@@ -100,10 +111,15 @@ if __name__ == '__main__':
         elif args.logging == 'ERROR': loglevel = logging.ERROR
         elif args.logging == 'CRITICAL': loglevel = logging.CRITICAL
 
-    logging.basicConfig(filename='ktadvance_project.log',level=loglevel)
+    if args.path in config.projects:
+        pdir = config.projects[args.path]
+        cpath = os.path.join(config.testdir,pdir)
+        logfilename = args.path + '_log.txt'
+    else:
+        cpath = os.path.abspath(args.path)
+        logfilename = args.logfilename
 
-    cpath = os.path.abspath(args.path)
-    config = Config()
+    logging.basicConfig(filename=logfilename,level=loglevel)
 
     if not os.path.isfile(config.canalyzer):
         print(UP.missing_analyzer_err_msg())

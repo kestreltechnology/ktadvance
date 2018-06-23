@@ -185,7 +185,7 @@ class CFilePredicateDictionary(object):
             return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_non_negative():
             args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]
-            def f(index,key): return POCPONonNegative(self,index,p.tags,args)
+            def f(index,key): return PO.CPONonNegative(self,index,p.tags,args)
             return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_no_overlap():
             args = [ self.dictionary.index_exp(p.get_exp1(),subst=subst),

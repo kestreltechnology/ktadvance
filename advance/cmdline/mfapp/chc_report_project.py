@@ -31,14 +31,16 @@ import os
 import advance.reporting.ProofObligations as RP
 import advance.util.printutil as UP
 
+from advance.util.Config import Config
 from advance.util.IndexedTable import IndexedTableError
 from advance.app.CApplication import CApplication
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('path',help='directory that holds the semantics directory')
-    parser.add_argument('--externalreferences',
-                            help='report all external references to functions',
+    parser.add_argument('path',help=('directory that holds the semantics directory'
+                                         + ' or the name of a test application'))
+    parser.add_argument('--list_test_applications',
+                            help='list names of test applications provided',
                             action='store_true')
     args = parser.parse_args()
     return args
@@ -46,8 +48,18 @@ def parse():
 if __name__ == '__main__':
 
     args = parse()
+    config  = Config()
 
-    cpath = args.path
+    if args.list_test_applications or args.path == '?':
+        print(UP.list_test_applications())
+        exit(0)
+
+    if args.path in config.projects:
+        pdir = config.projects[args.path]
+        cpath = os.path.join(config.testdir,pdir)
+    else:
+        cpath = os.path.abspath(args.path)
+
     if not os.path.isdir(cpath):
         print(UP.cpath_not_found_err_msg(cpath))
         exit(1)
@@ -67,11 +79,4 @@ if __name__ == '__main__':
             + '\nYou may have to re-run the analysis first: '
             + '\n' + e.msg
             + '\n' + ('*' * 80))
-
-    if args.externalreferences:
-        externalreferences = capp.get_missing_summaries()
-        if len(externalreferences) > 0:
-            print('\nExternal references (including missing library functions):')
-            for s in sorted(externalreferences):
-                print(str(externalreferences[s]).rjust(5) + '  ' + s)
     

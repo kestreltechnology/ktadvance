@@ -72,7 +72,11 @@ class CFunctionPPOs(CFunctionPOs):
             if 'deps' in p.attrib:
                 level = p.get('deps')
                 if level == 'a':
-                    ids = [int(x) for x in p.get('ids').split(',') ]
+                    ids = p.get('ids')
+                    if len(ids) > 0:
+                        ids = [int(x) for x in p.get('ids').split(',') ]
+                    else:
+                        ids = []
                     invs = p.get('invs')
                     if len(invs) > 0:
                         invs = [ int(x) for x in invs.split(',') ]

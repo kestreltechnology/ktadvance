@@ -76,7 +76,7 @@ def save_xrefs(f):
 
 if __name__ == '__main__':
 
-    logging.basicConfig(filename='ktadvance_juliet.log',level=logging.INFO)
+    logging.basicConfig(filename='ktadvance_juliet.log',level=logging.WARNING)
 
     args = parse()
     testpath = UF.get_juliet_testpath(args.path)

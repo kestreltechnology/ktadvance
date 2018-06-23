@@ -31,22 +31,23 @@ if os.path.isfile(os.path.join(os.path.dirname(os.path.abspath(__file__)), "Conf
     import advance.util.ConfigLocal as ConfigLocal
 
 testprojects = {
+    "cairo": "A/cairo-1.14.12",
+    "cleanflight": "B/cleanflight-CLFL_v2.3.2",
     "dnsmasq": "A/dnsmasq-2.76",
+    "dovecot": "sate/2010/dovecot-2.0.beta6",
     "file": "A/file",
-    "git": "A/git",
+    "git": "A/git-2.17.0",
     "hping": "A/hping",
-    "nginx": "A/nginx-1.2.9",
-    "openssl": "A/openssl-1.0.1f",
-    "cleanflight": "B/cleanflight",
+    "irssi": "sate/2009/irssi-0.8.14",
     "lighttpd": "sate/2008/lighttpd-1.4.18",
     "nagios": "sate/2008/nagios-2.10/base",
     "naim": "sate/2008/naim-0.11.8.3.1",
-    "irssi": "sate/2009/irssi-0.8.14",
+    "nginx": "A/nginx-1.2.9",
+    "nginx114":  "A/nginx-1.14.0",
+    "openssl": "A/openssl-1.0.1f",
     "pvm": "sate/2009/pvm3.4.6",
-    "dovecot": "sate/2010/dovecot-2.0.beta6"
+    "wpa_supplicant": "A/wpa_supplicant-2.6"
     }
-
-myprojects = {}
 
 class Config(object):
 

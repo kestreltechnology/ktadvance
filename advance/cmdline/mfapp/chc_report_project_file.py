@@ -41,11 +41,13 @@ from advance.util.IndexedTable import IndexedTableError
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('path',help='directory that holds the semantics directory')
+    parser.add_argument('path',help=('directory that holds the semantics directory'
+                                         + ' or the name of a test application'))
     parser.add_argument('cfile',help='name of c file that is part of the project')
     parser.add_argument('--showcode',help='show proof obligations on code for entire file',
                             action='store_true')
-    parser.add_argument('--open',help='show only proof obligions on code that are still open',
+    parser.add_argument('--open',help=('show only proof obligions on code that are still open'
+                                           + ' or that indicate a violation'),
                             action='store_true')
     parser.add_argument('--showinvs',help='show context invariants',action='store_true')
     args = parser.parse_args()
@@ -54,7 +56,14 @@ def parse():
 if __name__ == '__main__':
 
     args = parse()
-    cpath = args.path    
+    config = Config()
+
+    if args.path in config.projects:
+        pdir = config.projects[args.path]
+        cpath = os.path.join(config.testdir,pdir)
+    else:
+        cpath = os.path.abspath(args.path)
+
     if not os.path.isdir(cpath):
         print(UP.cpath_not_found_err_msg(cpath))
         exit(1)

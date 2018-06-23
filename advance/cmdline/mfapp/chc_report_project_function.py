@@ -31,6 +31,7 @@ import os
 import advance.util.printutil as UP
 import advance.util.fileutil as UF
 
+from advance.util.Config import Config
 from advance.util.IndexedTable import IndexedTableError
 
 import advance.reporting.ProofObligations as RP
@@ -42,9 +43,13 @@ from advance.app.CFile import CFunctionNotFoundException
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('path',help='directory that holds the semantics files')
+    parser.add_argument('path',help=('directory that holds the semantics files'
+                                         + ' or the name of a test application'))
     parser.add_argument('cfile',help='name of c file that is part of the project')
     parser.add_argument('cfunction',help='name of function in c file')
+    parser.add_argument('--list_test_applications',
+                            help='list names of test applications provided',
+                            action='store_true')
     parser.add_argument('--open',help='only show open proof obligations',action='store_true')
     parser.add_argument('--predicate',help='only show proof obligations of this type')
     parser.add_argument('--showinvs',help='show context invariants',action='store_true')
@@ -54,7 +59,19 @@ def parse():
 if __name__ == '__main__':
 
     args = parse()
-    cpath = args.path
+
+    config  = Config()
+
+    if args.list_test_applications:
+        print(UP.list_test_applications())
+        exit(0)
+
+    if args.path in config.projects:
+        pdir = config.projects[args.path]
+        cpath = os.path.join(config.testdir,pdir)
+    else:
+        cpath = os.path.abspath(args.path)
+
     if not os.path.isdir(cpath):
         print(UP.cpath_not_found_err_msg(cpath))
         exit(1)

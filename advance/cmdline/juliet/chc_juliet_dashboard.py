@@ -31,19 +31,22 @@ import os
 import advance.util.fileutil as UF
 import advance.cmdline.juliet.JulietTestCases as JTC
 
-violationcategories = [ 'reported', 'found-safe', 'found-deferred', 'unknown', 'other' ]
-safecontrolcategories = [ 'stmt-safe', 'safe', 'deferred', 'deadcode', 'unknown', 'other']
+violationcategories = [ 'V', 'S', 'D', 'U', 'O' ]
+safecontrolcategories = [ 'S', 'D', 'X', 'U', 'O']
 
-vhandled = [ 'reported' ]
-shandled = [ 'stmt-safe', 'safe', 'deadcode' ]
+vhandled = [ 'V' ]
+shandled = [ 'S', 'X' ]
+
+violations = 'vs'
+safecontrols = 'sc'
 
 if __name__ == '__main__':
 
     stotals = {}
-    stotals['violations'] = {}
-    stotals['safe-controls'] = {}
-    for c in violationcategories: stotals['violations'][c] = 0
-    for c in safecontrolcategories: stotals['safe-controls'][c] = 0
+    stotals[violations] = {}
+    stotals[safecontrols] = {}
+    for c in violationcategories: stotals[violations][c] = 0
+    for c in safecontrolcategories: stotals[safecontrols][c] = 0
 
     vppototals = 0
     sppototals = 0
@@ -58,51 +61,52 @@ if __name__ == '__main__':
 
     print('\n\nSummary')
     print('\n')
-    print('test'.ljust(tnamelength + 10) +    'violations                       safe-controls')
-    print(' '.ljust(tnamelength + 4) + 'V    S    D    U    O          S    L    D    X    U    O')
+    print('test'.ljust(tnamelength + 10) +    'violations                     safe-controls')
+    print(' '.ljust(tnamelength + 4) + 'V    S    D    U    O          S    D    X    U    O')
     print('-' * (tnamelength + 64))
 
     for cwe in sorted(JTC.testcases):
         print('\n'+cwe)
         ctotals = {}
-        ctotals['violations'] = {}
-        ctotals['safe-controls'] = {}
-        for c in violationcategories: ctotals['violations'][c] = 0
-        for c in safecontrolcategories: ctotals['safe-controls'][c] = 0
+        ctotals[violations] = {}
+        ctotals[safecontrols] = {}
+        for c in violationcategories: ctotals[violations][c] = 0
+        for c in safecontrolcategories: ctotals[safecontrols][c] = 0
         for cc in JTC.testcases[cwe]:
             t = os.path.join(cwe,cc)
-            totals = UF.read_juliet_test_summary(t)
-            if not (totals is None):
+            testtotals = UF.read_juliet_test_summary(t)
+            if not (testtotals is None):
+                totals = testtotals['total']
                 print(cc.ljust(tnamelength) +
-                        ''.join([str(totals['violations'][c]).rjust(5) for c in violationcategories]) +
+                        ''.join([str(totals[violations][c]).rjust(5) for c in violationcategories]) +
                         '   |  ' +
-                        ''.join([str(totals['safe-controls'][c]).rjust(5) for c in safecontrolcategories]))
+                        ''.join([str(totals[safecontrols][c]).rjust(5) for c in safecontrolcategories]))
                 for c in violationcategories:
-                    ctotals['violations'][c] += totals['violations'][c]
-                    stotals['violations'][c] += totals['violations'][c]
-                    vppototals += totals['violations'][c]
-                    if c in vhandled: vppohandled += totals['violations'][c]
+                    ctotals[violations][c] += totals[violations][c]
+                    stotals[violations][c] += totals[violations][c]
+                    vppototals += totals[violations][c]
+                    if c in vhandled: vppohandled += totals[violations][c]
                 for c in safecontrolcategories:
-                    ctotals['safe-controls'][c] += totals['safe-controls'][c]
-                    stotals['safe-controls'][c] += totals['safe-controls'][c]
-                    sppototals += totals['safe-controls'][c]
-                    if c in shandled: sppohandled += totals['safe-controls'][c]
+                    ctotals[safecontrols][c] += totals[safecontrols][c]
+                    stotals[safecontrols][c] += totals[safecontrols][c]
+                    sppototals += totals[safecontrols][c]
+                    if c in shandled: sppohandled += totals[safecontrols][c]
             else:
                 print(cc.ljust(tnamelength) + ('-'  * (44 - (tnamelength/2))) + ' not found ' +
                         ('-' * (44 - (tnamelength/2))))
 
         print('-' * (tnamelength + 64))
         print('total'.ljust(tnamelength) +
-                  ''.join([str(ctotals['violations'][c]).rjust(5) for c in violationcategories]) +
+                  ''.join([str(ctotals[violations][c]).rjust(5) for c in violationcategories]) +
                   '   |  ' +
-                  ''.join([str(ctotals['safe-controls'][c]).rjust(5) for c in safecontrolcategories]))
+                  ''.join([str(ctotals[safecontrols][c]).rjust(5) for c in safecontrolcategories]))
 
     print('\n\n')
     print('=' * (tnamelength + 64))
     print('grand total'.ljust(tnamelength) +
-              ''.join([str(stotals['violations'][c]).rjust(5) for c in violationcategories]) +
+              ''.join([str(stotals[violations][c]).rjust(5) for c in violationcategories]) +
               '   |  ' +
-              ''.join([str(stotals['safe-controls'][c]).rjust(5) for c in safecontrolcategories]))
+              ''.join([str(stotals[safecontrols][c]).rjust(5) for c in safecontrolcategories]))
 
     ppototals = vppototals + sppototals
     ppohandled = vppohandled + sppohandled

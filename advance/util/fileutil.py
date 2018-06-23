@@ -53,6 +53,21 @@ def get_xnode(filename,rootnode,desc,show=True):
 def get_targetfiles_filename(path):
     return os.path.join(path,'target_files.xml')
 
+def get_functionindex_filename(path):
+    return os.path.join(path,'functionindex.json')
+
+def save_functionindex(path,d):
+    filename = get_functionindex_filename(path)
+    with open(filename,'w') as fp:
+        json.dump(d,fp)
+
+def load_functionindex(path):
+    filename = get_functionindex_filename(path)
+    if os.path.isfile(filename):
+        with open(filename,'r') as fp:
+            return json.load(fp)
+    return {}
+
 def get_targetfiles_xnode(path):
     filename = get_targetfiles_filename(path)
     return get_xnode(filename,'c-files','File that holds the names of source files')
@@ -415,7 +430,7 @@ def get_juliet_testpath(testname):
 def save_juliet_test_summary(testname,d):
     path = get_juliet_testpath(testname)
     with open(os.path.join(path,'summaryresults.json'),'w') as fp:
-        json.dump(d,fp)
+        json.dump(d,fp,sort_keys=True)
 
 def read_juliet_test_summary(testname):
     path = get_juliet_testpath(testname)
