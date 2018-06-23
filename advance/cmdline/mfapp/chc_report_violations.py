@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -33,13 +33,20 @@ import advance.util.printutil as UP
 
 import advance.reporting.ProofObligations as RP
 
+from advance.util.Config import Config
 from advance.app.CApplication import CApplication
 
 def parse():
     usage = ('\nCall with the directory name that contains the semantics directory of a project')
     description = ('Reports the analysis results for a project that has been analyzed')
     parser = argparse.ArgumentParser(usage=usage,description=description)
-    parser.add_argument('path',help='name of one of the directory that holds the semantics directory')
+    parser.add_argument('path',help=('name of the directory that holds the semantics directory'
+                                         + ' or the name of a test application'))
+    parser.add_argument('--list_test_applications',
+                            help='list names of test applications provided',
+                            action='store_true')
+    parser.add_argument('--showcode',help='show the function code associated with the violations',
+                            action='store_true')
     args = parser.parse_args()
     return args
 
@@ -47,7 +54,17 @@ def parse():
 if __name__ == '__main__':
 
     args = parse()
-    cpath = args.path
+    config = Config()
+
+    if args.list_test_applications:
+        print(UP.list_test_applications())
+        exit(0)
+
+    if args.path in config.projects:
+        pdir = config.projects[args.path]
+        cpath = os.path.join(config.testdir,pdir)
+    else:
+        cpath = os.path.abspath(args.path)
 
     if not os.path.isdir(cpath):
         print(UP.cpath_not_found_err_msg(cpath))
@@ -74,19 +91,23 @@ if __name__ == '__main__':
 
     print('~' * 80)
     print('Violation report for application ' + args.path)
-    print('  - universal violations  : ' + str(violationcount))
+    print('  - violations suspected  : ' + str(violationcount))
     print('  - open proof obligations: ' + str(opencount))
     print('~' * 80)
     print('\n')
 
     if violationcount > 0:
-        print('Universal violations: ')
+        pofilter = lambda po:po.is_violated()
+        print('Violations suspected: ')
         for f in fns:
-            print(RP.function_code_violation_tostring(f))
+            if  args.showcode:
+                print(RP.function_code_violation_tostring(f))
+            else:
+                print(RP.function_pos_to_string(f,pofilter=pofilter))
 
     if opencount > 0:
-        print('>>>>> Note <<<<<')
-        print('>>> Any of the ' + str(opencount) + ' open proof obligations could indicate a violation.')
-        print('>>> A program is proven safe only if ALL proof obligations are proven safe.')
-        print('>>>>> Note <<<<<')
+        print(('*' * 35) + ' Important ' + ('*' * 34))
+        print('* Any of the ' + str(opencount) + ' open proof obligations could indicate a violation.')
+        print('* A program is proven safe only if ALL proof obligations are proven safe.')
+        print('*' * 80)
     
