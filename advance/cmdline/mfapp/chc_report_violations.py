@@ -75,28 +75,38 @@ if __name__ == '__main__':
     if not os.path.isdir(sempath):
         print(UP.semantics_not_found_err_msg(cpath))
         exit(1)
+
+    stats = {}
+    stats['openppos'] = 0
+    stats['openspos'] = 0
+    stats['ppoviolations'] = 0
+    stats['spoviolations'] = 0
    
     capp = CApplication(sempath)
     fns = []
-    opencount = 0
-    violationcount = 0
     def v(f):
-        global opencount
-        global violationcount
-        if len(f.get_violations()) > 0:
+        ppoviolations = f.get_violations()
+        spoviolations = f.get_spo_violations()
+        openppos = f.get_open_ppos()
+        openspos = f.get_open_spos()
+        if len(ppoviolations) > 0 or len(spoviolations) > 0:
             fns.append(f)
-            violationcount += len(f.get_violations())
-        opencount += len(f.get_open_ppos())
+            stats['ppoviolations'] += len(ppoviolations)
+            stats['spoviolations'] += len(spoviolations)
+        stats['openppos'] += len(openppos)
+        stats['openspos'] += len(openspos)
     capp.iter_functions(v)
 
     print('~' * 80)
     print('Violation report for application ' + args.path)
-    print('  - violations suspected  : ' + str(violationcount))
-    print('  - open proof obligations: ' + str(opencount))
+    print('  - ppo violations suspected: ' + str(stats['ppoviolations']))
+    print('  - spo violations suspected: ' + str(stats['spoviolations']))
+    print('  - open ppos: ' + str(stats['openppos']))
+    print('  - open spos: ' + str(stats['openspos']))
     print('~' * 80)
     print('\n')
 
-    if violationcount > 0:
+    if stats['ppoviolations'] + stats['spoviolations'] > 0:
         pofilter = lambda po:po.is_violated()
         print('Violations suspected: ')
         for f in fns:
@@ -105,9 +115,12 @@ if __name__ == '__main__':
             else:
                 print(RP.function_pos_to_string(f,pofilter=pofilter))
 
+    opencount = stats['openppos'] + stats['openspos']
+
     if opencount > 0:
         print(('*' * 35) + ' Important ' + ('*' * 34))
-        print('* Any of the ' + str(opencount) + ' open proof obligations could indicate a violation.')
+        print('* Any of the ' + str(opencount)
+                  + ' open proof obligations could indicate a violation.')
         print('* A program is proven safe only if ALL proof obligations are proven safe.')
         print('*' * 80)
     

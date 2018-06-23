@@ -132,11 +132,25 @@ class CFunctionProofs(object):
         self.iter_ppos(f)
         return result
 
+    def get_open_spos(self):
+        result = []
+        def f(spo):
+            if  not spo.is_closed(): result.append(spo)
+        self.iter_spos(f)
+        return result
+
     def get_violations(self):
         result = []
         def f(ppo):
             if ppo.is_violated(): result.append(ppo)
         self.iter_ppos(f)
+        return result
+
+    def get_spo_violations(self):
+        result = []
+        def f(spo):
+            if spo.is_violated(): result.append(spo)
+        self.iter_spos(f)
         return result
 
     def get_delegated(self):

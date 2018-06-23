@@ -174,7 +174,11 @@ class CFunction(object):
 
     def get_open_ppos(self): return self.proofs.get_open_ppos()
 
+    def get_open_spos(self): return self.proofs.get_open_spos()
+
     def get_violations(self): return self.proofs.get_violations()
+
+    def get_spo_violations(self): return self.proofs.get_spo_violations()
 
     def get_delegated(self): return self.proofs.get_delegated()
 
