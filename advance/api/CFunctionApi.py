@@ -51,7 +51,6 @@ class CFunctionApi(object):
         self.globalassumptions = {}
         self.globalassignments = []       # CGlobalAssignment list
         self.fieldassignments = {}        # nr -> FieldAssignment
-        self.missingsummaries = []
         self.librarycalls = {}            # (header,fname) -> count
         self.initialize()
 
@@ -155,8 +154,6 @@ class CFunctionApi(object):
             fname = x.get('f')
             count = x.get('c')
             self.librarycalls[(header,fname)] = count
-        for x in self.xnode.find('api').find('missing-summaries').findall('ms'):
-            self.missingsummaries.append(x.get('n'))
 
     def _get_global_assignments(self):
         if len(self.globalassignments) > 0: return

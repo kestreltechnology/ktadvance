@@ -34,7 +34,7 @@ class ApiAssumption(object):
         self.predicate = predicate      # proof/CPOPredicate
         self.ppos = ppos
         self.spos = spos
-        self.isglobal = isglobal
+        self.isglobal = isglobal        # assumption includes global variable
         self.isfile = isfile
 
     def __str__(self):
