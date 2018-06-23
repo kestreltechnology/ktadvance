@@ -31,7 +31,7 @@ import time
 Utility functions for reporting proof obligations and their statistics.
 '''
 
-dischargemethods = [ 'stmt', 'local', 'api', 'post', 'global', 'open' ]
+dischargemethods = [ 'violated', 'stmt', 'local', 'api', 'post', 'global', 'open' ]
 
 def get_dsmethods(extra):
     return extra + dischargemethods
@@ -47,6 +47,7 @@ def classifypo(po,d):
       d: dictionary, with discharge methods initialized (is updated)
     '''
     if po.is_closed():
+        if po.is_violated(): d['violated'] += 1
         deps = po.dependencies
         if deps.has_external_dependencies():
             deptype = po.get_dependencies_type()
@@ -186,6 +187,40 @@ class FunctionDisplay(object):
             return self.cfile.get_source_line(line).strip()
         return '?'
 
+    def pos_no_code_to_string(self,pos,pofilter=lambda po:True):
+        lines = []
+        for po in sorted(pos,key=lambda po:po.get_line()):
+            if not pofilter(po): continue
+            delegated = ''
+            indent = 18 if po.is_ppo() else 24
+            if po.is_closed():
+                expl = po.explanation
+                prefix = po.get_display_prefix()
+                lines.append(prefix + ' ' + str(po))
+                lines.append((' ' * indent) + expl)
+            else:
+                lines.append('\n<?> ' + str(po))
+                if po.has_diagnostic():
+                    amsgs = po.diagnostic.amsgs
+                    if len(amsgs) > 0:
+                        for arg in sorted(amsgs):
+                            for s in sorted(amsgs[arg]):
+                                lines.append((' ' * indent) + s)
+                    msgs = po.diagnostic.msgs
+                    if len(msgs) > 0:
+                        for m in msgs:
+                            lines.append((' ' * indent) + m)
+                    keys = po.diagnostic.get_argument_indices()
+                    for k in sorted(keys):
+                        invids = po.diagnostic.get_invariant_ids(k)
+                        for id in invids:
+                            inv = self.cfunction.invd.get_invariant_fact(id).get_non_relational_value()
+                            lines.append((' ' * indent) + str(k) + ': ' + str(inv))
+                else:
+                    lines.append((' ' * indent) + '---> no diagnostic found')
+        return '\n'.join(lines)
+
+
     def pos_on_code_tostring(self,pos,pofilter=lambda po:True,showinvs=False):
         lines = []
         contexts = set([])
@@ -271,6 +306,18 @@ class FunctionDisplay(object):
             lines.append((' ' * 18) + str(inv))
         return '\n'.join(lines)
 
+def function_pos_to_string(fn,pofilter=lambda po:True):
+    lines = []
+    ppos = fn.get_ppos()
+    ppos = [ x for x in ppos if pofilter(x) ]
+    spos = fn.get_spos()
+    fd = FunctionDisplay(fn,False)
+    if len(ppos) + len(spos) > 0:
+        lines.append('\nFunction ' + fn.name)
+        lines.append(fd.pos_no_code_to_string(ppos,pofilter=pofilter))
+        lines.append(fd.pos_no_code_to_string(spos,pofilter=pofilter))
+    return '\n'.join(lines)
+
 def function_code_tostring(fn,pofilter=lambda po:True,showinvs=False,showpreamble=True):
     lines = []
     ppos = fn.get_ppos()
@@ -301,18 +348,23 @@ def function_code_tostring(fn,pofilter=lambda po:True,showinvs=False,showpreambl
     return '\n'.join(lines)
 
 def function_code_open_tostring(fn,showinvs=False):
-
-    pofilter = lambda po:not po.is_closed()
+    pofilter = lambda po:(po.is_violated() or (not po.is_closed()))
     return function_code_tostring(fn,pofilter=pofilter,showinvs=showinvs)
 
 def function_code_violation_tostring(fn,showinvs=False):
     pofilter = lambda po:po.is_violated()
-
     return function_code_tostring(fn,pofilter=pofilter,showinvs=showinvs)
 
 def function_code_predicate_tostring(fn,p,showinvs=False):
     pofilter = lambda po:po.predicatetag == p
     return function_code_tostring(fn,pofilter=pofilter,showinvs=showinvs)
+
+def file_pos_violations_to_string(cfile):
+    lines = []
+    pofilter = lambda po:(po.is_violated())
+    def f(fn): lines.append(function_pos_to_string(fn,pofilter=pofilter))
+    cfile.iter_functions(f)
+    return '\n'.join(lines)
     
 def file_code_tostring(cfile,pofilter=lambda po:True,showinvs=False):
     lines = []
@@ -321,7 +373,7 @@ def file_code_tostring(cfile,pofilter=lambda po:True,showinvs=False):
     return '\n'.join(lines)
 
 def file_code_open_tostring(fn,showinvs=False):
-    pofilter = lambda po:not po.is_closed()
+    pofilter = lambda po:(po.is_violated() or (not po.is_closed()))
     return file_code_tostring(fn,pofilter=pofilter,showinvs=showinvs)
 
 def proofobligation_stats_tostring(pporesults,sporesults,rhlen=25,header1='',extradsmethods=[]):
