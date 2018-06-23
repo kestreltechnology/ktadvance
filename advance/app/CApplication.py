@@ -259,15 +259,6 @@ class CApplication(object):
         self.iter_files(f)
         return (sum(linecounts),sum(clinecounts),sum(cfuncounts))
 
-    def get_missing_summaries(self):
-        result = {}
-        def f(cfun):
-            for s in cfun.api.missingsummaries:
-                if not s in result: result[s] = 0
-                result[s] += 1
-        self.iter_functions(f)
-        return result
-
     def update_spos(self):
         """Create supporting proof obligations for all call sites."""
 
@@ -370,6 +361,10 @@ class CApplication(object):
             self.filenames[index] = fname
             self.files[fname] = CFile(self,index,cfile)
             self.indexmanager.add_file(self.files[fname])
+        else:
+            tgtxnode = UF.get_targetfiles_xnode(self.path)
+            filenames = [ c.get('name') for c in tgtxnode.findall('c-file') ]
+            raise CFileNotFoundException(filenames)
 
     def _initialize_callgraphs(self):
         if len(self.callgraph) > 0: return
