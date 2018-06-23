@@ -103,6 +103,18 @@ def my_cfiles_not_found_err_msg(testname):
     for t in Config().mycfiles: msg.append(t)
     return err_msg(msg)
 
+def list_test_applications():
+    config = Config()
+    lines = []
+    lines.append('*' * 80)
+    lines.append('Test applications currently provided:')
+    lines.append('-' * 80)
+    maxlen = max(len(name) for name in config.projects) + 5
+    for name in sorted(config.projects):
+        lines.append(name.ljust(maxlen) + config.projects[name])
+    lines.append('*' * 80)
+    return '\n'.join(lines)
+
     
 if __name__ == '__main__':
 
