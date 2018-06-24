@@ -26,6 +26,7 @@
 # ------------------------------------------------------------------------------
 
 from advance.api.ApiAssumption import ApiAssumption
+from advance.api.ContractAssumption import ContractAssumption
 from advance.api.GlobalAssumption import GlobalAssumption
 from advance.api.FieldAssignment import FieldAssignment
 from advance.api.CGlobalAssignment import CGlobalAssignment
@@ -44,6 +45,7 @@ class CFunctionApi(object):
         self.xnode = None
         self.parameters = {}              # nr -> (vid,vname)
         self.apiassumptions = {}          # id -> ApiAssumption
+        self.contractassumptions = {}     # (callee,index) -> ContractAssumption
         self.globalassumptionrequests = {}         # id -> GlobalAssumption
         self.postconditionrequests = {}            # id -> PostConditionRequest
         self.postconditionguarantees = {}  # id -> PostCondition
@@ -56,6 +58,9 @@ class CFunctionApi(object):
 
     def get_api_assumptions(self):
         return self.apiassumptions.values()
+
+    def get_contract_assumptions(self):
+        return self.contractassumptions.values()
 
     def get_postcondition_requests(self):
         return self.postconditionrequests.values()
@@ -97,6 +102,12 @@ class CFunctionApi(object):
                 lines.append('   ' + str(a))
         else:
             lines.append('\n  -- no assumptions')
+        if len(self.contractassumptions) > 0:
+            lines.append('\n contract assumptions')
+            for a in self.get_contract_assumptions():
+                lines.append('   ' + str(a))
+        else:
+            lines.append('\n  -- no contract assumptions')
         if len(self.postconditionrequests) > 0:
             lines.append('\n  postcondition requests:')
             for p in self.get_postcondition_requests():
@@ -132,6 +143,13 @@ class CFunctionApi(object):
             isfile = 'file' in x.attrib and x.get('file') == 'yes'
             self.apiassumptions[id] = ApiAssumption(self,id,predicate,ppos,spos,
                                                         isglobal=isglobal,isfile=isfile)
+        for x in self.xnode.find('api').find('contract-assumptions').findall('ca'):
+            xpredicate = self.cfile.interfacedictionary.read_xml_postcondition(x)
+            id = int(x.get('ixpre'))
+            callee = int(x.get('callee')) if 'callee' in x.attrib else (-1)
+            ppos = [ int(i) for i in x.get('ppos').split(',') ] if 'ppos' in x.attrib else []
+            spos = [ int(i) for i in x.get('spos').split(',') ] if 'spos' in x.attrib else []
+            self.contractassumptions[(callee,id)]  = ContractAssumption(self,id,callee,xpredicate,ppos,spos)
         xganode = self.xnode.find('api').find('global-assumption-requests')
         if not xganode is None:
             for x in self.xnode.find('api').find('global-assumption-requests').findall('hh'):
