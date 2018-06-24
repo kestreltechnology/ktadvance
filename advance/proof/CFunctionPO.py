@@ -162,7 +162,7 @@ class CFunctionPO(object):
             if t.is_api_assumption():
                 api = self.cfun.api
                 if api.apiassumptions[t.get_apiid()].isglobal:
-                    deptype = 'global'
+                    deptype = 'contract'
             if t.is_contract_assumption(): deptype = 'contract'
         return deptype
 
