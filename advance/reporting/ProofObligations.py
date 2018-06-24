@@ -31,13 +31,13 @@ import time
 Utility functions for reporting proof obligations and their statistics.
 '''
 
-dischargemethods = [ 'violated', 'stmt', 'local', 'api', 'post', 'global', 'open' ]
+dischargemethods = [ 'violated', 'stmt', 'local', 'api', 'contract', 'open' ]
 
 def get_dsmethods(extra):
     return extra + dischargemethods
 
 def get_dsmethod_header(indent,dsmethods,header1=''):
-    return (header1.ljust(indent) + ''.join([dm.rjust(8) for dm in dsmethods]) + 'total'.rjust(8))
+    return (header1.ljust(indent) + ''.join([dm.rjust(10) for dm in dsmethods]) + 'total'.rjust(10))
 
 def classifypo(po,d):
     '''Classify proof obligation with respect to discharge method and update dictionary.
@@ -149,25 +149,27 @@ def row_method_count_tostring(d,perc=False,extradsmethods=[],rhlen=25,header1=''
       table of discharge method counts represented as a string
 '''
     lines = []
+    width = 10
     dsmethods = get_dsmethods(extradsmethods)
     lines.append(get_dsmethod_header(rhlen,dsmethods,header1=header1))
-    barlen = 56 + rhlen
+    barlen = 70 + rhlen
     lines.append('-' * barlen)
     for t in sorted(d):
         r = [ d[t][dm] for dm in dsmethods ]
-        lines.append(t.ljust(rhlen) + ''.join([str(x).rjust(8) for x in r]) + str(sum(r)).rjust(8))
+        total = sum( [ d[t][dm] for dm in dsmethods if not dm == 'violated' ])
+        lines.append(t.ljust(rhlen) + ''.join([str(x).rjust(width) for x in r]) + str(total).rjust(width))
     lines.append('-' * barlen )
 
     totals = {}
     for dm in dsmethods:
         totals[dm] = sum([ d[t][dm] for t in d ])
-    totalcount = sum(totals.values())
-    lines.append('total'.ljust(rhlen) + ''.join([str(totals[dm]).rjust(8) for dm in dsmethods]) +
-                     str(totalcount).rjust(8))
+    totalcount = sum([ totals[dm] for dm in totals if not dm == 'violated'])
+    lines.append('total'.ljust(rhlen) + ''.join([str(totals[dm]).rjust(width) for dm in dsmethods]) +
+                     str(totalcount).rjust(width))
     if perc and totalcount > 0:
         scale = float(totalcount)/100.0
         lines.append('percent'.ljust(rhlen) +
-                         ''.join([str('{:.2f}'.format(float(totals[dm])/scale)).rjust(8)
+                         ''.join([str('{:.2f}'.format(float(totals[dm])/scale)).rjust(width)
                                       for dm in dsmethods]))
     return '\n'.join(lines)
     
