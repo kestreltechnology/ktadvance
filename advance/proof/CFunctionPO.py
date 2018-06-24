@@ -163,7 +163,7 @@ class CFunctionPO(object):
                 api = self.cfun.api
                 if api.apiassumptions[t.get_apiid()].isglobal:
                     deptype = 'global'
-            if t.is_postcondition_assumption(): deptype = 'post'
+            if t.is_contract_assumption(): deptype = 'contract'
         return deptype
 
     def get_global_assumptions(self):
