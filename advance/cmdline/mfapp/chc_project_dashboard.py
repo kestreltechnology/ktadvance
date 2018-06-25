@@ -33,26 +33,9 @@ import advance.util.fileutil as UF
 import advance.reporting.ProofObligations as RP
 from advance.util.Config import Config
 
-projects = [
-    'A/cairo-1.14.12',
-    'A/dnsmasq-2.76',
-    'A/file',
-    'A/git-2.17.0',
-    'A/hping',
-    'A/nginx-1.2.9',
-    'A/nginx-1.14.0',
-    'A/openssl-1.0.1f',
-    'A/wpa_supplicant-2.6',
-    'B/cleanflight-CLFL_v2.3.2',
-    'sate/2008/lighttpd-1.4.18',
-    'sate/2008/nagios-2.10/base',
-    'sate/2008/naim-0.11.8.3.1',
-    'sate/2009/irssi-0.8.14',
-    'sate/2009/pvm3.4.6',
-    'sate/2010/dovecot-2.0.beta6' ]
-
 if __name__ == '__main__':
 
+    config = Config()
     testdir = Config().testdir
 
     projectstats = {}   # project -> (linecount, clinecount, cfuncount)
@@ -66,8 +49,8 @@ if __name__ == '__main__':
     
     dsmethods = RP.get_dsmethods([])
 
-    for p in projects:
-        path = os.path.join(testdir,p)
+    for p in config.projects:
+        path = os.path.join(testdir,config.projects[p])
         results = UF.read_project_summary_results(path)
         if results is None:
             nosummary.append(p)
@@ -86,6 +69,17 @@ if __name__ == '__main__':
             analysistimes[p] = pd['timestamp']
         else:
             projectstats[p] = (0,0,0)
+
+        for t in ppod:
+            if not 'violated' in ppod[t]: ppod[t]['violated'] = -1
+        for t in spod:
+            if not 'violated' in spod[t]: spod[t]['violated'] = -1
+
+        
+        for t in ppod:
+            if not 'contract' in ppod[t]: ppod[t]['contract'] = -1
+        for t in spod:
+            if not 'contract' in spod[t]: spod[t]['contract'] = -1
         
         for t in ppod:
             if not t in ppotagtotals: ppotagtotals[t] = {}
