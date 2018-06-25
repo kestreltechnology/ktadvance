@@ -562,8 +562,9 @@ def totals_to_string(tagtotals,absolute=True,totals=True):
     rhlen = 28
     header1 = ''
     dsmethods = get_dsmethods([])
+    width = 10
     lines.append(get_dsmethod_header(rhlen,dsmethods,header1=header1) + '    %closed')
-    barlen = 64 + rhlen
+    barlen = 80 + rhlen
     lines.append('-' * barlen)
     for t in sorted(tagtotals):
         r = [ tagtotals[t][dm] for dm in dsmethods ]
@@ -572,11 +573,11 @@ def totals_to_string(tagtotals,absolute=True,totals=True):
         tagopenpct = (1.0 - (float(tagtotals[t]['open'])/float(rsum))) * 100.0
         tagopenpct = str('{:.1f}'.format(tagopenpct))
         if absolute:
-            lines.append(t.ljust(rhlen) + ''.join([str(x).rjust(8) for x in r])
-                            + str(sum(r)).rjust(10) + tagopenpct.rjust(8))
+            lines.append(t.ljust(rhlen) + ''.join([str(x).rjust(width) for x in r])
+                            + str(sum(r)).rjust(10) + tagopenpct.rjust(width))
         else:
             lines.append(t.ljust(rhlen)
-                             + ''.join([str('{:.2f}'.format(float(x)/float(rsum) * 100.0)).rjust(8)
+                             + ''.join([str('{:.2f}'.format(float(x)/float(rsum) * 100.0)).rjust(width)
                                             for x in r]))
     if totals:
         lines.append('-' * barlen )
@@ -588,11 +589,11 @@ def totals_to_string(tagtotals,absolute=True,totals=True):
             tagopenpct = (1.0 - (float(totals['open'])/float(totalcount))) * 100.0
             tagopenpct = str('{:.1f}'.format(tagopenpct))
             if absolute:
-                lines.append('total'.ljust(rhlen) + ''.join([str(totals[dm]).rjust(8) for dm in dsmethods])
-                                + str(totalcount).rjust(10) + tagopenpct.rjust(8))
+                lines.append('total'.ljust(rhlen) + ''.join([str(totals[dm]).rjust(width) for dm in dsmethods])
+                                + str(totalcount).rjust(10) + tagopenpct.rjust(width))
             scale = float(totalcount)/100.0
             lines.append('percent'.ljust(rhlen) +
-                            ''.join([str('{:.2f}'.format(float(totals[dm])/scale)).rjust(8)
+                            ''.join([str('{:.2f}'.format(float(totals[dm])/scale)).rjust(width)
                                         for dm in dsmethods]))
     return lines
 
