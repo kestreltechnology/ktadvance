@@ -1,0 +1,1121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:36.942662"/>
+  <cfile name="src/plugins/fts-squat/squat-trie">
+    <data-structures/>
+    <functions>
+      <function name="array_append_array_i">
+        <parameters>
+          <par name="dest_array" nr="1"/>
+          <par name="src_array" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_append_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="count" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_clear_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_count_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_create_from_buffer_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="buffer" nr="2"/>
+          <par name="element_size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_create_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="pool" nr="2"/>
+          <par name="element_size" nr="3"/>
+          <par name="init_count" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_delete_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="idx" nr="2"/>
+          <par name="count" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_free_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_get_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="count_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_get_modifiable_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="count_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_is_created_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="node_add_child">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="node" nr="2"/>
+          <par name="chr" nr="3"/>
+          <par name="level" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="node_add_uid">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="uid" nr="2"/>
+          <par name="node" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="node_drop_unused_children">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="node" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="node_free">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="node" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="node_leaf_string_add_or_split">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="node" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="data_len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="node_make_squential">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="node" nr="2"/>
+          <par name="level" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="node_read_children">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="node" nr="2"/>
+          <par name="level" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="node_split_string">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="node" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="node_write_children">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="node" nr="2"/>
+          <par name="node_offsets" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_build_add">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="uid" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="size" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_build_word">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="uid" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="char_lengths" nr="4"/>
+          <par name="size" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_build_word_bytes">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="uid" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="size" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_data_normalize">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_pack_num">
+        <parameters>
+          <par name="p" nr="1"/>
+          <par name="num" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_add_unknown">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="maybe_uids" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_build_deinit">
+        <parameters>
+          <par name="_ctx" nr="1"/>
+          <par name="expunged_uids" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_build_init">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="last_uid_r" nr="2"/>
+          <par name="ctx_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_build_more">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="uid" nr="2"/>
+          <par name="type" nr="3"/>
+          <par name="input" nr="4"/>
+          <par name="size" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_build_more_real">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="uid" nr="2"/>
+          <par name="type" nr="3"/>
+          <par name="input" nr="4"/>
+          <par name="size" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_check_header">
+        <parameters>
+          <par name="trie" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_close">
+        <parameters>
+          <par name="trie" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_close_fd">
+        <parameters>
+          <par name="trie" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_create_fd">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="path" nr="2"/>
+          <par name="flags" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_deinit">
+        <parameters>
+          <par name="_trie" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_delete">
+        <parameters>
+          <par name="trie" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_expunge_uidlists">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="rebuild_ctx" nr="2"/>
+          <par name="iter" nr="3"/>
+          <par name="expunged_uids" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_filter_type">
+        <parameters>
+          <par name="type" nr="1"/>
+          <par name="src" nr="2"/>
+          <par name="dest" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_get_last_uid">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="last_uid_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_get_uidlist">
+        <parameters>
+          <par name="trie" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_header_init">
+        <parameters>
+          <par name="trie" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_init">
+        <parameters>
+          <par name="path" nr="1"/>
+          <par name="uidvalidity" nr="2"/>
+          <par name="lock_method" nr="3"/>
+          <par name="flags" nr="4"/>
+          <par name="mode" nr="5"/>
+          <par name="gid" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_is_file_stale">
+        <parameters>
+          <par name="trie" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_iterate_deinit">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_iterate_first">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_iterate_init">
+        <parameters>
+          <par name="trie" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_iterate_next">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="shifts_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_lock">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="lock_type" nr="2"/>
+          <par name="file_lock_r" nr="3"/>
+          <par name="dotlock_r" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_lookup">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="str" nr="2"/>
+          <par name="type" nr="3"/>
+          <par name="definite_uids" nr="4"/>
+          <par name="maybe_uids" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_lookup_data">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="size" nr="3"/>
+          <par name="uids" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_lookup_partial">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="char_lengths" nr="3"/>
+          <par name="size" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_lookup_real">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="str" nr="2"/>
+          <par name="type" nr="3"/>
+          <par name="definite_uids" nr="4"/>
+          <par name="maybe_uids" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_map">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="building" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_map_header">
+        <parameters>
+          <par name="trie" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_mem_used">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="count_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_normalize_map_build">
+        <parameters>
+          <par name="trie" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_open">
+        <parameters>
+          <par name="trie" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_open_fd">
+        <parameters>
+          <par name="trie" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_refresh">
+        <parameters>
+          <par name="trie" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_renumber_uidlists">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="expunged_uids" nr="2"/>
+          <par name="compress" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_renumber_uidlists2">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="rebuild_ctx" nr="2"/>
+          <par name="iter" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_set_corrupted">
+        <parameters>
+          <par name="trie" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_set_full_len">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_set_partial_len">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_write">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_trie_write_lock">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_uidlist_update_expunged_uids">
+        <parameters>
+          <par name="shifts_arr" nr="1"/>
+          <par name="child_shifts" nr="2"/>
+          <par name="uids_arr" nr="3"/>
+          <par name="trie" nr="4"/>
+          <par name="node" nr="5"/>
+          <par name="do_shifts" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_unpack_num">
+        <parameters>
+          <par name="p" nr="1"/>
+          <par name="end" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_write_node">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="node" nr="2"/>
+          <par name="node_offset_r" nr="3"/>
+          <par name="level" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="squat_write_nodes">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="trie_file_cache_read">
+        <parameters>
+          <par name="trie" nr="1"/>
+          <par name="offset" nr="2"/>
+          <par name="size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="uni_utf8_char_bytes">
+        <parameters>
+          <par name="chr" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

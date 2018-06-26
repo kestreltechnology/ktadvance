@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:24.420520"/>
+  <cfile name="src/lib-mail/message-header-parser">
+    <data-structures/>
+    <functions>
+      <function name="buffer_get_data">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="used_size_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_parse_header">
+        <parameters>
+          <par name="input" nr="1"/>
+          <par name="hdr_size" nr="2"/>
+          <par name="flags" nr="3"/>
+          <par name="callback" nr="4"/>
+          <par name="context" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_parse_header_deinit">
+        <parameters>
+          <par name="_ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_parse_header_has_nuls">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_parse_header_init">
+        <parameters>
+          <par name="input" nr="1"/>
+          <par name="hdr_size" nr="2"/>
+          <par name="flags" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_parse_header_next">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="hdr_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

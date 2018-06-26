@@ -1,0 +1,797 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:37.796338"/>
+  <cfile name="src/plugins/quota/quota">
+    <data-structures/>
+    <functions>
+      <function name="array_append_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="count" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_append_space_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_count_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_create_from_buffer_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="buffer" nr="2"/>
+          <par name="element_size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_create_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="pool" nr="2"/>
+          <par name="element_size" nr="3"/>
+          <par name="init_count" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_delete_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="idx" nr="2"/>
+          <par name="count" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_free_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_get_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="count_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_get_modifiable_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="count_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_add_user_namespace">
+        <parameters>
+          <par name="quota" nr="1"/>
+          <par name="ns" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_alloc">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="mail" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_backend_find">
+        <parameters>
+          <par name="name" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_default_test_alloc">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="too_large_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_deinit">
+        <parameters>
+          <par name="_quota" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_free">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="mail" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_free_bytes">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="physical_size" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_get_resource">
+        <parameters>
+          <par name="root" nr="1"/>
+          <par name="mailbox_name" nr="2"/>
+          <par name="name" nr="3"/>
+          <par name="value_r" nr="4"/>
+          <par name="limit_r" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_init">
+        <parameters>
+          <par name="quota_set" nr="1"/>
+          <par name="user" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_recalculate">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_remove_user_namespace">
+        <parameters>
+          <par name="ns" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_root_add_rule">
+        <parameters>
+          <par name="root_set" nr="1"/>
+          <par name="rule_def" nr="2"/>
+          <par name="error_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_root_add_rules">
+        <parameters>
+          <par name="user" nr="1"/>
+          <par name="root_name" nr="2"/>
+          <par name="root_set" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_root_add_warning_rule">
+        <parameters>
+          <par name="root_set" nr="1"/>
+          <par name="rule_def" nr="2"/>
+          <par name="error_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_root_add_warning_rules">
+        <parameters>
+          <par name="user" nr="1"/>
+          <par name="root_name" nr="2"/>
+          <par name="root_set" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_root_deinit">
+        <parameters>
+          <par name="root" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_root_get_name">
+        <parameters>
+          <par name="root" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_root_get_resources">
+        <parameters>
+          <par name="root" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_root_get_rule_limits">
+        <parameters>
+          <par name="root" nr="1"/>
+          <par name="mailbox_name" nr="2"/>
+          <par name="bytes_limit_r" nr="3"/>
+          <par name="count_limit_r" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_root_init">
+        <parameters>
+          <par name="root_set" nr="1"/>
+          <par name="quota" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_root_is_namespace_visible">
+        <parameters>
+          <par name="root" nr="1"/>
+          <par name="ns" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_root_is_visible">
+        <parameters>
+          <par name="root" nr="1"/>
+          <par name="box" nr="2"/>
+          <par name="enforce" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_root_iter_deinit">
+        <parameters>
+          <par name="_iter" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_root_iter_init">
+        <parameters>
+          <par name="box" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_root_iter_next">
+        <parameters>
+          <par name="iter" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_root_lookup">
+        <parameters>
+          <par name="user" nr="1"/>
+          <par name="name" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_root_recalculate_relative_rules">
+        <parameters>
+          <par name="root_set" nr="1"/>
+          <par name="bytes_limit" nr="2"/>
+          <par name="count_limit" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_root_rule_find">
+        <parameters>
+          <par name="root_set" nr="1"/>
+          <par name="name" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_root_settings_init">
+        <parameters>
+          <par name="quota_set" nr="1"/>
+          <par name="root_def" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_rule_parse_limits">
+        <parameters>
+          <par name="root_set" nr="1"/>
+          <par name="rule" nr="2"/>
+          <par name="limits" nr="3"/>
+          <par name="relative_rule" nr="4"/>
+          <par name="error_r" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_rule_parse_percentage">
+        <parameters>
+          <par name="root_set" nr="1"/>
+          <par name="rule" nr="2"/>
+          <par name="limit" nr="3"/>
+          <par name="error_r" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_rule_recalculate_relative_rules">
+        <parameters>
+          <par name="rule" nr="1"/>
+          <par name="bytes_limit" nr="2"/>
+          <par name="count_limit" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_set_resource">
+        <parameters>
+          <par name="root" nr="1"/>
+          <par name="name" nr="2"/>
+          <par name="value" nr="3"/>
+          <par name="error_r" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_settings_deinit">
+        <parameters>
+          <par name="_quota_set" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_test_alloc">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="too_large_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_transaction_begin">
+        <parameters>
+          <par name="box" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_transaction_commit">
+        <parameters>
+          <par name="_ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_transaction_rollback">
+        <parameters>
+          <par name="_ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_transaction_set_limits">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_try_alloc">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="mail" nr="2"/>
+          <par name="too_large_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_user_read_settings">
+        <parameters>
+          <par name="user" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_warning_execute">
+        <parameters>
+          <par name="root" nr="1"/>
+          <par name="cmd" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="quota_warnings_execute">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="root" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

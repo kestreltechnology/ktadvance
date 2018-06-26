@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:24.578189"/>
+  <cfile name="src/lib-mail/message-size">
+    <data-structures/>
+    <functions>
+      <function name="message_get_body_size">
+        <parameters>
+          <par name="input" nr="1"/>
+          <par name="body" nr="2"/>
+          <par name="has_nuls" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_get_header_size">
+        <parameters>
+          <par name="input" nr="1"/>
+          <par name="hdr" nr="2"/>
+          <par name="has_nuls" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_size_add">
+        <parameters>
+          <par name="dest" nr="1"/>
+          <par name="src" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

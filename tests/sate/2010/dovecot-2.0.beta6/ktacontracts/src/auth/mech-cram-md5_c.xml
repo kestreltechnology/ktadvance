@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:14.486375"/>
+  <cfile name="src/auth/mech-cram-md5">
+    <data-structures/>
+    <functions>
+      <function name="credentials_callback">
+        <parameters>
+          <par name="result" nr="1"/>
+          <par name="credentials" nr="2"/>
+          <par name="size" nr="3"/>
+          <par name="auth_request" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get_cram_challenge">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hmac_md5_update">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mech_cram_md5_auth_continue">
+        <parameters>
+          <par name="auth_request" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="data_size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mech_cram_md5_auth_initial">
+        <parameters>
+          <par name="auth_request" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="data_size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mech_cram_md5_auth_new">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_cram_response">
+        <parameters>
+          <par name="request" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="size" nr="3"/>
+          <par name="error_r" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="verify_credentials">
+        <parameters>
+          <par name="request" nr="1"/>
+          <par name="credentials" nr="2"/>
+          <par name="size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

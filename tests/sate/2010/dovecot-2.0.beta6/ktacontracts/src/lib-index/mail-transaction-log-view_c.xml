@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:23.581528"/>
+  <cfile name="src/lib-index/mail-transaction-log-view">
+    <data-structures/>
+    <functions>
+      <function name="array_append_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="count" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_clear_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_count_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_create_from_buffer_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="buffer" nr="2"/>
+          <par name="element_size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_create_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="pool" nr="2"/>
+          <par name="element_size" nr="3"/>
+          <par name="init_count" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_free_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_get_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="count_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_idx_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="idx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_is_created_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="buffer_get_data">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="used_size_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="log_view_get_next">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="hdr_r" nr="2"/>
+          <par name="data_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="log_view_is_record_valid">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="hdr" nr="2"/>
+          <par name="data" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="log_view_is_uid_range_valid">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="rec_type" nr="2"/>
+          <par name="uids" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_view_clear">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="oldest_file_seq" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_view_close">
+        <parameters>
+          <par name="_view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_view_get_last">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="last_r" nr="2"/>
+          <par name="last_offset_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_view_get_prev_modseq">
+        <parameters>
+          <par name="view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_view_get_prev_pos">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="file_seq_r" nr="2"/>
+          <par name="file_offset_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_view_is_corrupted">
+        <parameters>
+          <par name="view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_view_is_last">
+        <parameters>
+          <par name="view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_view_mark">
+        <parameters>
+          <par name="view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_view_next">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="hdr_r" nr="2"/>
+          <par name="data_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_view_open">
+        <parameters>
+          <par name="log" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_view_rewind">
+        <parameters>
+          <par name="view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_view_set">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="min_file_seq" nr="2"/>
+          <par name="min_file_offset" nr="3"/>
+          <par name="max_file_seq" nr="4"/>
+          <par name="max_file_offset" nr="5"/>
+          <par name="reset_r" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_view_set_corrupted">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="fmt" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_view_unref_all">
+        <parameters>
+          <par name="view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_views_close">
+        <parameters>
+          <par name="log" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

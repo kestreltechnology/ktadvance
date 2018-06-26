@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:24.365947"/>
+  <cfile name="src/lib-mail/message-header-decode">
+    <data-structures/>
+    <functions>
+      <function name="decode_utf8_callback">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="charset" nr="3"/>
+          <par name="context" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_only_lwsp">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="size" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_header_decode">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="callback" nr="3"/>
+          <par name="context" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_header_decode_encoded">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="decodebuf" nr="3"/>
+          <par name="charsetlen_r" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_header_decode_utf8">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="dest" nr="3"/>
+          <par name="dtcase" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

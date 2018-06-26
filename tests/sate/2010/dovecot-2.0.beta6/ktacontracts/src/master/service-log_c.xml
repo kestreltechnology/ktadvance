@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:36.028748"/>
+  <cfile name="src/master/service-log">
+    <data-structures/>
+    <functions>
+      <function name="array_get_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="count_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="service_log_fds_init">
+        <parameters>
+          <par name="log_prefix" nr="1"/>
+          <par name="log_fd" nr="2"/>
+          <par name="handshake_buf" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="service_process_write_log_bye">
+        <parameters>
+          <par name="fd" nr="1"/>
+          <par name="process" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="services_log_deinit">
+        <parameters>
+          <par name="service_list" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="services_log_dup2">
+        <parameters>
+          <par name="dups" nr="1"/>
+          <par name="service_list" nr="2"/>
+          <par name="first_fd" nr="3"/>
+          <par name="fd_count" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="services_log_init">
+        <parameters>
+          <par name="service_list" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

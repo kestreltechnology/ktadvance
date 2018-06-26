@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:24.319221"/>
+  <cfile name="src/lib-mail/message-date">
+    <data-structures/>
+    <functions>
+      <function name="message_date_create">
+        <parameters>
+          <par name="timestamp" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_date_parse">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="timestamp_r" nr="3"/>
+          <par name="timezone_offset_r" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_date_parser_tokens">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="timestamp_r" nr="2"/>
+          <par name="timezone_offset_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="next_token">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="value" nr="2"/>
+          <par name="value_len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_timezone">
+        <parameters>
+          <par name="str" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

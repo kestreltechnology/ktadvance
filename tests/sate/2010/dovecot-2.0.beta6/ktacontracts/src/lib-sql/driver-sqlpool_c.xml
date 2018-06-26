@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:25.598607"/>
+  <cfile name="src/lib-sql/driver-sqlpool">
+    <data-structures/>
+    <functions>
+      <function name="array_append_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="count" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_append_space_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_clear_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_count_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_create_from_buffer_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="buffer" nr="2"/>
+          <par name="element_size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_create_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="pool" nr="2"/>
+          <par name="element_size" nr="3"/>
+          <par name="init_count" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_free_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_get_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="count_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_get_modifiable_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="count_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_idx_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="idx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_append_request">
+        <parameters>
+          <par name="db" nr="1"/>
+          <par name="request" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_commit_callback">
+        <parameters>
+          <par name="error" nr="1"/>
+          <par name="ctx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_connect">
+        <parameters>
+          <par name="_db" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_deinit">
+        <parameters>
+          <par name="_db" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_disconnect">
+        <parameters>
+          <par name="_db" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_escape_string">
+        <parameters>
+          <par name="_db" nr="1"/>
+          <par name="string" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_exec">
+        <parameters>
+          <par name="_db" nr="1"/>
+          <par name="query" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_get_connection">
+        <parameters>
+          <par name="db" nr="1"/>
+          <par name="unwanted_host_idx" nr="2"/>
+          <par name="conn_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_get_sync_connection">
+        <parameters>
+          <par name="db" nr="1"/>
+          <par name="conn_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_init">
+        <parameters>
+          <par name="connect_string" nr="1"/>
+          <par name="driver" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_new_conn_trans">
+        <parameters>
+          <par name="trans" nr="1"/>
+          <par name="conndb" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_parse_hosts">
+        <parameters>
+          <par name="db" nr="1"/>
+          <par name="connect_string" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_prepend_request">
+        <parameters>
+          <par name="db" nr="1"/>
+          <par name="request" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_query">
+        <parameters>
+          <par name="_db" nr="1"/>
+          <par name="query" nr="2"/>
+          <par name="callback" nr="3"/>
+          <par name="context" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_query_callback">
+        <parameters>
+          <par name="result" nr="1"/>
+          <par name="request" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_query_s">
+        <parameters>
+          <par name="_db" nr="1"/>
+          <par name="query" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_timeout">
+        <parameters>
+          <par name="db" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_transaction_begin">
+        <parameters>
+          <par name="_db" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_transaction_commit">
+        <parameters>
+          <par name="_ctx" nr="1"/>
+          <par name="callback" nr="2"/>
+          <par name="context" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_transaction_commit_s">
+        <parameters>
+          <par name="_ctx" nr="1"/>
+          <par name="error_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_transaction_free">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_transaction_rollback">
+        <parameters>
+          <par name="_ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="driver_sqlpool_update">
+        <parameters>
+          <par name="_ctx" nr="1"/>
+          <par name="query" nr="2"/>
+          <par name="affected_rows" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sqlpool_add_connection">
+        <parameters>
+          <par name="db" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sqlpool_find_available_connection">
+        <parameters>
+          <par name="db" nr="1"/>
+          <par name="unwanted_host_idx" nr="2"/>
+          <par name="all_disconnected_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sqlpool_find_host_with_least_connections">
+        <parameters>
+          <par name="db" nr="1"/>
+          <par name="host_idx_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sqlpool_reconnect">
+        <parameters>
+          <par name="conndb" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sqlpool_request_abort">
+        <parameters>
+          <par name="_request" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sqlpool_request_free">
+        <parameters>
+          <par name="_request" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sqlpool_request_handle_transaction">
+        <parameters>
+          <par name="conndb" nr="1"/>
+          <par name="trans" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sqlpool_request_new">
+        <parameters>
+          <par name="db" nr="1"/>
+          <par name="query" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sqlpool_request_send_next">
+        <parameters>
+          <par name="db" nr="1"/>
+          <par name="conndb" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sqlpool_state_changed">
+        <parameters>
+          <par name="conndb" nr="1"/>
+          <par name="prev_state" nr="2"/>
+          <par name="context" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

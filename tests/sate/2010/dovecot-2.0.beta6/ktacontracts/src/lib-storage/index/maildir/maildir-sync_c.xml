@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:27.993815"/>
+  <cfile name="src/lib-storage/index/maildir/maildir-sync">
+    <data-structures/>
+    <functions>
+      <function name="have_recent_messages">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="maildir_fix_duplicate">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="dir" nr="2"/>
+          <par name="fname2" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="maildir_scan_dir">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="new_dir" nr="2"/>
+          <par name="final" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="maildir_stat">
+        <parameters>
+          <par name="mbox" nr="1"/>
+          <par name="path" nr="2"/>
+          <par name="st_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="maildir_storage_sync_force">
+        <parameters>
+          <par name="mbox" nr="1"/>
+          <par name="uid" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="maildir_storage_sync_init">
+        <parameters>
+          <par name="box" nr="1"/>
+          <par name="flags" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="maildir_sync_context">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="forced" nr="2"/>
+          <par name="find_uid" nr="3"/>
+          <par name="lost_files_r" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="maildir_sync_context_new">
+        <parameters>
+          <par name="mbox" nr="1"/>
+          <par name="flags" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="maildir_sync_deinit">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="maildir_sync_get_changes">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="new_changed_r" nr="2"/>
+          <par name="cur_changed_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="maildir_sync_header_refresh">
+        <parameters>
+          <par name="mbox" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="maildir_sync_is_synced">
+        <parameters>
+          <par name="mbox" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="maildir_sync_notify">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="maildir_sync_quick_check">
+        <parameters>
+          <par name="mbox" nr="1"/>
+          <par name="undirty" nr="2"/>
+          <par name="new_dir" nr="3"/>
+          <par name="cur_dir" nr="4"/>
+          <par name="new_changed_r" nr="5"/>
+          <par name="cur_changed_r" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="maildir_sync_update_next_uid">
+        <parameters>
+          <par name="mbox" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

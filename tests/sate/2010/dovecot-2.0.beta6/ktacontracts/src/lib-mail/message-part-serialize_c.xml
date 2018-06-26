@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:24.534729"/>
+  <cfile name="src/lib-mail/message-part-serialize">
+    <data-structures/>
+    <functions>
+      <function name="buffer_get_used_size">
+        <parameters>
+          <par name="buf" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_part_deserialize">
+        <parameters>
+          <par name="pool" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="size" nr="3"/>
+          <par name="error_r" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_part_deserialize_part">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="parent" nr="2"/>
+          <par name="siblings" nr="3"/>
+          <par name="part_r" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_part_serialize">
+        <parameters>
+          <par name="part" nr="1"/>
+          <par name="dest" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="part_serialize">
+        <parameters>
+          <par name="part" nr="1"/>
+          <par name="dest" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="read_next">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="buffer" nr="2"/>
+          <par name="buffer_size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
