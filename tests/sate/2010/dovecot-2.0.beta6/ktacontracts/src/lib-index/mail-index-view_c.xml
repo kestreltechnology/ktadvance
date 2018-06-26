@@ -1,0 +1,841 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:23.195181"/>
+  <cfile name="src/lib-index/mail-index-view">
+    <data-structures/>
+    <functions>
+      <function name="array_append_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="count" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_clear_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_create_from_buffer_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="buffer" nr="2"/>
+          <par name="element_size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_create_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="pool" nr="2"/>
+          <par name="element_size" nr="3"/>
+          <par name="init_count" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_free_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_get_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="count_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_get_modifiable_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="count_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_idx_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="idx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_is_created_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_data_lookup_keywords">
+        <parameters>
+          <par name="map" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="keyword_idx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_ext_get_reset_id">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="map" nr="2"/>
+          <par name="ext_id" nr="3"/>
+          <par name="reset_id_r" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_ext_get_size">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="ext_id" nr="2"/>
+          <par name="map" nr="3"/>
+          <par name="hdr_size_r" nr="4"/>
+          <par name="record_size_r" nr="5"/>
+          <par name="record_align_r" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_get_header">
+        <parameters>
+          <par name="view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_get_header_ext">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="ext_id" nr="2"/>
+          <par name="data_r" nr="3"/>
+          <par name="data_size_r" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_is_expunged">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="seq" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_lookup">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="seq" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_lookup_ext">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="seq" nr="2"/>
+          <par name="ext_id" nr="3"/>
+          <par name="data_r" nr="4"/>
+          <par name="expunged_r" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_lookup_ext_full">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="seq" nr="2"/>
+          <par name="ext_id" nr="3"/>
+          <par name="map_r" nr="4"/>
+          <par name="data_r" nr="5"/>
+          <par name="expunged_r" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_lookup_first">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="flags" nr="2"/>
+          <par name="flags_mask" nr="3"/>
+          <par name="seq_r" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_lookup_full">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="seq" nr="2"/>
+          <par name="map_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_lookup_keywords">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="seq" nr="2"/>
+          <par name="keyword_idx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_lookup_seq">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="uid" nr="2"/>
+          <par name="seq_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_lookup_seq_range">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="first_uid" nr="2"/>
+          <par name="last_uid" nr="3"/>
+          <par name="first_seq_r" nr="4"/>
+          <par name="last_seq_r" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_lookup_uid">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="seq" nr="2"/>
+          <par name="uid_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_lookup_view_flags">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="seq" nr="2"/>
+          <par name="flags_r" nr="3"/>
+          <par name="keyword_idx" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_map_get_header_ext">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="map" nr="2"/>
+          <par name="ext_id" nr="3"/>
+          <par name="data_r" nr="4"/>
+          <par name="data_size_r" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_map_lookup_keywords">
+        <parameters>
+          <par name="map" nr="1"/>
+          <par name="seq" nr="2"/>
+          <par name="keyword_idx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_view_clone">
+        <parameters>
+          <par name="dest" nr="1"/>
+          <par name="src" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_view_close">
+        <parameters>
+          <par name="_view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_view_get_ext">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="ext_id" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_view_get_index">
+        <parameters>
+          <par name="view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_view_get_messages_count">
+        <parameters>
+          <par name="view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_view_get_transaction_count">
+        <parameters>
+          <par name="view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_view_is_inconsistent">
+        <parameters>
+          <par name="view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_view_open">
+        <parameters>
+          <par name="index___0" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_view_open_with_map">
+        <parameters>
+          <par name="index___0" nr="1"/>
+          <par name="map" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_view_ref">
+        <parameters>
+          <par name="view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_view_ref_map">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="map" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_view_transaction_ref">
+        <parameters>
+          <par name="view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_view_transaction_unref">
+        <parameters>
+          <par name="view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_view_unref_maps">
+        <parameters>
+          <par name="view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="view_close">
+        <parameters>
+          <par name="view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="view_ext_get_reset_id">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="map" nr="2"/>
+          <par name="ext_id" nr="3"/>
+          <par name="reset_id_r" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="view_get_header">
+        <parameters>
+          <par name="view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="view_get_header_ext">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="map" nr="2"/>
+          <par name="ext_id" nr="3"/>
+          <par name="data_r" nr="4"/>
+          <par name="data_size_r" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="view_get_messages_count">
+        <parameters>
+          <par name="view" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="view_lookup_ext_full">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="seq" nr="2"/>
+          <par name="ext_id" nr="3"/>
+          <par name="map_r" nr="4"/>
+          <par name="data_r" nr="5"/>
+          <par name="expunged_r" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="view_lookup_first">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="flags" nr="2"/>
+          <par name="flags_mask" nr="3"/>
+          <par name="seq_r" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="view_lookup_full">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="seq" nr="2"/>
+          <par name="map_r" nr="3"/>
+          <par name="expunged_r" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="view_lookup_keywords">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="seq" nr="2"/>
+          <par name="keyword_idx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="view_lookup_seq_range">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="first_uid" nr="2"/>
+          <par name="last_uid" nr="3"/>
+          <par name="first_seq_r" nr="4"/>
+          <par name="last_seq_r" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="view_lookup_uid">
+        <parameters>
+          <par name="view" nr="1"/>
+          <par name="seq" nr="2"/>
+          <par name="uid_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="view_map_lookup_ext_full">
+        <parameters>
+          <par name="map" nr="1"/>
+          <par name="rec" nr="2"/>
+          <par name="ext_id" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

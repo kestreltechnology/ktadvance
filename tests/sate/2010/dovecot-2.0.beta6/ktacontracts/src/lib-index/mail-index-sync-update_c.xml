@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:22.716084"/>
+  <cfile name="src/lib-index/mail-index-sync-update">
+    <data-structures/>
+    <functions>
+      <function name="array_get_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="count_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_idx_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="idx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="array_is_created_i">
+        <parameters>
+          <par name="array" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_header_update_counts">
+        <parameters>
+          <par name="hdr" nr="1"/>
+          <par name="old_flags" nr="2"/>
+          <par name="new_flags" nr="3"/>
+          <par name="error_r" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_header_update_lowwaters">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="uid" nr="2"/>
+          <par name="flags" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_sync_get_atomic_map">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_sync_header_update_counts">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="uid" nr="2"/>
+          <par name="old_flags" nr="3"/>
+          <par name="new_flags" nr="4"/>
+          <par name="all" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_sync_header_update_counts_all">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="uid" nr="2"/>
+          <par name="old_flags" nr="3"/>
+          <par name="new_flags" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_sync_map">
+        <parameters>
+          <par name="_map" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="force" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_sync_map_deinit">
+        <parameters>
+          <par name="sync_map_ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_sync_map_init">
+        <parameters>
+          <par name="sync_map_ctx" nr="1"/>
+          <par name="view" nr="2"/>
+          <par name="type" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_sync_move_to_private_memory">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_sync_record">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="hdr" nr="2"/>
+          <par name="data" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_sync_replace_map">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="map" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_sync_update_hdr_dirty_flag">
+        <parameters>
+          <par name="map" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_sync_update_log_offset">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="map" nr="2"/>
+          <par name="eol" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_index_sync_write_seq_update">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="seq1" nr="2"/>
+          <par name="seq2" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sync_append">
+        <parameters>
+          <par name="rec" nr="1"/>
+          <par name="ctx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sync_append_record">
+        <parameters>
+          <par name="map" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sync_expunge">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="uid1" nr="2"/>
+          <par name="uid2" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sync_expunge_call_handlers">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="seq1" nr="2"/>
+          <par name="seq2" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sync_flag_update">
+        <parameters>
+          <par name="u" nr="1"/>
+          <par name="ctx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sync_header_update">
+        <parameters>
+          <par name="u" nr="1"/>
+          <par name="ctx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sync_modseq_update">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="u" nr="2"/>
+          <par name="size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sync_uid_update">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="old_uid" nr="2"/>
+          <par name="new_uid" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sync_update_ignored_change">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

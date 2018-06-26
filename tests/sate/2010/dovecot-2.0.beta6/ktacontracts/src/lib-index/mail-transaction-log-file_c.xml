@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:23.512525"/>
+  <cfile name="src/lib-index/mail-transaction-log-file">
+    <data-structures/>
+    <functions>
+      <function name="buffer_get_data">
+        <parameters>
+          <par name="buf" nr="1"/>
+          <par name="used_size_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="buffer_get_used_size">
+        <parameters>
+          <par name="buf" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="log_file_map_check_offsets">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="start_offset" nr="2"/>
+          <par name="end_offset" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="log_file_set_syscall_error">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="function" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="log_file_track_mailbox_sync_offset_hdr">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="log_file_track_sync">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="hdr" nr="2"/>
+          <par name="trans_size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="log_get_synced_record">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="offset" nr="2"/>
+          <par name="hdr_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_add_to_list">
+        <parameters>
+          <par name="file" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_alloc">
+        <parameters>
+          <par name="log" nr="1"/>
+          <par name="path" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_alloc_in_memory">
+        <parameters>
+          <par name="log" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_create">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="reset" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_create2">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="new_fd" nr="2"/>
+          <par name="reset" nr="3"/>
+          <par name="dotlock" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_dotlock">
+        <parameters>
+          <par name="file" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_free">
+        <parameters>
+          <par name="_file" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_get_highest_modseq_at">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="offset" nr="2"/>
+          <par name="highest_modseq_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_get_modseq_next_offset">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="modseq" nr="2"/>
+          <par name="next_offset_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_insert_read">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="offset" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_is_dupe">
+        <parameters>
+          <par name="file" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_lock">
+        <parameters>
+          <par name="file" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_map">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="start_offset" nr="2"/>
+          <par name="end_offset" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_map_mmap">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="start_offset" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_mmap">
+        <parameters>
+          <par name="file" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_move_to_memory">
+        <parameters>
+          <par name="file" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_munmap">
+        <parameters>
+          <par name="file" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_need_nfs_flush">
+        <parameters>
+          <par name="file" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_open">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="check_existing" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_read">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="start_offset" nr="2"/>
+          <par name="nfs_flush" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_read_hdr">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="ignore_estale" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_read_header">
+        <parameters>
+          <par name="file" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_read_more">
+        <parameters>
+          <par name="file" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_set_corrupted">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="fmt" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_skip_to_head">
+        <parameters>
+          <par name="file" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_stat">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="ignore_estale" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_sync">
+        <parameters>
+          <par name="file" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_undotlock">
+        <parameters>
+          <par name="file" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_file_unlock">
+        <parameters>
+          <par name="file" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_init_hdr">
+        <parameters>
+          <par name="log" nr="1"/>
+          <par name="hdr" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_log_mark_corrupted">
+        <parameters>
+          <par name="file" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mail_transaction_update_modseq">
+        <parameters>
+          <par name="hdr" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="cur_modseq" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="modseq_cache_get_modseq">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="modseq" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="modseq_cache_get_offset">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="offset" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="modseq_cache_hit">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="idx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

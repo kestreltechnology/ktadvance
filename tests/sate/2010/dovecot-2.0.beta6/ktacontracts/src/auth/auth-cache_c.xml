@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:13.865714"/>
+  <cfile name="src/auth/auth-cache">
+    <data-structures/>
+    <functions>
+      <function name="auth_cache_clear">
+        <parameters>
+          <par name="cache" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="auth_cache_free">
+        <parameters>
+          <par name="_cache" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="auth_cache_insert">
+        <parameters>
+          <par name="cache" nr="1"/>
+          <par name="request" nr="2"/>
+          <par name="key" nr="3"/>
+          <par name="value" nr="4"/>
+          <par name="last_success" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="auth_cache_lookup">
+        <parameters>
+          <par name="cache" nr="1"/>
+          <par name="request" nr="2"/>
+          <par name="key" nr="3"/>
+          <par name="node_r" nr="4"/>
+          <par name="expired_r" nr="5"/>
+          <par name="neg_expired_r" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="auth_cache_new">
+        <parameters>
+          <par name="max_size" nr="1"/>
+          <par name="ttl_secs" nr="2"/>
+          <par name="neg_ttl_secs" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="auth_cache_node_destroy">
+        <parameters>
+          <par name="cache" nr="1"/>
+          <par name="node" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="auth_cache_node_link_head">
+        <parameters>
+          <par name="cache" nr="1"/>
+          <par name="node" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="auth_cache_node_unlink">
+        <parameters>
+          <par name="cache" nr="1"/>
+          <par name="node" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="auth_cache_parse_key">
+        <parameters>
+          <par name="pool" nr="1"/>
+          <par name="query" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="auth_cache_remove">
+        <parameters>
+          <par name="cache" nr="1"/>
+          <par name="request" nr="2"/>
+          <par name="key" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_auth_cache_clear">
+        <parameters>
+          <par name="si" nr="1"/>
+          <par name="context" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_auth_cache_stats">
+        <parameters>
+          <par name="si" nr="1"/>
+          <par name="context" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

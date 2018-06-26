@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:14.747955"/>
+  <cfile name="src/auth/passdb-cache">
+    <data-structures/>
+    <functions>
+      <function name="passdb_cache_deinit">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="passdb_cache_init">
+        <parameters>
+          <par name="set" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="passdb_cache_log_hit">
+        <parameters>
+          <par name="request" nr="1"/>
+          <par name="value" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="passdb_cache_lookup_credentials">
+        <parameters>
+          <par name="request" nr="1"/>
+          <par name="key" nr="2"/>
+          <par name="password_r" nr="3"/>
+          <par name="scheme_r" nr="4"/>
+          <par name="result_r" nr="5"/>
+          <par name="use_expired" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="passdb_cache_verify_plain">
+        <parameters>
+          <par name="request" nr="1"/>
+          <par name="key" nr="2"/>
+          <par name="password" nr="3"/>
+          <par name="result_r" nr="4"/>
+          <par name="use_expired" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

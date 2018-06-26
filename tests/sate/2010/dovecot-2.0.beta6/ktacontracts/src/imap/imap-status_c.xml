@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:18.742707"/>
+  <cfile name="src/imap/imap-status">
+    <data-structures/>
+    <functions>
+      <function name="imap_status_get">
+        <parameters>
+          <par name="cmd" nr="1"/>
+          <par name="ns" nr="2"/>
+          <par name="mailbox" nr="3"/>
+          <par name="items" nr="4"/>
+          <par name="result_r" nr="5"/>
+          <par name="error_r" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_status_parse_items">
+        <parameters>
+          <par name="cmd" nr="1"/>
+          <par name="args" nr="2"/>
+          <par name="items_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_status_send">
+        <parameters>
+          <par name="client" nr="1"/>
+          <par name="mailbox" nr="2"/>
+          <par name="items" nr="3"/>
+          <par name="result" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

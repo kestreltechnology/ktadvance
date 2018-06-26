@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:28.472631"/>
+  <cfile name="src/lib-storage/index/mbox/mbox-lock">
+    <data-structures/>
+    <functions>
+      <function name="dotlock_callback">
+        <parameters>
+          <par name="secs_left" nr="1"/>
+          <par name="stale" nr="2"/>
+          <par name="context" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_dotlock_log_eacces_error">
+        <parameters>
+          <par name="mbox" nr="1"/>
+          <par name="path" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_dotlock_privileged_op">
+        <parameters>
+          <par name="mbox" nr="1"/>
+          <par name="set" nr="2"/>
+          <par name="op" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_dotlock_touch">
+        <parameters>
+          <par name="mbox" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_file_open_latest">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="lock_type" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_init_lock_settings">
+        <parameters>
+          <par name="storage" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_lock">
+        <parameters>
+          <par name="mbox" nr="1"/>
+          <par name="lock_type" nr="2"/>
+          <par name="lock_id_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_lock_dotlock">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="lock_type" nr="2"/>
+          <par name="max_wait_time" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_lock_dotlock_int">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="lock_type" nr="2"/>
+          <par name="try" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_lock_dotlock_try">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="lock_type" nr="2"/>
+          <par name="max_wait_time" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_lock_fcntl">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="lock_type" nr="2"/>
+          <par name="max_wait_time" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_lock_flock">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="lock_type" nr="2"/>
+          <par name="max_wait_time" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_lock_list">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="lock_type" nr="2"/>
+          <par name="max_wait_time" nr="3"/>
+          <par name="idx" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_lock_lockf">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="lock_type" nr="2"/>
+          <par name="max_wait_time" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_read_lock_methods">
+        <parameters>
+          <par name="str" nr="1"/>
+          <par name="env" nr="2"/>
+          <par name="locks" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_unlock">
+        <parameters>
+          <par name="mbox" nr="1"/>
+          <par name="lock_id" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_unlock_files">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_update_locking">
+        <parameters>
+          <par name="mbox" nr="1"/>
+          <par name="lock_type" nr="2"/>
+          <par name="fcntl_locked_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

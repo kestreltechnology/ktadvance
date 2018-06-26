@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:24.516325"/>
+  <cfile name="src/lib-mail/message-parser">
+    <data-structures/>
+    <functions>
+      <function name="boundary_find">
+        <parameters>
+          <par name="boundaries" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="boundary_line_find">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="size" nr="3"/>
+          <par name="full" nr="4"/>
+          <par name="boundary_r" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_parser_deinit">
+        <parameters>
+          <par name="_ctx" nr="1"/>
+          <par name="parts_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_parser_init">
+        <parameters>
+          <par name="part_pool" nr="1"/>
+          <par name="input" nr="2"/>
+          <par name="hdr_flags" nr="3"/>
+          <par name="flags" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_parser_init_from_parts">
+        <parameters>
+          <par name="parts" nr="1"/>
+          <par name="input" nr="2"/>
+          <par name="hdr_flags" nr="3"/>
+          <par name="flags" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_parser_parse_body">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="hdr_callback" nr="2"/>
+          <par name="context" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_parser_parse_header">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="hdr_size" nr="2"/>
+          <par name="callback" nr="3"/>
+          <par name="context" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_parser_parse_next_block">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="block_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_parser_read_more">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="block_r" nr="2"/>
+          <par name="full_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="message_part_append">
+        <parameters>
+          <par name="pool" nr="1"/>
+          <par name="parent" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_body_add_block">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="block" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_content_type">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="hdr" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_next_body_message_rfc822_init">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="block_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_next_body_multipart_init">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_next_body_skip_boundary_line">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="block_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_next_body_to_boundary">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="block_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_next_body_to_eof">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="block_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_next_header">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="block_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_next_header_init">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="block_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_next_mime_header_init">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="block_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_part_finish">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="boundary" nr="2"/>
+          <par name="block_r" nr="3"/>
+          <par name="first_line" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="preparsed_parse_body_finish">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="block_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="preparsed_parse_body_init">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="block_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="preparsed_parse_body_more">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="block_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="preparsed_parse_eof">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="block_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="preparsed_parse_finish_header">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="block_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="preparsed_parse_next_header">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="block_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="preparsed_parse_next_header_init">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="block_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="preparsed_skip_to_next">
+        <parameters>
+          <par name="ctx" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

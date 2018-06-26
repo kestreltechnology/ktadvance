@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:28.954534"/>
+  <cfile name="src/lib-storage/index/mbox/mbox-sync-rewrite">
+    <data-structures/>
+    <functions>
+      <function name="array_get_modifiable_i">
+        <parameters>
+          <par name="array" nr="1"/>
+          <par name="count_r" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_fill_space">
+        <parameters>
+          <par name="sync_ctx" nr="1"/>
+          <par name="offset" nr="2"/>
+          <par name="size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_move">
+        <parameters>
+          <par name="sync_ctx" nr="1"/>
+          <par name="dest" nr="2"/>
+          <par name="source" nr="3"/>
+          <par name="size" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_sync_first_mail_written">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="hdr_offset" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_sync_header_remove_space">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="start_pos" nr="2"/>
+          <par name="size" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_sync_headers_add_space">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="size" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_sync_headers_remove_space">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="size" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_sync_read_and_move">
+        <parameters>
+          <par name="sync_ctx" nr="1"/>
+          <par name="mail_ctx" nr="2"/>
+          <par name="mails" nr="3"/>
+          <par name="seq" nr="4"/>
+          <par name="idx" nr="5"/>
+          <par name="padding" nr="6"/>
+          <par name="move_diff" nr="7"/>
+          <par name="expunged_space" nr="8"/>
+          <par name="end_offset" nr="9"/>
+          <par name="first_nonexpunged" nr="10"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_sync_read_next">
+        <parameters>
+          <par name="sync_ctx" nr="1"/>
+          <par name="mail_ctx" nr="2"/>
+          <par name="mails" nr="3"/>
+          <par name="seq" nr="4"/>
+          <par name="idx" nr="5"/>
+          <par name="expunged_space" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_sync_rewrite">
+        <parameters>
+          <par name="sync_ctx" nr="1"/>
+          <par name="mail_ctx" nr="2"/>
+          <par name="end_offset" nr="3"/>
+          <par name="move_diff" nr="4"/>
+          <par name="extra_space" nr="5"/>
+          <par name="first_seq" nr="6"/>
+          <par name="last_seq" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_sync_try_rewrite">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="move_diff" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

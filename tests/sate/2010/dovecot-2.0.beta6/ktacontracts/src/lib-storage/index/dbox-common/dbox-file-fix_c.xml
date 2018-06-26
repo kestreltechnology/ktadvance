@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:25.902637"/>
+  <cfile name="src/lib-storage/index/dbox-common/dbox-file-fix">
+    <data-structures/>
+    <functions>
+      <function name="dbox_file_copy_metadata">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="output" nr="2"/>
+          <par name="have_guid_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dbox_file_find_next_magic">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="offset_r" nr="2"/>
+          <par name="pre_r" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dbox_file_fix">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="start_offset" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dbox_file_fix_write_stream">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="start_offset" nr="2"/>
+          <par name="temp_path" nr="3"/>
+          <par name="output" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dbox_file_skip_broken_header">
+        <parameters>
+          <par name="file" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="stream_copy">
+        <parameters>
+          <par name="file" nr="1"/>
+          <par name="output" nr="2"/>
+          <par name="path" nr="3"/>
+          <par name="count" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

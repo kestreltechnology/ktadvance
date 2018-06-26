@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:29.325953"/>
+  <cfile name="src/lib-storage/list/mailbox-list-fs-flags">
+    <data-structures/>
+    <functions>
+      <function name="fs_list_get_mailbox_flags">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="dir" nr="2"/>
+          <par name="fname" nr="3"/>
+          <par name="type" nr="4"/>
+          <par name="st_r" nr="5"/>
+          <par name="flags_r" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_inbox_file">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="path" nr="2"/>
+          <par name="fname" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="list_is_maildir_mailbox">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="dir" nr="2"/>
+          <par name="fname" nr="3"/>
+          <par name="type" nr="4"/>
+          <par name="flags_r" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

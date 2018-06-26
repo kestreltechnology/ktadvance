@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-26 09:46:24.256496"/>
+  <cfile name="src/lib-mail/mbox-from">
+    <data-structures/>
+    <functions>
+      <function name="mbox_from_create">
+        <parameters>
+          <par name="sender" nr="1"/>
+          <par name="timestamp" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_from_parse">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="time_r" nr="3"/>
+          <par name="tz_offset_r" nr="4"/>
+          <par name="sender_r" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_parse_month">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="tm" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mbox_parse_year">
+        <parameters>
+          <par name="msg" nr="1"/>
+          <par name="tm" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
