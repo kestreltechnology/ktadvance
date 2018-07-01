@@ -274,6 +274,7 @@ class CFile(object):
             fp.write(UX.doc_to_pretty(ET.ElementTree(xroot)))
 
     def create_contract(self,contractpath,preservesmemory=False,seed={},ignorefns={}):
+        if UF.has_contracts(contractpath,self.name): return
         cnode = ET.Element('cfile')
         cnode.set('name',self.name)
         dnode = ET.Element('data-structures')
