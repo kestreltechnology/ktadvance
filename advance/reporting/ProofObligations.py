@@ -419,7 +419,7 @@ def project_proofobligation_stats_to_dict(capp,filefilter=lambda f:True,extradsm
     result = {}
     result['tagresults'] = {}
     result['fileresults'] = {}
-    result['stats'] = capp.get_project_counts()
+    result['stats'] = capp.get_project_counts(filefilter=filefilter)
     result['tagresults']['ppos'] = tagpporesults
     result['tagresults']['spos'] = tagsporesults
     result['fileresults']['ppos'] = pporesults
@@ -559,7 +559,7 @@ def tag_file_function_pos_tostring(pos,filefilter=lambda f:True,pofilter=lambda 
 
 def totals_to_string(tagtotals,absolute=True,totals=True):
     lines = []
-    rhlen = 28
+    rhlen = max ([ len(t) for t in tagtotals ])
     header1 = ''
     dsmethods = get_dsmethods([])
     width = 10
@@ -599,7 +599,7 @@ def totals_to_string(tagtotals,absolute=True,totals=True):
 
 def totals_to_presentation_string(ppototals,spototals,projectstats,absolute=True,totals=True):
     lines = []
-    rhlen = 28
+    rhlen = max([ len(t) for t in ppototals ])
     header1 = ''
     dsmethods = get_dsmethods([])
     lines.append(' '.rjust(rhlen) + 'line count'.rjust(10)
@@ -616,6 +616,7 @@ def totals_to_presentation_string(ppototals,spototals,projectstats,absolute=True
         if rpposum == 0: continue
         ppoopenpct = (1.0 - (float(ppototals[t]['open'])/float(rpposum))) * 100.0
         ppoopenpct = str('{:.1f}'.format(ppoopenpct))
+        if rsposum == 0: continue
         spoopenpct = (1.0 - (float(spototals[t]['open'])/float(rsposum))) * 100.0
         spoopenpct = str('{:.1f}'.format(spoopenpct))
         
