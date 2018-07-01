@@ -59,8 +59,7 @@ if __name__ == '__main__':
         
     capp = CApplication(sempath)
 
-    # filterout = [ 'io', 'main_linux', 'std_thread' ]
-    filterout = []
+    filterout = [ 'io', 'main_linux', 'std_thread' ]
     dc = [ 'deadcode' ]
     def filefilter(f): return (not f in filterout)
 

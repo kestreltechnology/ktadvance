@@ -49,6 +49,13 @@ class JulietTestSetRef(object):
                 return m
         return m
 
+    def get_predicates(self):
+        result = []
+        for p in self.macros:
+            if p.startswith('PPO'):
+                result.append(self.macros[p]['P'])
+        return result
+
     def get_tests(self): return self.tests.items()
 
     def iter(self,f):

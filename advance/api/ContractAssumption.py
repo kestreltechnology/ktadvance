@@ -40,7 +40,9 @@ class ContractAssumption(object):
     def __str__(self):
         strppos = ''
         strspos = ''
-        calleename = self.capi.cfile.declarations.get_global_varinfo(self.callee).vname
+        calleename = 'global'
+        if self.callee >= 0:
+            calleename = self.capi.cfile.declarations.get_global_varinfo(self.callee).vname
         if len(self.ppos) > 0:
             strppos = "\n      --Dependent ppo's: [" + ','.join(str(i) for i in self.ppos) + ']'
         if len(self.spos) > 0:

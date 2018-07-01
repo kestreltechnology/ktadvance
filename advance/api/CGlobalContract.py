@@ -27,10 +27,22 @@
 
 import logging
 
+import xml.etree.ElementTree as ET
+
 import advance.util.fileutil as UF
 
 class CGlobalContract(object):
     """Holds assumptions that transcend the file level.
+
+    The global contract is held by two files at the top directory of
+    the contractpath:
+    - globaldefs.json: 
+      - directions to the linker about hidden data structures and hidden fields
+
+    - globaldefs.xml:
+      - assumptions relevant to the CodeHawk analyzer
+      - library function summaries that override the standard library function 
+        summaries
 
     Examples: 
       - abstraction of interfile data structures by hiding fields
@@ -40,6 +52,7 @@ class CGlobalContract(object):
     def __init__(self,capp):
         self.capp = capp
         self.contractpath = self.capp.contractpath
+        self.globalassumptions = []
         self.hiddenstructs = {}
         self.hiddenfields = {}
         if not self.contractpath is None:
@@ -51,6 +64,21 @@ class CGlobalContract(object):
     def is_hidden_field(self,compname,fieldname):
         return compname in self.hiddenfields and fieldname in self.hiddenfields[compname]
 
+    def add_no_free(self):
+        if 'no-free' in self.globalassumptions: return
+        self.globalassumptions.append('no-free')
+        self.save_global_xml_contract()
+
+    def save_global_xml_contract(self):
+        cnode = ET.Element('global-definitions')
+        anode = ET.Element('global-assumptions')
+        for a in self.globalassumptions:
+            gnode = ET.Element('ga')
+            gnode.set('name',a)
+            anode.append(gnode)
+        cnode.append(anode)
+        UF.save_global_xml_contract(self.contractpath,cnode)
+
     def _initialize(self):
         globalcontract = None
         if UF.has_global_contract(self.contractpath):
@@ -61,3 +89,9 @@ class CGlobalContract(object):
             self.hiddenstructs = globalcontract['hidden-structs']
         if 'hidden-fields' in globalcontract:
             self.hiddenfields = globalcontract['hidden-fields']
+        if UF.has_global_xml_contract(self.contractpath):
+            logging.info('Load globaldefs.xml contract file')
+            globalxmlcontract = UF.get_global_xml_contract(self.contractpath)
+            if 'global-assumptions' in globalxmlcontract:
+                for a in globalxmlcontract.find('global-assumptions').findall('ga'):
+                    self.globalassumptions.append(a.get('name'))

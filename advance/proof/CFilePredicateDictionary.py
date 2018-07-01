@@ -36,7 +36,8 @@ po_predicate_constructors = {
     'nn': lambda x:PO.CPONotNull(*x),
     'null': lambda x:PO.CPONull(*x),
     'vm': lambda x:PO.CPOValidMem(*x),
-    'gm': lambda x:PO.CPOGlobalMem(*x),
+    'is': lambda x:PO.CPOInScope(*x),
+    'cls': lambda x:PO.CPOCanLeaveScope(*x),
     'ab': lambda x:PO.CPOAllocationBase(*x),
     'tao': lambda x:PO.CPOTypeAtOffset(*x),
     'lb': lambda x:PO.CPOLowerBound(*x),
@@ -118,9 +119,13 @@ class CFilePredicateDictionary(object):
             args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]
             def f(index,key): return PO.CPOValidMem(self,index,p.tags,args)
             return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
-        if p.is_global_mem():
+        if p.is_in_scope():
             args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]
-            def f(index,key): return PO.CPOGlobalMem(self,index,p.tags,args)
+            def f(index,key): return PO.CPOInScope(self,index,p.tags,args)
+            return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_can_leave_scope():
+            args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]
+            def f(index,key): return PO.CPOCanLeaveScope(self,index,p.tags,args)
             return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_allocation_base():
             args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]

@@ -32,7 +32,8 @@ po_predicate_names = {
     'nn': 'not-null',
     'null': 'null',
     'vm': 'valid-mem',
-    'gm': 'global-mem',
+    'is': 'in-scope',
+    'cls': 'can-leave-scope',
     'ab': 'allocation-base',
     'tao': 'type-at-offset',
     'lb': 'lower-bound',
@@ -79,7 +80,8 @@ class CPOPredicate(CD.CDictionaryRecord):
     def is_cast(self): return False
     def is_common_base(self): return False
     def is_format_string(self): return False
-    def is_global_mem(self): return False
+    def is_in_scope(self): return False
+    def is_can_leave_scope(self): return False
     def is_index_lower_bound(self): return False
     def is_index_upper_bound(self): return False
     def is_initialized(self): return False
@@ -174,10 +176,10 @@ class CPOValidMem(CPOPredicate):
 
 
 
-class CPOGlobalMem(CPOPredicate):
+class CPOCanLeaveScope(CPOPredicate):
     '''
     tags:
-        0: 'gm'
+        0: 'cls'
 
     args:
         0: exp
@@ -187,12 +189,31 @@ class CPOGlobalMem(CPOPredicate):
 
     def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
 
-    def is_global_mem(self): return True
+    def is_can_leave_scope(self): return True
 
     def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
     def __str__(self):return self.get_tag() + '(' + str(self.get_exp()) + ')'
 
+
+class CPOInScope(CPOPredicate):
+    '''
+    tags:
+        0: 'is'
+
+    args:
+        0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def is_in_scope(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
+    def __str__(self):return self.get_tag() + '(' + str(self.get_exp()) + ')'
 
 
 class CPOAllocationBase(CPOPredicate):
