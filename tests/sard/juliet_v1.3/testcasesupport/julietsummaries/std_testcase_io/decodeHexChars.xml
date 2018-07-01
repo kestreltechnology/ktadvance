@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<codehawk-summary-file>
+  <function-summary name="decodeHexChars">
+    <parameters>
+      <par name="bytes" nr="1"/>
+      <par name="numBytes" nr="2"/>
+      <par name="hex" nr="3"><deref-read/></par>
+    </parameters>
+    <preconditions>
+      <pre>
+	<math>
+	  <apply>
+	    <deref-read/>
+	    <ci>bytes</ci>
+	    <ci>numBytes</ci>
+	  </apply>
+	</math>
+      </pre>
+    </preconditions>
+    <postconditions>
+      <post>
+	<math>
+	  <apply><geq/><return/><cn>0</cn></apply>
+	</math>
+      </post>
+    </postconditions>
+    <sideeffects>
+      <sideeffect>
+	<math>
+	  <apply><initialized-range/><ci>bytes</ci><return/></apply>
+	</math>
+      </sideeffect>
+      <sideeffect><math><apply><preserves-all-memory/></apply></math></sideeffect>
+    </sideeffects>
+  </function-summary>
+</codehawk-summary-file>

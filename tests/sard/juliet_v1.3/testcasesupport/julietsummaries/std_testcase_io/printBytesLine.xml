@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <codehawk-summary-file>
-  <function-summary name="printLine">
+  <function-summary name="printBytesLine">
     <parameters>
-      <par name="dest" nr="1">
-	<pre><deref-read-nt-null/></pre>
-      </par>
+      <par name="bytes" nr="1"/>
+      <par name="numBytes" nr="2"/>
     </parameters>
-    <preconditions/>
+    <preconditions>
+      <pre>
+	<math>
+	  <apply>
+	    <deref-read/>
+	    <ci>bytes</ci>
+	    <ci>numBytes</ci>
+	  </apply>
+	</math>
+      </pre>
+    </preconditions>
     <postconditions/>
     <sideeffects>
       <sideeffect><math><apply><preserves-all-memory/></apply></math></sideeffect>
