@@ -25,6 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import calendar
 import os
 import subprocess
 import shutil
@@ -47,6 +48,12 @@ def get_xnode(filename,rootnode,desc,show=True):
             print(args)
     else:
         if show: print(desc + ' ' + filename + ' not found')
+
+def create_backup_file(filename):
+    if os.path.isfile(filename):
+        timestamp = calendar.timegm(time.gmtime())
+        backupfilename = filename + '_' + str(timestamp)
+        shutil.copy(filename,backupfilename)
 
 # ------------------------------------------------------------------------------
 
@@ -362,6 +369,15 @@ def save_contracts_file(path,cfilename,cnode):
     filename = os.path.join(path,cfilename + '_c.xml')
     _save_contracts_file_aux(path,filename,cnode)
 
+def save_global_xml_contract(path,cnode):
+    filename = os.path.join(path,'globaldefs.xml')
+    root = UX.get_xml_header('codehawk-contract-file','codehawk-contract-file')
+    root.append(cnode)
+    if os.path.isfile(filename):
+        create_backup_file(filename)
+    with open(filename,'w') as fp:
+        fp.write(UX.doc_to_pretty(ET.ElementTree(root)))
+
 def save_candidate_cotracts_file(path,cfilename,cnode):
     filename = os.path.join(path,cfilename + '_cc.xml')
     _save_contracts_file_aux(path,filename,cnode)
@@ -429,13 +445,13 @@ def get_juliet_testpath(testname):
 
 def save_juliet_test_summary(testname,d):
     path = get_juliet_testpath(testname)
-    with open(os.path.join(path,'summaryresults.json'),'w') as fp:
+    with open(os.path.join(path,'jsummaryresults.json'),'w') as fp:
         json.dump(d,fp,sort_keys=True)
 
 def read_juliet_test_summary(testname):
     path = get_juliet_testpath(testname)
     if os.path.isdir(path):
-        filename = os.path.join(path,'summaryresults.json')
+        filename = os.path.join(path,'jsummaryresults.json')
         if os.path.isfile(filename):
             with open(filename) as fp:
                 d = json.load(fp)
