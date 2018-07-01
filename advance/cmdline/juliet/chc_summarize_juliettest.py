@@ -28,11 +28,12 @@
 import argparse
 import os
 
+import advance.reporting.ProofObligations as RP
 import advance.util.fileutil as UF
 import advance.util.printutil as UP
 
-import advance.reporting.ProofObligations as RP
-
+from advance.util.Config import Config
+from advance.util.IndexedTable import IndexedTableError
 from advance.app.CApplication import CApplication
 
 def parse():
@@ -51,17 +52,31 @@ if __name__ == '__main__':
     if not os.path.isdir(cpath):
         print(UP.cpath_not_found_err_msg(cpath))
         exit(1)
-    
+
+    if not os.path.isdir(cpath):
+        print(UP.cpath_not_found_err_msg(cpath))
+        exit(1)
+
     sempath = os.path.join(cpath,'semantics')
+
     if not os.path.isdir(sempath):
         print(UP.semantics_not_found_err_msg(cpath))
         exit(1)
-        
+
+    def filefilter(filename):
+        return (not (filename in  [ "io", "main_linux", "std_thread" ]))
+    
     capp = CApplication(sempath)
-
-    filterout = [ 'io', 'main_linux', 'std_thread' ]
-    dc = [ 'deadcode' ]
-    def filefilter(f): return (not f in filterout)
-
-    print(RP.project_proofobligation_stats_tostring(capp,extradsmethods=dc,filefilter=filefilter))
+    timestamp = os.stat(capp.path).st_ctime
+    try:
+        result = RP.project_proofobligation_stats_to_dict(capp,filefilter=filefilter)
+        result['timestamp'] = timestamp
+        result['project'] = cpath
+        UF.save_project_summary_results(cpath,result)
+    except IndexedTableError as e:
+        print(
+            '\n' + ('*' * 80) + '\nThe analysis results format has changed'
+            + '\nYou may have to re-run the analysis first: '
+            + '\n' + e.msg
+            + '\n' + ('*' * 80))
 

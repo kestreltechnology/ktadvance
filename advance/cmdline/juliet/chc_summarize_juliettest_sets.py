@@ -1,5 +1,3 @@
-# ------------------------------------------------------------------------------
-# Access to the C Analyzer Analysis Results
 # Author: Henny Sipma
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
@@ -25,43 +23,24 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-import argparse
 import os
+import subprocess
 
-import advance.util.fileutil as UF
-import advance.util.printutil as UP
-
-import advance.reporting.ProofObligations as RP
-
-from advance.app.CApplication import CApplication
-
-def parse():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('path',
-                            help='path to the juliet test case (relative to juliet_v1.3)' +
-                            ' (e.g., CWE121/s01/CWE129_large)')
-    args = parser.parse_args()
-    return args
+import advance.cmdline.juliet.JulietTestCases as JTC
 
 if __name__ == '__main__':
 
-    args = parse()
-    cpath = UF.get_juliet_testpath(args.path)
+    for cwe in sorted(JTC.testcases):
+        for t in JTC.testcases[cwe]:
+            testcase = os.path.join(cwe,t)
+            print(testcase)
+            cmd = [ 'python' , 'chc_summarize_juliettest.py', testcase ]
+            result = subprocess.call(cmd,stderr=subprocess.STDOUT)
+            if result != 0:
+                raise Exception('Error in testcase ' + testcase)
+    else:
+        cmd = [ 'python', 'chc_project_dashboard.py' ]
+        result = subprocess.call(cmd,stderr=subprocess.STDOUT)
 
-    if not os.path.isdir(cpath):
-        print(UP.cpath_not_found_err_msg(cpath))
-        exit(1)
-    
-    sempath = os.path.join(cpath,'semantics')
-    if not os.path.isdir(sempath):
-        print(UP.semantics_not_found_err_msg(cpath))
-        exit(1)
-        
-    capp = CApplication(sempath)
-
-    filterout = [ 'io', 'main_linux', 'std_thread' ]
-    dc = [ 'deadcode' ]
-    def filefilter(f): return (not f in filterout)
-
-    print(RP.project_proofobligation_stats_tostring(capp,extradsmethods=dc,filefilter=filefilter))
-
+        print('\n\n' + ('=' * 80) + '\nAll Juliet test cases were scored successfully.')
+        print(('=' * 80) + '\n')
