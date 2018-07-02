@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -36,6 +36,9 @@ class TestCFileRef(object):
         self.r = r
         self.functions = {}
         self._initialize()
+
+    def iter(self,f):
+        for fn in self.functions.values(): f(fn)
 
     def get_functionnames(self): return sorted(self.functions.keys())
 

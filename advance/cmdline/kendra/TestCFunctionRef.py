@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,18 @@ class TestCFunctionRef(object):
         for l in self.ppos: result.extend(self.ppos[l])
         return result
 
+    def add_ppo(self,ppo):
+        self.r['ppos'].append(ppo)
+
     def has_ppos(self): return len(self.ppos) > 0
+
+    def get_pred_ppos(self,pred):
+        result = []
+        for line in self.ppos:
+            for ppo in self.ppos[line]:
+                if ppo.get_predicate() == pred:
+                    result.append(ppo)
+        return result
 
     def get_spos(self):
         result = []

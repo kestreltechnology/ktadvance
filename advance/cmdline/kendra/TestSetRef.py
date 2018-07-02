@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Kestrel Technology LLC
+# Copyright (c) 2017-2018 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,9 @@ class TestSetRef(object):
             self.r = json.load(fp)
         self.cfiles = {}
         self._initialize()
+
+    def iter(self,f):
+        for cfile in self.cfiles.values(): f(cfile)
 
     def get_cfilenames(self): return sorted(self.cfiles.keys())
 
