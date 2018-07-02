@@ -349,6 +349,10 @@ def has_global_contract(path):
     filename = os.path.join(path,'globaldefs.json')
     return os.path.isfile(filename)
 
+def has_global_xml_contract(path):
+    filename = os.path.join(path,'globaldefs.xml')
+    return os.path.isfile(filename)
+
 def get_global_contract(path):
     filename = os.path.join(path,'globaldefs.json')
     if os.path.isfile(filename):
