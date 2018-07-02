@@ -84,11 +84,11 @@ class CGlobalContract(object):
         if UF.has_global_contract(self.contractpath):
             logging.info('Load globaldefs.json contract file')
             globalcontract = UF.get_global_contract(self.contractpath)
-        if globalcontract is None: return
-        if 'hidden-structs' in globalcontract:
-            self.hiddenstructs = globalcontract['hidden-structs']
-        if 'hidden-fields' in globalcontract:
-            self.hiddenfields = globalcontract['hidden-fields']
+        if globalcontract is not None:
+            if 'hidden-structs' in globalcontract:
+                self.hiddenstructs = globalcontract['hidden-structs']
+            if 'hidden-fields' in globalcontract:
+                self.hiddenfields = globalcontract['hidden-fields']
         if UF.has_global_xml_contract(self.contractpath):
             logging.info('Load globaldefs.xml contract file')
             globalxmlcontract = UF.get_global_xml_contract(self.contractpath)
