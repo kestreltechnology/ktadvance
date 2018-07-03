@@ -125,7 +125,10 @@ class CFile(object):
             return self.contracts.get_function_contract(name)
 
     def get_max_functionname_length(self):
-        return max([ len(x) for x in self.functionnames ])
+        if len(self.functionnames) > 0:
+            return max([ len(x) for x in self.functionnames ])
+        else:
+            return 10
 
     def get_source_line(self,n):
         self._initialize_source()
