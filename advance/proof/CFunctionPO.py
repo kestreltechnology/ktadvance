@@ -38,9 +38,10 @@ po_status_indicators = { v:k for (k,v) in po_status.items() }
 
 class CProofDiagnostic(object):
 
-    def __init__(self,invsmap,msgs,amsgs):
+    def __init__(self,invsmap,msgs,amsgs,kmsgs):
         self.invsmap = invsmap  # arg -> int list
-        self.amsgs = amsgs      # arg -> string list (argument-specific messages) 
+        self.amsgs = amsgs      # arg -> string list (argument-specific messages)
+        self.kmsgs = kmsgs      # key -> string list (keyword messages)
         self.msgs = msgs        # string list
 
     def get_argument_indices(self): return self.invsmap.keys()
@@ -53,6 +54,7 @@ class CProofDiagnostic(object):
         inode = ET.Element('invs')        # invariants
         mmnode = ET.Element('msgs')       # general messages
         aanode = ET.Element('amsgs')      # messages about individual arguments
+        kknode = ET.Element('kmsgs')      # keyword messages
         for arg in self.invsmap:
             anode = ET.Element('arg')
             anode.set('a',str(arg))
@@ -66,11 +68,19 @@ class CProofDiagnostic(object):
                 tnode.set('t',t)
                 anode.append(tnode)
             aanode.append(anode)
+        for key in self.kmsgs:
+            knode = ET.Element('key')
+            knode.set('k',str(key))
+            for t in self.kmsgs[key]:
+                tnode = ET.Element('msg')
+                tnode.set('t',t)
+                knode.append(tnode)
+            kknode.append(knode)
         for t in self.msgs:
             mnode = ET.Element('msg')
             mnode.set('t',t)
             mmnode.append(mnode)
-        dnode.extend([inode, mmnode, aanode])
+        dnode.extend([inode, mmnode, aanode, kknode])
 
     def __str__(self):
         if len(self.msgs) == 0:
@@ -204,6 +214,23 @@ class CFunctionPO(object):
     def has_explanation(self): return (not self.explanation is None)
 
     def has_diagnostic(self): return (not self.diagnostic is None)
+
+    def has_referral_diagnostic(self):
+        if self.has_diagnostic():
+            for k in self.diagnostic.kmsgs:
+                if k.startswith('DomainRef'):
+                    return True
+        return False
+
+    def get_referral_diagnostics(self):
+        result = {}
+        if self.has_referral_diagnostic():
+            for k in self.diagnostic.kmsgs:
+                if k.startswith('DomainRef'):
+                    key = k[10:]
+                    if not key in result: result[key] = []
+                    result[key].extend(self.diagnostic.kmsgs[k])
+        return result
 
     def get_display_prefix(self):
         if self.is_violated(): return '<*>'

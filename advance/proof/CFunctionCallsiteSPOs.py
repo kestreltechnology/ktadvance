@@ -245,6 +245,7 @@ class CFunctionCallsiteSPOs(object):
                     if not dnode is None:
                         pinvs = {}
                         amsgs = {}
+                        kmsgs = {}
                         inode = dnode.find('invs')
                         if not inode is None:
                             for n in dnode.find('invs').findall('arg'):
@@ -260,7 +261,13 @@ class CFunctionCallsiteSPOs(object):
                                 arg = int(n.get('a'))
                                 msgs = [ x.get('t') for x in n.findall('msg') ]
                                 amsgs[arg] = msgs
-                        diag = CProofDiagnostic(pinvs,pmsgs,amsgs)
+                        knode = dnode.find('kmsgs')
+                        if not knode is None:
+                            for n in dnode.find('kmsgs').findall('key'):
+                                key = n.get('k')
+                                msgs = [  x.get('t') for x in n.findall('msg') ]
+                                kmsgs[key] = msgs
+                        diag = CProofDiagnostic(pinvs,pmsgs,amsgs,kmsgs)
                     self.spos[apiid].append(CFunctionCallsiteSPO(self,spotype,status,deps,expl,diag))
 
         # read in assumptions about the post conditions of the callee
