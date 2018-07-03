@@ -122,8 +122,9 @@ class AnalysisManager(object):
     def _create_file_primary_proofobligations_cmd_partial(self):
         cmd = [ self.canalyzer, '-summaries', self.chsummaries,
                     '-command', 'primary' ]
-        for s in self.thirdpartysummaries:
-            cmd.extend(['-summaries',s])
+        if not (self.thirdpartysummaries is None):
+            for s in self.thirdpartysummaries:
+                cmd.extend(['-summaries',s])
         if not (self.contractpath is None):
             cmd.extend(['-contractpath',self.contractpath])
 
@@ -170,15 +171,17 @@ class AnalysisManager(object):
                 self._execute_cmd(cmd)
             self.capp.iter_filenames_parallel(f, processes)
         else:
-            def f(cfile):self.create_file_primary_proofobligations(cfile)
+            def f(cfile):
+                self.create_file_primary_proofobligations(cfile)
             self.capp.iter_filenames(f)
 
     def _generate_and_check_file_cmd_partial(self, domains):
         cmd = [ self.canalyzer, '-summaries', self.chsummaries,
                     '-command', 'generate_and_check',
                     '-domains', domains ]
-        for s in self.thirdpartysummaries:
-            cmd.extend(['-summaries',s])
+        if not (self.thirdpartysummaries is None):
+            for s in self.thirdpartysummaries:
+                cmd.extend(['-summaries',s])
         if not (self.contractpath is None):
             cmd.extend(['-contractpath',self.contractpath])
         if self.nofilter: cmd.append('-nofilter')
@@ -221,7 +224,8 @@ class AnalysisManager(object):
                 self._execute_cmd(cmd)
             self.capp.iter_filenames_parallel(f, processes)
         else:
-            def f(cfile): self.generate_and_check_file(cfile,domains)
+            def f(cfile):
+                self.generate_and_check_file(cfile,domains)
             self.capp.iter_filenames(f)
         self.capp.iter_filenames(self.reset_tables)
 
