@@ -360,6 +360,10 @@ def get_global_contract(path):
             return json.load(fp)
     return {}
 
+def get_global_xml_contract(path):
+    filename = os.path.join(path,'globaldefs.xml')
+    return get_xnode(filename,'global-definitions','Global contract file')
+
 def _save_contracts_file_aux(path,filename,cnode):
     filedir = os.path.dirname(filename)
     if not os.path.isdir(filedir):

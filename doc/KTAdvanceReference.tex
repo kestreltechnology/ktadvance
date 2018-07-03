@@ -136,6 +136,15 @@ of all primitive predicates used is given below.
 \paragraph{allocation-base (ptr:exp): }
 The value of the ptr expression is the address of a 
                 dynamically allocated memory region.
+                
+\paragraph{can-leave-scope(ptr:exp): }
+The value of the pointer expression  can safely leave the scope (it does
+not point to a memory location that goes out of scope when the block/function
+is exited).
+                
+\paragraph{cast(tfrom:typ,tto:typ,e:exp):}
+The value of the expression can be safely cast from type {\tt tfrom}
+to type {\tt tto}.
 
 \paragraph{common-base (ptr1:exp, ptr2:exp): }
 The value of the ptr1 expression and the value of the ptr2 expression
@@ -160,6 +169,17 @@ The value in the location denoted by lhs is initialized.
 The value of the ptr expression points to a memory region of which at least
 len bytes are initialized starting from the address in ptr.
 
+\paragraph{in-scope(ptr:exp): }
+The value of the ptr expression points to a memory region that is in scope.
+
+\paragraph{int-overflow(op:binop,e1:exp,e2:exp,k:ikind): }
+The operation {\tt op} performed on expressions e1 and e2 does not lead to
+integer overflow, with {\tt k} indicating the width of the integer.
+
+\paragraph{int-underflow(op:binop,e1:exp,e2:exp,k:ikind): }
+The operation {\tt op} performed on expressions e1 and e2 does not lead to
+integer underflow, with {\tt k} indicating the width of the integer.
+
 \paragraph{lower-bound (ptr:exp):}
 The value of the ptr expression is greater than or equal to the
     lower bound of the memory region it is pointing at (vacuously true for NULL).
@@ -168,7 +188,7 @@ The value of the ptr expression is greater than or equal to the
 The value of the scalar expression is non-negative.
 
 \paragraph{no-overlap (ptr1:exp, ptr2:exp): }
-the value of the ptr1 expression and the value of the ptr2
+The value of the ptr1 expression and the value of the ptr2
    expression do not point at the same memory region.
 
 \paragraph{not-null (ptr:exp):}
@@ -184,15 +204,27 @@ The value of the ptr expression is NULL.
 The ptr expression points at a memory region that contains a null-terminator
 within its bounds.
 
-\paragraph{ptr-lower-bound (t:typ, op:binop, ptr:exp, scalar:exp)}
+\paragraph{pointer-cast(tfrom:typ,tto:typ,ptr:exp):}
+The ptr expression can be safely cast from target type {\tt tfrom} to
+target type {\tt tto}.
+
+\paragraph{ptr-lower-bound (t:typ, op:binop, ptr:exp, scalar:exp):}
 The result of the operation op performed on the ptr expression and scalar expression
 is greater than or equal to the lower bound of the memory region pointed to by
 the ptr expression.
 
-\paragraph{ptr-upper-bound (t:typ, op:binop, ptr:exp, scalar:exp)}
+\paragraph{ptr-upper-bound (t:typ, op:binop, ptr:exp, scalar:exp):}
 The result of the operation op performed on the ptr expression and scalar expression
 is less than or equal to the upper bound of the memory region pointed to by the ptr
 expression.
+
+\paragraph{signed-to-unsiged-cast(ifrom:ikind,ito:ikind,scalar:exp):}
+The scalar expression can be safely cast from the signed integer type {\tt ifrom}
+to the unsigned integer type {\tt ito}, in particular, it should be non-negative.
+
+\paragraph{unsigned-to-signed-cast(ifrom:ikind,ito:ikind,scalar:exp):}
+The scalar expression can be safely cast from the unsigned integer type {\tt ifrom}
+to the signed integer type {\tt ito}.
 
 \paragraph{upper-bound (ptr:exp):}
 The value of the ptr expression is less than or equal to the
@@ -202,6 +234,13 @@ The value of the ptr expression is less than or equal to the
 The value of the ptr expression is the address of or inside a 
 	valid memory region, that is, a memory region that has not been freed and
 	has not gone out of scope.
+	
+\paragraph{value-constraint(e:exp)}
+Boolean expression that is supposed to evaluate to true.
+
+\paragraph{width-overflow(e:exp,k:ikind):}
+The value of the expression is less than the width of the integer type
+(in bits).
 
 The following predicates are not a weakest precondition for undefined behavior, but
 are included to identify constructs generally considered undesirable.
@@ -250,7 +289,7 @@ source directory.
    \emph{created by:} Parser \\
    \emph{updated by:} none
 \item {\bf \fname\_cdict.xml: } Dictionary of types, variables, expressions, etc.
-   that appear in the program.\\
+   that appear in the program or in  proof obligations.\\
    \emph{created by:} Parser \\
    \emph{updated by:} C Analyzer (primary proof obligation generation)
 \item {\bf \fname\_gxrefs.xml: } Mapping between global indices and file-local
@@ -271,6 +310,9 @@ source directory.
    proof obligations.\\
    \emph{created by:} C Analyzer (primary proof obligation generator) \\
    \emph{updated by:} PyAdvance (creation of supporting proof obligations)
+\item {\bf \fname\_cgl.xml:} Dictionary of global and field assignments.\\
+	\emph{created by:} C Analyzer (primary proof obligation generator) \\
+	\emph{updated by:} C Analyzer (invariant generation)
 \end{itemize}
 
 \subsection{Function-level}
@@ -287,10 +329,10 @@ files.
    \emph{updated by:} none
 \item {\bf \fnname\_api.xml:} Application interface artifacts for a function,
   including assumptions on arguments (used to create supporting proof obligations),
-  postcondition guarantees provided by the function, postcondition requests from
-  other functions.\\
+  postcondition guarantees provided by the function, postcondition requests on
+  other functions, global variable condition requests.\\
   \emph{created by:} C Analyzer (primary proof obligation generation) \\
-  \emph{updated by:} C Analyzer (invariant gernation, proof obligation check), PyAdvance
+  \emph{updated by:} C Analyzer (invariant generation, proof obligation check), PyAdvance
 \item {\bf \fnname\_ppo.xml:} Primary proof obligations for a function. \\
   \emph{created by:} C Analyzer (primary proof obligation generation) \\
   \emph{updated by:} C Analyzer (proof obligation check)
@@ -342,6 +384,7 @@ name & description & AdvancePy reference\\  \hline
 {\tt host} & program location & app/CLHost.py \\
 {\tt lval} & program left-hand values & app/CLval.py\\
 {\tt offset} & location offsets (field, index) & app/COffsetExp.py \\
+{\tt string} & constant strings & util/StringIndexedTable.py \\
 {\tt typ} & program types & app/CTyp.py \\
 \end{tabular}
 \caption{\label{tab:cdict}Tables included in the \_cdict dictionary}

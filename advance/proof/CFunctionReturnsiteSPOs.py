@@ -110,6 +110,7 @@ class CFunctionReturnsiteSPOs(object):
                 if not dnode is None:
                     pinvs = {}
                     amsgs = {}
+                    kmsgs = {}
                     for n in dnode.find('invs').findall('arg'):
                         pinvs[int(n.get('a'))] = [ int(x) for x in n.get('i').split(',') ]
                     pmsgs = [ x.get('t') for x in dnode.find('msgs').findall('msg') ]
@@ -117,5 +118,11 @@ class CFunctionReturnsiteSPOs(object):
                         arg = int(n.get('a'))
                         msgs = [ x.get('t') for x in n.findall('msg') ]
                         amsgs[arg] = msgs
-                    diag = CProofDiagnostic(pinvs,pmsgs,amsgs)
+                    knode = dnode.find('kmsgs')
+                    if not knode is None:
+                        for n in dnode.find('kmsgs').findall('key'):
+                            key = n.get('k')
+                            msgs = [  x.get('t') for x in n.findall('msg') ]
+                            kmsgs[key] = msgs
+                    diag = CProofDiagnostic(pinvs,pmsgs,amsgs,kmsgs)
                 self.spos[iipc].append(CFunctionReturnsiteSPO(self,spotype,status,deps,expl,diag))

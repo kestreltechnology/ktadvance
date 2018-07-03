@@ -72,9 +72,9 @@ if __name__ == '__main__':
     if not os.path.isdir(sempath):
         print(UP.semantics_not_found_err_msg(cpath))
         exit(1)
-        
-    cfapp = CApplication(sempath,args.cfile)
+
     try:
+        cfapp = CApplication(sempath,args.cfile)
         cfile = cfapp.get_cfile()
     except CFileNotFoundException as e:
         print(e)

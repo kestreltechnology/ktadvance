@@ -1,10 +1,8 @@
-# ------------------------------------------------------------------------------
-# KT Advance C Source Code Analyzer
 # Author: Henny Sipma
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017-2018 Kestrel Technology LLC
+# Copyright (c) 2017 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,40 +23,34 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import argparse
+import os
+import subprocess
 
-from advance.cmdline.kendra.TestCFunctionRef import TestCFunctionRef
+def parse():
+    parser = argparse.ArgumentParser();
+    parser.add_argument('--apps',help='list of applications to analyze',
+                            nargs='*')
+    parser.add_argument('--maxprocesses',help='maximum number of processors',
+                            type=int,default=1)
+    args = parser.parse_args()
+    return args
 
-class TestCFileRef(object):
 
-    def __init__(self,testsetref,name,r):
-        self.testsetref = testsetref
-        self.name = name
-        self.r = r
-        self.functions = {}
-        self._initialize()
+if __name__ == '__main__':
 
-    def iter(self,f):
-        for fn in self.functions.values(): f(fn)
+    args = parse()
 
-    def get_functionnames(self): return sorted(self.functions.keys())
-
-    def get_functions(self):
-        return sorted(self.functions.values(),key=lambda f:f.name)
-
-    def get_function(self,fname):
-        if fname in self.functions:
-            return self.functions[fname]
-
-    def has_domains(self):
-        return 'domains' in self.r and len(self.r['domains']) > 0
-
-    def get_domains(self): return self.r['domains']
-
-    def has_spos(self):
-        for f in self.get_functions():
-            if f.has_spos(): return True
-        else: return False
-
-    def _initialize(self):
-        for f in self.r['functions']:
-            self.functions[f] = TestCFunctionRef(self,f,self.r['functions'][f])
+    for app in args.apps:
+        print('\nAnalyzing ' + str(app))
+        print('-' * (10 + len(app)))
+        cmd = [ 'python',  'chc_analyze_project.py', app , '--deletesemantics',
+                    '--verbose', '--maxprocesses', str(args.maxprocesses) ]
+        result = subprocess.call(cmd,stderr=subprocess.STDOUT)
+        if result != 0:
+            print('Error in application ' + app)
+            break
+    else:
+        print('\n\n' + ('=' * 80) + '\nThe following applications ran successfully:')
+        for app in args.apps:
+            print(' - ' + app)

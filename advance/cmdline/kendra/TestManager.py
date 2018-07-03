@@ -246,8 +246,8 @@ class TestManager(object):
                             self.check_ppos(creffilename,fname,funppos,refppos)
                         else:
                             self.testresults.add_ppo_count_error(
-                                cfilename,fname,len(funppos),len(refppos))
-                            raise FunctionPPOError(cfilename + ':' + fname)
+                                creffilename,fname,len(funppos),len(refppos))
+                            raise FunctionPPOError(creffilename + ':' + fname)
         except FunctionPPOError as detail:
             self.print_test_results()
             print('Function PPO error: ' + str(detail))
