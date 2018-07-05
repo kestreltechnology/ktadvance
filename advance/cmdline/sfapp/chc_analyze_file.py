@@ -26,6 +26,7 @@
 # ------------------------------------------------------------------------------
 
 import argparse
+import logging
 import time
 import os
 
@@ -61,6 +62,9 @@ def parse():
     parser.add_argument('--verbose',help='print out intermediate results',
                             action='store_true')
     parser.add_argument('--contractpath',help='path to contract files',default=None)
+    parser.add_argument('--unreachability',help='use unreachability to discharge proof obligations',
+                            action='store_true')
+    parser.add_argument('--thirdpartysummaries',help='use 3rd party summaries',nargs='*')
     args = parser.parse_args()
     return args
 
@@ -73,6 +77,9 @@ def timing(activity):
           '\n' + ('=' * 80))
 
 if __name__ == '__main__':
+
+    logging.basicConfig(filename='ktadvance.log',level=logging.WARNING)
+    
     args = parse()
     cpath = os.path.abspath(args.path)
 
@@ -111,7 +118,8 @@ if __name__ == '__main__':
         exit(1)
     
     am = AnalysisManager(capp,onefile=True,wordsize=int(args.wordsize),verbose=args.verbose,
-                             unreachability=False)
+                             unreachability=args.unreachability,
+                             thirdpartysummaries=args.thirdpartysummaries)
 
     cfilename = args.cfile
 
