@@ -53,6 +53,8 @@ class XPredicate(CD.CDictionaryRecord):
     def is_input_formatstring(self): return False
     def is_new_memory(self): return False
     def is_no_overlap(self): return False
+    def is_not_zero(self): return False
+    def is_non_negative(self): return False
     def is_not_null(self): return False
     def is_null(self): return False
     def is_null_terminated(self): return False
@@ -259,6 +261,41 @@ class XNotNull(XPredicate):
 
     def __str__(self): return 'not-null(' + str(self.get_term()) + ')'
 
+class XNonNegative(XPredicate):
+
+    def __init__(self,cd,index,tags,args):
+        XPredicate.__init__(self,cd,index,tags,args)
+
+    def get_term(self): return self.get_iterm(0)
+
+    def is_non_negative(self): return True
+
+    def write_mathml(self,cnode,signature):
+        anode = ET.Element('apply')
+        opnode =  ET.Element('non-negative')
+        rnode = self.get_term().get_mathml_node(signature)
+        anode.extend([opnode, rnode])
+        cnode.append(anode)
+
+    def __str__(self): return 'non-negative(' + str(self.get_term()) + ')'
+
+class XNotZero(XPredicate):
+
+    def __init__(self,cd,index,tags,args):
+        XPredicate.__init__(self,cd,index,tags,args)
+
+    def get_term(self): return self.get_iterm(0)
+
+    def is_not_zero(self): return True
+
+    def write_mathml(self,cnode,signature):
+        anode = ET.Element('apply')
+        opnode =  ET.Element('not-zero')
+        rnode = self.get_term().get_mathml_node(signature)
+        anode.extend([opnode, rnode])
+        cnode.append(anode)
+
+    def __str__(self): return 'not-zero(' + str(self.get_term()) + ')'
 
 class XNull(XPredicate):
 
