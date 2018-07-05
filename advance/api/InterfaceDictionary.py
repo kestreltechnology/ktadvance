@@ -72,6 +72,8 @@ xpredicate_constructors = {
     'nm': lambda x:XP.XNewMemory(*x),
     'no': lambda x:XP.XNoOverlap(*x),
     'nn': lambda x:XP.XNotNull(*x),
+    'nng': lambda x:XP.XNonNegative(*x),
+    'nz': lambda x:XP.XNotZero(*x),
     'null': lambda x:XP.XNull(*x),
     'nt': lambda x:XP.XNullTerminated(*x),
     'ofs': lambda x:XP.XOutputFormatString(*x),
@@ -229,6 +231,14 @@ class InterfaceDictionary(object):
             args = [ self.index_s_term(p.get_term()) ]
             def f(index,key): return XP.XNotNull(self,index,p.tags,args)
             return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_not_zero():
+            args = [ self.index_s_term(p.get_term()) ]
+            def f(index,key): return XP.XNotZero(self,index,p.tags,args)
+            return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_non_negative():
+            args = [ self.index_s_term(p.get_term()) ]
+            def f(index,key): return XP.XNonNegative(self,index,p.tags,args)
+            return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_initialized():
             args = [ self.index_s_term(p.get_term()) ]
             def f(index,key): return XP.XInitialized(self,index,p.tags,args)
@@ -317,8 +327,11 @@ class InterfaceDictionary(object):
         anode = mnode.find('apply')
         def pt(t): return self.parse_mathml_term(t,pars,gvars=gvars)
         (op,terms) = (anode[0].tag,anode[1:])
-        if op in ['eq','neq','gt','lt','ge','le']:
+        optransformer = { 'eq':'eq', 'neq':'ne', 'gt':'gt', 'lt':'lt',
+                              'geq':'ge', 'leq':'le' }
+        if op in ['eq','neq','gt','lt','geq','leq']:
             args = [ pt(t) for t in terms ]
+            op = optransformer[op]
             tags = [ 'x', op ]
             def f(index,key): return XP.XRelationalExpr(self,index,tags,args)
             return self.xpredicate_table.add(IT.get_key(tags,args),f)
@@ -326,6 +339,16 @@ class InterfaceDictionary(object):
             args = [ pt(terms[0]) ]
             tags = [ 'nn' ]
             def f(index,key): return XP.XNotNull(self,index,tags,args)
+            return self.xpredicate_table.add(IT.get_key(tags,args),f)
+        if op == 'not-zero':
+            args = [ pt(terms[0]) ]
+            tags = [ 'nz' ]
+            def f(index,key): return XP.XNotZero(self,index,tags,args)
+            return self.xpredicate_table.add(IT.get_key(tags,args),f)
+        if op == 'non-negative':
+            args = [ pt(terms[0]) ]
+            tags = [ 'nng' ]
+            def f(index,key): return XP.XNonNegative(self,index,tags,args)
             return self.xpredicate_table.add(IT.get_key(tags,args),f)
         if op == 'preserves-all-memory':
             args = []

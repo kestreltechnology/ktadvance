@@ -33,12 +33,14 @@ import advance.util.fileutil as UF
 import advance.util.printutil as UP
 import advance.util.xmlutil as UX
 
+from advance.util.Config import Config
 from advance.app.CApplication import CApplication
 
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('path',
-                            help="directory that holds the semantics directory")
+                            help=('directory that holds the semantics directory'
+                                      + ' or the name of a test application'))
     parser.add_argument('--contractpath',help='path to the contracts file',default=None)
     args = parser.parse_args()
     return args
@@ -46,8 +48,14 @@ def parse():
 if __name__ == '__main__':
 
     args = parse()
+    config = Config()
 
-    cpath = args.path
+    if args.path in config.projects:
+        pdir = config.projects[args.path]
+        cpath = os.path.join(config.testdir,pdir)
+    else:
+        cpath = os.path.abspath(args.path)
+
     if not os.path.isdir(cpath):
         print(UP.cpath_not_found_err_msg(cpath))
         exit(1)
