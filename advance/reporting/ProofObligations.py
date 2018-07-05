@@ -208,6 +208,11 @@ class FunctionDisplay(object):
                         for arg in sorted(amsgs):
                             for s in sorted(amsgs[arg]):
                                 lines.append((' ' * indent) + s)
+                    kmsgs = po.diagnostic.kmsgs
+                    if len(kmsgs) > 0:
+                        for key in sorted(kmsgs):
+                            for s in sorted(kmsgs[key]):
+                                lines.append((' ' * indent) + key + ": " + s)
                     msgs = po.diagnostic.msgs
                     if len(msgs) > 0:
                         for m in msgs:
@@ -266,6 +271,11 @@ class FunctionDisplay(object):
                         for arg in sorted(amsgs):
                             for s in sorted(amsgs[arg]):
                                 lines.append((' ' * indent) + s)
+                    kmsgs = po.diagnostic.kmsgs
+                    if len(kmsgs) > 0:
+                        for key in sorted(kmsgs):
+                            for s in sorted(kmsgs[key]):
+                                lines.append((' ' * indent) + key + ": " + s)
                     msgs = po.diagnostic.msgs
                     if len(msgs) > 0:
                         for m in msgs:
