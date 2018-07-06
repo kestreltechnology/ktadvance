@@ -9,29 +9,63 @@
           <par name="_index" nr="1"/>
         </parameters>
         <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="adjustmentFunction"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="adjustmentIndex"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="auxChannelIndex"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="auxSwitchChannelIndex"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post><math><apply><not-null/><return/></apply></math></post>	  
+	</postconditions>
       </function>
       <function name="applySelectAdjustment">
         <parameters>
           <par name="adjustmentFunction" nr="1"/>
           <par name="position" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="applyStepAdjustment">
         <parameters>
@@ -39,57 +73,39 @@
           <par name="adjustmentFunction" nr="2"/>
           <par name="delta" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="blackboxConfig">
         <parameters/>
         <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="device"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post><math><apply><not-null/><return/></apply></math></post>
+	</postconditions>
       </function>
       <function name="blackboxLogInflightAdjustmentEvent">
         <parameters>
           <par name="adjustmentFunction" nr="1"/>
           <par name="newValue" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="cmp32">
         <parameters>
           <par name="a" nr="1"/>
           <par name="b" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="configureAdjustment">
         <parameters>
@@ -97,15 +113,7 @@
           <par name="auxSwitchChannelIndex" nr="2"/>
           <par name="adjustmentConfig" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="constrain">
         <parameters>
@@ -113,91 +121,63 @@
           <par name="low" nr="2"/>
           <par name="high" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="processRcAdjustments">
         <parameters>
           <par name="controlRateConfig" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="resetAdjustmentStates">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="rxConfig">
         <parameters/>
         <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="midrc"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post><math><apply><not-null/><return/></apply></math></post>	  
+	</postconditions>
       </function>
       <function name="systemConfig">
         <parameters/>
         <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="rateProfile6PosSwitch"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post><math><apply><not-null/><return/></apply></math></post>	  
+	</postconditions>
       </function>
       <function name="updateAdjustmentStates">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="useAdjustmentConfig">
         <parameters>
           <par name="pidProfileToUse" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
     </functions>
   </cfile>

@@ -7,161 +7,145 @@
       <function name="accelerometerConfigMutable">
         <parameters/>
         <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	  <post><math><apply><not-null/><return/></apply></math></post>	  
+	</postconditions>
       </function>
       <function name="batteryConfig">
         <parameters/>
         <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="currentMeterSource"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="useConsumptionAlerts"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="useVBatAlerts"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="voltageMeterSource"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post><math><apply><not-null/><return/></apply></math></post>	  
+	</postconditions>
       </function>
       <function name="fcTasksInit">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="rxConfig">
         <parameters/>
         <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="serial_rx_provider"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post><math><apply><not-null/><return/></apply></math></post>	  
+	</postconditions>
       </function>
       <function name="serialConfig">
         <parameters/>
         <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="serial_update_rate_hz"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post><math><apply><not-null/><return/></apply></math></post>
+	</postconditions>
       </function>
       <function name="taskBatteryAlerts">
         <parameters>
           <par name="currentTimeUs" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="taskCameraControl">
         <parameters>
           <par name="currentTime" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="taskHandleSerial">
         <parameters>
           <par name="currentTimeUs" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="taskSerialCheck">
         <parameters>
           <par name="currentTimeUs" nr="1"/>
           <par name="currentDeltaTimeUs" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="taskTelemetry">
         <parameters>
           <par name="currentTimeUs" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="taskUpdateAccelerometer">
         <parameters>
           <par name="currentTimeUs" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="taskUpdateRxMain">
         <parameters>
           <par name="currentTimeUs" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
     </functions>
   </cfile>

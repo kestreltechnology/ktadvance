@@ -7,64 +7,64 @@
       <function name="blackboxConfig">
         <parameters/>
         <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="device"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="numBlocks"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="p_denom"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post><math><apply><not-null/><return/></apply></math></post>
         </postconditions>
       </function>
       <function name="blackboxConfigMutable">
         <parameters/>
         <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	  <post><math><apply><not-null/><return/></apply></math></post>	  
+	</postconditions>
       </function>
       <function name="cmsx_Blackbox_GetDeviceStatus">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="cmsx_Blackbox_onEnter">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="cmsx_Blackbox_onExit">
         <parameters>
           <par name="self" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
     </functions>
   </cfile>

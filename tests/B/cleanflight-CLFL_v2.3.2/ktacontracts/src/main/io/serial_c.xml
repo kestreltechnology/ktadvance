@@ -8,158 +8,95 @@
         <parameters>
           <par name="serialPort" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="determinePortSharing">
         <parameters>
           <par name="portConfig" nr="1"/>
           <par name="function" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="doesConfigurationUsePort">
         <parameters>
           <par name="identifier" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="findNextSerialPortConfig">
         <parameters>
           <par name="function" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="findNextSharedSerialPort">
         <parameters>
           <par name="functionMask" nr="1"/>
           <par name="sharedWithFunction" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="findSerialPortConfig">
         <parameters>
           <par name="function" nr="1"/>
         </parameters>
         <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="blackbox_baudrateIndex"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="identifier"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
       <function name="findSerialPortIndexByIdentifier">
         <parameters>
           <par name="identifier" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="findSerialPortUsageByIdentifier">
         <parameters>
           <par name="identifier" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="findSerialPortUsageByPort">
         <parameters>
           <par name="serialPort" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="findSharedSerialPort">
         <parameters>
           <par name="functionMask" nr="1"/>
           <par name="sharedWithFunction" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="isSerialConfigValid">
         <parameters>
           <par name="serialConfigToCheck" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="isSerialPortShared">
         <parameters>
@@ -167,43 +104,19 @@
           <par name="functionMask" nr="2"/>
           <par name="sharedWithFunction" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="lookupBaudRateIndex">
         <parameters>
           <par name="baudRate" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="nopConsumer">
         <parameters>
           <par name="data" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="openSerialPort">
         <parameters>
@@ -215,108 +128,44 @@
           <par name="mode" nr="6"/>
           <par name="options" nr="7"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="pgResetFn_serialConfig">
         <parameters>
           <par name="serialConfig___0" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="serialConfig">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="serialConfigMutable">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="serialFindPortConfiguration">
         <parameters>
           <par name="identifier" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="serialGetAvailablePortCount">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="serialInit">
         <parameters>
           <par name="softserialEnabled" nr="1"/>
           <par name="serialPortToDisable" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="serialIsPortAvailable">
         <parameters>
           <par name="identifier" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="serialPassthrough">
         <parameters>
@@ -325,43 +174,19 @@
           <par name="leftC" nr="3"/>
           <par name="rightC" nr="4"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="serialRemovePort">
         <parameters>
           <par name="identifier" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
       <function name="waitForSerialPortToFinishTransmitting">
         <parameters>
           <par name="serialPort" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+        <postconditions/>
       </function>
     </functions>
   </cfile>
