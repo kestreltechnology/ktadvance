@@ -77,8 +77,8 @@ if __name__ == '__main__':
     lines = []
     def f(fi):
         if fi.has_file_contracts():
-            if fi.contracts.has_assertions():
-                lines.append(str(fi.contracts))
+            if fi.contracts.has_postconditions():
+                lines.append(str(fi.contracts.report_postconditions()))
 
     capp.iter_files(f)
 
