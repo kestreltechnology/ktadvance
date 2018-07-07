@@ -8,109 +8,63 @@
         <parameters>
           <par name="displayPort" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="displayPortMspInit">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="displayPortProfileMsp">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	<postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="colAdjust"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="rowAdjust"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
       <function name="drawScreen">
         <parameters>
           <par name="displayPort" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="grab">
         <parameters>
           <par name="displayPort" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="heartbeat">
         <parameters>
           <par name="displayPort" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="isSynced">
         <parameters>
           <par name="displayPort" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="isTransferInProgress">
         <parameters>
           <par name="displayPort" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="output">
         <parameters>
@@ -119,71 +73,26 @@
           <par name="buf" nr="3"/>
           <par name="len" nr="4"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="release">
         <parameters>
           <par name="displayPort" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="resync">
         <parameters>
           <par name="displayPort" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="screenSize">
         <parameters>
           <par name="displayPort" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="txBytesFree">
         <parameters>
           <par name="displayPort" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="writeChar">
         <parameters>
@@ -192,15 +101,6 @@
           <par name="row" nr="3"/>
           <par name="c" nr="4"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="writeString">
         <parameters>
@@ -209,15 +109,6 @@
           <par name="row" nr="3"/>
           <par name="string" nr="4"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
     </functions>
   </cfile>

@@ -71,13 +71,41 @@
         <parameters>
           <par name="identifier" nr="1"/>
         </parameters>
-        <postconditions/>
+        <postconditions>
+	  <post><math><apply><geq/><return/><cn>0</cn></apply></math></post>
+	  <post><math><apply><lt/><return/><cn>6</cn></apply></math></post>
+	</postconditions>
       </function>
       <function name="findSerialPortUsageByIdentifier">
         <parameters>
           <par name="identifier" nr="1"/>
         </parameters>
-        <postconditions/>
+        <postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="function"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="serialPort"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
       <function name="findSerialPortUsageByPort">
         <parameters>
@@ -148,7 +176,20 @@
         <parameters>
           <par name="identifier" nr="1"/>
         </parameters>
-        <postconditions/>
+        <postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="functionMask"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
       <function name="serialGetAvailablePortCount">
         <parameters/>

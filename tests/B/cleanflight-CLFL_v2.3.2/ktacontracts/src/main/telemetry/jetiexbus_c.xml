@@ -6,7 +6,32 @@
     <functions>
       <function name="batteryConfig">
         <parameters/>
-        <postconditions/>
+        <postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="currentMeterSource"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="voltageMeterSource"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
       <function name="calcCRC8">
         <parameters>
@@ -46,7 +71,9 @@
         <parameters>
           <par name="currentSensor" nr="1"/>
         </parameters>
-        <postconditions/>
+        <postconditions>
+	  <post><math><apply><lt/><return/><cn>10</cn></apply></math></post>
+	</postconditions>
       </function>
       <function name="getSensorValue">
         <parameters>

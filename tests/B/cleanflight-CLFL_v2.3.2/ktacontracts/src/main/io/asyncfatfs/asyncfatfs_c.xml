@@ -10,15 +10,6 @@
           <par name="startCluster" nr="2"/>
           <par name="endCluster" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_FATGetNextCluster">
         <parameters>
@@ -26,58 +17,26 @@
           <par name="cluster" nr="2"/>
           <par name="nextCluster" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_FATIsEndOfChainMarker">
         <parameters>
           <par name="clusterNumber" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_FATSetNextCluster">
         <parameters>
           <par name="startCluster" nr="1"/>
           <par name="nextCluster" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_allocateCacheSector">
         <parameters>
           <par name="sectorIndex" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	<postconditions>
+	  <post><math><apply><geq/><return/><cn>0</cn></apply></math></post>
+	  <post><math><apply><lt/><return/><cn>8</cn></apply></math></post>
+	</postconditions>
       </function>
       <function name="afatfs_allocateDirectoryEntry">
         <parameters>
@@ -85,154 +44,55 @@
           <par name="dirEntry" nr="2"/>
           <par name="finder" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
-      </function>
+    </function>
       <function name="afatfs_allocateFileHandle">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_appendFreeCluster">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_appendRegularFreeCluster">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_appendRegularFreeClusterContinue">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_appendRegularFreeClusterInitOperationState">
         <parameters>
           <par name="state" nr="1"/>
           <par name="previousCluster" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_appendSupercluster">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_appendSuperclusterContinue">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_assert">
         <parameters>
           <par name="condition" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_byteIndexInCluster">
         <parameters>
           <par name="byteOffset" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_cacheFlushSector">
         <parameters>
           <par name="cacheIndex" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_cacheSector">
         <parameters>
@@ -241,29 +101,11 @@
           <par name="sectorFlags" nr="3"/>
           <par name="eraseCount" nr="4"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_cacheSectorGetMemory">
         <parameters>
           <par name="cacheEntryIndex" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_cacheSectorInit">
         <parameters>
@@ -271,55 +113,19 @@
           <par name="sectorIndex" nr="2"/>
           <par name="locked" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_cacheSectorMarkDirty">
         <parameters>
           <par name="descriptor" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_chdir">
         <parameters>
           <par name="directory" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_clusterSize">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_createFile">
         <parameters>
@@ -329,43 +135,16 @@
           <par name="fileMode" nr="4"/>
           <par name="callback" nr="5"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_createFileContinue">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_destroy">
         <parameters>
           <par name="dirty" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_extendSubdirectory">
         <parameters>
@@ -373,114 +152,42 @@
           <par name="parentDirectory" nr="2"/>
           <par name="callback" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_extendSubdirectoryContinue">
         <parameters>
           <par name="directory" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fatEntriesPerSector">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
-      </function>
+    </function>
       <function name="afatfs_fatSectorToPhysical">
         <parameters>
           <par name="fatIndex" nr="1"/>
           <par name="fatSectorIndex" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fclose">
         <parameters>
           <par name="file" nr="1"/>
           <par name="callback" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fcloseContinue">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_feof">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fileClusterToPhysical">
         <parameters>
           <par name="clusterNumber" nr="1"/>
           <par name="sectorIndex" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fileGetCursorClusterAndSector">
         <parameters>
@@ -488,29 +195,11 @@
           <par name="cluster" nr="2"/>
           <par name="sector" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fileGetCursorPhysicalSector">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fileGetNextCluster">
         <parameters>
@@ -518,140 +207,64 @@
           <par name="currentCluster" nr="2"/>
           <par name="nextCluster" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fileIsBusy">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fileLoadDirectoryEntry">
         <parameters>
           <par name="file" nr="1"/>
           <par name="entry" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fileLockCursorSectorForWrite">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fileOperationContinue">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fileOperationsPoll">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fileRetainCursorSectorForRead">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fileUnlockCacheSector">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fileUpdateFilesize">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_findCacheSector">
         <parameters>
           <par name="sectorIndex" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	<postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="retainCount"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
       <function name="afatfs_findClusterWithCondition">
         <parameters>
@@ -659,68 +272,23 @@
           <par name="cluster" nr="2"/>
           <par name="searchLimit" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_findFirst">
         <parameters>
           <par name="directory" nr="1"/>
           <par name="finder" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_findLargestContiguousFreeBlockBegin">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_findLargestContiguousFreeBlockContinue">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_findLast">
         <parameters>
           <par name="directory" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_findNext">
         <parameters>
@@ -728,27 +296,9 @@
           <par name="finder" nr="2"/>
           <par name="dirEntry" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_flush">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fopen">
         <parameters>
@@ -756,30 +306,12 @@
           <par name="mode" nr="2"/>
           <par name="complete" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fputc">
         <parameters>
           <par name="file" nr="1"/>
           <par name="c" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fread">
         <parameters>
@@ -787,29 +319,11 @@
           <par name="buffer" nr="2"/>
           <par name="len" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_freeFileCreated">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fseek">
         <parameters>
@@ -817,30 +331,12 @@
           <par name="offset" nr="2"/>
           <par name="whence" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fseekAtomic">
         <parameters>
           <par name="file" nr="1"/>
           <par name="offset" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fseekInternal">
         <parameters>
@@ -848,103 +344,40 @@
           <par name="offset" nr="2"/>
           <par name="callback" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fseekInternalContinue">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_ftell">
         <parameters>
           <par name="file" nr="1"/>
           <par name="position" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_ftruncate">
         <parameters>
           <par name="file" nr="1"/>
           <par name="callback" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_ftruncateContinue">
         <parameters>
           <par name="file" nr="1"/>
           <par name="markDeleted" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_funlink">
         <parameters>
           <par name="file" nr="1"/>
           <par name="callback" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_funlinkContinue">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_fwrite">
         <parameters>
@@ -952,55 +385,22 @@
           <par name="buffer" nr="2"/>
           <par name="len" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_getCacheDescriptorForBuffer">
         <parameters>
           <par name="memory" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_getCacheDescriptorIndexForBuffer">
         <parameters>
           <par name="memory" nr="1"/>
+	  <postconditions>
+	    <post><math><apply><leq/><return/><cn>127</cn></apply></math></post>
+	  </postconditions>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_getContiguousFreeSpace">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_getFATPositionForCluster">
         <parameters>
@@ -1008,185 +408,59 @@
           <par name="fatSectorIndex" nr="2"/>
           <par name="fatSectorEntryIndex" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_getFilesystemState">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_getFreeBufferSpace">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_getLastError">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_init">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_initContinue">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_initFileHandle">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_isEndOfAllocatedFile">
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_isFull">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_mkdir">
         <parameters>
           <par name="filename" nr="1"/>
           <par name="callback" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_parseMBR">
         <parameters>
           <par name="sector" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_parseVolumeID">
         <parameters>
           <par name="sector" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_poll">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_saveDirectoryEntry">
         <parameters>
           <par name="file" nr="1"/>
           <par name="mode" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_sdcardReadComplete">
         <parameters>
@@ -1195,15 +469,6 @@
           <par name="buffer" nr="3"/>
           <par name="callbackData" nr="4"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_sdcardWriteComplete">
         <parameters>
@@ -1212,70 +477,28 @@
           <par name="buffer" nr="3"/>
           <par name="callbackData" nr="4"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="afatfs_sectorIndexInCluster">
         <parameters>
           <par name="byteOffset" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	<postconditions>
+	  <post><math><apply><leq/><return/><cn>65535</cn></apply></math></post>
+	</postconditions>
       </function>
       <function name="afatfs_superClusterSize">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="isPowerOfTwo">
         <parameters>
           <par name="x" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="roundUpTo">
         <parameters>
           <par name="value" nr="1"/>
           <par name="rounding" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
     </functions>
   </cfile>

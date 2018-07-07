@@ -37,7 +37,20 @@
       </function>
       <function name="sdcard_getMetadata">
         <parameters/>
-        <postconditions/>
+        <postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="numBlocks"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
       <function name="sdcard_init">
         <parameters>

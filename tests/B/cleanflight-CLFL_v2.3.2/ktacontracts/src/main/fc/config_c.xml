@@ -15,6 +15,18 @@
       <function name="beeperConfig">
         <parameters/>
         <postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="beeper_off_flags"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
 	  <post><math><apply><not-null/><return/></apply></math></post>
 	</postconditions>
       </function>
@@ -302,6 +314,18 @@
       <function name="pidConfigMutable">
         <parameters/>
         <postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="pid_process_denom"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
 	  <post><math><apply><not-null/><return/></apply></math></post>
 	</postconditions>
       </function>

@@ -9,41 +9,14 @@
           <par name="mspPort" nr="1"/>
           <par name="receivedChar" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="mspProcessPendingRequest">
         <parameters>
           <par name="mspPort" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="mspSerialAllocatePorts">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="mspSerialChecksumBuf">
         <parameters>
@@ -51,42 +24,15 @@
           <par name="data" nr="2"/>
           <par name="len" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="mspSerialEncode">
         <parameters>
           <par name="msp" nr="1"/>
           <par name="packet" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="mspSerialInit">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="mspSerialProcess">
         <parameters>
@@ -94,60 +40,24 @@
           <par name="mspProcessCommandFn" nr="2"/>
           <par name="mspProcessReplyFn" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="mspSerialProcessReceivedCommand">
         <parameters>
           <par name="msp" nr="1"/>
           <par name="mspProcessCommandFn" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="mspSerialProcessReceivedData">
         <parameters>
           <par name="mspPort" nr="1"/>
           <par name="c" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="mspSerialProcessReceivedReply">
         <parameters>
           <par name="msp" nr="1"/>
           <par name="mspProcessReplyFn" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="mspSerialPush">
         <parameters>
@@ -156,80 +66,40 @@
           <par name="datalen" nr="3"/>
           <par name="direction" nr="4"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="mspSerialReleasePortIfAllocated">
         <parameters>
           <par name="serialPort" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="mspSerialTxBytesFree">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="mspSerialWaiting">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="resetMspPort">
         <parameters>
           <par name="mspPortToReset" nr="1"/>
           <par name="serialPort" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="serialConfig">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	<postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="reboot_character"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
     </functions>
   </cfile>
