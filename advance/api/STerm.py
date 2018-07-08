@@ -81,7 +81,7 @@ class STReturnValue(STerm):
 
     def get_mathml_node(self,signature): return ET.Element('return')
 
-    def __str__(self): return 'return-val'
+    def __str__(self): return 'returnval'
 
 
 class STNamedConstant(STerm):
@@ -193,8 +193,12 @@ class STArgAddressedValue(STerm):
         return anode
 
     def __str__(self):
-        return ('addressed-value(' + str(self.get_base_term())
-                    + str(self.get_offset_term()) + ')')
+        if self.get_offset_term().is_field_offset():
+            return (str(self.get_base_term()) + '->'
+                        + (str(self.get_offset_term().get_name())))
+        else:
+            return ('addressed-value(' + str(self.get_base_term())
+                        + str(self.get_offset_term()) + ')')
 
 
 class STArgNullTerminatorPos(STerm):

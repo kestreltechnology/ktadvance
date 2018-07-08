@@ -44,6 +44,7 @@ def parse():
                             default=None)
     parser.add_argument('--maketarget',
                             help='target to be provided in the call to make', default=None)
+    parser.add_argument('--keepUnused',help='keep unused variables',action='store_true')
     parser.add_argument('--savesemantics',help='create gzipped tar file with semantics files',
                         action='store_true')
     parser.add_argument('--filter',help='filter out files with absolute filenames',
@@ -125,7 +126,7 @@ if __name__ == '__main__':
                 print('*' * 80)
                 exit(1)
 
-    parsemanager = ParseManager(cpath,tgtpath,filter=args.filter)
+    parsemanager = ParseManager(cpath,tgtpath,filter=args.filter,keepUnused=args.keepUnused)
     parsemanager.initialize_paths()
 
     if doclean:

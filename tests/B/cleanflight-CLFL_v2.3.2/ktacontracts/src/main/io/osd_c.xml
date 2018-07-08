@@ -6,42 +6,91 @@
     <functions>
       <function name="batteryConfig">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	<postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="batteryCapacity"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="currentMeterSource"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="vbatfullcellvoltage"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="vbatmaxcellvoltage"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="vbatmincellvoltage"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
       <function name="blackboxConfig">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	<postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="device"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
       <function name="cmp32">
         <parameters>
           <par name="a" nr="1"/>
           <par name="b" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="constrain">
         <parameters>
@@ -49,39 +98,110 @@
           <par name="low" nr="2"/>
           <par name="high" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="isSomeStatEnabled">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdConfig">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	<postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="ahMaxPitch"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="ahMaxRoll"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="alt_alarm"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="cap_alarm"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="enabledWarnings"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="cap_alarm"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="rssi_alarm"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="units"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
       <function name="osdDisplayStatisticLabel">
         <parameters>
@@ -89,56 +209,20 @@
           <par name="text" nr="2"/>
           <par name="value" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdDrawElements">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdDrawLogo">
         <parameters>
           <par name="x" nr="1"/>
           <par name="y" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdDrawSingleElement">
         <parameters>
           <par name="item" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdFormatAltitudeString">
         <parameters>
@@ -146,15 +230,6 @@
           <par name="altitude" nr="2"/>
           <par name="pad" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdFormatMessage">
         <parameters>
@@ -162,15 +237,6 @@
           <par name="size" nr="2"/>
           <par name="message" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdFormatPID">
         <parameters>
@@ -178,15 +244,6 @@
           <par name="label" nr="2"/>
           <par name="pid" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdFormatTime">
         <parameters>
@@ -194,15 +251,6 @@
           <par name="precision" nr="2"/>
           <par name="time" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdFormatTimer">
         <parameters>
@@ -210,290 +258,118 @@
           <par name="showSymbol" nr="2"/>
           <par name="timerIndex" nr="3"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdGetBatteryAverageCellVoltage">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdGetBatterySymbol">
         <parameters>
           <par name="cellVoltage" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdGetBlackboxStatusString">
         <parameters>
           <par name="buff" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdGetDirectionSymbolFromHeading">
         <parameters>
           <par name="heading" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdGetHeadingIntoDiscreteDirections">
         <parameters>
           <par name="heading" nr="1"/>
           <par name="directions" nr="2"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdGetMetersToSelectedUnit">
         <parameters>
           <par name="meters" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdGetMetersToSelectedUnitSymbol">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdGetTimerSymbol">
         <parameters>
           <par name="src" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdGetTimerValue">
         <parameters>
           <par name="src" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdInit">
         <parameters>
           <par name="osdDisplayPortToUse" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdRefresh">
         <parameters>
           <par name="currentTimeUs" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdResetAlarms">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdResetStats">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdShowArmed">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdShowStats">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdUpdate">
         <parameters>
           <par name="currentTimeUs" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdUpdateAlarms">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="osdUpdateStats">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="pgResetFn_osdConfig">
         <parameters>
           <par name="osdConfig___0" nr="1"/>
         </parameters>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="pilotConfig">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
       </function>
       <function name="vtxSettingsConfig">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
+	<postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="lowPowerDisarm"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		  <field fname="power"/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
     </functions>
   </cfile>

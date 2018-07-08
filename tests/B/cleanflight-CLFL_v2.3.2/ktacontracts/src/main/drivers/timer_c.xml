@@ -40,7 +40,13 @@
       </function>
       <function name="__get_BASEPRI">
         <parameters/>
-        <postconditions/>
+        <postconditions>
+	  <post>
+	    <math>
+	      <apply><leq/><return/><cn>255</cn></apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
       <function name="__set_BASEPRI_MAX">
         <parameters>
@@ -60,13 +66,21 @@
         <parameters>
           <par name="ticks" nr="1"/>
         </parameters>
-        <postconditions/>
+        <postconditions>
+	  <post>
+	    <math>
+	      <apply><leq/><return/><cn>65535</cn></apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
       <function name="lookupChannelIndex">
         <parameters>
           <par name="channel" nr="1"/>
         </parameters>
-        <postconditions/>
+        <postconditions>
+	  <post><math><apply><lt/><return/><cn>4</cn></apply></math></post>
+	</postconditions>
       </function>
       <function name="lookupTimerIndex">
         <parameters>
@@ -354,7 +368,9 @@
         <parameters>
           <par name="channel" nr="1"/>
         </parameters>
-        <postconditions/>
+        <postconditions>
+	  <post><math><apply><lt/><return/><cn>72</cn></apply></math></post>
+	</postconditions>
       </function>
       <function name="timerNVICConfigure">
         <parameters>

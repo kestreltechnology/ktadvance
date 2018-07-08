@@ -47,6 +47,9 @@ class CFunctionContract(object):
 
     def has_assertions(self):
         return (len(self.postconditions) + len(self.preconditions)) > 0
+
+    def has_postconditions(self):
+        return len(self.postconditions) > 0
         
     def _initialize_signature(self,ppnode):
         if ppnode is None:
@@ -72,9 +75,25 @@ class CFunctionContract(object):
             self.preconditions[ipre] = pre
 
     def _initialize(self,xnode):
-        self._initialize_signature(xnode.find('parameters'))
-        self._initialize_postconditions(xnode.find('postconditions'))
-        self._initialize_preconditions(xnode.find('preconditions'))
+        try:
+            self._initialize_signature(xnode.find('parameters'))
+            self._initialize_postconditions(xnode.find('postconditions'))
+            self._initialize_preconditions(xnode.find('preconditions'))
+        except Exception as e:
+            print('Error in reading function contract ' + self.name
+                      + ' in file ' + self.cfun.cfile.name)
+            exit(1)
+
+    def report_postconditions(self):
+        lines = []
+        if len(self.postconditions) == 1:
+            return ('  ' + self.name + ': ' + str(self.postconditions.values()[0]))
+        elif len(self.postconditions) > 1:
+            lines.append('  ' + self.name)
+            for pc in self.postconditions.values():
+                lines.append('    ' + str(pc))
+            return  '\n'.join(lines)
+        return ''
 
     def __str__(self):
         lines = []

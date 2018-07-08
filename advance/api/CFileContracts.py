@@ -67,8 +67,22 @@ class CFileContracts(object):
         hasglobals = len(self.globalvariables) > 0
         return hasfns or hasglobals
 
+    def has_postconditions(self):
+        return any( [ f.has_postconditions() for f in self.functions.values() ])
+
     def iter_functions(self,f):
         for fn in self.functions: f(self.functions[fn])
+
+    def report_postconditions(self):
+        lines = []
+        if self.has_postconditions():
+            lines.append('\nFile: ' + self.cfile.name)
+            lines.append('-' * 80)
+            for f in self.functions.values():
+                if f.has_postconditions():
+                    lines.append(f.report_postconditions())
+            return '\n'.join(lines)
+        return ''
 
     def __str__(self):
         lines = []
