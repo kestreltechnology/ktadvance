@@ -45,7 +45,8 @@ class ParseManager(object):
         tgtspath (string): absolute path to semantics/sourcefiles directory
     """
 
-    def __init__(self,cpath,tgtpath,filter=False,posix=False,verbose=True,tgtplatform='-m64'):
+    def __init__(self,cpath,tgtpath,filter=False,posix=False,verbose=True,
+                     keepUnused=False,tgtplatform='-m64'):
         """Initialize paths to code, results, and parser executable.
 
         Args:
@@ -59,6 +60,7 @@ class ParseManager(object):
         self.tgtpath = tgtpath
         self.filter = filter
         self.posix = posix
+        self.keepUnused = keepUnused      #  keep variables that are not used
         self.sempath = os.path.join(self.tgtpath,'semantics')
         self.tgtxpath = os.path.join(self.sempath,'ktadvance')
         self.tgtspath = os.path.join(self.sempath,'sourcefiles')   # for .c and .i files
@@ -239,6 +241,8 @@ class ParseManager(object):
                             '-targetdirectory', self.tgtxpath ]
             if not self.filter:
                 command.append('-nofilter')
+            if self.keepUnused:
+                command.append('-keepUnused')
             command.append(ifilename)
             cfilelen = self.get_file_length(cfilename)
             cfiles[cfilename] = cfilelen
@@ -308,6 +312,8 @@ class ParseManager(object):
                     self.tgtxpath ]
         if not self.filter:
             cmd.append('-nofilter')
+        if self.keepUnused:
+            cmd.append('-keepUnused')
         cmd.append(ifilename)
         if self.verbose: print('Parse file: ' + str(cmd))
         if self.verbose:
