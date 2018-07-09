@@ -110,6 +110,7 @@ class CFunctionCallsiteSPOs(object):
 
         # retrieve callee's api assumptions and substitute parameters by arguments
         api = calleefun.get_api()
+        calleefile = calleefun.cfile
         if len(api.get_api_assumptions()) > 0:
             pars = api.get_parameters()
             vids = api.get_formal_vids()
@@ -124,6 +125,20 @@ class CFunctionCallsiteSPOs(object):
                         + ') in call to ' + calleefun.name + ' in function ' + self.cfun.name
                         + ' in file ' + cfile.name)
                 return
+            if calleefile.has_file_contracts() and calleefile.index != self.cfile.index:
+                gvarinfos = calleefile.contracts.globalvariables.values()
+                for othergvar in gvarinfos:
+                    othervid = othergvar.gvinfo.get_vid()
+                    thisvid = self.cfile.capp.convert_vid(calleefile.index,othervid,self.cfile.index)
+                    thisvinfo = self.cfile.declarations.get_global_varinfo(thisvid)
+                    if thisvinfo is None:
+                        logging.warning(cfile.name + ': ' + self.cfun.name + ' call to '
+                                            + calleefun.name + ' (' + str(calleefun.cfile.name)
+                                            + '): global api variable ' + othergvar.gvinfo.vname
+                                            + ' not found')
+                        return
+                    expindex = self.cfile.declarations.dictionary.varinfo_to_exp_index(thisvinfo)
+                    subst[othervid] = self.cfile.declarations.dictionary.get_exp(expindex)
             for a in api.get_api_assumptions():
                 if a.id in self.spos: continue
                 if a.isfile: continue       # file_level assumption
