@@ -3,54 +3,57 @@
   <header info="cfile" name="cfile" time="2018-06-05 16:14:16.314232"/>
   <cfile name="src/main/cms/cms_menu_imu">
     <data-structures/>
+    <global-variables>
+      <gvar name="currentPidProfile"/>
+    </global-variables>
     <functions>
       <function name="cmsx_FilterPerProfileRead">
         <parameters/>
-        <postconditions/>
       </function>
       <function name="cmsx_FilterPerProfileWriteback">
         <parameters>
           <par name="self" nr="1"/>
         </parameters>
-        <postconditions/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>currentPidProfile</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="cmsx_PidOnEnter">
         <parameters/>
-        <postconditions/>
       </function>
       <function name="cmsx_PidRead">
         <parameters/>
-        <postconditions/>
       </function>
       <function name="cmsx_PidWriteback">
         <parameters>
           <par name="self" nr="1"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="cmsx_RateProfileOnEnter">
         <parameters/>
-        <postconditions/>
       </function>
       <function name="cmsx_RateProfileRead">
         <parameters/>
-        <postconditions/>
       </function>
       <function name="cmsx_RateProfileWriteback">
         <parameters>
           <par name="self" nr="1"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="cmsx_menuGyro_onEnter">
         <parameters/>
-        <postconditions/>
       </function>
       <function name="cmsx_menuGyro_onExit">
         <parameters>
           <par name="self" nr="1"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="cmsx_menuImu_onEnter">
         <parameters/>

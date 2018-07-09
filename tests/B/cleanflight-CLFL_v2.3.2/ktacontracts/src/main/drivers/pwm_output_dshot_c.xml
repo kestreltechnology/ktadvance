@@ -3,6 +3,9 @@
   <header info="cfile" name="cfile" time="2018-06-05 16:14:16.860225"/>
   <cfile name="src/main/drivers/pwm_output_dshot">
     <data-structures/>
+    <global-variables>
+      <gvar name="loadDmaBuffer"/>
+    </global-variables>
     <functions>
       <function name="getMotorDmaOutput">
         <parameters>
@@ -46,7 +49,16 @@
           <par name="index" nr="1"/>
           <par name="value" nr="2"/>
         </parameters>
-        <postconditions/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>loadDmaBuffer</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
     </functions>
   </cfile>

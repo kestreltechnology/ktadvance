@@ -3,6 +3,11 @@
   <header info="cfile" name="cfile" time="2018-06-05 16:14:17.387086"/>
   <cfile name="src/main/fc/fc_rc">
     <data-structures/>
+    <global-variables>
+      <gvar name="applyRates"/>
+      <gvar name="currentControlRateProfile"/>
+      <gvar name="currentPidProfile"/>
+    </global-variables>
     <functions>
       <function name="applyBetaflightRates">
         <parameters>
@@ -10,7 +15,16 @@
           <par name="rcCommandf" nr="2"/>
           <par name="rcCommandfAbs" nr="3"/>
         </parameters>
-        <postconditions/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>currentControlRateProfile</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="applyRaceFlightRates">
         <parameters>
@@ -18,19 +32,46 @@
           <par name="rcCommandf" nr="2"/>
           <par name="rcCommandfAbs" nr="3"/>
         </parameters>
-        <postconditions/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>currentControlRateProfile</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="calculateSetpointRate">
         <parameters>
           <par name="axis" nr="1"/>
         </parameters>
-        <postconditions/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>applyRates</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="checkForThrottleErrorResetState">
         <parameters>
           <par name="rxRefreshRate" nr="1"/>
         </parameters>
-        <postconditions/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>currentPidProfile</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="constrain">
         <parameters>
@@ -90,11 +131,19 @@
       </function>
       <function name="initRcProcessing">
         <parameters/>
-        <postconditions/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>currentControlRateProfile</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="isMotorsReversed">
         <parameters/>
-        <postconditions/>
       </function>
       <function name="processRcCommand">
         <parameters/>
@@ -236,7 +285,16 @@
       </function>
       <function name="updateRcCommands">
         <parameters/>
-        <postconditions/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>currentControlRateProfile</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
     </functions>
   </cfile>

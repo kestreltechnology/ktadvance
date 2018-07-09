@@ -3,6 +3,9 @@
   <header info="cfile" name="cfile" time="2018-06-05 16:14:17.429610"/>
   <cfile name="src/main/fc/rc_adjustments">
     <data-structures/>
+    <global-variables>
+      <gvar name="pidProfile"/>
+    </global-variables>
     <functions>
       <function name="adjustmentRanges">
         <parameters>
@@ -65,7 +68,16 @@
           <par name="adjustmentFunction" nr="1"/>
           <par name="position" nr="2"/>
         </parameters>
-        <postconditions/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>pidProfile</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="applyStepAdjustment">
         <parameters>
@@ -73,7 +85,16 @@
           <par name="adjustmentFunction" nr="2"/>
           <par name="delta" nr="3"/>
         </parameters>
-        <postconditions/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>pidProfile</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="blackboxConfig">
         <parameters/>

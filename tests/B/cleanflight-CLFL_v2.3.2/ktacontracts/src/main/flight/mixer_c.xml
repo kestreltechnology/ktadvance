@@ -3,6 +3,9 @@
   <header info="cfile" name="cfile" time="2018-06-05 16:14:17.569798"/>
   <cfile name="src/main/flight/mixer">
     <data-structures/>
+    <global-variables>
+      <gvar name="currentPidProfile"/>
+    </global-variables>
     <functions>
       <function name="applyFlipOverAfterCrashModeToMotors">
         <parameters/>
@@ -56,7 +59,9 @@
         <parameters>
           <par name="_index" nr="1"/>
         </parameters>
-        <postconditions/>
+        <postconditions>
+	  <post><math><apply><not-null/><return/></apply></math></post>
+	</postconditions>
       </function>
       <function name="flight3DConfig">
         <parameters/>
@@ -73,6 +78,7 @@
 	      </apply>
 	    </math>
 	  </post>
+	  <post><math><apply><not-null/><return/></apply></math></post>	  
 	</postconditions>
       </function>
       <function name="flight3DConfigMutable">
@@ -90,6 +96,7 @@
 	      </apply>
 	    </math>
 	  </post>
+	  <post><math><apply><not-null/><return/></apply></math></post>
 	</postconditions>
       </function>
       <function name="getMotorCount">
@@ -100,18 +107,25 @@
       </function>
       <function name="getMotorMixRange">
         <parameters/>
-        <postconditions/>
       </function>
       <function name="initEscEndpoints">
         <parameters/>
-        <postconditions/>
       </function>
       <function name="mixTable">
         <parameters>
           <par name="currentTimeUs" nr="1"/>
           <par name="vbatPidCompensation" nr="2"/>
         </parameters>
-        <postconditions/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>currentPidProfile</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="mixerConfig">
         <parameters/>
@@ -128,6 +142,7 @@
 	      </apply>
 	    </math>
 	  </post>
+	  <post><math><apply><not-null/><return/></apply></math></post>
 	</postconditions>
       </function>
       <function name="mixerConfigureOutput">
@@ -189,6 +204,7 @@
 	      </apply>
 	    </math>
 	  </post>
+	  <post><math><apply><not-null/><return/></apply></math></post>
 	</postconditions>
       </function>
       <function name="pgResetFn_motorConfig">
@@ -224,6 +240,7 @@
 	      </apply>
 	    </math>
 	  </post>
+	  <post><math><apply><not-null/><return/></apply></math></post>
 	</postconditions>
       </function>
       <function name="stopMotors">

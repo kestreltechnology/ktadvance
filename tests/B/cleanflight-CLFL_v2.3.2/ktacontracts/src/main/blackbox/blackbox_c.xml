@@ -3,6 +3,9 @@
   <header info="cfile" name="cfile" time="2018-06-05 16:14:16.183070"/>
   <cfile name="src/main/blackbox/blackbox">
     <data-structures/>
+    <global-variables>
+      <gvar name="currentPidProfile"/>
+    </global-variables>
     <functions>
       <function name="accelerometerConfig">
         <parameters/>
@@ -253,6 +256,16 @@
       </function>
       <function name="blackboxWriteSysinfo">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>currentPidProfile</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions/>
       </function>
       <function name="compassConfig">
@@ -322,6 +335,7 @@
 	      </apply>
 	    </math>
 	  </post>
+	  <post><math><apply><not-null/><return/></apply></math></post>
         </postconditions>
       </function>
       <function name="currentSensorADCConfig">

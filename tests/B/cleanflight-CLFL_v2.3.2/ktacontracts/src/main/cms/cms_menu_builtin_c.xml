@@ -3,10 +3,22 @@
   <header info="cfile" name="cfile" time="2018-06-05 16:14:16.294909"/>
   <cfile name="src/main/cms/cms_menu_builtin">
     <data-structures/>
+    <global-variables>
+      <gvar name="shortGitRevision"/>
+    </global-variables>
     <functions>
       <function name="cmsx_InfoInit">
         <parameters/>
-        <postconditions/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>shortGitRevision</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
     </functions>
   </cfile>

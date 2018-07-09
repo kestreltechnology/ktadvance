@@ -2,6 +2,15 @@
 <c-analysis>
   <header info="cfile" name="cfile" time="2018-06-05 16:14:16.236932"/>
   <cfile name="src/main/blackbox/blackbox_io">
+    <global-variables>
+      <!-- static variable cannot be included in a precondition of a
+	   non-static function as it
+	   would possibly be exposed to other files in that way.
+	   blackboxPort is initialized by blackboxDeviceOpen, so a
+	   precondition may include the requirement to have executed
+	   that function first -->
+      <gvar name="blackboxPort" static="yes"/>
+    </global-variables>
     <data-structures/>
     <functions>
       <function name="blackboxConfig">
@@ -56,7 +65,18 @@
         <parameters>
           <par name="bytes" nr="1"/>
         </parameters>
-        <postconditions/>
+	<preconditions>
+	  <!-- non-static function cannot include precondition on
+	       static variable 
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>blackboxPort</ci>
+	      </apply>
+	    </math>
+	  </pre> -->
+	</preconditions>
       </function>
       <function name="blackboxGetLogNumber">
         <parameters/>

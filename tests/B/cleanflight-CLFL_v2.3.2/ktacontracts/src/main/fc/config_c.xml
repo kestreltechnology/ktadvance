@@ -3,10 +3,15 @@
   <header info="cfile" name="cfile" time="2018-06-05 16:14:17.241205"/>
   <cfile name="src/main/fc/config">
     <data-structures/>
+    <global-variables>
+      <gvar name="currentPidProfile"/>
+    </global-variables>
     <functions>
       <function name="accelerometerConfigMutable">
         <parameters/>
-        <postconditions/>
+        <postconditions>
+	  <post><math><apply><not-null/><return/></apply></math></post>
+	</postconditions>
       </function>
       <function name="activateConfig">
         <parameters/>
@@ -309,6 +314,7 @@
 	      </apply>
 	    </math>
 	  </post>
+	  <post><math><apply><not-null/><return/></apply></math></post>
 	</postconditions>
       </function>
       <function name="pidConfigMutable">
@@ -404,6 +410,7 @@
 	      </apply>
 	    </math>
 	  </post>
+	  <post><math><apply><not-null/><return/></apply></math></post>
 	</postconditions>
       </function>
       <function name="systemConfigMutable">
@@ -444,7 +451,16 @@
       </function>
       <function name="validateAndFixConfig">
         <parameters/>
-        <postconditions/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>currentPidProfile</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="validateAndFixGyroConfig">
         <parameters/>

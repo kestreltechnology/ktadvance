@@ -3,6 +3,9 @@
   <header info="cfile" name="cfile" time="2018-06-05 16:14:17.317889"/>
   <cfile name="src/main/fc/fc_core">
     <data-structures/>
+    <global-variables>
+      <gvar name="currentPidProfile"/>
+    </global-variables>
     <functions>
       <function name="accelerometerConfig">
         <parameters/>
@@ -172,6 +175,7 @@
 	      </apply>
 	    </math>
 	  </post>
+	  <post><math><apply><not-null/><return/></apply></math></post>
 	</postconditions>
       </function>
       <function name="pidConfig">
@@ -232,7 +236,16 @@
         <parameters>
           <par name="currentTimeUs" nr="1"/>
         </parameters>
-        <postconditions/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>currentPidProfile</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="rcControlsConfig">
         <parameters/>
@@ -344,7 +357,16 @@
         <parameters>
           <par name="currentTimeUs" nr="1"/>
         </parameters>
-        <postconditions/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>currentPidProfile</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="subTaskPidController">
         <parameters>
@@ -367,6 +389,7 @@
 	      </apply>
 	    </math>
 	  </post>
+	  <post><math><apply><not-null/><return/></apply></math></post>
 	</postconditions>
       </function>
       <function name="taskMainPidLoop">
