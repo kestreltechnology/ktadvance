@@ -25,68 +25,49 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-from advance.app.CAssignInstr import CAssignInstr
-from advance.app.CCallInstr import CCallInstr
-from advance.app.CContext import CContext
 
-def getstatement(ctxt,snode):
-    '''Returns the appropriate kind of CStmt dependent on the stmt kind.
+stmt_constructors = {
+    'instr': lambda x:CInstrsStmt(*x),
+    'if': lambda x:CIfStmt(*x),
+    'loop': lambda x:CLoopStmt(*x),
+    'break': lambda x:CBreakStmt(*x),
+    'return': lambda x:CReturnStmt(*x),
+    'goto': lambda x:CGotoStmt(*x),
+    'switch': lambda x:CSwitchStmt(*x),
+    'continue': lambda x:CContinueStmt(*x)
+    }
 
-    arguments:
-    snode: <stmt> element
-    '''
-    knode = snode.find('skind')
+def get_statement(parent,xnode):
+    """Return the appropriate kind of CStmt dependent on the stmt kind."""
+
+    knode = xnode.find('skind')
     tag = knode.get('stag')
-    if tag == 'instr':
-        return CInstrsStmt(ctxt,knode.find('instrs'))
-    if tag == 'if':
-        return CIfStmt(ctxt,snode)
-    if tag == 'loop':
-        return CLoopStmt(ctxt,snode)
-    if tag == 'break':
-        return CBreakStmt(ctxt,snode)
-    if tag == 'return':
-        return CReturnStmt(ctxt,snode)
-    if tag == 'goto':
-        return CGotoStmt(ctxt,snode)
-    if tag == 'switch':
-        return CSwitchStmt(ctxt,snode)
-    if tag == 'continue':
-        return CContinueStmt(ctxt,snode)
-    print('Unknown statement tag: ' + tag)
-    exit(1)
+    if tag in stmt_constructors:
+        return stmt_constructors[tag]((parent,xnode))
+    else:
+        print('Unknown statement tag found: ' + tag)
+        exit(1)
 
 class CBlock(object):
 
-    def __init__(self,ctxt,xnode):
-        self.ctxt = ctxt
-        self.xnode = xnode            # <block> or <sbody> node
+    def __init__(self,parent,xnode):
+        self.xnode = xnode            # CFunctionBody or CStmt
+        self.cfun = parent.cfun
         self.stmts = {}               # sid -> CStmt
-        self._initialize_statements()
 
-    def getstatements(self):
+    def iter_stmts(self,f):
+        self._initialize_statements()
+        for s in self.stmts.values(): f(s)
+
+    def get_statements(self):
         self._initialize_statements()
         return self.stmts.values()
-
-    def getstmtcount(self):
-        self._initialize_statements()
-        return sum([ self.stmts[sid].getstmtcount() for sid in self.stmts ])
-
-    def getinstrcount(self):
-        self._initialize_statements()
-        return sum([ self.stmts[sid].getinstrcount() for sid in self.stmts ])
-
-    def getcallinstrs(self):
-        result = []
-        for s in self.stmts.values():
-            result.extend(s.getcallinstrs())
-        return result
 
     def _initialize_statements(self):
         if len(self.stmts) > 0: return
         for s in self.xnode.find('bstmts').findall('stmt'):
             stmtid = int(s.get('sid'))
-            self.stmts[stmtid] = getstatement(self.ctxt,s)
+            self.stmts[stmtid] = get_statement(self,s)
 
 
 class CFunctionBody(object):
@@ -95,176 +76,215 @@ class CFunctionBody(object):
     def __init__(self,cfun,xnode):
         self.cfun = cfun
         self.xnode = xnode
-        self.ctxt = CContext(cfun)
-        self.block = CBlock(self.ctxt,self.xnode)
+        self.block = CBlock(self,xnode)
 
-    def getstatements(self): return self.block.getstatements()
-
-    def getstmtcount(self): return self.block.getstmtcount()
-
-    def getinstrcount(self): return self.block.getinstrcount()
-
-    def getcallinstrs(self): return self.block.getcallinstrs()
+    def iter_stmts(self,f): self.block.iter_stmts(f)
 
 
 class CStmt(object):
-    '''Function body statement.'''
+    """Function body statement."""
 
-    def __init__(self,ctxt,xnode):
-        self.ctxt = ctxt              # enclosing context
-        self.xnode = xnode            # stmt element
+    def __init__(self,parentblock,xnode):
+        self.parentblock = parentblock             # containing block CBlock
+        self.cfun = self.parentblock.cfun
+        self.xnode = xnode                         # stmt element
+        self.sid = int(self.xnode.get('sid'))
+        self.kind = self.xnode.find('skind').get('stag')
+        self.succs = []
+        self.preds = []
+        self._initialize_stmt()
 
-    def getsid(self): return int(self.xnode.get('sid'))
+    def is_instrs_stmt(self): return False
 
-    def getkind(self): return self.xnode.find('skind').get('stag')
+    def iter_stmts(self,f): pass
 
-    def getfile(self): return self.ctxt.getfile()
-
-    def getstring(self,index): return self.ctxt.getstring(index)
-
-    def getstmtcount(self): return 1
-
-    def getinstrcount(self): return 0
-
-    def getcallinstrs(self): return []
-
-    def isinstrs(self): return False
-
-    def getsuccessors(self):
-        result = []
-        for s in self.xnode.find('succs').findall('int'):
-            result.append(int(s.get('intValue')))
-        return result
-
-    def getpredecessors(self):
-        result = []
-        for s in self.xnode.find('preds').findall('int'):
-            result.append(int(s.get('intValue')))
-        return result
+    def _initialize_stmt(self):
+        xpreds = self.xnode.find('preds')
+        if not xpreds is None:
+            if 'r' in xpreds.attrib:
+                self.preds = [ int(x) for x in xpreds.get('r').split(',') ]
+        xsuccs = self.xnode.find('succs')
+        if not xsuccs is None:
+            if 'r' in xsuccs.attrib:
+                self.succs = [ int(x) for x in xsuccs.get('r').split(',') ]
 
     def __str__(self):
-        predecessors = ','.join(str(p) for p in self.getpredecessors())
-        successors = ','.join(str(s) for s in self.getsuccessors())
-        return (UP.rjust(str(self.getid()),4) +': [' + predecessors + '] ' + 
-                         self.getkind() + ' [' + successors + ']')
+        predecessors = ','.join( [ str(p) for p in self.preds ])
+        successors = ','.join( [ str(p) for p in self.succs ])
+        return (str(self.sid).rjust(4) +': [' + predecessors + '] ' + 
+                         self.kind + ' [' + successors + ']')
 
 
 class CIfStmt(CStmt):
-    '''If statement.'''
+    """If statement."""
 
-    def __init__(self,ctxt,xnode):
-        CStmt.__init__(self,ctxt,xnode)
+    def __init__(self,parentblock,xnode):
+        CStmt.__init__(self,parentblock,xnode)
+        self.thenblock = CBlock(self,self.xnode.find('skind').find('thenblock'))
+        self.elseblock = CBlock(self,self.xnode.find('skind').find('elseblock'))
 
-    def getthenblock(self):
-        ctxt = self.ctxt.addifthen()
-        return CBlock(ctxt,self.xnode.find('skind').find('thenblock'))
-
-    def getelseblock(self):
-        ctxt = self.ctxt.addifelse()
-        return CBlock(ctxt,self.xnode.find('skind').find('elseblock'))
-
-    def getstmtcount(self):
-        return (self.getthenblock().getstmtcount() +
-                    self.getelseblock().getstmtcount() +
-                    CStmt.getstmtcount(self))
-
-    def getinstrcount(self):
-        return (self.getthenblock().getinstrcount() + self.getelseblock().getinstrcount())
-
-    def getcallinstrs(self):
-        return self.getthenblock().getcallinstrs() + self.getelseblock().getcallinstrs()
+    def iter_stmts(self,f):
+        self.thenblock.iter_stmts(f)
+        self.elseblock.iter_stmts(f)
     
 
 class CLoopStmt(CStmt):
-    '''Loop statement.'''
+    """Loop statement."""
 
-    def __init__(self,ctxt,xnode):
-        CStmt.__init__(self,ctxt,xnode)
+    def __init__(self,parentblock,xnode):
+        CStmt.__init__(self,parentblock,xnode)
+        self.loopblock = CBlock(self,self.xnode.find('skind').find('block'))
 
-    def getloopblock(self):
-        ctxt = self.ctxt.addloop()
-        return CBlock(ctxt,self.xnode.find('skind').find('block'))
-
-    def getstmtcount(self):
-        return (self.getloopblock().getstmtcount() + CStmt.getstmtcount(self))
-
-    def getinstrcount(self):
-        return self.getloopblock().getinstrcount()
-
-    def getcallinstrs(self):
-        return self.getloopblock().getcallinstrs()
+    def iter_stmts(self,f):
+        self.loopblock.iter_stmts(f)
 
 
 class CSwitchStmt(CStmt):
-    '''Switch statement.'''
+    """Switch statement."""
 
-    def __init__(self,ctxt,xnode):
-        CStmt.__init__(self,ctxt.addswitch(),xnode)
+    def __init__(self,parentblock,xnode):
+        CStmt.__init__(self,parentblock,xnode)
+        self.switchblock = CBlock(self,self.xnode.find('skind').find('block'))
 
-    def getswitchblock(self):
-        ctxt = self.ctxt.addswitch()
-        return CBlock(ctxt,self.xnode.find('skind').find('block'))
-
-    def getstmtcount(self):
-        return (self.getswitchblock().getstmtcount() + CStmt.getstmtcount(self))
-
-    def getinstrcount(self):
-        return self.getswitchblock().getinstrcount()
-
-    def getcallinstrs(self):
-        return self.getswitchblock().getcallinstrs()
+    def iter_stmts(self,f):
+        self.switchblock.iter_stmts(f)
         
 
 class CBreakStmt(CStmt):
-    '''Break statement.'''
+    """Break statement."""
 
-    def __init__(self,ctxt,xnode):
-        CStmt.__init__(self,ctxt.addbreak(),xnode)
+    def __init__(self,parentblock,xnode):
+        CStmt.__init__(self,parentblock,xnode)
+
 
 class CContinueStmt(CStmt):
-    '''Continue statement.'''
+    """Continue statement."""
 
-    def __init__(self,ctxt,xnode):
-        CStmt.__init__(self,ctxt.addcontinue(),xnode)
+    def __init__(self,parentblock,xnode):
+        CStmt.__init__(self,parentblock,xnode)
 
 
 class CGotoStmt(CStmt):
-    '''Goto statement.'''
+    """Goto statement."""
 
-    def __init__(self,ctxt,xnode):
-        CStmt.__init__(self,ctxt.addgoto(),xnode)
+    def __init__(self,parentblock,xnode):
+        CStmt.__init__(self,parentblock,xnode)
 
 
 class CReturnStmt(CStmt):
-    '''Return statement.'''
+    """Return statement."""
 
-    def __init__(self,ctxt,xnode):
-        CStmt.__init__(self,ctxt.addreturn(),xnode)
+    def __init__(self,parentblock,xnode):
+        CStmt.__init__(self,parentblock,xnode)
         
 
 class CInstrsStmt(CStmt):
 
-    def __init__(self,ctxt,xnode):
-        CStmt.__init__(self,ctxt,xnode)
+    def __init__(self,parentblock,xnode):
+        CStmt.__init__(self,parentblock,xnode)
         self.instrs = []
         self._initialize()
 
-    def isinstrs(self): return True
+    def is_instrs_stmt(self): return True
 
-    def getinstrcount(self): return len(self.instrs)
-
-    def getcallinstrs(self):
-        return [ i for i in self.instrs if i.iscall() ]
+    def iter_instrs(self,f):
+        for i in self.instrs: f(i)
 
     def _initialize(self):
-        counter = 0
-        for inode in self.xnode.findall('instr'):
+        for inode in self.xnode.find('skind').find('instrs').findall('instr'):
             itag = inode.get('itag')
-            counter += 1
-            ictxt = self.ctxt.addinstr(counter)
             if itag == 'call':
-                self.instrs.append(CCallInstr(ictxt,inode))
+                self.instrs.append(CCallInstr(self,inode))
             elif itag == 'set':
-                self.instrs.append(CAssignInstr(ictxt,inode))
-            else:
-                print('Ignoring asm instructions')
+                self.instrs.append(CAssignInstr(self,inode))
+            elif itag == 'asm':
+                self.instrs.append(CAsmInstr(self,inode))
+
+
+
+class CInstr(object):
+
+    def __init__(self,parentstmt,xnode):
+        self.parentstmt = parentstmt
+        self.xnode = xnode
+        self.cfun = self.parentstmt.cfun
+
+    def is_assign(self): return False
+    def is_call(self): return False
+    def is_asm(self): return False
+
+
+class CCallInstr(CInstr):
+
+    def __init__(self,parentstmt,xnode):
+        CInstr.__init__(self,parentstmt,xnode)
+
+    def is_call(self): return True
+
+
+class CAssignInstr(CInstr):
+
+    def __init__(self,parentstmt,xnode):
+        CInstr.__init__(self,parentstmt,xnode)
+
+    def is_assign(self): return True
+
+
+class CAsmInstr(CInstr):
+
+    def __init__(self,parentstmt,xnode):
+        CInstr.__init__(self,parentstmt,xnode)
+        self.asminputs = []
+        self.asmoutputs = []
+        self.templates = []
+        self._initialize()
+
+    def is_asm(self): return True
+
+    def __str__(self):
+        lines = []
+        for s in self.templates:
+            lines.append(str(s))
+        for i in self.asminputs:
+            lines.append('  ' + str(i))
+        for o in self.asmoutputs:
+            lines.append('  ' + str(o))
+        return '\n'.join(lines)
+
+    def _initialize(self):
+        xinputs = self.xnode.find('asminputs')
+        if not xinputs is None:
+            for inode in xinputs.findall('asminput'):
+                self.asminputs.append(CAsmInput(self,inode))
+        xoutputs = self.xnode.find('asmoutputs')
+        if not xoutputs is None:
+            for onode in xoutputs.findall('asmoutput'):
+                self.asmoutputs.append(CAsmOutput(self,onode))
+        xtemplates = self.xnode.find('templates')
+        if not xtemplates is None:
+            for s in xtemplates.get('str-indices').split(','):
+                self.templates.append(self.cfun.cfile.declarations.dictionary.get_string(int(s)))
+
+
+class CAsmOutput(object):
+
+    def __init__(self,parentinstr,xnode):
+        self.parentinstr = parentinstr
+        self.xnode = xnode
+        self.constraint = xnode.get('constraint','none')
+        self.lval = self.parentinstr.cfun.cfile.declarations.dictionary.get_lval(int(self.xnode.get('ilval')))
+
+    def __str__(self):
+        return (str(self.constraint) + ';  lval: ' + str(self.lval))
+
+
+class CAsmInput(object):
+
+    def __init__(self,parentinstr,xnode):
+        self.parentinstr = parentinstr
+        self.xnode = xnode
+        self.constraint = xnode.get('constraint','none')
+        self.exp = self.parentinstr.cfun.cfile.declarations.dictionary.get_exp(int(self.xnode.get('iexp')))
+
+    def __str__(self):
+        return (str(self.constraint) + '; exp: ' + str(self.exp))

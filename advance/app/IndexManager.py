@@ -127,11 +127,14 @@ class IndexManager(object):
         if self.issinglefile:
             return vid
         gvid = self.get_gvid(fidsrc,vid)
+        msg = 'indexmgr:convert-vid(' + str(fidsrc) + ',' + str(vid) + ',' + str(fidtgt) + '): '
         if not gvid is None:
             if gvid in self.gvid2vid:
                 if fidtgt in self.gvid2vid[gvid]:
                     return self.gvid2vid[gvid][fidtgt]
                 else:
+                    logging.warning(msg + 'Create new index for global variable: '
+                                        + str(gvid))
                     self.gvid2vid[gvid][fidtgt] = self.fidvidmax[fidtgt]
                     self.fidvidmax[fidtgt] += 1
                     return self.gvid2vid[gvid][fidtgt]

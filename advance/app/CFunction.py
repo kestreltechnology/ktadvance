@@ -28,6 +28,8 @@
 import xml.etree.ElementTree as ET
 
 import advance.util.fileutil as UF
+
+from advance.app.CFunctionBody import CFunctionBody
 from advance.app.CLocation import CLocation
 from advance.app.CFunDeclarations import CFunDeclarations
 from advance.app.CVarInfo import CVarInfo
@@ -52,7 +54,7 @@ class CFunction(object):
         self.name = self.svar.vname
         self.formals = {}                            # vid -> CVarInfo
         self.locals = {}                             # vid -> CVarInfo
-        # self.body = CFunctionBody(self,self.xnode.find('sbody'))
+        self.body = CFunctionBody(self,self.xnode.find('sbody'))
         self.podictionary = CFunPODictionary(self)
         self.proofs = CFunctionProofs(self)        
         self.api = CFunctionApi(self)              
