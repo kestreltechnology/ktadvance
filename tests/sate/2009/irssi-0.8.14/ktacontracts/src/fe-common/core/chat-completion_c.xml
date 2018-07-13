@@ -1,0 +1,816 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-06-25 00:03:04.557005"/>
+  <cfile name="src/fe-common/core/chat-completion">
+    <data-structures/>
+    <functions>
+      <function name="auto_complete">
+        <parameters>
+          <par name="channel" nr="1"/>
+          <par name="line" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="chat_completion_deinit">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="chat_completion_init">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="complete_from_nicklist">
+        <parameters>
+          <par name="outlist" nr="1"/>
+          <par name="channel" nr="2"/>
+          <par name="nick" nr="3"/>
+          <par name="suffix" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="complete_window_nicks">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="window" nr="2"/>
+          <par name="word" nr="3"/>
+          <par name="nicksuffix" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="completion_channel_nicks">
+        <parameters>
+          <par name="channel" nr="1"/>
+          <par name="nick" nr="2"/>
+          <par name="suffix" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="completion_get_aliases">
+        <parameters>
+          <par name="word" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="completion_get_channels">
+        <parameters>
+          <par name="server" nr="1"/>
+          <par name="word" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="completion_get_chatnets">
+        <parameters>
+          <par name="word" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="completion_get_servers">
+        <parameters>
+          <par name="word" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="completion_get_servertags">
+        <parameters>
+          <par name="word" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="completion_get_targets">
+        <parameters>
+          <par name="word" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="completion_joinlist">
+        <parameters>
+          <par name="list1" nr="1"/>
+          <par name="list2" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="completion_last_message_add">
+        <parameters>
+          <par name="nick" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="completion_last_message_remove">
+        <parameters>
+          <par name="nick" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="completion_last_message_rename">
+        <parameters>
+          <par name="oldnick" nr="1"/>
+          <par name="newnick" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="completion_msg">
+        <parameters>
+          <par name="win_server" nr="1"/>
+          <par name="find_server" nr="2"/>
+          <par name="nick" nr="3"/>
+          <par name="prefix" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="completion_msg_server">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="server" nr="2"/>
+          <par name="nick" nr="3"/>
+          <par name="prefix" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="completion_nicks_nonstrict">
+        <parameters>
+          <par name="channel" nr="1"/>
+          <par name="nick" nr="2"/>
+          <par name="suffix" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="convert_msglist">
+        <parameters>
+          <par name="msglist" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="event_text">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="server" nr="2"/>
+          <par name="item" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="expand_escapes">
+        <parameters>
+          <par name="line" nr="1"/>
+          <par name="server" nr="2"/>
+          <par name="item" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="last_msg_add">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="nick" nr="2"/>
+          <par name="own" nr="3"/>
+          <par name="max" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="last_msg_cmp">
+        <parameters>
+          <par name="m1" nr="1"/>
+          <par name="m2" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="last_msg_dec_owns">
+        <parameters>
+          <par name="list" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="last_msg_destroy">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="rec" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="last_msg_find">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="nick" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="line_get_server">
+        <parameters>
+          <par name="line" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="read_settings">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_channel_destroyed">
+        <parameters>
+          <par name="channel" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_complete_alias">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="window" nr="2"/>
+          <par name="word" nr="3"/>
+          <par name="line" nr="4"/>
+          <par name="want_space" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_complete_away">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="window" nr="2"/>
+          <par name="word" nr="3"/>
+          <par name="line" nr="4"/>
+          <par name="want_space" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_complete_channel">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="window" nr="2"/>
+          <par name="word" nr="3"/>
+          <par name="line" nr="4"/>
+          <par name="want_space" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_complete_connect">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="window" nr="2"/>
+          <par name="word" nr="3"/>
+          <par name="line" nr="4"/>
+          <par name="want_space" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_complete_msg">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="window" nr="2"/>
+          <par name="word" nr="3"/>
+          <par name="line" nr="4"/>
+          <par name="want_space" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_complete_server">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="window" nr="2"/>
+          <par name="word" nr="3"/>
+          <par name="line" nr="4"/>
+          <par name="want_space" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_complete_tag">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="window" nr="2"/>
+          <par name="word" nr="3"/>
+          <par name="line" nr="4"/>
+          <par name="want_space" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_complete_target">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="window" nr="2"/>
+          <par name="word" nr="3"/>
+          <par name="line" nr="4"/>
+          <par name="want_space" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_complete_topic">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="window" nr="2"/>
+          <par name="word" nr="3"/>
+          <par name="line" nr="4"/>
+          <par name="want_space" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_complete_unalias">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="window" nr="2"/>
+          <par name="word" nr="3"/>
+          <par name="line" nr="4"/>
+          <par name="want_space" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_complete_window">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="window" nr="2"/>
+          <par name="word" nr="3"/>
+          <par name="linestart" nr="4"/>
+          <par name="want_space" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_complete_word">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="window" nr="2"/>
+          <par name="word" nr="3"/>
+          <par name="linestart" nr="4"/>
+          <par name="want_space" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_erase_complete_msg">
+        <parameters>
+          <par name="window" nr="1"/>
+          <par name="word" nr="2"/>
+          <par name="line" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_message_join">
+        <parameters>
+          <par name="server" nr="1"/>
+          <par name="channel" nr="2"/>
+          <par name="nick" nr="3"/>
+          <par name="address" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_message_own_private">
+        <parameters>
+          <par name="server" nr="1"/>
+          <par name="msg" nr="2"/>
+          <par name="target" nr="3"/>
+          <par name="origtarget" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_message_own_public">
+        <parameters>
+          <par name="server" nr="1"/>
+          <par name="msg" nr="2"/>
+          <par name="target" nr="3"/>
+          <par name="origtarget" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_message_private">
+        <parameters>
+          <par name="server" nr="1"/>
+          <par name="msg" nr="2"/>
+          <par name="nick" nr="3"/>
+          <par name="address" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_message_public">
+        <parameters>
+          <par name="server" nr="1"/>
+          <par name="msg" nr="2"/>
+          <par name="nick" nr="3"/>
+          <par name="address" nr="4"/>
+          <par name="target" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_nick_changed">
+        <parameters>
+          <par name="channel" nr="1"/>
+          <par name="nick" nr="2"/>
+          <par name="oldnick" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_nick_removed">
+        <parameters>
+          <par name="channel" nr="1"/>
+          <par name="nick" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sig_server_disconnected">
+        <parameters>
+          <par name="server" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
