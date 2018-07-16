@@ -35,14 +35,26 @@ from advance.util.Config import Config
 
 import advance.cmdline.juliet.JulietTestCases as JTC
 
-def get_juliet_projects():
+def parse():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--cwe',help='only report on the given cwe')
+    args = parser.parse_args()
+    return args
+
+
+def get_juliet_projects(cwe):
     result = []
-    for cwe in JTC.testcases:
-        for p in JTC.testcases[cwe]:
-            result.append(os.path.join(cwe,p))
+    for c in JTC.testcases:
+        if not ((cwe == 'all') or (c == cwe)): continue
+        for p in JTC.testcases[c]:
+            result.append(os.path.join(c,p))
     return result
 
 if __name__ == '__main__':
+
+    args = parse()
+    cwe = 'all'
+    if args.cwe is not None: cwe = args.cwe
 
     config = Config()
     testdir = Config().testdir
@@ -58,7 +70,7 @@ if __name__ == '__main__':
     
     dsmethods = RP.get_dsmethods([])
 
-    for p in get_juliet_projects():
+    for p in get_juliet_projects(cwe):
         path = os.path.join(UF.get_juliet_path(),p)
         # path = os.path.join(testdir,config.projects[p])
         results = UF.read_project_summary_results(path)
@@ -146,7 +158,8 @@ if __name__ == '__main__':
                   + '  ' + p.ljust(maxname) + str(lc).rjust(10) + str(clc).rjust(10)
                   + str(fc).rjust(10))
     print('-' * (maxname+48))
-    print('Total'.ljust(maxname+18) + str(lctotal).rjust(10) + str(clctotal).rjust(10)
+    print(('Total ' + str(len(analysistimes)) + ' test sets: ').ljust(maxname+18) +
+                          str(lctotal).rjust(10) + str(clctotal).rjust(10)
               + str(fctotal).rjust(10))
 
     print('\n\nProof obligation transfer')

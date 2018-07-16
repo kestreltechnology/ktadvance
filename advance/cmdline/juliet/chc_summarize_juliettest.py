@@ -65,8 +65,14 @@ if __name__ == '__main__':
 
     def filefilter(filename):
         return (not (filename in  [ "io", "main_linux", "std_thread" ]))
-    
-    capp = CApplication(sempath)
+
+    excludefiles = [ 'io.c', 'main_linux.c', 'std_thread.c' ]    
+    capp = CApplication(sempath,excludefiles=excludefiles)
+
+    contractviolations = capp.get_contract_condition_violations()
+    if len(contractviolations) > 0:
+        print(' --> ' + str(len(contractviolations)) + ' contract violations in ' + args.path)
+        
     timestamp = os.stat(capp.path).st_ctime
     try:
         result = RP.project_proofobligation_stats_to_dict(capp,filefilter=filefilter)

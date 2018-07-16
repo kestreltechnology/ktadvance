@@ -92,7 +92,9 @@ if __name__ == '__main__':
         print(UP.semantics_tar_not_found_err_msg(cpath))
         exit(1)
 
-    capp = CApplication(sempath)
+    excludefiles = [ 'io.c', 'main_linux.c', 'std_thread.c' ]        
+
+    capp = CApplication(sempath,excludefiles=excludefiles)
     linker = CLinker(capp)
     linker.link_compinfos()
     linker.link_varinfos()
@@ -105,7 +107,8 @@ if __name__ == '__main__':
         contractpath = args.contractpath
 
     # have to reinitialize capp to get linking info properly initialized
-    capp = CApplication(sempath,contractpath=contractpath)
+
+    capp = CApplication(sempath,contractpath=contractpath,excludefiles=excludefiles)
 
     # assume wordsize of 64
     # use unreachability as a means of proof obligation discharge

@@ -56,12 +56,25 @@ if __name__ == '__main__':
     if not os.path.isdir(sempath):
         print(UP.semantics_not_found_err_msg(cpath))
         exit(1)
-        
-    capp = CApplication(sempath)
+
+    excludefiles = [ 'io.c', 'main_linux.c', 'std_thread.c' ]                
+    capp = CApplication(sempath,excludefiles=excludefiles)
 
     filterout = [ 'io', 'main_linux', 'std_thread' ]
     dc = [ 'deadcode' ]
     def filefilter(f): return (not f in filterout)
 
     print(RP.project_proofobligation_stats_tostring(capp,extradsmethods=dc,filefilter=filefilter))
+
+    contract_condition_violations = capp.get_contract_condition_violations()
+    
+    if len(contract_condition_violations) > 0:
+        print('=' * 80)
+        print(str(len(contract_condition_violations)) + ' CONTRACT CONDITION FAILURES')
+        print('=' * 80)
+        for (fn,cc) in contract_condition_violations:
+            print(fn + ':')
+            for (name,desc) in cc:
+                print('   ' + name + ':' + desc)
+        print('=' * 80)
 

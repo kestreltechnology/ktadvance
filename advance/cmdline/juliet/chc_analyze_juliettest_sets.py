@@ -36,6 +36,7 @@ def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('--maxprocesses',help='maximum number of processors to use',
                             default='1')
+    parser.add_argument('--cwe',help='only analyze the given cwe')
     args = parser.parse_args()
     return args
 
@@ -53,9 +54,14 @@ if __name__ == '__main__':
     maxp = args.maxprocesses
     maxptxt = '' if maxp == 1 else ' (with ' + str(maxp) + ' processors)'
 
+    def excluded(cwe):
+        if args.cwe is None: return False
+        return not (args.cwe == cwe)
+
     with timing('analysis' + maxptxt):
     
         for cwe in sorted(JTC.testcases):
+            if excluded(cwe): continue
             print('Analyzing testcases for cwe ' + cwe)
             for t in JTC.testcases[cwe]:
                 testcase = os.path.join(cwe,t)

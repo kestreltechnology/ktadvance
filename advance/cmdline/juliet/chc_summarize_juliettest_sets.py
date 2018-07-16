@@ -23,14 +23,26 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import argparse
 import os
 import subprocess
 
 import advance.cmdline.juliet.JulietTestCases as JTC
 
+def parse():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--cwe',help='only report on the given cwe')
+    args = parser.parse_args()
+    return args
+
 if __name__ == '__main__':
 
+    args = parse()
+    rcwe = 'all'
+    if not args.cwe is None: rcwe = args.cwe
+
     for cwe in sorted(JTC.testcases):
+        if not ((rcwe == 'all') or (rcwe == cwe)): continue
         for t in JTC.testcases[cwe]:
             testcase = os.path.join(cwe,t)
             print(testcase)
@@ -40,6 +52,7 @@ if __name__ == '__main__':
                 raise Exception('Error in testcase ' + testcase)
     else:
         cmd = [ 'python', 'chc_project_dashboard.py' ]
+        if not args.cwe is None: cmd.extend( [ '--cwe', args.cwe ])
         result = subprocess.call(cmd,stderr=subprocess.STDOUT)
 
         print('\n\n' + ('=' * 80) + '\nAll Juliet test cases were scored successfully.')
