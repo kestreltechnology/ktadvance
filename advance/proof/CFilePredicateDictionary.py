@@ -66,7 +66,8 @@ po_predicate_constructors = {
     'vc': lambda x:PO.CPOValueConstraint(*x),
     'prm': lambda x:PO.CPOPreservedAllMemory(*x),
     'pre': lambda x:PO.CPOPredicate(*x),
-    'pv': lambda x:PO.CPOPreservedValue(*x)
+    'pv': lambda x:PO.CPOPreservedValue(*x),
+    'b': lambda x:PO.CPOBuffer(*x)
     }
 
 class CFilePredicateDictionary(object):

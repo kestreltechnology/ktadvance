@@ -62,7 +62,8 @@ po_predicate_names = {
     'vc': 'value-constraint',
     'prm': 'preserved-all-memory',
     'pv': 'preserves-value',
-    'pre': 'precondition' }
+    'pre': 'precondition',
+    'b': 'buffer' }
 
 def get_predicate_tag(name):
     revnames = { v:k for (k,v) in po_predicate_names.items() }
@@ -77,6 +78,7 @@ class CPOPredicate(CD.CDictionaryRecord):
     def get_tag(self): return po_predicate_names[self.tags[0]]
         
     def is_allocation_base(self): return False
+    def is_buffer(self): return False
     def is_cast(self): return False
     def is_common_base(self): return False
     def is_format_string(self): return False
@@ -236,7 +238,30 @@ class CPOAllocationBase(CPOPredicate):
     def __str__(self):return self.get_tag() + '(' + str(self.get_exp()) + ')'
 
 
+class CPOBuffer(CPOPredicate):
+    '''
+    tags:
+       0: 'b'
 
+    args:
+       0: exp (pointer to buffer)
+       1: exp (length of buffer in bytes)
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_length(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def is_buffer(self): return  True
+
+    def has_variable(self,vid):
+        return self.get_exp().has_variable(vid) or self.get_length().has_variable(vid)
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp())
+                    + ',size:' + str(self.get_length()) + ')')
 
 class CPOTypeAtOffset(CPOPredicate):
     '''
