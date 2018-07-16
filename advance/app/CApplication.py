@@ -61,12 +61,13 @@ class CApplication(object):
     """Primary access point for source code and analysis results."""
 
     def __init__(self,path,cfilename=None,srcpath=None,contractpath=None,
-                     candidate_contractpath=None):
+                     candidate_contractpath=None,excludefiles=[]):
         self.singlefile = not (cfilename is None)
         self.path = os.path.join(path,'ktadvance')
         self.srcpath = os.path.join(path,'sourcefiles') if srcpath is None else srcpath
         self.contractpath = contractpath
         self.globalcontract = None
+        self.excludefiles = excludefiles
         if not self.contractpath is None:
             self.globalcontract = CGlobalContract(self)
         self.candidate_contractpath = candidate_contractpath
@@ -307,6 +308,14 @@ class CApplication(object):
         def f(fn):fn.reload_spos()
         self.iter_functions(f)
 
+    def get_contract_condition_violations(self):
+        result = []
+        def f(fn):
+            if fn.violates_contract_conditions():
+                result.append((fn.name,fn.get_contract_condition_violations()))
+        self.iter_functions(f)
+        return result
+
     def get_ppos(self):
         result = []
         def f(fn): result.extend(fn.get_ppos())
@@ -342,6 +351,7 @@ class CApplication(object):
             # read target_files.xml file to retrieve application files
             tgtxnode = UF.get_targetfiles_xnode(self.path)
             for c in tgtxnode.findall('c-file'):
+                if c.get('name') in self.excludefiles: continue
                 id = int(c.get('id'))
                 if id is None:
                     print('No id found for ' + c.get('name'))

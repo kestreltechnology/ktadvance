@@ -125,6 +125,12 @@ class CFunction(object):
         self._readinvariants()
         return self.invariants
 
+    def violates_contract_conditions(self):
+        return len(self.api.contractconditionfailures) > 0
+
+    def get_contract_condition_violations(self):
+        return self.api.contractconditionfailures
+
     def get_proofs(self): return self.proofs
 
     def get_callsite_spos(self): return self.proofs.getspos
