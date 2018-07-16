@@ -244,8 +244,8 @@ class InterfaceDictionary(object):
             def f(index,key): return XP.XInitialized(self,index,p.tags,args)
             return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_initialized_buffer():
-            args = [ self.index_s_term(p.get_term()),
-                         self.index_s_term(p.get_length_term()) ]
+            args = [ self.index_s_term(p.get_buffer()),
+                         self.index_s_term(p.get_length()) ]
             def f(index,key): return XP.InitializedBuffer(self,index,p.tags,args)
             return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_null_terminated():
@@ -266,6 +266,10 @@ class InterfaceDictionary(object):
         if p.is_tainted():
             args = [ self.index_s_term(p.get_term()) ]
             def f(index,key): return XP.XTainted(self,index,p.tags,args)
+            return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_buffer():
+            args = [ self.index_s_term(p.get_buffer()), self.index_s_term(p.get_length()) ]
+            def f(index,key): return XP.XBuffer(self,index,p.tags,args)
             return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
         print('Index xpredicate not found for ' + p.tags[0])
         exit(1)
@@ -311,7 +315,8 @@ class InterfaceDictionary(object):
         if tnode.tag == 'apply':
             (op,terms) = (tnode[0].tag,tnode[1:])
             if op == 'addressed-value':
-                args = [ self.parse_mathml_term(terms[0],pars), self.parse_mathml_term(terms[1],pars) ]
+                args = [ self.parse_mathml_term(terms[0],pars,gvars=gvars),
+                             self.parse_mathml_term(terms[1],pars,gvars=gvars) ]
                 tags = [ 'aa' ]
                 def f(index,key): return ST.STArgAddressedValue(self,index,tags,args)
                 return self.s_term_table.add(IT.get_key(tags,args),f)
@@ -369,6 +374,26 @@ class InterfaceDictionary(object):
             args = [ pt(terms[0]) ]
             tags = [ 'tt' ]
             def f(index,key): return XP.XTainted(self,index,tags,args)
+            return self.xpredicate_table.add(IT.get_key(tags,args),f)
+        if op == 'allocation-base':
+            args = [ pt(terms[0]) ]
+            tags = [ 'ab' ]
+            def f(index,key): return XP.XAllocationBase(self,index,tags,args)
+            return self.xpredicate_table.add(IT.get_key(tags,args),f)
+        if op == 'new-memory':
+            args = [ pt(terms[0]), pt(terms[1]) ]
+            tags = [ 'nm' ]
+            def f(index,key): return XP.XNewMemory(self,index,tags,args)
+            return self.xpredicate_table.add(IT.get_key(tags,args),f)
+        if op == 'buffer':
+            args = [ pt(terms[0]), pt(terms[1]) ]
+            tags = [ 'b' ]
+            def f(index,key): return XP.XBuffer(self,index,tags,args)
+            return self.xpredicate_table.add(IT.get_key(tags,args),f)
+        if (op == 'initializes-range') or (op == 'initialized-range'):
+            args = [ pt(terms[0]), pt(terms[1]) ]
+            tags = [ 'ib' ]
+            def f(index,key): return XP.XInitializedBuffer(self,index,tags,args)
             return self.xpredicate_table.add(IT.get_key(tags,args),f)
         else:
             print('Parse mathml xpredicate not found for ' + op)

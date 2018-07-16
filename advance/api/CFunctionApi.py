@@ -54,6 +54,7 @@ class CFunctionApi(object):
         self.globalassignments = []       # CGlobalAssignment list
         self.fieldassignments = {}        # nr -> FieldAssignment
         self.librarycalls = {}            # (header,fname) -> count
+        self.contractconditionfailures = []
         self.initialize()
 
     def get_api_assumptions(self):
@@ -89,6 +90,10 @@ class CFunctionApi(object):
         lines.append('  parameters:')
         for n in self.get_parameters():
             lines.append('    ' + str(n).rjust(2))
+        if len(self.contractconditionfailures) > 0:
+            lines.append('\n  CONTRACT CONDITION FAILURE ')
+            for (name,desc) in self.contractconditionfailures:
+                lines.append('     ' + name + ':' + desc)
         if len(self.globalassumptionrequests) > 0:
             lines.append('\n  global assumption requests')
             for g in self.get_global_assumption_requests():
@@ -134,6 +139,10 @@ class CFunctionApi(object):
         if xnode is None:
             return
         self.xnode = xnode
+        xfailures = self.xnode.find('api').find('contract-condition-failures')
+        if not xfailures is None:
+            for x in xfailures.findall('failure'):
+                self.contractconditionfailures.append((x.get('name'),x.get('desc')))
         for x in self.xnode.find('api').find('api-assumptions').findall('aa'):
             predicate = self.cfile.predicatedictionary.read_xml_predicate(x)
             id = int(x.get('ipr'))
