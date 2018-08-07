@@ -135,10 +135,14 @@ class CApplication(object):
         for file in self.get_files(): f(file)
 
     def iter_files_parallel(self, f, processes):
-        Process_pool = multiprocessing.Pool(processes, maxtasksperchild=10)
-        Process_pool.map(f, self.get_files())
-        Process_pool.close()
-        Process_pool.join()
+        for fname in self.get_files():
+            while(len(multiprocessing.active_children()) >= processes):
+                pass
+
+            multiprocessing.Process(target=f, args=(fname,)).start()
+
+        while(len(multiprocessing.active_children()) > 0):
+            pass
 
     def iter_filenames(self,f):
         for fname in self.filenames.values(): f(fname)
@@ -156,6 +160,10 @@ class CApplication(object):
     def iter_functions(self,f):
         def g(fi): fi.iter_functions(f)
         self.iter_files(g)
+
+    def iter_functions_parallel(self,f,maxprocesses):
+        def g(fi): fi.iter_functions(f)
+        self.iter_files_parallel(g,maxprocesses)
 
     def resolve_vid_function(self,fid,vid):
         msg = 'resolve-vid-function(' + str(fid) + ',' + str(vid) + '):'
@@ -316,10 +324,20 @@ class CApplication(object):
         self.iter_functions(f)
         return result
 
-    def get_ppos(self):
+    def get_ppos(self, maxprocesses=1):
         result = []
-        def f(fn): result.extend(fn.get_ppos())
-        self.iter_functions(f)
+        lock = multiprocessing.Lock()    
+        def f_parallel(fn): 
+            fn_result = fn.get_ppos()
+            lock.acquire()
+            result.extend(fn_result)
+            lock.release()
+        def f(fn):
+            result.extend(fn.get_ppos())
+        if maxprocesses > 1:
+            self.iter_functions_parallel(f, maxprocesses)
+        else:
+            self.iter_functions(f)
         return result
 
     def get_spos(self):
