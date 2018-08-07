@@ -72,7 +72,6 @@ if __name__ == '__main__':
 
     for p in get_juliet_projects(cwe):
         path = os.path.join(UF.get_juliet_path(),p)
-        # path = os.path.join(testdir,config.projects[p])
         results = UF.read_project_summary_results(path)
         if results is None:
             nosummary.append(p)

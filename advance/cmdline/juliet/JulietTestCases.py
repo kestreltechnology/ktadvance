@@ -64,7 +64,23 @@ testcases = {
         "s04/CWE805_int_declare_memcpy",
         "s04/CWE805_int_declare_memmove",
         "s04/CWE805_struct_alloca_loop",
-        "s04/CWE805_struct_alloca_memcpy"
+        "s04/CWE805_struct_alloca_memcpy",
+        "s05/CWE805_struct_alloca_memmove",
+        "s05/CWE805_struct_declare_loop",
+        "s05/CWE805_struct_declare_memcpy",
+        "s05/CWE805_struct_declare_memmove",
+        "s06/CWE806_char_alloca_loop",
+        "s06/CWE806_char_alloca_memcpy",
+        "s06/CWE806_char_alloca_memmove",
+        "s06/CWE806_char_alloca_ncat",
+        "s06/CWE806_char_alloca_ncpy",
+        "s06/CWE806_char_alloca_snprintf",
+        "s06/CWE806_char_declare_loop",
+        "s06/CWE806_char_declare_memcpy",
+        "s06/CWE806_char_declare_memmove",
+        "s06/CWE806_char_declare_ncat",
+        "s06/CWE806_char_declare_ncpy",
+        "s07/CWE806_char_declare_snprintf"
         ],
     "CWE122": [
         "s01/char_type_overrun_memcpy",
@@ -75,6 +91,7 @@ testcases = {
         "s06/CWE135",
         "s06/c_CWE129_connect_socket",
         "s06/c_CWE129_fgets",
+        "s06/c_CWE129_fscanf",        
         "s06/c_CWE129_large",
         "s06/c_CWE129_listen_socket",
         "s06/c_CWE129_rand",
@@ -107,7 +124,10 @@ testcases = {
         "s10/c_dest_char_cat",
         "s10/c_dest_char_cpy",
         "s10/c_src_char_cat",
-        "s10/c_src_char_cpy"
+        "s10/c_src_char_cpy",
+        "s11/sizeof_double",
+        "s11/sizeof_int64_t",
+        "s11/sizeof_struct"
         ],
     "CWE124": [
         "s01/char_alloca_cpy",
@@ -210,6 +230,50 @@ testcases = {
         "s04/int_rand_square",
         "s04/short_fscanf_add",
         "s04/short_fscanf_multiply",
-        "s04/short_fscanf_square"
+        "s04/short_fscanf_square",
+        "s04/short_max_add",
+        "s04/short_max_multiply"
         ]
+    }
+
+
+variants = {
+    '01': 'Baseline',
+    '02': 'Control flow: if(1) and if(0)',
+    '03': 'Control flow: if(5==5) and if(5!=5)',
+    '04': 'Control flow: if(staticTrue) and if(staticFalse)',
+    '05': 'Control flow: if(staticTrue) and if(staticFalse)',
+    '06': 'Control flow: if(STATIC_CONST_FIVE==5) and if(STATIC_CONST_FIVE!=5)',
+    '07': 'Control flow: if(staticFive==5) and if(staticFive!=5)',
+    '08': 'Control flow: if(staticReturnsTrue()) and if(staticReturnsFalse())',
+    '09': 'Control flow: if(GLOBAL_CONST_TRUE) and if(GLOBAL_CONST_FALSE)',
+    '10': 'Control flow: if(globalTrue) and if(globalFalse)',
+    '11': 'Control flow: if(globalReturnsTrue()) and if(globalReturnsFalse())',
+    '12': 'Control flow: if(globalReturnsTrueOrFalse())',
+    '13': 'Control flow: if(GLOBAL_CONST_FIVE==5) and if(GLOBAL_CONST_FIVE!=5)',
+    '14': 'Control flow: if(globalFive==5) and if(globalFive!=5)',
+    '15': 'Control flow: switch(6) and switch(7)',
+    '16': 'Control flow: while(1)',
+    '17': 'Control flow: for loops',
+    '18': 'Control flow: goto statements',
+    '21': 'Control flow: Flow controlled by value of a static global variable (1 file)',
+    '22': 'Control flow: Flow controlled by value of a global variable (2 files)',
+    '31': 'Data flow using a copy of data within the same function',
+    '32': 'Data flow using two pointers to the same value within the same function',
+    '34': 'Data flow: use of a union containing two methods of accessing the same data (within the same function)',
+    '41': 'Data flow: data passed as an argument from one function to another in the same source file',
+    '42': 'Data flow: data returned from one function to another in the same source file',
+    '44': 'Data/control flow: data passed as an argument from one function to a function in the same source file called via a function pointer',
+    '45': 'Data flow: data passed as a static global variable from one function to another in the same source file',
+    '51': 'Data flow: data passed as an argument from one function to another in different source files',
+    '52': 'Data flow: data passed as an argument from one function to another to another in three different source files',
+    '53': 'Data flow: data passed as an argument from one function through two others to a fourth; all four functions are in different source files',
+    '54': 'Data flow: data passed as an argument from one function through three others to a fifth; all five functions are in different source files',
+    '61': 'Data flow: data returned from one function to another in different source files',
+    '63': 'Data flow: pointer to data passed from one function to another in different source files',
+    '64': 'Data flow: void pointer to data passed from one function to another in different source files',
+    '65': 'Data/control flow: data passed as an argument from one function to a function in a different source file called via a function pointer',
+    '66': 'Data flow: data passed in an array from one function to another in different source files',
+    '67': 'Data flow: data passed in a struct from one function to another in different source files',
+    '68': 'Data flow: data passed as a global variable from one function to another in different source files'
     }

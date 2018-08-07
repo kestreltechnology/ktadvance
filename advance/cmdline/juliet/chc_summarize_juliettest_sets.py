@@ -55,5 +55,5 @@ if __name__ == '__main__':
         if not args.cwe is None: cmd.extend( [ '--cwe', args.cwe ])
         result = subprocess.call(cmd,stderr=subprocess.STDOUT)
 
-        print('\n\n' + ('=' * 80) + '\nAll Juliet test cases were scored successfully.')
+        print('\n\n' + ('=' * 80) + '\nAll Juliet test cases were summarized successfully.')
         print(('=' * 80) + '\n')
