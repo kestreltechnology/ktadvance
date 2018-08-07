@@ -49,7 +49,7 @@ class XPredicate(CD.CDictionaryRecord):
     def is_freed(self): return False
     def is_functional(self): return False
     def is_initialized(self): return False
-    def is_initialized_buffer(self): return False
+    def is_initialized_range(self): return False
     def is_input_formatstring(self): return False
     def is_new_memory(self): return False
     def is_no_overlap(self): return False
@@ -184,7 +184,7 @@ class XInitialized(XPredicate):
     def __str__(self): return 'initialized(' + str(self.get_term()) + ')'
 
 
-class XInitializedBuffer(XPredicate):
+class XInitializedRange(XPredicate):
 
     def __init__(self,cd,index,tags,args):
         XPredicate.__init__(self,cd,index,tags,args)
@@ -193,10 +193,10 @@ class XInitializedBuffer(XPredicate):
 
     def get_length(self): return self.get_iterm(1)
 
-    def is_initialized_buffer(self): return True
+    def is_initialized_range(self): return True
 
     def __str__(self):
-        return ('initialized-buffer('  + str(self.get_buffer())
+        return ('initialized-range('  + str(self.get_buffer())
                     + str(self.get_length()) + ')')
 
 
@@ -217,15 +217,11 @@ class XNewMemory(XPredicate):
     def __init__(self,cd,index,tags,args):
         XPredicate.__init__(self,cd,index,tags,args)
 
-    def get_mem_pointer(self): return self.get_iterm(0)
-
-    def get_mem_size(self): return self.get_iterm(1)
+    def get_term(self): return self.get_iterm(0)
 
     def is_new_memory(self): return True
 
-    def __str__(self):
-        return ('new-memory(' + str(self.get_mem_pointer()) + ','
-                    + str(self.get_mem_size()) + ')')
+    def __str__(self): return ('new-memory(' + str(self.get_term()))
 
 
 class XNoOverlap(XPredicate):

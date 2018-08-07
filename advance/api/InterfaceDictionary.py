@@ -66,7 +66,7 @@ xpredicate_constructors = {
     'fr': lambda x:XP.XFreed(*x),
     'fn': lambda x:XP.XFunctional(*x),
     'i' : lambda x:XP.XInitialized(*x),
-    'ib': lambda x:XP.XInitializedBuffer(*x),
+    'ir': lambda x:XP.XInitializedRange(*x),
     'iv': lambda x:XP.XInvalidated(*x),
     'ifs': lambda x:XP.XInputFormatString(*x),
     'nm': lambda x:XP.XNewMemory(*x),
@@ -215,8 +215,7 @@ class InterfaceDictionary(object):
 
     def index_xpredicate(self,p):
         if p.is_new_memory():
-            args = [ self.index_s_term(p.get_mem_pointer()),
-                         self.index_s_term(p.get_mem_size()) ]
+            args = [ self.index_s_term(p.get_term()) ]
             def f(index,key): return XP.XNewMemory(self,index,p.tags,args)
             return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_allocation_base():
@@ -243,10 +242,10 @@ class InterfaceDictionary(object):
             args = [ self.index_s_term(p.get_term()) ]
             def f(index,key): return XP.XInitialized(self,index,p.tags,args)
             return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
-        if p.is_initialized_buffer():
+        if p.is_initialized_range():
             args = [ self.index_s_term(p.get_buffer()),
                          self.index_s_term(p.get_length()) ]
-            def f(index,key): return XP.InitializedBuffer(self,index,p.tags,args)
+            def f(index,key): return XP.InitializedRange(self,index,p.tags,args)
             return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_null_terminated():
             args = [ self.index_s_term(p.get_term()) ]
@@ -381,7 +380,7 @@ class InterfaceDictionary(object):
             def f(index,key): return XP.XAllocationBase(self,index,tags,args)
             return self.xpredicate_table.add(IT.get_key(tags,args),f)
         if op == 'new-memory':
-            args = [ pt(terms[0]), pt(terms[1]) ]
+            args = [ pt(terms[0]) ]
             tags = [ 'nm' ]
             def f(index,key): return XP.XNewMemory(self,index,tags,args)
             return self.xpredicate_table.add(IT.get_key(tags,args),f)
@@ -392,8 +391,8 @@ class InterfaceDictionary(object):
             return self.xpredicate_table.add(IT.get_key(tags,args),f)
         if (op == 'initializes-range') or (op == 'initialized-range'):
             args = [ pt(terms[0]), pt(terms[1]) ]
-            tags = [ 'ib' ]
-            def f(index,key): return XP.XInitializedBuffer(self,index,tags,args)
+            tags = [ 'ir' ]
+            def f(index,key): return XP.XInitializedRange(self,index,tags,args)
             return self.xpredicate_table.add(IT.get_key(tags,args),f)
         else:
             print('Parse mathml xpredicate not found for ' + op)
