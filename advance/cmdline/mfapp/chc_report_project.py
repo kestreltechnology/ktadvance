@@ -42,6 +42,8 @@ def parse():
     parser.add_argument('--list_test_applications',
                             help='list names of test applications provided',
                             action='store_true')
+    parser.add_argument('--maxprocesses',type=int,default=1,
+                            help='number of files to process in parallel')
     args = parser.parse_args()
     return args
 
@@ -71,8 +73,9 @@ if __name__ == '__main__':
         exit(1)
    
     capp = CApplication(sempath)
+
     try:
-        print(RP.project_proofobligation_stats_tostring(capp))
+        print(RP.project_proofobligation_stats_tostring(capp,maxprocesses=args.maxprocesses))
     except IndexedTableError as e:
         print(
             '\n' + ('*' * 80) + '\nThe analysis results format has changed'
