@@ -34,6 +34,7 @@ import advance.proof.CPOPredicate as PO
 
 po_predicate_constructors = {
     'nn': lambda x:PO.CPONotNull(*x),
+    "nm": lambda x:PO.CPONewMemory(*x),
     'null': lambda x:PO.CPONull(*x),
     'vm': lambda x:PO.CPOValidMem(*x),
     'is': lambda x:PO.CPOInScope(*x),
