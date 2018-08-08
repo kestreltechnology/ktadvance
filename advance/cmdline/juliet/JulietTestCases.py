@@ -232,7 +232,29 @@ testcases = {
         "s04/short_fscanf_multiply",
         "s04/short_fscanf_square",
         "s04/short_max_add",
-        "s04/short_max_multiply"
+        "s04/short_max_multiply",
+        "s04/short_max_square",
+        "s04/short_rand_add",
+        "s04/short_rand_multiply",
+        "s05/short_rand_square",
+        "s05/unsigned_int_fscanf_add",
+        "s05/unsigned_int_fscanf_multiply",
+        "s05/unsigned_int_fscanf_square",
+        "s05/unsigned_int_max_add",
+        "s05/unsigned_int_max_multiply",
+        "s05/unsigned_int_max_square",
+        "s05/unsigned_int_rand_add",
+        "s05/unsigned_int_rand_multiply",
+        "s05/unsigned_int_rand_square",
+        "s06/char_fscanf_postinc",
+        "s06/char_max_postinc",
+        "s06/char_rand_postinc",
+        "s06/int64_t_fscanf_postinc",
+        "s06/int64_t_max_postinc",
+        "s06/int64_t_rand_postinc",
+        "s06/int_connect_socket_postinc",
+        "s06/int_fgets_postinc",
+        "s06/int_fscanf_postinc"
         ]
     }
 
