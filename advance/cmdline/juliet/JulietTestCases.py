@@ -254,7 +254,16 @@ testcases = {
         "s06/int64_t_rand_postinc",
         "s06/int_connect_socket_postinc",
         "s06/int_fgets_postinc",
-        "s06/int_fscanf_postinc"
+        "s06/int_fscanf_postinc",
+        "s06/int_listen_socket_postinc",
+        "s06/int_max_postinc",
+        "s06/int_rand_postinc",
+        "s06/short_fscanf_postinc",
+        "s06/short_max_postinc",
+        "s06/short_rand_postinc",
+        "s06/unsigned_int_fscanf_postinc",
+        "s06/unsigned_int_max_postinc",
+        "s06/unsigned_int_rand_postinc"
         ]
     }
 
