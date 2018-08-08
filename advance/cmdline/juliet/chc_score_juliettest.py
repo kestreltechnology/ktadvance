@@ -61,7 +61,9 @@ if __name__ == '__main__':
         print(UP.semantics_not_found_err_msg(cpath))
         exit(1)
 
-    capp = CApplication(sempath)
+    excludefiles = [ 'io.c', 'main_linux.c', 'std_thread.c' ]
+    
+    capp = CApplication(sempath,excludefiles=excludefiles)
 
     d = UF.get_juliet_reference(args.path)
 

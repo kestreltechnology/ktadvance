@@ -30,6 +30,7 @@ import os
 
 import advance.util.fileutil as UF
 import advance.cmdline.juliet.JulietTestCases as JTC
+from advance.util.Config import Config
 
 violationcategories = [ 'V', 'S', 'D', 'U', 'O' ]
 safecontrolcategories = [ 'S', 'D', 'X', 'U', 'O']
@@ -40,7 +41,20 @@ shandled = [ 'S', 'X' ]
 violations = 'vs'
 safecontrols = 'sc'
 
+def parse():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--cwe',help='only report on the given cwe')
+    args = parser.parse_args()
+    return args
+
 if __name__ == '__main__':
+
+    args = parse()
+    cwerequested = 'all'
+    if args.cwe is not None: cwerequested = args.cwe
+
+    config = Config()
+    testdir = Config().testdir
 
     stotals = {}
     stotals[violations] = {}
@@ -66,6 +80,7 @@ if __name__ == '__main__':
     print('-' * (tnamelength + 64))
 
     for cwe in sorted(JTC.testcases):
+        if not (cwe == cwerequested or cwerequested == 'all'): continue
         print('\n'+cwe)
         ctotals = {}
         ctotals[violations] = {}

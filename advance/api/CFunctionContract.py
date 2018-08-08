@@ -43,6 +43,7 @@ class CFunctionContract(object):
         self.rsignature = {}                  # index nr -> name
         self.postconditions = {}              # index -> XPredicate
         self.preconditions = {}               # index -> XPredicate
+        self.sideeffects = {}                 # index -> XPredicate
         self._initialize(self.xnode)
 
     def has_assertions(self):
@@ -74,14 +75,23 @@ class CFunctionContract(object):
             pre = self.ixd.get_xpredicate(ipre)
             self.preconditions[ipre] = pre
 
+    def _initialize_sideeffects(self,sidenode):
+        if sidenode is None: return
+        gvars = self.cfilecontracts.globalvariables
+        for snode in sidenode.findall('sideeffect'):
+            iside = self.ixd.parse_mathml_xpredicate(snode,self.signature,gvars=gvars)
+            se = self.ixd.get_xpredicate(iside)
+            self.sideeffects[iside] = se
+
     def _initialize(self,xnode):
         try:
             self._initialize_signature(xnode.find('parameters'))
             self._initialize_postconditions(xnode.find('postconditions'))
             self._initialize_preconditions(xnode.find('preconditions'))
+            self._initialize_sideeffects(xnode.find('sideeffects'))
         except Exception as e:
             print('Error in reading function contract ' + self.name
-                      + ' in file ' + self.cfun.cfile.name)
+                      + ' in file ' + self.cfun.cfile.name + ': ' + str(e))
             exit(1)
 
     def report_postconditions(self):

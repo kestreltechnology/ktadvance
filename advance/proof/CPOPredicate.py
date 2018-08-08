@@ -30,6 +30,7 @@ import advance.app.CExp as CX
 
 po_predicate_names = {
     'nn': 'not-null',
+    'nm': 'new-memory',
     'null': 'null',
     'vm': 'valid-mem',
     'is': 'in-scope',
@@ -91,6 +92,7 @@ class CPOPredicate(CD.CDictionaryRecord):
     def is_int_overflow(self): return False
     def is_int_underflow(self): return False
     def is_lower_bound(self): return False
+    def is_new_memory(self): return False
     def is_non_negative(self): return False
     def is_no_overlap(self): return False
     def is_not_null(self): return False
@@ -236,6 +238,25 @@ class CPOAllocationBase(CPOPredicate):
     def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
     def __str__(self):return self.get_tag() + '(' + str(self.get_exp()) + ')'
+
+class CPONewMemory(CPOPredicate):
+    '''
+    tags:
+       0: 'nm'
+
+    args:
+       0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def is_new_memory(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
+    def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
 
 
 class CPOBuffer(CPOPredicate):

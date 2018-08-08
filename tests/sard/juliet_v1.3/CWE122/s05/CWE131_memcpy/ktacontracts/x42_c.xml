@@ -15,7 +15,39 @@
           <par name="data" nr="1"/>
         </parameters>
 	<postconditions>
-	  <post><math><apply><not-null/><return/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<new-memory/>
+		<return/>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<allocation-base/>
+		<return/>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<buffer/>
+		<return/>
+		<cn>10</cn>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<not-null/>
+		<return/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="goodG2B">
@@ -25,6 +57,41 @@
         <parameters>
           <par name="data" nr="1"/>
         </parameters>
+	<postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<new-memory/>
+		<return/>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<allocation-base/>
+		<return/>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<buffer/>
+		<return/>
+		<cn>40</cn>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<not-null/>
+		<return/>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
     </functions>
   </cfile>
