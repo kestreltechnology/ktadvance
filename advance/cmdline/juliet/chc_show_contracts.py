@@ -40,6 +40,7 @@ def parse():
                             help="path to the test case (relative to juliet_v1.3)" +
                             " (e.g., CWE121/s01/CWE129_large)")
     parser.add_argument('--contractpath',help='path to save the contracts file',default=None)
+    parser.add_argument('--post',help='only show postconditions',action='store_true')
     args = parser.parse_args()
     return args
 
@@ -68,12 +69,20 @@ if __name__ == '__main__':
     capp = CApplication(sempath,contractpath=contractpath)
 
     lines = []
-    def f(fi):
+    def showall(fi):
         if fi.has_file_contracts():
             if fi.contracts.has_assertions():
                 lines.append(str(fi.contracts))
 
-    capp.iter_files(f)
+    def showpost(fi):
+        if fi.has_file_contracts():
+            if fi.contracts.has_postconditions():
+                lines.append(str(fi.contracts.report_postconditions()))
+
+    if args.post:
+        capp.iter_files(showpost)
+    else:
+        capp.iter_files(showall)
 
     print('\n'.join(lines))
         

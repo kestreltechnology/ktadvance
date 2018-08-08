@@ -41,8 +41,8 @@ violations = 'vs'
 safecontrols = 'sc'
 
 def get_variant_description(testcase):
-    if testcase in variants:
-        return variants[testcase]
+    if testcase in JTC.variants:
+        return JTC.variants[testcase]
     else:
         return '?'
 
