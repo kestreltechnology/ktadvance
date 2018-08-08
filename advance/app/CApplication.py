@@ -324,20 +324,10 @@ class CApplication(object):
         self.iter_functions(f)
         return result
 
-    def get_ppos(self, maxprocesses=1):
+    def get_ppos(self):
         result = []
-        lock = multiprocessing.Lock()    
-        def f_parallel(fn): 
-            fn_result = fn.get_ppos()
-            lock.acquire()
-            result.extend(fn_result)
-            lock.release()
-        def f(fn):
-            result.extend(fn.get_ppos())
-        if maxprocesses > 1:
-            self.iter_functions_parallel(f, maxprocesses)
-        else:
-            self.iter_functions(f)
+        def f(fn): result.extend(fn.get_ppos())
+        self.iter_functions(f)
         return result
 
     def get_spos(self):

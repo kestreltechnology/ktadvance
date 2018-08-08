@@ -33,6 +33,7 @@ import subprocess
 
 from contextlib import contextmanager
 
+import advance.reporting.ProofObligations as RP
 import advance.util.fileutil as UF
 import advance.util.printutil as UP
 
@@ -40,6 +41,7 @@ from advance.util.Config import Config
 from advance.app.CApplication import CApplication
 from advance.cmdline.AnalysisManager import AnalysisManager
 from advance.linker.CLinker import CLinker
+from advance.util.IndexedTable import IndexedTableError
 
 def parse():
     usage = ('\nCall with the directory that holds the semantics files\n\n' +
@@ -174,3 +176,16 @@ if __name__ == '__main__':
             am.generate_and_check_app('llrvisp', processes=args.maxprocesses)
             capp.reinitialize_tables()
 
+    with timing('summarize'):
+        timestamp = os.stat(capp.path).st_ctime
+        try:
+            result = RP.project_proofobligation_stats_to_dict(capp)
+            result['timestamp'] = timestamp
+            result['project'] = cpath
+            UF.save_project_summary_results(cpath,result)
+        except IndexedTableError as e:
+            print(
+                '\n' + ('*' * 80) + '\nThe analysis results format has changed'
+                + '\nYou may have to re-run the analysis first: '
+                + '\n' + e.msg
+                + '\n' + ('*' * 80))
