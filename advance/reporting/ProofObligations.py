@@ -397,9 +397,9 @@ def proofobligation_stats_tostring(pporesults,sporesults,rhlen=25,header1='',ext
         lines.append(row_method_count_tostring(sporesults,perc=True,rhlen=rhlen,header1=header1))   
     return '\n'.join(lines)
 
-def project_proofobligation_stats_tostring(capp,filefilter=lambda f:True,extradsmethods=[],maxprocesses=1):
+def project_proofobligation_stats_tostring(capp,filefilter=lambda f:True,extradsmethods=[]):
     lines = []
-    ppos = capp.get_ppos(maxprocesses)
+    ppos = capp.get_ppos()
     spos = capp.get_spos()
     pporesults = get_file_method_count(ppos,extradsmethods=extradsmethods,filefilter=filefilter)
     sporesults = get_file_method_count(spos,extradsmethods=extradsmethods,filefilter=filefilter)
@@ -432,6 +432,23 @@ def project_proofobligation_stats_to_dict(capp,filefilter=lambda f:True,extradsm
     result['fileresults']['ppos'] = pporesults
     result['fileresults']['spos'] = sporesults
     return result
+
+def project_proofobligation_stats_dict_to_string(stats_dict):
+    lines = []
+
+    pporesults = stats_dict['fileresults']['ppos']
+    sporesults = stats_dict['fileresults']['spos']
+
+    rhlen = max([ len(x) for x in pporesults ])
+    lines.append(proofobligation_stats_tostring(pporesults,sporesults,rhlen=rhlen,header1='c files'))
+
+    lines.append('\n\nProof Obligation Statistics')
+
+    tagpporesults = stats_dict['tagresults']['ppos']
+    tagsporesults = stats_dict['tagresults']['spos']
+    lines.append(proofobligation_stats_tostring(tagpporesults,tagsporesults))
+
+    return '\n'.join(lines)
     
 def file_proofobligation_stats_tostring(cfile,extradsmethods=[]):
     lines = []

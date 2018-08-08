@@ -27,8 +27,12 @@
 
 import argparse
 import os
+import time
+
+from contextlib import contextmanager
 
 import advance.reporting.ProofObligations as RP
+import advance.util.fileutil as UF
 import advance.util.printutil as UP
 
 from advance.util.Config import Config
@@ -42,10 +46,16 @@ def parse():
     parser.add_argument('--list_test_applications',
                             help='list names of test applications provided',
                             action='store_true')
-    parser.add_argument('--maxprocesses',type=int,default=1,
-                            help='number of files to process in parallel')
     args = parser.parse_args()
     return args
+
+@contextmanager
+def timing(activity):
+    t0 = time.time()
+    yield
+    print('\n' + ('=' * 80) +
+          '\nCompleted ' + activity + ' in ' + str(time.time() - t0) + ' secs' +
+          '\n' + ('=' * 80))
 
 if __name__ == '__main__':
 
@@ -72,14 +82,22 @@ if __name__ == '__main__':
         print(UP.semantics_not_found_err_msg(cpath))
         exit(1)
    
-    capp = CApplication(sempath)
-
-    try:
-        print(RP.project_proofobligation_stats_tostring(capp,maxprocesses=args.maxprocesses))
-    except IndexedTableError as e:
-        print(
-            '\n' + ('*' * 80) + '\nThe analysis results format has changed'
-            + '\nYou may have to re-run the analysis first: '
-            + '\n' + e.msg
-            + '\n' + ('*' * 80))
+    with timing('summarize'):
+        summaries = UF.read_project_summary_results(cpath)
+        try:
+            if summaries == None:
+                capp = CApplication(sempath)
+                timestamp = os.stat(capp.path).st_ctime
+                result = RP.project_proofobligation_stats_to_dict(capp)
+                result['timestamp'] = timestamp
+                result['project'] = cpath
+                UF.save_project_summary_results(cpath, result)
+                summaries = UF.read_project_summary_results(cpath)
+            print(RP.project_proofobligation_stats_dict_to_string(summaries))
+        except IndexedTableError as e:
+            print(
+                '\n' + ('*' * 80) + '\nThe analysis results format has changed'
+                + '\nYou may have to re-run the analysis first: '
+                + '\n' + e.msg
+                + '\n' + ('*' * 80))
     
