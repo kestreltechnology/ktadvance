@@ -97,11 +97,11 @@ class CFunctionContract(object):
     def report_postconditions(self):
         lines = []
         if len(self.postconditions) == 1:
-            return ('  ' + self.name + ': ' + str(self.postconditions.values()[0]))
+            return ('  ' + self.name + ': ' + self.postconditions.values()[0].pretty())
         elif len(self.postconditions) > 1:
             lines.append('  ' + self.name)
             for pc in self.postconditions.values():
-                lines.append('    ' + str(pc))
+                lines.append('    ' + pc.pretty())
             return  '\n'.join(lines)
         return ''
 
@@ -111,7 +111,7 @@ class CFunctionContract(object):
         def add(t, pl):
             if len(pl) > 0:
                 lines.append(t)
-                for p in pl: lines.append('     ' + str(p))
+                for p in pl: lines.append('     ' + (p.pretty()))
         add('  Postconditions:', self.postconditions.values())
         add('  Preconditions :', self.preconditions.values())
         return '\n'.join(lines)

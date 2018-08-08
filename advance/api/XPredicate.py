@@ -29,6 +29,16 @@ import xml.etree.ElementTree as ET
 
 import advance.app.CDictionaryRecord as CD
 
+printops = {
+    'eq': ' = '
+    }
+
+def get_printop(s):
+    if s in printops:
+        return  printops[s]
+    else:
+        return s
+
 class XPredicate(CD.CDictionaryRecord):
 
     def __init__(self,cd,index,tags,args):
@@ -72,6 +82,8 @@ class XPredicate(CD.CDictionaryRecord):
     def write_mathml(self,cnode,signature):
         print('Missing write_mathml for ' + self.tags[0])
         exit(1)
+
+    def pretty(self): return self.__str__()
 
     def __str__(self): return 'xpredicate: ' + self.tags[0]
 
@@ -407,6 +419,10 @@ class XRelationalExpr(XPredicate):
         cnode.append(anode)
         anode.append(self.get_term1().get_mathml_node(signature))
         anode.append(self.get_term2().get_mathml_node(signature))
+
+    def pretty(self):
+        return (self.get_term1().pretty()  + get_printop(self.get_op())
+                    + self.get_term2().pretty())
 
     def __str__(self):
         return ('expr(' + self.get_op() + ' ' + str(self.get_term1()) + ','

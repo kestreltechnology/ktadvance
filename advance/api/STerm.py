@@ -52,6 +52,8 @@ class STerm(CD.CDictionaryRecord):
 
     def get_mathml_node(self,signature): return ET.Element('s-term')
 
+    def pretty(self): return self.__str__()
+
     def __str__(self): return 's-term-' + self.tags[0]
 
 
@@ -114,6 +116,8 @@ class STNumConstant(STerm):
         node = ET.Element('cn')
         node.text = str(self.get_constant())
         return node
+
+    def pretty(self): return str(self.get_constant())
 
     def __str__(self): return 'num-constant(' + str(self.get_constant()) + ')'
 
