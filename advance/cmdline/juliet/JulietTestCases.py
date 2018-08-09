@@ -264,6 +264,13 @@ testcases = {
         "s06/unsigned_int_fscanf_postinc",
         "s06/unsigned_int_max_postinc",
         "s06/unsigned_int_rand_postinc"
+        ],
+    "CWE252": [
+        "char_fgets"
+        ],
+    "CWE476": [
+        "binary_if",
+        "char"
         ]
     }
 

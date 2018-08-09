@@ -45,17 +45,12 @@ the same predicate appear on the same line) by a set of variable names,
 one of which has to appear in the ppo, or an expression context.
 '''
 def keymatches(tppo,ppo):
-    if (tppo.line == ppo.get_line() and
-            tppo.predicate == ppo.predicatetag):
-        if ((not tppo.has_exp_ctxt()) or
-            (tppo.has_exp_ctxt() and str(ppo.context.get_exp_context()) == tppo.expctxt)):
-            if ((not tppo.has_variable_names()) or
-                    (tppo.has_variable_names() and
-                         any([ ppo.has_variable_name(vname) for vname in tppo.variablename]))):
-                if ((not tppo.has_target_type()) or
-                        (tppo.has_target_type() and str(ppo.predicate.get_tgt_type()) == tppo.targettype)):
-                    return True
-    return False
+    return (tppo.line == ppo.get_line()
+                and tppo.predicate == ppo.predicatetag
+                and tppo.matches_exp_ctxt(ppo)
+                and tppo.matches_variable_names(ppo)
+                and tppo.matches_target_type(ppo)
+                and tppo.matches_pred_arg(ppo))
 
 def initialize_testsummary(testset,d):
     def f(tindex,test):

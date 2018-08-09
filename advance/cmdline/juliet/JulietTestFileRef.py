@@ -99,16 +99,20 @@ class JulietPpo(object):
         self.testfileref = testfileref
         self.line = line
         self.predicate = d['P']
+        self.predarg = None
         self.expctxt = None
         self.cfgctxt = None
         self.variablename = None
         self.targettype = None
+        if 'A' in d: self.predarg = d['A']
         if 'E' in d: self.expctxt = d['E']
         if 'C' in d: self.cfgctxt = d['C']
         if 'V' in d: self.variablename = d['V']
         if 'T' in d: self.targettype = d['T']
 
     def get_test(self): return self.testfileref.get_test()
+
+    def has_pred_arg(self): return not (self.predarg is None)
 
     def has_exp_ctxt(self): return not (self.expctxt is None)
 
@@ -117,6 +121,22 @@ class JulietPpo(object):
     def has_variable_names(self): return not (self.variablename is None)
 
     def has_target_type(self): return not (self.targettype is None)
+
+    def matches_pred_arg(self,ppo):
+        return ((not self.has_pred_arg())
+                    or any ([ ppo.has_argument_name(vname) for vname in self.predarg]))
+
+    def matches_exp_ctxt(self,ppo):
+        return ((not self.has_exp_ctxt())
+                    or str(ppo.context.get_exp_context()) == self.expctxt)
+
+    def matches_variable_names(self,ppo):
+        return ((not self.has_variable_names())
+                    or any([ ppo.has_variable_name(vname) for vname in self.variablename]))
+
+    def matches_target_type(self,ppo):
+        return ((not self.has_target_type())
+                    or str(ppo.predicate.get_tgt_type()) == self.targettype)
 
     def __str__(self):
         ctxt = ''
