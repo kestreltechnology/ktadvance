@@ -151,6 +151,13 @@ class CFunctionPO(object):
 
     def get_line(self): return self.location.get_line()
 
+    def has_argument_name(self,vname):
+        vid = self.cfun.get_variable_vid(vname)
+        if not vid is None:
+            return self.has_argument(vid)
+        else:
+            False
+
     def has_variable_name(self,vname):
         vid = self.cfun.get_variable_vid(vname)
         if not vid is None:
@@ -189,6 +196,8 @@ class CFunctionPO(object):
             for t in self.get_dependencies():
                 if t.is_postcondition_assumption(): result.append(t)
         return result
+
+    def has_argument(self,vid): return self.predicate.has_argument(vid)
 
     def has_variable(self,vid): return self.predicate.has_variable(vid)
 

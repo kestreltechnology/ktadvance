@@ -113,6 +113,7 @@ class CPOPredicate(CD.CDictionaryRecord):
     def is_width_overflow(self): return False
 
     def has_variable(self,vid): return False
+    def has_argument(self,vid): return False
 
     def __str__(self): return 'po-predicate ' + self.tags[0]
 
@@ -134,6 +135,13 @@ class CPONotNull(CPOPredicate):
     def is_not_null(self): return True
 
     def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
+    def has_argument(self,vid):
+        if self.get_exp().is_lval():
+            lhost = self.get_exp().get_lval().get_lhost()
+            return  lhost.is_var() and lhost.get_vid() == vid
+        else:
+            return False
 
     def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
 
