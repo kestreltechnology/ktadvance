@@ -132,7 +132,7 @@ class TestManager(object):
         if self.verbose: print('\nParsing files\n' + ('-' * 80))
         for cfile in self.get_cref_files():
             cfilename = cfile.name
-            ifilename = self.parsemanager.preprocess_file_with_gcc(cfilename,copyfiles=True)
+            ifilename = self.parsemanager.preprocess_file(cfilename,copyfiles=True)
             parseresult = self.parsemanager.parse_ifile(ifilename)
             if parseresult != 0:
                 self.testresults.add_parse_error(cfilename,str(parseresult))

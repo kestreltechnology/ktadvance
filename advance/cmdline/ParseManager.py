@@ -46,7 +46,8 @@ class ParseManager(object):
     """
 
     def __init__(self,cpath,tgtpath,filter=False,posix=False,verbose=True,
-                     keepUnused=False,tgtplatform='-m64'):
+                 keepUnused=False,tgtplatform='-m64',tgtcompiler='gcc',
+                 tgtcpuarch=None):
         """Initialize paths to code, results, and parser executable.
 
         Args:
@@ -66,10 +67,12 @@ class ParseManager(object):
         self.tgtspath = os.path.join(self.sempath,'sourcefiles')   # for .c and .i files
         self.config = Config()
         self.verbose = verbose
-        self.tgtplatform = tgtplatform     # compile to 32 bit or 64 bit platform (default 64 bit)
+        self.tgtcpuarch = tgtcpuarch     # compile to 32 bit or 64 bit platform (default 64 bit)
+        self.tgtcompiler = tgtcompiler
+        self.tgtplatform = tgtplatform
         if not (self.tgtplatform in [ '-m64', '-m32' ]):
-            printf('Warning: invalid target platform: ' + self.tgtplatform +
-                       '. Target platform is set to -m64')
+            print('Warning: invalid target platform: ' + self.tgtplatform +
+                     '. Target platform is set to -m64')
             self.tgtplatform = '-m64'
 
 
@@ -84,26 +87,31 @@ class ParseManager(object):
         gzipcmd = [ 'gzip', tarfilename ]
         subprocess.call(gzipcmd,cwd=self.cpath,stderr=subprocess.STDOUT) if self.verbose else subprocess.call(gzipcmd,cwd=self.cpath,stdout=open(os.devnull,'w'), stderr=subprocess.STDOUT)
 
-    def preprocess_file_with_gcc(self,cfilename,copyfiles=True,moreoptions=[]):
-        """Invoke gcc preprocessor on c source file.
+    def preprocess_file(self,cfilename,copyfiles=True,moreoptions=[]):
+        """Invoke preprocessor on c source file.
 
         Args:
             cfilename: c source code filename relative to cpath
             moreoptions: list of additional options to be given to the preprocessor
 
         Effects:
-            invokes the gcc preprocessor on the c source file and optionally copies 
+            invokes preprocessor on the c source file and optionally copies
             the original source file and the generated .i file to the 
             tgtpath/sourcefiles directory
         """
-        mac = self.config.platform == 'mac'
         ifilename = cfilename[:-1] + 'i'
-        macoptions = [ '-U___BLOCKS___',
-                       '-D_DARWIN_C_SOURCE',
-                       '-D_FORTIFY_SOURCE=0' ]
-        cmd = [ 'gcc', '-fno-inline', '-fno-builtin', '-E', '-g', self.tgtplatform ,
-                '-o', ifilename, cfilename ]
-        if mac: cmd = cmd[:1] + macoptions + cmd[1:]
+        cmd = [self.tgtcompiler]
+        if 'gcc' in self.tgtcompiler:
+            if self.config.platform == 'mac':
+                cmd.extend(['-U___BLOCKS___','-D_DARWIN_C_SOURCE','-D_FORTIFY_SOURCE=0'])
+            cmd.extend(['-fno-inline','-fno-builtin','-E','-g',self.tgtplatform,'-o',ifilename, cfilename])
+        elif 'armcc' in self.tgtcompiler:
+            cmd.extend(['--no_inline','-E','-g'])
+            if self.tgtcpuarch:
+                cmd.extend(['--cpu', self.tgtcpuarch])
+            cmd.extend(['-o', ifilename, cfilename])
+        else:
+            raise AssertionError("Unknown compiler: {}".format(self.tgtcompiler))
         cmd = cmd[:1] + moreoptions + cmd[1:]
         if self.verbose:
             print('Preprocess file: ' + str(cmd))
@@ -290,7 +298,7 @@ class ParseManager(object):
                 if fname.endswith('.c'):
                     fname = self.normalize_filename(os.path.join(d,fname))
                     if fname.startswith('semantics'): continue
-                    ifilename = self.preprocess_file_with_gcc(fname,copyfiles)
+                    ifilename = self.preprocess_file(fname,copyfiles)
                     self.parse_ifile(ifilename)
                     targetfiles.add_file(self.normalize_filename(fname))
         targetfiles.savexmlfile(self.tgtxpath)
@@ -367,7 +375,7 @@ if __name__ == '__main__':
     pm = ParseManager(id115dir,id115dir)
     pm.initialize_paths()
     for f in [ 'id115.c', 'id116.c', 'id117.c', 'id118.c' ]:
-        ifilename = pm.preprocess_file_with_gcc(f)
+        ifilename = pm.preprocess_file(f)
         pm.parse_ifile(ifilename)
 
     
