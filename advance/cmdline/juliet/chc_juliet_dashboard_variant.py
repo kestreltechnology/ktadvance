@@ -60,8 +60,8 @@ if __name__ == '__main__':
     if not args.variant in JTC.variants:
         print('*' * 80)
         print('Variant ' + args.variant + ' not found. Variants available are: ')
-        for v in sorted(variants):
-            print(v + ': ' + variants[v])
+        for v in sorted(JTC.variants):
+            print(v + ': ' + JTC.variants[v])
         print('*' * 80)
         exit(1)
 

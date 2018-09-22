@@ -46,27 +46,20 @@ if __name__ == '__main__':
     testdir = config.testdir
     dsmethods = RP.get_dsmethods([])
 
-    args = parse()
     cwe = 'all'
     if args.cwe is not None: cwe = args.cwe
 
-    colors =  {
-        'violated': 'red',
-        'stmt': 'green',
-        'local': 'lightgreen',
-        'api': 'springgreen',
-        'contract': 'aquamarine',
-        'open': 'orange'}
+    colors =  RP.histogramcolors
         
-    ppodmtotals = {}
-    spodmtotals = {}
+    ppodmtotals = {}    # dm -> totals list (per test)
+    spodmtotals = {}    # dm -> totals list (per test)
     plotlegend = []
     for dm in dsmethods: ppodmtotals[dm] = []
     for dm in dsmethods: spodmtotals[dm] = []
     width = 0.67
     N = 0
-    ptotals = []
-    stotals = []
+    ptotals = []   # totals list   (per test)
+    stotals = []   # totals list   (per test)
 
     for p in get_juliet_projects(cwe):
         path = os.path.join(UF.get_juliet_path(),p)
@@ -74,8 +67,8 @@ if __name__ == '__main__':
         if results is None:
             continue
         pd = results
-        ppod = pd['tagresults']['ppos']
-        spod = pd['tagresults']['spos']
+        ppod = pd['tagresults']['ppos']        # ppotype -> dm -> count
+        spod = pd['tagresults']['spos']        # ppotype -> dm -> count
 
         for t in ppod:
             if not 'violated' in ppod[t]: ppod[t]['violated'] = 0
@@ -154,15 +147,15 @@ if __name__ == '__main__':
 
     if  args.local:
         partial(N,['stmt','local'],['api','contract','open'])
-
+¯
     if args.api:
         partial(N,['stmt','local','api'],['contract','open'])
 
     if args.contract:
         partial(N,['stmt','local','api','contract'],['open'])
 
-    ppofractions = {}
-    spofractions = {}
+    ppofractions = {}    # dm -> fractions list (per test)
+    spofractions = {}    # dm -> fractions list (per test)
 
     for dm in dsmethods:
         ppofractions[dm] = []

@@ -34,42 +34,15 @@ import advance.reporting.ProofObligations as RP
 from advance.util.Config import Config
 
 import advance.cmdline.juliet.JulietTestCases as JTC
-
-variantfiles = {
-    '51': [ 'a', 'b' ],
-    '52': [ 'a', 'b', 'c' ],
-    '53': [ 'a', 'b', 'c', 'd' ],
-    '54': [ 'a', 'b', 'c', 'd', 'e' ],
-    '61': [ 'a', 'b' ],
-    '63': [ 'a', 'b' ],
-    '64': [ 'a', 'b' ],
-    '65': [ 'a', 'b' ],
-    '66': [ 'a', 'b' ],
-    '67': [ 'a', 'b' ],
-    '68': [ 'a', 'b' ]
-    }
-
-def get_variant_files(variant):
-    if variant in variantfiles:
-        return [ 'x' + variant + suffix for suffix in variantfiles[variant] ]
-    return []
+import advance.cmdline.juliet.JulietVariantReporting as JVR
 
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('variant',help=('sequence number of variant, e.g., 01, or 09 or 61, etc.'
                                             + ' (type ? to see a list of available variants)'))
-    parser.add_argument('--cwe',help='only report on the given cwe')
+    parser.add_argument('--cwe',help='only report on the given cwe, e.g., CWE121')
     args = parser.parse_args()
     return args
-
-
-def get_juliet_projects(cwe):
-    result = []
-    for c in JTC.testcases:
-        if not ((cwe == 'all') or (c == cwe)): continue
-        for p in JTC.testcases[c]:
-            result.append(os.path.join(c,p))
-    return result
 
 if __name__ == '__main__':
 
@@ -84,41 +57,8 @@ if __name__ == '__main__':
             print(v + ': ' + JTC.variants[v])
         print('*' * 80)
         exit(1)
-
-    variant = 'x' + args.variant
-
-    config = Config()
-    testdir = Config().testdir
-
-    ppoprojecttotals = {}   # project -> dm -> dmtota
-    ppofiletotals = {}
-    nosummary = []
-
-    for p in get_juliet_projects(cwe):
-        path = os.path.join(UF.get_juliet_path(),p)
-        results = UF.read_project_summary_results(path)
-        if results is None:
-            nosummary.append(p)
-            continue
-        pd = results
-
-        if variant in pd['fileresults']['ppos']:
-            ppod = pd['fileresults']['ppos'][variant]
-            ppoprojecttotals[p] = ppod
-
-        else:
-            vfiles = get_variant_files(args.variant)
-            if len(vfiles) > 0 and vfiles[0] in pd['fileresults']['ppos']:
-                ppoprojecttotals[p] = {}                
-                for f in vfiles:
-                    if f in pd['fileresults']['ppos']:
-                        ppod = pd['fileresults']['ppos'][f]
-                        if not  'violated' in ppod:
-                            ppod['violated'] = 0
-                        for dm in ppod:
-                            if not dm in ppoprojecttotals[p]:
-                                ppoprojecttotals[p][dm] = 0
-                            ppoprojecttotals[p][dm] += ppod[dm]
+        
+    (ppoprojecttotals,spoprojecttotals,nosummary) = JVR.get_ppo_project_variant_totals(args.variant,cwe)
 
     print('\n\nPrimary Proof Obligations')
     print('\n'.join(RP.totals_to_string(ppoprojecttotals)))
