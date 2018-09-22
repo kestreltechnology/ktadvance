@@ -448,6 +448,12 @@ class XTainted(XPredicate):
 
     def get_term(self): return self.get_iterm(0)
 
+    def get_lower_bound(self):
+        if (int(self.args[1])) > 0: return self.get_iterm(1)
+
+    def get_upper_bound(self):
+        if (int(self.args[2])) > 0: return self.get_iterm(2)
+
     def is_tainted(self): return True
 
     def __str__(self): return 'tainted(' + str(self.get_term()) + ')'

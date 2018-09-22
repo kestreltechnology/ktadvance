@@ -108,7 +108,7 @@ class STNumConstant(STerm):
     def __init__(self,cd,index,tags,args):
         STerm.__init__(self,cd,index,tags,args)
 
-    def get_constant(self): return int(self.args[0])
+    def get_constant(self): return int(self.tags[1])
 
     def is_num_constant(self): return True
 

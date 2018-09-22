@@ -197,6 +197,10 @@ class InterfaceDictionary(object):
             def f(index,key): return ST.STRuntimeValue(self,index,t.tags,t.args)
             return self.s_term_table.add(IT.get_key(t.tags,t.args),f)
 
+    def index_opt_s_term(self,t):
+        if t is None: return -1
+        else: return self.index_opt_s_term(t)
+
     def mk_s_term(self,tags,args):
         def f(index,key): return s_term_constructors[tags[0]]((self,index,tags,args))
         return self.s_term_table.add(IT.get_key(tags,args),f)
@@ -263,7 +267,9 @@ class InterfaceDictionary(object):
             def f(index,key): return XP.XPreservesAllMemory(self,index,p.tags,p.args)
             return self.xpredicate_table.add(IT.get_key(p.tags,p.args),f)
         if p.is_tainted():
-            args = [ self.index_s_term(p.get_term()) ]
+            args = [ self.index_s_term(p.get_term()),
+                         self.index_opt_s_term(p.get_lower_bound()),
+                         self.index_opt_s_term(p.get_upper_bound()) ]
             def f(index,key): return XP.XTainted(self,index,p.tags,args)
             return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_buffer():
@@ -302,8 +308,8 @@ class InterfaceDictionary(object):
             def f(index,key): return ST.STArgValue(self,index,tags,args)
             return self.s_term_table.add(IT.get_key(tags,args),f)
         if tnode.tag == 'cn':
-            tags = [ 'ic' ]
-            args = [ int(tnode.text) ]
+            tags = [ 'ic', tnode.text ]
+            args = [ ]
             def f(index,key): return ST.STNumConstant(self,index,tags,args)
             return self.s_term_table.add(IT.get_key(tags,args),f)
         if tnode.tag == 'field':
@@ -330,6 +336,12 @@ class InterfaceDictionary(object):
         mnode = pcnode.find('math')
         anode = mnode.find('apply')
         def pt(t): return self.parse_mathml_term(t,pars,gvars=gvars)
+        def bound(t):
+            if t in anode[0].attrib:
+                b = int(anode[0].get(t))
+                tags = [ 'ic', str(b) ]
+                return self.mk_s_term(self,tags,[])
+            return (-1)
         (op,terms) = (anode[0].tag,anode[1:])
         optransformer = { 'eq':'eq', 'neq':'ne', 'gt':'gt', 'lt':'lt',
                               'geq':'ge', 'leq':'le' }
@@ -370,7 +382,7 @@ class InterfaceDictionary(object):
             def f(index,key): return XP.XInitialized(self,index,tags,args)
             return self.xpredicate_table.add(IT.get_key(tags,args),f)
         if op == 'tainted':
-            args = [ pt(terms[0]) ]
+            args = [ pt(terms[0]), bound('lb'), bound('ub') ]
             tags = [ 'tt' ]
             def f(index,key): return XP.XTainted(self,index,tags,args)
             return self.xpredicate_table.add(IT.get_key(tags,args),f)
