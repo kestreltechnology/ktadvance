@@ -33,6 +33,15 @@ Utility functions for reporting proof obligations and their statistics.
 
 dischargemethods = [ 'violated', 'stmt', 'local', 'api', 'contract', 'open' ]
 
+histogramcolors = {
+    'violated': 'red',
+    'stmt': 'green',
+    'local': 'lightgreen',
+    'api': 'springgreen',
+    'contract': 'aquamarine',
+    'open': 'orange'
+    }
+
 def get_dsmethods(extra):
     return extra + dischargemethods
 
@@ -580,6 +589,12 @@ def tag_file_function_pos_tostring(pos,filefilter=lambda f:True,pofilter=lambda 
 
     return '\n'.join(lines)
 
+def get_totals_from_tagtotals(tagtotals):
+    totals = {}
+    dsmethods = get_dsmethods([])
+    for dm in dsmethods:
+        totals[dm] = sum([ tagtotals[t][dm] for t in tagtotals if dm in tagtotals[t] ])
+    return totals
 
 def totals_to_string(tagtotals,absolute=True,totals=True):
     lines = []
@@ -605,9 +620,7 @@ def totals_to_string(tagtotals,absolute=True,totals=True):
                                             for x in r]))
     if totals:
         lines.append('-' * barlen )
-        totals = {}
-        for dm in dsmethods:
-            totals[dm] = sum([ tagtotals[t][dm] for t in tagtotals ])
+        totals = get_totals_from_tagtotals(tagtotals)
         totalcount = sum(totals.values())
         if totalcount > 0:
             tagopenpct = (1.0 - (float(totals['open'])/float(totalcount))) * 100.0
