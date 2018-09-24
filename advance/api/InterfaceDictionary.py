@@ -199,7 +199,7 @@ class InterfaceDictionary(object):
 
     def index_opt_s_term(self,t):
         if t is None: return -1
-        else: return self.index_opt_s_term(t)
+        else: return self.index_s_term(t)
 
     def mk_s_term(self,tags,args):
         def f(index,key): return s_term_constructors[tags[0]]((self,index,tags,args))
@@ -340,7 +340,7 @@ class InterfaceDictionary(object):
             if t in anode[0].attrib:
                 b = int(anode[0].get(t))
                 tags = [ 'ic', str(b) ]
-                return self.mk_s_term(self,tags,[])
+                return self.mk_s_term(tags,[])
             return (-1)
         (op,terms) = (anode[0].tag,anode[1:])
         optransformer = { 'eq':'eq', 'neq':'ne', 'gt':'gt', 'lt':'lt',
