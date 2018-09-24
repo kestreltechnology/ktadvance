@@ -8,6 +8,16 @@
         <parameters>
           <par name="data" nr="1"/>
         </parameters>
+	<postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<tainted lb="-2147483648" ub="2147483647"/>
+		<return/>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
       <function name="CWE124_Buffer_Underwrite__CWE839_connect_socket_61b_goodB2GSource">
         <parameters>
@@ -18,6 +28,9 @@
         <parameters>
           <par name="data" nr="1"/>
         </parameters>
+	<postconditions>
+	  <post><math><apply><eq/><return/><cn>7</cn></apply></math></post>
+	</postconditions>
       </function>
     </functions>
   </cfile>
