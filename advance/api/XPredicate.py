@@ -30,7 +30,8 @@ import xml.etree.ElementTree as ET
 import advance.app.CDictionaryRecord as CD
 
 printops = {
-    'eq': ' = '
+    'eq': ' = ',
+    'lt': ' < '
     }
 
 def get_printop(s):
@@ -456,7 +457,12 @@ class XTainted(XPredicate):
 
     def is_tainted(self): return True
 
-    def __str__(self): return 'tainted(' + str(self.get_term()) + ')'
+    def __str__(self):
+        lb = self.get_lower_bound()
+        ub = self.get_upper_bound()
+        slb = '' if lb is None else ' LB:' + str(lb)
+        sub = '' if ub is None else ' UB:' + str(ub)
+        return 'tainted(' + str(self.get_term()) + ')' + slb + sub
 
 
 class XUniquePointer(XPredicate):

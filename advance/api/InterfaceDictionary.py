@@ -37,6 +37,21 @@ import advance.api.PostAssume as PA
 import advance.api.STerm as ST
 import advance.api.XPredicate as XP
 
+macroconstants = {
+    "MININT8": "-128",
+    "MAXINT8": "127",
+    "MAXUINT8": "255",
+    "MININT16": "-32768",
+    "MAXINT16": "32767",
+    "MAXUINT16": "65535",
+    "MININT32": "-2147483648",
+    "MAXINT32": "2147483647",
+    "MAXUINT32": "4294967295",
+    "MININT64": "-9223372036854775808",
+    "MAXINT64": "9223372036854775807",
+    "MAXUINT64": "18446744073709551615"
+    }
+
 api_parameter_constructors = {
     'pf': lambda x:AP.APFormal(*x),
     'pg': lambda x:AP.APGlobal(*x)
@@ -303,9 +318,14 @@ class InterfaceDictionary(object):
             def f(index,key): return ST.STReturnValue(self,index,tags,args)
             return self.s_term_table.add(IT.get_key(tags,args),f)
         if tnode.tag == 'ci':
-            tags = [ 'av' ]
-            args = [ self.parse_mathml_api_parameter(tnode.text,pars,gvars=gvars) ]
-            def f(index,key): return ST.STArgValue(self,index,tags,args)
+            if tnode.text in macroconstants:
+                tags = [ 'ic', macroconstants[tnode.text] ]
+                args = []
+                def f(index,key): return ST.STNumConstant(self,index,tags,args)
+            else:
+                tags = [ 'av' ]
+                args = [ self.parse_mathml_api_parameter(tnode.text,pars,gvars=gvars) ]
+                def f(index,key): return ST.STArgValue(self,index,tags,args)
             return self.s_term_table.add(IT.get_key(tags,args),f)
         if tnode.tag == 'cn':
             tags = [ 'ic', tnode.text ]
@@ -338,7 +358,11 @@ class InterfaceDictionary(object):
         def pt(t): return self.parse_mathml_term(t,pars,gvars=gvars)
         def bound(t):
             if t in anode[0].attrib:
-                b = int(anode[0].get(t))
+                ctxt = anode[0].get(t)
+                if ctxt in macroconstants:
+                    b = int(macroconstants[ctxt])
+                else:
+                    b = int(ctxt)
                 tags = [ 'ic', str(b) ]
                 return self.mk_s_term(tags,[])
             return (-1)
