@@ -30,6 +30,7 @@ import os
 import xml.etree.ElementTree as ET
 
 import advance.util.fileutil as UF
+import advance.util.printutil as UP
 import advance.util.xmlutil as UX
 
 from advance.app.CApplication import CApplication
@@ -71,8 +72,11 @@ if __name__ == '__main__':
     lines = []
     def showall(fi):
         if fi.has_file_contracts():
-            if fi.contracts.has_assertions():
-                lines.append(str(fi.contracts))
+            try:
+                if fi.contracts.has_assertions():
+                    lines.append(str(fi.contracts))
+            except Exception as e:
+                print('Error in file: ' + fi.name + ': ' + str(e))
 
     def showpost(fi):
         if fi.has_file_contracts():

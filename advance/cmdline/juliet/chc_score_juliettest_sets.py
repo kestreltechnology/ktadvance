@@ -23,15 +23,30 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import argparse
 import os
 import subprocess
 
 import advance.cmdline.juliet.JulietTestCases as JTC
 
+def parse():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--cwe',help='only score the given cwe')
+    args = parser.parse_args()
+    return args
+
+
 if __name__ == '__main__':
+
+    args = parse()
+
+    def excluded(cwe):
+        if args.cwe is None: return False
+        return not (args.cwe == cwe)
 
     for cwe in sorted(JTC.testcases):
         for t in JTC.testcases[cwe]:
+            if excluded(cwe): continue
             testcase = os.path.join(cwe,t)
             cmd = [ 'python' , 'chc_score_juliettest.py', testcase ]
             result = subprocess.call(cmd,stderr=subprocess.STDOUT)

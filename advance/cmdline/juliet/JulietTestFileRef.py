@@ -136,7 +136,7 @@ class JulietPpo(object):
 
     def matches_target_type(self,ppo):
         return ((not self.has_target_type())
-                    or str(ppo.predicate.get_tgt_type()) == self.targettype)
+                    or str(ppo.predicate.get_tgt_kind()) == self.targettype)
 
     def __str__(self):
         ctxt = ''
