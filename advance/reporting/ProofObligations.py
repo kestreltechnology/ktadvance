@@ -567,6 +567,9 @@ def tag_file_function_pos_tostring(pos,filefilter=lambda f:True,pofilter=lambda 
                 for po in sorted(fundict[f][ff],key=lambda po:po.get_line()):
                     invd = po.cfun.invd
                     lines.append((' ' * 6) + str(po))
+                    if po.is_closed():
+                        lines.append((' ' * 14) + str(po.explanation))
+
                     if po.has_diagnostic():
                         amsgs = po.diagnostic.amsgs
                         if len(amsgs) > 0:
