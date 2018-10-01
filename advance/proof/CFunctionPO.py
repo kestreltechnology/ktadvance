@@ -31,7 +31,9 @@ po_status = {
     'g': 'safe',
     'o': 'open',
     'r': 'violation',
-    'x': 'dead-code'
+    'x': 'dead-code',
+    'p': 'implementation-defined',
+    'b': 'value-wrap-around'
     }
 
 po_status_indicators = { v:k for (k,v) in po_status.items() }
@@ -213,6 +215,10 @@ class CFunctionPO(object):
 
     def is_safe(self): return (self.status == 'safe')
 
+    def is_implementation_defined(self): return (self.status == 'implementation-defined')
+
+    def is_value_wrap_around(self): return (self.status == 'value-wrap-around')
+
     def is_deadcode(self): return (self.status == 'dead-code')
 
     def is_delegated(self):
@@ -243,6 +249,8 @@ class CFunctionPO(object):
 
     def get_display_prefix(self):
         if self.is_violated(): return '<*>'
+        if self.is_implementation_defined(): return '<!>'
+        if self.is_value_wrap_around(): return '<o>'
         if self.is_open(): return '<?>'
         if self.is_deadcode(): return '<X>'
         if self.dependencies.is_stmt(): return '<S>'

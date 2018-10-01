@@ -45,8 +45,12 @@ po_predicate_names = {
     'ir': 'initialized-range',
     'c': 'cast',
     'pc': 'pointer-cast',
-    'csu': 'signed-to-unsigned-cast',
+    'csul': 'signed-to-unsigned-cast-lb',
+    'csuu': 'signed-to-unsigned-cast-ub',
+    'cuu': 'unsigend-to-unsigned-cast',
     'cus': 'unsigned-to-signed-cast',
+    'cssl': 'signed-to-signed-cast-lb',
+    'cssu': 'signed-to-signed-cast-ub',
     'z': 'not-zero',
     'nt': 'null-terminated',
     'nneg': 'non-negative',
@@ -524,10 +528,10 @@ class CPOPointerCast(CPOPredicate):
 
 
 
-class CPOSignedToUnsignedCast(CPOPredicate):
+class CPOSignedToUnsignedCastLB(CPOPredicate):
     '''
     tags:
-        0: 'csu'
+        0: 'csul'
         1: from ikind
         2: tgt ikind
 
@@ -552,6 +556,33 @@ class CPOSignedToUnsignedCast(CPOPredicate):
                     + ',from:' + self.get_from_kind()
                     + ',to:' + self.get_tgt_kind() + ')')
 
+class CPOSignedToUnsignedCastUB(CPOPredicate):
+    '''
+    tags:
+        0: 'csuu'
+        1: from ikind
+        2: tgt ikind
+
+    args:
+        0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_from_kind(self): return self.tags[1]
+
+    def get_tgt_kind(self): return self.tags[2]
+
+    def is_signed_to_unsigned_cast(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp())
+                    + ',from:' + self.get_from_kind()
+                    + ',to:' + self.get_tgt_kind() + ')')
 
 
 class CPOUnsignedToSignedCast(CPOPredicate):
@@ -582,7 +613,89 @@ class CPOUnsignedToSignedCast(CPOPredicate):
                     + ',from:' + self.get_from_kind()
                     + ',to:' + self.get_tgt_kind() + ')')
 
+class CPOUnsignedToUnsignedCast(CPOPredicate):
+    '''
+    tags:
+        0: 'cuu'
+        1: from ikind
+        2: tgt ikind
 
+    args:
+        0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_from_kind(self): return self.tags[1]
+
+    def get_tgt_kind(self): return self.tags[2]
+
+    def is_unsigned_to_signed_cast(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp())
+                    + ',from:' + self.get_from_kind()
+                    + ',to:' + self.get_tgt_kind() + ')')
+
+class CPOSignedToSignedCastLB(CPOPredicate):
+    '''
+    tags:
+        0: 'cssl'
+        1: from ikind
+        2: tgt ikind
+
+    args:
+        0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_from_kind(self): return self.tags[1]
+
+    def get_tgt_kind(self): return self.tags[2]
+
+    def is_unsigned_to_signed_cast(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp())
+                    + ',from:' + self.get_from_kind()
+                    + ',to:' + self.get_tgt_kind() + ')')
+
+class CPOSignedToSignedCastUB(CPOPredicate):
+    '''
+    tags:
+        0: 'cssu'
+        1: from ikind
+        2: tgt ikind
+
+    args:
+        0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_from_kind(self): return self.tags[1]
+
+    def get_tgt_kind(self): return self.tags[2]
+
+    def is_unsigned_to_signed_cast(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp())
+                    + ',from:' + self.get_from_kind()
+                    + ',to:' + self.get_tgt_kind() + ')')
 
 class CPONotZero(CPOPredicate):
     '''
@@ -960,7 +1073,7 @@ class CPOValueConstraint(CPOPredicate):
 
     def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
-    def __str__(self): return self.get_tag()
+    def __str__(self): return str(self.get_exp())
 
 
 class CPOPreservedAllMemory(CPOPredicate):
