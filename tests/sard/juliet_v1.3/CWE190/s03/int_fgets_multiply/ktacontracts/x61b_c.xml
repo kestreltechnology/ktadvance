@@ -8,6 +8,16 @@
         <parameters>
           <par name="data" nr="1"/>
         </parameters>
+	<postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<tainted lb="MININT32" ub="MAXINT32"/>
+		<return/>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
       <function name="CWE190_Integer_Overflow__int_fgets_multiply_61b_goodB2GSource">
         <parameters>
@@ -18,6 +28,17 @@
         <parameters>
           <par name="data" nr="1"/>
         </parameters>
+	<postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<eq/>
+		<return/>
+		<cn>2</cn>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
     </functions>
   </cfile>
