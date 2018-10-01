@@ -8,6 +8,16 @@
         <parameters>
           <par name="data" nr="1"/>
         </parameters>
+	<postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<tainted lb="MININT8" ub="MAXINT8"/>
+		<return/>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
       <function name="CWE190_Integer_Overflow__char_rand_square_61b_goodB2GSource">
         <parameters>
@@ -19,6 +29,17 @@
           <par name="data" nr="1"/>
         </parameters>
       </function>
+      <postconditions>
+	<post>
+	  <math>
+	    <apply>
+	      <eq/>
+	      <return/>
+	      <cn>2</cn>
+	    </apply>
+	  </math>
+	</post>
+      </postconditions>
     </functions>
   </cfile>
 </c-analysis>
