@@ -264,7 +264,7 @@ class InterfaceDictionary(object):
         if p.is_initialized_range():
             args = [ self.index_s_term(p.get_buffer()),
                          self.index_s_term(p.get_length()) ]
-            def f(index,key): return XP.InitializedRange(self,index,p.tags,args)
+            def f(index,key): return XP.XInitializedRange(self,index,p.tags,args)
             return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_null_terminated():
             args = [ self.index_s_term(p.get_term()) ]
