@@ -3,6 +3,11 @@
   <header info="cfile" name="cfile" time="2018-06-15 18:32:45.985626"/>
   <cfile name="x45">
     <data-structures/>
+    <global-variables>
+      <gvar
+	  name="CWE122_Heap_Based_Buffer_Overflow__c_CWE129_connect_socket_45_badData"/>
+      <gvar name="CWE122_Heap_Based_Buffer_Overflow__c_CWE129_connect_socket_45_goodG2BData"/>
+    </global-variables>
     <functions>
       <function name="CWE122_Heap_Based_Buffer_Overflow__c_CWE129_connect_socket_45_bad">
         <parameters/>
@@ -12,6 +17,17 @@
       </function>
       <function name="badSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<lt/>
+		<ci>CWE122_Heap_Based_Buffer_Overflow__c_CWE129_connect_socket_45_badData</ci>
+		<cn>10</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="goodB2G">
         <parameters/>
@@ -24,7 +40,18 @@
       </function>
       <function name="goodG2BSink">
         <parameters/>
-      </function>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<lt/>
+		<ci>CWE122_Heap_Based_Buffer_Overflow__c_CWE129_connect_socket_45_goodG2BData</ci>
+		<cn>10</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
+      </function>      
     </functions>
   </cfile>
 </c-analysis>
