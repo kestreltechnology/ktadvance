@@ -93,7 +93,9 @@ def classify_tgt_safecontrol(ppo,capp):
             if all( [ x == 'S' for x in classifications ]):
                 return 'S'                                      # safe
             if 'O' in classifications: return 'O'
-        return 'D'                                              # deferred
+            return 'D'                                           # deferred
+        else:
+            return 'S'
     if ppo.is_deadcode(): return 'X'                            # dead code
     return 'O'                                                  # other
 
