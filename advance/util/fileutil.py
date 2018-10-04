@@ -540,8 +540,8 @@ def unpack_tar_file(path,deletesemantics=False):
         if result != 0:
             print('Error in ' + ' '.join(cmd))
             return False
-        else:
-            print('Successfully extracted ' + targzfile)
+        # else:
+            # print('Successfully extracted ' + targzfile)
     return os.path.isdir('semantics')
         
 
