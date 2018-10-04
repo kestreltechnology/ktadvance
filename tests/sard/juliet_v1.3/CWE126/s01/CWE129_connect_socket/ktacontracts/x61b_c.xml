@@ -15,7 +15,14 @@
           <par name="data" nr="1"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><tainted/><return/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<tainted lb="MININT32" ub="MAXINT32"/>
+		<return/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="CWE126_Buffer_Overread__CWE129_connect_socket_61b_goodG2BSource">
