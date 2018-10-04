@@ -174,6 +174,12 @@ class CFunctionPO(object):
             depids = self.dependencies.ids
             return [ self.pod.get_assumption_type(id) for id in depids ]
 
+    def has_api_dependencies(self):
+        if self.has_dependencies():
+            atypes = self.get_dependencies()
+            return any( [ t.is_api_assumption() for t in atypes ])
+        return false
+
     def get_dependencies_type(self):
         atypes = self.get_dependencies()
         deptype = 'api'
