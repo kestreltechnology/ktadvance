@@ -25,6 +25,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import os
 
 class TestResults(object):
 
@@ -110,10 +111,63 @@ class TestResults(object):
     def add_sev_discrepancy(self,cfilename,cfun,spo,status):
         self.sevresults[cfilename][cfun.name]['discrepancies'].append((spo,status,False))
 
+    def get_line_summary(self):
+        name = os.path.basename(self.testsetref.specfilename)[:-5]
+        parsing = ''
+        ppogen = ''
+        spogen = ''
+        pporesult = ''
+        sporesult = ''
+        for cfile in self.cfiles:
+            cfilename = cfile.name
+            cfunctions = cfile.get_functions()
+            parsingok = True
+            ppogenok = True
+            spogenok = True
+            pporesultok = True
+            sporesultok = True
+            if len(cfunctions) > 0:
+                for cfun in cfunctions:
+                    fname = cfun.name
+                    if self.includesparsing:
+                        if self.xfileresults[cfilename]['xffiles'][fname] != 'ok':
+                            parsingok = False
+                    if self.includesppos:
+                        funresults = self.pporesults[cfilename][fname]
+                        count = funresults['count']
+                        missing = funresults['missingpredicates']
+                        if count != 'ok' or len(missing) > 0:
+                            ppogenok = False
+                    if self.includesspos:
+                        funresults = self.sporesults[cfilename][fname]
+                        count = funresults['count']
+                        missing = funresults['missing']
+                        if count != 'ok' or len(missing) > 0:
+                            spogenok = False
+                    if self.includespevs:
+                        pevs = self.pevresults[cfilename][fname]['discrepancies']
+                        if len(pevs) > 0:
+                            pporesultok = False
+                    if self.includessevs:
+                        sevs = self.sevresults[cfilename][fname]['discrepancies']
+                        if len(sevs) > 0:
+                            sporesultok = False
+                def pr(result): return '=' if result else 'X'
+                parsing += pr(parsingok)
+                ppogen += pr(ppogenok)
+                spogen += pr(spogenok)
+                pporesult += pr(pporesultok)
+                sporesult += pr(sporesultok)
+        return (name.ljust(10) + '[  ' + parsing.ljust(6) + ppogen.ljust(6)
+                    + spogen.ljust(6) + pporesult.ljust(6)
+                    + sporesult.ljust(6) + ']')
+
+
     def get_summary(self):
         lines = []
-        header = 'File'.ljust(10) + 'Parsing'.center(15) + 'PPO Gen'.center(15) + \
-        'SPO Gen'.center(15) + 'PPO Results'.center(15) + 'SPO Results'.center(15)
+        header = ('File'.ljust(10) + 'Parsing'.center(15) + 'PPO Gen'.center(15)
+                      + 'SPO Gen'.center(15) + 'PPO Results'.center(15)
+                      + 'SPO Results'.center(15))
         lines.append(header)
         lines.append('-' * 85)
         for cfile in self.cfiles:

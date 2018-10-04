@@ -113,6 +113,8 @@ class TestManager(object):
     def print_test_results(self): print(str(self.testresults))
 
     def print_test_results_summary(self): print(str(self.testresults.get_summary()))
+
+    def print_test_results_line_summary(self): print(str(self.testresults.get_line_summary()))
  
     def test_parser(self,savesemantics=False):
         """Parse the source code and optionally save the semantics files in a tar file.

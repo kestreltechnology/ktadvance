@@ -88,7 +88,7 @@ if __name__ == '__main__':
                 if testmanager.verbose: 
                     testmanager.print_test_results()
                 else:
-                    testmanager.print_test_results_summary()
+                    testmanager.print_test_results_line_summary()
             else:
                 print(
                     '\n' + ('*' * 80) + '\nThis test set is not supported on the mac.' +
