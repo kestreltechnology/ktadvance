@@ -1,0 +1,23 @@
+{
+    "test": "CWE562/return_buf",
+    "macros": {
+	"PPO1": {
+	    "P": "can-leave-scope"
+	},
+	"PS1": [ "PPO1" ]
+    },
+    "tests": {
+	"01": {
+	    "cfiles": {
+		"x01.c": {
+		    "violations": {
+			"17": [ "PS1" ]
+		    },
+		    "safe-controls": {
+			"39": [ "PS1" ]
+		    }
+		}
+	    }
+	}
+    }
+}
