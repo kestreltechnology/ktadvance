@@ -369,12 +369,50 @@ testcases = {
         "s01/fgets_strncpy",
         "s01/fscanf_malloc"
         ],
+    "CWE196": [
+        "basic"
+        ],
+    "CWE197": [
+        "s01/int_connect_socket_to_char"
+        ],
+    "CWE242": [
+        "basic"
+        ],
     "CWE252": [
         "char_fgets"
+        ],
+    "CWE253": [
+        "char_fgets",
+        "char_fprintf"
+        ],
+    "CWE416": [
+        "malloc_free_char",
+        "malloc_free_int",
+        "malloc_free_int64_t",
+        "malloc_free_long",
+        "malloc_free_struct",
+        "return_freed_ptr"
+        ],
+    "CWE469": [
+        "char"
         ],
     "CWE476": [
         "binary_if",
         "char"
+        ],
+    "CWE562": [
+        "return_buf",
+        "return_pointer_buf"
+        ],
+    "CWE587": [
+        "basic"
+        ],
+    "CWE588": [
+        "struct"
+        ],
+    "CWE665": [
+        "char_cat",
+        "char_ncat"
         ]
     }
 
