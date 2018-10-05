@@ -188,6 +188,14 @@ class CPOValidMem(CPOPredicate):
 
     def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
+    def has_argument(self,vid):
+        if self.get_exp().is_lval():
+            lhost = self.get_exp().get_lval().get_lhost()
+            return  lhost.is_var() and lhost.get_vid() == vid
+        else:
+            return False
+
+
     def __str__(self): return self.get_tag() +'(' + str(self.get_exp()) + ')'
 
 
@@ -520,6 +528,13 @@ class CPOPointerCast(CPOPredicate):
     def is_pointer_cast(self): return True
 
     def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
+    def has_argument(self,vid):
+        if self.get_exp().is_lval():
+            lhost = self.get_exp().get_lval().get_lhost()
+            return  lhost.is_var() and lhost.get_vid() == vid
+        else:
+            return False
 
     def __str__(self):
         return (self.get_tag() + '(' + str(self.get_exp()) + ',from:'
