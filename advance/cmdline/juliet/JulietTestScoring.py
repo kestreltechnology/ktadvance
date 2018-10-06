@@ -50,7 +50,8 @@ def keymatches(tppo,ppo):
                 and tppo.matches_exp_ctxt(ppo)
                 and tppo.matches_variable_names(ppo)
                 and tppo.matches_target_type(ppo)
-                and tppo.matches_pred_arg(ppo))
+                and tppo.matches_pred_arg(ppo)
+                and tppo.matches_reference_type(ppo))
 
 def initialize_testsummary(testset,d):
     def f(tindex,test):

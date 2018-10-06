@@ -104,11 +104,13 @@ class JulietPpo(object):
         self.cfgctxt = None
         self.variablename = None
         self.targettype = None
+        self.referencetype = None
         if 'A' in d: self.predarg = d['A']
         if 'E' in d: self.expctxt = d['E']
         if 'C' in d: self.cfgctxt = d['C']
         if 'V' in d: self.variablename = d['V']
         if 'T' in d: self.targettype = d['T']
+        if 'R' in d: self.referencetype = d['R']
 
     def get_test(self): return self.testfileref.get_test()
 
@@ -121,6 +123,8 @@ class JulietPpo(object):
     def has_variable_names(self): return not (self.variablename is None)
 
     def has_target_type(self): return not (self.targettype is None)
+
+    def has_reference_type(self): return not (self.referencetype is None)
 
     def matches_pred_arg(self,ppo):
         return ((not self.has_pred_arg())
@@ -137,6 +141,10 @@ class JulietPpo(object):
     def matches_target_type(self,ppo):
         return ((not self.has_target_type())
                     or str(ppo.predicate.get_tgt_kind()) == self.targettype)
+
+    def matches_reference_type(self,ppo):
+        return ((not self.has_reference_type())
+                    or (self.referencetype == 'mem' and ppo.predicate.has_ref_type()))
 
     def __str__(self):
         ctxt = ''
