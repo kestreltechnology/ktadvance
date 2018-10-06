@@ -47,7 +47,7 @@ po_predicate_names = {
     'pc': 'pointer-cast',
     'csul': 'signed-to-unsigned-cast-lb',
     'csuu': 'signed-to-unsigned-cast-ub',
-    'cuu': 'unsigend-to-unsigned-cast',
+    'cuu': 'unsigned-to-unsigned-cast',
     'cus': 'unsigned-to-signed-cast',
     'cssl': 'signed-to-signed-cast-lb',
     'cssu': 'signed-to-signed-cast-ub',
@@ -68,7 +68,9 @@ po_predicate_names = {
     'prm': 'preserved-all-memory',
     'pv': 'preserves-value',
     'pre': 'precondition',
-    'b': 'buffer' }
+    'b': 'buffer',
+    'va': 'var-args'
+    }
 
 def get_predicate_tag(name):
     revnames = { v:k for (k,v) in po_predicate_names.items() }
@@ -118,6 +120,7 @@ class CPOPredicate(CD.CDictionaryRecord):
 
     def has_variable(self,vid): return False
     def has_argument(self,vid): return False
+    def has_ref_type(self): return False
 
     def __str__(self): return 'po-predicate ' + self.tags[0]
 
@@ -445,6 +448,8 @@ class CPOInitialized(CPOPredicate):
     def is_initialized(self): return True
 
     def has_variable(self,vid): return self.get_lval().has_variable(vid)
+
+    def has_ref_type(self): return self.get_lval().has_ref_type()
 
     def __str__(self): return self.get_tag() + '(' + str(self.get_lval()) + ')'
 
@@ -1032,7 +1037,7 @@ class CPOFormatString(CPOPredicate):
     def __init__(self,cd,index,tags,args):
         CPOPredicate.__init__(self,cd,index,tags,args)
 
-    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+    def get_exp(self): return self.cd.dictionary.get_exp(int(self.args[0]))
 
     def is_format_string(self): return True
 
@@ -1041,6 +1046,31 @@ class CPOFormatString(CPOPredicate):
     def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
 
 
+class CPOVarArgs(CPOPredicate):
+    '''
+    tags:
+       0: 'va'
+
+    args:
+       0: exp (format string)
+       1: int (expected number of arguments)
+       r: exps (actual arguments)
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_formatstring(self):
+        return self.cd.dictionary.get_exp(int(self.args[1]))
+
+    def get_argcount(self): return int(self.args[0])
+
+    def get_arguments(self):
+        return [ self.cd.dictionary.get_exp(int(x)) for x in self.args[2:] ]
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_formatstring())
+                    + ',' + str(self.get_argcount()) + ','
+                    + str(len(self.get_arguments())) + ')')
 
 class CPONoOverlap(CPOPredicate):
     '''
