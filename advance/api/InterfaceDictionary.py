@@ -345,6 +345,12 @@ class InterfaceDictionary(object):
                 tags = [ 'aa' ]
                 def f(index,key): return ST.STArgAddressedValue(self,index,tags,args)
                 return self.s_term_table.add(IT.get_key(tags,args),f)
+            elif op == 'divide':
+                args = [ self.parse_mathml_term(terms[0],pars,gvars=gvars),
+                             self.parse_mathml_term(terms[1],pars,gvars=gvars) ]
+                tags = [ 'ax', 'divide' ]
+                def f(index,key): return ST.STArithmeticExpr(self,index,tags,args)
+                return self.s_term_table.add(IT.get_key(tags,args),f)
             else:
                 print('Parse mathml s-term apply not found for ' + op)
                 exit(1)
