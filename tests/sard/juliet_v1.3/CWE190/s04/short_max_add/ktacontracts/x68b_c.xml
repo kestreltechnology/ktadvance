@@ -3,15 +3,41 @@
   <header info="cfile" name="cfile" time="2018-08-03 23:43:57.502428"/>
   <cfile name="x68b">
     <data-structures/>
+    <global-variables>
+      <gvar name="CWE190_Integer_Overflow__short_max_add_68_badData"/>
+      <gvar name="CWE190_Integer_Overflow__short_max_add_68_goodG2BData"/>
+    </global-variables>
     <functions>
       <function name="CWE190_Integer_Overflow__short_max_add_68b_badSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<lt/>
+		<ci>CWE190_Integer_Overflow__short_max_add_68_badData</ci>
+		<ci>MAXINT16</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="CWE190_Integer_Overflow__short_max_add_68b_goodB2GSink">
         <parameters/>
       </function>
       <function name="CWE190_Integer_Overflow__short_max_add_68b_goodG2BSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<lt/>
+		<ci>CWE190_Integer_Overflow__short_max_add_68_goodG2BData</ci>
+		<ci>MAXINT16</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
     </functions>
   </cfile>

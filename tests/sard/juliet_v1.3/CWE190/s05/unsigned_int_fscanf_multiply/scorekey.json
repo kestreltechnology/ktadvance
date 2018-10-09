@@ -1,7 +1,10 @@
 {
     "test": "CWE190/s05/unsigned_int_fscanf_multiply",
     "macros": {
-	"PS1": [ ]
+	"PPO1": {
+	    "P": "uint-overflow"
+	},
+	"PS1": [ "PPO1" ]
     },
     "tests": {
 	"01": {
@@ -171,10 +174,10 @@
 	    "cfiles": {
 		"x12.c": {
 		    "violations": {
-			"41": [ "PS1" ],
-			"52": [ "PS1" ]
+			"41": [ "PS1" ]
 		    },
 		    "safe-controls": {
+			"52": [ "PS1" ],			
 			"91": [ "PS1" ],
 			"107": [ "PS1" ],
 			"140": [ "PS1" ],

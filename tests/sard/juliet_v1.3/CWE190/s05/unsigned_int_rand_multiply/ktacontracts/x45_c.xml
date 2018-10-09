@@ -3,6 +3,10 @@
   <header info="cfile" name="cfile" time="2018-08-07 13:25:45.606411"/>
   <cfile name="x45">
     <data-structures/>
+    <global-variables>
+      <gvar name="CWE190_Integer_Overflow__unsigned_int_rand_multiply_45_badData"/>
+      <gvar name="CWE190_Integer_Overflow__unsigned_int_rand_multiply_45_goodG2BData"/>
+    </global-variables>
     <functions>
       <function name="CWE190_Integer_Overflow__unsigned_int_rand_multiply_45_bad">
         <parameters/>
@@ -12,6 +16,21 @@
       </function>
       <function name="badSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<lt/>
+		<ci>CWE190_Integer_Overflow__unsigned_int_rand_multiply_45_badData</ci>
+		<apply>
+		  <divide/>
+		  <ci>MAXUINT32</ci>
+		  <cn>2</cn>
+		</apply>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="goodB2G">
         <parameters/>
@@ -24,6 +43,21 @@
       </function>
       <function name="goodG2BSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<lt/>
+		<ci>CWE190_Integer_Overflow__unsigned_int_rand_multiply_45_goodG2BData</ci>
+		<apply>
+		  <divide/>
+		  <ci>MAXUINT32</ci>
+		  <cn>2</cn>
+		</apply>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
     </functions>
   </cfile>
