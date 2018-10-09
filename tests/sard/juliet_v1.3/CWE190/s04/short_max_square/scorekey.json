@@ -2,8 +2,8 @@
     "test": "CWE190/s04/short_max_square",
     "macros": {
 	"PPO1": {
-	    "P": "cast",
-	    "T": "short"
+	    "P": "signed-to-signed-cast-ub",
+	    "T": "ishort"
 	},
 	"PS1": [ "PPO1" ]
     },
@@ -175,10 +175,10 @@
 	    "cfiles": {
 		"x12.c": {
 		    "violations": {
-			"42": [ "PS1" ],
-			"51": [ "PS1" ]
+			"42": [ "PS1" ]
 		    },
 		    "safe-controls": {
+			"51": [ "PS1" ],			
 			"87": [ "PS1" ],
 			"100": [ "PS1" ],
 			"131": [ "PS1" ],
