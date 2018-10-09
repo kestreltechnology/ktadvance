@@ -29,47 +29,49 @@ import advance.app.CDictionaryRecord as CD
 import advance.app.CExp as CX
 
 po_predicate_names = {
-    'nn': 'not-null',
-    'nm': 'new-memory',
-    'null': 'null',
-    'vm': 'valid-mem',
-    'is': 'in-scope',
-    'cls': 'can-leave-scope',
-    'ab': 'allocation-base',
-    'tao': 'type-at-offset',
-    'lb': 'lower-bound',
-    'ub': 'upper-bound',
-    'ilb': 'index-lower-bound',
-    'iub': 'index-upper-bound',
-    'i': 'initialized',
-    'ir': 'initialized-range',
-    'c': 'cast',
-    'pc': 'pointer-cast',
+    'ab'  : 'allocation-base',
+    'b'   : 'buffer',    
+    'c'   : 'cast',
+    'cb'  : 'common-base',
+    'cbt' : 'common-base-type',    
+    'cls' : 'can-leave-scope',
+    'cssl': 'signed-to-signed-cast-lb',
+    'cssu': 'signed-to-signed-cast-ub',    
     'csul': 'signed-to-unsigned-cast-lb',
     'csuu': 'signed-to-unsigned-cast-ub',
-    'cuu': 'unsigned-to-unsigned-cast',
-    'cus': 'unsigned-to-signed-cast',
-    'cssl': 'signed-to-signed-cast-lb',
-    'cssu': 'signed-to-signed-cast-ub',
-    'z': 'not-zero',
-    'nt': 'null-terminated',
+    'cus' : 'unsigned-to-signed-cast',    
+    'cuu' : 'unsigned-to-unsigned-cast',
+    'ft'  : 'format-string',    
+    'i'   : 'initialized',    
+    'ilb' : 'index-lower-bound',
+    'io'  : 'int-overflow',    
+    'ir'  : 'initialized-range',    
+    'is'  : 'in-scope',
+    'iu'  : 'int-underflow',    
+    'iub' : 'index-upper-bound',    
+    'lb'  : 'lower-bound',    
+    'nm'  : 'new-memory',    
+    'nn'  : 'not-null',
     'nneg': 'non-negative',
-    'iu': 'int-underflow',
-    'io': 'int-overflow',
-    'w': 'width-overflow',
-    'plb': 'ptr-lower-bound',
-    'pub': 'ptr-upper-bound',
+    'no'  : 'no-overlap',    
+    'nt'  : 'null-terminated',
+    'null': 'null',
+    'pc'  : 'pointer-cast',
+    'plb' : 'ptr-lower-bound',
+    'pre' : 'precondition',
+    'prm' : 'preserved-all-memory',    
+    'pub' : 'ptr-upper-bound',
     'pubd': 'ptr-upper-bound-deref',
-    'cb': 'common-base',
-    'cbt': 'common-base-type',
-    'ft': 'format-string',
-    'no': 'no-overlap',
-    'vc': 'value-constraint',
-    'prm': 'preserved-all-memory',
-    'pv': 'preserves-value',
-    'pre': 'precondition',
-    'b': 'buffer',
-    'va': 'var-args'
+    'pv'  : 'preserves-value',    
+    'tao' : 'type-at-offset',
+    'ub'  : 'upper-bound',
+    'uio' : 'uint-overflow',
+    'uiu' : 'uint-underflow',
+    'va'  : 'var-args',   
+    'vc'  : 'value-constraint',    
+    'vm'  : 'valid-mem',
+    'w'   : 'width-overflow',    
+    'z'   : 'not-zero'
     }
 
 def get_predicate_tag(name):
@@ -819,6 +821,74 @@ class CPOIntOverflow(CPOPredicate):
     '''
     tags:
         0: 'io'
+        1: binop
+        2: ikind
+
+    args:
+        0: exp1
+        1: exp2
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_binop(self): return self.tags[1]
+
+    def get_ikind(self): return self.tags[2]
+
+    def get_exp1(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_exp2(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def is_int_overflow(self): return True
+
+    def has_variable(self,vid):
+        return self.get_exp1().has_variable(vid) or self.get_exp2().has_variable(vid)
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp1())
+                    + ',' + str(self.get_exp2())
+                    + ',op:' + self.get_binop()
+                    + ',ikind:' + self.get_ikind() + ')')
+
+class CPOUIntUnderflow(CPOPredicate):
+    '''
+    tags:
+        0: 'uiu'
+        1: binop
+        2: ikind
+
+    args:
+        0: exp1
+        1: exp2
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_binop(self): return self.tags[1]
+
+    def get_ikind(self): return self.tags[2]
+
+    def get_exp1(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_exp2(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def is_int_underflow(self): return True
+
+    def has_variable(self,vid):
+        return self.get_exp1().has_variable(vid) or self.get_exp2().has_variable(vid)
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp1())
+                    + ',' + str(self.get_exp2())
+                    + ',op:' + self.get_binop()
+                    + ',ikind:' + self.get_ikind() + ')')
+
+
+
+class CPOUIntOverflow(CPOPredicate):
+    '''
+    tags:
+        0: 'uio'
         1: binop
         2: ikind
 
