@@ -3,6 +3,10 @@
   <header info="cfile" name="cfile" time="2018-09-17 16:55:10.766280"/>
   <cfile name="x45">
     <data-structures/>
+    <global-variables>
+      <gvar name="CWE190_Integer_Overflow__short_max_preinc_45_badData"/>
+      <gvar name="CWE190_Integer_Overflow__short_max_preinc_45_goodG2BData"/>
+    </global-variables>
     <functions>
       <function name="CWE190_Integer_Overflow__short_max_preinc_45_bad">
         <parameters/>
@@ -12,6 +16,17 @@
       </function>
       <function name="badSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<lt/>
+		<ci>CWE190_Integer_Overflow__short_max_preinc_45_badData</ci>
+		<ci>MAXINT16</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="goodB2G">
         <parameters/>
@@ -24,6 +39,17 @@
       </function>
       <function name="goodG2BSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<lt/>
+		<ci>CWE190_Integer_Overflow__short_max_preinc_45_goodG2BData</ci>
+		<ci>MAXINT16</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
     </functions>
   </cfile>
