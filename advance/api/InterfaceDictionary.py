@@ -84,6 +84,7 @@ xpredicate_constructors = {
     'ir': lambda x:XP.XInitializedRange(*x),
     'iv': lambda x:XP.XInvalidated(*x),
     'ifs': lambda x:XP.XInputFormatString(*x),
+    'ha': lambda x:XP.XHeapAddress(*x),
     'nm': lambda x:XP.XNewMemory(*x),
     'no': lambda x:XP.XNoOverlap(*x),
     'nn': lambda x:XP.XNotNull(*x),
@@ -98,6 +99,7 @@ xpredicate_constructors = {
     'prn': lambda x:XP.XPreservesNullTermination(*x),
     'prv': lambda x:XP.XPreservesValidity(*x),
     'rep': lambda x:XP.XRepositioned(*x),
+    'sa': lambda x:XP.XStackAddress(*x),
     'x': lambda x:XP.XRelationalExpr(*x),
     'cf': lambda x:XP.XConfined(*x),
     'tt': lambda x:XP.XTainted(*x),
@@ -236,6 +238,13 @@ class InterfaceDictionary(object):
         if p.is_new_memory():
             args = [ self.index_s_term(p.get_term()) ]
             def f(index,key): return XP.XNewMemory(self,index,p.tags,args)
+            return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_heap_address():
+            args = [ self.index_s_term(p.get_term()) ]
+            def f(index,key): return XP.XHeapAddress(self,index,p.tags,args)
+            return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_stack_address():
+            def f(index,key): return XP.XStackAddress(self,index,p.tags,args)
             return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_allocation_base():
             args = [ self.index_s_term(p.get_term()) ]

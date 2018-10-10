@@ -59,6 +59,7 @@ class XPredicate(CD.CDictionaryRecord):
     def is_false(self): return False
     def is_freed(self): return False
     def is_functional(self): return False
+    def is_heap_address(self): return False
     def is_initialized(self): return False
     def is_initialized_range(self): return False
     def is_input_formatstring(self): return False
@@ -77,6 +78,7 @@ class XPredicate(CD.CDictionaryRecord):
     def is_preserves_value(self): return False
     def is_relational_expr(self): return False
     def is_repositioned(self): return False
+    def is_stack_address(self): return False
     def is_tainted(self): return False
     def is_unique_pointer(self): return False
 
@@ -236,6 +238,27 @@ class XNewMemory(XPredicate):
 
     def __str__(self): return ('new-memory(' + str(self.get_term()))
 
+class XHeapAddress(XPredicate):
+
+    def __init__(self,cd,index,tags,args):
+        XPredicate.__init__(self,cd,index,tags,args)
+
+    def get_term(self): return self.get_iterm(0)
+
+    def is_heap_address(self): return True
+
+    def __str__(self): return ('heap-address(' + str(self.get_term()))
+
+class XStackAddress(XPredicate):
+
+    def __init__(self,cd,index,tags,args):
+        XPredicate.__init__(self,cd,index,tags,args)
+
+    def get_term(self): return self.get_iterm(0)
+
+    def is_stack_address(self): return True
+
+    def __str__(self): return ('stack-address(' + str(self.get_term()))
 
 class XNoOverlap(XPredicate):
 
