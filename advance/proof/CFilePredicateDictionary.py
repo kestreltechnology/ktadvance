@@ -251,6 +251,11 @@ class CFilePredicateDictionary(object):
                          self.dictionary.index_exp(p.get_exp2(),subst=subst) ]
             def f(index,key): return PO.CPOCommonBase(self,index,p.tags,args)
             return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_buffer():
+            args = [ self.dictionary.index_exp(p.get_exp(),subst=subst),
+                         self.dictionary.index_exp(p.get_length(),subst=subst) ]
+            def f(index,key): return PO.CPOBuffer(self,index,p.tags,args)
+            return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
         print('***** Predicate without indexing: ' + str(p))
         exit(1)
 
