@@ -79,6 +79,7 @@ class CExpBase(CD.CDictionaryRecord):
     def is_alignofe(self): return False
 
     def has_variable(self,vid): return False
+    def has_variable_op(self,vid,op): return False
 
     def __str__(self): return 'baseexp:' + self.tags[0]
 
@@ -275,6 +276,10 @@ class CExpBinOp(CExpBase):
 
     def has_variable(self,vid):
         return self.get_exp1().has_variable(vid) or self.get_exp2().has_variable(vid)
+
+    def has_variable_op(self,vid,op):
+        return ((self.get_exp1().has_variable(vid) or self.get_exp2().has_variable(vid))
+                    and (op == binoperatorstrings[self.get_op()]))
 
     def __str__(self):
         return ('(' + str(self.get_exp1()) + ' ' + binoperatorstrings[self.get_op()] + ' '
