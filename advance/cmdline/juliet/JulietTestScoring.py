@@ -49,6 +49,7 @@ def keymatches(tppo,ppo):
                 and tppo.predicate == ppo.predicatetag
                 and tppo.matches_exp_ctxt(ppo)
                 and tppo.matches_variable_names(ppo)
+                and tppo.matches_variable_names_plus(ppo)
                 and tppo.matches_target_type(ppo)
                 and tppo.matches_pred_arg(ppo)
                 and tppo.matches_reference_type(ppo))

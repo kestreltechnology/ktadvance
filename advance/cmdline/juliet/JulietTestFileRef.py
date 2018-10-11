@@ -103,12 +103,14 @@ class JulietPpo(object):
         self.expctxt = None
         self.cfgctxt = None
         self.variablename = None
+        self.variablenameplus = None
         self.targettype = None
         self.referencetype = None
         if 'A' in d: self.predarg = d['A']
         if 'E' in d: self.expctxt = d['E']
         if 'C' in d: self.cfgctxt = d['C']
         if 'V' in d: self.variablename = d['V']
+        if 'VP' in d: self.variablenameplus = d['VP']
         if 'T' in d: self.targettype = d['T']
         if 'R' in d: self.referencetype = d['R']
 
@@ -121,6 +123,8 @@ class JulietPpo(object):
     def has_cfg_ctxt(self): return not (self.cfgctxt is None)
 
     def has_variable_names(self): return not (self.variablename is None)
+
+    def has_variable_names_plus(self): return not (self.variablenameplus is None)
 
     def has_target_type(self): return not (self.targettype is None)
 
@@ -137,6 +141,10 @@ class JulietPpo(object):
     def matches_variable_names(self,ppo):
         return ((not self.has_variable_names())
                     or any([ ppo.has_variable_name(vname) for vname in self.variablename]))
+
+    def matches_variable_names_plus(self,ppo):
+        return ((not self.has_variable_names_plus())
+                    or any([ ppo.has_variable_name_op(vname,'+') for vname in self.variablenameplus]))
 
     def matches_target_type(self,ppo):
         return ((not self.has_target_type())
