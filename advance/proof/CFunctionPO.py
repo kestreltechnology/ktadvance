@@ -158,14 +158,21 @@ class CFunctionPO(object):
         if not vid is None:
             return self.has_argument(vid)
         else:
-            False
+            return False
 
     def has_variable_name(self,vname):
         vid = self.cfun.get_variable_vid(vname)
         if not vid is None:
             return self.has_variable(vid)
         else:
-            False
+            return False
+
+    def has_variable_name_op(self,vname,op):
+        vid = self.cfun.get_variable_vid(vname)
+        if not vid is None:
+            return self.has_variable_op(vid,op)
+        else:
+            return False
 
     def has_dependencies(self): return (not self.dependencies is None)
 
@@ -208,6 +215,8 @@ class CFunctionPO(object):
     def has_argument(self,vid): return self.predicate.has_argument(vid)
 
     def has_variable(self,vid): return self.predicate.has_variable(vid)
+
+    def has_variable_op(self,vid,op): return self.predicate.has_variable_op(vid,op)
 
     def has_target_type(self,targettype): return self.predicate.has_target_type()
 
