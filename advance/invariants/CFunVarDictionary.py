@@ -52,7 +52,7 @@ constant_value_variable_constructors = {
     'iv':lambda x:CV.CVVInitialValue(*x),
     'frv':lambda x:CV.CVVFunctionReturnValue(*x),
     'erv':lambda x:CV.CVVExpFunctionReturnValue(*x),
-    'sev':lambda x:CV.CVVSideEffectValue(*x),
+    'fsev':lambda x:CV.CVVSideEffectValue(*x),
     'esev':lambda x:CV.CVVExpSideEffectValue(*x),
     'sv':lambda x:CV.CVVSymbolicValue(*x),
     'ma':lambda x:CV.CVVMemoryAddress(*x)

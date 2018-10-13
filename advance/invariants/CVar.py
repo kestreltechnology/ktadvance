@@ -295,7 +295,7 @@ class CVVExpFunctionReturnValue(ConstantValueVariable):
 class CVVSideEffectValue(ConstantValueVariable):
 
     def __init__(self,vd,index,tags,args):
-        ConstantValueVariable.__init__(self,cd,index,tags,args)
+        ConstantValueVariable.__init__(self,vd,index,tags,args)
 
     def is_sideeffect_value(self): return True
 
