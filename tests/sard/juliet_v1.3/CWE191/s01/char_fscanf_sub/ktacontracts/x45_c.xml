@@ -3,6 +3,10 @@
   <header info="cfile" name="cfile" time="2018-09-17 18:47:30.457526"/>
   <cfile name="x45">
     <data-structures/>
+    <global-variables>
+      <gvar name="CWE191_Integer_Underflow__char_fscanf_sub_45_badData"/>
+      <gvar name="CWE191_Integer_Underflow__char_fscanf_sub_45_goodG2BData"/>
+    </global-variables>
     <functions>
       <function name="CWE191_Integer_Underflow__char_fscanf_sub_45_bad">
         <parameters/>
@@ -12,6 +16,17 @@
       </function>
       <function name="badSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<gt/>
+		<ci>CWE191_Integer_Underflow__char_fscanf_sub_45_badData</ci>
+		<ci>MININT8</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="goodB2G">
         <parameters/>
@@ -24,6 +39,17 @@
       </function>
       <function name="goodG2BSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<gt/>
+		<ci>CWE191_Integer_Underflow__char_fscanf_sub_45_goodG2BData</ci>
+		<ci>MININT8</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
     </functions>
   </cfile>
