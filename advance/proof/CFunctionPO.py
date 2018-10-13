@@ -191,11 +191,15 @@ class CFunctionPO(object):
         atypes = self.get_dependencies()
         deptype = 'api'
         for t in atypes:
-            if t.is_api_assumption():
-                api = self.cfun.api
-                if api.apiassumptions[t.get_apiid()].isglobal:
-                    deptype = 'contract'
-            if t.is_contract_assumption(): deptype = 'contract'
+            try:
+                if t.is_api_assumption():
+                    api = self.cfun.api
+                    if api.apiassumptions[t.get_apiid()].isglobal:
+                        deptype = 'contract'
+                if t.is_contract_assumption(): deptype = 'contract'
+            except KeyError as e:
+                print('KeyError in ' + self.cfun.name + ' in file ' + self.cfile.name)
+                exit(1)
         return deptype
 
     def get_global_assumptions(self):
