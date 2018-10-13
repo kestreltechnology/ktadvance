@@ -58,13 +58,16 @@ def classifypo(po,d):
     if po.is_closed():
         if po.is_violated(): d['violated'] += 1
         deps = po.dependencies
-        if deps.has_external_dependencies():
-            deptype = po.get_dependencies_type()
-            d[deptype] += 1
-        elif deps.is_stmt():
-            d['stmt'] += 1
-        elif deps.is_local():
-            d['local'] += 1
+        try:
+            if deps.has_external_dependencies():
+                deptype = po.get_dependencies_type()
+                d[deptype] += 1
+            elif deps.is_stmt():
+                d['stmt'] += 1
+            elif deps.is_local():
+                d['local'] += 1
+        except:
+            print('Unable to classify ' + str(po))
     else:
         d['open'] += 1
 

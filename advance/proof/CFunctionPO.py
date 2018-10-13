@@ -198,8 +198,9 @@ class CFunctionPO(object):
                         deptype = 'contract'
                 if t.is_contract_assumption(): deptype = 'contract'
             except KeyError as e:
-                print('KeyError in ' + self.cfun.name + ' in file ' + self.cfile.name)
-                exit(1)
+                print('KeyError in ' + self.cfun.name + ' in file ' + self.cfile.name
+                          + ": " + str(e))
+                raise
         return deptype
 
     def get_global_assumptions(self):
