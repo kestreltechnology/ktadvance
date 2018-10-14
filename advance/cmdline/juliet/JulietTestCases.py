@@ -129,6 +129,10 @@ testcases = {
         "s11/sizeof_int64_t",
         "s11/sizeof_struct"
         ],
+    "CWE123": [
+        "fgets",
+        "listen_socket"
+        ],
     "CWE124": [
         "s01/char_alloca_cpy",
         "s01/char_alloca_loop",
@@ -190,6 +194,32 @@ testcases = {
         "s02/malloc_char_memcpy",
         "s02/malloc_char_memmove",
         "s02/malloc_char_ncpy"
+        ],
+    "CWE134": [
+        "s01/char_connect_socket_fprintf",
+        "s01/char_connect_socket_printf",
+        "s01/char_connect_socket_snprintf",
+        "s01/char_connect_socket_vfprintf",
+        "s01/char_console_fprintf",
+        "s01/char_console_printf",
+        "s01/char_console_snprintf",
+        "s01/char_console_vfprintf",
+        "s01/char_console_vprintf",
+        "s02/char_environment_fprintf",
+        "s02/char_environment_printf",
+        "s02/char_environment_snprintf",
+        "s02/char_environment_vfprintf",
+        "s02/char_environment_vprintf",
+        "s02/char_file_fprintf",
+        "s02/char_file_printf",
+        "s02/char_file_snprintf",
+        "s02/char_file_vfprintf",
+        "s03/char_file_vprintf",
+        "s03/char_listen_socket_fprintf",
+        "s03/char_listen_socket_printf",
+        "s03/char_listen_socket_snprintf",
+        "s03/char_listen_socket_vfprintf",
+        "s03/char_listen_socket_vprintf"
         ],
     "CWE188": [
         "modify_local",
@@ -368,6 +398,9 @@ testcases = {
         "s01/fgets_memmove",
         "s01/fgets_strncpy",
         "s01/fscanf_malloc"
+        ],
+    "CWE195": [
+        "s01/connect_socket_malloc"
         ],
     "CWE196": [
         "basic"
