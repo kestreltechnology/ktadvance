@@ -112,9 +112,13 @@ class CPOPredicate(CD.CDictionaryRecord):
     def is_ptr_lower_bound(self): return False
     def is_ptr_upper_bound(self): return False
     def is_ptr_upper_bound_deref(self): return False
-    def is_signed_to_unsigned_cast(self): return False
-    def is_type_at_offset(self): return False
+    def is_signed_to_signed_cast_lb(self): return False
+    def is_signed_to_signed_cast_ub(self): return False
+    def is_signed_to_unsigned_cast_lb(self): return False
+    def is_signed_to_unsigned_cast_ub(self): return False
     def is_unsigned_to_signed_cast(self): return False
+    def is_unsigned_to_unsigned_cast(self): return False
+    def is_type_at_offset(self): return False
     def is_upper_bound(self): return False
     def is_valid_mem(self): return False
     def is_value_constraint(self): return False
@@ -570,7 +574,7 @@ class CPOSignedToUnsignedCastLB(CPOPredicate):
 
     def get_tgt_kind(self): return self.tags[2]
 
-    def is_signed_to_unsigned_cast(self): return True
+    def is_signed_to_unsigned_cast_lb(self): return True
 
     def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
@@ -598,7 +602,7 @@ class CPOSignedToUnsignedCastUB(CPOPredicate):
 
     def get_tgt_kind(self): return self.tags[2]
 
-    def is_signed_to_unsigned_cast(self): return True
+    def is_signed_to_unsigned_cast_ub(self): return True
 
     def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
@@ -655,7 +659,7 @@ class CPOUnsignedToUnsignedCast(CPOPredicate):
 
     def get_tgt_kind(self): return self.tags[2]
 
-    def is_unsigned_to_signed_cast(self): return True
+    def is_unsigned_to_unsigned_cast(self): return True
 
     def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
@@ -683,7 +687,7 @@ class CPOSignedToSignedCastLB(CPOPredicate):
 
     def get_tgt_kind(self): return self.tags[2]
 
-    def is_unsigned_to_signed_cast(self): return True
+    def is_signed_to_signed_cast_lb(self): return True
 
     def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
@@ -711,7 +715,7 @@ class CPOSignedToSignedCastUB(CPOPredicate):
 
     def get_tgt_kind(self): return self.tags[2]
 
-    def is_unsigned_to_signed_cast(self): return True
+    def is_signed_to_signed_cast_ub(self): return True
 
     def has_variable(self,vid): return self.get_exp().has_variable(vid)
 

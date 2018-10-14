@@ -185,13 +185,29 @@ class CFilePredicateDictionary(object):
                          self.dictionary.index_exp(p.get_exp(),subst=subst) ]
             def f(index,key): return PO.CPOPointerCast(self,index,p.tags,args)
             return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
-        if p.is_signed_to_unsigned_cast():
+        if p.is_signed_to_signed_cast_lb():
             args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]
-            def f(index,key): return PO.CPOSignedToUnsignedCast(self,index,p.tags,args)
+            def f(index,key): return PO.CPOSignedToSignedCastLB(self,index,p.tags,args)
+            return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_signed_to_signed_cast_ub():
+            args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]
+            def f(index,key): return PO.CPOSignedToSignedCastUB(self,index,p.tags,args)
+            return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_signed_to_unsigned_cast_lb():
+            args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]
+            def f(index,key): return PO.CPOSignedToUnsignedCastLB(self,index,p.tags,args)
+            return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_signed_to_unsigned_cast_ub():
+            args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]
+            def f(index,key): return PO.CPOSignedToUnsignedCastUB(self,index,p.tags,args)
             return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_unsigned_to_signed_cast():
             args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]
             def f(index,key): return PO.CPOUnsignedToSignedCast(self,index,p.tags,args)
+            return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_unsigned_to_unsigned_cast():
+            args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]
+            def f(index,key): return PO.CPOUnsignedToUnsignedCast(self,index,p.tags,args)
             return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_not_zero():
             args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]
