@@ -400,7 +400,15 @@ testcases = {
         "s01/fscanf_malloc"
         ],
     "CWE195": [
-        "s01/connect_socket_malloc"
+        "s01/connect_socket_malloc",
+        "s01/connect_socket_memcpy",
+        "s01/connect_socket_memmove",
+        "s01/connect_socket_strncpy",
+        "s01/fgets_malloc",
+        "s01/fgets_memcpy",
+        "s01/fgets_memmove",
+        "s01/fgets_strncpy",
+        "s01/fscanf_malloc"
         ],
     "CWE196": [
         "basic"
@@ -417,6 +425,29 @@ testcases = {
     "CWE253": [
         "char_fgets",
         "char_fprintf"
+        ],
+    "CWE369": [
+        "s01/float_connect_socket",
+        "s01/float_fgets",
+        "s01/float_fscanf",
+        "s01/float_listenSocket",
+        "s01/float_rand",
+        "s01/float_zero",
+        "s01/int_connect_socket_divide",
+        "s01/int_connect_socket_modulo",
+        "s01/int_fgets_divide",
+        "s01/int_fgets_modulo",
+        "s01/int_fscanf_divide",
+        "s02/int_fscanf_modulo",
+        "s02/int_listen_socket_divide",
+        "s02/int_listen_socket_modulo",
+        "s02/int_rand_divide",
+        "s02/int_rand_modulo",
+        "s02/int_zero_divide",
+        "s02/int_zero_modulo"
+        ],
+    "CWE415": [
+        "s01/malloc_free_char"
         ],
     "CWE416": [
         "malloc_free_char",
@@ -442,6 +473,17 @@ testcases = {
         ],
     "CWE588": [
         "struct"
+        ],
+    "CWE590": [
+        "s04/free_char_alloca",
+        "s04/free_char_declare",
+        "s04/free_char_static",
+        "s04/free_int64_t_alloca",
+        "s04/free_int64_t_declare",
+        "s04/free_int64_t_static",
+        "s04/free_int_alloca",
+        "s04/free_int_declare",
+        "s04/free_int_static"
         ],
     "CWE665": [
         "char_cat",
