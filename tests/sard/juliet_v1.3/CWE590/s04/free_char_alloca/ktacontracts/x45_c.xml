@@ -3,6 +3,10 @@
   <header info="cfile" name="cfile" time="2018-10-14 22:28:15.298047"/>
   <cfile name="x45">
     <data-structures/>
+    <global-variables>
+      <gvar name="CWE590_Free_Memory_Not_on_Heap__free_char_alloca_45_badData"/>
+      <gvar name="CWE590_Free_Memory_Not_on_Heap__free_char_alloca_45_goodG2BData"/>
+    </global-variables>
     <functions>
       <function name="CWE590_Free_Memory_Not_on_Heap__free_char_alloca_45_bad">
         <parameters/>
@@ -12,12 +16,32 @@
       </function>
       <function name="badSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<allocation-base/>
+		<ci>CWE590_Free_Memory_Not_on_Heap__free_char_alloca_45_badData</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="goodG2B">
         <parameters/>
       </function>
       <function name="goodG2BSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<allocation-base/>
+		<ci>CWE590_Free_Memory_Not_on_Heap__free_char_alloca_45_goodG2BData</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
     </functions>
   </cfile>
