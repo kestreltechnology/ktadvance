@@ -127,6 +127,7 @@ class CPOPredicate(CD.CDictionaryRecord):
     def has_variable(self,vid): return False
     def has_variable_op(self,vid,op): return False
     def has_argument(self,vid): return False
+    def has_variable_deref(self,vid): return False
     def has_ref_type(self): return False
 
     def __str__(self): return 'po-predicate ' + self.tags[0]
@@ -455,6 +456,8 @@ class CPOInitialized(CPOPredicate):
     def is_initialized(self): return True
 
     def has_variable(self,vid): return self.get_lval().has_variable(vid)
+
+    def has_variable_deref(self,vid): return self.get_lval().has_variable_deref(vid)
 
     def has_ref_type(self): return self.get_lval().has_ref_type()
 

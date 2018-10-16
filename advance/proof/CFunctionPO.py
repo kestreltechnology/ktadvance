@@ -174,6 +174,13 @@ class CFunctionPO(object):
         else:
             return False
 
+    def has_variable_name_deref(self,vname):
+        vid = self.cfun.get_variable_vid(vname)
+        if not vid is None:
+            return self.has_variable_deref(vid)
+        else:
+            return False
+
     def has_dependencies(self): return (not self.dependencies is None)
 
     def get_dependencies(self):
@@ -197,6 +204,7 @@ class CFunctionPO(object):
                     if api.apiassumptions[t.get_apiid()].isglobal:
                         deptype = 'contract'
                 if t.is_contract_assumption(): deptype = 'contract'
+                if t.is_postcondition_assumption(): deptype = 'contract'
             except KeyError as e:
                 print('KeyError in ' + self.cfun.name + ' in file ' + self.cfile.name
                           + ": " + str(e))
@@ -222,6 +230,8 @@ class CFunctionPO(object):
     def has_variable(self,vid): return self.predicate.has_variable(vid)
 
     def has_variable_op(self,vid,op): return self.predicate.has_variable_op(vid,op)
+
+    def has_variable_deref(self,vid): return self.predicate.has_variable_deref(vid)
 
     def has_target_type(self,targettype): return self.predicate.has_target_type()
 
