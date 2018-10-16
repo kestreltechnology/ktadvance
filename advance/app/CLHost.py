@@ -38,6 +38,7 @@ class CLHostBase(CD.CDictionaryRecord):
     def is_tmpvar(self): return False
 
     def has_variable(self,vid): return False
+    def has_variable_deref(self,vid): return False
     def has_ref_type(self): return self.is_mem()
 
     def __str__(self): return 'lhostbase:' + self.tags[0]
@@ -85,5 +86,7 @@ class CLHostMem(CLHostBase):
     def is_mem(self): return True
 
     def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
+    def has_variable_deref(self,vid): return self.get_exp().has_variable(vid)
 
     def __str__(self): return '(*' + str(self.get_exp()) + ')'
