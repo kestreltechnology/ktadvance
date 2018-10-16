@@ -87,6 +87,7 @@ class CStmt(object):
     def __init__(self,parentblock,xnode):
         self.parentblock = parentblock             # containing block CBlock
         self.cfun = self.parentblock.cfun
+        self.cdictionary = self.cfun.fdecls.dictionary
         self.xnode = xnode                         # stmt element
         self.sid = int(self.xnode.get('sid'))
         self.kind = self.xnode.find('skind').get('stag')
@@ -95,6 +96,7 @@ class CStmt(object):
         self._initialize_stmt()
 
     def is_instrs_stmt(self): return False
+    def is_if_stmt(self): return False
 
     def iter_stmts(self,f): pass
 
@@ -122,10 +124,14 @@ class CIfStmt(CStmt):
         CStmt.__init__(self,parentblock,xnode)
         self.thenblock = CBlock(self,self.xnode.find('skind').find('thenblock'))
         self.elseblock = CBlock(self,self.xnode.find('skind').find('elseblock'))
+        self.condition = self.cdictionary.get_exp(int(self.xnode.find('skind').get('iexp')))
+        self.location = self.cfun.fdecls.get_location(int(self.xnode.find('skind').get('iloc')))
 
     def iter_stmts(self,f):
         self.thenblock.iter_stmts(f)
         self.elseblock.iter_stmts(f)
+
+    def is_if_stmt(self): return True
     
 
 class CLoopStmt(CStmt):
