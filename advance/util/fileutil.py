@@ -473,6 +473,14 @@ def get_juliet_reference(testname):
             d = json.load(fp)
         return d
 
+# ---------------------------------------------------- functional tests  ------
+
+def get_functional_tests_path():
+    return os.path.join(Config().testdir,'functional')
+
+def get_functional_testpath(testpath):
+    return os.path.join(get_functional_tests_path(),testpath)
+
 # ------------------------------------------------------------ my cfiles ------
 
 def get_my_cfiles(testname):
