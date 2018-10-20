@@ -34,6 +34,7 @@ import advance.reporting.ProofObligations as RP
 
 from advance.util.Config import Config
 from advance.app.CApplication import CApplication
+from advance.app.CApplication import CFileNotFoundException
 
 def parse():
     parser = argparse.ArgumentParser()
@@ -64,8 +65,12 @@ if __name__ == '__main__':
         print(UP.semantics_not_found_err_msg(cpath))
         exit(1)
 
-    cfapp = CApplication(sempath,args.cfile)
-    cfile = cfapp.get_cfile()
+    try:        
+        cfapp = CApplication(sempath,args.cfile)
+        cfile = cfapp.get_cfile()
+    except CFileNotFoundException as e:
+        print(str(e))
+        exit(1)
 
     dc = [ 'deadcode' ]
 

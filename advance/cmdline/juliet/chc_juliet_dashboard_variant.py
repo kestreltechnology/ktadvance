@@ -50,12 +50,15 @@ def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('variant',help=('sequence number of variant, e.g. 01, or 09, or 61, etc.'
                                             + ' (type ? to see a list of available variants)'))
+    parser.add_argument('--cwe',help='only report on the given cwe')    
     args = parser.parse_args()
     return args
 
 if __name__ == '__main__':
 
     args = parse()
+    cwerequested = 'all'
+    if args.cwe is not None: cwerequested = args.cwe
 
     if not args.variant in JTC.variants:
         print('*' * 80)
@@ -90,6 +93,7 @@ if __name__ == '__main__':
     print('-' * (tnamelength + 64))
 
     for cwe in sorted(JTC.testcases):
+        if not (cwe == cwerequested or cwerequested == 'all'): continue
         print('\n'+cwe)
         ctotals = {}
         ctotals[violations] = {}

@@ -147,7 +147,7 @@ if __name__ == '__main__':
 
     if  args.local:
         partial(N,['stmt','local'],['api','contract','open'])
-¯
+
     if args.api:
         partial(N,['stmt','local','api'],['contract','open'])
 

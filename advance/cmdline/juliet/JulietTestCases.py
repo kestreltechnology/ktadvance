@@ -23,6 +23,499 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+missingscorekeys = {
+    "CWE121": [
+        "s01/CWE129_connect_socket",
+        "s01/CWE129_fgets",
+        "s01/CWE129_fscanf",
+        "s01/CWE129_listen_socket",
+        "s01/CWE131_memcpy",
+        "s01/CWE135",
+        "s01/CWE193_char_alloca_cpy"
+        ],
+    "CWE123": [
+        "connect_socket"
+        ],
+    "CWE124": [
+        "s01/CWE839_listen_socket"
+        ],
+    "CWE126": [
+        "s01/CWE129_listen_socket"
+        ],
+    "CWE127": [
+        "s01/CWE839_listen_socket"
+        ],
+    "CWE194": [
+        "s01/fscanf_memcpy",
+        "s01/fscanf_memmove",
+        "s01/fscanf_strncpy",
+        "s02/listen_socket_malloc",
+        "s02/listen_socket_memcpy",
+        "s02/listen_socket_memmove",
+        "s02/listen_socket_strncpy",
+        "s02/negative_malloc",
+        "s02/negative_memcpy",
+        "s02/negative_memmove",
+        "s02/negative_strncpy",
+        "s02/rand_malloc",
+        "s02/rand_memcpy",
+        "s02/rand_memmove",
+        "s02/rand_strncpy"
+        ],
+    "CWE197": [
+        "s01/int_connect_socket_to_short",
+        "s01/int_fgets_to_char",
+        "s01/int_fgets_to_short",
+        "s01/int_fscanf_to_char",
+        "s01/int_fscanf_to_short",
+        "s01/int_large_to_char",
+        "s01/int_large_to_short",
+        "s01/int_listen_socket_to_char",
+        "s01/int_listen_socket_to_short",
+        "s01/int_rand_to_char",
+        "s01/int_rand_to_short",
+        "s02/short_connect_socket",
+        "s02/short_fgets",
+        "s02/short_fscanf",
+        "s02/short_large",
+        "s02/short_listen_socket",
+        "s02/short_rand"
+        ],
+    "CWE252": [
+        "char_fprintf",
+        "char_fputc",
+        "char_fputs",
+        "char_fread",
+        "char_fscanf",
+        "char_fwrite",
+        "char_putc",
+        "char_putchar",
+        "char_puts",
+        "char_remove",
+        "char_rename",
+        "char_scanf",
+        "char_snprintf",
+        "char_sscanf"
+        ],
+    "CWE364": [
+        "basic"
+        ],
+    "CWE366": [
+        "global_int",
+        "int_byref"
+        ],
+    "CWE367": [
+        "access",
+        "stat"
+        ],
+    "CWE377": [
+        "char_mktemp",
+        "char_tempnam",
+        "char_tmpnam"
+        ],
+    "CWE390": [
+        "fgets_char",
+        "fopen",
+        "sqrt"
+        ],
+    "CWE391": [
+        "sqrt",
+        "wcstombs"
+        ],
+    "CWE398": [
+        "addition",
+        "empty_block",
+        "empty_case",
+        "empty_else",
+        "empty_for",
+        "empty_function",
+        "empty_if",
+        "empty_while",
+        "equals",
+        "five",
+        "semicolon"
+        ],
+    "CWE400": [
+        "s01/connect_socket_for_loop",
+        "s01/connect_socket_fwrite",
+        "s01/connect_socket_sleep",
+        "s01/fgets_for_loop",
+        "s01/fgets_fwrite",
+        "s01/fgets_sleep",
+        "s01/fscanf_for_loop",
+        "s01/fscanf_fwrite",
+        "s01/fscanf_sleep",
+        "s01/listen_socket_for_loop",
+        "s01/listen_socket_fwrite",
+        "s02/listen_socket_sleep",
+        "s02/rand_for_loop",
+        "s02/rand_fwrite",
+        "s02/rand_sleep"
+        ],
+    "CWE401": [
+        "s01/char_calloc",
+        "s01/char_malloc",
+        "s01/char_realloc",
+        "s01/int64_t_calloc",
+        "s01/int64_t_malloc",
+        "s01/int64_t_realloc"
+        "s01/int_calloc",
+        "s01/int_malloc",
+        "s01/int_realloc",
+        "s01/malloc_realloc_char",
+        "s01/malloc_realloc_int64_t",
+        "s01/malloc_realloc_struct_twoIntsStruct",
+        "s01/malloc_realloc_twoIntsStruct",
+        "s03/struct_twoIntsStruct_calloc",
+        "s03/struct_twoIntsStruct_malloc",
+        "s03/struct_twoIntsStruct_realloc"
+        ],
+    "CWE404": [
+        "open_fclose"
+        ],
+    "CWE426": [
+        "char_popen",
+        "char_system"
+        ],
+    "CWE427": [
+        "char_connect_socket",
+        "char_console",
+        "char_environment",
+        "char_file",
+        "char_listen_socket"
+        ],
+    "CWE457": [
+        "s01/int64_t",
+        "s01/long"
+        ],
+    "CWE459": [
+        "char"
+        ],
+    "CWE464": [
+        "basic"
+        ],
+    "CWE467": [
+        "char",
+        "int",
+        "short"
+        ],
+    "CWE468": [
+        "char_ptr_to_int",
+        "int"
+        ],
+    "CWE475": [
+        "char"
+        ],
+    "CWE476": [
+        "deref_after_check",
+        "int",
+        "int64_t",
+        "long",
+        "null_check_after_deref",
+        "struct"
+        ],
+    "CWE478": [
+        "basic"
+        ],
+    "CWE479": [
+        "basic"
+        ],
+    "CWE480": [
+        "basic"
+        ],
+    "CWE481": [
+        "basic"
+        ],
+    "CWE482": [
+        "basic"
+        ],
+    "CWE483": [
+        "if_without_braces_multiple_lines",
+        "if_without_braces_single_line",
+        "semicolon"
+        ],
+    "CWE484": [
+        "basic"
+        ],
+    "CWE506": [
+        "file_transfer_connect_socket",
+        "file_transfer_listen_socket"
+        ],
+    "CWE510": [
+        "hostname_based_logic",
+        "ip_based_logic",
+        "network_connection",
+        "network_listen"
+        ],
+    "CWE511": [
+        "counter",
+        "rand",
+        "time"
+        ],
+    "CWE526": [
+        "basic"
+        ],
+    "CWE546": [
+        "BUG",
+        "FIXME",
+        "HACK",
+        "LATER",
+        "TODO"
+        ],
+    "CWE561": [
+        "return_before_code",
+        "unused_function"
+        ],
+    "CWE563": [
+        "unused_global_value",
+        "unused_global_variable",
+        "unused_init_variable_char",
+        "unused_init_variable_int",
+        "unused_init_variable_int64_t",
+        "unused_init_variable_long",
+        "unused_init_variable_struct",
+        "unused_parameter_value",
+        "unused_parameter_variable",
+        "unused_static_global_value",
+        "unused_static_global_variable",
+        "unused_uninit_variable_char",
+        "unused_uninit_variable_int",
+        "unused_uninit_variable_int64_t",
+        "unused_uninit_variable_long",
+        "unused_uninit_variable_struct",
+        "unused_value_char",
+        "unused_value_int",
+        "unused_value_int64_t",
+        "unused_value_long",
+        "unused_value_struct"
+        ],
+    "CWE570": [
+        "global",
+        "global_const",
+        "global_const_five",
+        "global_five",
+        "global_return",
+        "n_equal_n_minus_one",
+        "n_less_int_min",
+        "static",
+        "static_const",
+        "static_const_five",
+        "static_five",
+        "static_return",
+        "string_equals",
+        "two_equals_three",
+        "unsigned_int",
+        "zero"
+        ],
+    "CWE571": [
+        "global",
+        "global_const",
+        "global_const_five",
+        "global_five",
+        "global_return",
+        "n_equal_n_minus_one",
+        "n_less_int_min",
+        "one",
+        "static",
+        "static_const",
+        "static_const_five",
+        "static_five",
+        "static_return",
+        "string_equals",
+        "two_equals_three",
+        "unsigned_int"
+        ],
+    "CWE605": [
+        "basic"
+        ],
+    "CWE606": [
+        "char_connect_socket",
+        "char_console",
+        "char_environment",
+        "char_file",
+        "char_listen_socket"
+        ],
+    "CWE617": [
+        "connect_socket",
+        "fgets",
+        "fixed",
+        "fscanf",
+        "listen_socket",
+        "rand",
+        "zero"
+        ],
+    "CWE666": [
+        "accept_bind_listen",
+        "accept_listen_bind",
+        "bind_accept_listen",
+        "listen_accept_bind",
+        "listen_bind_accept"
+        ],
+    "CWE667": [
+        "basic"
+        ],
+    "CWE674": [
+        "infinite_recursive_call",
+        "unbounded_recursive_call"
+        ],
+    "CWE675": [
+        "fopen",
+        "freopen",
+        "open"
+        ],
+    "CWE680": [
+        "malloc_connnect_socket",
+        "malloc_listen_socket"
+        ],
+    "CWE758": [
+        "no_return"
+        ],
+    "CWE761": [
+        "char_connect_socket",
+        "char_listen_socket"
+        ],
+    "CWE773": [
+        "fopen",
+        "open"
+        ],
+    "CWE775": [
+        "fopen_no_close",
+        "open_no_close"
+        ],
+    "CWE78": [
+        "s02/char_console_popen",
+        "s02/char_console_system",
+        "s02/char_environment_execlp",
+        "s02/char_environment_popen",
+        "s02/char_environment_system",
+        "s03/char_file_execlp",
+        "s03/char_file_popen",
+        "s03/char_file_system",
+        "s04/char_listen_socket_execlp",
+        "s04/char_listen_socket_popen",
+        "s04/char_listen_socket_system"
+        ],
+    "CWE832": [
+        "basic"
+        ],
+    "CWE835": [
+        "do",
+        "do_true",
+        "for",
+        "for_empty",
+        "while",
+        "while_true"
+        ]
+    }
+
+worklist = {
+    "CWE195": [
+        "s01/fscanf_memcpy",
+        "s01/fscanf_memmove",
+        "s01/fsfanf_strncpy",
+        "s02/listen_socket_malloc",
+        "s02/listen_socket_memcpy",
+        "s02/listen_socket_memmove",
+        "s02/listen_socket_strncpy",
+        "s02/negative_malloc",
+        "s02/negative_memcpy",
+        "s02/negative_memmove",
+        "s02/negative_strncpy",
+        "s02/rand_malloc",
+        "s02/rand_memcpy",
+        "s02/rand_memmove",
+        "s02/rand_strncpy"
+        ],
+    "CWE253": [
+        "char_putc",
+        "char_putchar",
+        "char_puts",
+        "char_remove",
+        "char_rename",
+        "char_scanf",
+        "char_snprintf",
+        "char_sscanf"
+        ],
+    "CWE415": [
+        "s01/malloc_free_int",
+        "s01/malloc_free_int64_t",
+        "s01/malloc_free_long",
+        "s01/malloc_free_struct"
+        ],
+    "CWE457": [
+        "s01/double_array_declare_partial_init",
+        "s01/double_array_malloc_no_init",
+        "s01/double_array_malloc_partial_init",
+        "s01/double_pointer",
+        "s01/int_array_alloca_no_init",
+        "s01/int_array_alloca_partial_init",
+        "s01/int_array_declare_no_init",
+        "s01/int_array_declare_partial_init",
+        "s01/int_array_malloc_no_init",
+        "s01/int_array_malloc_partial_init",
+        "s01/int_pointer",
+        "s01/struct_array_alloca_no_init",
+        "s01/struct_array_alloca_partial_init",
+        "s01/struct_array_declare_no_init",
+        "s01/struct_array_declare_partial_init",
+        "s01/struct_array_malloc_no_init",
+        "s01/struct_array_malloc_partial_init",
+        "s01/struct_pointer"
+        ],
+    "CWE590": [
+        "s04/free_long_alloca",
+        "s04/free_long_declare",
+        "s05/free_long_static",
+        "s05/free_struct_alloca",
+        "s05/free_struct_declare",
+        "s05/free_struct_static"
+        ],
+    "CWE690": [
+        "s01/char_calloc",
+        "s01/char_malloc",
+        "s01/char_realloc",
+        "s01/fopen",
+        "s01/int64_t_calloc",
+        "s01/int64_t_malloc",
+        "s01/int64_t_realloc",
+        "s01/int_calloc",
+        "s01/int_malloc",
+        "s01/int_realloc",
+        "s01/long_calloc",
+        "s01/long_malloc",
+        "s02/long_realloc",
+        "s02/struct_calloc",
+        "s02/struct_malloc",
+        "s02/struct_realloc"
+        ],
+    "CWE758": [
+        "double_pointer_malloc_use",
+        "int64_t_alloca_use",
+        "int64_t_malloc_use",
+        "int_alloca_use",
+        "int_malloc_use",
+        "int_pointer_alloca_use",
+        "int_pointer_malloc_use",
+        "long_alloca_use",
+        "long_malloc_use",
+        "struct_alloca_use",
+        "struct_malloc_use",
+        "struct_pointer_alloca_use",
+        "struct_pointer_malloc_use"
+        ],
+    "CWE789": [
+        "malloc_char_connect_socket",
+        "malloc_char_fgets",
+        "malloc_char_fscanf",
+        "malloc_char_listen_socket",
+        "malloc_char_rand"
+        ],
+    "CWE843": [
+        "char",
+        "short"
+        ]
+    }
+
 
 testcases = {
     "CWE121": [
@@ -143,6 +636,7 @@ testcases = {
         "s01/char_declare_loop",
         "s01/char_declare_memcpy",
         "s01/char_declare_memmove",
+        "s01/char_declare_ncpy",
         "s01/CWE839_connect_socket",
         "s01/CWE839_fgets",
         "s01/CWE839_fscanf",
@@ -200,6 +694,7 @@ testcases = {
         "s01/char_connect_socket_printf",
         "s01/char_connect_socket_snprintf",
         "s01/char_connect_socket_vfprintf",
+        "s01/char_connect_socket_vprintf",                
         "s01/char_console_fprintf",
         "s01/char_console_printf",
         "s01/char_console_snprintf",
@@ -424,7 +919,12 @@ testcases = {
         ],
     "CWE253": [
         "char_fgets",
-        "char_fprintf"
+        "char_fprintf",
+        "char_fputc",
+        "char_fputs",       
+        "char_fread",
+        "char_fscanf",
+        "char_fwrite"
         ],
     "CWE369": [
         "s01/float_connect_socket",
@@ -446,6 +946,9 @@ testcases = {
         "s02/int_zero_divide",
         "s02/int_zero_modulo"
         ],
+    "CWE391": [
+        "strtol"
+        ],
     "CWE415": [
         "s01/malloc_free_char"
         ],
@@ -456,6 +959,12 @@ testcases = {
         "malloc_free_long",
         "malloc_free_struct",
         "return_freed_ptr"
+        ],
+    "CWE457": [
+        "s01/char_pointer",
+        "s01/double_array_alloca_no_init",
+        "s01/double_array_alloca_partial_init",
+        "s01/double_array_declare_no_init"        
         ],
     "CWE469": [
         "char"
@@ -488,6 +997,36 @@ testcases = {
     "CWE665": [
         "char_cat",
         "char_ncat"
+        ],
+    "CWE680": [
+        "malloc_fgets",
+        "malloc_fixed",
+        "malloc_fscanf",
+        "malloc_rand"
+        ],
+    "CWE681": [
+        "double2float",
+        "double2int",
+        "doubleNaN2int"
+        ],
+    "CWE685": [
+        "basic"
+        ],
+    "CWE688": [
+        "basic"
+        ],
+    "CWE758": [
+        "char_alloca_use",
+        "char_malloc_use",
+        "char_pointer_alloca_use",
+        "char_pointer_malloc_use",
+        "double_pointer_alloca_use"
+        ],
+    "CWE761": [
+        "char_console",
+        "char_environment",
+        "char_file",
+        "char_fixed_string"        
         ]
     }
 
