@@ -62,7 +62,8 @@ po_predicate_names = {
     'prm' : 'preserved-all-memory',    
     'pub' : 'ptr-upper-bound',
     'pubd': 'ptr-upper-bound-deref',
-    'pv'  : 'preserves-value',    
+    'pv'  : 'preserves-value',
+    'sae' : 'stack-address-escape',
     'tao' : 'type-at-offset',
     'ub'  : 'upper-bound',
     'uio' : 'uint-overflow',
@@ -118,6 +119,7 @@ class CPOPredicate(CD.CDictionaryRecord):
     def is_signed_to_unsigned_cast_ub(self): return False
     def is_unsigned_to_signed_cast(self): return False
     def is_unsigned_to_unsigned_cast(self): return False
+    def is_stack_address_escape(self): return False
     def is_type_at_offset(self): return False
     def is_upper_bound(self): return False
     def is_valid_mem(self): return False
@@ -229,6 +231,36 @@ class CPOCanLeaveScope(CPOPredicate):
     def has_variable(self,vid): return self.get_exp().has_variable(vid)
 
     def __str__(self):return self.get_tag() + '(' + str(self.get_exp()) + ')'
+
+class CPOStackAddressEscape(CPOPredicate):
+    '''
+    tags:
+       0: 'sae'
+
+    args:
+       0: lval option
+       1: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_lval(self): return self.cd.dictionary.get_lval(int(self.args[0]))
+
+    def get_exp(self): return self.cd.dictionary.get_exp(int(self.args[1]))
+
+    def has_lval(self): return (int(self.args[0])) >= 0
+
+    def is_stack_address_escape(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
+    def __str__(self):
+        lval = ''
+        if self.has_lval():
+            lval = str(self.get_lval()) + ','
+        return (self.get_tag() + '(' + lval + str(self.get_exp()) + ')')
+                
+    
 
 
 class CPOInScope(CPOPredicate):

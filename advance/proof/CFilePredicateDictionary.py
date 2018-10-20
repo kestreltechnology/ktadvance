@@ -66,7 +66,8 @@ po_predicate_constructors = {
     'pub' : lambda x:PO.CPOPtrUpperBound(*x),
     'pubd': lambda x:PO.CPOPtrUpperBoundDeref(*x),
     'pv'  : lambda x:PO.CPOPreservedValue(*x),    
-    'null': lambda x:PO.CPONull(*x),    
+    'null': lambda x:PO.CPONull(*x),
+    'sae' : lambda x:PO.CPOStackAddressEscape(*x),
     'tao' : lambda x:PO.CPOTypeAtOffset(*x),
     'ub'  : lambda x:PO.CPOUpperBound(*x),
     'uio' : lambda x:PO.CPOUIntOverflow(*x),
@@ -135,6 +136,14 @@ class CFilePredicateDictionary(object):
         if p.is_can_leave_scope():
             args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]
             def f(index,key): return PO.CPOCanLeaveScope(self,index,p.tags,args)
+            return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_stack_address_escape():
+            if p.has_lval():
+                args = [ self.dictional.index_lval(p.get_lval(),subst=subst),
+                             self.dictionary.index_exp(p.get_exp(),subst=subst) ]
+            else:
+                args = [ -1, self.dictionary.index_exp(p.get_exp(),subst=subst) ]
+            def f(index,key): return PO.CPOStackAddressEscape(self,index,p.tags,args)
             return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_allocation_base():
             args = [ self.dictionary.index_exp(p.get_exp(),subst=subst) ]
