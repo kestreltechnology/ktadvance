@@ -26,6 +26,11 @@
 # ------------------------------------------------------------------------------
 
 import advance.util.fileutil as UF
+import advance.util.IndexedTable as IT
+
+import advance.app.CExp as CE
+import advance.app.CLval as CV
+
 
 from advance.app.CDictionary import CDictionary
 
@@ -82,12 +87,43 @@ class CFileDictionary(CDictionary):
         else:
             return ckey
 
+    def index_lhost_offset(self,lhost,offset):
+        args = [ lhost, offset ]
+        def f(index,key): return CV.CLval(self,index,[],args)
+        return self.lval_table.add(IT.get_key([],args),f)
+
+    def mk_lval_exp(self,lval):
+        args =  [ lval ]
+        tags = [ 'lval' ]
+        def f(index,key): return CE.CExpLval(self,index,tags,args)
+        return self.exp_table.add(IT.get_key(tags,args),f)
+
     def index_exp(self,e,subst={},fid=-1):
         if e.is_lval():
             lhost = e.get_lval().get_lhost()
             if lhost.is_var() and lhost.get_vid() in subst:
                 if e.get_lval().get_offset().has_offset():
-                    raise Exception('Unexpected offset in exp to be substituted: ' + str(e))
+                    if e.get_lval().get_offset().is_field():
+                        paroffset = e.get_lval().get_offset()
+                        newsubst = subst.copy()
+                        newsubst.pop(lhost.get_vid())
+                        iargexp = self.index_exp(subst[lhost.get_vid()],newsubst,fid)
+                        argexp = self.get_exp(iargexp)
+                        if argexp.is_lval():
+                            arghost = argexp.get_lval().get_lhost()
+                            if argexp.get_lval().get_offset().has_offset():
+                                argoffset = argexp.get_lval().get_offset()
+                                raise Exception('Unexpected offset in substitution argument: '
+                                                    + str(argexp)
+                                                    + '; offset: ' + str(argoffset))
+                            iarghost = self.index_lhost(arghost,newsubst,fid)
+                            iargoffset = self.index_offset(paroffset,fid)
+                            iarglval = self.index_lhost_offset(iarghost,iargoffset)
+                            return self.mk_lval_exp(iarglval)
+                        else:
+                            raise Exception('Unexpected type in substition argument (not an lval): ' + str(callarg))
+                    else:
+                        raise Exception('Unexpected offset in exp to be substituted: ' + str(e))
                 # avoid re-substitution for recursive functions
                 newsubst = subst.copy()
                 newsubst.pop(lhost.get_vid())
