@@ -3,15 +3,41 @@
   <header info="cfile" name="cfile" time="2018-09-17 19:22:43.923162"/>
   <cfile name="x68b">
     <data-structures/>
+    <global-variables>
+      <gvar name="CWE191_Integer_Underflow__int64_t_rand_sub_68_badData"/>
+      <gvar name="CWE191_Integer_Underflow__int64_t_rand_sub_68_goodG2BData"/>
+    </global-variables>
     <functions>
       <function name="CWE191_Integer_Underflow__int64_t_rand_sub_68b_badSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<gt/>
+		<ci>CWE191_Integer_Underflow__int64_t_rand_sub_68_badData</ci>
+		<ci>MININT64</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="CWE191_Integer_Underflow__int64_t_rand_sub_68b_goodB2GSink">
         <parameters/>
       </function>
       <function name="CWE191_Integer_Underflow__int64_t_rand_sub_68b_goodG2BSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<gt/>
+		<ci>CWE191_Integer_Underflow__int64_t_rand_sub_68_goodG2BData</ci>
+		<ci>MININT64</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
     </functions>
   </cfile>
