@@ -270,6 +270,7 @@ class FunctionDisplay(object):
             delegated = ''
             indent = 18 if po.is_ppo() else 24
             if po.is_closed():
+                # contexts.add(po.context)    (uncomment to see all invariants)
                 expl = po.explanation
                 prefix = po.get_display_prefix()
                 lines.append(prefix + ' ' + str(po))
@@ -400,7 +401,7 @@ def file_code_open_tostring(fn,showinvs=False):
     pofilter = lambda po:(po.is_violated() or (not po.is_closed()))
     return file_code_tostring(fn,pofilter=pofilter,showinvs=showinvs)
 
-def proofobligation_stats_tostring(pporesults,sporesults,rhlen=25,header1='',extradsmethods=[]):
+def proofobligation_stats_tostring(pporesults,sporesults,rhlen=28,header1='',extradsmethods=[]):
     lines = []
     lines.append('\nPrimary Proof Obligations')
     lines.append(row_method_count_tostring(pporesults,perc=True,rhlen=rhlen,header1=header1))
