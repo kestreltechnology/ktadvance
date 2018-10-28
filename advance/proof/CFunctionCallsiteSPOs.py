@@ -162,6 +162,7 @@ class CFunctionCallsiteSPOs(object):
                                         + calleefun.name + ' (' + str(calleefun.cfile.name)
                                         + '): unable to create spo for assumption '
                                         + str(a) + ': ' + str(e))
+                    raise
 
 
     def collect_post_assumes(self):

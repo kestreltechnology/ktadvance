@@ -58,15 +58,16 @@ po_predicate_constructors = {
     'nn'  : lambda x:PO.CPONotNull(*x),
     'nneg': lambda x:PO.CPONonNegative(*x),
     'no'  : lambda x:PO.CPONoOverlap(*x),    
-    'nt'  : lambda x:PO.CPONullTerminated(*x),    
+    'nt'  : lambda x:PO.CPONullTerminated(*x),
+    'null': lambda x:PO.CPONull(*x),    
     'pc'  : lambda x:PO.CPOPointerCast(*x),
     'plb' : lambda x:PO.CPOPtrLowerBound(*x),
     'pre' : lambda x:PO.CPOPredicate(*x),    
     'prm' : lambda x:PO.CPOPreservedAllMemory(*x),    
     'pub' : lambda x:PO.CPOPtrUpperBound(*x),
     'pubd': lambda x:PO.CPOPtrUpperBoundDeref(*x),
-    'pv'  : lambda x:PO.CPOPreservedValue(*x),    
-    'null': lambda x:PO.CPONull(*x),
+    'pv'  : lambda x:PO.CPOPreservedValue(*x),
+    'rb'  : lambda x:PO.CPORevBuffer(*x),
     'sae' : lambda x:PO.CPOStackAddressEscape(*x),
     'tao' : lambda x:PO.CPOTypeAtOffset(*x),
     'ub'  : lambda x:PO.CPOUpperBound(*x),
@@ -155,7 +156,7 @@ class CFilePredicateDictionary(object):
             def f(index,key): return PO.CPOTypeAtOffset(self,index,p.tags,args)
             return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_lower_bound():
-            args [ self.dictionary.index_typ(p.get_type()),
+            args = [ self.dictionary.index_typ(p.get_type()),
                        self.dictionary.index_exp(p.get_exp(),subst=subst) ]
             def f(index,key): return PO.CPOLowerBound(self,index,p.tags,args)
             return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
@@ -280,6 +281,11 @@ class CFilePredicateDictionary(object):
             args = [ self.dictionary.index_exp(p.get_exp(),subst=subst),
                          self.dictionary.index_exp(p.get_length(),subst=subst) ]
             def f(index,key): return PO.CPOBuffer(self,index,p.tags,args)
+            return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_rev_buffer():
+            args = [ self.dictionary.index_exp(p.get_exp(),subst=subst),
+                         self.dictionary.index_exp(p.get_length(),subst=subst) ]
+            def f(index,key): return PO.CPORevBuffer(self,index,p.tags,args)
             return self.po_predicate_table.add(IT.get_key(p.tags,args),f)
         print('***** Predicate without indexing: ' + str(p))
         exit(1)

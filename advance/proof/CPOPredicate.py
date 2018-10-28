@@ -113,6 +113,7 @@ class CPOPredicate(CD.CDictionaryRecord):
     def is_ptr_lower_bound(self): return False
     def is_ptr_upper_bound(self): return False
     def is_ptr_upper_bound_deref(self): return False
+    def is_rev_buffer(self): return False
     def is_signed_to_signed_cast_lb(self): return False
     def is_signed_to_signed_cast_ub(self): return False
     def is_signed_to_unsigned_cast_lb(self): return False
@@ -339,6 +340,31 @@ class CPOBuffer(CPOPredicate):
     def get_length(self): return self.cd.dictionary.get_exp(self.args[1])
 
     def is_buffer(self): return  True
+
+    def has_variable(self,vid):
+        return self.get_exp().has_variable(vid) or self.get_length().has_variable(vid)
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp())
+                    + ',size:' + str(self.get_length()) + ')')
+
+class CPORevBuffer(CPOPredicate):
+    '''
+    tags:
+       0: 'b'
+
+    args:
+       0: exp (pointer to buffer)
+       1: exp (length of buffer in bytes before pointer)
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_length(self): return self.cd.dictionary.get_exp(self.args[1])
+
+    def is_rev_buffer(self): return  True
 
     def has_variable(self,vid):
         return self.get_exp().has_variable(vid) or self.get_length().has_variable(vid)
