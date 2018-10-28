@@ -152,7 +152,7 @@ class CFileDeclarations(object):
         for v in gvarinfos:
             if v.vname == name:
                 return v
-        print('Global variable ' + name + ' not found in file ' + cfile.name)
+        print('Global variable ' + name + ' not found in file ' + self.cfile.name)
         exit(1)
 
     # ------------------ Retrieve items from file definitions dictionary -------
