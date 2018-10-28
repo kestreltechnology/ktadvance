@@ -78,6 +78,7 @@ xpredicate_constructors = {
     'b' : lambda x:XP.XBuffer(*x),
     'c' : lambda x:XP.XConstTerm(*x),
     'f' : lambda x:XP.XFalse(*x),
+    'fi': lambda x:XP.XFormattedInput(*x),
     'fr': lambda x:XP.XFreed(*x),
     'fn': lambda x:XP.XFunctional(*x),
     'i' : lambda x:XP.XInitialized(*x),
@@ -98,6 +99,7 @@ xpredicate_constructors = {
     'prm': lambda x:XP.XPreservesAllMemory(*x),
     'prn': lambda x:XP.XPreservesNullTermination(*x),
     'prv': lambda x:XP.XPreservesValidity(*x),
+    'rb': lambda x:XP.XRevBuffer(*x),
     'rep': lambda x:XP.XRepositioned(*x),
     'sa': lambda x:XP.XStackAddress(*x),
     'x': lambda x:XP.XRelationalExpr(*x),
@@ -297,8 +299,14 @@ class InterfaceDictionary(object):
             def f(index,key): return XP.XTainted(self,index,p.tags,args)
             return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_buffer():
-            args = [ self.index_s_term(p.get_buffer()), self.index_s_term(p.get_length()) ]
+            args = [ self.index_s_term(p.get_buffer()),
+                         self.index_s_term(p.get_length()) ]
             def f(index,key): return XP.XBuffer(self,index,p.tags,args)
+            return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_rev_buffer():
+            args = [ self.index_s_term(p.get_buffer()),
+                         self.index_s_term(p.get_length()) ]
+            def f(index,key): return XP.XRevBuffer(self,index,p.tags,args)
             return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
         print('Index xpredicate not found for ' + p.tags[0])
         exit(1)
@@ -357,13 +365,19 @@ class InterfaceDictionary(object):
             elif op == 'divide':
                 args = [ self.parse_mathml_term(terms[0],pars,gvars=gvars),
                              self.parse_mathml_term(terms[1],pars,gvars=gvars) ]
-                tags = [ 'ax', 'divide' ]
+                tags = [ 'ax', 'div' ]
                 def f(index,key): return ST.STArithmeticExpr(self,index,tags,args)
                 return self.s_term_table.add(IT.get_key(tags,args),f)
             elif op == 'times':
                 args = [ self.parse_mathml_term(terms[0],pars,gvars=gvars),
                              self.parse_mathml_term(terms[1],pars,gvars=gvars) ]
-                tags = [ 'ax', 'times' ]
+                tags = [ 'ax', 'mult' ]
+                def f(index,key): return ST.STArithmeticExpr(self,index,tags,args)
+                return self.s_term_table.add(IT.get_key(tags,args),f)
+            elif op == 'plus':
+                args = [ self.parse_mathml_term(terms[0],pars,gvars=gvars),
+                             self.parse_mathml_term(terms[1],pars,gvars=gvars) ]
+                tags = [ 'ax', 'plusa' ]
                 def f(index,key): return ST.STArithmeticExpr(self,index,tags,args)
                 return self.s_term_table.add(IT.get_key(tags,args),f)                
             else:
@@ -445,6 +459,11 @@ class InterfaceDictionary(object):
             args = [ pt(terms[0]), pt(terms[1]) ]
             tags = [ 'b' ]
             def f(index,key): return XP.XBuffer(self,index,tags,args)
+            return self.xpredicate_table.add(IT.get_key(tags,args),f)
+        if op == 'rev-buffer':
+            args = [ pt(terms[0]), pt(terms[1]) ]
+            tags = [ 'b' ]
+            def f(index,key): return XP.XRevBuffer(self,index,tags,args)
             return self.xpredicate_table.add(IT.get_key(tags,args),f)
         if (op == 'initializes-range') or (op == 'initialized-range'):
             args = [ pt(terms[0]), pt(terms[1]) ]

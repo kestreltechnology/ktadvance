@@ -57,6 +57,7 @@ class XPredicate(CD.CDictionaryRecord):
     def is_confined(self): return False
     def is_const_term(self): return False
     def is_false(self): return False
+    def is_formatted_input(self): return False
     def is_freed(self): return False
     def is_functional(self): return False
     def is_heap_address(self): return False
@@ -78,6 +79,7 @@ class XPredicate(CD.CDictionaryRecord):
     def is_preserves_value(self): return False
     def is_relational_expr(self): return False
     def is_repositioned(self): return False
+    def is_rev_buffer(self): return False
     def is_stack_address(self): return False
     def is_tainted(self): return False
     def is_unique_pointer(self): return False
@@ -116,6 +118,21 @@ class XBuffer(XPredicate):
 
     def __str__(self):
         return 'buffer(' + str(self.get_buffer()) + ',' + str(self.get_length()) + ')'
+
+class XRevBuffer(XPredicate):
+    """number of bytes before the pointer"""
+
+    def __init__(self,cd,index,tags,args):
+        XPredicate.__init__(self,cd,index,tags,args)
+
+    def get_buffer(self): return self.get_iterm(0)
+
+    def get_length(self): return self.get_iterm(1)
+
+    def is_rev_buffer(self): return True
+
+    def __str__(self):
+        return 'rev-buffer(' + str(self.get_buffer()) + ',' + str(self.get_length()) + ')'
 
 
 class XConfined(XPredicate):
@@ -156,6 +173,18 @@ class XFalse(XPredicate):
         node.append(anode)
 
     def __str__(self): return 'FALSE'
+
+
+class XFormattedInput(XPredicate):
+
+    def __init__(self,cd,index,tags,args):
+        XPredicate.__init__(self,cd,index,tags,args)
+
+    def get_term(self): return self.get_iterm(0)
+
+    def is_formatted_input(self): return True
+
+    def __str__(self): return 'formatte-input(' + str(self.get_term()) + ')'
 
 
 class XFreed(XPredicate):
