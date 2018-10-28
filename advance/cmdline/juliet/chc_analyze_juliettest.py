@@ -61,6 +61,10 @@ def parse():
     parser.add_argument('--analysisrounds',
                             help='Number of times to generate secondary proof obligations',
                             type=int,default=5)
+    parser.add_argument('--wordsize',
+                            help='size of an integer in bits',
+                            type=int,
+                            default=64)
     parser.add_argument('--contractpath',help='path to save the contracts file',default=None)
     args = parser.parse_args()
     return args
@@ -114,7 +118,7 @@ if __name__ == '__main__':
 
     # assume wordsize of 64
     # use unreachability as a means of proof obligation discharge
-    am = AnalysisManager(capp,wordsize=64,unreachability=True,
+    am = AnalysisManager(capp,wordsize=args.wordsize,unreachability=True,
                              thirdpartysummaries=[UF.get_juliet_summaries()])
 
     with timing('analysis of ' + args.path):
