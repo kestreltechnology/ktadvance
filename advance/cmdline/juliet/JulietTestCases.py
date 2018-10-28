@@ -33,9 +33,6 @@ missingscorekeys = {
         "s01/CWE135",
         "s01/CWE193_char_alloca_cpy"
         ],
-    "CWE123": [
-        "connect_socket"
-        ],
     "CWE124": [
         "s01/CWE839_listen_socket"
         ],
@@ -61,25 +58,6 @@ missingscorekeys = {
         "s02/rand_memcpy",
         "s02/rand_memmove",
         "s02/rand_strncpy"
-        ],
-    "CWE197": [
-        "s01/int_connect_socket_to_short",
-        "s01/int_fgets_to_char",
-        "s01/int_fgets_to_short",
-        "s01/int_fscanf_to_char",
-        "s01/int_fscanf_to_short",
-        "s01/int_large_to_char",
-        "s01/int_large_to_short",
-        "s01/int_listen_socket_to_char",
-        "s01/int_listen_socket_to_short",
-        "s01/int_rand_to_char",
-        "s01/int_rand_to_short",
-        "s02/short_connect_socket",
-        "s02/short_fgets",
-        "s02/short_fscanf",
-        "s02/short_large",
-        "s02/short_listen_socket",
-        "s02/short_rand"
         ],
     "CWE252": [
         "char_fprintf",
@@ -193,15 +171,6 @@ missingscorekeys = {
         ],
     "CWE464": [
         "basic"
-        ],
-    "CWE467": [
-        "char",
-        "int",
-        "short"
-        ],
-    "CWE468": [
-        "char_ptr_to_int",
-        "int"
         ],
     "CWE475": [
         "char"
@@ -363,17 +332,6 @@ missingscorekeys = {
         "freopen",
         "open"
         ],
-    "CWE680": [
-        "malloc_connnect_socket",
-        "malloc_listen_socket"
-        ],
-    "CWE758": [
-        "no_return"
-        ],
-    "CWE761": [
-        "char_connect_socket",
-        "char_listen_socket"
-        ],
     "CWE773": [
         "fopen",
         "open"
@@ -409,6 +367,9 @@ missingscorekeys = {
     }
 
 worklist = {
+    "CWE123": [
+        "connect_socket"
+        ],
     "CWE195": [
         "s01/fscanf_memcpy",
         "s01/fscanf_memmove",
@@ -425,6 +386,25 @@ worklist = {
         "s02/rand_memcpy",
         "s02/rand_memmove",
         "s02/rand_strncpy"
+        ],
+    "CWE197": [
+        "s01/int_connect_socket_to_short",
+        "s01/int_fgets_to_char",
+        "s01/int_fgets_to_short",
+        "s01/int_fscanf_to_char",
+        "s01/int_fscanf_to_short",
+        "s01/int_large_to_char",
+        "s01/int_large_to_short",
+        "s01/int_listen_socket_to_char",
+        "s01/int_listen_socket_to_short",
+        "s01/int_rand_to_char",
+        "s01/int_rand_to_short",
+        "s02/short_connect_socket",
+        "s02/short_fgets",
+        "s02/short_fscanf",
+        "s02/short_large",
+        "s02/short_listen_socket",
+        "s02/short_rand"
         ],
     "CWE253": [
         "char_putc",
@@ -462,6 +442,15 @@ worklist = {
         "s01/struct_array_malloc_partial_init",
         "s01/struct_pointer"
         ],
+    "CWE467": [
+        "char",
+        "int",
+        "short"
+        ],
+    "CWE468": [
+        "char_ptr_to_int",
+        "int"
+        ],
     "CWE590": [
         "s04/free_long_alloca",
         "s04/free_long_declare",
@@ -469,6 +458,10 @@ worklist = {
         "s05/free_struct_alloca",
         "s05/free_struct_declare",
         "s05/free_struct_static"
+        ],
+    "CWE680": [
+        "malloc_connnect_socket",
+        "malloc_listen_socket"
         ],
     "CWE690": [
         "s01/char_calloc",
@@ -498,10 +491,15 @@ worklist = {
         "int_pointer_malloc_use",
         "long_alloca_use",
         "long_malloc_use",
+        "no_return"        
         "struct_alloca_use",
         "struct_malloc_use",
         "struct_pointer_alloca_use",
         "struct_pointer_malloc_use"
+        ],
+    "CWE761": [
+        "char_connect_socket",
+        "char_listen_socket"
         ],
     "CWE789": [
         "malloc_char_connect_socket",
