@@ -100,7 +100,8 @@ class CXVariable(XDictionaryRecord):
 
     def get_denotation(self): return self.vd.get_c_variable_denotation(self.get_seqnr())
 
-    def __str__(self): return (str(self.get_name()) + '(' + str(self.get_seqnr()) + ')')
+    def __str__(self):
+        return (str(self.get_name()) + '(' + str(self.get_seqnr()) + ')')
 
 
 class CXXCstBase(XDictionaryRecord):

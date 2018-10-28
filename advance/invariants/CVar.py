@@ -204,12 +204,9 @@ class MemoryReferenceData(VDictionaryRecord):
 
     def get_base(self): return self.vd.get_memory_base (int(self.args[0]))
 
-    def get_offset(self): return self.cd.get_offset(int(self.args[1]))
+    def get_type(self): return self.cd.get_typ(int(self.args[1]))
 
-    def get_type(self): return self.cd.get_typ(int(self.args[2]))
-
-    def __str__(self):
-        return (str(self.get_base()) + str(self.get_offset()))
+    def __str__(self): return (str(self.get_base()))
 
 class ConstantValueVariable(VDictionaryRecord):
 
@@ -222,6 +219,7 @@ class ConstantValueVariable(VDictionaryRecord):
     def is_sideeffect_value(self): return False
     def is_exp_sideeffect_value(self): return False
     def is_symbolic_value(self): return False
+    def is_tainted_value(self): return False
     def is_memory_address(self): return False
 
     def __str__(self): return 'cvv ' + self.tags[0]
@@ -360,12 +358,37 @@ class CVVSymbolicValue(ConstantValueVariable):
 
     def get_xpr(self): return self.xd.get_xpr(int(self.args[0]))
 
-    def get_type(self): return self.cd.gettype(int(self.args[1]))
+    def get_type(self): return self.cd.get_typ(int(self.args[1]))
 
     def __string__(self): return str(self.get_xpr())
 
 
+class CVVTaintedValue(ConstantValueVariable):
 
+    def __init__(self,vd,index,tags,args):
+        ConstantValueVariable.__init__(self,vd,index,tags,args)
+
+    def is_tainted_value(self): return True
+
+    def has_lower_bound(self): return (int(self.args[1]) >= 0)
+
+    def has_upper_bound(self): return (int(self.args[2]) >= 0)
+
+    def get_lower_bound(self):
+        if self.has_lower_bound():
+            return self.xd.get_xpr(int(self.args[1]))
+
+    def get_upper_bound(self):
+        if self.has_upper_bound():
+            return self.xd.get_xpr(int(self.args[2]))
+
+    def get_origin(self): return self.xd.get_variable(int(self.args[0]))
+
+    def get_type(self): return self.cd.get_typ(int(self.args[3]))
+
+    def __str__(self):
+        return ("taint-from-" + str(self.get_origin()))
+    
 class CVVMemoryAddress(ConstantValueVariable):
 
     def __init__(self,vd,index,tags,args):
@@ -376,7 +399,11 @@ class CVVMemoryAddress(ConstantValueVariable):
     def get_memory_reference(self):
         return self.vd.get_memory_reference_data(int(self.args[0]))
 
-    def __str__(self): return 'memory-address:' + str(self.get_memory_reference())
+    def get_offset(self): return self.cd.get_offset(int(self.args[1]))
+
+    def __str__(self):
+        return ('memory-address:' + str(self.get_memory_reference())
+                    + ':' + str(self.get_offset()))
 
 
 
@@ -446,7 +473,14 @@ class MemoryVariable(CVariableDenotation):
 
     def get_memory_reference_id(self): return int(self.args[0])
 
-    def __str__(self): return 'memvar-' + str(self.get_memory_reference_id())
+    def get_memory_reference_data(self):
+        return self.vd.get_memory_reference_data(self.get_memory_reference_id())
+
+    def get_offset(self): return self.cd.get_offset(int(self.args[1]))
+
+    def __str__(self):
+        return ('memvar-' + str(self.get_memory_reference_id())
+                    + '{' + str(self.get_memory_reference_data()) + '}')
 
 class ReturnVariable(CVariableDenotation):
 

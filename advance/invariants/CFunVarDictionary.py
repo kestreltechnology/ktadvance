@@ -55,6 +55,7 @@ constant_value_variable_constructors = {
     'fsev':lambda x:CV.CVVSideEffectValue(*x),
     'esev':lambda x:CV.CVVExpSideEffectValue(*x),
     'sv':lambda x:CV.CVVSymbolicValue(*x),
+    'tv':lambda x:CV.CVVTaintedValue(*x),
     'ma':lambda x:CV.CVVMemoryAddress(*x)
     }
 
