@@ -3,15 +3,41 @@
   <header info="cfile" name="cfile" time="2018-06-16 17:24:12.264660"/>
   <cfile name="x68b">
     <data-structures/>
+    <global-variables>
+      <gvar name="CWE124_Buffer_Underwrite__CWE839_fgets_68_badData"/>
+      <gvar name="CWE124_Buffer_Underwrite__CWE839_fgets_68_goodG2BData"/>
+    </global-variables>
     <functions>
       <function name="CWE124_Buffer_Underwrite__CWE839_fgets_68b_badSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<geq/>
+		<ci>CWE124_Buffer_Underwrite__CWE839_fgets_68_badData</ci>
+		<cn>0</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="CWE124_Buffer_Underwrite__CWE839_fgets_68b_goodB2GSink">
         <parameters/>
       </function>
       <function name="CWE124_Buffer_Underwrite__CWE839_fgets_68b_goodG2BSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<geq/>
+		<ci>CWE124_Buffer_Underwrite__CWE839_fgets_68_goodG2BData</ci>
+		<cn>0</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
     </functions>
   </cfile>

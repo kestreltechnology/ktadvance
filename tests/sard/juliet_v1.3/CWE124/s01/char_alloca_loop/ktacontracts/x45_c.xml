@@ -3,6 +3,10 @@
   <header info="cfile" name="cfile" time="2018-06-16 12:36:32.524738"/>
   <cfile name="x45">
     <data-structures/>
+    <global-variables>
+      <gvar name="CWE124_Buffer_Underwrite__char_alloca_loop_45_goodG2BData"/>
+      <gvar name="CWE124_Buffer_Underwrite__char_alloca_loop_45_badData"/>
+    </global-variables>
     <functions>
       <function name="CWE124_Buffer_Underwrite__char_alloca_loop_45_bad">
         <parameters/>
@@ -12,12 +16,32 @@
       </function>
       <function name="badSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>CWE124_Buffer_Underwrite__char_alloca_loop_45_badData</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="goodG2B">
         <parameters/>
       </function>
       <function name="goodG2BSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>CWE124_Buffer_Underwrite__char_alloca_loop_45_goodG2BData</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
     </functions>
   </cfile>
