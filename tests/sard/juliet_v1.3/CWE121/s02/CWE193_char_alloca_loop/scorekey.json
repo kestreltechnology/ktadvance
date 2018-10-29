@@ -4,13 +4,10 @@
             "P": "ptr-upper-bound-deref"
         },
 	"PPO2": {
-	    "P": "initialized",
-	    "E": "rhs"
+	    "P": "stack-address-escape"
 	},
-	"PPO3": {
-	    "P": "index-upper-bound"
-	},
-        "PS1": [ "PPO1" ]
+        "PS1": [ "PPO1" ],
+	"PS2": [ "PPO2" ]
     },
     "tests": {
         "01": {
@@ -306,7 +303,9 @@
 	    "cfiles": {
 		"x45.c": {
 		    "violations": {
-			"42": [ "PS1" ]
+			"42": [ "PS1" ],
+			"57": [ "PS2" ],
+			"92": [ "PS2" ]
 		    },
 		    "safe-controls": {
 			"77": [ "PS1" ]
@@ -424,6 +423,14 @@
 	},
 	"68": {
 	    "cfiles": {
+		"x68a.c": {
+		    "violations": {
+			"43": [ "PS2" ],
+			"64": [ "PS2" ]
+		    },
+		    "safe-controls": {
+		    }
+		},
 		"x68b.c": {
 		    "violations": {
 			"44": [ "PS1" ]

@@ -1,31 +1,15 @@
 {
     "macros": {
 	"PPO1": {
-	    "P": "no-overlap"
-	},
-	"PPO2": {
-	    "comment": "not-null(data)",
-	    "P": "not-null",
-	    "E": "arg:1"
-	},
-	"PPO3": {
 	    "P": "ptr-upper-bound",
 	    "E": "arg:1",
 	    "V": [ "data", "data___0", "data___1" ]
 	},
-	"PPO4": {
-	    "P": "not-null",
-	    "E": "arg:2"
+	"PPO2": {
+	    "P": "stack-address-escape"
 	},
-	"PPO5": {
-	    "P": "ptr-upper-bound",
-	    "E": "arg:2"
-	},
-	"PPO6": {
-	    "P": "initialized-range",
-	    "E": "arg:2"
-	},
-	"PS1": [ "PPO3" ]
+	"PS1": [ "PPO1" ],
+	"PS2": [ "PPO2" ]
     },
     "tests": {
 	"01": {
@@ -321,7 +305,9 @@
 	    "cfiles": {
 		"x45.c": {
 		    "violations": {
-			"38": [ "PS1" ]
+			"38": [ "PS1" ],
+			"52": [ "PS2" ],
+			"82": [ "PS2" ]
 		    },
 		    "safe-controls": {
 			"68": [ "PS1" ]
@@ -439,6 +425,14 @@
 	},
 	"68": {
 	    "cfiles": {
+		"x68a.c": {
+		    "violations": {
+			"43": [ "PS2" ],
+			"64": [ "PS2" ]
+		    },
+		    "safe-controls": {
+		    }
+		},
 		"x68b.c": {
 		    "violations": {
 			"40": [ "PS1" ]
