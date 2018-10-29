@@ -3,15 +3,49 @@
   <header info="cfile" name="cfile" time="2018-06-17 20:49:09.805041"/>
   <cfile name="x68b">
     <data-structures/>
+    <global-variables>
+      <gvar name="CWE190_Integer_Overflow__char_fscanf_multiply_68_badData"/>
+      <gvar name="CWE190_Integer_Overflow__char_fscanf_multiply_68_goodG2BData"/>
+    </global-variables>
     <functions>
       <function name="CWE190_Integer_Overflow__char_fscanf_multiply_68b_badSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<leq/>
+		<apply>
+		  <times/>
+		  <ci>CWE190_Integer_Overflow__char_fscanf_multiply_68_badData</ci>
+		  <cn>2</cn>
+		</apply>
+		<cn>127</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="CWE190_Integer_Overflow__char_fscanf_multiply_68b_goodB2GSink">
         <parameters/>
       </function>
       <function name="CWE190_Integer_Overflow__char_fscanf_multiply_68b_goodG2BSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<leq/>
+		<apply>
+		  <times/>
+		  <ci>CWE190_Integer_Overflow__char_fscanf_multiply_68_goodG2BData</ci>
+		  <cn>2</cn>
+		</apply>
+		<cn>127</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
     </functions>
   </cfile>
