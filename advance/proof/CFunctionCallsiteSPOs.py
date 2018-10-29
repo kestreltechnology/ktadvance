@@ -157,12 +157,17 @@ class CFunctionCallsiteSPOs(object):
                                         + ') request datastructure condition for '
                                         + str(a.predicate) + ' for key ' + str(e.ckey)
                                         + ' to handle api assumption')
+                except LookupError as e:
+                    logging.warning(cfile.name + ': ' + self.cfun.name + ' call to '
+                                        + calleefun.name + ' (' + str(calleefun.cfile.name)
+                                        + ') request datastructure condition for '
+                                        + str(a.predicate) + ': ' + str(e)
+                                        + ' to handle api assumption')
                 except Exception as e:
                     logging.warning(cfile.name + ': ' + self.cfun.name + ' call to '
                                         + calleefun.name + ' (' + str(calleefun.cfile.name)
                                         + '): unable to create spo for assumption '
                                         + str(a) + ': ' + str(e))
-                    raise
 
 
     def collect_post_assumes(self):
