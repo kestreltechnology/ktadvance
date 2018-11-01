@@ -77,7 +77,6 @@ function_tables = {
     'spo_type': lambda(f):f.podictionary.spo_type_table,
 
     # vard
-    'allocated_region_data':  lambda(f):f.vard.allocated_region_data_table,
     'memory_base': lambda(f):f.vard.memory_base_table,
     'memory_reference_data': lambda(f):f.vard.memory_reference_data_table,
     'constant_value_variable': lambda(f):f.vard.constant_value_variable_table,
