@@ -79,13 +79,11 @@ class CFunVarDictionary (object):
         self.cfun = self.fdecls.cfun
         self.cfile = self.cfun.cfile
         self.xd = CFunXprDictionary(self)
-        self.allocated_region_data_table = IT.IndexedTable('allocated-region-data-table')
         self.memory_base_table = IT.IndexedTable('memory-base-table')
         self.memory_reference_data_table = IT.IndexedTable('memory-reference-data-table')
         self.constant_value_variable_table = IT.IndexedTable('constant-value-variable-table')
         self.c_variable_denotation_table = IT.IndexedTable('c-variable-denotation-table')
         self.tables = [
-            (self.allocated_region_data_table,self._read_xml_allocated_region_data_table),
             (self.memory_base_table,self._read_xml_memory_base_table),
             (self.memory_reference_data_table,self._read_xml_memory_reference_data_table),
             (self.constant_value_variable_table,self._read_xml_constant_value_variable_table),
@@ -142,13 +140,6 @@ class CFunVarDictionary (object):
         return '\n'.join(lines)
 
     # ----------------------- Internal -----------------------------------------
-
-    def _read_xml_allocated_region_data_table(self,txnode):
-        def get_value(node):
-            rep = IT.get_rep(node)
-            args = (self,) + rep
-            return CV.AllocatedRegionData(*args)
-        self.allocated_region_data_table.read_xml(txnode,'n',get_value)
 
     def _read_xml_memory_base_table(self,txnode):
         def get_value(node):

@@ -134,9 +134,9 @@ class MemoryBaseAllocStackAddress(MemoryBase):
 
     def is_alloc_stackaddress(self): return True
 
-    def get_allocated_region_id(self): return int(self.args[0])
+    def get_region_id(self): return int(self.args[0])
 
-    def __str__(self): return 'alloca-' + str(self.get_allocated_region_id())
+    def __str__(self): return 'alloca-' + str(self.get_region_id())
 
 class MemoryBaseHeapAddress(MemoryBase):
 
@@ -147,9 +147,9 @@ class MemoryBaseHeapAddress(MemoryBase):
 
     def is_valid(self): return (int(self.args[1]) == 1)
 
-    def get_allocated_region_id(self): return int(self.args[0])
+    def get_region_id(self): return int(self.args[0])
 
-    def __str__(self): return 'heap-' + str(self.get_allocated_region_id())
+    def __str__(self): return 'heap-' + str(self.get_region_id())
 
 class MemoryBaseBaseVar(MemoryBase):
 
