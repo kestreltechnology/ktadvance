@@ -68,7 +68,8 @@ c_variable_denotation_constructors = {
     'rv':lambda x:CV.ReturnVariable(*x),
     'fv':lambda x:CV.FieldVariable(*x),
     'cv':lambda x:CV.CheckVariable(*x),
-    'av':lambda x:CV.AuxiliaryVariable(*x)
+    'av':lambda x:CV.AuxiliaryVariable(*x),
+    'xv':lambda x:CV.AugmentationVariable(*x)
     }
 
 class CFunVarDictionary (object):

@@ -529,6 +529,18 @@ class CheckVariable(CVariableDenotation):
                                       + str(x[2])) for x in self.get_po_isppo_expnr_ids() ])
                     + ')')
 
+class AugmentationVariable(CVariableDenotation):
+    '''Represents an additional variable that does not interact with the  rest of the system.'''
+
+    def __init__(self,vd,index,tags,args):
+        CVariableDenotation.__init__(self,vd,index,tags,args)
+
+    def is_augmentation_variable(self): return True
+
+    def get_name(self): return self.tags[1]
+
+    def __str__(self): return 'augv:' + str(self.get_name())
+
 class AuxiliaryVariable(CVariableDenotation):
 
     def __init__(self,vd,index,tags,args):
