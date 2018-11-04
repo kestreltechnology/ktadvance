@@ -51,6 +51,9 @@ class CFunctionContract(object):
 
     def has_postconditions(self):
         return len(self.postconditions) > 0
+
+    def has_preconditions(self):
+        return len(self.preconditions) > 0
         
     def _initialize_signature(self,ppnode):
         if ppnode is None:
@@ -101,8 +104,19 @@ class CFunctionContract(object):
         elif len(self.postconditions) > 1:
             lines.append('  ' + self.name)
             for pc in self.postconditions.values():
-                lines.append('    ' + pc.pretty())
+                lines.append('     ' + pc.pretty())
             return  '\n'.join(lines)
+        return ''
+
+    def report_preconditions(self):
+        lines = []
+        if len(self.preconditions) == 1:
+            return ('  ' + self.name + ': ' + self.preconditions.values()[0].pretty())
+        elif len(self.preconditions) > 1:
+            lines.append('  ' + self.name)
+            for pc in self.preconditions.values():
+                lines.append('     ' + pc.pretty())
+            return '\n'.join(lines)
         return ''
 
     def __str__(self):

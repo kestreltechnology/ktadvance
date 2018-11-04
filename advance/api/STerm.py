@@ -29,6 +29,23 @@ import xml.etree.ElementTree as ET
 
 import advance.app.CDictionaryRecord as CD
 
+printops = {
+    'plus': '+',
+    'plusa': '+',
+    'minnus': '-',
+    'times': '*',
+    'mult': '*',
+    'divide': '/',
+    'div': '/'
+    }
+
+def get_printop(s):
+    if s in printops:
+        return  printops[s]
+    else:
+        return s
+
+
 class STerm(CD.CDictionaryRecord):
 
     def __init__(self,cd,index,tags,args):
@@ -263,6 +280,10 @@ class STArithmeticExpr(STerm):
         t2node = self.get_term2().get_mathml_node(signature)
         anode.extend([ opnode, t1node, t2node ])
         return anode
+
+    def pretty(self):
+        return ('(' + self.get_term1().pretty() + ' ' + get_printop(self.get_op())
+                    + ' ' + self.get_term2().pretty() + ')')
 
     def __str__(self):
         return ('xpr(' + str(self.get_term1()) + ' ' + self.get_op() + ' ' +

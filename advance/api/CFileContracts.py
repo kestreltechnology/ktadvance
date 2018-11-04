@@ -70,17 +70,31 @@ class CFileContracts(object):
     def has_postconditions(self):
         return any( [ f.has_postconditions() for f in self.functions.values() ])
 
+    def has_preconditions(self):
+        return any( [ f.has_preconditions() for f in self.functions.values() ])
+
     def iter_functions(self,f):
         for fn in self.functions: f(self.functions[fn])
 
     def report_postconditions(self):
         lines = []
         if self.has_postconditions():
-            lines.append('\nFile: ' + self.cfile.name)
+            lines.append('\nFile: ' + self.cfile.name + ' - postconditions')
             lines.append('-' * 80)
             for f in self.functions.values():
                 if f.has_postconditions():
                     lines.append(f.report_postconditions())
+            return '\n'.join(lines)
+        return ''
+
+    def report_preconditions(self):
+        lines = []
+        if self.has_preconditions():
+            lines.append('\nFile: ' + self.cfile.name + ' - preconditions')
+            lines.append('-' * 80)
+            for f in  self.functions.values():
+                if f.has_preconditions():
+                    lines.append(f.report_preconditions())
             return '\n'.join(lines)
         return ''
 

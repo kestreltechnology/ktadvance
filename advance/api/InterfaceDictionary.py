@@ -105,7 +105,8 @@ xpredicate_constructors = {
     'x': lambda x:XP.XRelationalExpr(*x),
     'cf': lambda x:XP.XConfined(*x),
     'tt': lambda x:XP.XTainted(*x),
-    'up': lambda x:XP.XUniquePointer(*x)
+    'up': lambda x:XP.XUniquePointer(*x),
+    'vm': lambda x:XP.XValidMem(*x)
     }
     
 class InterfaceDictionary(object):
@@ -449,6 +450,11 @@ class InterfaceDictionary(object):
             args = [ pt(terms[0]) ]
             tags = [ 'ab' ]
             def f(index,key): return XP.XAllocationBase(self,index,tags,args)
+            return self.xpredicate_table.add(IT.get_key(tags,args),f)
+        if op == 'valid-mem':
+            args = [ pt(terms[0]) ]
+            tags = [ 'vm' ]
+            def f(index,key): return XP.XValidMem(self,index,tags,args)
             return self.xpredicate_table.add(IT.get_key(tags,args),f)
         if op == 'new-memory':
             args = [ pt(terms[0]) ]

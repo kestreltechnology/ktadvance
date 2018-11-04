@@ -30,8 +30,11 @@ import xml.etree.ElementTree as ET
 import advance.app.CDictionaryRecord as CD
 
 printops = {
-    'eq': ' = ',
-    'lt': ' < '
+    'eq': '=',
+    'lt': '<',
+    'gt': '>',
+    'ge': '>=',
+    'le': '<='
     }
 
 def get_printop(s):
@@ -83,6 +86,7 @@ class XPredicate(CD.CDictionaryRecord):
     def is_stack_address(self): return False
     def is_tainted(self): return False
     def is_unique_pointer(self): return False
+    def is_valid_mem(self): return False
 
     def write_mathml(self,cnode,signature):
         print('Missing write_mathml for ' + self.tags[0])
@@ -474,8 +478,8 @@ class XRelationalExpr(XPredicate):
         anode.append(self.get_term2().get_mathml_node(signature))
 
     def pretty(self):
-        return (self.get_term1().pretty()  + get_printop(self.get_op())
-                    + self.get_term2().pretty())
+        return (self.get_term1().pretty() +' ' + get_printop(self.get_op())
+                    + ' ' + self.get_term2().pretty())
 
     def __str__(self):
         return ('expr(' + self.get_op() + ' ' + str(self.get_term1()) + ','
@@ -527,3 +531,15 @@ class XUniquePointer(XPredicate):
     def is_unique_pointer(self): return True
 
     def __str__(self): return 'unique-pointer(' + str(self.get_term()) + ')'
+
+
+class XValidMem(XPredicate):
+
+    def __init__(self,cd,index,tags,args):
+        XPredicate.__init__(self,cd,index,tags,args)
+
+    def get_term(self): return self.get_iterm(0)
+
+    def is_valid_mem(self): return True
+
+    def __str__(self): return 'valid-mem(' + str(self.get_term()) + ')'
