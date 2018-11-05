@@ -3,11 +3,20 @@
   <header info="cfile" name="cfile" time="2018-05-18 17:30:56.682327"/>
   <cfile name="src/ipset">
     <data-structures/>
+    <global-variables>
+      <gvar name="buffer"/>
+    </global-variables>
     <functions>
       <function name="ipset_init">
         <parameters/>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="add_to_ipset">
@@ -18,7 +27,13 @@
           <par name="remove___0" nr="4"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="new_add_to_ipset">
@@ -28,8 +43,32 @@
           <par name="af" nr="3"/>
           <par name="remove___0" nr="4"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>buffer</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>buffer</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="add_attr">
