@@ -4,23 +4,55 @@
   <cfile name="src/domain">
     <data-structures/>
     <global-variables>
-      <gvar name="dnsmasq_daemon" notnull="yes" finit="all-fields"/>
+      <gvar name="dnsmasq_daemon"/>
     </global-variables>
     <functions>
       <function name="get_domain">
         <parameters>
           <par name="addr" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="get_domain6">
         <parameters>
           <par name="addr" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="is_name_synthetic">
@@ -29,8 +61,24 @@
           <par name="name" nr="2"/>
           <par name="addr" nr="3"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="search_domain">
@@ -48,8 +96,24 @@
           <par name="addr" nr="2"/>
           <par name="name" nr="3"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="search_domain6">

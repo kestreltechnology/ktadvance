@@ -4,7 +4,7 @@
   <cfile name="src/dnsmasq">
     <data-structures/>
     <global-variables>
-      <gvar name="dnsmasq_daemon" notnull="yes" finit="all-fields"/>
+      <gvar name="dnsmasq_daemon"/>
     </global-variables>
     <functions>
       <function name="make_icmp_sock">
@@ -35,8 +35,24 @@
         <parameters>
           <par name="addr" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="queue_event">
@@ -72,8 +88,24 @@
           <par name="do_reload" nr="2"/>
           <par name="now" nr="3"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="main">
@@ -81,22 +113,64 @@
           <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions/>
       </function>
       <function name="set_dns_listeners">
         <parameters>
           <par name="now" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="check_dns_listeners">
         <parameters>
           <par name="now" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="sig_handler">
@@ -111,8 +185,24 @@
         <parameters>
           <par name="now" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="async_event">
@@ -120,8 +210,24 @@
           <par name="pipe___0" nr="1"/>
           <par name="now" nr="2"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
     </functions>

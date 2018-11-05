@@ -4,7 +4,7 @@
   <cfile name="src/dhcp6">
     <data-structures/>
     <global-variables>
-      <gvar name="dnsmasq_daemon" notnull="yes" finit="all-fields"/>
+      <gvar name="dnsmasq_daemon"/>
     </global-variables>
     <functions>
       <function name="complete_context6">
@@ -18,8 +18,24 @@
           <par name="valid" nr="7"/>
           <par name="vparam" nr="8"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="config_find_by_address6">
@@ -45,8 +61,24 @@
         <parameters>
           <par name="now" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="config_valid">
@@ -63,14 +95,46 @@
         <parameters>
           <par name="now" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="dhcp6_init">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="make_duid1">
@@ -81,16 +145,56 @@
           <par name="maclen" nr="4"/>
           <par name="parm" nr="5"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="dhcp6_packet">
         <parameters>
           <par name="now" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="address6_available">
@@ -116,8 +220,24 @@
           <par name="plain_range" nr="8"/>
           <par name="ans" nr="9"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="construct_worker">
@@ -131,8 +251,24 @@
           <par name="valid" nr="7"/>
           <par name="vparam" nr="8"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="get_client_mac">
@@ -144,8 +280,24 @@
           <par name="mactypep" nr="5"/>
           <par name="now" nr="6"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="address6_valid">

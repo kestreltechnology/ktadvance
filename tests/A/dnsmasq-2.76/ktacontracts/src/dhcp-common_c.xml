@@ -4,7 +4,7 @@
   <cfile name="src/dhcp-common">
     <data-structures/>
     <global-variables>
-      <gvar name="dnsmasq_daemon" notnull="yes" finit="all-fields"/>
+      <gvar name="dnsmasq_daemon"/>
     </global-variables>
     <functions>
       <function name="bindtodevice">
@@ -35,8 +35,24 @@
         <parameters>
           <par name="tags" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="display_opts">
@@ -50,16 +66,48 @@
           <par name="family" nr="1"/>
           <par name="context" nr="2"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="dhcp_update_configs">
         <parameters>
           <par name="configs" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="option_filter">
@@ -86,8 +134,24 @@
           <par name="family" nr="1"/>
           <par name="relay" nr="2"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="is_config_in_context">
@@ -198,8 +262,24 @@
           <par name="buf" nr="5"/>
           <par name="buf_len" nr="6"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="strip_hostname">
@@ -234,20 +314,76 @@
           <par name="netid" nr="1"/>
           <par name="xid" nr="2"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="whichdevice">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="dhcp_common_init">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
     </functions>
