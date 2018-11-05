@@ -380,7 +380,13 @@ class InterfaceDictionary(object):
                              self.parse_mathml_term(terms[1],pars,gvars=gvars) ]
                 tags = [ 'ax', 'plusa' ]
                 def f(index,key): return ST.STArithmeticExpr(self,index,tags,args)
-                return self.s_term_table.add(IT.get_key(tags,args),f)                
+                return self.s_term_table.add(IT.get_key(tags,args),f)
+            elif op == 'minus':
+                args = [ self.parse_mathml_term(terms[0],pars,gvars=gvars),
+                             self.parse_mathml_term(terms[1],pars,gvars=gvars) ]
+                tags = [ 'ax', 'minusa' ]
+                def f(index,key): return ST.STArithmeticExpr(self,index,tags,args)
+                return self.s_term_table.add(IT.get_key(tags,args),f)
             else:
                 print('Parse mathml s-term apply not found for ' + op)
                 exit(1)
