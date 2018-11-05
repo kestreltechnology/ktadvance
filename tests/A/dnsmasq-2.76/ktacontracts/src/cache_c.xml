@@ -4,7 +4,16 @@
   <cfile name="src/cache">
     <data-structures/>
     <global-variables>
-      <gvar name="dnsmasq_daemon" notnull="yes" finit="all-fields"/>
+      <gvar name="big_free"/>
+      <gvar name="bignames_left"/>
+      <gvar name="buff___0"/>      
+      <gvar name="cache_head"/>
+      <gvar name="cache_tail"/>
+      <gvar name="dhcp_spare"/>
+      <gvar name="dnsmasq_daemon"/>
+      <gvar name="hash_table"/>
+      <gvar name="hash_size"/>
+      <gvar name="uid"/>
     </global-variables>
     <functions>
       <function name="is_outdated_cname_pointer">
@@ -21,7 +30,13 @@
           <par name="crecp" nr="2"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="cache_scan_free">
@@ -31,22 +46,112 @@
           <par name="now" nr="3"/>
           <par name="flags" nr="4"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>hash_table</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="cache_init">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="rehash">
         <parameters>
           <par name="size" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<leq/>
+		<apply>
+		  <times/>
+		  <apply>
+		    <plus/>
+		    <ci>hash_size</ci>
+		    <cn>1</cn>
+		  </apply>
+		  <cn>4</cn>
+		</apply>
+		<ci>MAXUINT32</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<geq/>
+		<ci>hash_size</ci>
+		<cn>0</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>hash_table</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>hash_table</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<allocation-base/>
+		<ci>hash_table</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="eatspace">
@@ -61,8 +166,24 @@
         <parameters>
           <par name="t" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="add_hosts_entry">
@@ -85,16 +206,48 @@
           <par name="addr" nr="3"/>
           <par name="arg" nr="4"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="record_source">
         <parameters>
           <par name="index___0" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="querystr">
@@ -102,8 +255,32 @@
           <par name="desc" nr="1"/>
           <par name="type" nr="2"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>buff___0</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<allocation-base/>
+		<ci>buff___0</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="add_dhcp_cname">
@@ -111,8 +288,24 @@
           <par name="target" nr="1"/>
           <par name="ttd" nr="2"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="cache_find_by_addr">
@@ -122,14 +315,40 @@
           <par name="now" nr="3"/>
           <par name="prot" nr="4"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>hash_table</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="cache_free">
         <parameters>
           <par name="crecp" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>cache_tail</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions/>
       </function>
       <function name="cache_unlink">
@@ -155,8 +374,24 @@
         <parameters>
           <par name="crecp" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>cache_head</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="cache_end_insert">
@@ -189,8 +424,29 @@
       </function>
       <function name="next_uid">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<leq/>
+		<apply>
+		  <plus/>
+		  <ci>uid</ci>
+		  <cn>1</cn>
+		</apply>
+		<ci>MAXUINT32</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="cache_insert">
@@ -201,14 +457,99 @@
           <par name="ttl" nr="4"/>
           <par name="flags" nr="5"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>big_free</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>cache_tail</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>cache_tail</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<geq/>
+		<apply>
+		  <minus/>
+		  <ci>bignames_left</ci>
+		  <cn>1</cn>
+		</apply>
+		<ci>MININT32</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="cache_reload">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>hash_table</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<allocation-base/>
+		<return/>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="cache_add_dhcp_entry">
@@ -218,8 +559,32 @@
           <par name="host_address" nr="3"/>
           <par name="ttd" nr="4"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dhcp_spare</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="hash_bucket">
