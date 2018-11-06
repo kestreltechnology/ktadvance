@@ -3,12 +3,60 @@
   <header info="cfile" name="cfile" time="2018-10-16 18:30:01.466711"/>
   <cfile name="x68b">
     <data-structures/>
+    <global-variables>
+      <gvar name="CWE761_Free_Pointer_Not_at_Start_of_Buffer__char_environment_68_badDataForGoodSink"/>
+      <gvar name="CWE761_Free_Pointer_Not_at_Start_of_Buffer__char_environment_68_badDataForBadSink"/>
+    </global-variables>
     <functions>
       <function name="CWE761_Free_Pointer_Not_at_Start_of_Buffer__char_environment_68b_badSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>CWE761_Free_Pointer_Not_at_Start_of_Buffer__char_environment_68_badDataForBadSink</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>CWE761_Free_Pointer_Not_at_Start_of_Buffer__char_environment_68_badDataForBadSink</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="CWE761_Free_Pointer_Not_at_Start_of_Buffer__char_environment_68b_goodB2GSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<allocation-base/>
+		<ci>CWE761_Free_Pointer_Not_at_Start_of_Buffer__char_environment_68_badDataForGoodSink</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>CWE761_Free_Pointer_Not_at_Start_of_Buffer__char_environment_68_badDataForGoodSink</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>CWE761_Free_Pointer_Not_at_Start_of_Buffer__char_environment_68_badDataForGoodSink</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
     </functions>
   </cfile>
