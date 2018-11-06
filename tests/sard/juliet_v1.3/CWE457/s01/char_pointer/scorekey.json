@@ -19,7 +19,13 @@
 	"PPO6": {
 	    "P": "upper-bound"
 	},
-	"PS1": [ "PPO1", "PPO2", "PPO3", "PPO4", "PPO5", "PPO6" ]
+	"PPO7": {
+	    "P": "initialized",
+	    "D": [ "dataPtr" ]
+	},
+	"PS1": [ "PPO1", "PPO2", "PPO3", "PPO4", "PPO5", "PPO6" ],
+	"PS2": [ "PPO1", "PPO2", "PPO4", "PPO5", "PPO6" ],
+	"PS3": [ "PPO7" ]
     },
     "tests": {
 	"01": {
@@ -289,7 +295,8 @@
 	    "cfiles": {
 		"x63b.c": {
 		    "violations": {
-			"28": [ "PS1" ]
+			"26": [ "PS3" ],
+			"28": [ "PS2" ]
 		    },
 		    "safe-controls": {
 			"40": [ "PS1" ],
@@ -302,7 +309,8 @@
 	    "cfiles": {
 		"x64b.c": {
 		    "violations": {
-			"31": [ "PS1" ]
+			"29": [ "PS3" ],
+			"31": [ "PS2" ]
 		    },
 		    "safe-controls": {
 			"46": [ "PS1" ],
