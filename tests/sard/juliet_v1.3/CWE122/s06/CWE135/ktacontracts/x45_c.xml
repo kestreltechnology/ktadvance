@@ -3,6 +3,11 @@
   <header info="cfile" name="cfile" time="2018-06-15 21:32:55.478746"/>
   <cfile name="x45">
     <data-structures/>
+    <global-variables>
+      <gvar name="CWE122_Heap_Based_Buffer_Overflow__CWE135_45_goodG2BData"/>
+      <gvar name="CWE122_Heap_Based_Buffer_Overflow__CWE135_45_goodB2GData"/>
+      <gvar name="CWE122_Heap_Based_Buffer_Overflow__CWE135_45_badData"/>
+    </global-variables>
     <functions>
       <function name="CWE122_Heap_Based_Buffer_Overflow__CWE135_45_bad">
         <parameters/>
@@ -12,18 +17,72 @@
       </function>
       <function name="badSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>CWE122_Heap_Based_Buffer_Overflow__CWE135_45_badData</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>CWE122_Heap_Based_Buffer_Overflow__CWE135_45_badData</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="goodB2G">
         <parameters/>
       </function>
       <function name="goodB2GSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>CWE122_Heap_Based_Buffer_Overflow__CWE135_45_goodB2GData</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>CWE122_Heap_Based_Buffer_Overflow__CWE135_45_goodB2GData</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="goodG2B">
         <parameters/>
       </function>
       <function name="goodG2BSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>CWE122_Heap_Based_Buffer_Overflow__CWE135_45_goodG2BData</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>CWE122_Heap_Based_Buffer_Overflow__CWE135_45_goodG2BData</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
     </functions>
   </cfile>
