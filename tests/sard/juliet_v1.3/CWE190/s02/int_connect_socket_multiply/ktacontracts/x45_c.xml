@@ -3,6 +3,10 @@
   <header info="cfile" name="cfile" time="2018-06-18 19:26:18.590410"/>
   <cfile name="x45">
     <data-structures/>
+    <global-variables>
+      <gvar name="CWE190_Integer_Overflow__int_connect_socket_multiply_45_badData"/>
+      <gvar name="CWE190_Integer_Overflow__int_connect_socket_multiply_45_goodG2BData"/>
+    </global-variables>
     <functions>
       <function name="CWE190_Integer_Overflow__int_connect_socket_multiply_45_bad">
         <parameters/>
@@ -12,6 +16,21 @@
       </function>
       <function name="badSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<leq/>
+		<apply>
+		  <times/>
+		  <ci>CWE190_Integer_Overflow__int_connect_socket_multiply_45_badData</ci>
+		  <cn>2</cn>
+		</apply>
+		<ci>MAXINT32</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="goodB2G">
         <parameters/>
@@ -24,6 +43,21 @@
       </function>
       <function name="goodG2BSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<leq/>
+		<apply>
+		  <times/>
+		  <ci>CWE190_Integer_Overflow__int_connect_socket_multiply_45_goodG2BData</ci>
+		  <cn>2</cn>
+		</apply>
+		<ci>MAXINT32</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
     </functions>
   </cfile>
