@@ -388,6 +388,21 @@ class CVVTaintedValue(ConstantValueVariable):
 
     def __str__(self):
         return ("taint-from-" + str(self.get_origin()))
+
+class CVVByteSequence(ConstantValueVariable):
+
+    def __init__(self,vd,index,tags,args):
+        ConstantValueVariable.__init__(self,vd,index,tags,args)
+
+    def is_byte_sequence(self): return True
+
+    def get_origin(self): return self.xd.get_variable(int(self.args[0]))
+
+    def has_length(self): return (int(self.args[1]) >= 0)
+
+    def get_length(self):
+        if self.has_length():
+            return self.xd.get_xpr(int(self.args[1]))
     
 class CVVMemoryAddress(ConstantValueVariable):
 
