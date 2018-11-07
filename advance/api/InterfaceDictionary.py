@@ -75,6 +75,7 @@ s_term_constructors = {
 
 xpredicate_constructors = {
     'ab': lambda x:XP.XAllocationBase(*x),
+    'bw': lambda x:XP.XBlockWrite(*x),
     'b' : lambda x:XP.XBuffer(*x),
     'c' : lambda x:XP.XConstTerm(*x),
     'f' : lambda x:XP.XFalse(*x),
@@ -252,6 +253,10 @@ class InterfaceDictionary(object):
         if p.is_allocation_base():
             args = [ self.index_s_term(p.get_term()) ]
             def f(index,key): return XP.XAllocationBase(self,index,p.tags,args)
+            return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_block_write():
+            args = [ self.index_s_term(p.get_term()), self.index_s_term(p.get_length()) ]
+            def f(index,key): return XP.XBlockWrite(self,index,p.tags,args)
             return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_null():
             args = [ self.index_s_term(p.get_term()) ]
@@ -456,6 +461,11 @@ class InterfaceDictionary(object):
             args = [ pt(terms[0]) ]
             tags = [ 'ab' ]
             def f(index,key): return XP.XAllocationBase(self,index,tags,args)
+            return self.xpredicate_table.add(IT.get_key(tags,args),f)
+        if op  == 'block-write':
+            args = [ pt(terms[0]), pt(terms[1]) ]
+            tags = [ 'bw' ]
+            def f(index,key): return XP.XBlockWrite(self,index,tags,args)
             return self.xpredicate_table.add(IT.get_key(tags,args),f)
         if op == 'valid-mem':
             args = [ pt(terms[0]) ]

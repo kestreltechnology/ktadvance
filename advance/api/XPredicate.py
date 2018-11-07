@@ -56,6 +56,7 @@ class XPredicate(CD.CDictionaryRecord):
         exit(1)
 
     def is_allocation_base(self): return False
+    def is_block_write(self): return False
     def is_buffer(self): return False
     def is_confined(self): return False
     def is_const_term(self): return False
@@ -107,6 +108,22 @@ class XAllocationBase(XPredicate):
     def is_allocation_base(self): return True
 
     def __str__(self): return 'allocation-base(' + str(self.get_term()) + ')'
+
+
+class XBlockWrite(XPredicate):
+
+    def __init__(self,cd,index,tags,args):
+        XPredicate.__init__(self,cd,index,tags,args)
+
+    def get_term(self): return self.get_iterm(0)
+
+    def get_length(self): return self.get_iterm(1)
+
+    def is_block_write(self): return True
+
+    def __str__(self):
+        return ('block-write(' + str(self.get_term()) + ','
+                    + str(self.get_length()) + ')')
 
 
 class XBuffer(XPredicate):
