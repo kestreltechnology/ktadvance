@@ -367,17 +367,7 @@ missingscorekeys = {
     }
 
 worklist = {
-    "CWE123": [
-        "connect_socket"
-        ],
     "CWE195": [
-        "s01/fscanf_memcpy",
-        "s01/fscanf_memmove",
-        "s01/fsfanf_strncpy",
-        "s02/listen_socket_malloc",
-        "s02/listen_socket_memcpy",
-        "s02/listen_socket_memmove",
-        "s02/listen_socket_strncpy",
         "s02/negative_malloc",
         "s02/negative_memcpy",
         "s02/negative_memmove",
@@ -621,6 +611,7 @@ testcases = {
         "s11/sizeof_struct"
         ],
     "CWE123": [
+        "connect_socket",
         "fgets",
         "listen_socket"
         ],
@@ -901,7 +892,14 @@ testcases = {
         "s01/fgets_memcpy",
         "s01/fgets_memmove",
         "s01/fgets_strncpy",
-        "s01/fscanf_malloc"
+        "s01/fscanf_malloc",
+        "s01/fscanf_memcpy",
+        "s01/fscanf_memmove",
+        "s01/fscanf_strncpy",
+        "s02/listen_socket_malloc",
+        "s02/listen_socket_memcpy",
+        "s02/listen_socket_memmove",
+        "s02/listen_socket_strncpy"        
         ],
     "CWE196": [
         "basic"

@@ -39,6 +39,10 @@ def parse():
     parser.add_argument('path',
                             help='path to the juliet test case (relative to juliet_v1.3)' +
                             ' (e.g., CWE121/s01/CWE129_large)')
+    parser.add_argument('--xdelegated',help="exclude delegated ppo's",
+                            action='store_true')
+    parser.add_argument('--xviolated',help="exclude violated ppo's",
+                            action='store_true')
     parser.add_argument('--predicates',nargs='*',
                             help='predicates of interest (default: all)')
     args = parser.parse_args()
@@ -77,14 +81,20 @@ if __name__ == '__main__':
         print('No open proof obligations found')
 
     if len(delegated) > 0:
-        print('\n\nDelegated proof obligations:\n' +  ('=' * 80))
-        print(RP.tag_file_function_pos_tostring(delegated,pofilter=pofilter))
+        if args.xdelegated:
+            print("Number of delegated ppo's: " + (str(len(delegated))))
+        else:
+            print('\n\nDelegated proof obligations:\n' +  ('=' * 80))
+            print(RP.tag_file_function_pos_tostring(delegated,pofilter=pofilter))
     else:
         print('No delegated proof obligations found')
 
     if len(violations) > 0:
-        print('\n\nViolations:\n' + ('=' * 80))
-        print(RP.tag_file_function_pos_tostring(violations,pofilter=pofilter))
+        if args.xviolated:
+            print("Number of violations: " + str(len(violations)))
+        else:
+            print('\n\nViolations:\n' + ('=' * 80))
+            print(RP.tag_file_function_pos_tostring(violations,pofilter=pofilter))
     else:
         print('\n' + ('=' * 80) + '\nNo violations found')
         print('Note: any open proof obligation can be a violation!')
