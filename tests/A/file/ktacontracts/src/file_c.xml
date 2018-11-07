@@ -3,12 +3,38 @@
   <header info="cfile" name="cfile" time="2018-05-13 18:05:30.869709"/>
   <cfile name="src/file">
     <data-structures/>
+    <global-variables>
+      <gvar name="optarg"/>
+      <gvar name="optind"/>
+      <gvar name="progname"/>
+      <gvar name="separator"/>
+      <gvar name="stdin"/>
+    </global-variables>
     <functions>
       <function name="main">
         <parameters>
           <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>optarg</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<geq/>
+		<ci>optind</ci>
+		<cn>0</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions/>
       </function>
       <function name="load">
@@ -16,6 +42,16 @@
           <par name="magicfile" nr="1"/>
           <par name="flags" nr="2"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>progname</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
 	  <post><math><apply><preserves-all-memory/></apply></math></post>
 	</postconditions>
@@ -24,6 +60,16 @@
         <parameters>
           <par name="p" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>progname</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
 	  <post><math><apply><preserves-all-memory/></apply></math></post>
 	</postconditions>
@@ -32,12 +78,32 @@
         <parameters>
           <par name="magic" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>progname</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
 	  <post><math><apply><preserves-all-memory/></apply></math></post>
 	</postconditions>
       </function>
       <function name="usage">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>progname</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
 	  <post><math><apply><preserves-all-memory/></apply></math></post>
 	</postconditions>
@@ -70,6 +136,32 @@
           <par name="ms" nr="1"/>
           <par name="fn" nr="2"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>stdin</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>progname</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>separator</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
 	  <post><math><apply><preserves-all-memory/></apply></math></post>
 	</postconditions>
@@ -79,7 +171,22 @@
           <par name="s" nr="1"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<geq/>
+		<return/>
+		<cn>0</cn>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="process">
@@ -88,6 +195,16 @@
           <par name="inname" nr="2"/>
           <par name="wid" nr="3"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>separator</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
 	  <post><math><apply><preserves-all-memory/></apply></math></post>
 	</postconditions>

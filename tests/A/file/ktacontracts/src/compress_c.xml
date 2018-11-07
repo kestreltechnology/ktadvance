@@ -3,6 +3,9 @@
   <header info="cfile" name="cfile" time="2018-05-13 18:05:33.591031"/>
   <cfile name="src/compress">
     <data-structures/>
+    <global-variables>
+      <gvar name="ncompr"/>
+    </global-variables>
     <functions>
       <function name="uncompressbuf">
         <parameters>
@@ -74,8 +77,33 @@
           <par name="buf" nr="4"/>
           <par name="nbytes" nr="5"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<lt/>
+		<ci>ncompr</ci>
+		<cn>15</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<allocation-base/>
+		<return/>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="copydesc">
