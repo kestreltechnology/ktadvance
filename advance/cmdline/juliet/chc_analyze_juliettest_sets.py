@@ -29,12 +29,13 @@ import subprocess
 import time
 
 from contextlib import contextmanager
+from multiprocessing import Pool
 
 import advance.cmdline.juliet.JulietTestCases as JTC
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--maxprocesses',help='maximum number of processors to use',
+    parser.add_argument('--maxprocesses',type=int,help='maximum number of processors to use',
                             default='1')
     parser.add_argument('--cwe',help='only analyze the given cwe')
     args = parser.parse_args()
@@ -48,35 +49,42 @@ def timing(activity):
           '\nCompleted ' + activity + ' in ' + str(time.time() - t0) + ' secs' +
           '\n' + ('=' * 80))
 
+def analyze_juliettest(testdata):
+    (testcase, index) = testdata
+    cmd = [ 'python', 'chc_analyze_juliettest.py', testcase ]
+    result = subprocess.call(cmd,stderr=subprocess.STDOUT)
+    return result
+
 if __name__ == '__main__':
 
     args = parse()
     maxp = args.maxprocesses
     maxptxt = '' if maxp == 1 else ' (with ' + str(maxp) + ' processors)'
 
+    pool = Pool(maxp)
+    testcases = []
+
     def excluded(cwe):
         if args.cwe is None: return False
         return not (args.cwe == cwe)
 
     with timing('analysis' + maxptxt):
-    
+        count = 0
         for cwe in sorted(JTC.testcases):
-            if excluded(cwe): continue
-            print('Analyzing testcases for cwe ' + cwe)
-            for t in JTC.testcases[cwe]:
-                testcase = os.path.join(cwe,t)
-                cmd = [ 'python' , 'chc_analyze_juliettest.py', '--maxprocesses' ,
-                            args.maxprocesses, testcase ]
-                result = subprocess.call(cmd,stderr=subprocess.STDOUT)
-                if result != 0:
-                    print('Error in testcase ' + testcase)
-                    exit(1)
-            else:
-                print('\n\n' + ('=' * 80) + '\nAll Juliet test cases for ' + cwe
-                        + ' ran successfully.')
-                print(('=' * 80) + '\n')
+           if excluded(cwe): continue
+           print('Analyzing testcases for cwe ' + cwe)
+           for t in JTC.testcases[cwe]:
+               testcase = os.path.join(cwe,t)
+               testcases.append((testcase, count))
+               count += 1
 
-        else:
-            print('\n\n' + ('=' * 80) + '\nAll Juliet test cases ran successfully.')
-            print(('=' * 80) + '\n')
-        
+        results = pool.map(analyze_juliettest, testcases)
+
+    print('\n' + ('=' * 80))
+    if len(results) == results.count(0):
+        print('All Juliet test cases ran successfully.')
+    else:
+        for x in range(len(results)):
+            if results[x] != 0:
+                print('Error in testcase ' + testcases[x][0])
+    print(('=' * 80) + '\n')
