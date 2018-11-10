@@ -28,17 +28,29 @@ import os
 import subprocess
 
 import advance.cmdline.juliet.JulietTestCases as JTC
+from multiprocessing import Pool
 
 def parse():
     parser = argparse.ArgumentParser()
+    parser.add_argument('--maxprocesses',type=int,help='maximum number of processors to use',
+                            default='1')
     parser.add_argument('--cwe',help='only score the given cwe')
     args = parser.parse_args()
     return args
 
+def score_juliettest(testcase):
+    cmd = ['python', 'chc_score_juliettest.py', testcase ]
+    print('Scoring ' + testcase + ' ...')
+    result = subprocess.call(cmd, stdout=open(os.devnull, 'w'), stderr=subprocess.STDOUT)
+    return result
 
 if __name__ == '__main__':
 
     args = parse()
+
+    pool = Pool(args.maxprocesses)
+    testcases = []
+    results = []
 
     def excluded(cwe):
         if args.cwe is None: return False
@@ -48,13 +60,17 @@ if __name__ == '__main__':
         for t in JTC.testcases[cwe]:
             if excluded(cwe): continue
             testcase = os.path.join(cwe,t)
-            cmd = [ 'python' , 'chc_score_juliettest.py', testcase ]
-            result = subprocess.call(cmd,stderr=subprocess.STDOUT)
-            if result != 0:
-                raise Exception('Error in testcase ' + testcase)
+            testcases.append(testcase)
+            
+    results = pool.map(score_juliettest, testcases)
+
+    print('\n\n' + ('=' * 80))
+    if results.count(0) < len(results):
+        for x in range(len(results)):
+            if results[x] != 0:
+                print('Error in testcase ' + testcases[x])
     else:
         cmd = [ 'python', 'chc_juliet_dashboard.py' ]
         result = subprocess.call(cmd,stderr=subprocess.STDOUT)
-
-        print('\n\n' + ('=' * 80) + '\nAll Juliet test cases were scored successfully.')
-        print(('=' * 80) + '\n')
+        print('All Juliet test cases were scored successfully.')
+    print(('=' * 80) + '\n')
