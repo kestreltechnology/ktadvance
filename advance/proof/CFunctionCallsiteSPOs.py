@@ -48,6 +48,7 @@ class CFunctionCallsiteSPOs(object):
         self.cspos = cspos
         self.cfile = self.cspos.cfile
         self.context = self.cfile.contexttable.read_xml_context(xnode)
+        self.header = xnode.get('header','') 
         self.cfun = self.cspos.cfun
         self.location = self.cfile.declarations.read_xml_location(xnode)
         # direct call
@@ -101,6 +102,7 @@ class CFunctionCallsiteSPOs(object):
             return
 
         # retrieve callee information
+        if  self.header.startswith('lib:'): return
         cfile = self.cfile
         calleefun = cfile.capp.resolve_vid_function(cfile.index,self.callee.get_vid())
         if calleefun is None:
@@ -195,15 +197,21 @@ class CFunctionCallsiteSPOs(object):
                 f(spo)
 
     def get_spo(self,id):
-        if id in self.spos:
-            return self.spos[id]    
+        for apiid in self.spos:
+            for spo in self.spos[apiid]:
+                if  spo.id == id: return spo
 
-    def has_spo(self,id): return id in self.spos
+    def has_spo(self,id):
+        for apiid in self.spos:
+            for spo in self.spos[apiid]:
+                if spo.id == id: return True
+        return False
 
     def write_xml(self,cnode):
         # write location
         self.cfile.declarations.write_xml_location(cnode,self.location)
         self.cfile.contexttable.write_xml_context(cnode,self.context)
+        if self.header != '': cnode.set('header',self.header)
 
         # write information about the callee
         if not self.callee is None:

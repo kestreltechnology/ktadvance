@@ -80,7 +80,7 @@ class ATContractAssumptionType(ATDictionaryRecord):
 
     def is_contract_assumption(self): return True
 
-    def __str__(self): return 'api:' + str(self.get_predicate())
+    def __str__(self): return 'contract:' + str(self.get_predicate())
 
 class ATPostconditionType(ATDictionaryRecord):
 

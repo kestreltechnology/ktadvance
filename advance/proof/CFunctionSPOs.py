@@ -65,9 +65,13 @@ class CFunctionSPOs(CFunctionPOs):
     def get_spo(self,id):
         for cs in self.callsitespos.values():
             if cs.has_spo(id):
-                return cs.getspo(id)
+                return cs.get_spo(id)
+        for rs in self.returnsitespos.values():
+            if rs.has_spo(id):
+                return rs.get_spo(id)
         else:
-            print('No spo found with id ' + str(id))
+            print('No spo found with id ' + str(id) + ' in function '
+                      + self.cproofs.cfun.name)
             exit(1)
 
     def iter_callsites(self,f):

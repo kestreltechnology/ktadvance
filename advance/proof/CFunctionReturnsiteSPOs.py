@@ -64,6 +64,17 @@ class CFunctionReturnsiteSPOs(object):
 
     def get_cfg_context_string(self): return str(self.context)
 
+    def get_spo(self,id):
+        for pcid in self.spos:
+            for spo in self.spos[pcid]:
+                if spo.id == id: return spo
+
+    def has_spo(self,id):
+        for pcid in self.spos:
+            for spo in self.spos[pcid]:
+                if spo.id == id: return True
+        return False
+
     def iter(self,f):
         for id in self.spos:
             for spo in self.spos[id]:

@@ -96,7 +96,6 @@ class CProofDependencies(object):
        's': dependent on statement itself only
        'f': dependent on function context
        'a': dependent on other functions in the application
-       'g': dependent on global variable
        'x': dead code
 
     ids: list of api assumption id's on which the proof is dependent
@@ -196,20 +195,21 @@ class CFunctionPO(object):
 
     def get_dependencies_type(self):
         atypes = self.get_dependencies()
-        deptype = 'api'
-        for t in atypes:
-            try:
-                if t.is_api_assumption():
-                    api = self.cfun.api
-                    if api.apiassumptions[t.get_apiid()].isglobal:
-                        deptype = 'contract'
-                if t.is_contract_assumption(): deptype = 'contract'
-                if t.is_postcondition_assumption(): deptype = 'contract'
-            except KeyError as e:
-                print('KeyError in ' + self.cfun.name + ' in file ' + self.cfile.name
-                          + ": " + str(e))
-                raise
-        return deptype
+        if len(atypes) == 1:
+            t = atypes[0]
+            if t.is_api_assumption(): return 'api'
+            if t.is_global_assumption(): return 'contract'
+            if t.is_contract_assumption(): return 'contract'
+            if t.is_postcondition_assumption(): return 'contract'
+        elif len(atypes) == 0:
+            return 'local'
+        else:
+            if any([ t.is_global_assumption()
+                         or t.is_contract_assumption()
+                         or t.is_postcondition_assumption() for t in atypes]):
+                return 'contract'
+            else:
+                return 'api'
 
     def get_global_assumptions(self):
         result = []
