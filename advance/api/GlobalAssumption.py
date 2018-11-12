@@ -35,11 +35,20 @@ class GlobalAssumption(object):
         self.ppos = ppos
         self.spos = spos
 
+    def has_open_pos(self):
+        return (len(self.get_open_ppos()) + len(self.get_open_spos())) > 0
+
+    def get_open_ppos(self):
+        return [ i for i in self.ppos if self.cfun.get_ppo(i).is_open() ]
+
+    def get_open_spos(self):
+        return [ i for i in self.spos if self.cfun.get_spo(i).is_open() ]        
+
     def __str__(self):
         strppos = ''
         strspos = ''
         if len(self.ppos) > 0:
-            strppos = "\n      --Dependent ppo's: [" + ','.join(str(i) for i in self.ppos) + ']'
+            strppos = "\n      --Dependent ppo's: [" + ','.join(str(i) for i in self.get_open_ppos()) + ']'
         if len(self.spos) > 0:
-            strspos = "\n      --Dependent spo's: [" + ','.join(str(i) for i in self.spos) + ']'
+            strspos = "\n      --Dependent spo's: [" + ','.join(str(i) for i in self.get_open_spos()) + ']'
         return (str(self.id) + '  ' + str(self.predicate) + strppos + strspos)

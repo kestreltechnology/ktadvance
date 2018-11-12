@@ -57,6 +57,22 @@ class CFunctionApi(object):
         self.contractconditionfailures = []
         self.initialize()
 
+    def has_outstanding_postcondition_requests(self):
+        return (sum([ len(r.get_open_ppos()) for r in self.postconditionrequests.values() ])) > 0
+
+    def has_outstanding_global_requests(self):
+        return (sum([ len(r.get_open_ppos()) for r in self.globalassumptionrequests.values() ])) > 0
+
+    def get_open_ppos(self):
+        return [ i for i in self.ppos if self.cfun.get_ppo(i).is_open() ]
+
+    def get_open_spos(self):
+        return [ i for i in self.spos if self.cfun.get_spo(i).is_open() ]
+
+    def has_outstanding_requests(self):
+        return (self.has_outstanding_postcondition_requests()
+                    or self.has_outstanding_global_requests())
+
     def get_api_assumptions(self):
         return self.apiassumptions.values()
 

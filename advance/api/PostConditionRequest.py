@@ -35,14 +35,22 @@ class PostConditionRequest(object):
         self.callee = self.postrequest.get_callee()
         self.ppos = ppos
         self.spos = spos
-        
 
+    def has_open_pos(self):
+        return (len(self.get_open_ppos()) + len(self.get_open_spos())) > 0
+
+    def get_open_ppos(self):
+        return [ i for i in self.ppos if self.cfun.get_ppo(i).is_open() ]
+
+    def get_open_spos(self):
+        return [ i for i in self.spos if self.cfun.get_spo(i).is_open() ]
+    
     def __str__(self):
         dppos = ''
         if len(self.ppos) > 0:
-            dppos = "\n      --Dependent ppo's: [" + ', '.join(str(i) for i in self.ppos) + ']\n'
+            dppos = "\n      --Dependent ppo's: [" + ', '.join(str(i) for i in self.get_open_ppos()) + ']\n'
         dspos = ''
         if len(self.spos) > 0:
-            dspos = "\n      --Dependent spo's: [" + ', '.join(str(i) for i in self.spos) + ']\n'
+            dspos = "\n      --Dependent spo's: [" + ', '.join(str(i) for i in self.get_open_spos()) + ']\n'
         return (str(self.callee.vname) + ':' + str(self.postcondition) + dppos + dspos)
 
