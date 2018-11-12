@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-11-10 10:38:20.954992"/>
+  <cfile name="slaac">
+    <data-structures/>
+    <global-variables>
+      <gvar name="dnsmasq_daemon"/>
+      <gvar name="ping_id"/>
+    </global-variables>
+    <functions>
+      <function name="periodic_slaac">
+        <parameters>
+          <par name="now" nr="1"/>
+          <par name="leases" nr="2"/>
+        </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<geq/>
+		<ci>ping_id</ci>
+		<cn>10</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
+      </function>
+      <function name="slaac_add_addrs">
+        <parameters>
+          <par name="lease" nr="1"/>
+          <par name="now" nr="2"/>
+          <par name="force" nr="3"/>
+        </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
+      </function>
+      <function name="slaac_ping_reply">
+        <parameters>
+          <par name="sender" nr="1"/>
+          <par name="packet" nr="2"/>
+          <par name="interface" nr="3"/>
+          <par name="leases" nr="4"/>
+        </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
