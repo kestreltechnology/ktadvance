@@ -95,6 +95,8 @@ class CFunction(object):
 
     def get_ppo(self,index): return self.proofs.get_ppo(index)
 
+    def get_spo(self,index): return self.proofs.get_spo(index)
+
     def iter_callsites(self,f): self.proofs.iter_callsites(f)
 
     def get_vid(self): return self.svar.get_vid()
