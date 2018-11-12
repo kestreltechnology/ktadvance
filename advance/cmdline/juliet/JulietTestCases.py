@@ -368,7 +368,6 @@ missingscorekeys = {
 
 worklist = {
     "CWE195": [
-        "s02/negative_malloc",
         "s02/negative_memcpy",
         "s02/negative_memmove",
         "s02/negative_strncpy",
@@ -432,44 +431,9 @@ worklist = {
         "s01/struct_array_malloc_partial_init",
         "s01/struct_pointer"
         ],
-    "CWE467": [
-        "char",
-        "int",
-        "short"
-        ],
-    "CWE468": [
-        "char_ptr_to_int",
-        "int"
-        ],
-    "CWE590": [
-        "s04/free_long_alloca",
-        "s04/free_long_declare",
-        "s05/free_long_static",
-        "s05/free_struct_alloca",
-        "s05/free_struct_declare",
-        "s05/free_struct_static"
-        ],
     "CWE680": [
         "malloc_connnect_socket",
         "malloc_listen_socket"
-        ],
-    "CWE690": [
-        "s01/char_calloc",
-        "s01/char_malloc",
-        "s01/char_realloc",
-        "s01/fopen",
-        "s01/int64_t_calloc",
-        "s01/int64_t_malloc",
-        "s01/int64_t_realloc",
-        "s01/int_calloc",
-        "s01/int_malloc",
-        "s01/int_realloc",
-        "s01/long_calloc",
-        "s01/long_malloc",
-        "s02/long_realloc",
-        "s02/struct_calloc",
-        "s02/struct_malloc",
-        "s02/struct_realloc"
         ],
     "CWE758": [
         "double_pointer_malloc_use",
@@ -487,20 +451,12 @@ worklist = {
         "struct_pointer_alloca_use",
         "struct_pointer_malloc_use"
         ],
-    "CWE761": [
-        "char_connect_socket",
-        "char_listen_socket"
-        ],
     "CWE789": [
         "malloc_char_connect_socket",
         "malloc_char_fgets",
         "malloc_char_fscanf",
         "malloc_char_listen_socket",
         "malloc_char_rand"
-        ],
-    "CWE843": [
-        "char",
-        "short"
         ]
     }
 
@@ -899,7 +855,8 @@ testcases = {
         "s02/listen_socket_malloc",
         "s02/listen_socket_memcpy",
         "s02/listen_socket_memmove",
-        "s02/listen_socket_strncpy"        
+        "s02/listen_socket_strncpy",
+        "s02/negative_malloc"        
         ],
     "CWE196": [
         "basic"
@@ -962,6 +919,15 @@ testcases = {
         "s01/double_array_alloca_partial_init",
         "s01/double_array_declare_no_init"        
         ],
+    "CWE467": [
+        "char",
+        "int",
+        "short"
+        ],
+    "CWE468": [
+        "char_ptr_to_int",
+        "int"
+        ],
     "CWE469": [
         "char"
         ],
@@ -988,7 +954,13 @@ testcases = {
         "s04/free_int64_t_static",
         "s04/free_int_alloca",
         "s04/free_int_declare",
-        "s04/free_int_static"
+        "s04/free_int_static",
+        "s04/free_long_alloca",
+        "s04/free_long_declare",
+        "s05/free_long_static",
+        "s05/free_struct_alloca",
+        "s05/free_struct_declare",
+        "s05/free_struct_static"        
         ],
     "CWE665": [
         "char_cat",
@@ -1011,6 +983,24 @@ testcases = {
     "CWE688": [
         "basic"
         ],
+    "CWE690": [
+        "s01/char_calloc",
+        "s01/char_malloc",
+        "s01/char_realloc",
+        "s01/fopen",
+        "s01/int64_t_calloc",
+        "s01/int64_t_malloc",
+        "s01/int64_t_realloc",
+        "s01/int_calloc",
+        "s01/int_malloc",
+        "s01/int_realloc",
+        "s01/long_calloc",
+        "s01/long_malloc",
+        "s02/long_realloc",
+        "s02/struct_calloc",
+        "s02/struct_malloc",
+        "s02/struct_realloc"        
+        ],
     "CWE758": [
         "char_alloca_use",
         "char_malloc_use",
@@ -1019,10 +1009,16 @@ testcases = {
         "double_pointer_alloca_use"
         ],
     "CWE761": [
+        "char_connect_socket",        
         "char_console",
         "char_environment",
         "char_file",
-        "char_fixed_string"        
+        "char_fixed_string",
+        "char_listen_socket"        
+        ],
+    "CWE843": [
+        "char",
+        "short"
         ]
     }
 

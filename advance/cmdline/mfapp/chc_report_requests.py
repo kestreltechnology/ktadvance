@@ -73,16 +73,16 @@ if __name__ == '__main__':
     def report_requests(fi):
         lines.append(fi.name)
         def f(fn):
-            if (len(fn.api.postconditionrequests) + len(fn.api.globalassumptionrequests)) > 0:
+            if fn.api.has_outstanding_requests():
                 lines.append('  ' + fn.name)
-                if len(fn.api.postconditionrequests) > 0:
+                if fn.api.has_outstanding_postcondition_requests():
                     lines.append('    postcondition requests:')
                     for p in fn.api.get_postcondition_requests():
                         lines.append('      ' + str(p))
                         stats['npost'] += 1
                         stats['ndepppo'] += len(p.ppos)
                         stats['ndepspo'] += len(p.spos)
-                if len(fn.api.globalassumptionrequests) > 0:
+                if fn.api.has_outstanding_global_requests():
                     lines.append('    global assumption requests:')
                     for p in fn.api.get_global_assumption_requests():
                         lines.append('      ' + str(p))

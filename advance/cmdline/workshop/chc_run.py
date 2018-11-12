@@ -34,7 +34,7 @@ import shutil
 import advance.util.fileutil as UF
 import advance.util.printutil as UP
 import advance.reporting.ProofObligations as RP
-import advance.cmdline.functional.FunctionalTests as FT
+import advance.cmdline.workshop.WorkshopFiles as WF
 
 from advance.util.Config import Config
 from advance.cmdline.ParseManager import ParseManager
@@ -43,7 +43,7 @@ from advance.app.CApplication import CApplication
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('name',help='name of test to run')
+    parser.add_argument('name',help='name of work to run')
     parser.add_argument('--showinvariants',help='show invariants for all contexts',
                             action='store_true')
     parser.add_argument('--logging',help='log level msgs to be recorded (default=WARNING)',
@@ -71,15 +71,6 @@ if __name__ == '__main__':
         print('*' * 80)
         exit(1)
 
-    if not args.name in FT.functionaltestfiles:
-        print('*' * 80)
-        print('Test with name ' + args.name + ' not found.')
-        print('Available test files:')
-        for (key,test) in FT.functionaltestfiles.items():
-            print(key.ljust(20) + os.path.join(test[0],test[1]))
-        print('*' * 80)
-        exit(1)
-
     if args.logging is None:
         loglevel = logging.WARNING
     else:
@@ -91,8 +82,10 @@ if __name__ == '__main__':
     logfilename = args.name + '_log.txt'
     logging.basicConfig(filename=logfilename,level=loglevel)
 
-    test = FT.functionaltestfiles[args.name]
-    cpath = UF.get_functional_testpath(test[0])
+    wsdata = UF.get_workshop_file_data(args.name)
+    cpath = wsdata['path']
+    cfilename = wsdata['file']
+    wssummaries = wsdata['summaries']
 
     os.chdir(cpath)
     if os.path.isdir('semantics'):
@@ -103,7 +96,6 @@ if __name__ == '__main__':
     parsemanager.initialize_paths()
 
     try:
-        cfilename = test[1]
         ifilename = parsemanager.preprocess_file_with_gcc(cfilename)
         result = parsemanager.parse_ifile(ifilename)
         if result != 0:
@@ -132,7 +124,8 @@ if __name__ == '__main__':
                               'check the directory name' ]))
         exit(1)
 
-    am = AnalysisManager(capp,onefile=True,wordsize=args.wordsize)
+    am = AnalysisManager(capp,onefile=True,wordsize=args.wordsize,
+                             thirdpartysummaries=wssummaries)
     am.create_file_primary_proofobligations(cfilename)
     am.reset_tables(cfilename)
     capp.collect_post_assumes()

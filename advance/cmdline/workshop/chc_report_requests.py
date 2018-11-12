@@ -35,16 +35,16 @@ from advance.app.CApplication import CApplication
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('path',
-                            help='path to the juliet test case (relative to juliet_v1.3)' +
-                            ' (e.g., CWE121/s01/CWE129_large)')
+    parser.add_argument('name',help='name of work')
     args = parser.parse_args()
     return args
 
 if __name__ == '__main__':
 
     args = parse()
-    cpath = UF.get_juliet_testpath(args.path)
+    wsdata = UF.get_workshop_file_data(args.name)
+    cpath = wsdata['path']
+    cfilename = wsdata['file']
 
     if not os.path.isdir(cpath):
         print(UP.cpath_not_found_err_msg(cpath))
@@ -55,7 +55,7 @@ if __name__ == '__main__':
         print(UP.semantics_not_found_err_msg(cpath))
         exit(1)
         
-    capp = CApplication(sempath)
+    capp = CApplication(sempath,cfilename)
     lines = []
 
     stats = {}

@@ -27,65 +27,50 @@
 
 import argparse
 import os
-import xml.etree.ElementTree as ET
 
 import advance.util.fileutil as UF
 import advance.util.printutil as UP
-import advance.util.xmlutil as UX
 
-from advance.util.Config import Config
+import advance.reporting.ProofObligations as RP
+
 from advance.app.CApplication import CApplication
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('path',
-                            help=('directory that holds the semantics directory'
-                                      + ' or the name of a test application'))
-    parser.add_argument('--contractpath',help='path to the contracts file',default=None)
-    parser.add_argument('--xpre',help="don't show preconditions",action='store_true')
-    parser.add_argument('--xpost',help="don't show postconditions",action='store_true')
+    parser.add_argument('name',help='name of work file')
     args = parser.parse_args()
     return args
 
 if __name__ == '__main__':
 
     args = parse()
-    config = Config()
-
-    if args.path in config.projects:
-        pdir = config.projects[args.path]
-        cpath = os.path.join(config.testdir,pdir)
-    else:
-        cpath = os.path.abspath(args.path)
+    wsdata = UF.get_workshop_file_data(args.name)
+    cpath = wsdata['path']
+    cfilename = wsdata['file']
 
     if not os.path.isdir(cpath):
         print(UP.cpath_not_found_err_msg(cpath))
         exit(1)
-
+    
     sempath = os.path.join(cpath,'semantics')
     if not os.path.isdir(sempath):
-        success = UF.unpack_tar_file(cpath,args.deletesemantics)
-        if not success:
-            print(UP.semantics_tar_not_found_err_msg(cpath))
-            exit(1)
-        
-    if args.contractpath is None:
-        contractpath = os.path.join(cpath,'ktacontracts')
-    else:
-        contractpath = args.contractpath
+        print(UP.semantics_not_found_err_msg(cpath))
+        exit(1)
 
-    capp = CApplication(sempath,contractpath=contractpath)
+    capp = CApplication(sempath,cfilename)
+    cfile = capp.get_cfile()
 
-    lines = []
-    def f(fi):
-        if fi.has_file_contracts():
-            if (not args.xpost) and fi.contracts.has_postconditions():
-                lines.append(str(fi.contracts.report_postconditions()))
-            if (not args.xpre)  and fi.contracts.has_preconditions():
-                lines.append(str(fi.contracts.report_preconditions()))
+    print(RP.file_proofobligation_stats_tostring(cfile))
 
-    capp.iter_files(f)
-
-    print('\n'.join(lines))
-        
+    contract_condition_violations = capp.get_contract_condition_violations()
+    
+    if len(contract_condition_violations) > 0:
+        print('=' * 80)
+        print(str(len(contract_condition_violations)) + ' CONTRACT CONDITION FAILURES')
+        print('=' * 80)
+        for (fn,cc) in contract_condition_violations:
+            print(fn + ':')
+            for (name,desc) in cc:
+                print('   ' + name + ':' + desc)
+        print('=' * 80)
 

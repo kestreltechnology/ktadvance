@@ -92,22 +92,22 @@ if __name__ == '__main__':
         vnhfractions = get_fractions(vnothandled,vtotal)
         shfractions = get_fractions(shandled,stotal)
         snhfractions = get_fractions(snothandled,stotal)
-        plots.append(plt.bar(ind,vhfractions,width,bottom=y_offset,color='red'))
-        y_offset += vhfractions
-        plots.append(plt.bar(ind,vnhfractions,width,bottom=y_offset,color='orange'))
-        y_offset += vnhfractions
+
+        plots.append(plt.bar(ind,shfractions,width,bottom=y_offset,color='green'))
+        y_offset += shfractions
         plots.append(plt.bar(ind,snhfractions,width,bottom=y_offset,color='orange'))
         y_offset += snhfractions
-        plots.append(plt.bar(ind,shfractions,width,bottom=y_offset,color='green'))
-
+        plots.append(plt.bar(ind,vnhfractions,width,bottom=y_offset,color='orange'))
+        y_offset += vnhfractions
+        plots.append(plt.bar(ind,vhfractions,width,bottom=y_offset,color='red'))        
     else:
-        plots.append(plt.bar(ind,vhandled,width,bottom=y_offset,color='red'))
-        y_offset += vhandled
-        plots.append(plt.bar(ind,vnothandled,width,bottom=y_offset,color='orange'))
-        y_offset += vnothandled
+        plots.append(plt.bar(ind,shandled,width,bottom=y_offset,color='green'))
+        y_offset += shandled
         plots.append(plt.bar(ind,snothandled,width,bottom=y_offset,color='orange'))
         y_offset += snothandled
-        plots.append(plt.bar(ind,shandled,width,bottom=y_offset,color='green'))
+        plots.append(plt.bar(ind,vnothandled,width,bottom=y_offset,color='orange'))
+        y_offset += vnothandled
+        plots.append(plt.bar(ind,vhandled,width,bottom=y_offset,color='red'))        
 
     plt.xticks(ind+0.4,plotlegend)
     plt.show()
