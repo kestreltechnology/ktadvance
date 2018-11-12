@@ -34,7 +34,6 @@ import shutil
 import advance.util.fileutil as UF
 import advance.util.printutil as UP
 import advance.reporting.ProofObligations as RP
-import advance.cmdline.workshop.WorkshopFiles as WF
 
 from advance.util.Config import Config
 from advance.cmdline.ParseManager import ParseManager
