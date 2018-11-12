@@ -174,7 +174,7 @@ class CFunctionCallsiteSPOs(object):
 
     def collect_post_assumes(self):
         """Collect postconditions from callee's contract and add as assume."""
-
+        if self.header.startswith('lib:'): return
         if not self.has_callee(): return
         # retrieve callee information
         cfile = self.cfile
@@ -216,7 +216,6 @@ class CFunctionCallsiteSPOs(object):
         # write information about the callee
         if not self.callee is None:
             self.cfile.declarations.write_xml_varinfo(cnode,self.callee)
-            calleefun = self.cfile.capp.resolve_vid_function(self.cfile.index,self.callee.get_vid())
         if not self.callee_exp is None:
             self.cfile.declarations.dictionary.write_xml_exp(cnode,self.callee_exp)
         if not self.icallees is None:
