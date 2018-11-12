@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-11-11 12:02:50.136380"/>
+  <cfile name="arp">
+    <global-variables>
+      <gvar name="dnsmasq_daemon"/>
+      <gvar name="freelist"/>
+      <gvar name="old"/>
+    </global-variables>
+    <data-structures/>
+    <functions>
+      <function name="do_arp_script_run">
+        <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>freelist</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>old</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>old</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
+      </function>
+      <function name="filter_mac">
+        <parameters>
+          <par name="family" nr="1"/>
+          <par name="addrp" nr="2"/>
+          <par name="mac" nr="3"/>
+          <par name="maclen" nr="4"/>
+          <par name="parmv" nr="5"/>
+        </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>freelist</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>freelist</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
+      </function>
+      <function name="find_mac">
+        <parameters>
+          <par name="addr" nr="1"/>
+          <par name="mac" nr="2"/>
+          <par name="lazy" nr="3"/>
+          <par name="now" nr="4"/>
+        </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>freelist</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>freelist</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
