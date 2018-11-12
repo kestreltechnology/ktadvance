@@ -31,7 +31,7 @@ import time
 Utility functions for reporting proof obligations and their statistics.
 '''
 
-dischargemethods = [ 'violated', 'stmt', 'local', 'api', 'contract', 'open' ]
+dischargemethods = [ 'stmt', 'local', 'api', 'contract', 'open', 'violated' ]
 
 histogramcolors = {
     'violated': 'red',
@@ -58,15 +58,14 @@ def classifypo(po,d):
     if po.is_closed():
         if po.is_violated(): d['violated'] += 1
         deps = po.dependencies
-        try:
-            if deps.has_external_dependencies():
-                deptype = po.get_dependencies_type()
-                d[deptype] += 1
-            elif deps.is_stmt():
-                d['stmt'] += 1
-            elif deps.is_local():
-                d['local'] += 1
-        except:
+        if deps.has_external_dependencies():
+            deptype = po.get_dependencies_type()
+            d[deptype] += 1
+        elif deps.is_stmt():
+            d['stmt'] += 1
+        elif deps.is_local() or deps.is_deadcode():
+            d['local'] += 1
+        else:
             print('Unable to classify ' + str(po))
     else:
         d['open'] += 1
