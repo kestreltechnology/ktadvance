@@ -481,6 +481,41 @@ def get_functional_tests_path():
 def get_functional_testpath(testpath):
     return os.path.join(get_functional_tests_path(),testpath)
 
+# ---------------------------------------------------- workshop files  ------
+
+def get_workshop_path():
+    return os.path.join(Config().testdir,'workshop')
+
+def get_workshop_list():
+    filename =  os.path.join(get_workshop_path(),'workshop.json')
+    if os.path.isfile(filename):
+        with open(filename) as fp:
+            workshoplist = json.load(fp)
+            return workshoplist
+
+def get_workshop_file_data(wfile):
+    wspath = get_workshop_path()
+    workshoplist = get_workshop_list()
+    if not workshoplist is None:
+        if wfile in workshoplist:
+            wsdata = workshoplist[wfile]
+            filedata = {}
+            filedata['summaries'] = []
+            filedata['file'] = wsdata['file']
+            filedata['path'] = os.path.join(wspath,wsdata['path'])
+            for s in wsdata['summaries']:
+                filedata['summaries'].append(os.path.join(wspath,s))
+            return filedata
+        else:
+            print('*' * 80)
+            print('Workshop file: ' + wfile + ' not foound.')
+            print('Available workshop files are: ')
+            print('-' * 80)
+            for name in workshoplist:
+                print(name + ': ' + workshoplist[name]['path'] + ', ' + workshoplist[name]['file'])
+            print('-' * 80)
+            exit(0)
+
 # ------------------------------------------------------------ my cfiles ------
 
 def get_my_cfiles(testname):
