@@ -3,6 +3,10 @@
   <header info="cfile" name="cfile" time="2018-06-15 15:40:47.691309"/>
   <cfile name="x45">
     <data-structures/>
+    <global-variables>
+      <gvar name="CWE121_Stack_Based_Buffer_Overflow__CWE805_char_declare_memmove_45_badData"/>
+      <gvar name="CWE121_Stack_Based_Buffer_Overflow__CWE805_char_declare_memmove_45_goodG2BData"/>
+    </global-variables>
     <functions>
       <function name="CWE121_Stack_Based_Buffer_Overflow__CWE805_char_declare_memmove_45_bad">
         <parameters/>
@@ -12,12 +16,50 @@
       </function>
       <function name="badSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>CWE121_Stack_Based_Buffer_Overflow__CWE805_char_declare_memmove_45_badData</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<buffer/>
+		<ci>CWE121_Stack_Based_Buffer_Overflow__CWE805_char_declare_memmove_45_badData</ci>
+		<cn>100</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="goodG2B">
         <parameters/>
       </function>
       <function name="goodG2BSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>CWE121_Stack_Based_Buffer_Overflow__CWE805_char_declare_memmove_45_goodG2BData</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<buffer/>
+		<ci>CWE121_Stack_Based_Buffer_Overflow__CWE805_char_declare_memmove_45_goodG2BData</ci>
+		<cn>100</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
     </functions>
   </cfile>

@@ -7,8 +7,12 @@
 	"PPO2": {
 	    "P": "ptr-upper-bound-deref"
 	},
+	"PPO3": {
+	    "P": "stack-address-escape"
+	},
 	"PS1": [ "PPO1" ],
-	"PS2": [ "PPO2" ]
+	"PS2": [ "PPO2" ],
+	"PS3": [ "PPO3" ]
     },
     "tests": {
 	"01": {
@@ -359,6 +363,22 @@
 		}
 	    }
 	},
+	"45": {
+	    "cfiles": {
+		"x45.c": {
+		    "violations": {
+			"37": [ "PS1" ],
+			"39": [ "PS2" ],
+			"53": [ "PS3" ],
+			"88": [ "PS3" ]
+		    },
+		    "safe-controls": {
+			"73": [ "PS1" ],
+			"75": [ "PS2" ]
+		    }
+		}
+	    }
+	},
 	"51": {
 	    "cfiles": {
 		"x51b.c": {
@@ -392,7 +412,9 @@
 		"x53d.c": {
 		    "violations": {
 			"35": [ "PS1" ],
-			"37": [ "PS2" ]
+			"37": [ "PS2" ],
+			"53": [ "PS3" ],
+			"88": [ "PS3" ]
 		    },
 		    "safe-controls": {
 			"57": [ "PS1" ],
@@ -487,6 +509,14 @@
 	},
 	"68": {
 	    "cfiles": {
+		"x68a.c": {
+		    "violations": {
+			"38": [ "PS3" ],
+			"58": [ "PS3" ]
+		    },
+		    "safe-controls": {
+		    }
+		},
 		"x68b.c": {
 		    "violations": {
 			"39": [ "PS1" ],
