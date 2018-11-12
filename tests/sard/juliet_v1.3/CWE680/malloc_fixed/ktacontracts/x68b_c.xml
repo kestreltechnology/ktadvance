@@ -3,12 +3,64 @@
   <header info="cfile" name="cfile" time="2018-10-04 23:09:32.193908"/>
   <cfile name="x68b">
     <data-structures/>
+    <global-variables>
+      <gvar name="CWE680_Integer_Overflow_to_Buffer_Overflow__malloc_fixed_68_badData"/>
+      <gvar name="CWE680_Integer_Overflow_to_Buffer_Overflow__malloc_fixed_68_goodG2BData"/>
+    </global-variables>
     <functions>
       <function name="CWE680_Integer_Overflow_to_Buffer_Overflow__malloc_fixed_68b_badSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<geq/>
+		<ci>CWE680_Integer_Overflow_to_Buffer_Overflow__malloc_fixed_68_badData</ci>
+		<cn>0</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<leq/>
+		<ci>CWE680_Integer_Overflow_to_Buffer_Overflow__malloc_fixed_68_badData</ci>
+		<apply>
+		  <divide/>
+		  <ci>MAXUINT32</ci>
+		  <cn>4</cn>
+		</apply>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
       <function name="CWE680_Integer_Overflow_to_Buffer_Overflow__malloc_fixed_68b_goodG2BSink">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<geq/>
+		<ci>CWE680_Integer_Overflow_to_Buffer_Overflow__malloc_fixed_68_goodG2BData</ci>
+		<cn>0</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<leq/>
+		<ci>CWE680_Integer_Overflow_to_Buffer_Overflow__malloc_fixed_68_goodG2BData</ci>
+		<apply>
+		  <divide/>
+		  <ci>MAXUINT32</ci>
+		  <cn>4</cn>
+		</apply>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
       </function>
     </functions>
   </cfile>
