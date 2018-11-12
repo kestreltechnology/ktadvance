@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<codehawk-summary-file>
+  <function-summary name="iface_enumerate" file="src/netlink.c">
+    <parameters>
+      <par name="family" nr="1"/>
+      <par name="parm" nr="2"/>
+      <par name="callback" nr="3"><pre><deref-read/></pre></par>
+    </parameters>
+    <preconditions>
+      <pre>
+	<math>
+	  <apply>
+	    <leq/>
+	    <ci>family</ci>
+	    <cn>255</cn>
+	  </apply>
+	</math>
+      </pre>
+      <pre>
+	<math>
+	  <apply>
+	    <geq/>
+	    <ci>family</ci>
+	    <cn>0</cn>
+	  </apply>
+	</math>
+      </pre>
+    </preconditions>
+    <postconditions/>
+    <sideeffects>
+      <sideeffect>
+	<math>
+	  <apply>
+	    <preserves-all-memory/>
+	  </apply>
+	</math>
+      </sideeffect>
+    </sideeffects>
+  </function-summary>
+</codehawk-summary-file>

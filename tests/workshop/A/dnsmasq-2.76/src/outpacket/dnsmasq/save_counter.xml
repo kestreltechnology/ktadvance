@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<codehawk-summary-file>
+  <function-summary name="save_counter" file="src/outpacket.c">
+    <parameters>
+      <par name="newval" nr="1"/>
+    </parameters>
+    <preconditions>
+      <pre>
+	<math>
+	  <apply>
+	    <geq/>
+	    <ci>newval</ci>
+	    <cn>-1</cn>
+	  </apply>
+	</math>
+      </pre>
+    </preconditions>
+    <postconditions>
+      <post>
+	<math>
+	  <apply>
+	    <geq/>
+	    <return/>
+	    <cn>0</cn>
+	  </apply>
+	</math>
+      </post>
+    </postconditions>
+    <sideeffects>
+      <sideeffect>
+	<math>
+	  <apply>
+	    <preserves-all-memory/>
+	  </apply>
+	</math>
+      </sideeffect>
+    </sideeffects>
+  </function-summary>
+</codehawk-summary-file>

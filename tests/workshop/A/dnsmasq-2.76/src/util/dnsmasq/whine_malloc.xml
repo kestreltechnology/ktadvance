@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<codehawk-summary-file>
+  <function-summary name="whine_malloc" file="src/util.c">
+    <parameters>
+      <par name="size" nr="1"/>
+    </parameters>
+    <preconditions>
+      <pre>
+	<math>
+	  <apply>
+	    <gt/>
+	    <ci>size</ci>
+	    <cn>0</cn>
+	  </apply>
+	</math>
+      </pre>
+    </preconditions>
+    <postconditions>
+      <post>
+	<math>
+	  <apply>
+	    <buffer/>
+	    <return/>
+	    <ci>size</ci>
+	  </apply>
+	</math>
+      </post>
+      <post>
+	<math>
+	  <apply>
+	    <new-memory/>
+	    <return/>
+	  </apply>
+	</math>
+      </post>
+      <post>
+	<math>
+	  <apply>
+	    <allocation-base/>
+	    <return/>
+	  </apply>
+	</math>
+      </post>
+      <post>
+	<math>
+	  <apply>
+	    <not-null/>
+	    <return/>
+	  </apply>
+	</math>
+      </post>
+    </postconditions>
+    <sideeffects>
+      <sideeffect>
+	<math>
+	  <apply>
+	    <preserves-all-memory/>
+	  </apply>
+	</math>
+      </sideeffect>
+    </sideeffects>
+  </function-summary>
+</codehawk-summary-file>

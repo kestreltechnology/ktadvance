@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<codehawk-summary-file>
+  <function-summary name="read_hostsfile" file="src/cache.c">
+    <parameters>
+      <par name="filename" nr="1"><pre><deref-read-nt/></pre></par>
+      <par name="index" nr="2"/>
+      <par name="cache_size" nr="3"/>
+      <par name="rrhash" nr="4"><pre><deref-read/></pre></par>
+      <par name="hashsz" nr="5"/>
+    </parameters>
+    <preconditions>
+      <pre>
+	<math>
+	  <apply>
+	    <gt/>
+	    <ci>hashsz</ci>
+	    <cn>0</cn>
+	  </apply>
+	</math>
+      </pre>
+    </preconditions>
+    <postconditions/>
+    <sideeffects>
+      <sideeffect>
+	<math>
+	  <apply>
+	    <preserves-all-memory/>
+	  </apply>
+	</math>
+      </sideeffect>
+    </sideeffects>
+  </function-summary>
+</codehawk-summary-file>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<codehawk-summary-file>
+  <function-summary name="queue_arp" file="src/helper.c">
+    <parameters>
+      <par name="action" nr="1"/>
+      <par name="mac" nr="2"><pre><deref-read/></pre></par>
+      <par name="maclen" nr="3"/>
+      <par name="family" nr="4"/>
+      <par name="addr" nr="5"><pre><deref-read/></pre></par>
+    </parameters>
+    <preconditions>
+      <pre>
+	<math>
+	  <apply>
+	    <geq/>
+	    <ci>maclen</ci>
+	    <cn>0</cn>
+	  </apply>
+	</math>
+      </pre>
+    </preconditions>
+    <postconditions/>
+    <sideeffects>
+      <sideeffect>
+	<math>
+	  <apply>
+	    <preserves-all-memory/>
+	  </apply>
+	</math>
+      </sideeffect>
+    </sideeffects>
+  </function-summary>
+</codehawk-summary-file>
