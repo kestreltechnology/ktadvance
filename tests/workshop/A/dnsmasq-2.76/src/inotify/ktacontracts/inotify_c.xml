@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-11-11 15:39:28.145735"/>
+  <cfile name="inotify">
+    <data-structures/>
+    <global-variables>
+      <gvar name="dnsmasq_daemon"/>
+      <gvar name="inotify_buffer"/>
+    </global-variables>
+    <functions>
+      <function name="inotify_check">
+        <parameters>
+          <par name="now" nr="1"/>
+        </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>inotify_buffer</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>inotify_buffer</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
+      </function>
+      <function name="inotify_dnsmasq_init">
+        <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
+      </function>
+      <function name="my_readlink">
+        <parameters>
+          <par name="path" nr="1"/>
+        </parameters>
+      </function>
+      <function name="set_dynamic_inotify">
+        <parameters>
+          <par name="flag" nr="1"/>
+          <par name="total_size" nr="2"/>
+          <par name="rhash" nr="3"/>
+          <par name="revhashsz" nr="4"/>
+        </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<valid-mem/>
+		<ci>dnsmasq_daemon</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
