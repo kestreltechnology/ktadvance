@@ -78,6 +78,7 @@ xpredicate_constructors = {
     'bw': lambda x:XP.XBlockWrite(*x),
     'b' : lambda x:XP.XBuffer(*x),
     'c' : lambda x:XP.XConstTerm(*x),
+    'cr': lambda x:XP.XControlledResource(*x),
     'f' : lambda x:XP.XFalse(*x),
     'fi': lambda x:XP.XFormattedInput(*x),
     'fr': lambda x:XP.XFreed(*x),
@@ -314,6 +315,10 @@ class InterfaceDictionary(object):
                          self.index_s_term(p.get_length()) ]
             def f(index,key): return XP.XRevBuffer(self,index,p.tags,args)
             return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_controlled_resource():
+            args = [ self.index_s_term(p.get_size())]
+            def f(index,key): return XP.ControlledResource(self,index,p.tags,args)
+            return  self.xpredicate_table.add(IT.get_key(p.tags,args),f)
         print('Index xpredicate not found for ' + p.tags[0])
         exit(1)
         

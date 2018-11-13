@@ -60,6 +60,7 @@ class XPredicate(CD.CDictionaryRecord):
     def is_buffer(self): return False
     def is_confined(self): return False
     def is_const_term(self): return False
+    def is_controlled_resource(self): return False
     def is_false(self): return False
     def is_formatted_input(self): return False
     def is_freed(self): return False
@@ -154,6 +155,22 @@ class XRevBuffer(XPredicate):
 
     def __str__(self):
         return 'rev-buffer(' + str(self.get_buffer()) + ',' + str(self.get_length()) + ')'
+
+
+class XControlledResource(XPredicate):
+
+    def __init__(self,cd,index,tags,args):
+        XPredicate.__init__(self,cd,index,tags,args)
+
+    def get_size(self): return self.get_iterm(0)
+
+    def get_resource(self): return self.tags[1]
+
+    def is_controlled_resource(self): return True
+
+    def __str__(self):
+        return ('controlled-resource:' + self.get_resource() +  '('
+                    + str(self.get_size()) + ')')
 
 
 class XConfined(XPredicate):
