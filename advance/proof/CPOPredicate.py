@@ -35,12 +35,14 @@ po_predicate_names = {
     'cb'  : 'common-base',
     'cbt' : 'common-base-type',    
     'cls' : 'can-leave-scope',
+    'cr'  : 'controlled-resource',
     'cssl': 'signed-to-signed-cast-lb',
     'cssu': 'signed-to-signed-cast-ub',    
     'csul': 'signed-to-unsigned-cast-lb',
     'csuu': 'signed-to-unsigned-cast-ub',
     'cus' : 'unsigned-to-signed-cast',    
     'cuu' : 'unsigned-to-unsigned-cast',
+    'fc'  : 'format-cast',
     'ft'  : 'format-string',    
     'i'   : 'initialized',    
     'ilb' : 'index-lower-bound',
@@ -91,6 +93,8 @@ class CPOPredicate(CD.CDictionaryRecord):
     def is_buffer(self): return False
     def is_cast(self): return False
     def is_common_base(self): return False
+    def is_format_cast(self): return False
+    def is_controlled_resource(self): return False
     def is_format_string(self): return False
     def is_in_scope(self): return False
     def is_can_leave_scope(self): return False
@@ -213,6 +217,36 @@ class CPOValidMem(CPOPredicate):
     def __str__(self): return self.get_tag() +'(' + str(self.get_exp()) + ')'
 
 
+class CPOControlledResource(CPOPredicate):
+    '''
+    tags:
+        0: 'cr',
+        1: name of resource (e.g., memory)
+
+    args:
+        0: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+
+    def get_resource(self): return self.tags[1]
+
+    def is_controlled_resource(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
+    def has_argument(self,vid):
+        if self.get_exp().is_lval():
+            lhost = self.get_exp().get_lval().get_lhost()
+            return  lhost.is_var() and lhost.get_vid() == vid
+        else:
+            return False
+
+
+    def __str__(self):
+        return self.get_tag() + ':' + self.get_resource() + '(' + str(self.get_exp()) + ')'
 
 class CPOCanLeaveScope(CPOPredicate):
     '''
@@ -577,6 +611,33 @@ class CPOCast(CPOPredicate):
                     + str(self.get_from_type())
                     + ',to:' + str(self.get_tgt_type()) + ')')
 
+class CPOFormatCast(CPOPredicate):
+    '''
+    tags:
+        0: 'c'
+
+    args:
+        0: typ (tfrom, current)
+        1: typ (tto, target)
+        2: exp
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(self.args[2])
+
+    def get_from_type(self): return self.cd.dictionary.get_typ(self.args[0])
+
+    def get_tgt_type(self): return self.cd.dictionary.get_typ(self.args[1])
+
+    def is_format_cast(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
+    def __str__(self):
+        return (self.get_tag() + '(' + str(self.get_exp()) + ',from:'
+                    + str(self.get_from_type())
+                    + ',to:' + str(self.get_tgt_type()) + ')')
 
 
 class CPOPointerCast(CPOPredicate):
