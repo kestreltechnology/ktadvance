@@ -58,6 +58,38 @@ class JulietTestSetRef(object):
 
     def get_tests(self): return self.tests.items()
 
+    def get_predicate_violations(self):
+        result = {}
+        violations = self.get_violations()
+        for v in violations:
+            p = v.predicate
+            if not p in result: result[p] = 0
+            result[p] += 1
+        return result
+
+    def get_predicate_safe_controls(self):
+        result = {}
+        safecontrols = self.get_safe_controls()
+        for s in safecontrols:
+            p = s.predicate
+            if not p in result: result[p] = 0
+            result[p] += 1
+        return result
+
+    def get_violations(self):
+        result = []
+        def f(i,test):
+            result.extend(test.get_violations())
+        self.iter(f)
+        return result
+
+    def get_safe_controls(self):
+        result = []
+        def f(i,test):
+            result.extend(test.get_safe_controls())
+        self.iter(f)
+        return result
+
     def iter(self,f):
         for (t,test) in self.get_tests():
             f(t,test)

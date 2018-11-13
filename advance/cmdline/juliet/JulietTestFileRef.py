@@ -31,8 +31,8 @@ class JulietTestFileRef():
     def __init__(self,testref,d):
         self.testref = testref
         self.d = d
-        self.violations = {}
-        self.safecontrols = {}
+        self.violations = {}        # line-no -> JulietViolation
+        self.safecontrols = {}      # line-no -> JulietSafeControl
         self.delegated = {}
         self.spo_safecontrols = {}
         self._initialize()

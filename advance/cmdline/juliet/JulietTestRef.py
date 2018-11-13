@@ -33,7 +33,7 @@ class JulietTestRef():
         self.testsetref = testsetref
         self.test = test
         self.d = d
-        self.cfiles = {}
+        self.cfiles = {}    #  filename -> JulietTestFileRef
         self._initialize()
 
     def get_test(self): return self.test
@@ -41,6 +41,22 @@ class JulietTestRef():
     def expand(self,m): return self.testsetref.expand(m)
 
     def get_cfiles(self): return self.cfiles.items()
+
+    def get_violations(self):
+        result = []
+        def f(name,ctestfile):
+            violations = ctestfile.get_violations()
+            result.extend(sum([ v[1] for v in violations ],[]))
+        self.iter(f)
+        return result
+
+    def get_safe_controls(self):
+        result = []
+        def f(name,ctestfile):
+            safecontrols = ctestfile.get_safe_controls()
+            result.extend(sum([ v[1] for v in safecontrols ],[]))
+        self.iter(f)
+        return result
 
     '''f: (filename,juliettestfile) -> unit. '''
     def iter(self,f):

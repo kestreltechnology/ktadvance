@@ -367,18 +367,7 @@ missingscorekeys = {
     }
 
 worklist = {
-    "CWE195": [
-        "s02/negative_memcpy",
-        "s02/negative_memmove",
-        "s02/negative_strncpy",
-        "s02/rand_malloc",
-        "s02/rand_memcpy",
-        "s02/rand_memmove",
-        "s02/rand_strncpy"
-        ],
     "CWE197": [
-        "s01/int_connect_socket_to_short",
-        "s01/int_fgets_to_char",
         "s01/int_fgets_to_short",
         "s01/int_fscanf_to_char",
         "s01/int_fscanf_to_short",
@@ -431,10 +420,6 @@ worklist = {
         "s01/struct_array_malloc_partial_init",
         "s01/struct_pointer"
         ],
-    "CWE680": [
-        "malloc_connnect_socket",
-        "malloc_listen_socket"
-        ],
     "CWE758": [
         "double_pointer_malloc_use",
         "int64_t_alloca_use",
@@ -450,13 +435,6 @@ worklist = {
         "struct_malloc_use",
         "struct_pointer_alloca_use",
         "struct_pointer_malloc_use"
-        ],
-    "CWE789": [
-        "malloc_char_connect_socket",
-        "malloc_char_fgets",
-        "malloc_char_fscanf",
-        "malloc_char_listen_socket",
-        "malloc_char_rand"
         ]
     }
 
@@ -856,13 +834,22 @@ testcases = {
         "s02/listen_socket_memcpy",
         "s02/listen_socket_memmove",
         "s02/listen_socket_strncpy",
-        "s02/negative_malloc"        
+        "s02/negative_malloc",
+        "s02/negative_memcpy",
+        "s02/negative_memmove",
+        "s02/negative_strncpy",
+        "s02/rand_malloc",
+        "s02/rand_memcpy",
+        "s02/rand_memmove",
+        "s02/rand_strncpy"        
         ],
     "CWE196": [
         "basic"
         ],
     "CWE197": [
-        "s01/int_connect_socket_to_char"
+        "s01/int_connect_socket_to_char",
+        "s01/int_connect_socket_to_short",
+        "s01/int_fgets_to_char"        
         ],
     "CWE242": [
         "basic"
@@ -970,7 +957,9 @@ testcases = {
         "malloc_fgets",
         "malloc_fixed",
         "malloc_fscanf",
-        "malloc_rand"
+        "malloc_rand",
+        "malloc_connnect_socket",
+        "malloc_listen_socket"        
         ],
     "CWE681": [
         "double2float",
@@ -1016,12 +1005,63 @@ testcases = {
         "char_fixed_string",
         "char_listen_socket"        
         ],
+    "CWE789": [
+        "s01/malloc_char_connect_socket",
+        "s01/malloc_char_fgets",
+        "s01/malloc_char_fscanf",
+        "s01/malloc_char_listen_socket",
+        "s01/malloc_char_rand"        
+        ],
     "CWE843": [
         "char",
         "short"
         ]
     }
 
+cwenames = {
+    'CWE121': 'CWE121_Stack_Based_Buffer_Overflow',
+    'CWE122': 'CWE122_Heap_Based_Buffer_Overflow',
+    'CWE123': 'CWE123_Write_What_Where_Condition',
+    'CWE124': 'CWE124_Buffer_Underwrite',
+    'CWE126': 'CWE126_Buffer_Overread',
+    'CWE127': 'CWE127_Buffer_Underread',
+    'CWE134': 'CWE134_Uncontrolled_Format_String',
+    'CWE188': 'CWE188_Reliance_on_Data_Memory_Layout',
+    'CWE190': 'CWE190_Integer_Overflow',
+    'CWE191': 'CWE191_Integer_Underflow',
+    'CWE194': 'CWE194_Unexpected_Sign_Extension',
+    'CWE195': 'CWE195_Signed_to_Unsigned_Conversion_Error',
+    'CWE196': 'CWE196_Unsigned_to_Signed_Conversion_Error',
+    'CWE197': 'CWE197_Numeric_Truncation_Error',
+    'CWE242': 'CWE242_Use_of_Inherently_Dangerous_Function',
+    'CWE252': 'CWE252_Unchecked_Return_Value',
+    'CWE253': 'CWE253_Incorrect_Check_of_Function_Return_Value',
+    'CWE369': 'CWE369_Divide_by_Zero',
+    'CWE391': 'CWE391_Unchecked_Error_Condition',
+    'CWE415': 'CWE415_Double_Free',
+    'CWE416': 'CWE416_Use_After_Free',
+    'CWE457': 'CWE457_Use_of_Uninitialized_Variable',
+    'CWE467': 'CWE467_Use_of_sizeof_on_Pointer_Type',
+    'CWE468': 'CWE468_Incorrect_Pointer_Scaling',
+    'CWE469': 'CWE469_Use_of_Pointer_Subtraction_to_Determine_Size',
+    'CWE476': 'CWE476_NULL_Pointer_Dereference',
+    'CWE562': 'CWE562_Return_of_Stack_Variable_Address',
+    'CWE587': 'CWE587_Assignment_of_Fixed_Address_to_Pointer',
+    'CWE588': 'CWE588_Attempt_to_Access_Child_of_Non_Structure_Pointer',
+    'CWE590': 'CWE590_Free_Memory_Not_on_Heap',
+    'CWE665': 'CWE665_Improper_Initialization',
+    'CWE680': 'CWE680_Integer_Overflow_to_Buffer_Overflow',
+    'CWE681': 'CWE681_Incorrect_Conversion_Between_Numeric_Types',
+    'CWE685': 'CWE685_Function_Call_With_Incorrect_Number_of_Arguments',
+    'CWE688': 'CWE688_Function_Call_With_Incorrect_Variable_or_Reference_as_Argument',
+    'CWE690': 'CWE690_NULL_Deref_From_Return',
+    'CWE758': 'CWE758_Undefined_Behavior',
+    'CWE761': 'CWE761_Free_Pointer_Not_at_Start_of_Buffer',
+    'CWE789': 'CWE789_Uncontrolled_Mem_Alloc',
+    'CWE843': 'CWE843_Type_Confusion'
+    }
+
+    
 
 variants = {
     '01': 'Baseline',
