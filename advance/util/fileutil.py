@@ -111,6 +111,54 @@ def save_project_summary_results(path,d):
     with open(os.path.join(path,'summaryresults.json'),'w') as fp:
         json.dump(d,fp)
 
+def save_project_summary_results_as_xml(path, d):
+    xml_file = os.path.join(path, 'summaryresults.xml')
+    tags = d['tagresults']
+    ppos = tags['ppos']
+    spos = tags['spos']
+    files = d['fileresults'] 
+    file_ppos = files['ppos']
+    file_spos = files['spos']
+
+    xml_root = ET.Element("xml-root")
+    tagresults = ET.SubElement(xml_root, 'tagresults')
+    ppos_xml = ET.SubElement(tagresults, 'ppos')
+    spos_xml = ET.SubElement(tagresults, 'spos')
+    fileresults = ET.SubElement(xml_root, 'fileresults')
+    file_ppos_xml = ET.SubElement(fileresults, 'ppos')
+    file_spos_xml = ET.SubElement(fileresults, 'spos')
+
+    for key in ppos:
+        ppo_type = ET.SubElement(ppos_xml, "ppo")
+        ppo_type.set("name", key)
+        for val in ppos[key]:
+            stat = ppos[key][val]
+            ppo_type.set(val, str(stat))
+
+    for key in spos:
+        spo_type = ET.SubElement(spos_xml, "spo")
+        spo_type.set("name", key)
+        for val in spos[key]:
+            stat = spos[key][val]
+            spo_type.set(val, str(stat))
+
+    for key in file_ppos:
+        ppo_file = ET.SubElement(file_ppos_xml, "ppo")
+        ppo_file.set("name", key)
+        stats_dict = file_ppos[key]
+        for stats in stats_dict:
+            ppo_file.set(stats, str(stats_dict[stats]))
+
+    for key in file_spos:
+        spo_file = ET.SubElement(file_spos_xml, "spo")
+        spo_file.set("name", key)
+        stats_dict = file_spos[key]
+        for stats in stats_dict:
+            spo_file.set(stats, str(stats_dict[stats]))
+
+    tree = ET.ElementTree(xml_root)
+    tree.write(xml_file)
+
 def read_project_summary_results(path):
     if os.path.isdir(path):
         filename = os.path.join(path,'summaryresults.json')
