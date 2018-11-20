@@ -45,6 +45,52 @@ def get_printop(s):
     else:
         return s
 
+class SOffset(CD.CDictionaryRecord):
+
+    def __init__(self,cd,index,tags,args):
+        CD.CDictionaryRecord.__init__(self,cd,index,tags,args)
+
+    def is_nooffset(self): return False
+    def is_field_offset(self): return False
+    def is_index_offset(self): return False
+
+    def __str__(self): return 's-offset-' + self.tags[0]
+
+class STArgNoOffset(SOffset):
+
+    def __init__(self,cd,index,tags,args):
+        SOffset.__init__(self,cd,index,tags,args)
+
+    def is_nooffset(self): return True
+
+    def __str__(self): return ''
+
+class STArgFieldOffset(SOffset):
+
+    def __init__(self,cd,index,tags,args):
+        SOffset.__init__(self,cd,index,tags,args)
+
+    def get_field(self): return self.tags[1]
+
+    def get_offset(self): return self.cd.get_s_offset(int(self.args[0]))
+
+    def is_field_offset(self): return True
+
+    def __str__(self): return '.' + self.get_field() + str(self.get_offset())
+
+class STArgIndexOffset(SOffset):
+
+    def __init__(self,cd,index,tags,args):
+        SOffset.__init__(self,cd,index,tags,args)
+
+    def get_index(self): return int(self.tags[1])
+
+    def get_offset(self): return self.cd.get_s_offset(int(self.args[0]))
+
+    def is_index_offset(self): return True
+
+    def __str__(self): return '[' + str(self.get_ind()) + ']' + str(self.get_offset())
+
 
 class STerm(CD.CDictionaryRecord):
 
@@ -80,6 +126,8 @@ class STArgValue(STerm):
         STerm.__init__(self,cd,index,tags,args)
 
     def get_parameter(self): return self.cd.get_api_parameter(int(self.args[0]))
+
+    def get_offset(self): return self.cd.get_s_offset(int(self.args[1]))
 
     def is_arg_value(self): return True
 
@@ -201,7 +249,7 @@ class STArgAddressedValue(STerm):
 
     def get_base_term(self): return self.get_iterm(0)
 
-    def get_offset_term(self): return self.get_iterm(1)
+    def get_offset(self): return self.cd.get_s_offset(int(self.args[1]))
 
     def is_arg_addressed_value(self): return True
 
@@ -214,12 +262,8 @@ class STArgAddressedValue(STerm):
         return anode
 
     def __str__(self):
-        if self.get_offset_term().is_field_offset():
-            return (str(self.get_base_term()) + '->'
-                        + (str(self.get_offset_term().get_name())))
-        else:
-            return ('addressed-value(' + str(self.get_base_term())
-                        + str(self.get_offset_term()) + ')')
+        return ('addressed-value(' + str(self.get_base_term())
+                    + str(self.get_offset()) + ')')
 
 
 class STArgNullTerminatorPos(STerm):

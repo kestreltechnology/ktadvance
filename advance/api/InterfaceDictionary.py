@@ -57,6 +57,13 @@ api_parameter_constructors = {
     'pg': lambda x:AP.APGlobal(*x)
 }
 
+s_offset_constructors = {
+    'no': lambda x:ST.STArgNoOffset(*x),
+    'fo': lambda x:ST.STArgFieldOffset(*x),
+    'io': lambda x:ST.STArgIndexOffset(*x)
+}
+                                    
+
 s_term_constructors = {
     'av': lambda x:ST.STArgValue(*x),
     'rv': lambda x:ST.STReturnValue(*x),
@@ -120,6 +127,7 @@ class InterfaceDictionary(object):
         self.declarations = self.cfile.declarations
         self.dictionary = self.declarations.dictionary
         self.api_parameter_table = IT.IndexedTable('api-parameter-table')
+        self.s_offset_table = IT.IndexedTable('s-offset-table')
         self.s_term_table = IT.IndexedTable('s-term-table')
         self.xpredicate_table = IT.IndexedTable('xpredicate-table')
         self.postrequest_table = IT.IndexedTable('postrequest-table')
@@ -127,6 +135,7 @@ class InterfaceDictionary(object):
         self.ds_condition_table = IT.IndexedTable('ds-condition-table')
         self.tables = [
             (self.api_parameter_table,self._read_xml_api_parameter_table),
+            (self.s_offset_table,self._read_xml_s_offset_table),
             (self.s_term_table,self._read_xml_s_term_table),
             (self.xpredicate_table, self._read_xml_xpredicate_table),
             (self.postrequest_table,self._read_xml_postrequest_table),
@@ -138,6 +147,9 @@ class InterfaceDictionary(object):
 
     def get_api_parameter(self,ix):
         return self.api_parameter_table.retrieve(ix)
+
+    def get_s_offset(self,ix):
+        return self.s_offset_table.retrieve(ix)
 
     def get_s_term(self,ix):
         return self.s_term_table.retrieve(ix)
@@ -166,11 +178,31 @@ class InterfaceDictionary(object):
         return self.get_api_parameter(self.mk_api_parameter(['pf'],[ n ]))
 
     def mk_global_api_parameter(self,g):
-        return self.get_api_parameter(self.mk_api_parameter([ 'pg', g ],[]))       
-        
+        return self.get_api_parameter(self.mk_api_parameter([ 'pg', g ],[]))
+
+    def index_s_offset(self,t):
+        if t.is_nooffset():
+            def f(index,key): return ST.STArgNoOffset(self,index,t.tags,t.args)
+            return self.s_offset_table.add(IT.get_key(t.tags,t.args),f)
+        if t.is_field_offset():
+            args = [ self.index_s_offset(t.get_offset()) ]
+            def f(index,key): return ST.ArgFieldOffset(self,index,t.tags,args)
+            return self.s_offset_table.add(IT.get_key(t.tags,args),f)
+        if t.is_index_offset():
+            def f(index,key): return ST.ArgIndexOffset(self,index,t.tags,t.args)
+            return self.s_offset_table.add(IT.get_key(t.tags,t.args),f)
+
+    def mk_s_offset(self,tags,args):
+        def f(index,key): return s_offset_constructors[tags[0]](self,index,tags,args)
+        return self.s_offset_table.add(IT.get_key(tags,args),f)
+    
+    def mk_arg_no_offset(self):
+        return self.get_s_offst(self.mk_s_offset(['no'],[]))
+
     def index_s_term(self,t):
         if t.is_arg_value():
-            args = [ self.index_api_parameter(t.get_parameter()) ]
+            args = [ self.index_api_parameter(t.get_parameter()),
+                         self.index_s_offset(t.get_offset()) ]
             def f(index,key): return ST.STArgValue(self,index,t.tags,args)
             return self.s_term_table.add(IT.get_key(t.tags,args),f)
         if t.is_return_value():
@@ -195,7 +227,7 @@ class InterfaceDictionary(object):
             return self.s_term_table.add(IT.get_key(t.tags,t.args),f)
         if t.is_arg_addressed_value():
             args = [ self.index_s_term(t.get_base_term()),
-                         self.index_s_term(t.get_offset_term()) ]
+                         self.index_s_offset(t.get_offset()) ]
             def f(index,key): return ST.STArgAddressedValue(self,index,t.tags,args)
             return self.s_term_table.add(IT.get_key(t.tags,args),f)
         if t.is_arg_null_terminator_pos():
@@ -337,6 +369,19 @@ class InterfaceDictionary(object):
             return self.api_parameter_table.add(IT.get_key(tags,args),f)
         print('Api parameter name ' + name + ' not found in parameters or global variables')
         exit(1)
+
+    def parse_mathml_offset(self,tnode):
+        if tnode is None:
+            tags = [ 'no' ]
+            def f(index,key): return ST.STArgNoOffset(self,index,tags,[])
+            return self.s_offset_table.add(IT.get_key(tags,[]),f)
+        elif tnode.tag == 'field':
+            tags = [ 'fo', tnode.get('name') ]
+            def f(index,key): return ST.STArgFieldOffset(self,index,tags,[])
+            return self.s_offset_table.add(IT.get_key(tags,[]),f)
+        else:
+            print('Encountered index offset')
+            exit(1)
         
 
     def parse_mathml_term(self,tnode,pars,gvars=[]):
@@ -352,7 +397,8 @@ class InterfaceDictionary(object):
                 def f(index,key): return ST.STNumConstant(self,index,tags,args)
             else:
                 tags = [ 'av' ]
-                args = [ self.parse_mathml_api_parameter(tnode.text,pars,gvars=gvars) ]
+                args = [ self.parse_mathml_api_parameter(tnode.text,pars,gvars=gvars),
+                             self.parse_mathml_offset(None) ]
                 def f(index,key): return ST.STArgValue(self,index,tags,args)
             return self.s_term_table.add(IT.get_key(tags,args),f)
         if tnode.tag == 'cn':
@@ -369,7 +415,7 @@ class InterfaceDictionary(object):
             (op,terms) = (tnode[0].tag,tnode[1:])
             if op == 'addressed-value':
                 args = [ self.parse_mathml_term(terms[0],pars,gvars=gvars),
-                             self.parse_mathml_term(terms[1],pars,gvars=gvars) ]
+                             self.parse_mathml_offset(tnode[0][0]) ]
                 tags = [ 'aa' ]
                 def f(index,key): return ST.STArgAddressedValue(self,index,tags,args)
                 return self.s_term_table.add(IT.get_key(tags,args),f)
@@ -544,6 +590,14 @@ class InterfaceDictionary(object):
             args = (self,) + rep
             return api_parameter_constructors[tag](args)
         self.api_parameter_table.read_xml(txnode,'n',get_value)
+
+    def _read_xml_s_offset_table(self,txnode):
+        def get_value(node):
+            rep = IT.get_rep(node)
+            tag = rep[1][0]
+            args = (self,) + rep
+            return s_offset_constructors[tag](args)
+        self.s_offset_table.read_xml(txnode,'n',get_value)
 
     def _read_xml_s_term_table(self,txnode):
         def get_value(node):
