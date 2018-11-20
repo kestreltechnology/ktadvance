@@ -27,27 +27,11 @@
 
 import os
 
+import advance.util.TestProjects as TP
+
 if os.path.isfile(os.path.join(os.path.dirname(os.path.abspath(__file__)), "ConfigLocal.py")):
     import advance.util.ConfigLocal as ConfigLocal
 
-testprojects = {
-    "cairo": "A/cairo-1.14.12",
-    "cleanflight": "B/cleanflight-CLFL_v2.3.2",
-    "dnsmasq": "A/dnsmasq-2.76",
-    "dovecot": "sate/2010/dovecot-2.0.beta6",
-    "file": "A/file",
-    "git": "A/git-2.17.0",
-    "hping": "A/hping",
-    "irssi": "sate/2009/irssi-0.8.14",
-    "lighttpd": "sate/2008/lighttpd-1.4.18",
-    "nagios": "sate/2008/nagios-2.10/base",
-    "naim": "sate/2008/naim-0.11.8.3.1",
-    "nginx": "A/nginx-1.2.9",
-    "nginx114":  "A/nginx-1.14.0",
-    "openssl": "A/openssl-1.0.1f",
-    "pvm": "sate/2009/pvm3.4.6",
-    "wpa_supplicant": "A/wpa_supplicant-2.6"
-    }
 
 class Config(object):
 
@@ -76,7 +60,7 @@ class Config(object):
             self.canalyzer = os.path.join(self.binariesdir,'ktadvance_mac')
 
         '''test cases'''
-        self.projects = testprojects
+        self.projects = TP.testprojects
         self.myprojects = {}
         self.mycfiles = {}
 
@@ -99,11 +83,11 @@ class Config(object):
             lines.append('libear'.ljust(plen) + ': ' + self.libear)
         lines.append('summaries'.ljust(plen) + ': ' + self.summaries)
         lines.append('projects'.ljust(plen) + ':')
-        for (p,d) in sorted(testprojects.items()):
-            lines.append(' '.ljust(3) + str(p).ljust(12) + ': ' + str(d))
-        if len(myprojects) > 0:
+        for (p,d) in sorted(TP.testprojects.items()):
+            lines.append(' '.ljust(3) + str(p).ljust(15) + ': ' + str(d))
+        if len(self.myprojects) > 0:
             lines.append('my projects'.ljust(plen) + ':')
-            for (p,d) in sorted(myprojects.items()):
+            for (p,d) in sorted(self.myprojects.items()):
                 lines.append(' '.ljust(3) + str(p).ljust(12) + ': ' + str(d))
         lines.append('-' * 64)
         return '\n'.join(lines)

@@ -442,6 +442,13 @@ def get_juliet_path():
     sardpath = os.path.join(Config().testdir,'sard')
     return os.path.abspath(os.path.join(sardpath,'juliet_v1.3'))
 
+def get_juliet_testcases_list():
+    path = get_juliet_path()
+    filename = os.path.join(path,'juliettestcases.json')
+    if os.path.isfile(filename):
+        with open(filename) as fp:
+            return json.load(fp)
+
 def get_juliet_summaries():
     path = get_juliet_path()
     summarypath = os.path.join(path,'testcasesupport')
@@ -493,26 +500,37 @@ def get_workshop_list():
             workshoplist = json.load(fp)
             return workshoplist
 
-def get_workshop_file_data(wfile):
+def get_workshop_file_data(project,wfile):
     wspath = get_workshop_path()
     workshoplist = get_workshop_list()
     if not workshoplist is None:
-        if wfile in workshoplist:
-            wsdata = workshoplist[wfile]
-            filedata = {}
-            filedata['summaries'] = []
-            filedata['file'] = wsdata['file']
-            filedata['path'] = os.path.join(wspath,wsdata['path'])
-            for s in wsdata['summaries']:
-                filedata['summaries'].append(os.path.join(wspath,s))
-            return filedata
+        if project in workshoplist:
+            projectlist = workshoplist[project]
+            if wfile in projectlist:
+                wsdata = projectlist[wfile]
+                filedata = {}
+                filedata['summaries'] = []
+                filedata['file'] = wsdata['file']
+                filedata['path'] = os.path.join(wspath,wsdata['path'])
+                for s in wsdata['summaries']:
+                    filedata['summaries'].append(os.path.join(wspath,s))
+                return filedata
+            else:
+                print('*' * 80)
+                print('Workshop file: ' + wfile + ' not foound in project: ' + project + '.')
+                print('Available files are in project: ' + project + ' are:')
+                print('-' * 80)
+                for name in projectlist:
+                    print(name.ljust(8) + ': ' + projectlist[name]['path'] + ', ' + projectlist[name]['file'])
+                print('-' * 80)
+                exit(0)
         else:
             print('*' * 80)
-            print('Workshop file: ' + wfile + ' not foound.')
-            print('Available workshop files are: ')
+            print('Workshop project: ' + project + ' not found.')
+            print('Available workshop projects are:')
             print('-' * 80)
             for name in workshoplist:
-                print(name + ': ' + workshoplist[name]['path'] + ', ' + workshoplist[name]['file'])
+                print(name)
             print('-' * 80)
             exit(0)
 
@@ -594,17 +612,30 @@ if __name__ == '__main__':
 
     testdir = config.testdir
 
-    print('kendra paths:')
+    print('\nkendra paths:')
+    print('-' * 80)
     for id in range(115,119):
         id = 'id' + str(id) + '.c'
         print('  ' + id + ': ' + get_kendra_cpath(id))
 
-    print('zitser paths:')
+    print('\nzitser paths:')
+    print('-' * 80)
     for id in [ 'id1283', 'id1310' ]:
         print('  ' + id + get_zitser_testpath(id))
 
-    print('juliet paths:')
+    print('\njuliet paths:')
+    print('-' * 80)
     for cwe in [ 'CWE121/s01/CWE129_fgets',
                      'CWE122/s01/char_type_overrun_memcpy' ]:
         print('  ' + cwe + ': ' + get_juliet_testpath(cwe))
+
+    print('\nworkshop files:')
+    print('-' * 80)
+    workshoplist = get_workshop_list()
+    for p in workshoplist:
+        print(p)
+        filelist = workshoplist[p]
+        for f in filelist:
+            fdata = filelist[f]
+            print('   ' + f.ljust(10) + ': ' + fdata['path'] + '/' + fdata['file'])
 
