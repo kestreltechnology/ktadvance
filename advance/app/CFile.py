@@ -160,6 +160,7 @@ class CFile(object):
 
     def get_function_by_index(self,index):
         self._initialize_functions()
+        index = int(index)
         if index in self.functions:
             return self.functions[index]
         else:
