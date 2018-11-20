@@ -92,6 +92,7 @@ if __name__ == '__main__':
                 result['timestamp'] = timestamp
                 result['project'] = cpath
                 UF.save_project_summary_results(cpath, result)
+                UF.save_project_summary_results_as_xml(cpath, result)
                 summaries = UF.read_project_summary_results(cpath)
             print(RP.project_proofobligation_stats_dict_to_string(summaries))
         except IndexedTableError as e:
