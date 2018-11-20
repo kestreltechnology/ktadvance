@@ -36,6 +36,7 @@ import advance.reporting.ProofObligations as RP
 
 def parse():
     parser = argparse.ArgumentParser()
+    parser.add_argument('project',help='name of project')
     parser.add_argument('name',help='name of work file')
     parser.add_argument('--xdelegated',help="exclude delegated ppo's",
                             action='store_true')
@@ -49,7 +50,7 @@ def parse():
 if __name__ == '__main__':
 
     args = parse()
-    wsdata = UF.get_workshop_file_data(args.name)
+    wsdata = UF.get_workshop_file_data(args.project,args.name)
     cpath = wsdata['path']
     cfilename = wsdata['file']
 

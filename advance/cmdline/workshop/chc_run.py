@@ -42,6 +42,7 @@ from advance.app.CApplication import CApplication
 
 def parse():
     parser = argparse.ArgumentParser()
+    parser.add_argument('project',help='name of project')
     parser.add_argument('name',help='name of work to run')
     parser.add_argument('--showinvariants',help='show invariants for all contexts',
                             action='store_true')
@@ -81,7 +82,7 @@ if __name__ == '__main__':
     logfilename = args.name + '_log.txt'
     logging.basicConfig(filename=logfilename,level=loglevel)
 
-    wsdata = UF.get_workshop_file_data(args.name)
+    wsdata = UF.get_workshop_file_data(args.project,args.name)
     cpath = wsdata['path']
     cfilename = wsdata['file']
     wssummaries = wsdata['summaries']
