@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-11-14 21:05:45.505837"/>
+  <cfile name="ngx_buf">
+    <data-structures/>
+    <functions>
+      <function name="ngx_alloc_chain_link">
+        <parameters>
+          <par name="pool" nr="1"/>
+        </parameters>
+	<postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<preserves-all-memory/>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
+      </function>
+      <function name="ngx_chain_add_copy">
+        <parameters>
+          <par name="pool" nr="1"/>
+          <par name="chain" nr="2"/>
+          <par name="in" nr="3"/>
+        </parameters>
+      </function>
+      <function name="ngx_chain_get_free_buf">
+        <parameters>
+          <par name="p" nr="1"/>
+          <par name="free" nr="2"/>
+        </parameters>
+      </function>
+      <function name="ngx_chain_update_chains">
+        <parameters>
+          <par name="p" nr="1"/>
+          <par name="free" nr="2"/>
+          <par name="busy" nr="3"/>
+          <par name="out" nr="4"/>
+          <par name="tag" nr="5"/>
+        </parameters>
+      </function>
+      <function name="ngx_create_chain_of_bufs">
+        <parameters>
+          <par name="pool" nr="1"/>
+          <par name="bufs" nr="2"/>
+        </parameters>
+      </function>
+      <function name="ngx_create_temp_buf">
+        <parameters>
+          <par name="pool" nr="1"/>
+          <par name="size" nr="2"/>
+        </parameters>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
