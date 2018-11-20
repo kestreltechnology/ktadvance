@@ -41,6 +41,7 @@ testprojects = {
     "naim": "sate/2008/naim-0.11.8.3.1",
     "nginx": "A/nginx-1.2.9",
     "nginx114":  "A/nginx-1.14.0",
+    "nginx1156": "A/nginx-1.15.6",
     "openssl": "A/openssl-1.0.1f",
     "pvm": "sate/2009/pvm3.4.6",
     "wpa_supplicant": "A/wpa_supplicant-2.6"
