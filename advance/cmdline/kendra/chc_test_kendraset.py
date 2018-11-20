@@ -27,6 +27,7 @@
 
 import argparse
 import json
+import logging
 import os
 
 import advance.util.fileutil as UF
@@ -59,6 +60,10 @@ if __name__ == '__main__':
 
     args = parse()
     testname = args.testset
+    loglevel = logging.WARNING
+    logfilename =  args.testset + '_log.txt'
+    logging.basicConfig(filename=logfilename,level=loglevel)
+    
     cpath = UF.get_kendra_testpath(testname)
     if not os.path.isdir(cpath):
         print(UP.cpath_not_found_err_msg(cpath))
