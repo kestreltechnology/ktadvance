@@ -63,6 +63,8 @@ class STArgNoOffset(SOffset):
 
     def is_nooffset(self): return True
 
+    def get_mathml_node(self,signature): return None
+
     def __str__(self): return ''
 
 class STArgFieldOffset(SOffset):
@@ -76,6 +78,14 @@ class STArgFieldOffset(SOffset):
 
     def is_field_offset(self): return True
 
+    def get_mathml_node(self,signature):
+        fnode = ET.Element('field')
+        fnode.set('name',self.get_field())
+        offnode = self.get_offset().get_mathml_node()
+        if not offnode is None:
+            fnode.append(offnode)
+        return fnode
+
     def __str__(self): return '.' + self.get_field() + str(self.get_offset())
 
 class STArgIndexOffset(SOffset):
@@ -88,6 +98,14 @@ class STArgIndexOffset(SOffset):
     def get_offset(self): return self.cd.get_s_offset(int(self.args[0]))
 
     def is_index_offset(self): return True
+
+    def get_mathml_node(self,signature):
+        inode = ET.Element('index')
+        inode.set('i',str(self.get_index()))
+        offnode = self.get_offset().get_mathml_node()
+        if not offnode is None:
+            inode.append(offnode)
+        return inode
 
     def __str__(self): return '[' + str(self.get_ind()) + ']' + str(self.get_offset())
 
@@ -257,8 +275,10 @@ class STArgAddressedValue(STerm):
         anode = ET.Element('apply')
         opnode = ET.Element('addressed-value')
         t1node = self.get_base_term().get_mathml_node(signature)
-        t2node = self.get_offset_term().get_mathml_node(signature)
-        anode.extend([ opnode, t1node, t2node ])
+        offnode = self.get_offset().get_mathml_node(signature)
+        if not offnode is None:
+            t1node.append(offnode)
+        anode.extend([ opnode, t1node ])
         return anode
 
     def __str__(self):

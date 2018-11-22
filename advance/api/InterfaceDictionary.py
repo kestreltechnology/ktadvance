@@ -186,10 +186,10 @@ class InterfaceDictionary(object):
             return self.s_offset_table.add(IT.get_key(t.tags,t.args),f)
         if t.is_field_offset():
             args = [ self.index_s_offset(t.get_offset()) ]
-            def f(index,key): return ST.ArgFieldOffset(self,index,t.tags,args)
+            def f(index,key): return ST.STArgFieldOffset(self,index,t.tags,args)
             return self.s_offset_table.add(IT.get_key(t.tags,args),f)
         if t.is_index_offset():
-            def f(index,key): return ST.ArgIndexOffset(self,index,t.tags,t.args)
+            def f(index,key): return ST.STArgIndexOffset(self,index,t.tags,t.args)
             return self.s_offset_table.add(IT.get_key(t.tags,t.args),f)
 
     def mk_s_offset(self,tags,args):
@@ -377,7 +377,8 @@ class InterfaceDictionary(object):
             return self.s_offset_table.add(IT.get_key(tags,[]),f)
         elif tnode.tag == 'field':
             tags = [ 'fo', tnode.get('name') ]
-            def f(index,key): return ST.STArgFieldOffset(self,index,tags,[])
+            args = [ self.parse_mathml_offset(None) ]
+            def f(index,key): return ST.STArgFieldOffset(self,index,tags,args)
             return self.s_offset_table.add(IT.get_key(tags,[]),f)
         else:
             print('Encountered index offset')
