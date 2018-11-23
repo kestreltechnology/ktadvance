@@ -166,7 +166,8 @@ class CFunctionProofs(object):
             if not xnode is None:
                 self.ppos = CFunctionPPOs(self,xnode)
             else:
-                print('Unable to load ppos for ' + self.cfun.name)
+                print('Unable to load ppos for ' + self.cfun.name + ' in file '
+                          + self.cfile.name)
 
     def _get_spos(self,force=False):
         if self.spos is None or force:
@@ -174,7 +175,8 @@ class CFunctionProofs(object):
             if not xnode is None:
                 self.spos = CFunctionSPOs(self,xnode)
             else:
-                print('Unable to load spos for ' + self.cfun.name)
+                print('Unable to load spos for ' + self.cfun.name + ' in file '
+                          + self.cfile.name)
 
     def _save_spos(self,cnode):
         UF.save_spo_file(self.capp.path,self.cfile.name,self.cfun.name,cnode)
