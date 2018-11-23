@@ -415,8 +415,9 @@ class InterfaceDictionary(object):
         if tnode.tag == 'apply':
             (op,terms) = (tnode[0].tag,tnode[1:])
             if op == 'addressed-value':
+                offsetnode = tnode[0][0] if len(tnode[0]) > 0 else None
                 args = [ self.parse_mathml_term(terms[0],pars,gvars=gvars),
-                             self.parse_mathml_offset(tnode[0][0]) ]
+                             self.parse_mathml_offset(offsetnode) ]
                 tags = [ 'aa' ]
                 def f(index,key): return ST.STArgAddressedValue(self,index,tags,args)
                 return self.s_term_table.add(IT.get_key(tags,args),f)
