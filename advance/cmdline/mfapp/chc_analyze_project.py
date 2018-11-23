@@ -167,13 +167,13 @@ if __name__ == '__main__':
         capp.update_spos()
 
         for i in range(1):
-            am.generate_and_check_app('llrvisp', processes=args.maxprocesses)
+            am.generate_and_check_app('vllrisp', processes=args.maxprocesses)
             capp.reinitialize_tables()
             capp.update_spos()
 
         for i in range(args.analysisrounds):
             capp.update_spos()
-            am.generate_and_check_app('llrvisp', processes=args.maxprocesses)
+            am.generate_and_check_app('vllrisp', processes=args.maxprocesses)
             capp.reinitialize_tables()
 
     with timing('summarize'):
