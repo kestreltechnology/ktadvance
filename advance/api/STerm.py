@@ -107,7 +107,7 @@ class STArgIndexOffset(SOffset):
             inode.append(offnode)
         return inode
 
-    def __str__(self): return '[' + str(self.get_ind()) + ']' + str(self.get_offset())
+    def __str__(self): return '[' + str(self.get_index()) + ']' + str(self.get_offset())
 
 
 class STerm(CD.CDictionaryRecord):
