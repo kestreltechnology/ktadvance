@@ -9,16 +9,49 @@
     <functions>
       <function name="applyFlipOverAfterCrashModeToMotors">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<lt/>
+		<ci>motorCount</ci>
+		<cn>9</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions/>
       </function>
       <function name="applyMixToMotors">
         <parameters>
           <par name="motorMix" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<lt/>
+		<ci>motorCount</ci>
+		<cn>9</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions/>
       </function>
       <function name="areMotorsRunning">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<lt/>
+		<ci>motorCount</ci>
+		<cn>9</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions/>
       </function>
       <function name="calculateThrottleAndCurrentMotorEndpoints">
@@ -33,7 +66,26 @@
           <par name="low" nr="2"/>
           <par name="high" nr="3"/>
         </parameters>
-        <postconditions/>
+	<postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<geq/>
+		<return/>
+		<cn>0</cn>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<leq/>
+		<return/>
+		<cn>65535</cn>
+	      </apply>
+	    </math>
+	  </post>
+	</postconditions>
       </function>
       <function name="constrainf">
         <parameters>
@@ -59,13 +111,91 @@
         <parameters>
           <par name="_index" nr="1"/>
         </parameters>
-        <postconditions>
-	  <post><math><apply><not-null/><return/></apply></math></post>
+	<postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<not-null/>
+		<return/>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value/>
+		  <return/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value>
+		    <field name="throttle"/>
+		  </addressed-value>
+		  <return/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="flight3DConfig">
         <parameters/>
         <postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<not-null/>
+		<return/>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value>
+		    <field name="deadband3d_high"/>
+		  </addressed-value>
+		  <return/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value>
+		    <field name="deadband3d_low"/>
+		  </addressed-value>
+		  <return/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value>
+		    <field name="deadband3d_throttle"/>
+		  </addressed-value>
+		  <return/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
 	  <post>
 	    <math>
 	      <apply>
@@ -79,12 +209,6 @@
 	      </apply>
 	    </math>
 	  </post>
-	  <post><math><apply><not-null/><return/></apply></math></post>	  
-	</postconditions>
-      </function>
-      <function name="flight3DConfigMutable">
-        <parameters/>
-        <postconditions>
 	  <post>
 	    <math>
 	      <apply>
@@ -98,7 +222,32 @@
 	      </apply>
 	    </math>
 	  </post>
-	  <post><math><apply><not-null/><return/></apply></math></post>
+	</postconditions>
+      </function>
+      <function name="flight3DConfigMutable">
+        <parameters/>
+        <postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<not-null/>
+		<return/>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value>
+		    <field name="switched_mode3d"/>
+		  </addressed-value>
+		  <return/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="getMotorCount">
@@ -127,11 +276,54 @@
 	      </apply>
 	    </math>
 	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value>
+		    <field name="pidSumLimit"/>
+		  </addressed-value>
+		  <ci>currentPidProfile</ci>
+		</apply>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value>
+		    <field name="pidSumLimitYaw"/>
+		  </addressed-value>
+		  <ci>currentPidProfile</ci>
+		</apply>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<lt/>
+		<ci>motorCount</ci>
+		<cn>9</cn>
+	      </apply>
+	    </math>
+	  </pre>
 	</preconditions>
       </function>
       <function name="mixerConfig">
         <parameters/>
         <postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<not-null/>
+		<return/>
+	      </apply>
+	    </math>
+	  </post>
 	  <post>
 	    <math>
 	      <apply>
@@ -145,11 +337,30 @@
 	      </apply>
 	    </math>
 	  </post>
-	  <post><math><apply><not-null/><return/></apply></math></post>
 	</postconditions>
       </function>
       <function name="mixerConfigureOutput">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<geq/>
+		<ci>currentMixerMode</ci>
+		<cn>0</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	  <pre>
+	    <math>
+	      <apply>
+		<lt/>
+		<ci>currentMixerMode</ci>
+		<cn>27</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions/>
       </function>
       <function name="mixerInit">
@@ -199,6 +410,27 @@
 	  <post>
 	    <math>
 	      <apply>
+		<not-null/>
+		<return/>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value>
+		    <field name="maxthrottle"/>
+		  </addressed-value>
+		  <return/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
+	  <post>
+	    <math>
+	      <apply>
 		<initialized/>
 		<apply>
 		  <addressed-value>
@@ -209,7 +441,19 @@
 	      </apply>
 	    </math>
 	  </post>
-	  <post><math><apply><not-null/><return/></apply></math></post>
+	  <post>
+	    <math>
+	      <apply>
+		<initialized/>
+		<apply>
+		  <addressed-value>
+		    <field name="minthrottle"/>
+		  </addressed-value>
+		  <return/>
+		</apply>
+	      </apply>
+	    </math>
+	  </post>
 	</postconditions>
       </function>
       <function name="pgResetFn_motorConfig">
@@ -220,7 +464,15 @@
       </function>
       <function name="rxConfig">
         <parameters/>
-        <postconditions>
+	<postconditions>
+	  <post>
+	    <math>
+	      <apply>
+		<not-null/>
+		<return/>
+	      </apply>
+	    </math>
+	  </post>
 	  <post>
 	    <math>
 	      <apply>
@@ -247,7 +499,6 @@
 	      </apply>
 	    </math>
 	  </post>
-	  <post><math><apply><not-null/><return/></apply></math></post>
 	</postconditions>
       </function>
       <function name="stopMotors">
@@ -262,10 +513,32 @@
         <parameters>
           <par name="mc" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<lt/>
+		<ci>motorCount</ci>
+		<cn>9</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions/>
       </function>
       <function name="writeMotors">
         <parameters/>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<lt/>
+		<ci>motorCount</ci>
+		<cn>9</cn>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions/>
       </function>
     </functions>
