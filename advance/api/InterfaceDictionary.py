@@ -376,8 +376,9 @@ class InterfaceDictionary(object):
             def f(index,key): return ST.STArgNoOffset(self,index,tags,[])
             return self.s_offset_table.add(IT.get_key(tags,[]),f)
         elif tnode.tag == 'field':
+            offsetnode = tnode[0] if len(tnode) > 0 else None
             tags = [ 'fo', tnode.get('name') ]
-            args = [ self.parse_mathml_offset(None) ]
+            args = [ self.parse_mathml_offset(offsetnode) ]
             def f(index,key): return ST.STArgFieldOffset(self,index,tags,args)
             return self.s_offset_table.add(IT.get_key(tags,[]),f)
         else:
