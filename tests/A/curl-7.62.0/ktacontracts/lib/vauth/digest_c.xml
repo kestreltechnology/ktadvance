@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-11-26 23:51:58.956030"/>
+  <cfile name="lib/vauth/digest">
+    <data-structures/>
+    <functions>
+      <function name="Curl_auth_create_digest_http_message">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="userp" nr="2"/>
+          <par name="passwdp" nr="3"/>
+          <par name="request" nr="4"/>
+          <par name="uripath" nr="5"/>
+          <par name="digest" nr="6"/>
+          <par name="outptr" nr="7"/>
+          <par name="outlen" nr="8"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="Curl_auth_create_digest_md5_message">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="chlg64" nr="2"/>
+          <par name="userp" nr="3"/>
+          <par name="passwdp" nr="4"/>
+          <par name="service" nr="5"/>
+          <par name="outptr" nr="6"/>
+          <par name="outlen" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="Curl_auth_decode_digest_http_message">
+        <parameters>
+          <par name="chlg" nr="1"/>
+          <par name="digest" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="Curl_auth_digest_cleanup">
+        <parameters>
+          <par name="digest" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="Curl_auth_digest_get_pair">
+        <parameters>
+          <par name="str" nr="1"/>
+          <par name="value" nr="2"/>
+          <par name="content" nr="3"/>
+          <par name="endptr" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="Curl_auth_is_digest_supported">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="_Curl_auth_create_digest_http_message">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="userp" nr="2"/>
+          <par name="passwdp" nr="3"/>
+          <par name="request" nr="4"/>
+          <par name="uripath" nr="5"/>
+          <par name="digest" nr="6"/>
+          <par name="outptr" nr="7"/>
+          <par name="outlen" nr="8"/>
+          <par name="convert_to_ascii" nr="9"/>
+          <par name="hash" nr="10"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="auth_decode_digest_md5_message">
+        <parameters>
+          <par name="chlg64" nr="1"/>
+          <par name="nonce" nr="2"/>
+          <par name="nlen" nr="3"/>
+          <par name="realm" nr="4"/>
+          <par name="rlen" nr="5"/>
+          <par name="alg" nr="6"/>
+          <par name="alen" nr="7"/>
+          <par name="qop" nr="8"/>
+          <par name="qlen" nr="9"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="auth_digest_get_key_value">
+        <parameters>
+          <par name="chlg" nr="1"/>
+          <par name="key" nr="2"/>
+          <par name="value" nr="3"/>
+          <par name="max_val_len" nr="4"/>
+          <par name="end_char" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="auth_digest_get_qop_values">
+        <parameters>
+          <par name="options" nr="1"/>
+          <par name="value" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="auth_digest_md5_to_ascii">
+        <parameters>
+          <par name="source" nr="1"/>
+          <par name="dest" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="auth_digest_sha256_to_ascii">
+        <parameters>
+          <par name="source" nr="1"/>
+          <par name="dest" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="auth_digest_string_quoted">
+        <parameters>
+          <par name="source" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

@@ -1,0 +1,742 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-11-26 23:51:56.899204"/>
+  <cfile name="lib/imap">
+    <data-structures/>
+    <functions>
+      <function name="imap_atom">
+        <parameters>
+          <par name="str" nr="1"/>
+          <par name="escape_only" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_block_statemach">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_connect">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="done" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_continue_authenticate">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="resp" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_disconnect">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="dead_connection" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_do">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="done" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_doing">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="dophase_done" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_done">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="status" nr="2"/>
+          <par name="premature" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_dophase_done">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="connected" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_endofresp">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="line" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="resp" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_get_message">
+        <parameters>
+          <par name="buffer" nr="1"/>
+          <par name="outptr" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_getsock">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="socks" nr="2"/>
+          <par name="numsocks" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_init">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_is_bchar">
+        <parameters>
+          <par name="ch" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_matchresp">
+        <parameters>
+          <par name="line" nr="1"/>
+          <par name="len" nr="2"/>
+          <par name="cmd" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_multi_statemach">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="done" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_parse_custom_request">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_parse_url_options">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_parse_url_path">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_perform">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="connected" nr="2"/>
+          <par name="dophase_done" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_perform_append">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_perform_authenticate">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="mech" nr="2"/>
+          <par name="initresp" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_perform_authentication">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_perform_capability">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_perform_fetch">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_perform_list">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_perform_login">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_perform_logout">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_perform_search">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_perform_select">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_perform_starttls">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_perform_upgrade_tls">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_regular_transfer">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="dophase_done" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_sendf">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="fmt" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_setup_connection">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_state_append_final_resp">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="imapcode" nr="2"/>
+          <par name="instate" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_state_append_resp">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="imapcode" nr="2"/>
+          <par name="instate" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_state_auth_resp">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="imapcode" nr="2"/>
+          <par name="instate" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_state_capability_resp">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="imapcode" nr="2"/>
+          <par name="instate" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_state_fetch_final_resp">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="imapcode" nr="2"/>
+          <par name="instate" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_state_fetch_resp">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="imapcode" nr="2"/>
+          <par name="instate" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_state_listsearch_resp">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="imapcode" nr="2"/>
+          <par name="instate" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_state_login_resp">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="imapcode" nr="2"/>
+          <par name="instate" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_state_select_resp">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="imapcode" nr="2"/>
+          <par name="instate" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_state_servergreet_resp">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="imapcode" nr="2"/>
+          <par name="instate" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_state_starttls_resp">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="imapcode" nr="2"/>
+          <par name="instate" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_statemach_act">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="imap_to_imaps">
+        <parameters>
+          <par name="conn" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="state">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="newstate" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

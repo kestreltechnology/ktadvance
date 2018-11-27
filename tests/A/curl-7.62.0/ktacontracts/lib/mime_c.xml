@@ -1,0 +1,868 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-11-26 23:51:57.024228"/>
+  <cfile name="lib/mime">
+    <data-structures/>
+    <functions>
+      <function name="Curl_mime_add_header">
+        <parameters>
+          <par name="slp" nr="1"/>
+          <par name="fmt" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="Curl_mime_cleanpart">
+        <parameters>
+          <par name="part" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="Curl_mime_contenttype">
+        <parameters>
+          <par name="filename" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="Curl_mime_duppart">
+        <parameters>
+          <par name="dst" nr="1"/>
+          <par name="src" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="Curl_mime_initpart">
+        <parameters>
+          <par name="part" nr="1"/>
+          <par name="easy" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="Curl_mime_prepare_headers">
+        <parameters>
+          <par name="part" nr="1"/>
+          <par name="contenttype" nr="2"/>
+          <par name="disposition" nr="3"/>
+          <par name="strategy" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="Curl_mime_read">
+        <parameters>
+          <par name="buffer" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="nitems" nr="3"/>
+          <par name="instream" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="Curl_mime_rewind">
+        <parameters>
+          <par name="part" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="Curl_mime_set_subparts">
+        <parameters>
+          <par name="part" nr="1"/>
+          <par name="subparts" nr="2"/>
+          <par name="take_ownership" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="Curl_mime_size">
+        <parameters>
+          <par name="part" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_content_type">
+        <parameters>
+          <par name="slp" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="boundary" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="cleanup_encoder_state">
+        <parameters>
+          <par name="p" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="cleanup_part_content">
+        <parameters>
+          <par name="part" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="curl_mime_addpart">
+        <parameters>
+          <par name="mime" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="curl_mime_data">
+        <parameters>
+          <par name="part" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="datasize" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="curl_mime_data_cb">
+        <parameters>
+          <par name="part" nr="1"/>
+          <par name="datasize" nr="2"/>
+          <par name="readfunc" nr="3"/>
+          <par name="seekfunc" nr="4"/>
+          <par name="freefunc" nr="5"/>
+          <par name="arg" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="curl_mime_encoder">
+        <parameters>
+          <par name="part" nr="1"/>
+          <par name="encoding" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="curl_mime_filedata">
+        <parameters>
+          <par name="part" nr="1"/>
+          <par name="filename" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="curl_mime_filename">
+        <parameters>
+          <par name="part" nr="1"/>
+          <par name="filename" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="curl_mime_free">
+        <parameters>
+          <par name="mime" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="curl_mime_headers">
+        <parameters>
+          <par name="part" nr="1"/>
+          <par name="headers" nr="2"/>
+          <par name="take_ownership" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="curl_mime_init">
+        <parameters>
+          <par name="easy" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="curl_mime_name">
+        <parameters>
+          <par name="part" nr="1"/>
+          <par name="name" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="curl_mime_subparts">
+        <parameters>
+          <par name="part" nr="1"/>
+          <par name="subparts" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="curl_mime_type">
+        <parameters>
+          <par name="part" nr="1"/>
+          <par name="mimetype" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="encoder_7bit_read">
+        <parameters>
+          <par name="buffer" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="ateof" nr="3"/>
+          <par name="part" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="encoder_base64_read">
+        <parameters>
+          <par name="buffer" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="ateof" nr="3"/>
+          <par name="part" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="encoder_base64_size">
+        <parameters>
+          <par name="part" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="encoder_nop_read">
+        <parameters>
+          <par name="buffer" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="ateof" nr="3"/>
+          <par name="part" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="encoder_nop_size">
+        <parameters>
+          <par name="part" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="encoder_qp_read">
+        <parameters>
+          <par name="buffer" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="ateof" nr="3"/>
+          <par name="part" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="encoder_qp_size">
+        <parameters>
+          <par name="part" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="escape_string">
+        <parameters>
+          <par name="src" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="match_header">
+        <parameters>
+          <par name="hdr" nr="1"/>
+          <par name="lbl" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mime_file_free">
+        <parameters>
+          <par name="ptr" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mime_file_read">
+        <parameters>
+          <par name="buffer" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="nitems" nr="3"/>
+          <par name="instream" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mime_file_seek">
+        <parameters>
+          <par name="instream" nr="1"/>
+          <par name="offset" nr="2"/>
+          <par name="whence" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mime_mem_free">
+        <parameters>
+          <par name="ptr" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mime_mem_read">
+        <parameters>
+          <par name="buffer" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="nitems" nr="3"/>
+          <par name="instream" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mime_mem_seek">
+        <parameters>
+          <par name="instream" nr="1"/>
+          <par name="offset" nr="2"/>
+          <par name="whence" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mime_open_file">
+        <parameters>
+          <par name="part" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mime_part_rewind">
+        <parameters>
+          <par name="part" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mime_subparts_free">
+        <parameters>
+          <par name="ptr" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mime_subparts_read">
+        <parameters>
+          <par name="buffer" nr="1"/>
+          <par name="size" nr="2"/>
+          <par name="nitems" nr="3"/>
+          <par name="instream" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mime_subparts_seek">
+        <parameters>
+          <par name="instream" nr="1"/>
+          <par name="offset" nr="2"/>
+          <par name="whence" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mime_subparts_unbind">
+        <parameters>
+          <par name="ptr" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mimesetstate">
+        <parameters>
+          <par name="state" nr="1"/>
+          <par name="tok" nr="2"/>
+          <par name="ptr" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="multipart_size">
+        <parameters>
+          <par name="mime" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="qp_lookahead_eol">
+        <parameters>
+          <par name="st" nr="1"/>
+          <par name="ateof" nr="2"/>
+          <par name="n" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="read_encoded_part_content">
+        <parameters>
+          <par name="part" nr="1"/>
+          <par name="buffer" nr="2"/>
+          <par name="bufsize" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="read_part_content">
+        <parameters>
+          <par name="part" nr="1"/>
+          <par name="buffer" nr="2"/>
+          <par name="bufsize" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="readback_bytes">
+        <parameters>
+          <par name="state" nr="1"/>
+          <par name="buffer" nr="2"/>
+          <par name="bufsize" nr="3"/>
+          <par name="bytes" nr="4"/>
+          <par name="numbytes" nr="5"/>
+          <par name="trail" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="readback_part">
+        <parameters>
+          <par name="part" nr="1"/>
+          <par name="buffer" nr="2"/>
+          <par name="bufsize" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="search_header">
+        <parameters>
+          <par name="hdrlist" nr="1"/>
+          <par name="hdr" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="slist_size">
+        <parameters>
+          <par name="s" nr="1"/>
+          <par name="overhead" nr="2"/>
+          <par name="skip" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strippath">
+        <parameters>
+          <par name="fullfile" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
