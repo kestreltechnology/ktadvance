@@ -65,6 +65,7 @@ class XPredicate(CD.CDictionaryRecord):
     def is_formatted_input(self): return False
     def is_freed(self): return False
     def is_functional(self): return False
+    def is_global_address(self): return False
     def is_heap_address(self): return False
     def is_initialized(self): return False
     def is_initialized_range(self): return False
@@ -304,6 +305,17 @@ class XNewMemory(XPredicate):
     def is_new_memory(self): return True
 
     def __str__(self): return ('new-memory(' + str(self.get_term()))
+
+class XGlobalAddress(XPredicate):
+
+    def __init__(self,cd,index,tags,args):
+        XPredicate.__init__(self,cd,index,tags,args)
+
+    def get_term(self): return self.get_iterm(0)
+
+    def is_global_address(self): return True
+
+    def __str__(self): return ('global-address(' + str(self.get_term()))
 
 class XHeapAddress(XPredicate):
 

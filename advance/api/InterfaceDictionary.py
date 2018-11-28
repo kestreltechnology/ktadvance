@@ -90,11 +90,12 @@ xpredicate_constructors = {
     'fi': lambda x:XP.XFormattedInput(*x),
     'fr': lambda x:XP.XFreed(*x),
     'fn': lambda x:XP.XFunctional(*x),
+    'ga': lambda x:XP.XGlobalAddress(*x),
+    'ha': lambda x:XP.XHeapAddress(*x),    
     'i' : lambda x:XP.XInitialized(*x),
     'ir': lambda x:XP.XInitializedRange(*x),
     'iv': lambda x:XP.XInvalidated(*x),
     'ifs': lambda x:XP.XInputFormatString(*x),
-    'ha': lambda x:XP.XHeapAddress(*x),
     'nm': lambda x:XP.XNewMemory(*x),
     'no': lambda x:XP.XNoOverlap(*x),
     'nn': lambda x:XP.XNotNull(*x),
@@ -279,6 +280,10 @@ class InterfaceDictionary(object):
         if p.is_heap_address():
             args = [ self.index_s_term(p.get_term()) ]
             def f(index,key): return XP.XHeapAddress(self,index,p.tags,args)
+            return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
+        if p.is_global_address():
+            args = [ self.index_s_term(p.get_term()) ]
+            def f(index,key): return XP.XGlobalAddress(self,index,p.tags,args)
             return self.xpredicate_table.add(IT.get_key(p.tags,args),f)
         if p.is_stack_address():
             def f(index,key): return XP.XStackAddress(self,index,p.tags,args)
@@ -475,6 +480,16 @@ class InterfaceDictionary(object):
             op = optransformer[op]
             tags = [ 'x', op ]
             def f(index,key): return XP.XRelationalExpr(self,index,tags,args)
+            return self.xpredicate_table.add(IT.get_key(tags,args),f)
+        if op == 'global-address':
+            args = [ pt(terms[0]) ]
+            tags = [ 'ga' ]
+            def f(index,key): return XP.XGlobalAddress(self,index,tags,args)
+            return self.xpredicate_table.add(IT.get_key(tags,args),f)
+        if op == 'heap-address':
+            args = [ pt(terms[0]) ]
+            tags = [ 'ha' ]
+            def f(index,key): return XP.XHeapAddress(self,index,tags,args)
             return self.xpredicate_table.add(IT.get_key(tags,args),f)
         if op == 'not-null':
             args = [ pt(terms[0]) ]
