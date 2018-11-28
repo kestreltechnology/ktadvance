@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<codehawk-summary-file>
+  <function-summary name="file_ms_free" file="src/apprentice.c">
+    <parameters>
+      <par name="ms" nr="1"><pre><deref-read/></pre></par>
+    </parameters>
+    <preconditions>
+      <pre>
+	<math>
+	  <apply>
+	    <allocation-base/>
+	    <ci>ms</ci>
+	  </apply>
+	</math>
+      </pre>
+      <pre>
+	<math>
+	  <apply>
+	    <allocation-base/>
+	    <apply>
+	      <addressed-value>
+		<field name="o">
+		  <field name="pbuf"/>
+		</field>
+	      </addressed-value>
+	      <ci>ms</ci>
+	    </apply>
+	  </apply>
+	</math>
+      </pre>
+    </preconditions>
+    <postconditions/>
+    <sideeffects/>
+  </function-summary>
+</codehawk-summary-file>
