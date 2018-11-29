@@ -1852,118 +1852,7 @@ typedef uint32_t timeUs_t;
 static inline timeDelta_t cmpTimeUs(timeUs_t a, timeUs_t b) { return (timeDelta_t)(a - b); }
 
 
-/* ref 6227 (pid): 40 ./src/main/flight/mixer.h */
-# 40 "./src/main/flight/mixer.h"
-typedef enum mixerMode
-{
-    MIXER_TRI = 1,
-    MIXER_QUADP = 2,
-    MIXER_QUADX = 3,
-    MIXER_BICOPTER = 4,
-    MIXER_GIMBAL = 5,
-    MIXER_Y6 = 6,
-    MIXER_HEX6 = 7,
-    MIXER_FLYING_WING = 8,
-    MIXER_Y4 = 9,
-    MIXER_HEX6X = 10,
-    MIXER_OCTOX8 = 11,
-    MIXER_OCTOFLATP = 12,
-    MIXER_OCTOFLATX = 13,
-    MIXER_AIRPLANE = 14,
-    MIXER_HELI_120_CCPM = 15,
-    MIXER_HELI_90_DEG = 16,
-    MIXER_VTAIL4 = 17,
-    MIXER_HEX6H = 18,
-    MIXER_RX_TO_SERVO = 19,
-    MIXER_DUALCOPTER = 20,
-    MIXER_SINGLECOPTER = 21,
-    MIXER_ATAIL4 = 22,
-    MIXER_CUSTOM = 23,
-    MIXER_CUSTOM_AIRPLANE = 24,
-    MIXER_CUSTOM_TRI = 25,
-    MIXER_QUADX_1234 = 26
-} mixerMode_e;
-
-typedef struct motorMixer_s {
-    float throttle;
-    float roll;
-    float pitch;
-    float yaw;
-} motorMixer_t;
-
-extern motorMixer_t customMotorMixer_SystemArray[8];
-extern motorMixer_t customMotorMixer_CopyArray[8];
-static inline const motorMixer_t* customMotorMixer(int _index) {
-  return &customMotorMixer_SystemArray[_index];
-}
-static inline motorMixer_t* customMotorMixerMutable(int _index) {
-  return &customMotorMixer_SystemArray[_index];
-}
-static inline motorMixer_t (* customMotorMixer_array(void))[8] {
-  return &customMotorMixer_SystemArray;
-}
-struct _dummy;
-
-typedef struct mixer_s {
-    uint8_t motorCount;
-    uint8_t useServo;
-    const motorMixer_t *motor;
-} mixer_t;
-
-typedef struct mixerConfig_s {
-    uint8_t mixerMode;
-   _Bool yaw_motors_reversed;
-} mixerConfig_t;
-
-extern mixerConfig_t mixerConfig_System;
-extern mixerConfig_t mixerConfig_Copy;
-static inline const mixerConfig_t* mixerConfig(void) { return &mixerConfig_System; }
-static inline mixerConfig_t* mixerConfigMutable(void) { return &mixerConfig_System; }
-struct _dummy;
-
-typedef struct motorConfig_s {
-    motorDevConfig_t dev;
-    uint16_t digitalIdleOffsetValue;
-    uint16_t minthrottle;
-    uint16_t maxthrottle;
-    uint16_t mincommand;
-} motorConfig_t;
-
-extern motorConfig_t motorConfig_System;
-extern motorConfig_t motorConfig_Copy;
-static inline const motorConfig_t* motorConfig(void) { return &motorConfig_System; }
-static inline motorConfig_t* motorConfigMutable(void) { return &motorConfig_System; }
-struct _dummy;
-
-extern const mixer_t mixers[];
-extern float motor[8];
-extern float motor_disarmed[8];
-extern float motorOutputHigh, motorOutputLow;
-struct rxConfig_s;
-
-uint8_t getMotorCount(void);
-float getMotorMixRange(void);
-_Bool areMotorsRunning(void);
-_Bool mixerIsOutputSaturated(int axis, float errorRate);
-
-void mixerLoadMix(int index, motorMixer_t *customMixers);
-void mixerInit(mixerMode_e mixerMode);
-
-void mixerConfigureOutput(void);
-
-void mixerResetDisarmedMotors(void);
-void mixTable(timeUs_t currentTimeUs, uint8_t vbatPidCompensation);
-void syncMotors(_Bool enabled);
-void writeMotors(void);
-void stopMotors(void);
-void stopPwmAllMotors(void);
-
-float convertExternalToMotor(uint16_t externalValue);
-uint16_t convertMotorToExternal(float motorValue);
-
-_Bool mixerIsTricopter(void);
-
-/* 5799: 23 ./src/main/drivers/time.h */
+/* ref 5799: 23 ./src/main/drivers/time.h */
 # 23 "./src/main/drivers/time.h"
 
 void delayMicroseconds(timeUs_t us);
@@ -2682,7 +2571,6 @@ void imuQuaternionComputeProducts(quaternion *quat, quaternionProducts *quatProd
 
 _Bool imuQuaternionHeadfreeOffsetSet(void);
 void imuQuaternionHeadfreeTransformVectorEarthToBody(t_fp_vector_def * v);
-
 
 /* ref 6679: 18 ./src/main/rx/rx.h */
 # 18 "./src/main/rx/rx.h"
@@ -3569,3 +3457,52 @@ static inline accelerometerConfig_t* accelerometerConfigMutable(void) {
   return &accelerometerConfig_System;
 }
 struct _dummy;
+
+_Bool accInit(uint32_t gyroTargetLooptime);
+_Bool accIsCalibrationComplete(void);
+void accSetCalibrationCycles(uint16_t calibrationCyclesRequired);
+void resetRollAndPitchTrims(rollAndPitchTrims_t *rollAndPitchTrims);
+void accUpdate(timeUs_t currentTimeUs, rollAndPitchTrims_t *rollAndPitchTrims);
+_Bool accGetAccumulationAverage(float *accumulation);
+
+/* ref 6644 (imu): 28 ./src/main/sensors/compass.h */
+# 28 "./src/main/sensors/compass.h"
+typedef enum {
+    MAG_DEFAULT = 0,
+    MAG_NONE = 1,
+    MAG_HMC5883 = 2,
+    MAG_AK8975 = 3,
+    MAG_AK8963 = 4,
+    MAG_QMC5883 = 5
+} magSensor_e;
+
+typedef struct mag_s {
+    float magADC[3];
+    float magneticDeclination;
+} mag_t;
+
+extern mag_t mag;
+
+typedef struct compassConfig_s {
+    int16_t mag_declination;
+
+    sensor_align_e mag_align;
+    uint8_t mag_hardware;
+    uint8_t mag_bustype;
+    uint8_t mag_i2c_device;
+    uint8_t mag_i2c_address;
+    uint8_t mag_spi_device;
+    ioTag_t mag_spi_csn;
+    ioTag_t interruptTag;
+    flightDynamicsTrims_t magZero;
+} compassConfig_t;
+
+extern compassConfig_t compassConfig_System;
+extern compassConfig_t compassConfig_Copy;
+static inline const compassConfig_t* compassConfig(void) { return &compassConfig_System; }
+static inline compassConfig_t* compassConfigMutable(void) { return &compassConfig_System; }
+struct _dummy;
+
+_Bool compassIsHealthy(void);
+void compassUpdate(timeUs_t currentTime);
+_Bool compassInit(void);
