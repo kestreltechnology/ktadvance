@@ -61,7 +61,7 @@ static char *inotify_buffer;
 
 #define errno  (*__errno_location ()) 
 #define daemon dnsmasq_daemon
-#define inotify_add_watchb inotify_add_watchb
+#define inotify_add_watchb inotify_add_watch
 
 /* If path is a symbolic link, return the path it
    points to, made absolute if relative.
