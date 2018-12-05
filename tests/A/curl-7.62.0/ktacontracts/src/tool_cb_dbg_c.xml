@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-11-26 23:51:59.317855"/>
+  <cfile name="src/tool_cb_dbg">
+    <data-structures/>
+    <functions>
+      <function name="dump">
+        <parameters>
+          <par name="timebuf" nr="1"/>
+          <par name="text" nr="2"/>
+          <par name="stream" nr="3"/>
+          <par name="ptr" nr="4"/>
+          <par name="size" nr="5"/>
+          <par name="tracetype" nr="6"/>
+          <par name="infotype" nr="7"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tool_debug_cb">
+        <parameters>
+          <par name="handle" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="size" nr="4"/>
+          <par name="userdata" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

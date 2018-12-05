@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2018-11-26 23:51:58.370376"/>
+  <cfile name="lib/socks">
+    <data-structures/>
+    <functions>
+      <function name="Curl_SOCKS4">
+        <parameters>
+          <par name="proxy_user" nr="1"/>
+          <par name="hostname" nr="2"/>
+          <par name="remote_port" nr="3"/>
+          <par name="sockindex" nr="4"/>
+          <par name="conn" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="Curl_SOCKS5">
+        <parameters>
+          <par name="proxy_user" nr="1"/>
+          <par name="proxy_password" nr="2"/>
+          <par name="hostname" nr="3"/>
+          <par name="remote_port" nr="4"/>
+          <par name="sockindex" nr="5"/>
+          <par name="conn" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="Curl_blockread_all">
+        <parameters>
+          <par name="conn" nr="1"/>
+          <par name="sockfd" nr="2"/>
+          <par name="buf" nr="3"/>
+          <par name="buffersize" nr="4"/>
+          <par name="n" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

@@ -30,6 +30,7 @@ testprojects = {
     "cairo": "A/cairo-1.14.12",
     "cfingerd": "A/cfingerd-1.4.2",
     "cleanflight": "B/cleanflight-CLFL_v2.3.2",
+    "curl": "A/curl-7.62.0",
     "dnsmasq": "A/dnsmasq-2.76",
     "dovecot": "sate/2010/dovecot-2.0.beta6",
     "file": "A/file",
