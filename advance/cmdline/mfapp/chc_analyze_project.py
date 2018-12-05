@@ -183,6 +183,7 @@ if __name__ == '__main__':
             result['timestamp'] = timestamp
             result['project'] = cpath
             UF.save_project_summary_results(cpath,result)
+            UF.save_project_summary_results_as_xml(cpath, result)
         except IndexedTableError as e:
             print(
                 '\n' + ('*' * 80) + '\nThe analysis results format has changed'
