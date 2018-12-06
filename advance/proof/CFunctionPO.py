@@ -89,12 +89,41 @@ class CProofDiagnostic(object):
             return 'no diagnostic messages'
         return '\n'.join(self.msgs)
 
+def get_diagnostic(xnode):
+    pinvs = {}
+    amsgs = {}
+    kmsgs = {}
+    pmsgs = []
+    if xnode is None:
+        return CProofDiagnostic(pinvs,pmsgs,amsgs,kmsgs)
+    inode = xnode.find('invs')
+    if not inode is None:
+        for n in inode.findall('arg'):
+            pinvs[int(n.get('a'))] = [ int(x) for x in n.get('i').split(',') ]
+    mnode = xnode.find('msgs')
+    if not mnode is None:
+        pmsgs = [ x.get('t') for x in mnode.findall('msg') ]
+    anode = xnode.find('amsgs')
+    if not anode is None:
+        for n in anode.findall('arg'):
+            arg = int(n.get('a'))
+            msgs = [ x.get('t') for x in n.findall('msg') ]
+            amsgs[arg] = msgs
+    knode = xnode.find('kmsgs')
+    if not knode is None:
+        for n in knode.findall('key'):
+            key = n.get('k')
+            msgs = [ x.get('t') for x in n.findall('msg') ]
+            kmsgs[key] = msgs
+    return CProofDiagnostic(pinvs,pmsgs,amsgs,kmsgs)
+
 class CProofDependencies(object):
     '''Extent of dependency of a closed proof obligation.
 
     levels:
        's': dependent on statement itself only
        'f': dependent on function context
+       'r': reduced to local spo in function context
        'a': dependent on other functions in the application
        'x': dead code
 
@@ -109,11 +138,14 @@ class CProofDependencies(object):
         self.ids = ids
         self.invs = invs
 
-    def is_stmt(self): return self.level == 's'
+    def is_stmt(self):
+        return self.level == 's'
 
-    def is_local(self): return self.level == 's' or self.level == 'f'
+    def is_local(self):
+        return self.level == 's' or self.level == 'f' or self.level == 'r'
 
-    def has_external_dependencies(self): return self.level == 'a'
+    def has_external_dependencies(self):
+        return self.level == 'a'
 
     def is_deadcode(self): return self.level == 'x'
 
@@ -125,6 +157,28 @@ class CProofDependencies(object):
             cnode.set('invs',','.join([str(i) for i in self.invs ]))
 
     def __str__(self): return self.level
+
+
+def get_dependencies(owner,xnode):
+    if xnode is None:
+        return None
+    if 'deps' in xnode.attrib:
+        level = xnode.get('deps')
+    else:
+        level = 's'
+    if 'ids' in xnode.attrib:
+        ids = [ int(x) for x in xnode.get('ids').split(',') ]
+    else:
+        ids = []
+    if 'invs' in xnode.attrib:
+        invs = xnode.get('invs')
+        if len(invs) > 0:
+            invs = [ int(x) for x in invs.split(',') ]
+        else:
+            invs = []
+    else:
+        invs = []
+    return CProofDependencies(owner,level,ids,invs)
 
 
 class CFunctionPO(object):
@@ -197,19 +251,25 @@ class CFunctionPO(object):
         atypes = self.get_dependencies()
         if len(atypes) == 1:
             t = atypes[0]
+            if t.is_local_assumption(): return 'local'
             if t.is_api_assumption(): return 'api'
+            if t.is_global_api_assumption(): return 'contract'
             if t.is_global_assumption(): return 'contract'
             if t.is_contract_assumption(): return 'contract'
-            if t.is_postcondition_assumption(): return 'contract'
+            else:
+                printf('assumption not recognized: ' + str(t))
+                exit(1)
         elif len(atypes) == 0:
             return 'local'
         else:
-            if any([ t.is_global_assumption()
-                         or t.is_contract_assumption()
-                         or t.is_postcondition_assumption() for t in atypes]):
+            if any([ t.is_global_api_assumption()
+                         or t.is_contract_assumption() for t in atypes]):
                 return 'contract'
             else:
-                return 'api'
+                print('assumptions not recognized: ')
+                for t in atypes:
+                    print('  ' + str(t))
+                exit(1)
 
     def get_global_assumptions(self):
         result = []
@@ -222,7 +282,7 @@ class CFunctionPO(object):
         result = []
         if self.has_dependencies():
             for t in self.get_dependencies():
-                if t.is_postcondition_assumption(): result.append(t)
+                if t.is_contract_assumption(): result.append(t)
         return result
 
     def has_argument(self,vid): return self.predicate.has_argument(vid)

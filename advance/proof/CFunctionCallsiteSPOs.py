@@ -31,6 +31,7 @@ import xml.etree.ElementTree as ET
 
 import advance.util.xmlutil as UX
 
+import advance.proof.CFunctionPO as PO
 
 from advance.app.CLocation import CLocation
 from advance.app.CFileDictionary import CKeyLookupError
@@ -252,18 +253,7 @@ class CFunctionCallsiteSPOs(object):
                     spotype = self.cfun.podictionary.read_xml_spo_type(po)
                     deps = None
                     status = po_status[po.get('s','o')]
-                    if 'deps' in po.attrib:
-                        level = po.get('deps')
-                        invs = po.get('invs')
-                        if invs is not None and len(invs) > 0:
-                            invs = [ int(x) for x in po.get('invs').split(',') ]
-                        else:
-                            invs = []
-                        if level == 'a':
-                            ids = [int(x) for x in po.get('ids').split(',') ]
-                        else:
-                            ids = []
-                        deps = CProofDependencies(self,level,ids,invs)
+                    deps = PO.get_dependencies(self,po)
                     expl = None
                     enode = po.find('e')
                     if not enode is None:
@@ -271,31 +261,7 @@ class CFunctionCallsiteSPOs(object):
                     diag = None
                     dnode = po.find('d')
                     if not dnode is None:
-                        pinvs = {}
-                        amsgs = {}
-                        kmsgs = {}
-                        inode = dnode.find('invs')
-                        if not inode is None:
-                            for n in dnode.find('invs').findall('arg'):
-                                pinvs[int(n.get('a'))] = [ int(x) for x in n.get('i').split(',') ]
-                        mnode = dnode.find('msgs')
-                        if not mnode is None:
-                            pmsgs =  [ x.get('t') for x in dnode.find('msgs').findall('msg') ]
-                        else:
-                            pmsgs = []
-                        mnode = dnode.find('amsgs')
-                        if not mnode is None:
-                            for n in dnode.find('amsgs').findall('arg'):
-                                arg = int(n.get('a'))
-                                msgs = [ x.get('t') for x in n.findall('msg') ]
-                                amsgs[arg] = msgs
-                        knode = dnode.find('kmsgs')
-                        if not knode is None:
-                            for n in dnode.find('kmsgs').findall('key'):
-                                key = n.get('k')
-                                msgs = [  x.get('t') for x in n.findall('msg') ]
-                                kmsgs[key] = msgs
-                        diag = CProofDiagnostic(pinvs,pmsgs,amsgs,kmsgs)
+                        diag = PO.get_diagnostic(dnode)
                     self.spos[apiid].append(CFunctionCallsiteSPO(self,spotype,status,deps,expl,diag))
 
         # read in assumptions about the post conditions of the callee

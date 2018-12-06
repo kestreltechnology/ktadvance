@@ -30,10 +30,18 @@ import xml.etree.ElementTree as ET
 import advance.util.idregistry as UI
 import advance.util.xmlutil as UX
 
+import advance.proof.CFunctionPO as PO
+
 from advance.proof.CFunctionCallsiteSPOs import CFunctionCallsiteSPOs
 from advance.proof.CFunctionReturnsiteSPOs import CFunctionReturnsiteSPOs
+from advance.proof.CFunctionLocalSPO import CFunctionLocalSPO
 
 from advance.proof.CFunctionPOs import CFunctionPOs
+
+from advance.proof.CFunctionPO import CProofDependencies
+from advance.proof.CFunctionPO import po_status
+from advance.proof.CFunctionPO import CProofDiagnostic
+
 
 class CFunctionSPOs(CFunctionPOs):
     '''Represents the set of secondary proof obligations for a function.'''
@@ -43,6 +51,7 @@ class CFunctionSPOs(CFunctionPOs):
         self.xnode = xnode
         self.cproofs = cproofs
         self.spocounter = 0
+        self.localspos = {}
         self.callsitespos = {}             # cfg-contextstring -> CFunctionCallsiteSPOs
         self.returnsitespos = {}           # cfg-contextstring -> CFunctionReturnsiteSPOs
         self._initialize()
@@ -63,6 +72,9 @@ class CFunctionSPOs(CFunctionPOs):
         for cs in self.callsitespos.values(): cs.distribute_post_guarantees()
 
     def get_spo(self,id):
+        for localspo in self.localspos.values():
+            if ls.id == id:
+                return localspo 
         for cs in self.callsitespos.values():
             if cs.has_spo(id):
                 return cs.get_spo(id)
@@ -79,6 +91,8 @@ class CFunctionSPOs(CFunctionPOs):
             f(cs)
 
     def iter(self,f):
+        for localspo in self.localspos.values():
+            f(localspo)
         for cs in sorted(self.callsitespos.values(),key=lambda p:(p.get_line())):
             cs.iter(f)
         for cs in self.returnsitespos.values():
@@ -86,10 +100,15 @@ class CFunctionSPOs(CFunctionPOs):
 
     def write_xml(self,cnode):
         snode = ET.Element('spos')
+        llnode = ET.Element('localspos')
         cssnode = ET.Element('callsites')
         rrnode = ET.Element('returnsites')
         dcnode = ET.Element('direct-calls')
         idcnode = ET.Element('indirect-calls')
+        for ls in self.localspos.values():
+            lnode = ET.Element('po')
+            ls.write_xml(lnode)
+            llnode.append(lnode)
         for cs in self.callsitespos.values():
             if cs.is_direct_call():
                 csnode = ET.Element('dc')
@@ -103,6 +122,7 @@ class CFunctionSPOs(CFunctionPOs):
             rsnode = ET.Element('rs')
             rs.write_xml(rsnode)
             rrnode.append(rsnode)
+        snode.append(llnode)
         snode.append(cssnode)
         snode.append(rrnode)
         cssnode.extend([dcnode,idcnode])
@@ -110,6 +130,15 @@ class CFunctionSPOs(CFunctionPOs):
 
     def _initialize(self):
         spos = self.xnode.find('spos')
+        localspos = spos.find('localspos')
+        if not localspos is None:
+            for po in localspos.findall('po'):
+                spotype = self.cfun.podictionary.read_xml_spo_type(po)
+                expl = None if po.find('e') is None else po.find('e')
+                deps = PO.get_dependencies(self,po)
+                diag = PO.get_diagnostic(po.find('d'))
+                status = po_status[po.get('s','o') ]
+                self.localspos[spotype.id] = CFunctionLocalSPO(self,spotype,status,deps,expl,diag)
         css = spos.find('callsites').find('direct-calls')
         if not css is None:
             for cs in css.findall('dc'):

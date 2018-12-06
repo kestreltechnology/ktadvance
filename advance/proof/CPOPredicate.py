@@ -42,6 +42,7 @@ po_predicate_names = {
     'csuu': 'signed-to-unsigned-cast-ub',
     'cus' : 'unsigned-to-signed-cast',    
     'cuu' : 'unsigned-to-unsigned-cast',
+    'dr'  : 'distinct-region',
     'fc'  : 'format-cast',
     'ft'  : 'format-string',
     'ga'  : 'global-address',
@@ -210,7 +211,7 @@ class CPOHeapAddress(CPOPredicate):
     def __init__(self,cd,index,tags,args):
         CPOPredicate.__init__(self,cd,index,tags,args)
 
-    def get_exp(self): return self.cd.dictionary.get_exp(self.args[0])
+    def get_exp(self): return self.cd.dictionary.get_exp(int(self.args[0]))
 
     def is_heap_address(self): return True
 
@@ -226,6 +227,36 @@ class CPOHeapAddress(CPOPredicate):
     def __str__(self): return self.get_tag() + '(' + str(self.get_exp()) + ')'
 
 
+class CPODistinctRegion(CPOPredicate):
+    '''
+    tags:
+    0: 'dr'
+
+    args:
+    0: exp
+    1: memref index
+    '''
+    def __init__(self,cd,index,tags,args):
+        CPOPredicate.__init__(self,cd,index,tags,args)
+
+    def get_exp(self): return self.cd.dictionary.get_exp(int(self.args[0]))
+
+    def get_memref(self): return int(self.args[1])
+
+    def is_distinct_region(self): return True
+
+    def has_variable(self,vid): return self.get_exp().has_variable(vid)
+
+    def has_argument(self,vid):
+        if self.get_exp().is_lval():
+            lhost = self.get_exp().get_lval().get_lhost()
+            return lhost.is_var() and lhost.get_vid() == vid
+        else:
+            return False
+
+    def __str__(self):
+        return self.get_tag() + '(' + str(self.get_exp()) + ',' + str(self.get_memref()) + ')'
+        
 class CPONull(CPOPredicate):
     '''
     tags:

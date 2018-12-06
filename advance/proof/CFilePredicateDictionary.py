@@ -46,6 +46,7 @@ po_predicate_constructors = {
     'csuu': lambda x:PO.CPOSignedToUnsignedCastUB(*x),
     'cus' : lambda x:PO.CPOUnsignedToSignedCast(*x),
     'cuu' : lambda x:PO.CPOUnsignedToUnsignedCast(*x),
+    'dr'  : lambda x:PO.CPODistinctRegion(*x),
     'fc'  : lambda x:PO.CPOFormatCast(*x),
     'ft'  : lambda x:PO.CPOFormatString(*x),
     'ga'  : lambda x:PO.CPOGlobalAddress(*x),

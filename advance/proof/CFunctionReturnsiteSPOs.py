@@ -101,39 +101,8 @@ class CFunctionReturnsiteSPOs(object):
             self.spos[iipc] = []
             for po in p.findall('po'):
                 spotype = self.cfun.podictionary.read_xml_spo_type(po)
-                deps = None
+                deps = PO.get_dependencies(self,po)
                 status = po_status[po.get('s','o')]
-                if 'deps' in po.attrib:
-                    level = po.get('deps')
-                    if level == 'a':
-                        ids = [int(x) for x in po.get('ids').split(',') ]
-                        invs = po.get('invs')
-                        if len(invs) > 0:
-                            invs = [ int(x) for x in invs.split(',') ]
-                        else:
-                            invs = []
-                        deps = PO.CProofDependencies(self,level,ids,invs)
-                    else:
-                        deps = PO.CProofDependencies(self,level)
                 expl = None if po.find('e') is None else po.find('e').get('txt')
-                diag = None
-                dnode = po.find('d')
-                if not dnode is None:
-                    pinvs = {}
-                    amsgs = {}
-                    kmsgs = {}
-                    for n in dnode.find('invs').findall('arg'):
-                        pinvs[int(n.get('a'))] = [ int(x) for x in n.get('i').split(',') ]
-                    pmsgs = [ x.get('t') for x in dnode.find('msgs').findall('msg') ]
-                    for n in dnode.find('amsgs').findall('arg'):
-                        arg = int(n.get('a'))
-                        msgs = [ x.get('t') for x in n.findall('msg') ]
-                        amsgs[arg] = msgs
-                    knode = dnode.find('kmsgs')
-                    if not knode is None:
-                        for n in dnode.find('kmsgs').findall('key'):
-                            key = n.get('k')
-                            msgs = [  x.get('t') for x in n.findall('msg') ]
-                            kmsgs[key] = msgs
-                    diag = CProofDiagnostic(pinvs,pmsgs,amsgs,kmsgs)
+                diag = PO.get_diagnostic(po.find('d'))
                 self.spos[iipc].append(CFunctionReturnsiteSPO(self,spotype,status,deps,expl,diag))

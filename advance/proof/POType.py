@@ -92,6 +92,21 @@ class PPOLibType(POTypeDictionaryRecord):
                     + self.get_lib_function_name() + ',' + str(self.get_precondition())
                     + ')' )
 
+class LocalSPOType(POTypeDictionaryRecord):
+
+    def __init__(self,pod,index,tags,args):
+        POTypeDictionaryRecord.__init__(self,pod,index,tags,args)
+
+    def get_location(self): return self.cdecls.get_location(int(self.args[0]))
+
+    def get_context(self): return self.contexts.get_program_context(int(self.args[1]))
+
+    def get_predicate(self): return self.pd.get_predicate(int(self.args[2]))
+
+    def __str__(self):
+        return ('local-spo(' + str(self.get_location()) + ',' + str(self.get_context())
+                + ',' + str(self.get_predicate()) + ')' )
+
 class CallsiteSPOType(POTypeDictionaryRecord):
 
     def __init__(self,pod,index,tags,args):

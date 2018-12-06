@@ -34,9 +34,10 @@ import advance.proof.AssumptionType as AT
 import advance.proof.POType as PP
 
 assumption_type_constructors = {
+    'la': lambda x:AT.ATLocalAssumptionType(*x),
     'aa': lambda x:AT.ATApiAssumptionType(*x),
-    'ca': lambda x:AT.ATContractAssumptionType(*x),
-    'pc': lambda x:AT.ATPostconditionType(*x),
+    'gi': lambda x:AT.ATGlobalApiAssumptionType(*x),
+    'ca': lambda x:AT.ATPostconditionType(*x),
     'ga': lambda x:AT.ATGlobalAssumptionType(*x)
     }
 
@@ -47,7 +48,8 @@ ppo_type_constructors = {
 
 spo_type_constructors = {
     'cs': lambda x:PP.CallsiteSPOType(*x),
-    'rs': lambda x:PP.ReturnsiteSPOType(*x)
+    'rs': lambda x:PP.ReturnsiteSPOType(*x),
+    'ls': lambda x:PP.LocalSPOType(*x)
     }
 
 class CFunPODictionary(object):
