@@ -269,7 +269,7 @@ class CFunctionPO(object):
                 print('assumptions not recognized: ')
                 for t in atypes:
                     print('  ' + str(t))
-                exit(1)
+                return 'api'
 
     def get_global_assumptions(self):
         result = []
