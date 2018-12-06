@@ -107,6 +107,7 @@ xpredicate_constructors = {
     'pr': lambda x:XP.XPreservesMemory(*x),
     'pv': lambda x:XP.XPreservesValue(*x),
     'prm': lambda x:XP.XPreservesAllMemory(*x),
+    'prmx': lambda x:XP.XPreservesAllMemoryX(*x),
     'prn': lambda x:XP.XPreservesNullTermination(*x),
     'prv': lambda x:XP.XPreservesValidity(*x),
     'rb': lambda x:XP.XRevBuffer(*x),
@@ -361,7 +362,7 @@ class InterfaceDictionary(object):
         
     def parse_mathml_api_parameter(self,name,pars,gvars=[]):
         if (not name in pars) and (not name in gvars):
-            print('Error in reading user data: ' + name)
+            print('Error in reading user data: ' + name + ' in file ' + self.cfile.name)
         if name in pars:
             tags = [ 'pf' ]
             args = [ pars[name] ]
@@ -385,7 +386,13 @@ class InterfaceDictionary(object):
             tags = [ 'fo', tnode.get('name') ]
             args = [ self.parse_mathml_offset(offsetnode) ]
             def f(index,key): return ST.STArgFieldOffset(self,index,tags,args)
-            return self.s_offset_table.add(IT.get_key(tags,[]),f)
+            return self.s_offset_table.add(IT.get_key(tags,args),f)
+        elif tnode.tag == 'index':
+            offsetnode = tnode[0] if len(tnode) > 0 else None
+            tags = [ 'io', tnode.get('i') ]
+            args = [ self.parse_mathml_offset(offsetnode) ]
+            def f(index,key): return ST.STArgIndexOffset(self,index,tags,args)
+            return self.s_offset_table.add(IT.get_key(tags,args),f)
         else:
             print('Encountered index offset')
             exit(1)

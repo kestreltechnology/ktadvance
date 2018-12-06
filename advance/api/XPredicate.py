@@ -79,6 +79,7 @@ class XPredicate(CD.CDictionaryRecord):
     def is_null_terminated(self): return False
     def is_output_formatstring(self): return False
     def is_preserves_all_memory(self): return False
+    def is_preserves_all_memory_x(self): return False
     def is_preserves_memory(self): return False
     def is_preserves_null_termination(self): return False
     def is_preserves_validity(self): return False
@@ -453,6 +454,17 @@ class XPreservesAllMemory(XPredicate):
 
     def __str__(self): return 'preserves-all-memory'
 
+class XPreservesAllMemoryX(XPredicate):
+
+    def __init__(self,cd,index,tags,args):
+        XPredicate.__init__(self,cd,index,tags,args)
+
+    def is_preserves_all_memory_x(self): return True
+
+    def get_terms(self): return [ self.get_iterm(i) for i in self.args ]
+
+    def __str__(self):
+        return 'preserves-all-memory-x(' + ','.join( [ str(x) for x in self.get_terms() ]) + ')'
 
 class XPreservesMemory(XPredicate):
 
