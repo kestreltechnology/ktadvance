@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<codehawk-summary-file>
+  <function-summary name="log_error_write" file="src/log.c">
+    <parameters>
+      <par name="srv" nr="1"><pre><deref-read/></pre></par>
+      <par name="filename" nr="2"><pre><deref-read-nt/></pre></par>
+      <par name="line" nr="3"/>
+      <par name="fmt" nr="4">
+	<pre><format-string/><deref-read-nt/></pre>
+      </par>
+    </parameters>
+    <preconditions>
+      <pre>
+	<math>
+	  <apply>
+	    <initialized/>
+	    <apply>
+	      <addressed-value>
+		<field name="errorlog_mode"/>
+	      </addressed-value>
+	      <ci>server</ci>
+	    </apply>
+	  </apply>
+	</math>
+      </pre>
+      <pre>
+	<math>
+	  <apply>
+	    <initialized/>
+	    <apply>
+	      <addressed-value>
+		<field name="cur_ts"/>
+	      </addressed-value>
+	      <ci>server</ci>
+	    </apply>
+	  </apply>
+	</math>
+      </pre>
+      <pre>
+	<math>
+	  <apply>
+	    <initialized/>
+	    <apply>
+	      <addressed-value>
+		<field name="last_generated_debug_ts"/>
+	      </addressed-value>
+	      <ci>server</ci>
+	    </apply>
+	  </apply>
+	</math>
+      </pre>
+      <pre>
+	<math>
+	  <apply>
+	    <initialized/>
+	    <apply>
+	      <addressed-value>
+		<field name="ts_debug_str"/>
+	      </addressed-value>
+	      <ci>server</ci>
+	    </apply>
+	  </apply>
+	</math>
+      </pre>
+    </preconditions>
+    <postconditions/>
+    <sideeffects>
+      <sideeffect>
+	<math>
+	  <apply>
+	    <preserves-all-memory/>
+	  </apply>
+	</math>
+      </sideeffect>
+    </sideeffects>
+  </function-summary>
+</codehawk-summary-file>

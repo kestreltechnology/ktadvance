@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<codehawk-summary-file>
+  <function-summary name="buffer_is_equal_string" file="src/buffer.c">
+    <parameters>
+      <par name="a" nr="1"><pre><deref-read/></pre></par>
+      <par name="s" nr="2"><pre><deref-read-nt/></pre></par>
+      <par name="b_len" nr="3"/>
+    </parameters>
+    <preconditions>
+      <pre>
+	<math>
+	  <apply>
+	    <initialized/>
+	    <apply>
+	      <addressed-value>
+		<field name="used"/>
+	      </addressed-value>
+	      <ci>a</ci>
+	    </apply>
+	  </apply>
+	</math>
+      </pre>
+      <pre>
+	<math>
+	  <apply>
+	    <initialized/>
+	    <apply>
+	      <addressed-value>
+		<field name="ptr"/>
+	      </addressed-value>
+	      <ci>a</ci>
+	    </apply>
+	  </apply>
+	</math>
+      </pre>
+    </preconditions>
+    <postconditions/>
+    <sideeffects>
+      <sideeffect>
+	<math>
+	  <apply>
+	    <preserves-all-memory/>
+	  </apply>
+	</math>
+      </sideeffect>
+    </sideeffects>
+  </function-summary>
+</codehawk-summary-file>

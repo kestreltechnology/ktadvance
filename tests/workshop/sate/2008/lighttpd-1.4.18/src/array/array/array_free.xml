@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<codehawk-summary-file>
+  <function-summary name="array_free" file="src/array.c">
+    <parameters>
+      <par name="a" nr="1"><pre><deref-read-null/></pre></par>
+    </parameters>
+    <preconditions>
+      <pre>
+	<math>
+	  <apply>
+	    <initialized/>
+	    <apply>
+	      <addressed-value>
+		<field name="size"/>
+	      </addressed-value>
+	      <ci>a</ci>	      
+	    </apply>
+	  </apply>
+	</math>
+      </pre>
+      <pre>
+	<math>
+	  <apply>
+	    <initialized/>
+	    <apply>
+	      <addressed-value>
+		<field name="data"/>
+	      </addressed-value>
+	      <ci>a</ci>
+	    </apply>
+	  </apply>
+	</math>
+      </pre>
+      <pre>
+	<math>
+	  <apply>
+	    <initialized/>
+	    <apply>
+	      <addressed-value>
+		<field name="sorted"/>
+	      </addressed-value>
+	      <ci>a</ci>	      
+	    </apply>
+	  </apply>
+	</math>
+      </pre>
+    </preconditions>
+    <postconditions/>
+    <sideeffects/>
+  </function-summary>
+</codehawk-summary-file>
