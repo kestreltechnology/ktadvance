@@ -137,15 +137,15 @@ if __name__ == '__main__':
     am.reset_tables(cfilename)
     capp.collect_post_assumes()
 
-    am.generate_and_check_file(cfilename,'llrvisp')
-    # am.generate_and_check_file(cfilename,'llv')
+    # am.generate_and_check_file(cfilename,'llrvisp')
+    am.generate_and_check_file(cfilename,'vllrisp')
     am.reset_tables(cfilename)
     capp.collect_post_assumes()
 
     for k in range(4):
         capp.update_spos()
-        am.generate_and_check_file(cfilename,'llrvisp')
-        # am.generate_and_check_file(cfilename,'llv')        
+        am.generate_and_check_file(cfilename,'vllrisp')
+        # am.generate_and_check_file(cfilename,'lv')        
         am.reset_tables(cfilename)
 
     capp = CApplication(sempath,cfilename)
