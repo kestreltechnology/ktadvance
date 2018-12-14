@@ -1,11 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 13:16:38.137378"/>
-  <cfile name="base/config">
-    <data-structures/>
+  <header time="2018-12-06 16:18:47">
+    <application file="base/config.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="global_host_event_handler"/>
+      <gvar name="global_service_event_handler"/>
+      <gvar name="ochp_command"/>
+      <gvar name="ocsp_command"/>
+    </global-variables>
     <functions>
       <function name="pre_flight_check">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>ochp_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>ochp_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>global_service_event_handler</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>ocsp_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>global_service_event_handler</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>ocsp_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>global_host_event_handler</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>global_host_event_handler</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
