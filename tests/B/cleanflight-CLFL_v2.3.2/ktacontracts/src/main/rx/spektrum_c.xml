@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-05 16:14:19.619926"/>
-  <cfile name="src/main/rx/spektrum">
-    <data-structures/>
+  <header time="2018-12-08 11:41:14">
+    <application file="src/main/rx/spektrum.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="rxConfig">
         <parameters/>
-	<postconditions>
-	  <post>
-	    <math>
-	      <apply>
-		<initialized/>
-		<apply>
-		  <addressed-value>
-		    <field name="spektrum_bind_plug_ioTag"/>
-		  </addressed-value>
-		  <return/>
-		</apply>
-	      </apply>
-	    </math>
-	  </post>
-	</postconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="spektrum_bind_plug_ioTag"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="serialPinConfig">
         <parameters/>
@@ -65,11 +67,11 @@
         <parameters>
           <par name="self" nr="1"/>
         </parameters>
-    </function>
+      </function>
       <function name="srxlRxWriteTelemetryData">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
       </function>
     </functions>
