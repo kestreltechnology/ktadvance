@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 16:01:26.489912"/>
-  <cfile name="src/lemon">
-    <data-structures/>
+  <header time="2018-12-04 15:32:33">
+    <application file="src/lemon.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="Action_add">
         <parameters>
           <par name="app" nr="1"/>
-          <par name="type" nr="2"/>
-          <par name="sp" nr="3"/>
           <par name="arg" nr="4"/>
+          <par name="sp" nr="3"/>
+          <par name="type" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -24,13 +26,18 @@
       <function name="Action_new">
         <parameters/>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -81,8 +88,8 @@
       </function>
       <function name="Configcmp">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -100,13 +107,31 @@
           <par name="dot" nr="2"/>
         </parameters>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="fws"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -118,13 +143,31 @@
           <par name="dot" nr="2"/>
         </parameters>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="fws"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -286,9 +329,9 @@
       </function>
       <function name="ErrorMsg">
         <parameters>
+          <par name="format" nr="3"/>
           <par name="filename" nr="1"/>
           <par name="lineno" nr="2"/>
-          <par name="format" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -414,8 +457,8 @@
       </function>
       <function name="OptInit">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="a" nr="1"/>
           <par name="err" nr="3"/>
         </parameters>
         <postconditions>
@@ -483,8 +526,8 @@
       </function>
       <function name="Plink_copy">
         <parameters>
-          <par name="to" nr="1"/>
           <par name="from" nr="2"/>
+          <par name="to" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -513,9 +556,6 @@
       <function name="Plink_new">
         <parameters/>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
@@ -523,13 +563,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="PrintAction">
         <parameters>
+          <par name="indent" nr="3"/>
           <par name="ap" nr="1"/>
           <par name="fp" nr="2"/>
-          <par name="indent" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -655,8 +703,8 @@
       </function>
       <function name="SetUnion">
         <parameters>
-          <par name="s1" nr="1"/>
           <par name="s2" nr="2"/>
+          <par name="s1" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -692,6 +740,19 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="bp"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="State_init">
@@ -724,13 +785,18 @@
       <function name="State_new">
         <parameters/>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -741,13 +807,29 @@
           <par name="y" nr="1"/>
         </parameters>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -810,11 +892,18 @@
       <function name="Symbol_arrayof">
         <parameters/>
         <postconditions>
-	  <post><math><apply><not-null/><return/></apply></math></post>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -878,9 +967,6 @@
           <par name="x" nr="1"/>
         </parameters>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
@@ -888,12 +974,46 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="fallback"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="prec"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="Symbolcmpp">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -922,8 +1042,8 @@
       </function>
       <function name="acttab_action">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="lookahead" nr="2"/>
+          <par name="p" nr="1"/>
           <par name="action" nr="3"/>
         </parameters>
         <postconditions>
@@ -939,13 +1059,135 @@
       <function name="acttab_alloc">
         <parameters/>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="aAction"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nAction"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="mnLookahead"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="aLookahead"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="mxLookahead"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="mnAction"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nLookahead"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nActionAlloc"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nLookaheadAlloc"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -995,8 +1237,8 @@
       </function>
       <function name="axset_compare">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1086,8 +1328,8 @@
       <function name="emit_destructor_code">
         <parameters>
           <par name="out" nr="1"/>
-          <par name="sp" nr="2"/>
           <par name="lemp" nr="3"/>
+          <par name="sp" nr="2"/>
           <par name="lineno" nr="4"/>
         </parameters>
         <postconditions>
@@ -1122,13 +1364,26 @@
           <par name="suffix" nr="2"/>
         </parameters>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1137,8 +1392,8 @@
       <function name="file_open">
         <parameters>
           <par name="lemp" nr="1"/>
-          <par name="suffix" nr="2"/>
           <par name="mode" nr="3"/>
+          <par name="suffix" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1148,13 +1403,24 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="findbreak">
         <parameters>
           <par name="msg" nr="1"/>
-          <par name="min" nr="2"/>
           <par name="max" nr="3"/>
+          <par name="min" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1212,8 +1478,8 @@
       </function>
       <function name="has_destructor">
         <parameters>
-          <par name="sp" nr="1"/>
           <par name="lemp" nr="2"/>
+          <par name="sp" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1227,8 +1493,8 @@
       </function>
       <function name="main">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1243,7 +1509,6 @@
       <function name="memory_error">
         <parameters/>
         <postconditions>
-	  <post><math><apply><false/></apply></math></post>
           <post>
             <math>
               <apply>
@@ -1251,14 +1516,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <false/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="merge">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
-          <par name="cmp" nr="3"/>
           <par name="offset" nr="4"/>
+          <par name="a" nr="1"/>
+          <par name="cmp" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1276,9 +1548,6 @@
           <par name="upr" nr="2"/>
         </parameters>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
@@ -1286,12 +1555,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="msort">
         <parameters>
-          <par name="list" nr="1"/>
           <par name="next" nr="2"/>
+          <par name="list" nr="1"/>
           <par name="cmp" nr="3"/>
         </parameters>
         <postconditions>
@@ -1306,8 +1583,8 @@
       </function>
       <function name="myassert">
         <parameters>
-          <par name="file" nr="1"/>
           <par name="line" nr="2"/>
+          <par name="file" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1322,13 +1599,18 @@
       <function name="newconfig">
         <parameters/>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1351,8 +1633,8 @@
       <function name="pathsearch">
         <parameters>
           <par name="argv0" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="modemask" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1383,8 +1665,8 @@
       </function>
       <function name="resolve_conflict">
         <parameters>
-          <par name="apx" nr="1"/>
           <par name="apy" nr="2"/>
+          <par name="apx" nr="1"/>
           <par name="errsym" nr="3"/>
         </parameters>
         <postconditions>
@@ -1399,8 +1681,8 @@
       </function>
       <function name="statecmp">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1452,6 +1734,17 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="tplt_print">
@@ -1474,9 +1767,9 @@
       </function>
       <function name="tplt_xfer">
         <parameters>
-          <par name="name" nr="1"/>
-          <par name="in" nr="2"/>
           <par name="out" nr="3"/>
+          <par name="in" nr="2"/>
+          <par name="name" nr="1"/>
           <par name="lineno" nr="4"/>
         </parameters>
         <postconditions>

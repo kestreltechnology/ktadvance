@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 16:01:25.581971"/>
-  <cfile name="src/buffer">
-    <data-structures/>
+  <header time="2018-12-04 14:21:22">
+    <application file="src/buffer.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="LI_ltostr">
         <parameters>
@@ -14,6 +16,15 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -36,8 +47,8 @@
       </function>
       <function name="buffer_append_long_hex">
         <parameters>
-          <par name="b" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="b" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,9 +62,9 @@
       </function>
       <function name="buffer_append_memory">
         <parameters>
-          <par name="b" nr="1"/>
-          <par name="s" nr="2"/>
           <par name="s_len" nr="3"/>
+          <par name="s" nr="2"/>
+          <par name="b" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -67,8 +78,8 @@
       </function>
       <function name="buffer_append_string">
         <parameters>
-          <par name="b" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="b" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -82,8 +93,8 @@
       </function>
       <function name="buffer_append_string_buffer">
         <parameters>
-          <par name="b" nr="1"/>
           <par name="src" nr="2"/>
+          <par name="b" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -97,9 +108,9 @@
       </function>
       <function name="buffer_append_string_encoded">
         <parameters>
-          <par name="b" nr="1"/>
-          <par name="s" nr="2"/>
           <par name="s_len" nr="3"/>
+          <par name="s" nr="2"/>
+          <par name="b" nr="1"/>
           <par name="encoding" nr="4"/>
         </parameters>
         <postconditions>
@@ -114,9 +125,9 @@
       </function>
       <function name="buffer_append_string_len">
         <parameters>
-          <par name="b" nr="1"/>
-          <par name="s" nr="2"/>
           <par name="s_len" nr="3"/>
+          <par name="s" nr="2"/>
+          <par name="b" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -130,8 +141,8 @@
       </function>
       <function name="buffer_append_string_rfill">
         <parameters>
-          <par name="b" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="b" nr="1"/>
           <par name="maxlen" nr="3"/>
         </parameters>
         <postconditions>
@@ -200,9 +211,9 @@
       </function>
       <function name="buffer_caseless_compare">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="a_len" nr="2"/>
           <par name="b" nr="3"/>
+          <par name="a" nr="1"/>
           <par name="b_len" nr="4"/>
         </parameters>
         <postconditions>
@@ -232,9 +243,9 @@
       </function>
       <function name="buffer_copy_memory">
         <parameters>
-          <par name="b" nr="1"/>
-          <par name="s" nr="2"/>
           <par name="s_len" nr="3"/>
+          <par name="s" nr="2"/>
+          <par name="b" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -248,8 +259,8 @@
       </function>
       <function name="buffer_copy_string">
         <parameters>
-          <par name="b" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="b" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -263,8 +274,8 @@
       </function>
       <function name="buffer_copy_string_buffer">
         <parameters>
-          <par name="b" nr="1"/>
           <par name="src" nr="2"/>
+          <par name="b" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -278,9 +289,9 @@
       </function>
       <function name="buffer_copy_string_hex">
         <parameters>
+          <par name="in_len" nr="3"/>
           <par name="b" nr="1"/>
           <par name="in" nr="2"/>
-          <par name="in_len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -294,9 +305,9 @@
       </function>
       <function name="buffer_copy_string_len">
         <parameters>
-          <par name="b" nr="1"/>
-          <par name="s" nr="2"/>
           <par name="s_len" nr="3"/>
+          <par name="s" nr="2"/>
+          <par name="b" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -325,13 +336,44 @@
       <function name="buffer_init">
         <parameters/>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ptr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="size"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -356,13 +398,18 @@
           <par name="str" nr="1"/>
         </parameters>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -384,8 +431,8 @@
       </function>
       <function name="buffer_is_equal">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -399,9 +446,9 @@
       </function>
       <function name="buffer_is_equal_right_len">
         <parameters>
-          <par name="b1" nr="1"/>
-          <par name="b2" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="b2" nr="2"/>
+          <par name="b1" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -415,8 +462,8 @@
       </function>
       <function name="buffer_is_equal_string">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="a" nr="1"/>
           <par name="b_len" nr="3"/>
         </parameters>
         <postconditions>
@@ -446,8 +493,8 @@
       </function>
       <function name="buffer_prepare_append">
         <parameters>
-          <par name="b" nr="1"/>
           <par name="size" nr="2"/>
+          <par name="b" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -461,8 +508,8 @@
       </function>
       <function name="buffer_prepare_copy">
         <parameters>
-          <par name="b" nr="1"/>
           <par name="size" nr="2"/>
+          <par name="b" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -490,9 +537,9 @@
       </function>
       <function name="buffer_search_string_len">
         <parameters>
-          <par name="b" nr="1"/>
-          <par name="needle" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="needle" nr="2"/>
+          <par name="b" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -534,8 +581,8 @@
       </function>
       <function name="buffer_urldecode_internal">
         <parameters>
-          <par name="url" nr="1"/>
           <par name="is_query" nr="2"/>
+          <par name="url" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -584,6 +631,15 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>

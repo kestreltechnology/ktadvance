@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 16:01:27.788971"/>
-  <cfile name="src/mod_ssi">
-    <data-structures/>
+  <header time="2018-12-05 21:46:24">
+    <application file="src/mod_ssi.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="pcre_free"/>
+    </global-variables>
     <functions>
       <function name="build_ssi_cgi_vars">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -22,9 +26,27 @@
       </function>
       <function name="mod_ssi_free">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="p_d" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>pcre_free</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>pcre_free</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -37,9 +59,9 @@
       </function>
       <function name="mod_ssi_handle_request">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -65,9 +87,9 @@
       </function>
       <function name="mod_ssi_patch_connection">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -81,9 +103,9 @@
       </function>
       <function name="mod_ssi_physical_path">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p_d" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -111,8 +133,8 @@
       </function>
       <function name="mod_ssi_set_defaults">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="p_d" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -126,9 +148,9 @@
       </function>
       <function name="process_ssi_stmt">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p" nr="3"/>
+          <par name="srv" nr="1"/>
           <par name="l" nr="4"/>
           <par name="n" nr="5"/>
         </parameters>
@@ -160,9 +182,9 @@
       </function>
       <function name="ssi_env_add_request_headers">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>

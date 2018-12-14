@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 16:01:28.393097"/>
-  <cfile name="src/status_counter">
-    <data-structures/>
+  <header time="2018-12-05 22:00:24">
+    <application file="src/status_counter.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="status_counter_dec">
         <parameters>
-          <par name="srv" nr="1"/>
-          <par name="s" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="s" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -22,14 +24,11 @@
       </function>
       <function name="status_counter_get_counter">
         <parameters>
-          <par name="srv" nr="1"/>
-          <par name="s" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="s" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
@@ -37,13 +36,34 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="value"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="status_counter_inc">
         <parameters>
-          <par name="srv" nr="1"/>
-          <par name="s" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="s" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -57,10 +77,10 @@
       </function>
       <function name="status_counter_set">
         <parameters>
-          <par name="srv" nr="1"/>
-          <par name="s" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="s" nr="2"/>
           <par name="val" nr="4"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>

@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 16:01:26.691902"/>
-  <cfile name="src/mod_cgi">
-    <data-structures/>
+  <header time="2018-12-04 15:39:29">
+    <application file="src/mod_cgi.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="cgi_connection_close">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="hctx" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -21,9 +23,9 @@
       </function>
       <function name="cgi_connection_close_callback">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p_d" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -37,9 +39,9 @@
       </function>
       <function name="cgi_create_env">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p" nr="3"/>
+          <par name="srv" nr="1"/>
           <par name="cgi_handler" nr="4"/>
         </parameters>
         <postconditions>
@@ -54,8 +56,8 @@
       </function>
       <function name="cgi_demux_response">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="hctx" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -69,11 +71,11 @@
       </function>
       <function name="cgi_env_add">
         <parameters>
-          <par name="env" nr="1"/>
-          <par name="key" nr="2"/>
-          <par name="key_len" nr="3"/>
-          <par name="val" nr="4"/>
           <par name="val_len" nr="5"/>
+          <par name="env" nr="1"/>
+          <par name="key_len" nr="3"/>
+          <par name="key" nr="2"/>
+          <par name="val" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -118,9 +120,6 @@
       <function name="cgi_handler_ctx_init">
         <parameters/>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
@@ -128,13 +127,55 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="response_header"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="response"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="cgi_is_handled">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p_d" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -148,9 +189,9 @@
       </function>
       <function name="cgi_pid_add">
         <parameters>
-          <par name="srv" nr="1"/>
-          <par name="p" nr="2"/>
           <par name="pid" nr="3"/>
+          <par name="p" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -164,9 +205,9 @@
       </function>
       <function name="cgi_pid_del">
         <parameters>
-          <par name="srv" nr="1"/>
-          <par name="p" nr="2"/>
           <par name="pid" nr="3"/>
+          <par name="p" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -180,10 +221,10 @@
       </function>
       <function name="cgi_response_parse">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p" nr="3"/>
           <par name="in" nr="4"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -197,8 +238,8 @@
       </function>
       <function name="cgi_trigger">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="p_d" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -212,8 +253,8 @@
       </function>
       <function name="mod_cgi_free">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="p_d" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -227,9 +268,9 @@
       </function>
       <function name="mod_cgi_handle_subrequest">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p_d" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -255,9 +296,9 @@
       </function>
       <function name="mod_cgi_patch_connection">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -285,8 +326,8 @@
       </function>
       <function name="mod_fastcgi_set_defaults">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="p_d" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>

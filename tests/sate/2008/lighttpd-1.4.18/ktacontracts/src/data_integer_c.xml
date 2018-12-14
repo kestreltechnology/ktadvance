@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 16:01:26.026340"/>
-  <cfile name="src/data_integer">
-    <data-structures/>
+  <header time="2018-12-04 15:15:16">
+    <application file="src/data_integer.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="data_integer_copy">
         <parameters>
@@ -35,13 +37,31 @@
       <function name="data_integer_init">
         <parameters/>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="key"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -64,8 +84,8 @@
       </function>
       <function name="data_integer_print">
         <parameters>
-          <par name="d" nr="1"/>
           <par name="depth" nr="2"/>
+          <par name="d" nr="1"/>
         </parameters>
         <postconditions>
           <post>

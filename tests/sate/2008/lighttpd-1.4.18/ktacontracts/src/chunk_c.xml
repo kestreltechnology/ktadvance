@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 16:01:25.613860"/>
-  <cfile name="src/chunk">
-    <data-structures/>
+  <header time="2018-12-04 14:24:31">
+    <application file="src/chunk.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="chunk_free">
         <parameters>
@@ -46,8 +48,8 @@
       </function>
       <function name="chunkqueue_append_buffer">
         <parameters>
-          <par name="cq" nr="1"/>
           <par name="mem" nr="2"/>
+          <par name="cq" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -61,8 +63,8 @@
       </function>
       <function name="chunkqueue_append_buffer_weak">
         <parameters>
-          <par name="cq" nr="1"/>
           <par name="mem" nr="2"/>
+          <par name="cq" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -76,8 +78,8 @@
       </function>
       <function name="chunkqueue_append_chunk">
         <parameters>
-          <par name="cq" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="cq" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -91,10 +93,10 @@
       </function>
       <function name="chunkqueue_append_file">
         <parameters>
+          <par name="len" nr="4"/>
           <par name="cq" nr="1"/>
           <par name="fn" nr="2"/>
           <par name="offset" nr="3"/>
-          <par name="len" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -108,9 +110,9 @@
       </function>
       <function name="chunkqueue_append_mem">
         <parameters>
-          <par name="cq" nr="1"/>
-          <par name="mem" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="mem" nr="2"/>
+          <par name="cq" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -141,13 +143,18 @@
           <par name="cq" nr="1"/>
         </parameters>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -186,13 +193,46 @@
           <par name="cq" nr="1"/>
         </parameters>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="mem"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="file">
+                      <field name="name"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -240,8 +280,8 @@
       </function>
       <function name="chunkqueue_prepend_buffer">
         <parameters>
-          <par name="cq" nr="1"/>
           <par name="mem" nr="2"/>
+          <par name="cq" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -255,8 +295,8 @@
       </function>
       <function name="chunkqueue_prepend_chunk">
         <parameters>
-          <par name="cq" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="cq" nr="1"/>
         </parameters>
         <postconditions>
           <post>

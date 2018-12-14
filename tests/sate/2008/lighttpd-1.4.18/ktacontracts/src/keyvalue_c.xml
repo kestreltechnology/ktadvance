@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 16:01:26.224113"/>
-  <cfile name="src/keyvalue">
-    <data-structures/>
+  <header time="2018-12-04 15:26:17">
+    <application file="src/keyvalue.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="pcre_free"/>
+    </global-variables>
     <functions>
       <function name="get_http_method_key">
         <parameters>
@@ -92,8 +96,8 @@
         <parameters>
           <par name="kvb" nr="1"/>
           <par name="key" nr="2"/>
-          <par name="realm" nr="3"/>
           <par name="type" nr="4"/>
+          <par name="realm" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -134,8 +138,8 @@
       <function name="keyvalue_buffer_append">
         <parameters>
           <par name="kvb" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="key" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -175,8 +179,8 @@
       </function>
       <function name="keyvalue_get_key">
         <parameters>
-          <par name="kv" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="kv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -190,8 +194,8 @@
       </function>
       <function name="keyvalue_get_value">
         <parameters>
-          <par name="kv" nr="1"/>
           <par name="k" nr="2"/>
+          <par name="kv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -206,8 +210,8 @@
       <function name="pcre_keyvalue_buffer_append">
         <parameters>
           <par name="kvb" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="key" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -223,6 +227,24 @@
         <parameters>
           <par name="kvb" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>pcre_free</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>pcre_free</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -248,8 +270,8 @@
       <function name="s_keyvalue_buffer_append">
         <parameters>
           <par name="kvb" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="key" nr="2"/>
         </parameters>
         <postconditions>
           <post>

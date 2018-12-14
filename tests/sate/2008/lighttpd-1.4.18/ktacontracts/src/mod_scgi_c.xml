@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 16:01:27.676232"/>
-  <cfile name="src/mod_scgi">
-    <data-structures/>
+  <header time="2018-12-05 21:45:54">
+    <application file="src/mod_scgi.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="environ"/>
+    </global-variables>
     <functions>
       <function name="env_add">
         <parameters>
-          <par name="env" nr="1"/>
-          <par name="key" nr="2"/>
-          <par name="key_len" nr="3"/>
-          <par name="val" nr="4"/>
           <par name="val_len" nr="5"/>
+          <par name="env" nr="1"/>
+          <par name="key_len" nr="3"/>
+          <par name="key" nr="2"/>
+          <par name="val" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -39,9 +43,6 @@
       <function name="handler_ctx_init">
         <parameters/>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
@@ -49,12 +50,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="mod_scgi_free">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="p_d" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -68,9 +77,9 @@
       </function>
       <function name="mod_scgi_handle_joblist">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p_d" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -84,9 +93,9 @@
       </function>
       <function name="mod_scgi_handle_subrequest">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p_d" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -100,8 +109,8 @@
       </function>
       <function name="mod_scgi_handle_trigger">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="p_d" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -141,8 +150,8 @@
       </function>
       <function name="mod_scgi_set_defaults">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="p_d" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -156,10 +165,10 @@
       </function>
       <function name="scgi_check_extension">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p_d" nr="3"/>
           <par name="uri_path_handler" nr="4"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -173,9 +182,9 @@
       </function>
       <function name="scgi_check_extension_1">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p_d" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -189,9 +198,9 @@
       </function>
       <function name="scgi_check_extension_2">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p_d" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -205,8 +214,8 @@
       </function>
       <function name="scgi_connection_cleanup">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="hctx" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -220,8 +229,8 @@
       </function>
       <function name="scgi_connection_close">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="hctx" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -235,9 +244,9 @@
       </function>
       <function name="scgi_connection_close_callback">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p_d" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -251,9 +260,9 @@
       </function>
       <function name="scgi_connection_reset">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p_d" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -267,8 +276,8 @@
       </function>
       <function name="scgi_create_env">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="hctx" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -282,8 +291,8 @@
       </function>
       <function name="scgi_demux_response">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="hctx" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -297,11 +306,11 @@
       </function>
       <function name="scgi_env_add">
         <parameters>
-          <par name="env" nr="1"/>
-          <par name="key" nr="2"/>
-          <par name="key_len" nr="3"/>
-          <par name="val" nr="4"/>
           <par name="val_len" nr="5"/>
+          <par name="env" nr="1"/>
+          <par name="key_len" nr="3"/>
+          <par name="key" nr="2"/>
+          <par name="val" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -315,9 +324,9 @@
       </function>
       <function name="scgi_env_add_request_headers">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -331,8 +340,8 @@
       </function>
       <function name="scgi_establish_connection">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="hctx" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -419,9 +428,6 @@
       <function name="scgi_host_init">
         <parameters/>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
@@ -429,13 +435,177 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="active_procs"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="unixsocket"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="bin_path"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="bin_env"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="num_procs"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="port"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="docroot"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="first"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="host"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="max_id"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="min_procs"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="bin_env_copy"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="scgi_patch_connection">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
           <par name="p" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -464,9 +634,6 @@
       <function name="scgi_process_init">
         <parameters/>
         <postconditions>
-	  <post>
-	    <math><apply><not-null/><return/></apply></math>
-	  </post>
           <post>
             <math>
               <apply>
@@ -474,13 +641,47 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="socket"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="port"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="scgi_proclist_sort_down">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="host" nr="2"/>
           <par name="proc" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -494,9 +695,9 @@
       </function>
       <function name="scgi_proclist_sort_up">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="host" nr="2"/>
           <par name="proc" nr="3"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -510,8 +711,8 @@
       </function>
       <function name="scgi_reconnect">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="hctx" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -525,11 +726,11 @@
       </function>
       <function name="scgi_response_parse">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="con" nr="2"/>
+          <par name="eol" nr="5"/>
           <par name="p" nr="3"/>
           <par name="in" nr="4"/>
-          <par name="eol" nr="5"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -543,9 +744,9 @@
       </function>
       <function name="scgi_restart_dead_procs">
         <parameters>
-          <par name="srv" nr="1"/>
-          <par name="p" nr="2"/>
           <par name="host" nr="3"/>
+          <par name="p" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -559,8 +760,8 @@
       </function>
       <function name="scgi_set_state">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="hctx" nr="2"/>
+          <par name="srv" nr="1"/>
           <par name="state" nr="3"/>
         </parameters>
         <postconditions>
@@ -575,11 +776,29 @@
       </function>
       <function name="scgi_spawn_connection">
         <parameters>
-          <par name="srv" nr="1"/>
-          <par name="p" nr="2"/>
           <par name="host" nr="3"/>
           <par name="proc" nr="4"/>
+          <par name="p" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>environ</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>environ</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -592,8 +811,8 @@
       </function>
       <function name="scgi_write_request">
         <parameters>
-          <par name="srv" nr="1"/>
           <par name="hctx" nr="2"/>
+          <par name="srv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
