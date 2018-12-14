@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:57.024228"/>
-  <cfile name="lib/mime">
-    <data-structures/>
+  <header time="2018-12-12 23:06:41">
+    <application file="lib/mime.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+      <gvar name="Curl_cstrdup"/>
+    </global-variables>
     <functions>
       <function name="Curl_mime_add_header">
         <parameters>
           <par name="slp" nr="1"/>
           <par name="fmt" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -23,6 +47,24 @@
         <parameters>
           <par name="part" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -64,8 +106,8 @@
       </function>
       <function name="Curl_mime_initpart">
         <parameters>
-          <par name="part" nr="1"/>
           <par name="easy" nr="2"/>
+          <par name="part" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -80,10 +122,28 @@
       <function name="Curl_mime_prepare_headers">
         <parameters>
           <par name="part" nr="1"/>
+          <par name="strategy" nr="4"/>
           <par name="contenttype" nr="2"/>
           <par name="disposition" nr="3"/>
-          <par name="strategy" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -96,10 +156,10 @@
       </function>
       <function name="Curl_mime_read">
         <parameters>
+          <par name="instream" nr="4"/>
           <par name="buffer" nr="1"/>
           <par name="size" nr="2"/>
           <par name="nitems" nr="3"/>
-          <par name="instream" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -127,9 +187,9 @@
       </function>
       <function name="Curl_mime_set_subparts">
         <parameters>
+          <par name="take_ownership" nr="3"/>
           <par name="part" nr="1"/>
           <par name="subparts" nr="2"/>
-          <par name="take_ownership" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -157,9 +217,9 @@
       </function>
       <function name="add_content_type">
         <parameters>
+          <par name="boundary" nr="3"/>
           <par name="slp" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="boundary" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -203,6 +263,24 @@
         <parameters>
           <par name="mime" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -219,6 +297,24 @@
           <par name="data" nr="2"/>
           <par name="datasize" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -232,11 +328,11 @@
       <function name="curl_mime_data_cb">
         <parameters>
           <par name="part" nr="1"/>
-          <par name="datasize" nr="2"/>
-          <par name="readfunc" nr="3"/>
           <par name="seekfunc" nr="4"/>
-          <par name="freefunc" nr="5"/>
           <par name="arg" nr="6"/>
+          <par name="freefunc" nr="5"/>
+          <par name="readfunc" nr="3"/>
+          <par name="datasize" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -268,6 +364,40 @@
           <par name="part" nr="1"/>
           <par name="filename" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -283,6 +413,40 @@
           <par name="part" nr="1"/>
           <par name="filename" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -297,6 +461,24 @@
         <parameters>
           <par name="mime" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -309,9 +491,9 @@
       </function>
       <function name="curl_mime_headers">
         <parameters>
+          <par name="take_ownership" nr="3"/>
           <par name="part" nr="1"/>
           <par name="headers" nr="2"/>
-          <par name="take_ownership" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -327,6 +509,40 @@
         <parameters>
           <par name="easy" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -342,6 +558,40 @@
           <par name="part" nr="1"/>
           <par name="name" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -372,6 +622,40 @@
           <par name="part" nr="1"/>
           <par name="mimetype" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -384,10 +668,10 @@
       </function>
       <function name="encoder_7bit_read">
         <parameters>
+          <par name="part" nr="4"/>
           <par name="buffer" nr="1"/>
           <par name="size" nr="2"/>
           <par name="ateof" nr="3"/>
-          <par name="part" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -401,10 +685,10 @@
       </function>
       <function name="encoder_base64_read">
         <parameters>
+          <par name="part" nr="4"/>
           <par name="buffer" nr="1"/>
           <par name="size" nr="2"/>
           <par name="ateof" nr="3"/>
-          <par name="part" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -432,10 +716,10 @@
       </function>
       <function name="encoder_nop_read">
         <parameters>
+          <par name="part" nr="4"/>
           <par name="buffer" nr="1"/>
           <par name="size" nr="2"/>
           <par name="ateof" nr="3"/>
-          <par name="part" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -463,10 +747,10 @@
       </function>
       <function name="encoder_qp_read">
         <parameters>
+          <par name="part" nr="4"/>
           <par name="buffer" nr="1"/>
           <par name="size" nr="2"/>
           <par name="ateof" nr="3"/>
-          <par name="part" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -496,6 +780,24 @@
         <parameters>
           <par name="src" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -508,9 +810,9 @@
       </function>
       <function name="match_header">
         <parameters>
-          <par name="hdr" nr="1"/>
-          <par name="lbl" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="lbl" nr="2"/>
+          <par name="hdr" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -526,6 +828,24 @@
         <parameters>
           <par name="ptr" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -538,10 +858,10 @@
       </function>
       <function name="mime_file_read">
         <parameters>
+          <par name="instream" nr="4"/>
           <par name="buffer" nr="1"/>
           <par name="size" nr="2"/>
           <par name="nitems" nr="3"/>
-          <par name="instream" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -573,6 +893,24 @@
         <parameters>
           <par name="ptr" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -585,10 +923,10 @@
       </function>
       <function name="mime_mem_read">
         <parameters>
+          <par name="instream" nr="4"/>
           <par name="buffer" nr="1"/>
           <par name="size" nr="2"/>
           <par name="nitems" nr="3"/>
-          <par name="instream" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -660,10 +998,10 @@
       </function>
       <function name="mime_subparts_read">
         <parameters>
+          <par name="instream" nr="4"/>
           <par name="buffer" nr="1"/>
           <par name="size" nr="2"/>
           <par name="nitems" nr="3"/>
-          <par name="instream" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -707,9 +1045,9 @@
       </function>
       <function name="mimesetstate">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="tok" nr="2"/>
           <par name="ptr" nr="3"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -785,12 +1123,12 @@
       </function>
       <function name="readback_bytes">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="buffer" nr="2"/>
-          <par name="bufsize" nr="3"/>
-          <par name="bytes" nr="4"/>
           <par name="numbytes" nr="5"/>
+          <par name="bytes" nr="4"/>
+          <par name="buffer" nr="2"/>
           <par name="trail" nr="6"/>
+          <par name="state" nr="1"/>
+          <par name="bufsize" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -820,8 +1158,8 @@
       </function>
       <function name="search_header">
         <parameters>
-          <par name="hdrlist" nr="1"/>
           <par name="hdr" nr="2"/>
+          <par name="hdrlist" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -835,9 +1173,9 @@
       </function>
       <function name="slist_size">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="overhead" nr="2"/>
           <par name="skip" nr="3"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -853,6 +1191,40 @@
         <parameters>
           <par name="fullfile" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

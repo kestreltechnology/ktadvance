@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:56.055074"/>
-  <cfile name="lib/curl_sasl">
-    <data-structures/>
+  <header time="2018-12-12 22:33:51">
+    <application file="lib/curl_sasl.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cstrdup"/>
+    </global-variables>
     <functions>
       <function name="Curl_sasl_can_authenticate">
         <parameters>
@@ -38,9 +43,43 @@
         <parameters>
           <par name="sasl" nr="1"/>
           <par name="conn" nr="2"/>
-          <par name="code" nr="3"/>
           <par name="progress" nr="4"/>
+          <par name="code" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -53,9 +92,9 @@
       </function>
       <function name="Curl_sasl_decode_mech">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="ptr" nr="1"/>
           <par name="maxlen" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -85,8 +124,8 @@
       <function name="Curl_sasl_parse_url_auth_option">
         <parameters>
           <par name="sasl" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="value" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -101,10 +140,28 @@
       <function name="Curl_sasl_start">
         <parameters>
           <par name="sasl" nr="1"/>
-          <par name="conn" nr="2"/>
           <par name="force_ir" nr="3"/>
+          <par name="conn" nr="2"/>
           <par name="progress" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

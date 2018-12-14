@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:56.023661"/>
-  <cfile name="lib/curl_path">
-    <data-structures/>
+  <header time="2018-12-12 22:33:35">
+    <application file="lib/curl_path.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+    </global-variables>
     <functions>
       <function name="Curl_get_pathname">
         <parameters>
@@ -10,6 +15,40 @@
           <par name="path" nr="2"/>
           <par name="homedir" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -23,9 +62,43 @@
       <function name="Curl_getworkingpath">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="homedir" nr="2"/>
           <par name="path" nr="3"/>
+          <par name="homedir" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

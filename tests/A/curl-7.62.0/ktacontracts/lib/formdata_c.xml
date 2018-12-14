@@ -1,15 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:56.195074"/>
-  <cfile name="lib/formdata">
-    <data-structures/>
+  <header time="2018-12-12 22:37:32">
+    <application file="lib/formdata.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_ccalloc"/>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+      <gvar name="Curl_cstrdup"/>
+    </global-variables>
     <functions>
       <function name="AddFormInfo">
         <parameters>
-          <par name="value" nr="1"/>
-          <par name="contenttype" nr="2"/>
           <par name="parent_form_info" nr="3"/>
+          <par name="contenttype" nr="2"/>
+          <par name="value" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -22,21 +47,39 @@
       </function>
       <function name="AddHttpPost">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="namelength" nr="2"/>
-          <par name="value" nr="3"/>
-          <par name="contentslength" nr="4"/>
-          <par name="buffer" nr="5"/>
-          <par name="bufferlength" nr="6"/>
-          <par name="contenttype" nr="7"/>
-          <par name="flags" nr="8"/>
-          <par name="contentHeader" nr="9"/>
-          <par name="showfilename" nr="10"/>
           <par name="userp" nr="11"/>
+          <par name="buffer" nr="5"/>
           <par name="parent_post" nr="12"/>
+          <par name="contentslength" nr="4"/>
+          <par name="contenttype" nr="7"/>
+          <par name="value" nr="3"/>
+          <par name="showfilename" nr="10"/>
           <par name="httppost" nr="13"/>
           <par name="last_post" nr="14"/>
+          <par name="contentHeader" nr="9"/>
+          <par name="bufferlength" nr="6"/>
+          <par name="flags" nr="8"/>
+          <par name="name" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -49,10 +92,10 @@
       </function>
       <function name="Curl_getformdata">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="finalform" nr="2"/>
           <par name="post" nr="3"/>
           <par name="fread_func" nr="4"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -70,6 +113,56 @@
           <par name="last_post" nr="2"/>
           <par name="params" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -99,6 +192,24 @@
         <parameters>
           <par name="form" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -111,9 +222,9 @@
       </function>
       <function name="curl_formget">
         <parameters>
-          <par name="form" nr="1"/>
           <par name="arg" nr="2"/>
           <par name="append" nr="3"/>
+          <par name="form" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -127,10 +238,44 @@
       </function>
       <function name="setname">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="part" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

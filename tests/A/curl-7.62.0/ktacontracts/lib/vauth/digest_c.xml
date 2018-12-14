@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:58.956030"/>
-  <cfile name="lib/vauth/digest">
-    <data-structures/>
+  <header time="2018-12-12 23:32:20">
+    <application file="lib/vauth/digest.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+      <gvar name="Curl_cstrdup"/>
+    </global-variables>
     <functions>
       <function name="Curl_auth_create_digest_http_message">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="userp" nr="2"/>
-          <par name="passwdp" nr="3"/>
-          <par name="request" nr="4"/>
-          <par name="uripath" nr="5"/>
-          <par name="digest" nr="6"/>
           <par name="outptr" nr="7"/>
           <par name="outlen" nr="8"/>
+          <par name="userp" nr="2"/>
+          <par name="passwdp" nr="3"/>
+          <par name="digest" nr="6"/>
+          <par name="uripath" nr="5"/>
+          <par name="data" nr="1"/>
+          <par name="request" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -27,14 +33,32 @@
       </function>
       <function name="Curl_auth_create_digest_md5_message">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="chlg64" nr="2"/>
-          <par name="userp" nr="3"/>
-          <par name="passwdp" nr="4"/>
-          <par name="service" nr="5"/>
           <par name="outptr" nr="6"/>
           <par name="outlen" nr="7"/>
+          <par name="userp" nr="3"/>
+          <par name="service" nr="5"/>
+          <par name="passwdp" nr="4"/>
+          <par name="data" nr="1"/>
+          <par name="chlg64" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -47,9 +71,43 @@
       </function>
       <function name="Curl_auth_decode_digest_http_message">
         <parameters>
-          <par name="chlg" nr="1"/>
           <par name="digest" nr="2"/>
+          <par name="chlg" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -64,6 +122,24 @@
         <parameters>
           <par name="digest" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -76,10 +152,10 @@
       </function>
       <function name="Curl_auth_digest_get_pair">
         <parameters>
-          <par name="str" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="content" nr="3"/>
+          <par name="value" nr="2"/>
           <par name="endptr" nr="4"/>
+          <par name="str" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -105,17 +181,35 @@
       </function>
       <function name="_Curl_auth_create_digest_http_message">
         <parameters>
-          <par name="data" nr="1"/>
+          <par name="outptr" nr="7"/>
+          <par name="convert_to_ascii" nr="9"/>
+          <par name="outlen" nr="8"/>
           <par name="userp" nr="2"/>
           <par name="passwdp" nr="3"/>
-          <par name="request" nr="4"/>
-          <par name="uripath" nr="5"/>
-          <par name="digest" nr="6"/>
-          <par name="outptr" nr="7"/>
-          <par name="outlen" nr="8"/>
-          <par name="convert_to_ascii" nr="9"/>
           <par name="hash" nr="10"/>
+          <par name="digest" nr="6"/>
+          <par name="uripath" nr="5"/>
+          <par name="data" nr="1"/>
+          <par name="request" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -128,16 +222,34 @@
       </function>
       <function name="auth_decode_digest_md5_message">
         <parameters>
-          <par name="chlg64" nr="1"/>
           <par name="nonce" nr="2"/>
           <par name="nlen" nr="3"/>
-          <par name="realm" nr="4"/>
-          <par name="rlen" nr="5"/>
-          <par name="alg" nr="6"/>
-          <par name="alen" nr="7"/>
           <par name="qop" nr="8"/>
+          <par name="rlen" nr="5"/>
+          <par name="alen" nr="7"/>
           <par name="qlen" nr="9"/>
+          <par name="alg" nr="6"/>
+          <par name="chlg64" nr="1"/>
+          <par name="realm" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -150,10 +262,10 @@
       </function>
       <function name="auth_digest_get_key_value">
         <parameters>
-          <par name="chlg" nr="1"/>
-          <par name="key" nr="2"/>
-          <par name="value" nr="3"/>
           <par name="max_val_len" nr="4"/>
+          <par name="chlg" nr="1"/>
+          <par name="value" nr="3"/>
+          <par name="key" nr="2"/>
           <par name="end_char" nr="5"/>
         </parameters>
         <postconditions>
@@ -168,9 +280,43 @@
       </function>
       <function name="auth_digest_get_qop_values">
         <parameters>
-          <par name="options" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="options" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -183,8 +329,8 @@
       </function>
       <function name="auth_digest_md5_to_ascii">
         <parameters>
-          <par name="source" nr="1"/>
           <par name="dest" nr="2"/>
+          <par name="source" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -198,8 +344,8 @@
       </function>
       <function name="auth_digest_sha256_to_ascii">
         <parameters>
-          <par name="source" nr="1"/>
           <par name="dest" nr="2"/>
+          <par name="source" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -215,6 +361,24 @@
         <parameters>
           <par name="source" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

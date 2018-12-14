@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:59.187257"/>
-  <cfile name="lib/vtls/openssl">
-    <data-structures/>
+  <header time="2018-12-12 23:33:25">
+    <application file="lib/vtls/openssl.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+      <gvar name="keylog_file_fp"/>
+    </global-variables>
     <functions>
       <function name="Curl_ossl_cert_status_request">
         <parameters/>
@@ -32,6 +38,35 @@
       </function>
       <function name="Curl_ossl_cleanup">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>keylog_file_fp</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>keylog_file_fp</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>keylog_file_fp</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -44,8 +79,8 @@
       </function>
       <function name="Curl_ossl_close">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="sockindex" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -73,8 +108,8 @@
       </function>
       <function name="Curl_ossl_connect">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="sockindex" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -88,9 +123,9 @@
       </function>
       <function name="Curl_ossl_connect_nonblocking">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="sockindex" nr="2"/>
           <par name="done" nr="3"/>
+          <par name="sockindex" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -104,8 +139,8 @@
       </function>
       <function name="Curl_ossl_data_pending">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="connindex" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -148,6 +183,24 @@
       </function>
       <function name="Curl_ossl_init">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -162,8 +215,8 @@
         <parameters>
           <par name="tmp" nr="1"/>
           <par name="tmplen" nr="2"/>
-          <par name="md5sum" nr="3"/>
           <par name="unused" nr="4"/>
+          <par name="md5sum" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -177,9 +230,9 @@
       </function>
       <function name="Curl_ossl_random">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="entropy" nr="2"/>
           <par name="length" nr="3"/>
+          <par name="entropy" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -221,8 +274,8 @@
       </function>
       <function name="Curl_ossl_set_engine">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="engine" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -251,8 +304,8 @@
       <function name="Curl_ossl_sha256sum">
         <parameters>
           <par name="tmp" nr="1"/>
-          <par name="tmplen" nr="2"/>
           <par name="sha256sum" nr="3"/>
+          <par name="tmplen" nr="2"/>
           <par name="unused" nr="4"/>
         </parameters>
         <postconditions>
@@ -267,8 +320,8 @@
       </function>
       <function name="Curl_ossl_shutdown">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="sockindex" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -311,9 +364,9 @@
       </function>
       <function name="X509V3_ext">
         <parameters>
+          <par name="exts" nr="3"/>
           <par name="data" nr="1"/>
           <par name="certnum" nr="2"/>
-          <par name="exts" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -327,9 +380,9 @@
       </function>
       <function name="asn1_object_dump">
         <parameters>
-          <par name="a" nr="1"/>
-          <par name="buf" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="buf" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -343,13 +396,13 @@
       </function>
       <function name="cert_stuff">
         <parameters>
+          <par name="cert_type" nr="4"/>
           <par name="conn" nr="1"/>
+          <par name="key_type" nr="6"/>
           <par name="ctx" nr="2"/>
           <par name="cert_file" nr="3"/>
-          <par name="cert_type" nr="4"/>
-          <par name="key_file" nr="5"/>
-          <par name="key_type" nr="6"/>
           <par name="key_passwd" nr="7"/>
+          <par name="key_file" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -377,8 +430,8 @@
       </function>
       <function name="get_cert_chain">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="connssl" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -434,10 +487,10 @@
       </function>
       <function name="ossl_connect_common">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="sockindex" nr="2"/>
           <par name="nonblocking" nr="3"/>
           <par name="done" nr="4"/>
+          <par name="sockindex" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -451,8 +504,8 @@
       </function>
       <function name="ossl_connect_step1">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="sockindex" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -466,8 +519,8 @@
       </function>
       <function name="ossl_connect_step2">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="sockindex" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -481,8 +534,8 @@
       </function>
       <function name="ossl_connect_step3">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="sockindex" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -496,10 +549,10 @@
       </function>
       <function name="ossl_recv">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="num" nr="2"/>
           <par name="buf" nr="3"/>
           <par name="buffersize" nr="4"/>
+          <par name="conn" nr="1"/>
           <par name="curlcode" nr="5"/>
         </parameters>
         <postconditions>
@@ -514,10 +567,10 @@
       </function>
       <function name="ossl_send">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="sockindex" nr="2"/>
-          <par name="mem" nr="3"/>
           <par name="len" nr="4"/>
+          <par name="mem" nr="3"/>
+          <par name="sockindex" nr="2"/>
+          <par name="conn" nr="1"/>
           <par name="curlcode" nr="5"/>
         </parameters>
         <postconditions>
@@ -532,9 +585,9 @@
       </function>
       <function name="ossl_strerror">
         <parameters>
-          <par name="error" nr="1"/>
           <par name="buf" nr="2"/>
           <par name="size" nr="3"/>
+          <par name="error" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -548,8 +601,8 @@
       </function>
       <function name="passwd_callback">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="num" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="encrypting" nr="3"/>
           <par name="global_passwd" nr="4"/>
         </parameters>
@@ -565,10 +618,44 @@
       </function>
       <function name="pkp_pin_peer_pubkey">
         <parameters>
+          <par name="pinnedpubkey" nr="3"/>
           <par name="data" nr="1"/>
           <par name="cert" nr="2"/>
-          <par name="pinnedpubkey" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -581,12 +668,12 @@
       </function>
       <function name="pubkey_show">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="mem" nr="2"/>
+          <par name="bn" nr="6"/>
           <par name="num" nr="3"/>
+          <par name="mem" nr="2"/>
+          <par name="data" nr="1"/>
           <par name="type" nr="4"/>
           <par name="name" nr="5"/>
-          <par name="bn" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -612,12 +699,12 @@
       </function>
       <function name="select_next_proto_cb">
         <parameters>
-          <par name="ssl" nr="1"/>
           <par name="out" nr="2"/>
           <par name="outlen" nr="3"/>
-          <par name="in" nr="4"/>
+          <par name="ssl" nr="1"/>
           <par name="inlen" nr="5"/>
           <par name="arg" nr="6"/>
+          <par name="in" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -633,10 +720,10 @@
         <parameters>
           <par name="out" nr="1"/>
           <par name="outlen" nr="2"/>
-          <par name="in" nr="3"/>
-          <par name="inlen" nr="4"/>
-          <par name="key" nr="5"/>
           <par name="keylen" nr="6"/>
+          <par name="inlen" nr="4"/>
+          <par name="in" nr="3"/>
+          <par name="key" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -650,9 +737,9 @@
       </function>
       <function name="servercert">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="connssl" nr="2"/>
           <par name="strict" nr="3"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -667,8 +754,8 @@
       <function name="set_ssl_version_min_max">
         <parameters>
           <par name="ctx_options" nr="1"/>
-          <par name="conn" nr="2"/>
           <par name="sockindex" nr="3"/>
+          <par name="conn" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -697,13 +784,13 @@
       </function>
       <function name="ssl_tls_trace">
         <parameters>
-          <par name="direction" nr="1"/>
-          <par name="ssl_ver" nr="2"/>
-          <par name="content_type" nr="3"/>
-          <par name="buf" nr="4"/>
           <par name="len" nr="5"/>
           <par name="ssl" nr="6"/>
           <par name="userp" nr="7"/>
+          <par name="direction" nr="1"/>
+          <par name="buf" nr="4"/>
+          <par name="ssl_ver" nr="2"/>
+          <par name="content_type" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -717,8 +804,8 @@
       </function>
       <function name="ssl_ui_reader">
         <parameters>
-          <par name="ui" nr="1"/>
           <par name="uis" nr="2"/>
+          <par name="ui" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -732,8 +819,8 @@
       </function>
       <function name="ssl_ui_writer">
         <parameters>
-          <par name="ui" nr="1"/>
           <par name="uis" nr="2"/>
+          <par name="ui" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -747,10 +834,10 @@
       </function>
       <function name="subj_alt_hostcheck">
         <parameters>
-          <par name="data" nr="1"/>
+          <par name="dispname" nr="4"/>
           <par name="match_pattern" nr="2"/>
           <par name="hostname" nr="3"/>
-          <par name="dispname" nr="4"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -767,6 +854,24 @@
           <par name="ssl" nr="1"/>
           <par name="state" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>keylog_file_fp</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>keylog_file_fp</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -779,9 +884,9 @@
       </function>
       <function name="tls_rt_type">
         <parameters>
-          <par name="type" nr="1"/>
           <par name="buf" nr="2"/>
           <par name="buflen" nr="3"/>
+          <par name="type" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -810,8 +915,8 @@
       </function>
       <function name="verifystatus">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="connssl" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -825,9 +930,9 @@
       </function>
       <function name="x509_name_oneline">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="buf" nr="2"/>
           <par name="size" nr="3"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>

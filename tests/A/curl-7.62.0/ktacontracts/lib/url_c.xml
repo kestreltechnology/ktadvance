@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:58.810040"/>
-  <cfile name="lib/url">
-    <data-structures/>
+  <header time="2018-12-12 23:26:48">
+    <application file="lib/url.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_ccalloc"/>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+      <gvar name="Curl_cstrdup"/>
+      <gvar name="Curl_ssl"/>
+    </global-variables>
     <functions>
       <function name="ConnectionExists">
         <parameters>
-          <par name="data" nr="1"/>
+          <par name="waitpipe" nr="5"/>
+          <par name="force_reuse" nr="4"/>
           <par name="needle" nr="2"/>
           <par name="usethis" nr="3"/>
-          <par name="force_reuse" nr="4"/>
-          <par name="waitpipe" nr="5"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -40,6 +48,24 @@
         <parameters>
           <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -52,9 +78,9 @@
       </function>
       <function name="Curl_connect">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="in_connect" nr="2"/>
           <par name="asyncp" nr="3"/>
+          <par name="data" nr="1"/>
           <par name="protocol_done" nr="4"/>
         </parameters>
         <postconditions>
@@ -69,8 +95,8 @@
       </function>
       <function name="Curl_connected_proxy">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="sockindex" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -84,8 +110,8 @@
       </function>
       <function name="Curl_disconnect">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
           <par name="dead_connection" nr="3"/>
         </parameters>
         <postconditions>
@@ -100,9 +126,9 @@
       </function>
       <function name="Curl_doing_getsock">
         <parameters>
+          <par name="numsocks" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="socks" nr="2"/>
-          <par name="numsocks" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -118,6 +144,24 @@
         <parameters>
           <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -132,6 +176,24 @@
         <parameters>
           <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -144,8 +206,8 @@
       </function>
       <function name="Curl_getoff_all_pipelines">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -159,8 +221,8 @@
       </function>
       <function name="Curl_init_do">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -190,6 +252,56 @@
         <parameters>
           <par name="curl" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -202,12 +314,46 @@
       </function>
       <function name="Curl_parse_login_details">
         <parameters>
-          <par name="login" nr="1"/>
+          <par name="optionsp" nr="5"/>
           <par name="len" nr="2"/>
           <par name="userp" nr="3"/>
+          <par name="login" nr="1"/>
           <par name="passwdp" nr="4"/>
-          <par name="optionsp" nr="5"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -235,8 +381,8 @@
       </function>
       <function name="Curl_protocol_connecting">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -250,8 +396,8 @@
       </function>
       <function name="Curl_protocol_doing">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -265,9 +411,9 @@
       </function>
       <function name="Curl_protocol_getsock">
         <parameters>
+          <par name="numsocks" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="socks" nr="2"/>
-          <par name="numsocks" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -299,6 +445,24 @@
           <par name="conn" nr="1"/>
           <par name="protocol_done" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -327,6 +491,24 @@
         <parameters>
           <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -339,8 +521,8 @@
       </function>
       <function name="Curl_upkeep">
         <parameters>
-          <par name="conn_cache" nr="1"/>
           <par name="data" nr="2"/>
+          <par name="conn_cache" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -368,8 +550,8 @@
       </function>
       <function name="IsPipeliningPossible">
         <parameters>
-          <par name="handle" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="handle" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -399,6 +581,85 @@
         <parameters>
           <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ssl</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ssl</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="sizeof_ssl_backend_data"/>
+                  </addressed-value>
+                  <ci>Curl_ssl</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -411,8 +672,8 @@
       </function>
       <function name="call_extract_if_dead">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="param" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -426,8 +687,8 @@
       </function>
       <function name="check_noproxy">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="no_proxy" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -443,6 +704,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -455,8 +734,8 @@
       </function>
       <function name="conn_upkeep">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="param" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -470,10 +749,44 @@
       </function>
       <function name="create_conn">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="in_connect" nr="2"/>
+          <par name="data" nr="1"/>
           <par name="async" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -488,6 +801,40 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -529,9 +876,9 @@
       </function>
       <function name="findprotocol">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="conn" nr="2"/>
           <par name="protostr" nr="3"/>
+          <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -545,8 +892,8 @@
       </function>
       <function name="fix_hostname">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="host" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -645,12 +992,46 @@
       </function>
       <function name="override_login">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="conn" nr="2"/>
+          <par name="optionsp" nr="5"/>
           <par name="userp" nr="3"/>
           <par name="passwdp" nr="4"/>
-          <par name="optionsp" nr="5"/>
+          <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -663,11 +1044,45 @@
       </function>
       <function name="parse_connect_to_host_port">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="host" nr="2"/>
-          <par name="hostname_result" nr="3"/>
           <par name="port_result" nr="4"/>
+          <par name="data" nr="1"/>
+          <par name="hostname_result" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -680,10 +1095,28 @@
       </function>
       <function name="parse_connect_to_slist">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
           <par name="conn_to_host" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -696,12 +1129,30 @@
       </function>
       <function name="parse_connect_to_string">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="conn" nr="2"/>
-          <par name="conn_to_host" nr="3"/>
-          <par name="host_result" nr="4"/>
           <par name="port_result" nr="5"/>
+          <par name="data" nr="1"/>
+          <par name="host_result" nr="4"/>
+          <par name="conn_to_host" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -714,11 +1165,74 @@
       </function>
       <function name="parse_proxy">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="conn" nr="2"/>
           <par name="proxy" nr="3"/>
+          <par name="conn" nr="2"/>
           <par name="proxytype" nr="4"/>
+          <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="supports"/>
+                  </addressed-value>
+                  <ci>Curl_ssl</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ssl</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ssl</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -731,8 +1245,8 @@
       </function>
       <function name="parse_proxy_auth">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -746,8 +1260,8 @@
       </function>
       <function name="parse_remote_port">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -761,8 +1275,8 @@
       </function>
       <function name="parseurlandfillconn">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -776,8 +1290,8 @@
       </function>
       <function name="proxy_info_matches">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="needle" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -805,10 +1319,44 @@
       </function>
       <function name="resolve_server">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
           <par name="async" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -824,6 +1372,24 @@
           <par name="old_conn" nr="1"/>
           <par name="conn" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -838,6 +1404,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -866,6 +1450,40 @@
         <parameters>
           <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

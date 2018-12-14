@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:55.261430"/>
-  <cfile name="lib/conncache">
-    <data-structures/>
+  <header time="2018-12-13 07:48:33">
+    <application file="lib/conncache.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+    </global-variables>
     <functions>
       <function name="Curl_conncache_add_conn">
         <parameters>
           <par name="connc" nr="1"/>
           <par name="conn" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -51,6 +90,24 @@
         <parameters>
           <par name="connc" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -63,8 +120,8 @@
       </function>
       <function name="Curl_conncache_extract_bundle">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="bundle" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -92,8 +149,8 @@
       </function>
       <function name="Curl_conncache_find_bundle">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="connc" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -121,10 +178,10 @@
       </function>
       <function name="Curl_conncache_foreach">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="connc" nr="2"/>
           <par name="param" nr="3"/>
           <par name="func" nr="4"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -141,6 +198,24 @@
           <par name="connc" nr="1"/>
           <par name="size" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -210,8 +285,8 @@
       </function>
       <function name="bundle_add_conn">
         <parameters>
-          <par name="cb_ptr" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="cb_ptr" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -228,6 +303,24 @@
           <par name="data" nr="1"/>
           <par name="cb_ptr" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -242,6 +335,24 @@
         <parameters>
           <par name="cb_ptr" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -254,8 +365,8 @@
       </function>
       <function name="bundle_remove_conn">
         <parameters>
-          <par name="cb_ptr" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="cb_ptr" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -285,8 +396,8 @@
       <function name="conncache_add_bundle">
         <parameters>
           <par name="connc" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="bundle" nr="3"/>
+          <par name="key" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -317,6 +428,24 @@
         <parameters>
           <par name="freethis" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -329,9 +458,9 @@
       </function>
       <function name="hashkey">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="buf" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="buf" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -345,8 +474,8 @@
       </function>
       <function name="sigpipe_ignore">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="ig" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>

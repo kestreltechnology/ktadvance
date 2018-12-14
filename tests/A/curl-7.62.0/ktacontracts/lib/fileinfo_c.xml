@@ -1,11 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:56.153131"/>
-  <cfile name="lib/fileinfo">
-    <data-structures/>
+  <header time="2018-12-12 22:37:21">
+    <application file="lib/fileinfo.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_ccalloc"/>
+      <gvar name="Curl_cfree"/>
+    </global-variables>
     <functions>
       <function name="Curl_fileinfo_alloc">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -20,6 +43,24 @@
         <parameters>
           <par name="finfo" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

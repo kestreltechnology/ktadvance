@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:58.901639"/>
-  <cfile name="lib/vauth/cleartext">
-    <data-structures/>
+  <header time="2018-12-12 23:31:54">
+    <application file="lib/vauth/cleartext.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+      <gvar name="Curl_cstrdup"/>
+    </global-variables>
     <functions>
       <function name="Curl_auth_create_external_message">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="user" nr="2"/>
           <par name="outptr" nr="3"/>
           <par name="outlen" nr="4"/>
+          <par name="user" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -23,11 +29,29 @@
       </function>
       <function name="Curl_auth_create_login_message">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="valuep" nr="2"/>
           <par name="outptr" nr="3"/>
           <par name="outlen" nr="4"/>
+          <par name="data" nr="1"/>
+          <par name="valuep" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -40,12 +64,46 @@
       </function>
       <function name="Curl_auth_create_plain_message">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="userp" nr="2"/>
-          <par name="passwdp" nr="3"/>
           <par name="outptr" nr="4"/>
           <par name="outlen" nr="5"/>
+          <par name="userp" nr="2"/>
+          <par name="passwdp" nr="3"/>
+          <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

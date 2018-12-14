@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:55.991327"/>
-  <cfile name="lib/curl_ntlm_core">
-    <data-structures/>
+  <header time="2018-12-12 22:30:25">
+    <application file="lib/curl_ntlm_core.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_ccalloc"/>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+      <gvar name="Curl_cstrdup"/>
+    </global-variables>
     <functions>
       <function name="Curl_hmac_md5">
         <parameters>
-          <par name="key" nr="1"/>
-          <par name="keylen" nr="2"/>
-          <par name="data" nr="3"/>
           <par name="datalen" nr="4"/>
+          <par name="keylen" nr="2"/>
           <par name="output" nr="5"/>
+          <par name="key" nr="1"/>
+          <par name="data" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -24,9 +31,9 @@
       </function>
       <function name="Curl_ntlm_core_lm_resp">
         <parameters>
-          <par name="keys" nr="1"/>
           <par name="plaintext" nr="2"/>
           <par name="results" nr="3"/>
+          <par name="keys" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -40,9 +47,9 @@
       </function>
       <function name="Curl_ntlm_core_mk_lm_hash">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="password" nr="2"/>
           <par name="lmbuffer" nr="3"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -56,8 +63,8 @@
       </function>
       <function name="Curl_ntlm_core_mk_lmv2_resp">
         <parameters>
-          <par name="ntlmv2hash" nr="1"/>
           <par name="challenge_client" nr="2"/>
+          <par name="ntlmv2hash" nr="1"/>
           <par name="challenge_server" nr="3"/>
           <par name="lmresp" nr="4"/>
         </parameters>
@@ -73,10 +80,60 @@
       </function>
       <function name="Curl_ntlm_core_mk_nt_hash">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="password" nr="2"/>
+          <par name="data" nr="1"/>
           <par name="ntbuffer" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -90,12 +147,46 @@
       <function name="Curl_ntlm_core_mk_ntlmv2_hash">
         <parameters>
           <par name="user" nr="1"/>
-          <par name="userlen" nr="2"/>
-          <par name="domain" nr="3"/>
           <par name="domlen" nr="4"/>
           <par name="ntlmhash" nr="5"/>
+          <par name="domain" nr="3"/>
           <par name="ntlmv2hash" nr="6"/>
+          <par name="userlen" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -108,12 +199,46 @@
       </function>
       <function name="Curl_ntlm_core_mk_ntlmv2_resp">
         <parameters>
-          <par name="ntlmv2hash" nr="1"/>
           <par name="challenge_client" nr="2"/>
+          <par name="ntresp_len" nr="5"/>
+          <par name="ntlmv2hash" nr="1"/>
           <par name="ntlm" nr="3"/>
           <par name="ntresp" nr="4"/>
-          <par name="ntresp_len" nr="5"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -158,8 +283,8 @@
       </function>
       <function name="extend_key_56_to_64">
         <parameters>
-          <par name="key_56" nr="1"/>
           <par name="key" nr="2"/>
+          <par name="key_56" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -173,8 +298,8 @@
       </function>
       <function name="setup_des_key">
         <parameters>
-          <par name="key_56" nr="1"/>
           <par name="ks" nr="2"/>
+          <par name="key_56" nr="1"/>
         </parameters>
         <postconditions>
           <post>

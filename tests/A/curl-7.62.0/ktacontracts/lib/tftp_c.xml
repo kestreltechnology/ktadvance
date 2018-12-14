@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:58.549286"/>
-  <cfile name="lib/tftp">
-    <data-structures/>
+  <header time="2018-12-12 23:24:57">
+    <application file="lib/tftp.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_ccalloc"/>
+      <gvar name="Curl_cfree"/>
+    </global-variables>
     <functions>
       <function name="Curl_strnlen">
         <parameters>
@@ -49,8 +54,8 @@
       </function>
       <function name="setpacketblock">
         <parameters>
-          <par name="packet" nr="1"/>
           <par name="num" nr="2"/>
+          <par name="packet" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -64,8 +69,8 @@
       </function>
       <function name="setpacketevent">
         <parameters>
-          <par name="packet" nr="1"/>
           <par name="num" nr="2"/>
+          <par name="packet" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -79,9 +84,27 @@
       </function>
       <function name="tftp_connect">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -94,8 +117,8 @@
       </function>
       <function name="tftp_connect_for_rx">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="event" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -109,8 +132,8 @@
       </function>
       <function name="tftp_connect_for_tx">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="event" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -127,6 +150,24 @@
           <par name="conn" nr="1"/>
           <par name="dead_connection" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -139,8 +180,8 @@
       </function>
       <function name="tftp_do">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -154,8 +195,8 @@
       </function>
       <function name="tftp_doing">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="dophase_done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -169,9 +210,9 @@
       </function>
       <function name="tftp_done">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="status" nr="2"/>
           <par name="premature" nr="3"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -185,9 +226,9 @@
       </function>
       <function name="tftp_getsock">
         <parameters>
+          <par name="numsocks" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="socks" nr="2"/>
-          <par name="numsocks" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -201,8 +242,8 @@
       </function>
       <function name="tftp_multi_statemach">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -216,10 +257,10 @@
       </function>
       <function name="tftp_option_add">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="csize" nr="2"/>
           <par name="buf" nr="3"/>
           <par name="option" nr="4"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -233,10 +274,10 @@
       </function>
       <function name="tftp_option_get">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
-          <par name="option" nr="3"/>
+          <par name="buf" nr="1"/>
           <par name="value" nr="4"/>
+          <par name="option" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -250,9 +291,9 @@
       </function>
       <function name="tftp_parse_option_ack">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="ptr" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="ptr" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -266,8 +307,8 @@
       </function>
       <function name="tftp_perform">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="dophase_done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -295,8 +336,8 @@
       </function>
       <function name="tftp_rx">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="event" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -310,9 +351,27 @@
       </function>
       <function name="tftp_send_first">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="event" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -353,8 +412,8 @@
       </function>
       <function name="tftp_state_machine">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="event" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -397,8 +456,8 @@
       </function>
       <function name="tftp_tx">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="event" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>

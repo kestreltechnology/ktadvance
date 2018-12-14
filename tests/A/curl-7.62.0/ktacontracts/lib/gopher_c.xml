@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:56.456235"/>
-  <cfile name="lib/gopher">
-    <data-structures/>
+  <header time="2018-12-12 22:58:03">
+    <application file="lib/gopher.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cfree"/>
+    </global-variables>
     <functions>
       <function name="gopher_do">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

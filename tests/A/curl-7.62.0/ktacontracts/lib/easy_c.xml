@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:56.117111"/>
-  <cfile name="lib/easy">
-    <data-structures/>
+  <header time="2018-12-12 22:35:52">
+    <application file="lib/easy.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_ccalloc"/>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+      <gvar name="Curl_cstrdup"/>
+      <gvar name="initialized"/>
+    </global-variables>
     <functions>
       <function name="curl_easy_cleanup">
         <parameters>
@@ -22,6 +30,72 @@
         <parameters>
           <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -34,8 +108,8 @@
       </function>
       <function name="curl_easy_getinfo">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="info" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -61,9 +135,27 @@
       </function>
       <function name="curl_easy_pause">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="action" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -90,9 +182,9 @@
       </function>
       <function name="curl_easy_recv">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="buffer" nr="2"/>
           <par name="buflen" nr="3"/>
+          <par name="data" nr="1"/>
           <par name="n" nr="4"/>
         </parameters>
         <postconditions>
@@ -121,9 +213,9 @@
       </function>
       <function name="curl_easy_send">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="buffer" nr="2"/>
           <par name="buflen" nr="3"/>
+          <par name="data" nr="1"/>
           <par name="n" nr="4"/>
         </parameters>
         <postconditions>
@@ -152,6 +244,21 @@
       </function>
       <function name="curl_global_cleanup">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>initialized</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -178,13 +285,28 @@
       </function>
       <function name="curl_global_init_mem">
         <parameters>
-          <par name="flags" nr="1"/>
-          <par name="m" nr="2"/>
-          <par name="f" nr="3"/>
-          <par name="r" nr="4"/>
-          <par name="s" nr="5"/>
           <par name="c" nr="6"/>
+          <par name="r" nr="4"/>
+          <par name="m" nr="2"/>
+          <par name="s" nr="5"/>
+          <par name="f" nr="3"/>
+          <par name="flags" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>initialized</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -228,8 +350,8 @@
       </function>
       <function name="easy_perform">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="events" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -257,9 +379,24 @@
       </function>
       <function name="global_init">
         <parameters>
-          <par name="flags" nr="1"/>
           <par name="memoryfuncs" nr="2"/>
+          <par name="flags" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>initialized</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -272,8 +409,8 @@
       </function>
       <function name="sigpipe_ignore">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="ig" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>

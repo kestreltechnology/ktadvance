@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:57.395444"/>
-  <cfile name="lib/pop3">
-    <data-structures/>
+  <header time="2018-12-12 23:15:57">
+    <application file="lib/pop3.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_ccalloc"/>
+      <gvar name="Curl_cfree"/>
+    </global-variables>
     <functions>
       <function name="Curl_pop3_write">
         <parameters>
@@ -36,8 +41,8 @@
       </function>
       <function name="pop3_connect">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,8 +56,8 @@
       </function>
       <function name="pop3_continue_auth">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="resp" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -69,6 +74,24 @@
           <par name="conn" nr="1"/>
           <par name="dead_connection" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -81,8 +104,8 @@
       </function>
       <function name="pop3_do">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -96,8 +119,8 @@
       </function>
       <function name="pop3_doing">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="dophase_done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -111,10 +134,28 @@
       </function>
       <function name="pop3_done">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="status" nr="2"/>
           <par name="premature" nr="3"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -142,10 +183,10 @@
       </function>
       <function name="pop3_endofresp">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="line" nr="2"/>
-          <par name="len" nr="3"/>
           <par name="resp" nr="4"/>
+          <par name="len" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -159,8 +200,8 @@
       </function>
       <function name="pop3_get_message">
         <parameters>
-          <par name="buffer" nr="1"/>
           <par name="outptr" nr="2"/>
+          <par name="buffer" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -174,9 +215,9 @@
       </function>
       <function name="pop3_getsock">
         <parameters>
+          <par name="numsocks" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="socks" nr="2"/>
-          <par name="numsocks" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -192,6 +233,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -204,8 +263,8 @@
       </function>
       <function name="pop3_multi_statemach">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -261,9 +320,9 @@
       </function>
       <function name="pop3_perform">
         <parameters>
+          <par name="dophase_done" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="connected" nr="2"/>
-          <par name="dophase_done" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -292,8 +351,8 @@
       <function name="pop3_perform_auth">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="mech" nr="2"/>
           <par name="initresp" nr="3"/>
+          <par name="mech" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -405,8 +464,8 @@
       </function>
       <function name="pop3_regular_transfer">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="dophase_done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -435,8 +494,8 @@
       <function name="pop3_state_apop_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="pop3code" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="pop3code" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -451,8 +510,8 @@
       <function name="pop3_state_auth_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="pop3code" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="pop3code" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -467,8 +526,8 @@
       <function name="pop3_state_capa_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="pop3code" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="pop3code" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -483,9 +542,27 @@
       <function name="pop3_state_command_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="pop3code" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="pop3code" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -499,8 +576,8 @@
       <function name="pop3_state_pass_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="pop3code" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="pop3code" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -515,9 +592,27 @@
       <function name="pop3_state_servergreet_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="pop3code" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="pop3code" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -531,8 +626,8 @@
       <function name="pop3_state_starttls_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="pop3code" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="pop3code" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -547,8 +642,8 @@
       <function name="pop3_state_user_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="pop3code" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="pop3code" nr="2"/>
         </parameters>
         <postconditions>
           <post>

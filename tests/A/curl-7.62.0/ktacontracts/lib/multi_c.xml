@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:57.229680"/>
-  <cfile name="lib/multi">
-    <data-structures/>
+  <header time="2018-12-12 23:11:19">
+    <application file="lib/multi.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_ccalloc"/>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+    </global-variables>
     <functions>
       <function name="Curl_expire">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="milli" nr="2"/>
+          <par name="data" nr="1"/>
           <par name="id" nr="3"/>
         </parameters>
         <postconditions>
@@ -79,9 +85,9 @@
       </function>
       <function name="Curl_multi_add_perform">
         <parameters>
+          <par name="conn" nr="3"/>
           <par name="multi" nr="1"/>
           <par name="data" nr="2"/>
-          <par name="conn" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -155,6 +161,40 @@
           <par name="hashsize" nr="1"/>
           <par name="chashsize" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -237,8 +277,8 @@
       </function>
       <function name="Curl_pipeline_wanted">
         <parameters>
-          <par name="multi" nr="1"/>
           <par name="bits" nr="2"/>
+          <par name="multi" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -252,8 +292,8 @@
       </function>
       <function name="Curl_set_in_callback">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -312,9 +352,9 @@
       </function>
       <function name="curl_multi_assign">
         <parameters>
-          <par name="multi" nr="1"/>
-          <par name="s" nr="2"/>
           <par name="hashp" nr="3"/>
+          <par name="s" nr="2"/>
+          <par name="multi" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -330,6 +370,24 @@
         <parameters>
           <par name="multi" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -342,11 +400,11 @@
       </function>
       <function name="curl_multi_fdset">
         <parameters>
-          <par name="multi" nr="1"/>
           <par name="read_fd_set" nr="2"/>
-          <par name="write_fd_set" nr="3"/>
-          <par name="exc_fd_set" nr="4"/>
           <par name="max_fd" nr="5"/>
+          <par name="exc_fd_set" nr="4"/>
+          <par name="write_fd_set" nr="3"/>
+          <par name="multi" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -360,8 +418,8 @@
       </function>
       <function name="curl_multi_info_read">
         <parameters>
-          <par name="multi" nr="1"/>
           <par name="msgs_in_queue" nr="2"/>
+          <par name="multi" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -417,8 +475,8 @@
       </function>
       <function name="curl_multi_setopt">
         <parameters>
-          <par name="multi" nr="1"/>
           <par name="option" nr="2"/>
+          <par name="multi" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -432,8 +490,8 @@
       </function>
       <function name="curl_multi_socket">
         <parameters>
-          <par name="multi" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="multi" nr="1"/>
           <par name="running_handles" nr="3"/>
         </parameters>
         <postconditions>
@@ -448,8 +506,8 @@
       </function>
       <function name="curl_multi_socket_action">
         <parameters>
-          <par name="multi" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="multi" nr="1"/>
           <par name="ev_bitmask" nr="3"/>
           <par name="running_handles" nr="4"/>
         </parameters>
@@ -495,12 +553,46 @@
       </function>
       <function name="curl_multi_wait">
         <parameters>
-          <par name="multi" nr="1"/>
           <par name="extra_fds" nr="2"/>
+          <par name="ret" nr="5"/>
+          <par name="multi" nr="1"/>
           <par name="extra_nfds" nr="3"/>
           <par name="timeout_ms" nr="4"/>
-          <par name="ret" nr="5"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -527,9 +619,9 @@
       </function>
       <function name="domore_getsock">
         <parameters>
+          <par name="numsocks" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="socks" nr="2"/>
-          <par name="numsocks" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -543,10 +635,10 @@
       </function>
       <function name="fd_key_compare">
         <parameters>
-          <par name="k1" nr="1"/>
           <par name="k1_len" nr="2"/>
-          <par name="k2" nr="3"/>
           <par name="k2_len" nr="4"/>
+          <par name="k2" nr="3"/>
+          <par name="k1" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -560,9 +652,9 @@
       </function>
       <function name="hash_fd">
         <parameters>
-          <par name="key" nr="1"/>
-          <par name="key_length" nr="2"/>
           <par name="slots_num" nr="3"/>
+          <par name="key_length" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -591,8 +683,8 @@
       </function>
       <function name="multi_addmsg">
         <parameters>
-          <par name="multi" nr="1"/>
           <par name="msg" nr="2"/>
+          <par name="multi" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -606,8 +698,8 @@
       </function>
       <function name="multi_addtimeout">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="stamp" nr="2"/>
+          <par name="data" nr="1"/>
           <par name="eid" nr="3"/>
         </parameters>
         <postconditions>
@@ -637,8 +729,8 @@
       </function>
       <function name="multi_do">
         <parameters>
-          <par name="connp" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="connp" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -652,8 +744,8 @@
       </function>
       <function name="multi_do_more">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="complete" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -667,10 +759,28 @@
       </function>
       <function name="multi_done">
         <parameters>
-          <par name="connp" nr="1"/>
           <par name="status" nr="2"/>
           <par name="premature" nr="3"/>
+          <par name="connp" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -683,8 +793,8 @@
       </function>
       <function name="multi_freeamsg">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -698,9 +808,9 @@
       </function>
       <function name="multi_getsock">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="socks" nr="2"/>
           <par name="numsocks" nr="3"/>
+          <par name="socks" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -743,10 +853,28 @@
       </function>
       <function name="multi_runsingle">
         <parameters>
-          <par name="multi" nr="1"/>
           <par name="now" nr="2"/>
+          <par name="multi" nr="1"/>
           <par name="data" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -759,9 +887,9 @@
       </function>
       <function name="multi_socket">
         <parameters>
-          <par name="multi" nr="1"/>
           <par name="checkall" nr="2"/>
           <par name="s" nr="3"/>
+          <par name="multi" nr="1"/>
           <par name="ev_bitmask" nr="4"/>
           <par name="running_handles" nr="5"/>
         </parameters>
@@ -806,10 +934,44 @@
       </function>
       <function name="sh_addentry">
         <parameters>
-          <par name="sh" nr="1"/>
           <par name="s" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="sh" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -822,8 +984,8 @@
       </function>
       <function name="sh_delentry">
         <parameters>
-          <par name="sh" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="sh" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -839,6 +1001,24 @@
         <parameters>
           <par name="freethis" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -851,8 +1031,8 @@
       </function>
       <function name="sh_getentry">
         <parameters>
-          <par name="sh" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="sh" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -881,8 +1061,8 @@
       </function>
       <function name="sigpipe_ignore">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="ig" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -939,9 +1119,9 @@
       </function>
       <function name="waitconnect_getsock">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="sock" nr="2"/>
           <par name="numsocks" nr="3"/>
+          <par name="sock" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -955,9 +1135,9 @@
       </function>
       <function name="waitproxyconnect_getsock">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="sock" nr="2"/>
           <par name="numsocks" nr="3"/>
+          <par name="sock" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:56.131511"/>
-  <cfile name="lib/escape">
-    <data-structures/>
+  <header time="2018-12-12 22:36:33">
+    <application file="lib/escape.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+    </global-variables>
     <functions>
       <function name="Curl_isunreserved">
         <parameters>
@@ -20,13 +25,47 @@
       </function>
       <function name="Curl_urldecode">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="string" nr="2"/>
           <par name="length" nr="3"/>
-          <par name="ostring" nr="4"/>
           <par name="olen" nr="5"/>
+          <par name="string" nr="2"/>
           <par name="reject_ctrl" nr="6"/>
+          <par name="data" nr="1"/>
+          <par name="ostring" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -39,10 +78,44 @@
       </function>
       <function name="curl_easy_escape">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="string" nr="2"/>
           <par name="inlength" nr="3"/>
+          <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -55,11 +128,29 @@
       </function>
       <function name="curl_easy_unescape">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="string" nr="2"/>
           <par name="length" nr="3"/>
           <par name="olen" nr="4"/>
+          <par name="string" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -89,6 +180,24 @@
         <parameters>
           <par name="p" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -101,8 +210,8 @@
       </function>
       <function name="curl_unescape">
         <parameters>
-          <par name="string" nr="1"/>
           <par name="length" nr="2"/>
+          <par name="string" nr="1"/>
         </parameters>
         <postconditions>
           <post>

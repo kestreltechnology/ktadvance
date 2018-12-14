@@ -1,19 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:58.984770"/>
-  <cfile name="lib/vauth/oauth2">
-    <data-structures/>
+  <header time="2018-12-12 23:32:46">
+    <application file="lib/vauth/oauth2.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cfree"/>
+    </global-variables>
     <functions>
       <function name="Curl_auth_create_oauth_bearer_message">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="user" nr="2"/>
-          <par name="host" nr="3"/>
-          <par name="port" nr="4"/>
-          <par name="bearer" nr="5"/>
           <par name="outptr" nr="6"/>
+          <par name="host" nr="3"/>
           <par name="outlen" nr="7"/>
+          <par name="user" nr="2"/>
+          <par name="bearer" nr="5"/>
+          <par name="port" nr="4"/>
+          <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

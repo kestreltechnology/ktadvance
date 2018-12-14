@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:59.589292"/>
-  <cfile name="src/tool_getparam">
-    <data-structures/>
+  <header time="2018-12-12 23:37:00">
+    <application file="src/tool_getparam.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="curlinfo"/>
+    </global-variables>
     <functions>
       <function name="GetFileAndPassword">
         <parameters>
           <par name="nextarg" nr="1"/>
-          <par name="file" nr="2"/>
           <par name="password" nr="3"/>
+          <par name="file" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -22,9 +26,9 @@
       </function>
       <function name="GetSizeParameter">
         <parameters>
-          <par name="global" nr="1"/>
-          <par name="arg" nr="2"/>
           <par name="which" nr="3"/>
+          <par name="arg" nr="2"/>
+          <par name="global" nr="1"/>
           <par name="value_out" nr="4"/>
         </parameters>
         <postconditions>
@@ -41,10 +45,41 @@
         <parameters>
           <par name="flag" nr="1"/>
           <par name="nextarg" nr="2"/>
-          <par name="usedarg" nr="3"/>
-          <par name="global" nr="4"/>
           <par name="config" nr="5"/>
+          <par name="global" nr="4"/>
+          <par name="usedarg" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="features"/>
+                  </addressed-value>
+                  <ci>curlinfo</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curlinfo</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curlinfo</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -58,8 +93,8 @@
       <function name="parse_args">
         <parameters>
           <par name="config" nr="1"/>
-          <par name="argc" nr="2"/>
           <par name="argv" nr="3"/>
+          <par name="argc" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -73,9 +108,9 @@
       </function>
       <function name="parse_cert_parameter">
         <parameters>
-          <par name="cert_parameter" nr="1"/>
-          <par name="certname" nr="2"/>
           <par name="passphrase" nr="3"/>
+          <par name="certname" nr="2"/>
+          <par name="cert_parameter" nr="1"/>
         </parameters>
         <postconditions>
           <post>

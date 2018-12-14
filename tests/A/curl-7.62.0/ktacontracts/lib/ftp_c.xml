@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:56.384275"/>
-  <cfile name="lib/ftp">
-    <data-structures/>
+  <header time="2018-12-12 22:38:21">
+    <application file="lib/ftp.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_ccalloc"/>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+      <gvar name="Curl_crealloc"/>
+      <gvar name="Curl_cstrdup"/>
+    </global-variables>
     <functions>
       <function name="AcceptServerConnect">
         <parameters>
@@ -35,9 +43,9 @@
       </function>
       <function name="Curl_GetFTPResponse">
         <parameters>
+          <par name="ftpcode" nr="3"/>
           <par name="nreadp" nr="1"/>
           <par name="conn" nr="2"/>
-          <par name="ftpcode" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,8 +59,8 @@
       </function>
       <function name="Curl_ftpsend">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="cmd" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -140,6 +148,24 @@
         <parameters>
           <par name="ftpc" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -166,8 +192,8 @@
       </function>
       <function name="ftp_connect">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -184,6 +210,24 @@
           <par name="conn" nr="1"/>
           <par name="dead_connection" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -196,8 +240,8 @@
       </function>
       <function name="ftp_do">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -226,8 +270,8 @@
       </function>
       <function name="ftp_doing">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="dophase_done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -241,9 +285,9 @@
       </function>
       <function name="ftp_domore_getsock">
         <parameters>
+          <par name="numsocks" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="socks" nr="2"/>
-          <par name="numsocks" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -257,10 +301,44 @@
       </function>
       <function name="ftp_done">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="status" nr="2"/>
           <par name="premature" nr="3"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -288,9 +366,9 @@
       </function>
       <function name="ftp_endofresp">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="conn" nr="1"/>
           <par name="code" nr="4"/>
         </parameters>
         <postconditions>
@@ -319,9 +397,9 @@
       </function>
       <function name="ftp_getsock">
         <parameters>
+          <par name="numsocks" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="socks" nr="2"/>
-          <par name="numsocks" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -335,8 +413,8 @@
       </function>
       <function name="ftp_multi_statemach">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -383,6 +461,72 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_crealloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_crealloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -395,10 +539,10 @@
       </function>
       <function name="ftp_pasv_verbose">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="ai" nr="2"/>
-          <par name="newhost" nr="3"/>
           <par name="port" nr="4"/>
+          <par name="newhost" nr="3"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -412,9 +556,9 @@
       </function>
       <function name="ftp_perform">
         <parameters>
+          <par name="dophase_done" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="connected" nr="2"/>
-          <par name="dophase_done" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -442,10 +586,10 @@
       </function>
       <function name="ftp_readresp">
         <parameters>
-          <par name="sockfd" nr="1"/>
-          <par name="pp" nr="2"/>
           <par name="ftpcode" nr="3"/>
           <par name="size" nr="4"/>
+          <par name="sockfd" nr="1"/>
+          <par name="pp" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -459,8 +603,8 @@
       </function>
       <function name="ftp_regular_transfer">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="dophase_done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -474,8 +618,8 @@
       </function>
       <function name="ftp_sendquote">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="quote" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -491,6 +635,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -503,8 +665,8 @@
       </function>
       <function name="ftp_state_acct_resp">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="ftpcode" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -532,8 +694,8 @@
       </function>
       <function name="ftp_state_get_resp">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="ftpcode" nr="2"/>
+          <par name="conn" nr="1"/>
           <par name="instate" nr="3"/>
         </parameters>
         <postconditions>
@@ -550,6 +712,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -590,8 +770,8 @@
       </function>
       <function name="ftp_state_mdtm_resp">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="ftpcode" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -605,8 +785,8 @@
       </function>
       <function name="ftp_state_pasv_resp">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="ftpcode" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -620,8 +800,8 @@
       </function>
       <function name="ftp_state_port_resp">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="ftpcode" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -664,8 +844,8 @@
       <function name="ftp_state_quote">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="init" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="init" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -693,8 +873,8 @@
       </function>
       <function name="ftp_state_rest_resp">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="ftpcode" nr="2"/>
+          <par name="conn" nr="1"/>
           <par name="instate" nr="3"/>
         </parameters>
         <postconditions>
@@ -752,8 +932,8 @@
       </function>
       <function name="ftp_state_size_resp">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="ftpcode" nr="2"/>
+          <par name="conn" nr="1"/>
           <par name="instate" nr="3"/>
         </parameters>
         <postconditions>
@@ -782,8 +962,8 @@
       </function>
       <function name="ftp_state_stor_resp">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="ftpcode" nr="2"/>
+          <par name="conn" nr="1"/>
           <par name="instate" nr="3"/>
         </parameters>
         <postconditions>
@@ -812,8 +992,8 @@
       </function>
       <function name="ftp_state_type_resp">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="ftpcode" nr="2"/>
+          <par name="conn" nr="1"/>
           <par name="instate" nr="3"/>
         </parameters>
         <postconditions>
@@ -857,9 +1037,43 @@
       </function>
       <function name="ftp_state_use_port">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="fcmd" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -886,8 +1100,8 @@
       </function>
       <function name="ftp_state_user_resp">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="ftpcode" nr="2"/>
+          <par name="conn" nr="1"/>
           <par name="instate" nr="3"/>
         </parameters>
         <postconditions>
@@ -904,6 +1118,40 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -932,6 +1180,56 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -960,6 +1258,24 @@
         <parameters>
           <par name="ptr" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -974,6 +1290,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

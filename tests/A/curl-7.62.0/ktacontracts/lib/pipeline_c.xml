@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:57.321455"/>
-  <cfile name="lib/pipeline">
-    <data-structures/>
+  <header time="2018-12-12 23:13:48">
+    <application file="lib/pipeline.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+    </global-variables>
     <functions>
       <function name="Curl_add_handle_to_pipeline">
         <parameters>
-          <par name="handle" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="handle" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -21,8 +26,8 @@
       </function>
       <function name="Curl_move_handle_from_send_to_recv_pipe">
         <parameters>
-          <par name="handle" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="handle" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -36,8 +41,8 @@
       </function>
       <function name="Curl_pipeline_checkget_read">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,8 +56,8 @@
       </function>
       <function name="Curl_pipeline_checkget_write">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -94,8 +99,8 @@
       </function>
       <function name="Curl_pipeline_penalized">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -109,8 +114,8 @@
       </function>
       <function name="Curl_pipeline_server_blacklisted">
         <parameters>
-          <par name="handle" nr="1"/>
           <par name="server_name" nr="2"/>
+          <par name="handle" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -124,9 +129,27 @@
       </function>
       <function name="Curl_pipeline_set_server_blacklist">
         <parameters>
-          <par name="servers" nr="1"/>
           <par name="list" nr="2"/>
+          <par name="servers" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -142,6 +165,24 @@
           <par name="sites" nr="1"/>
           <par name="list" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -154,8 +195,8 @@
       </function>
       <function name="Curl_pipeline_site_blacklisted">
         <parameters>
-          <par name="handle" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="handle" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -169,8 +210,8 @@
       </function>
       <function name="Curl_recvpipe_head">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -184,8 +225,8 @@
       </function>
       <function name="Curl_sendpipe_head">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -232,6 +273,24 @@
           <par name="user" nr="1"/>
           <par name="element" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -247,6 +306,24 @@
           <par name="user" nr="1"/>
           <par name="element" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

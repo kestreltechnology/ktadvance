@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:56.729417"/>
-  <cfile name="lib/http_chunks">
-    <data-structures/>
+  <header time="2018-12-12 23:01:37">
+    <application file="lib/http_chunks.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cmalloc"/>
+      <gvar name="Curl_crealloc"/>
+    </global-variables>
     <functions>
       <function name="Curl_chunked_strerror">
         <parameters>
@@ -34,11 +39,45 @@
       </function>
       <function name="Curl_httpchunk_read">
         <parameters>
+          <par name="datalen" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="datap" nr="2"/>
-          <par name="datalen" nr="3"/>
           <par name="wrotep" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_crealloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_crealloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

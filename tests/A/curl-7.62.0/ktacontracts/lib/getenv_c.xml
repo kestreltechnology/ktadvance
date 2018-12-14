@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:56.427882"/>
-  <cfile name="lib/getenv">
-    <data-structures/>
+  <header time="2018-12-12 22:40:17">
+    <application file="lib/getenv.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cstrdup"/>
+    </global-variables>
     <functions>
       <function name="GetEnv">
         <parameters>
           <par name="variable" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

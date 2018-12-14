@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:58.980767"/>
-  <cfile name="lib/vauth/ntlm">
-    <data-structures/>
+  <header time="2018-12-12 23:32:36">
+    <application file="lib/vauth/ntlm.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+    </global-variables>
     <functions>
       <function name="Curl_auth_create_ntlm_type1_message">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="userp" nr="2"/>
-          <par name="passwdp" nr="3"/>
-          <par name="service" nr="4"/>
-          <par name="hostname" nr="5"/>
-          <par name="ntlm" nr="6"/>
           <par name="outptr" nr="7"/>
           <par name="outlen" nr="8"/>
+          <par name="userp" nr="2"/>
+          <par name="service" nr="4"/>
+          <par name="passwdp" nr="3"/>
+          <par name="hostname" nr="5"/>
+          <par name="ntlm" nr="6"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -27,12 +32,12 @@
       </function>
       <function name="Curl_auth_create_ntlm_type3_message">
         <parameters>
-          <par name="data" nr="1"/>
+          <par name="outptr" nr="5"/>
+          <par name="outlen" nr="6"/>
           <par name="userp" nr="2"/>
           <par name="passwdp" nr="3"/>
           <par name="ntlm" nr="4"/>
-          <par name="outptr" nr="5"/>
-          <par name="outlen" nr="6"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -46,10 +51,28 @@
       </function>
       <function name="Curl_auth_decode_ntlm_type2_message">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="type2msg" nr="2"/>
           <par name="ntlm" nr="3"/>
+          <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -76,6 +99,24 @@
         <parameters>
           <par name="ntlm" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -88,11 +129,29 @@
       </function>
       <function name="ntlm_decode_type2_target">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="buffer" nr="2"/>
           <par name="size" nr="3"/>
           <par name="ntlm" nr="4"/>
+          <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -105,9 +164,9 @@
       </function>
       <function name="unicodecpy">
         <parameters>
+          <par name="length" nr="3"/>
           <par name="dest" nr="1"/>
           <par name="src" nr="2"/>
-          <par name="length" nr="3"/>
         </parameters>
         <postconditions>
           <post>

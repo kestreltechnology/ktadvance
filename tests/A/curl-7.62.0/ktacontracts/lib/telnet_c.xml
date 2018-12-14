@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:58.490487"/>
-  <cfile name="lib/telnet">
-    <data-structures/>
+  <header time="2018-12-12 23:24:36">
+    <application file="lib/telnet.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_ccalloc"/>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+    </global-variables>
     <functions>
       <function name="check_telnet_options">
         <parameters>
@@ -22,6 +28,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -48,10 +72,10 @@
       </function>
       <function name="printoption">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="direction" nr="2"/>
           <par name="cmd" nr="3"/>
+          <par name="direction" nr="2"/>
           <par name="option" nr="4"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -65,10 +89,10 @@
       </function>
       <function name="printsub">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="direction" nr="2"/>
-          <par name="pointer" nr="3"/>
           <par name="length" nr="4"/>
+          <par name="direction" nr="2"/>
+          <par name="data" nr="1"/>
+          <par name="pointer" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -142,8 +166,8 @@
       </function>
       <function name="send_negotiation">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="cmd" nr="2"/>
+          <par name="conn" nr="1"/>
           <par name="option" nr="3"/>
         </parameters>
         <postconditions>
@@ -158,10 +182,44 @@
       </function>
       <function name="send_telnet_data">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="buffer" nr="2"/>
+          <par name="conn" nr="1"/>
           <par name="nread" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -235,8 +293,8 @@
       </function>
       <function name="telnet_do">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -250,10 +308,28 @@
       </function>
       <function name="telnet_done">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="status" nr="2"/>
           <par name="premature" nr="3"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -266,9 +342,9 @@
       </function>
       <function name="telrcv">
         <parameters>
+          <par name="count" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="inbuf" nr="2"/>
-          <par name="count" nr="3"/>
         </parameters>
         <postconditions>
           <post>

@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:56.480140"/>
-  <cfile name="lib/hmac">
-    <data-structures/>
+  <header time="2018-12-12 22:58:40">
+    <application file="lib/hmac.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+    </global-variables>
     <functions>
       <function name="Curl_HMAC_final">
         <parameters>
-          <par name="ctxt" nr="1"/>
           <par name="result" nr="2"/>
+          <par name="ctxt" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -21,10 +44,28 @@
       </function>
       <function name="Curl_HMAC_init">
         <parameters>
-          <par name="hashparams" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="keylen" nr="3"/>
+          <par name="key" nr="2"/>
+          <par name="hashparams" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -38,8 +79,8 @@
       <function name="Curl_HMAC_update">
         <parameters>
           <par name="ctxt" nr="1"/>
-          <par name="data" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="data" nr="2"/>
         </parameters>
         <postconditions>
           <post>

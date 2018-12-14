@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:52:00.076226"/>
-  <cfile name="src/tool_setopt">
-    <data-structures/>
+  <header time="2018-12-12 23:39:06">
+    <application file="src/tool_setopt.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="easysrc_mime_count"/>
+      <gvar name="easysrc_slist_count"/>
+    </global-variables>
     <functions>
       <function name="_curl_easy_setopt_err_CURLSH">
         <parameters/>
@@ -270,8 +275,8 @@
       </function>
       <function name="c_escape">
         <parameters>
-          <par name="str" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="str" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -285,9 +290,24 @@
       </function>
       <function name="libcurl_generate_mime">
         <parameters>
-          <par name="mime" nr="1"/>
           <par name="mimeno" nr="2"/>
+          <par name="mime" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>easysrc_mime_count</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -300,9 +320,24 @@
       </function>
       <function name="libcurl_generate_slist">
         <parameters>
-          <par name="slist" nr="1"/>
           <par name="slistno" nr="2"/>
+          <par name="slist" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>easysrc_slist_count</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -316,10 +351,10 @@
       <function name="tool_setopt">
         <parameters>
           <par name="curl" nr="1"/>
-          <par name="str" nr="2"/>
           <par name="config" nr="3"/>
-          <par name="name" nr="4"/>
+          <par name="str" nr="2"/>
           <par name="tag" nr="5"/>
+          <par name="name" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -335,9 +370,9 @@
         <parameters>
           <par name="curl" nr="1"/>
           <par name="config" nr="2"/>
-          <par name="name" nr="3"/>
           <par name="tag" nr="4"/>
           <par name="nvlist" nr="5"/>
+          <par name="name" nr="3"/>
           <par name="lval" nr="6"/>
         </parameters>
         <postconditions>
@@ -354,9 +389,9 @@
         <parameters>
           <par name="curl" nr="1"/>
           <par name="config" nr="2"/>
-          <par name="name" nr="3"/>
           <par name="tag" nr="4"/>
           <par name="nvlist" nr="5"/>
+          <par name="name" nr="3"/>
           <par name="lval" nr="6"/>
         </parameters>
         <postconditions>
@@ -373,9 +408,9 @@
         <parameters>
           <par name="curl" nr="1"/>
           <par name="config" nr="2"/>
-          <par name="name" nr="3"/>
           <par name="tag" nr="4"/>
           <par name="nvlist" nr="5"/>
+          <par name="name" nr="3"/>
           <par name="lval" nr="6"/>
         </parameters>
         <postconditions>
@@ -392,9 +427,9 @@
         <parameters>
           <par name="curl" nr="1"/>
           <par name="config" nr="2"/>
-          <par name="name" nr="3"/>
           <par name="tag" nr="4"/>
           <par name="mimepost" nr="5"/>
+          <par name="name" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -410,9 +445,9 @@
         <parameters>
           <par name="curl" nr="1"/>
           <par name="config" nr="2"/>
-          <par name="name" nr="3"/>
-          <par name="tag" nr="4"/>
           <par name="list" nr="5"/>
+          <par name="tag" nr="4"/>
+          <par name="name" nr="3"/>
         </parameters>
         <postconditions>
           <post>

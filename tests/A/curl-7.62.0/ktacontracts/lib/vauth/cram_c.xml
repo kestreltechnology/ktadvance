@@ -1,18 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:58.905417"/>
-  <cfile name="lib/vauth/cram">
-    <data-structures/>
+  <header time="2018-12-12 23:32:02">
+    <application file="lib/vauth/cram.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cfree"/>
+    </global-variables>
     <functions>
       <function name="Curl_auth_create_cram_md5_message">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="chlg" nr="2"/>
-          <par name="userp" nr="3"/>
-          <par name="passwdp" nr="4"/>
           <par name="outptr" nr="5"/>
           <par name="outlen" nr="6"/>
+          <par name="userp" nr="3"/>
+          <par name="passwdp" nr="4"/>
+          <par name="chlg" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -25,9 +47,9 @@
       </function>
       <function name="Curl_auth_decode_cram_md5_message">
         <parameters>
-          <par name="chlg64" nr="1"/>
           <par name="outptr" nr="2"/>
           <par name="outlen" nr="3"/>
+          <par name="chlg64" nr="1"/>
         </parameters>
         <postconditions>
           <post>

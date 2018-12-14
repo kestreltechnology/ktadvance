@@ -1,16 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:56.532497"/>
-  <cfile name="lib/hostip">
-    <data-structures/>
+  <header time="2018-12-12 22:59:12">
+    <application file="lib/hostip.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_ccalloc"/>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+    </global-variables>
     <functions>
       <function name="Curl_cache_addr">
         <parameters>
-          <par name="data" nr="1"/>
+          <par name="port" nr="4"/>
           <par name="addr" nr="2"/>
           <par name="hostname" nr="3"/>
-          <par name="port" nr="4"/>
+          <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -23,9 +63,9 @@
       </function>
       <function name="Curl_fetch_addr">
         <parameters>
+          <par name="port" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="hostname" nr="2"/>
-          <par name="port" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -63,8 +103,8 @@
       </function>
       <function name="Curl_hostcache_clean">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="hash" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -165,10 +205,10 @@
       </function>
       <function name="Curl_resolv">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="hostname" nr="2"/>
           <par name="port" nr="3"/>
+          <par name="conn" nr="1"/>
           <par name="entry" nr="4"/>
+          <par name="hostname" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -182,8 +222,8 @@
       </function>
       <function name="Curl_resolv_check">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="dns" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -197,9 +237,9 @@
       </function>
       <function name="Curl_resolv_getsock">
         <parameters>
+          <par name="numsocks" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="socks" nr="2"/>
-          <par name="numsocks" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -213,11 +253,11 @@
       </function>
       <function name="Curl_resolv_timeout">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="hostname" nr="2"/>
-          <par name="port" nr="3"/>
-          <par name="entry" nr="4"/>
           <par name="timeoutms" nr="5"/>
+          <par name="port" nr="3"/>
+          <par name="conn" nr="1"/>
+          <par name="entry" nr="4"/>
+          <par name="hostname" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -231,8 +271,8 @@
       </function>
       <function name="Curl_resolv_unlock">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="dns" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -246,9 +286,43 @@
       </function>
       <function name="Curl_shuffle_addr">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="addr" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -261,8 +335,8 @@
       </function>
       <function name="create_hostcache_id">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="port" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -276,10 +350,28 @@
       </function>
       <function name="fetch_addr">
         <parameters>
+          <par name="port" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="hostname" nr="2"/>
-          <par name="port" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -294,6 +386,24 @@
         <parameters>
           <par name="freethis" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -306,8 +416,8 @@
       </function>
       <function name="hostcache_prune">
         <parameters>
-          <par name="hostcache" nr="1"/>
           <par name="cache_timeout" nr="2"/>
+          <par name="hostcache" nr="1"/>
           <par name="now" nr="3"/>
         </parameters>
         <postconditions>
@@ -322,8 +432,8 @@
       </function>
       <function name="hostcache_timestamp_remove">
         <parameters>
-          <par name="datap" nr="1"/>
           <par name="hc" nr="2"/>
+          <par name="datap" nr="1"/>
         </parameters>
         <postconditions>
           <post>

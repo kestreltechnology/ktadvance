@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:55.804289"/>
-  <cfile name="lib/connect">
-    <data-structures/>
+  <header time="2018-12-13 07:48:40">
+    <application file="lib/connect.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="host_prefix"/>
+      <gvar name="if_prefix"/>
+    </global-variables>
     <functions>
       <function name="Curl_closesocket">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="sock" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -21,8 +26,8 @@
       </function>
       <function name="Curl_conn_data_pending">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="sockindex" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -50,8 +55,8 @@
       </function>
       <function name="Curl_conncontrol">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="ctrl" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -80,9 +85,9 @@
       </function>
       <function name="Curl_getaddressinfo">
         <parameters>
-          <par name="sa" nr="1"/>
-          <par name="addr" nr="2"/>
           <par name="port" nr="3"/>
+          <par name="addr" nr="2"/>
+          <par name="sa" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -111,8 +116,8 @@
       </function>
       <function name="Curl_is_connected">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="sockindex" nr="2"/>
+          <par name="conn" nr="1"/>
           <par name="connected" nr="3"/>
         </parameters>
         <postconditions>
@@ -141,9 +146,9 @@
       </function>
       <function name="Curl_socket">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="ai" nr="2"/>
           <par name="addr" nr="3"/>
+          <par name="conn" nr="1"/>
           <par name="sockfd" nr="4"/>
         </parameters>
         <postconditions>
@@ -173,9 +178,9 @@
       </function>
       <function name="Curl_timeleft">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="nowp" nr="2"/>
           <par name="duringconnect" nr="3"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -204,11 +209,45 @@
       </function>
       <function name="bindlocal">
         <parameters>
+          <par name="af" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="sockfd" nr="2"/>
-          <par name="af" nr="3"/>
           <par name="scope" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>if_prefix</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>host_prefix</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>if_prefix</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>host_prefix</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -221,8 +260,8 @@
       </function>
       <function name="conn_is_conn">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="param" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -236,10 +275,44 @@
       </function>
       <function name="singleipconnect">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="ai" nr="2"/>
           <par name="sockp" nr="3"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>if_prefix</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>host_prefix</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>if_prefix</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>host_prefix</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -252,8 +325,8 @@
       </function>
       <function name="tcpkeepalive">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="sockfd" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -267,8 +340,8 @@
       </function>
       <function name="trynextip">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="sockindex" nr="2"/>
+          <par name="conn" nr="1"/>
           <par name="tempindex" nr="3"/>
         </parameters>
         <postconditions>

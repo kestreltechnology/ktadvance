@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:56.747089"/>
-  <cfile name="lib/http_ntlm">
-    <data-structures/>
+  <header time="2018-12-12 23:02:02">
+    <application file="lib/http_ntlm.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cfree"/>
+    </global-variables>
     <functions>
       <function name="Curl_http_ntlm_cleanup">
         <parameters>
@@ -20,9 +24,9 @@
       </function>
       <function name="Curl_input_ntlm">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="proxy" nr="2"/>
           <par name="header" nr="3"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -36,9 +40,27 @@
       </function>
       <function name="Curl_output_ntlm">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="proxy" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

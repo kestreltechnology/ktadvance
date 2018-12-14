@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:59.774942"/>
-  <cfile name="src/tool_operate">
-    <data-structures/>
+  <header time="2018-12-12 23:38:14">
+    <application file="src/tool_operate.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="curlinfo"/>
+    </global-variables>
     <functions>
       <function name="is_fatal_error">
         <parameters>
@@ -35,8 +39,8 @@
       <function name="operate">
         <parameters>
           <par name="config" nr="1"/>
-          <par name="argc" nr="2"/>
           <par name="argv" nr="3"/>
+          <par name="argc" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -50,9 +54,40 @@
       </function>
       <function name="operate_do">
         <parameters>
-          <par name="global" nr="1"/>
           <par name="config" nr="2"/>
+          <par name="global" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="features"/>
+                  </addressed-value>
+                  <ci>curlinfo</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curlinfo</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curlinfo</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

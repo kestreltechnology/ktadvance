@@ -1,15 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:56.715349"/>
-  <cfile name="lib/http">
-    <data-structures/>
+  <header time="2018-12-12 23:00:15">
+    <application file="lib/http.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_ccalloc"/>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+      <gvar name="Curl_crealloc"/>
+      <gvar name="Curl_cstrdup"/>
+    </global-variables>
     <functions>
       <function name="Curl_add_buffer">
         <parameters>
-          <par name="inp" nr="1"/>
-          <par name="inptr" nr="2"/>
           <par name="size" nr="3"/>
+          <par name="inptr" nr="2"/>
+          <par name="inp" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -24,6 +66,24 @@
         <parameters>
           <par name="inp" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -36,6 +96,24 @@
       </function>
       <function name="Curl_add_buffer_init">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -48,10 +126,10 @@
       </function>
       <function name="Curl_add_buffer_send">
         <parameters>
-          <par name="inp" nr="1"/>
-          <par name="conn" nr="2"/>
-          <par name="bytes_written" nr="3"/>
           <par name="included_body_bytes" nr="4"/>
+          <par name="bytes_written" nr="3"/>
+          <par name="conn" nr="2"/>
+          <par name="inp" nr="1"/>
           <par name="socketindex" nr="5"/>
         </parameters>
         <postconditions>
@@ -66,9 +144,27 @@
       </function>
       <function name="Curl_add_bufferf">
         <parameters>
-          <par name="inp" nr="1"/>
           <par name="fmt" nr="2"/>
+          <par name="inp" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -81,9 +177,9 @@
       </function>
       <function name="Curl_add_custom_headers">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="is_connect" nr="2"/>
           <par name="req_buffer" nr="3"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -97,8 +193,8 @@
       </function>
       <function name="Curl_add_timecondition">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="req_buffer" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -112,8 +208,8 @@
       </function>
       <function name="Curl_checkProxyheaders">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="thisheader" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -128,8 +224,8 @@
       <function name="Curl_compareheader">
         <parameters>
           <par name="headerline" nr="1"/>
-          <par name="header" nr="2"/>
           <par name="content" nr="3"/>
+          <par name="header" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -145,6 +241,24 @@
         <parameters>
           <par name="header" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -157,9 +271,43 @@
       </function>
       <function name="Curl_http">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -174,6 +322,40 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -186,8 +368,8 @@
       </function>
       <function name="Curl_http_connect">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -201,9 +383,9 @@
       </function>
       <function name="Curl_http_done">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="status" nr="2"/>
           <par name="premature" nr="3"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -217,10 +399,28 @@
       </function>
       <function name="Curl_http_input_auth">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="proxy" nr="2"/>
+          <par name="conn" nr="1"/>
           <par name="auth" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -234,9 +434,9 @@
       <function name="Curl_http_output_auth">
         <parameters>
           <par name="conn" nr="1"/>
+          <par name="proxytunnel" nr="4"/>
           <par name="request" nr="2"/>
           <par name="path" nr="3"/>
-          <par name="proxytunnel" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -250,11 +450,45 @@
       </function>
       <function name="Curl_http_readwrite_headers">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
           <par name="nread" nr="3"/>
           <par name="stop_reading" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -269,6 +503,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -295,9 +547,9 @@
       </function>
       <function name="checkhttpprefix">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="s" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="s" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -311,9 +563,9 @@
       </function>
       <function name="checkprefixmax">
         <parameters>
-          <par name="prefix" nr="1"/>
-          <par name="buffer" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="buffer" nr="2"/>
+          <par name="prefix" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -327,10 +579,10 @@
       </function>
       <function name="checkprotoprefix">
         <parameters>
-          <par name="data" nr="1"/>
+          <par name="len" nr="4"/>
           <par name="conn" nr="2"/>
           <par name="s" nr="3"/>
-          <par name="len" nr="4"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -344,9 +596,9 @@
       </function>
       <function name="checkrtspprefix">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="s" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="s" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -360,9 +612,9 @@
       </function>
       <function name="expect100">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="conn" nr="2"/>
           <par name="req_buffer" nr="3"/>
+          <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -376,8 +628,8 @@
       </function>
       <function name="get_http_string">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -391,10 +643,28 @@
       </function>
       <function name="header_append">
         <parameters>
+          <par name="length" nr="3"/>
           <par name="data" nr="1"/>
           <par name="k" nr="2"/>
-          <par name="length" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_crealloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_crealloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -407,9 +677,9 @@
       </function>
       <function name="http_getsock_do">
         <parameters>
+          <par name="numsocks" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="socks" nr="2"/>
-          <par name="numsocks" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -423,9 +693,27 @@
       </function>
       <function name="http_output_basic">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="proxy" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -440,6 +728,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -480,8 +786,8 @@
       </function>
       <function name="https_connecting">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -495,9 +801,9 @@
       </function>
       <function name="https_getsock">
         <parameters>
+          <par name="numsocks" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="socks" nr="2"/>
-          <par name="numsocks" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -511,11 +817,11 @@
       </function>
       <function name="output_auth_headers">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="authstatus" nr="2"/>
+          <par name="proxy" nr="5"/>
+          <par name="conn" nr="1"/>
           <par name="request" nr="3"/>
           <par name="path" nr="4"/>
-          <par name="proxy" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -558,10 +864,10 @@
       </function>
       <function name="readmoredata">
         <parameters>
+          <par name="userp" nr="4"/>
           <par name="buffer" nr="1"/>
           <par name="size" nr="2"/>
           <par name="nitems" nr="3"/>
-          <par name="userp" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -575,8 +881,8 @@
       </function>
       <function name="use_http_1_1plus">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="conn" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>

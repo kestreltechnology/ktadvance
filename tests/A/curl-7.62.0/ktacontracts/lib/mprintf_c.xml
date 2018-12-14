@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:57.088079"/>
-  <cfile name="lib/mprintf">
-    <data-structures/>
+  <header time="2018-12-12 23:10:27">
+    <application file="lib/mprintf.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+      <gvar name="Curl_crealloc"/>
+      <gvar name="Curl_cstrdup"/>
+    </global-variables>
     <functions>
       <function name="addbyter">
         <parameters>
@@ -24,6 +31,40 @@
           <par name="output" nr="1"/>
           <par name="data" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_crealloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_crealloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -38,6 +79,40 @@
         <parameters>
           <par name="format" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -50,9 +125,19 @@
       </function>
       <function name="curl_mfprintf">
         <parameters>
-          <par name="whereto" nr="1"/>
           <par name="format" nr="2"/>
+          <par name="whereto" nr="1"/>
         </parameters>
+	<preconditions>
+	  <pre>
+	    <math>
+	      <apply>
+		<not-null/>
+		<ci>format</ci>
+	      </apply>
+	    </math>
+	  </pre>
+	</preconditions>
         <postconditions>
           <post>
             <math>
@@ -79,9 +164,9 @@
       </function>
       <function name="curl_msnprintf">
         <parameters>
+          <par name="format" nr="3"/>
           <par name="buffer" nr="1"/>
           <par name="maxlength" nr="2"/>
-          <par name="format" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -95,8 +180,8 @@
       </function>
       <function name="curl_msprintf">
         <parameters>
-          <par name="buffer" nr="1"/>
           <par name="format" nr="2"/>
+          <par name="buffer" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -110,9 +195,43 @@
       </function>
       <function name="curl_mvaprintf">
         <parameters>
-          <par name="format" nr="1"/>
           <par name="ap_save" nr="2"/>
+          <par name="format" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -125,9 +244,9 @@
       </function>
       <function name="curl_mvfprintf">
         <parameters>
-          <par name="whereto" nr="1"/>
-          <par name="format" nr="2"/>
           <par name="ap_save" nr="3"/>
+          <par name="format" nr="2"/>
+          <par name="whereto" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -141,8 +260,8 @@
       </function>
       <function name="curl_mvprintf">
         <parameters>
-          <par name="format" nr="1"/>
           <par name="ap_save" nr="2"/>
+          <par name="format" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -156,10 +275,10 @@
       </function>
       <function name="curl_mvsnprintf">
         <parameters>
+          <par name="ap_save" nr="4"/>
+          <par name="format" nr="3"/>
           <par name="buffer" nr="1"/>
           <par name="maxlength" nr="2"/>
-          <par name="format" nr="3"/>
-          <par name="ap_save" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -173,9 +292,9 @@
       </function>
       <function name="curl_mvsprintf">
         <parameters>
-          <par name="buffer" nr="1"/>
-          <par name="format" nr="2"/>
           <par name="ap_save" nr="3"/>
+          <par name="format" nr="2"/>
+          <par name="buffer" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -189,8 +308,8 @@
       </function>
       <function name="dprintf_DollarString">
         <parameters>
-          <par name="input" nr="1"/>
           <par name="end" nr="2"/>
+          <par name="input" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -235,10 +354,10 @@
       </function>
       <function name="dprintf_formatf">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="stream" nr="2"/>
-          <par name="format" nr="3"/>
           <par name="ap_save" nr="4"/>
+          <par name="format" nr="3"/>
+          <par name="stream" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>

@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:56.899204"/>
-  <cfile name="lib/imap">
-    <data-structures/>
+  <header time="2018-12-12 23:03:24">
+    <application file="lib/imap.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_ccalloc"/>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+      <gvar name="Curl_cstrdup"/>
+    </global-variables>
     <functions>
       <function name="imap_atom">
         <parameters>
-          <par name="str" nr="1"/>
           <par name="escape_only" nr="2"/>
+          <par name="str" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -35,8 +76,8 @@
       </function>
       <function name="imap_connect">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -50,8 +91,8 @@
       </function>
       <function name="imap_continue_authenticate">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="resp" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -68,6 +109,24 @@
           <par name="conn" nr="1"/>
           <par name="dead_connection" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -80,8 +139,8 @@
       </function>
       <function name="imap_do">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -95,8 +154,8 @@
       </function>
       <function name="imap_doing">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="dophase_done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -110,10 +169,28 @@
       </function>
       <function name="imap_done">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="status" nr="2"/>
           <par name="premature" nr="3"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -141,10 +218,10 @@
       </function>
       <function name="imap_endofresp">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="line" nr="2"/>
-          <par name="len" nr="3"/>
           <par name="resp" nr="4"/>
+          <par name="len" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -158,8 +235,8 @@
       </function>
       <function name="imap_get_message">
         <parameters>
-          <par name="buffer" nr="1"/>
           <par name="outptr" nr="2"/>
+          <par name="buffer" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -173,9 +250,9 @@
       </function>
       <function name="imap_getsock">
         <parameters>
+          <par name="numsocks" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="socks" nr="2"/>
-          <par name="numsocks" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -191,6 +268,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ccalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -217,9 +312,9 @@
       </function>
       <function name="imap_matchresp">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
           <par name="cmd" nr="3"/>
+          <par name="line" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -233,8 +328,8 @@
       </function>
       <function name="imap_multi_statemach">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -250,6 +345,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -278,6 +391,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -290,9 +421,9 @@
       </function>
       <function name="imap_perform">
         <parameters>
+          <par name="dophase_done" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="connected" nr="2"/>
-          <par name="dophase_done" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -308,6 +439,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -321,8 +470,8 @@
       <function name="imap_perform_authenticate">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="mech" nr="2"/>
           <par name="initresp" nr="3"/>
+          <par name="mech" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -380,6 +529,40 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -394,6 +577,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -436,6 +637,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -476,8 +695,8 @@
       </function>
       <function name="imap_regular_transfer">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="dophase_done" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -494,6 +713,24 @@
           <par name="conn" nr="1"/>
           <par name="fmt" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -521,8 +758,8 @@
       <function name="imap_state_append_final_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="imapcode" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="imapcode" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -537,8 +774,8 @@
       <function name="imap_state_append_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="imapcode" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="imapcode" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -553,8 +790,8 @@
       <function name="imap_state_auth_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="imapcode" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="imapcode" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -569,8 +806,8 @@
       <function name="imap_state_capability_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="imapcode" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="imapcode" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -585,8 +822,8 @@
       <function name="imap_state_fetch_final_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="imapcode" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="imapcode" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -601,9 +838,27 @@
       <function name="imap_state_fetch_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="imapcode" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="imapcode" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -617,8 +872,8 @@
       <function name="imap_state_listsearch_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="imapcode" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="imapcode" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -633,8 +888,8 @@
       <function name="imap_state_login_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="imapcode" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="imapcode" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -649,9 +904,43 @@
       <function name="imap_state_select_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="imapcode" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="imapcode" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cstrdup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -665,8 +954,8 @@
       <function name="imap_state_servergreet_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="imapcode" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="imapcode" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -681,8 +970,8 @@
       <function name="imap_state_starttls_resp">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="imapcode" nr="2"/>
           <par name="instate" nr="3"/>
+          <par name="imapcode" nr="2"/>
         </parameters>
         <postconditions>
           <post>

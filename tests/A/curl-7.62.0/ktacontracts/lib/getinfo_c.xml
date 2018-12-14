@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:56.452061"/>
-  <cfile name="lib/getinfo">
-    <data-structures/>
+  <header time="2018-12-12 22:40:29">
+    <application file="lib/getinfo.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_ssl"/>
+    </global-variables>
     <functions>
       <function name="Curl_getinfo">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="info" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -23,6 +28,24 @@
         <parameters>
           <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -35,8 +58,8 @@
       </function>
       <function name="getinfo_char">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="info" nr="2"/>
+          <par name="data" nr="1"/>
           <par name="param_charp" nr="3"/>
         </parameters>
         <postconditions>
@@ -51,9 +74,9 @@
       </function>
       <function name="getinfo_double">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="info" nr="2"/>
           <par name="param_doublep" nr="3"/>
+          <par name="info" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -67,9 +90,9 @@
       </function>
       <function name="getinfo_long">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="info" nr="2"/>
           <par name="param_longp" nr="3"/>
+          <par name="info" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -83,9 +106,9 @@
       </function>
       <function name="getinfo_offt">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="info" nr="2"/>
           <par name="param_offt" nr="3"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -99,10 +122,41 @@
       </function>
       <function name="getinfo_slist">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="info" nr="2"/>
+          <par name="data" nr="1"/>
           <par name="param_slistp" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_ssl</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_ssl</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="get_internals"/>
+                  </addressed-value>
+                  <ci>Curl_ssl</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -115,9 +169,9 @@
       </function>
       <function name="getinfo_socket">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="info" nr="2"/>
           <par name="param_socketp" nr="3"/>
+          <par name="info" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>

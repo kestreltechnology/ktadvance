@@ -1,15 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-11-26 23:51:55.225036"/>
-  <cfile name="lib/base64">
-    <data-structures/>
+  <header time="2018-12-13 07:48:25">
+    <application file="lib/base64.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="Curl_cfree"/>
+      <gvar name="Curl_cmalloc"/>
+    </global-variables>
     <functions>
       <function name="Curl_base64_decode">
         <parameters>
-          <par name="src" nr="1"/>
           <par name="outptr" nr="2"/>
           <par name="outlen" nr="3"/>
+          <par name="src" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -22,12 +61,46 @@
       </function>
       <function name="Curl_base64_encode">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="inputbuff" nr="2"/>
-          <par name="insize" nr="3"/>
           <par name="outptr" nr="4"/>
           <par name="outlen" nr="5"/>
+          <par name="insize" nr="3"/>
+          <par name="data" nr="1"/>
+          <par name="inputbuff" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -40,12 +113,46 @@
       </function>
       <function name="Curl_base64url_encode">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="inputbuff" nr="2"/>
-          <par name="insize" nr="3"/>
           <par name="outptr" nr="4"/>
           <par name="outlen" nr="5"/>
+          <par name="insize" nr="3"/>
+          <par name="data" nr="1"/>
+          <par name="inputbuff" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -58,13 +165,47 @@
       </function>
       <function name="base64_encode">
         <parameters>
+          <par name="outptr" nr="5"/>
           <par name="table64" nr="1"/>
+          <par name="outlen" nr="6"/>
+          <par name="insize" nr="4"/>
           <par name="data" nr="2"/>
           <par name="inputbuff" nr="3"/>
-          <par name="insize" nr="4"/>
-          <par name="outptr" nr="5"/>
-          <par name="outlen" nr="6"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>Curl_cmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
