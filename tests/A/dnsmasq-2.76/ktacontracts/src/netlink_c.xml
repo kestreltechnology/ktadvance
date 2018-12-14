@@ -1,47 +1,210 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-18 17:31:12.196207"/>
-  <cfile name="src/netlink">
-    <data-structures/>
+  <header time="2018-12-05 23:36:16">
+    <application file="src/netlink.c"/>
+  </header>
+  <cfile>
     <global-variables>
-      <gvar name="dnsmasq_daemon" notnull="yes" finit="all-fields"/>
+      <gvar name="dnsmasq_daemon" notnull="yes"/>
+      <gvar name="seq"/>
     </global-variables>
     <functions>
+      <function name="iface_enumerate">
+        <parameters>
+          <par name="callback" nr="3"/>
+          <par name="family" nr="1"/>
+          <par name="parm" nr="2"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="netlinkfd"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>seq</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="netlink_init">
+        <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options2"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="doing_dhcp6"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="doing_ra"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="netlink_multicast">
+        <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="netlinkfd"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
       <function name="netlink_recv">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="netlinkfd"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="nl_async">
         <parameters>
           <par name="h" nr="1"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="netlink_init">
-        <parameters/>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="iface_enumerate">
-        <parameters>
-          <par name="family" nr="1"/>
-          <par name="parm" nr="2"/>
-          <par name="callback" nr="3"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="netlink_multicast">
-        <parameters/>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
     </functions>
   </cfile>

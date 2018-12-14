@@ -1,268 +1,1596 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-18 17:31:05.239013"/>
-  <cfile name="src/network">
-    <data-structures/>
+  <header time="2018-12-05 23:38:24">
+    <application file="src/network.c"/>
+  </header>
+  <cfile>
     <global-variables>
-      <gvar name="dnsmasq_daemon" notnull="yes" finit="all-fields"/>
+      <gvar name="dnsmasq_daemon" notnull="yes"/>
     </global-variables>
     <functions>
-      <function name="create_wildcard_listeners">
-        <parameters/>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="create_bound_listeners">
+      <function name="add_update_server">
         <parameters>
-          <par name="dienow" nr="1"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="warn_bound_listeners">
-        <parameters/>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="warn_int_names">
-        <parameters/>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="is_dad_listeners">
-        <parameters/>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="make_sock">
-        <parameters>
-          <par name="addr" nr="1"/>
-          <par name="type" nr="2"/>
-          <par name="dienow" nr="3"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="iface_check">
-        <parameters>
-          <par name="family" nr="1"/>
+          <par name="source_addr" nr="3"/>
+          <par name="domain" nr="5"/>
           <par name="addr" nr="2"/>
-          <par name="name" nr="3"/>
-          <par name="auth" nr="4"/>
+          <par name="interface" nr="4"/>
+          <par name="flags" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="servers"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="loopback_exception">
-        <parameters>
-          <par name="fd" nr="1"/>
-          <par name="family" nr="2"/>
-          <par name="addr" nr="3"/>
-          <par name="name" nr="4"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="label_exception">
-        <parameters>
-          <par name="index___0" nr="1"/>
-          <par name="family" nr="2"/>
-          <par name="addr" nr="3"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="fix_fd">
-        <parameters>
-          <par name="fd" nr="1"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="tcp_interface">
-        <parameters>
-          <par name="fd" nr="1"/>
-          <par name="af" nr="2"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="set_ipv6pktinfo">
-        <parameters>
-          <par name="fd" nr="1"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="join_multicast">
-        <parameters>
-          <par name="dienow" nr="1"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="newaddress">
-        <parameters>
-          <par name="now" nr="1"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="allocate_sfd">
         <parameters>
           <par name="addr" nr="1"/>
           <par name="intname" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="osport"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="sfds"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="iface_allowed_v6">
-        <parameters>
-          <par name="local" nr="1"/>
-          <par name="prefix" nr="2"/>
-          <par name="scope" nr="3"/>
-          <par name="if_index" nr="4"/>
-          <par name="flags" nr="5"/>
-          <par name="preferred" nr="6"/>
-          <par name="valid" nr="7"/>
-          <par name="vparam" nr="8"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="iface_allowed_v4">
-        <parameters>
-          <par name="local" nr="1"/>
-          <par name="if_index" nr="2"/>
-          <par name="label" nr="3"/>
-          <par name="netmask" nr="4"/>
-          <par name="broadcast" nr="5"/>
-          <par name="vparam" nr="6"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="indextoname">
-        <parameters>
-          <par name="fd" nr="1"/>
-          <par name="index___0" nr="2"/>
-          <par name="name" nr="3"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="create_listeners">
-        <parameters>
-          <par name="addr" nr="1"/>
-          <par name="do_tftp" nr="2"/>
-          <par name="dienow" nr="3"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="local_bind">
-        <parameters>
-          <par name="fd" nr="1"/>
-          <par name="addr" nr="2"/>
-          <par name="intname" nr="3"/>
-          <par name="is_tcp" nr="4"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="random_sock">
-        <parameters>
-          <par name="family" nr="1"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="pre_allocate_sfds">
-        <parameters/>
-        <postconditions/>
-      </function>
-      <function name="reload_servers">
-        <parameters>
-          <par name="fname" nr="1"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="mark_servers">
-        <parameters>
-          <par name="flag" nr="1"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="cleanup_servers">
-        <parameters/>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="iface_allowed">
-        <parameters>
-          <par name="param" nr="1"/>
-          <par name="if_index" nr="2"/>
-          <par name="label" nr="3"/>
-          <par name="addr" nr="4"/>
-          <par name="netmask" nr="5"/>
-          <par name="prefixlen" nr="6"/>
-          <par name="iface_flags" nr="7"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="add_update_server">
-        <parameters>
-          <par name="flags" nr="1"/>
-          <par name="addr" nr="2"/>
-          <par name="source_addr" nr="3"/>
-          <par name="interface" nr="4"/>
-          <par name="domain" nr="5"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="check_servers">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="interfaces"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="namebuff"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="servers"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="edns_pktsz"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="cleanup_servers">
+        <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="servers"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="create_bound_listeners">
+        <parameters>
+          <par name="dienow" nr="1"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options2"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="if_addrs"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="interfaces"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="listeners"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="create_listeners">
+        <parameters>
+          <par name="dienow" nr="3"/>
+          <par name="addr" nr="1"/>
+          <par name="do_tftp" nr="2"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="port"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="create_wildcard_listeners">
+        <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="port"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options2"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="enumerate_interfaces">
         <parameters>
           <par name="reset" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options2"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="interfaces"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="int_names"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="listeners"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="auth_zones"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="interface_addrs"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="fix_fd">
+        <parameters>
+          <par name="fd" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="iface_allowed">
+        <parameters>
+          <par name="param" nr="1"/>
+          <par name="prefixlen" nr="6"/>
+          <par name="addr" nr="4"/>
+          <par name="netmask" nr="5"/>
+          <par name="label" nr="3"/>
+          <par name="iface_flags" nr="7"/>
+          <par name="if_index" nr="2"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options2"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="if_names"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="interfaces"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="int_names"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="tftp_interfaces"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="auth_zones"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="interface_addrs"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="dhcp_except"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="iface_allowed_v4">
+        <parameters>
+          <par name="vparam" nr="6"/>
+          <par name="broadcast" nr="5"/>
+          <par name="netmask" nr="4"/>
+          <par name="label" nr="3"/>
+          <par name="local" nr="1"/>
+          <par name="if_index" nr="2"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="port"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="iface_allowed_v6">
+        <parameters>
+          <par name="vparam" nr="8"/>
+          <par name="preferred" nr="6"/>
+          <par name="valid" nr="7"/>
+          <par name="scope" nr="3"/>
+          <par name="local" nr="1"/>
+          <par name="flags" nr="5"/>
+          <par name="prefix" nr="2"/>
+          <par name="if_index" nr="4"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="port"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="iface_check">
+        <parameters>
+          <par name="family" nr="1"/>
+          <par name="addr" nr="2"/>
+          <par name="auth" nr="4"/>
+          <par name="name" nr="3"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="if_addrs"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="if_names"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="if_except"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="authinterface"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="indextoname">
+        <parameters>
+          <par name="index___0" nr="2"/>
+          <par name="fd" nr="1"/>
+          <par name="name" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="is_dad_listeners">
+        <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="interfaces"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="join_multicast">
+        <parameters>
+          <par name="dienow" nr="1"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="interfaces"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="doing_dhcp6"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="relay6"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="doing_ra"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="icmp6fd"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="dhcp6fd"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="label_exception">
+        <parameters>
+          <par name="family" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="index___0" nr="1"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="interfaces"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="local_bind">
+        <parameters>
+          <par name="is_tcp" nr="4"/>
+          <par name="addr" nr="2"/>
+          <par name="intname" nr="3"/>
+          <par name="fd" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="loopback_exception">
+        <parameters>
+          <par name="family" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="fd" nr="1"/>
+          <par name="name" nr="4"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="interfaces"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="make_sock">
+        <parameters>
+          <par name="dienow" nr="3"/>
+          <par name="addr" nr="1"/>
+          <par name="type" nr="2"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options2"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="addrbuff"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="mark_servers">
+        <parameters>
+          <par name="flag" nr="1"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="servers"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="newaddress">
+        <parameters>
+          <par name="now" nr="1"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options2"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="doing_dhcp6"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="relay6"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="doing_ra"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="pre_allocate_sfds">
+        <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="namebuff"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="query_port"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="servers"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+      </function>
+      <function name="random_sock">
+        <parameters>
+          <par name="family" nr="1"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="min_port"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="max_port"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="reload_servers">
+        <parameters>
+          <par name="fname" nr="1"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="namebuff"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="query_port"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="set_ipv6pktinfo">
+        <parameters>
+          <par name="fd" nr="1"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="tcp_interface">
+        <parameters>
+          <par name="af" nr="2"/>
+          <par name="fd" nr="1"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="packet_buff_sz"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="v6pktinfo"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="packet"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="warn_bound_listeners">
+        <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="addrbuff"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="interfaces"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="warn_int_names">
+        <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="int_names"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
     </functions>
   </cfile>

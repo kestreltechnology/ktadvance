@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-18 17:30:57.737179"/>
-  <cfile name="src/log">
-    <data-structures/>
+  <header time="2018-12-05 23:34:42">
+    <application file="src/log.c"/>
+  </header>
+  <cfile>
     <global-variables>
-      <gvar name="dnsmasq_daemon" notnull="yes" finit="all-fields"/>
+      <gvar name="dnsmasq_daemon" notnull="yes"/>
+      <gvar name="entries"/>
+      <gvar name="entries_alloced"/>
+      <gvar name="entries_lost"/>
+      <gvar name="free_entries"/>
+      <gvar name="max_logs"/>
     </global-variables>
     <functions>
       <function name="check_log_writer">
@@ -12,68 +18,371 @@
           <par name="force" nr="1"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="die">
+        <parameters>
+          <par name="arg1" nr="2"/>
+          <par name="exit_code" nr="3"/>
+          <par name="message" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <false/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="flush_log">
         <parameters/>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="die">
-        <parameters>
-          <par name="message" nr="1"/>
-          <par name="arg1" nr="2"/>
-          <par name="exit_code" nr="3"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><false/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="free_entry">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>entries</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>entries</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="next"/>
+                  </addressed-value>
+                  <ci>entries</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>free_entries</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="log_start">
-        <parameters>
-          <par name="ent_pw" nr="1"/>
-          <par name="errfd" nr="2"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="log_write">
-        <parameters/>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="log_reopen">
         <parameters>
           <par name="log_file" nr="1"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="log_start">
+        <parameters>
+          <par name="ent_pw" nr="1"/>
+          <par name="errfd" nr="2"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="log_fac"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="log_file"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="max_logs"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="log_write">
+        <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="length"/>
+                  </addressed-value>
+                  <ci>entries</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>entries</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>entries</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="pid"/>
+                  </addressed-value>
+                  <ci>entries</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="offset"/>
+                  </addressed-value>
+                  <ci>entries</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="my_syslog">
         <parameters>
-          <par name="priority" nr="1"/>
           <par name="format" nr="2"/>
+          <par name="priority" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>free_entries</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>max_logs</ci>
+                  <cn>8</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>free_entries</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>entries_lost</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>entries_alloced</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="next"/>
+                  </addressed-value>
+                  <ci>free_entries</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="set_log_writer">
         <parameters/>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
     </functions>
   </cfile>

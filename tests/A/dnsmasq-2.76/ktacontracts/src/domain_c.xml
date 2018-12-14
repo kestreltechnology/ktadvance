@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-18 17:31:03.760630"/>
-  <cfile name="src/domain">
-    <data-structures/>
+  <header time="2018-12-05 23:27:29">
+    <application file="src/domain.c"/>
+  </header>
+  <cfile>
     <global-variables>
       <gvar name="dnsmasq_daemon"/>
     </global-variables>
@@ -11,84 +12,164 @@
         <parameters>
           <par name="addr" nr="1"/>
         </parameters>
-	<preconditions>
-	  <pre>
-	    <math>
-	      <apply>
-		<not-null/>
-		<ci>dnsmasq_daemon</ci>
-	      </apply>
-	    </math>
-	  </pre>
-	</preconditions>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="domain_suffix"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cond_domain"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
-	  <post>
-	    <math>
-	      <apply>
-		<preserves-all-memory/>
-	      </apply>
-	    </math>
-	  </post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="get_domain6">
         <parameters>
           <par name="addr" nr="1"/>
         </parameters>
-	<preconditions>
-	  <pre>
-	    <math>
-	      <apply>
-		<not-null/>
-		<ci>dnsmasq_daemon</ci>
-	      </apply>
-	    </math>
-	  </pre>
-	</preconditions>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="domain_suffix"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cond_domain"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
-	  <post>
-	    <math>
-	      <apply>
-		<preserves-all-memory/>
-	      </apply>
-	    </math>
-	  </post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="is_name_synthetic">
         <parameters>
+          <par name="addr" nr="3"/>
           <par name="flags" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="addr" nr="3"/>
         </parameters>
-	<preconditions>
-	  <pre>
-	    <math>
-	      <apply>
-		<not-null/>
-		<ci>dnsmasq_daemon</ci>
-	      </apply>
-	    </math>
-	  </pre>
-	</preconditions>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="synth_domains"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
-	  <post>
-	    <math>
-	      <apply>
-		<preserves-all-memory/>
-	      </apply>
-	    </math>
-	  </post>
-	</postconditions>
-      </function>
-      <function name="search_domain">
-        <parameters>
-          <par name="addr" nr="1"/>
-          <par name="c" nr="2"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="is_rev_synth">
         <parameters>
@@ -96,34 +177,128 @@
           <par name="addr" nr="2"/>
           <par name="name" nr="3"/>
         </parameters>
-	<preconditions>
-	  <pre>
-	    <math>
-	      <apply>
-		<not-null/>
-		<ci>dnsmasq_daemon</ci>
-	      </apply>
-	    </math>
-	  </pre>
-	</preconditions>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="synth_domains"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
-	  <post>
-	    <math>
-	      <apply>
-		<preserves-all-memory/>
-	      </apply>
-	    </math>
-	  </post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="search_domain">
+        <parameters>
+          <par name="c" nr="2"/>
+          <par name="addr" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="domain"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="prefix"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="search_domain6">
         <parameters>
-          <par name="addr" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="addr" nr="1"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="domain"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="prefix"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
     </functions>
   </cfile>

@@ -1,38 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-18 17:31:12.038297"/>
-  <cfile name="src/poll">
-    <data-structures/>
+  <header time="2018-12-05 23:42:17">
+    <application file="src/poll.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="arrsize"/>
+      <gvar name="nfds"/>
+      <gvar name="pollfds"/>
+    </global-variables>
     <functions>
-      <function name="poll_listen">
+      <function name="do_poll">
         <parameters>
-          <par name="fd" nr="1"/>
-          <par name="event" nr="2"/>
+          <par name="timeout" nr="1"/>
         </parameters>
-        <postconditions/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>pollfds</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>pollfds</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
       <function name="fd_search">
         <parameters>
           <par name="fd" nr="1"/>
         </parameters>
-        <postconditions/>
-      </function>
-      <function name="do_poll">
-        <parameters>
-          <par name="timeout" nr="1"/>
-        </parameters>
-        <postconditions/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>pollfds</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>pollfds</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
       <function name="poll_check">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="event" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
-        <postconditions/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>pollfds</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>pollfds</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+      </function>
+      <function name="poll_listen">
+        <parameters>
+          <par name="event" nr="2"/>
+          <par name="fd" nr="1"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>pollfds</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>pollfds</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>nfds</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>pollfds</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <ci>arrsize</ci>
+                  <cn>2</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <ci>nfds</ci>
+                  <cn>2</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
       <function name="poll_reset">
         <parameters/>
-        <postconditions/>
       </function>
     </functions>
   </cfile>

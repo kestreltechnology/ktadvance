@@ -1,20 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-18 17:30:58.106230"/>
-  <cfile name="src/slaac">
-    <data-structures/>
+  <header time="2018-12-05 23:49:02">
+    <application file="src/slaac.c"/>
+  </header>
+  <cfile>
     <global-variables>
-      <gvar name="dnsmasq_daemon" notnull="yes" finit="all-fields"/>
+      <gvar name="dnsmasq_daemon" notnull="yes"/>
+      <gvar name="ping_id"/>
     </global-variables>
     <functions>
-      <function name="slaac_ping_reply">
+      <function name="periodic_slaac">
         <parameters>
-          <par name="sender" nr="1"/>
-          <par name="packet" nr="2"/>
-          <par name="interface" nr="3"/>
-          <par name="leases" nr="4"/>
+          <par name="now" nr="1"/>
+          <par name="leases" nr="2"/>
         </parameters>
-        <postconditions/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="dhcp6"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="icmp6fd"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>ping_id</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
       <function name="slaac_add_addrs">
         <parameters>
@@ -22,14 +66,73 @@
           <par name="now" nr="2"/>
           <par name="force" nr="3"/>
         </parameters>
-        <postconditions/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="dhcp6"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
-      <function name="periodic_slaac">
+      <function name="slaac_ping_reply">
         <parameters>
-          <par name="now" nr="1"/>
-          <par name="leases" nr="2"/>
+          <par name="packet" nr="2"/>
+          <par name="sender" nr="1"/>
+          <par name="interface" nr="3"/>
+          <par name="leases" nr="4"/>
         </parameters>
-        <postconditions/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="addrbuff"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options2"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
     </functions>
   </cfile>

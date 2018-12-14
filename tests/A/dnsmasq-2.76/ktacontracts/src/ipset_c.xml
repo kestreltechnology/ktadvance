@@ -1,96 +1,140 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-18 17:30:56.682327"/>
-  <cfile name="src/ipset">
-    <data-structures/>
+  <header time="2018-12-05 23:32:25">
+    <application file="src/ipset.c"/>
+  </header>
+  <cfile>
     <global-variables>
       <gvar name="buffer"/>
     </global-variables>
     <functions>
-      <function name="ipset_init">
-        <parameters/>
-        <postconditions>
-	  <post>
-	    <math>
-	      <apply>
-		<preserves-all-memory/>
-	      </apply>
-	    </math>
-	  </post>
-	</postconditions>
-      </function>
-      <function name="add_to_ipset">
-        <parameters>
-          <par name="setname" nr="1"/>
-          <par name="ipaddr" nr="2"/>
-          <par name="flags" nr="3"/>
-          <par name="remove___0" nr="4"/>
-        </parameters>
-        <postconditions>
-	  <post>
-	    <math>
-	      <apply>
-		<preserves-all-memory/>
-	      </apply>
-	    </math>
-	  </post>
-	</postconditions>
-      </function>
-      <function name="new_add_to_ipset">
-        <parameters>
-          <par name="setname" nr="1"/>
-          <par name="ipaddr" nr="2"/>
-          <par name="af" nr="3"/>
-          <par name="remove___0" nr="4"/>
-        </parameters>
-	<preconditions>
-	  <pre>
-	    <math>
-	      <apply>
-		<not-null/>
-		<ci>buffer</ci>
-	      </apply>
-	    </math>
-	  </pre>
-	  <pre>
-	    <math>
-	      <apply>
-		<valid-mem/>
-		<ci>buffer</ci>
-	      </apply>
-	    </math>
-	  </pre>
-	</preconditions>
-        <postconditions>
-	  <post>
-	    <math>
-	      <apply>
-		<preserves-all-memory/>
-	      </apply>
-	    </math>
-	  </post>
-	</postconditions>
-      </function>
       <function name="add_attr">
         <parameters>
           <par name="nlh" nr="1"/>
-          <par name="type" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="type" nr="2"/>
           <par name="data" nr="4"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="add_to_ipset">
+        <parameters>
+          <par name="remove___0" nr="4"/>
+          <par name="ipaddr" nr="2"/>
+          <par name="flags" nr="3"/>
+          <par name="setname" nr="1"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>buffer</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>buffer</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ipset_init">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="new_add_to_ipset">
+        <parameters>
+          <par name="remove___0" nr="4"/>
+          <par name="af" nr="3"/>
+          <par name="ipaddr" nr="2"/>
+          <par name="setname" nr="1"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>buffer</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>buffer</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nlmsg_len"/>
+                  </addressed-value>
+                  <ci>buffer</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="old_add_to_ipset">
         <parameters>
-          <par name="setname" nr="1"/>
-          <par name="ipaddr" nr="2"/>
           <par name="remove___0" nr="3"/>
+          <par name="ipaddr" nr="2"/>
+          <par name="setname" nr="1"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
     </functions>
   </cfile>
