@@ -958,7 +958,7 @@ testcases = {
         "malloc_fixed",
         "malloc_fscanf",
         "malloc_rand",
-        "malloc_connnect_socket",
+        "malloc_connect_socket",
         "malloc_listen_socket"        
         ],
     "CWE681": [
