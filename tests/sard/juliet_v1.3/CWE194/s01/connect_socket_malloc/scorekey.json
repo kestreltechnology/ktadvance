@@ -1,22 +1,19 @@
 {
-   "macros": {
-      "PPO1": {
-         "P": "signed-to-unsigned-cast-lb"
-      }, 
-      "PPO2": {
-         "P": "ptr-lower-bound"
-      }, 
-      "PS1": [
-         "PPO1"
-      ], 
-      "PS2": [
-         "PPO1"
-      ], 
-      "PS3": [
-         "PPO2" 
-      ]
-   }, 
-   "test": "CWE194/s01/connect_socket_malloc", 
+    "test": "CWE194/s01/connect_socket_malloc",     
+    "macros": {
+	"PPO1": {
+            "P": "signed-to-unsigned-cast-lb"
+	}, 
+	"PPO2": {
+            "P": "ptr-lower-bound"
+	},
+	"PPO3": {
+	    "P": "controlled-resource"
+	},
+	"PS1": [ "PPO1", "PPO3" ], 
+	"PS2": [ "PPO1" ], 
+	"PS3": [ "PPO2" ]
+    }, 
    "tests": {
       "01": {
          "cfiles": {
