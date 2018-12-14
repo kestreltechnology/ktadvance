@@ -1,5 +1,13 @@
 
-
+/* ref 3412 (ngx_buf) */
+extern __inline __attribute__ ((__always_inline__))
+__attribute__ ((__gnu_inline__)) __attribute__ ((__artificial__)) int
+__attribute__ ((__nothrow__ , __leaf__))
+__asprintf (char **__restrict __ptr, const char *__restrict __fmt, ...)
+{
+  return __asprintf_chk (__ptr, 2 - 1, __fmt,
+    __builtin_va_arg_pack ());
+}
 
 # 16 "src/core/ngx_buf.h"
 typedef void * ngx_buf_tag_t;
