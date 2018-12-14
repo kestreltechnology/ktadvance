@@ -1,13 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 14:52:57.497121"/>
-  <cfile name="src/events">
-    <data-structures/>
+  <header time="2018-12-05 22:51:12">
+    <application file="src/events.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="curconn"/>
+    </global-variables>
     <functions>
       <function name="event_handle">
         <parameters>
           <par name="now" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="winname"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

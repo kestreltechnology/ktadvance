@@ -1,13 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 14:52:58.401266"/>
-  <cfile name="src/set">
-    <data-structures/>
+  <header time="2018-12-05 22:57:59">
+    <application file="src/set.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="curconn"/>
+    </global-variables>
     <functions>
       <function name="set_echof">
         <parameters>
           <par name="format" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -20,9 +55,19 @@
       </function>
       <function name="set_setvar">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="val" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -35,12 +80,12 @@
       </function>
       <function name="set_tabcomplete">
         <parameters>
+          <par name="desc" nr="6"/>
+          <par name="buf" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="start" nr="2"/>
-          <par name="buf" nr="3"/>
-          <par name="bufloc" nr="4"/>
           <par name="match" nr="5"/>
-          <par name="desc" nr="6"/>
+          <par name="bufloc" nr="4"/>
         </parameters>
         <postconditions>
           <post>

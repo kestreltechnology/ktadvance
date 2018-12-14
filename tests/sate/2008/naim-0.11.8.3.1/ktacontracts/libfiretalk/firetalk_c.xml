@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 14:52:55.748087"/>
-  <cfile name="libfiretalk/firetalk">
-    <data-structures/>
+  <header time="2018-12-05 22:34:22">
+    <application file="libfiretalk/firetalk.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="FP_MAX"/>
+      <gvar name="firetalk_protocols"/>
+      <gvar name="handle_head"/>
+      <gvar name="isonline_hack"/>
+    </global-variables>
     <functions>
       <function name="firetalk_callback_buddyadded">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="group" nr="3"/>
           <par name="friendly" nr="4"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -24,8 +31,8 @@
       <function name="firetalk_callback_buddyremoved">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="group" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -107,10 +114,10 @@
       </function>
       <function name="firetalk_callback_chat_gottopic">
         <parameters>
-          <par name="c" nr="1"/>
-          <par name="room" nr="2"/>
           <par name="topic" nr="3"/>
+          <par name="c" nr="1"/>
           <par name="author" nr="4"/>
+          <par name="room" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -174,9 +181,9 @@
       <function name="firetalk_callback_chat_kicked">
         <parameters>
           <par name="c" nr="1"/>
+          <par name="reason" nr="4"/>
           <par name="room" nr="2"/>
           <par name="by" nr="3"/>
-          <par name="reason" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -256,10 +263,10 @@
       <function name="firetalk_callback_chat_user_kicked">
         <parameters>
           <par name="c" nr="1"/>
+          <par name="reason" nr="5"/>
           <par name="room" nr="2"/>
           <par name="who" nr="3"/>
           <par name="by" nr="4"/>
-          <par name="reason" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -274,9 +281,9 @@
       <function name="firetalk_callback_chat_user_left">
         <parameters>
           <par name="c" nr="1"/>
+          <par name="reason" nr="4"/>
           <par name="room" nr="2"/>
           <par name="who" nr="3"/>
-          <par name="reason" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -308,9 +315,27 @@
       <function name="firetalk_callback_chat_user_quit">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="who" nr="2"/>
           <par name="reason" nr="3"/>
+          <par name="who" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -338,8 +363,8 @@
       <function name="firetalk_callback_connectfailed">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="error" nr="2"/>
           <par name="description" nr="3"/>
+          <par name="error" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -384,9 +409,9 @@
       <function name="firetalk_callback_error">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="error" nr="2"/>
           <par name="roomoruser" nr="3"/>
           <par name="description" nr="4"/>
+          <par name="error" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -401,8 +426,8 @@
       <function name="firetalk_callback_eviled">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="newevil" nr="2"/>
           <par name="eviler" nr="3"/>
+          <par name="newevil" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -417,13 +442,13 @@
       <function name="firetalk_callback_file_offer">
         <parameters>
           <par name="c" nr="1"/>
+          <par name="size" nr="4"/>
+          <par name="port" nr="7"/>
+          <par name="ipstring" nr="5"/>
           <par name="from" nr="2"/>
           <par name="filename" nr="3"/>
-          <par name="size" nr="4"/>
-          <par name="ipstring" nr="5"/>
-          <par name="ip6string" nr="6"/>
-          <par name="port" nr="7"/>
           <par name="type" nr="8"/>
+          <par name="ip6string" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -437,12 +462,12 @@
       </function>
       <function name="firetalk_callback_gotinfo">
         <parameters>
+          <par name="idle" nr="6"/>
           <par name="c" nr="1"/>
           <par name="nickname" nr="2"/>
           <par name="info" nr="3"/>
-          <par name="warning" nr="4"/>
           <par name="online" nr="5"/>
-          <par name="idle" nr="6"/>
+          <par name="warning" nr="4"/>
           <par name="flags" nr="7"/>
         </parameters>
         <postconditions>
@@ -510,6 +535,24 @@
           <par name="automessage" nr="3"/>
           <par name="message" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -527,6 +570,24 @@
           <par name="automessage" nr="3"/>
           <par name="message" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -584,8 +645,8 @@
       </function>
       <function name="firetalk_callback_setidle">
         <parameters>
-          <par name="c" nr="1"/>
           <par name="idle" nr="2"/>
+          <par name="c" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -616,9 +677,9 @@
       <function name="firetalk_callback_subcode_reply">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="from" nr="2"/>
-          <par name="command" nr="3"/>
           <par name="args___0" nr="4"/>
+          <par name="command" nr="3"/>
+          <par name="from" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -633,9 +694,9 @@
       <function name="firetalk_callback_subcode_request">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="from" nr="2"/>
-          <par name="command" nr="3"/>
           <par name="args___0" nr="4"/>
+          <par name="command" nr="3"/>
+          <par name="from" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -650,8 +711,8 @@
       <function name="firetalk_callback_typing">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="typing" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -669,6 +730,24 @@
           <par name="oldnick" nr="2"/>
           <par name="newnick" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -697,10 +776,28 @@
       </function>
       <function name="firetalk_chat_deop">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="room" nr="2"/>
           <par name="who" nr="3"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -713,10 +810,28 @@
       </function>
       <function name="firetalk_chat_internal_add_member">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="room" nr="2"/>
           <par name="nickname" nr="3"/>
+          <par name="room" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -732,6 +847,24 @@
           <par name="conn" nr="1"/>
           <par name="name" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -744,10 +877,28 @@
       </function>
       <function name="firetalk_chat_internal_remove_member">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="room" nr="2"/>
           <par name="nickname" nr="3"/>
+          <par name="room" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -763,6 +914,24 @@
           <par name="conn" nr="1"/>
           <par name="name" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -775,11 +944,29 @@
       </function>
       <function name="firetalk_chat_invite">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="room" nr="2"/>
           <par name="who" nr="3"/>
+          <par name="conn" nr="1"/>
           <par name="message" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -792,9 +979,27 @@
       </function>
       <function name="firetalk_chat_join">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="room" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -807,11 +1012,29 @@
       </function>
       <function name="firetalk_chat_kick">
         <parameters>
-          <par name="conn" nr="1"/>
+          <par name="reason" nr="4"/>
           <par name="room" nr="2"/>
           <par name="who" nr="3"/>
-          <par name="reason" nr="4"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -824,8 +1047,8 @@
       </function>
       <function name="firetalk_chat_listmembers">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="roomname" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -839,9 +1062,27 @@
       </function>
       <function name="firetalk_chat_normalize">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="room" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -854,10 +1095,28 @@
       </function>
       <function name="firetalk_chat_op">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="room" nr="2"/>
           <par name="who" nr="3"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -870,9 +1129,27 @@
       </function>
       <function name="firetalk_chat_part">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="room" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -885,11 +1162,29 @@
       </function>
       <function name="firetalk_chat_send_action">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="room" nr="2"/>
-          <par name="message" nr="3"/>
           <par name="auto_flag" nr="4"/>
+          <par name="conn" nr="1"/>
+          <par name="message" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -902,11 +1197,29 @@
       </function>
       <function name="firetalk_chat_send_message">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="room" nr="2"/>
-          <par name="message" nr="3"/>
           <par name="auto_flag" nr="4"/>
+          <par name="conn" nr="1"/>
+          <par name="message" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -919,10 +1232,28 @@
       </function>
       <function name="firetalk_chat_set_topic">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="room" nr="2"/>
           <par name="topic" nr="3"/>
+          <par name="room" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -953,6 +1284,24 @@
           <par name="nick1" nr="2"/>
           <par name="nick2" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -965,9 +1314,35 @@
       </function>
       <function name="firetalk_create_handle">
         <parameters>
-          <par name="protocol" nr="1"/>
           <par name="clientstruct" nr="2"/>
+          <par name="protocol" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>handle_head</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1008,8 +1383,8 @@
       </function>
       <function name="firetalk_dequeue">
         <parameters>
-          <par name="queue" nr="1"/>
           <par name="key" nr="2"/>
+          <par name="queue" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1019,12 +1394,38 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="firetalk_destroy_handle">
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1039,6 +1440,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1051,9 +1470,9 @@
       </function>
       <function name="firetalk_enqueue">
         <parameters>
-          <par name="queue" nr="1"/>
           <par name="key" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="queue" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1067,10 +1486,10 @@
       </function>
       <function name="firetalk_file_accept">
         <parameters>
+          <par name="localfile" nr="4"/>
+          <par name="clientfilestruct" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="filehandle" nr="2"/>
-          <par name="clientfilestruct" nr="3"/>
-          <par name="localfile" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1099,10 +1518,10 @@
       </function>
       <function name="firetalk_file_offer">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="nickname" nr="2"/>
-          <par name="filename" nr="3"/>
           <par name="clientfilestruct" nr="4"/>
+          <par name="conn" nr="1"/>
+          <par name="filename" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1155,6 +1574,831 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="7"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="clientstruct"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="9"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="36"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="5"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="13"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="8"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="subcode_request_default"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="subcode_request_head"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="connected"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="6"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="40"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="33"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="29"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="35"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="fd"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="localip"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="0"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="28"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="37"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="15"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="39"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="19"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="44"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="24"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="23"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="1"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="12"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="32"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="22"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="deny_head"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="protocol"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="2"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="43"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="room_head"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="20"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="38"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="42"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="25"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="26"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="file_head"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="46"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="14"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="41"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="17"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="username"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="16"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="31"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="subcode_reply_head"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="subcode_reply_default"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="4"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="buddy_head"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="30"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="3"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="21"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="callbacks">
+                      <index i="18"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="handle"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="firetalk_find_member">
@@ -1163,11 +2407,42 @@
           <par name="r" nr="2"/>
           <par name="name" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="admin"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -1177,6 +2452,24 @@
         <parameters>
           <par name="strprotocol" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1192,11 +2485,81 @@
           <par name="c" nr="1"/>
           <par name="room" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="admin"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="sentjoin"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="name"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="member_head"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -1265,6 +2628,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1277,11 +2658,45 @@
       </function>
       <function name="firetalk_im_add_buddy">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="group" nr="3"/>
           <par name="friendly" nr="4"/>
+          <par name="conn" nr="1"/>
+          <par name="name" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>isonline_hack</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>isonline_hack</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1294,9 +2709,27 @@
       </function>
       <function name="firetalk_im_add_deny">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="nickname" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1309,9 +2742,27 @@
       </function>
       <function name="firetalk_im_delete_buddy">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="nickname" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1324,9 +2775,27 @@
       </function>
       <function name="firetalk_im_evil">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="who" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1342,6 +2811,24 @@
           <par name="conn" nr="1"/>
           <par name="name" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1350,13 +2837,148 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nickname"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="group"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="friendly"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="warnval"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="idletime"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="online"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="typing"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="away"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="capabilities"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="firetalk_im_get_info">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="nickname" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1369,10 +2991,10 @@
       </function>
       <function name="firetalk_im_insert_buddy">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="group" nr="3"/>
           <par name="friendly" nr="4"/>
+          <par name="conn" nr="1"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1386,9 +3008,27 @@
       </function>
       <function name="firetalk_im_internal_add_deny">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="nickname" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1401,9 +3041,27 @@
       </function>
       <function name="firetalk_im_internal_remove_deny">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="nickname" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1433,6 +3091,24 @@
           <par name="conn" nr="1"/>
           <par name="name" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1445,9 +3121,27 @@
       </function>
       <function name="firetalk_im_remove_deny">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="nickname" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1460,11 +3154,29 @@
       </function>
       <function name="firetalk_im_send_action">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="dest" nr="2"/>
-          <par name="message" nr="3"/>
           <par name="auto_flag" nr="4"/>
+          <par name="conn" nr="1"/>
+          <par name="message" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1477,11 +3189,29 @@
       </function>
       <function name="firetalk_im_send_message">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="dest" nr="2"/>
-          <par name="message" nr="3"/>
           <par name="auto_flag" nr="4"/>
+          <par name="conn" nr="1"/>
+          <par name="message" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1496,6 +3226,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1510,6 +3258,24 @@
         <parameters>
           <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1553,9 +3319,9 @@
       <function name="firetalk_internal_connect_host_addr">
         <parameters>
           <par name="host" nr="1"/>
+          <par name="inet6" nr="4"/>
           <par name="port" nr="2"/>
           <par name="inet4" nr="3"/>
-          <par name="inet6" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1642,8 +3408,8 @@
       <function name="firetalk_internal_send_data">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="data" nr="2"/>
           <par name="length" nr="3"/>
+          <par name="data" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1672,9 +3438,27 @@
       </function>
       <function name="firetalk_isprint">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1701,8 +3485,8 @@
       </function>
       <function name="firetalk_peek">
         <parameters>
-          <par name="queue" nr="1"/>
           <par name="key" nr="2"/>
+          <par name="queue" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1718,8 +3502,8 @@
         <parameters>
           <par name="buf" nr="1"/>
           <par name="buflen" nr="2"/>
-          <par name="queue" nr="3"/>
           <par name="key" nr="4"/>
+          <par name="queue" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1733,9 +3517,9 @@
       </function>
       <function name="firetalk_register_callback">
         <parameters>
+          <par name="function" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="function" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1763,6 +3547,50 @@
         <parameters>
           <par name="proto" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>FP_MAX</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <plus/>
+                  <ci>FP_MAX</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1787,12 +3615,30 @@
       </function>
       <function name="firetalk_select_custom">
         <parameters>
+          <par name="timeout" nr="5"/>
+          <par name="fd_write" nr="3"/>
           <par name="n" nr="1"/>
           <par name="fd_read" nr="2"/>
-          <par name="fd_write" nr="3"/>
           <par name="fd_except" nr="4"/>
-          <par name="timeout" nr="5"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1805,10 +3651,28 @@
       </function>
       <function name="firetalk_set_away">
         <parameters>
+          <par name="auto_flag" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="message" nr="2"/>
-          <par name="auto_flag" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1824,6 +3688,24 @@
           <par name="conn" nr="1"/>
           <par name="info" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1836,9 +3718,27 @@
       </function>
       <function name="firetalk_set_nickname">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="nickname" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1852,9 +3752,27 @@
       <function name="firetalk_set_password">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="oldpass" nr="2"/>
           <par name="newpass" nr="3"/>
+          <par name="oldpass" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1867,9 +3785,27 @@
       </function>
       <function name="firetalk_set_privacy">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="mode" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1882,11 +3818,29 @@
       </function>
       <function name="firetalk_signon">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="server" nr="2"/>
-          <par name="port" nr="3"/>
           <par name="username" nr="4"/>
+          <par name="port" nr="3"/>
+          <par name="server" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1915,6 +3869,33 @@
         <parameters>
           <par name="p" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>FP_MAX</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1942,9 +3923,9 @@
       </function>
       <function name="firetalk_subcode_register_reply_callback">
         <parameters>
+          <par name="callback" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="command" nr="2"/>
-          <par name="callback" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1958,9 +3939,9 @@
       </function>
       <function name="firetalk_subcode_register_request_callback">
         <parameters>
+          <par name="callback" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="command" nr="2"/>
-          <par name="callback" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1975,8 +3956,8 @@
       <function name="firetalk_subcode_register_request_reply">
         <parameters>
           <par name="conn" nr="1"/>
-          <par name="command" nr="2"/>
           <par name="reply" nr="3"/>
+          <par name="command" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1990,11 +3971,29 @@
       </function>
       <function name="firetalk_subcode_send_reply">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="to" nr="2"/>
-          <par name="command" nr="3"/>
           <par name="args___0" nr="4"/>
+          <par name="conn" nr="1"/>
+          <par name="command" nr="3"/>
+          <par name="to" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -2007,11 +4006,29 @@
       </function>
       <function name="firetalk_subcode_send_request">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="to" nr="2"/>
-          <par name="command" nr="3"/>
           <par name="args___0" nr="4"/>
+          <par name="conn" nr="1"/>
+          <par name="command" nr="3"/>
+          <par name="to" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -2024,9 +4041,27 @@
       </function>
       <function name="firetalk_user_visible">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="nickname" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -2039,10 +4074,28 @@
       </function>
       <function name="firetalk_user_visible_but">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="room" nr="2"/>
           <par name="nickname" nr="3"/>
+          <par name="room" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>firetalk_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

@@ -1,15 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 14:52:57.481125"/>
-  <cfile name="src/echof">
-    <data-structures/>
+  <header time="2018-12-05 22:50:53">
+    <application file="src/echof.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="curconn"/>
+    </global-variables>
     <functions>
       <function name="echof">
         <parameters>
+          <par name="format" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="where" nr="2"/>
-          <par name="format" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -22,8 +57,8 @@
       </function>
       <function name="status_echof">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="format" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -37,8 +72,8 @@
       </function>
       <function name="window_echof">
         <parameters>
-          <par name="bwin" nr="1"/>
           <par name="format" nr="2"/>
+          <par name="bwin" nr="1"/>
         </parameters>
         <postconditions>
           <post>

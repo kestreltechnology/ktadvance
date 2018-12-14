@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 14:52:56.021826"/>
-  <cfile name="libfiretalk/lily">
-    <data-structures/>
+  <header time="2018-12-05 22:37:20">
+    <application file="libfiretalk/lily.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="blockwhat"/>
+      <gvar name="info"/>
+      <gvar name="infolen"/>
+      <gvar name="lily_recvar"/>
+      <gvar name="output"/>
+      <gvar name="output___0"/>
+      <gvar name="str"/>
+    </global-variables>
     <functions>
       <function name="lily_chat_add">
         <parameters>
+          <par name="idle" nr="6"/>
           <par name="c" nr="1"/>
+          <par name="creation" nr="5"/>
+          <par name="users" nr="8"/>
+          <par name="attrib" nr="7"/>
+          <par name="title" nr="4"/>
           <par name="handle" nr="2"/>
           <par name="name" nr="3"/>
-          <par name="title" nr="4"/>
-          <par name="creation" nr="5"/>
-          <par name="idle" nr="6"/>
-          <par name="attrib" nr="7"/>
-          <par name="users" nr="8"/>
         </parameters>
         <postconditions>
           <post>
@@ -54,6 +64,32 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="title"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="name"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="lily_chat_find_name">
@@ -66,6 +102,32 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="handle"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="isemote"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -121,9 +183,9 @@
       <function name="lily_chat_kick">
         <parameters>
           <par name="c" nr="1"/>
+          <par name="reason" nr="4"/>
           <par name="room" nr="2"/>
           <par name="who" nr="3"/>
-          <par name="reason" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -185,8 +247,8 @@
         <parameters>
           <par name="c" nr="1"/>
           <par name="room" nr="2"/>
-          <par name="message" nr="3"/>
           <par name="auto_flag" nr="4"/>
+          <par name="message" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -202,8 +264,8 @@
         <parameters>
           <par name="c" nr="1"/>
           <par name="room" nr="2"/>
-          <par name="message" nr="3"/>
           <par name="auto_flag" nr="4"/>
+          <par name="message" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -217,9 +279,9 @@
       </function>
       <function name="lily_chat_set_topic">
         <parameters>
+          <par name="topic" nr="3"/>
           <par name="c" nr="1"/>
           <par name="room" nr="2"/>
-          <par name="topic" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -260,9 +322,9 @@
       </function>
       <function name="lily_ctcp_encode">
         <parameters>
+          <par name="args" nr="3"/>
           <par name="c" nr="1"/>
           <par name="command" nr="2"/>
-          <par name="args" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -322,6 +384,68 @@
           <par name="c" nr="1"/>
           <par name="str___0" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>blockwhat</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>infolen</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>blockwhat</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>blockwhat</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>blockwhat</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>info</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -335,8 +459,8 @@
       <function name="lily_got_data">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="_buffer" nr="2"/>
           <par name="bufferpos" nr="3"/>
+          <par name="_buffer" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -351,8 +475,8 @@
       <function name="lily_got_data">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="_buffer" nr="2"/>
           <par name="bufferpos" nr="3"/>
+          <par name="_buffer" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -367,8 +491,8 @@
       <function name="lily_got_data_connecting">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="_buffer" nr="2"/>
           <par name="bufferpos" nr="3"/>
+          <par name="_buffer" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -398,6 +522,24 @@
         <parameters>
           <par name="string" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>output</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>output</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -411,8 +553,8 @@
       <function name="lily_im_add_buddy">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="nickname" nr="2"/>
           <par name="group" nr="3"/>
+          <par name="nickname" nr="2"/>
           <par name="friendly" nr="4"/>
         </parameters>
         <postconditions>
@@ -458,8 +600,8 @@
       <function name="lily_im_remove_buddy">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="nickname" nr="2"/>
           <par name="group" nr="3"/>
+          <par name="nickname" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -490,8 +632,8 @@
         <parameters>
           <par name="c" nr="1"/>
           <par name="dest" nr="2"/>
-          <par name="message" nr="3"/>
           <par name="auto_flag" nr="4"/>
+          <par name="message" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -507,8 +649,8 @@
         <parameters>
           <par name="c" nr="1"/>
           <par name="dest" nr="2"/>
-          <par name="message" nr="3"/>
           <par name="auto_flag" nr="4"/>
+          <par name="message" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -581,6 +723,24 @@
         <parameters>
           <par name="string" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>output___0</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>output___0</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -635,8 +795,8 @@
       </function>
       <function name="lily_postselect">
         <parameters>
-          <par name="c" nr="1"/>
           <par name="read___0" nr="2"/>
+          <par name="c" nr="1"/>
           <par name="write___0" nr="3"/>
           <par name="except" nr="4"/>
         </parameters>
@@ -652,11 +812,11 @@
       </function>
       <function name="lily_preselect">
         <parameters>
-          <par name="c" nr="1"/>
           <par name="read___0" nr="2"/>
+          <par name="c" nr="1"/>
           <par name="write___0" nr="3"/>
-          <par name="except" nr="4"/>
           <par name="n" nr="5"/>
+          <par name="except" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -671,9 +831,9 @@
       <function name="lily_queue_printf">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="first" nr="3"/>
           <par name="second" nr="4"/>
+          <par name="key" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -689,6 +849,24 @@
         <parameters>
           <par name="what" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lily_recvar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lily_recvar</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -705,6 +883,24 @@
           <par name="buffer" nr="2"/>
           <par name="bufferpos" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>str</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>str</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -735,6 +931,24 @@
           <par name="c" nr="1"/>
           <par name="str___0" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lily_recvar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lily_recvar</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -763,8 +977,8 @@
       <function name="lily_set_away">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="message" nr="2"/>
           <par name="auto_flag" nr="3"/>
+          <par name="message" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -809,8 +1023,8 @@
       <function name="lily_set_password">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="oldpass" nr="2"/>
           <par name="newpass" nr="3"/>
+          <par name="oldpass" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -854,10 +1068,10 @@
       </function>
       <function name="lily_subcode_send_reply">
         <parameters>
-          <par name="c" nr="1"/>
-          <par name="to" nr="2"/>
-          <par name="command" nr="3"/>
           <par name="args" nr="4"/>
+          <par name="c" nr="1"/>
+          <par name="command" nr="3"/>
+          <par name="to" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -871,10 +1085,10 @@
       </function>
       <function name="lily_subcode_send_request">
         <parameters>
-          <par name="c" nr="1"/>
-          <par name="to" nr="2"/>
-          <par name="command" nr="3"/>
           <par name="args" nr="4"/>
+          <par name="c" nr="1"/>
+          <par name="command" nr="3"/>
+          <par name="to" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -902,15 +1116,15 @@
       </function>
       <function name="lily_user_add">
         <parameters>
-          <par name="c" nr="1"/>
-          <par name="handle" nr="2"/>
-          <par name="name" nr="3"/>
           <par name="blurb" nr="4"/>
-          <par name="login" nr="5"/>
           <par name="idle" nr="6"/>
-          <par name="state" nr="7"/>
-          <par name="attrib" nr="8"/>
+          <par name="c" nr="1"/>
+          <par name="login" nr="5"/>
           <par name="pronoun" nr="9"/>
+          <par name="attrib" nr="8"/>
+          <par name="handle" nr="2"/>
+          <par name="state" nr="7"/>
+          <par name="name" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -935,6 +1149,32 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="name"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="state"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="lily_user_find_name">
@@ -947,6 +1187,45 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="name"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ctcpmagic"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="state"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>

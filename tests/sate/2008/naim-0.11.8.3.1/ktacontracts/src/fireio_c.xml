@@ -1,19 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 14:52:58.116798"/>
-  <cfile name="src/fireio">
-    <data-structures/>
+  <header time="2018-12-05 22:53:22">
+    <application file="src/fireio.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="awayar"/>
+      <gvar name="awayc"/>
+      <gvar name="curconn"/>
+      <gvar name="html_cleanar"/>
+      <gvar name="namec"/>
+      <gvar name="names"/>
+    </global-variables>
     <functions>
       <function name="cgetwin">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="roomname" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="e">
+                      <field name="chat"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="et"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="winname"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="blurb"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -35,10 +98,10 @@
       </function>
       <function name="do_replace">
         <parameters>
-          <par name="dest" nr="1"/>
-          <par name="new" nr="2"/>
-          <par name="wordlen" nr="3"/>
           <par name="len" nr="4"/>
+          <par name="dest" nr="1"/>
+          <par name="wordlen" nr="3"/>
+          <par name="new" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -64,11 +127,21 @@
       </function>
       <function name="fnewtransfer">
         <parameters>
-          <par name="handle" nr="1"/>
-          <par name="filename" nr="2"/>
-          <par name="from" nr="3"/>
           <par name="size" nr="4"/>
+          <par name="from" nr="3"/>
+          <par name="filename" nr="2"/>
+          <par name="handle" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -97,6 +170,24 @@
         <parameters>
           <par name="str" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>html_cleanar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>html_cleanar</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -233,6 +324,16 @@
           <par name="sess" nr="1"/>
           <par name="client" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -278,6 +379,16 @@
           <par name="sess" nr="1"/>
           <par name="client" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -293,6 +404,16 @@
           <par name="sess" nr="1"/>
           <par name="client" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -353,6 +474,16 @@
           <par name="sess" nr="1"/>
           <par name="client" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -383,6 +514,67 @@
           <par name="sess" nr="1"/>
           <par name="client" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>namec</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>namec</ci>
+                    <cn>1</cn>
+                  </apply>
+                  <cn>4</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <plus/>
+                  <ci>namec</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>names</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>names</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -443,6 +635,16 @@
           <par name="sess" nr="1"/>
           <par name="client" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -605,12 +807,22 @@
       </function>
       <function name="naim_ctcp_AUTOPEER">
         <parameters>
-          <par name="sess" nr="1"/>
-          <par name="client" nr="2"/>
-          <par name="from" nr="3"/>
-          <par name="command" nr="4"/>
           <par name="args" nr="5"/>
+          <par name="sess" nr="1"/>
+          <par name="command" nr="4"/>
+          <par name="from" nr="3"/>
+          <par name="client" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -623,11 +835,11 @@
       </function>
       <function name="naim_ctcp_HEXTEXT">
         <parameters>
-          <par name="sess" nr="1"/>
-          <par name="client" nr="2"/>
-          <par name="from" nr="3"/>
-          <par name="command" nr="4"/>
           <par name="args" nr="5"/>
+          <par name="sess" nr="1"/>
+          <par name="command" nr="4"/>
+          <par name="from" nr="3"/>
+          <par name="client" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -641,11 +853,11 @@
       </function>
       <function name="naim_ctcp_LC">
         <parameters>
-          <par name="sess" nr="1"/>
-          <par name="client" nr="2"/>
-          <par name="from" nr="3"/>
-          <par name="command" nr="4"/>
           <par name="args" nr="5"/>
+          <par name="sess" nr="1"/>
+          <par name="command" nr="4"/>
+          <par name="from" nr="3"/>
+          <par name="client" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -659,11 +871,11 @@
       </function>
       <function name="naim_ctcp_PING">
         <parameters>
-          <par name="sess" nr="1"/>
-          <par name="client" nr="2"/>
-          <par name="from" nr="3"/>
-          <par name="command" nr="4"/>
           <par name="args" nr="5"/>
+          <par name="sess" nr="1"/>
+          <par name="command" nr="4"/>
+          <par name="from" nr="3"/>
+          <par name="client" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -677,11 +889,11 @@
       </function>
       <function name="naim_ctcp_VERSION">
         <parameters>
-          <par name="sess" nr="1"/>
-          <par name="client" nr="2"/>
-          <par name="from" nr="3"/>
-          <par name="command" nr="4"/>
           <par name="args" nr="5"/>
+          <par name="sess" nr="1"/>
+          <par name="command" nr="4"/>
+          <par name="from" nr="3"/>
+          <par name="client" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -695,11 +907,11 @@
       </function>
       <function name="naim_ctcp_default">
         <parameters>
-          <par name="sess" nr="1"/>
-          <par name="client" nr="2"/>
-          <par name="from" nr="3"/>
-          <par name="command" nr="4"/>
           <par name="args" nr="5"/>
+          <par name="sess" nr="1"/>
+          <par name="command" nr="4"/>
+          <par name="from" nr="3"/>
+          <par name="client" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -713,12 +925,38 @@
       </function>
       <function name="naim_ctcprep_AWAY">
         <parameters>
-          <par name="sess" nr="1"/>
-          <par name="client" nr="2"/>
-          <par name="from" nr="3"/>
-          <par name="command" nr="4"/>
           <par name="args" nr="5"/>
+          <par name="sess" nr="1"/>
+          <par name="command" nr="4"/>
+          <par name="from" nr="3"/>
+          <par name="client" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>awayar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>awayar</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -731,11 +969,11 @@
       </function>
       <function name="naim_ctcprep_HEXTEXT">
         <parameters>
-          <par name="sess" nr="1"/>
-          <par name="client" nr="2"/>
-          <par name="from" nr="3"/>
-          <par name="command" nr="4"/>
           <par name="args" nr="5"/>
+          <par name="sess" nr="1"/>
+          <par name="command" nr="4"/>
+          <par name="from" nr="3"/>
+          <par name="client" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -749,12 +987,30 @@
       </function>
       <function name="naim_ctcprep_VERSION">
         <parameters>
-          <par name="sess" nr="1"/>
-          <par name="client" nr="2"/>
-          <par name="from" nr="3"/>
-          <par name="command" nr="4"/>
           <par name="args" nr="5"/>
+          <par name="sess" nr="1"/>
+          <par name="command" nr="4"/>
+          <par name="from" nr="3"/>
+          <par name="client" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>awayar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>awayar</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -767,11 +1023,11 @@
       </function>
       <function name="naim_ctcprep_default">
         <parameters>
-          <par name="sess" nr="1"/>
-          <par name="client" nr="2"/>
-          <par name="from" nr="3"/>
-          <par name="command" nr="4"/>
           <par name="args" nr="5"/>
+          <par name="sess" nr="1"/>
+          <par name="command" nr="4"/>
+          <par name="from" nr="3"/>
+          <par name="client" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -788,6 +1044,16 @@
           <par name="sess" nr="1"/>
           <par name="client" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -818,6 +1084,75 @@
           <par name="sess" nr="1"/>
           <par name="client" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>awayar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>awayar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <minus/>
+                    <ci>awayc</ci>
+                    <cn>1</cn>
+                  </apply>
+                  <cn>8</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>awayc</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>awayc</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>awayar</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -966,6 +1301,16 @@
           <par name="sess" nr="1"/>
           <par name="client" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -981,6 +1326,16 @@
           <par name="sess" nr="1"/>
           <par name="client" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1008,11 +1363,11 @@
       </function>
       <function name="naim_recvfrom">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="_name" nr="2"/>
-          <par name="_dest" nr="3"/>
           <par name="_message" nr="4"/>
           <par name="len" nr="5"/>
+          <par name="_name" nr="2"/>
+          <par name="conn" nr="1"/>
+          <par name="_dest" nr="3"/>
           <par name="flags" nr="6"/>
         </parameters>
         <postconditions>
@@ -1088,6 +1443,75 @@
           <par name="sess" nr="1"/>
           <par name="client" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>awayar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>awayar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <minus/>
+                    <ci>awayc</ci>
+                    <cn>1</cn>
+                  </apply>
+                  <cn>8</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>awayc</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>awayc</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>awayar</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1115,12 +1539,12 @@
       </function>
       <function name="recvfrom_autobuddy">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="name" nr="2"/>
-          <par name="dest" nr="3"/>
-          <par name="message" nr="4"/>
           <par name="len" nr="5"/>
+          <par name="dest" nr="3"/>
+          <par name="conn" nr="1"/>
+          <par name="message" nr="4"/>
           <par name="flags" nr="6"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1134,12 +1558,12 @@
       </function>
       <function name="recvfrom_beep">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="name" nr="2"/>
-          <par name="dest" nr="3"/>
-          <par name="message" nr="4"/>
           <par name="len" nr="5"/>
+          <par name="dest" nr="3"/>
+          <par name="conn" nr="1"/>
+          <par name="message" nr="4"/>
           <par name="flags" nr="6"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1153,12 +1577,12 @@
       </function>
       <function name="recvfrom_decrypt">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="name" nr="2"/>
-          <par name="dest" nr="3"/>
-          <par name="message" nr="4"/>
           <par name="len" nr="5"/>
+          <par name="dest" nr="3"/>
+          <par name="conn" nr="1"/>
+          <par name="message" nr="4"/>
           <par name="flags" nr="6"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1172,13 +1596,23 @@
       </function>
       <function name="recvfrom_display_chat">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="name" nr="2"/>
-          <par name="dest" nr="3"/>
-          <par name="message" nr="4"/>
           <par name="len" nr="5"/>
+          <par name="dest" nr="3"/>
+          <par name="conn" nr="1"/>
+          <par name="message" nr="4"/>
           <par name="flags" nr="6"/>
+          <par name="name" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1192,11 +1626,11 @@
       <function name="recvfrom_display_chat_print">
         <parameters>
           <par name="bwin" nr="1"/>
-          <par name="flags" nr="2"/>
           <par name="istome" nr="3"/>
+          <par name="flags" nr="2"/>
+          <par name="message" nr="6"/>
           <par name="name" nr="4"/>
           <par name="prefix" nr="5"/>
-          <par name="message" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -1210,12 +1644,12 @@
       </function>
       <function name="recvfrom_display_user">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="name" nr="2"/>
-          <par name="dest" nr="3"/>
-          <par name="message" nr="4"/>
           <par name="len" nr="5"/>
+          <par name="dest" nr="3"/>
+          <par name="conn" nr="1"/>
+          <par name="message" nr="4"/>
           <par name="flags" nr="6"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1229,12 +1663,12 @@
       </function>
       <function name="recvfrom_ignorelist">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="name" nr="2"/>
-          <par name="dest" nr="3"/>
-          <par name="message" nr="4"/>
           <par name="len" nr="5"/>
+          <par name="dest" nr="3"/>
+          <par name="conn" nr="1"/>
+          <par name="message" nr="4"/>
           <par name="flags" nr="6"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1248,12 +1682,12 @@
       </function>
       <function name="recvfrom_log">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="name" nr="2"/>
-          <par name="dest" nr="3"/>
-          <par name="message" nr="4"/>
           <par name="len" nr="5"/>
+          <par name="dest" nr="3"/>
+          <par name="conn" nr="1"/>
+          <par name="message" nr="4"/>
           <par name="flags" nr="6"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1268,9 +1702,9 @@
       <function name="str_replace">
         <parameters>
           <par name="orig" nr="1"/>
-          <par name="new" nr="2"/>
           <par name="str" nr="3"/>
           <par name="strsize" nr="4"/>
+          <par name="new" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1284,10 +1718,10 @@
       </function>
       <function name="user_name">
         <parameters>
-          <par name="buf" nr="1"/>
-          <par name="buflen" nr="2"/>
-          <par name="conn" nr="3"/>
           <par name="user" nr="4"/>
+          <par name="buf" nr="1"/>
+          <par name="conn" nr="3"/>
+          <par name="buflen" nr="2"/>
         </parameters>
         <postconditions>
           <post>

@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 14:52:58.252235"/>
-  <cfile name="src/hwprintf">
-    <data-structures/>
+  <header time="2018-12-05 22:54:21">
+    <application file="src/hwprintf.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="fontstacklen"/>
+      <gvar name="last_inunderline"/>
+    </global-variables>
     <functions>
       <function name="h_zero">
         <parameters>
-          <par name="h" nr="1"/>
           <par name="win" nr="2"/>
+          <par name="h" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -21,9 +26,9 @@
       </function>
       <function name="hwprintf">
         <parameters>
+          <par name="format" nr="3"/>
           <par name="win" nr="1"/>
           <par name="_pair" nr="2"/>
-          <par name="format" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,8 +56,8 @@
       </function>
       <function name="nw_wrap_addch">
         <parameters>
-          <par name="h" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="h" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -66,8 +71,8 @@
       </function>
       <function name="nw_wrap_addstr">
         <parameters>
-          <par name="h" nr="1"/>
           <par name="str" nr="2"/>
+          <par name="h" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -81,9 +86,9 @@
       </function>
       <function name="parsehtml">
         <parameters>
-          <par name="h" nr="1"/>
-          <par name="str" nr="2"/>
           <par name="backup" nr="3"/>
+          <par name="str" nr="2"/>
+          <par name="h" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -97,8 +102,8 @@
       </function>
       <function name="parsehtml_amp">
         <parameters>
-          <par name="h" nr="1"/>
           <par name="text" nr="2"/>
+          <par name="h" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -112,10 +117,10 @@
       </function>
       <function name="parsehtml_pair">
         <parameters>
-          <par name="buf___0" nr="1"/>
           <par name="_pair" nr="2"/>
-          <par name="inbold" nr="3"/>
           <par name="foreorback" nr="4"/>
+          <par name="inbold" nr="3"/>
+          <par name="buf___0" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -129,8 +134,8 @@
       </function>
       <function name="parsehtml_pair_RGB">
         <parameters>
-          <par name="pair" nr="1"/>
           <par name="bold" nr="2"/>
+          <par name="pair" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -144,12 +149,12 @@
       </function>
       <function name="parsehtml_pair_closest">
         <parameters>
-          <par name="_pair" nr="1"/>
-          <par name="R" nr="2"/>
           <par name="G" nr="3"/>
           <par name="B" nr="4"/>
-          <par name="inbold" nr="5"/>
+          <par name="R" nr="2"/>
+          <par name="_pair" nr="1"/>
           <par name="foreorback" nr="6"/>
+          <par name="inbold" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -163,10 +168,34 @@
       </function>
       <function name="parsehtml_tag">
         <parameters>
-          <par name="h" nr="1"/>
-          <par name="text" nr="2"/>
           <par name="backup" nr="3"/>
+          <par name="text" nr="2"/>
+          <par name="h" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>last_inunderline</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>fontstacklen</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -179,10 +208,10 @@
       </function>
       <function name="vhwprintf">
         <parameters>
-          <par name="win" nr="1"/>
-          <par name="_pair" nr="2"/>
           <par name="format" nr="3"/>
+          <par name="win" nr="1"/>
           <par name="msg" nr="4"/>
+          <par name="_pair" nr="2"/>
         </parameters>
         <postconditions>
           <post>

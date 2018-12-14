@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 14:52:56.566777"/>
-  <cfile name="secs/liaison">
-    <data-structures/>
+  <header time="2018-12-05 22:44:21">
+    <application file="secs/liaison.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="secs_client_cmdhandler"/>
+      <gvar name="secs_root"/>
+    </global-variables>
     <functions>
       <function name="secs_block_getroot">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>secs_root</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -48,6 +63,24 @@
         <parameters>
           <par name="line" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>secs_client_cmdhandler</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>secs_client_cmdhandler</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -76,6 +109,37 @@
           <par name="length" nr="2"/>
           <par name="_var" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>secs_root</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>secs_root</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="variables"/>
+                  </addressed-value>
+                  <ci>secs_root</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -88,10 +152,33 @@
       </function>
       <function name="secs_makevar">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="value" nr="2"/>
           <par name="type" nr="3"/>
+          <par name="name" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>secs_root</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="variables"/>
+                  </addressed-value>
+                  <ci>secs_root</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -104,11 +191,34 @@
       </function>
       <function name="secs_makevar_int">
         <parameters>
-          <par name="name" nr="1"/>
+          <par name="buf_num" nr="4"/>
           <par name="value" nr="2"/>
           <par name="type" nr="3"/>
-          <par name="buf_num" nr="4"/>
+          <par name="name" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>secs_root</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="variables"/>
+                  </addressed-value>
+                  <ci>secs_root</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -121,8 +231,8 @@
       </function>
       <function name="secs_setvar">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="val" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>

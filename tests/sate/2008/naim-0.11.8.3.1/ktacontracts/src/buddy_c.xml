@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 14:52:56.709007"/>
-  <cfile name="src/buddy">
-    <data-structures/>
+  <header time="2018-12-05 22:46:06">
+    <application file="src/buddy.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="awayar"/>
+      <gvar name="awayc"/>
+      <gvar name="bsort_conn"/>
+      <gvar name="curconn"/>
+      <gvar name="home"/>
+      <gvar name="lastclose"/>
+    </global-variables>
     <functions>
       <function name="baway">
         <parameters>
@@ -10,6 +19,67 @@
           <par name="buddy" nr="2"/>
           <par name="isaway" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>awayar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>awayar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <plus/>
+                  <ci>awayc</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>awayc</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>awayc</ci>
+                    <cn>1</cn>
+                  </apply>
+                  <cn>8</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -51,8 +121,8 @@
       </function>
       <function name="bclearall_bwin">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="bwin" nr="2"/>
+          <par name="conn" nr="1"/>
           <par name="force" nr="3"/>
         </parameters>
         <postconditions>
@@ -67,10 +137,36 @@
       </function>
       <function name="bclose">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="bwin" nr="2"/>
+          <par name="conn" nr="1"/>
           <par name="_auto" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>lastclose</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lastclose</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -86,6 +182,16 @@
           <par name="conn" nr="1"/>
           <par name="buddy" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -113,9 +219,9 @@
       </function>
       <function name="bgetwin">
         <parameters>
+          <par name="et" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="buddy" nr="2"/>
-          <par name="et" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -160,9 +266,9 @@
       </function>
       <function name="bnewwin">
         <parameters>
+          <par name="et" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="et" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -222,6 +328,37 @@
           <par name="p1" nr="1"/>
           <par name="p2" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>bsort_conn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>bsort_conn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="conn"/>
+                  </addressed-value>
+                  <ci>bsort_conn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -234,6 +371,50 @@
       </function>
       <function name="bupdate">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="winname"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -246,6 +427,102 @@
       </function>
       <function name="iupdate">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="online"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="lag"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="warnval"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="winname"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="sn"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -260,6 +537,24 @@
         <parameters>
           <par name="d" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>home</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>home</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -298,9 +593,9 @@
       </function>
       <function name="playback">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="bwin" nr="2"/>
           <par name="lines" nr="3"/>
+          <par name="bwin" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -314,9 +609,9 @@
       </function>
       <function name="playback_fopen">
         <parameters>
-          <par name="conn" nr="1"/>
-          <par name="bwin" nr="2"/>
           <par name="mode" nr="3"/>
+          <par name="bwin" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -330,10 +625,10 @@
       </function>
       <function name="user_name">
         <parameters>
-          <par name="buf" nr="1"/>
-          <par name="buflen" nr="2"/>
-          <par name="conn" nr="3"/>
           <par name="user" nr="4"/>
+          <par name="buf" nr="1"/>
+          <par name="conn" nr="3"/>
+          <par name="buflen" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -347,8 +642,8 @@
       </function>
       <function name="verify_winlist_sanity">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="verifywin" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>

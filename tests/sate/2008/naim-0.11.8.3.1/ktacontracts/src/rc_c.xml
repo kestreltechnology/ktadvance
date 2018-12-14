@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 14:52:58.354374"/>
-  <cfile name="src/rc">
-    <data-structures/>
+  <header time="2018-12-05 22:56:11">
+    <application file="src/rc.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="LINES"/>
+      <gvar name="curconn"/>
+      <gvar name="rc_var_b_c"/>
+      <gvar name="rc_var_i_c"/>
+      <gvar name="rc_var_s_c"/>
+    </global-variables>
     <functions>
       <function name="buddy_tabcomplete">
         <parameters>
+          <par name="desc" nr="6"/>
+          <par name="buf" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="start" nr="2"/>
-          <par name="buf" nr="3"/>
-          <par name="bufloc" nr="4"/>
           <par name="match" nr="5"/>
-          <par name="desc" nr="6"/>
+          <par name="bufloc" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -41,6 +49,16 @@
         <parameters>
           <par name="faimrcfile" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -53,11 +71,21 @@
       </function>
       <function name="raddbuddy">
         <parameters>
+          <par name="group" nr="3"/>
           <par name="conn" nr="1"/>
           <par name="screenname" nr="2"/>
-          <par name="group" nr="3"/>
           <par name="notes" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -74,6 +102,16 @@
           <par name="screenname" nr="2"/>
           <par name="notes" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -88,6 +126,47 @@
         <parameters>
           <par name="conf" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <lt/>
+                <apply>
+                  <minus/>
+                  <ci>rc_var_i_c</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>17</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <lt/>
+                <apply>
+                  <minus/>
+                  <ci>rc_var_s_c</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>20</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <lt/>
+                <apply>
+                  <minus/>
+                  <ci>rc_var_b_c</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>16</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -102,6 +181,47 @@
         <parameters>
           <par name="conf" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <minus/>
+                  <ci>LINES</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>LINES</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>LINES</ci>
+                  <cn>2</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

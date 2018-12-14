@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 14:52:58.452598"/>
-  <cfile name="src/win">
-    <data-structures/>
+  <header time="2018-12-05 22:58:36">
+    <application file="src/win.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="COLOR_PAIRS"/>
+      <gvar name="curconn"/>
+      <gvar name="curscr"/>
+      <gvar name="statusbar_text"/>
+      <gvar name="stdscr"/>
+    </global-variables>
     <functions>
       <function name="do_resize">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="bwin" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -21,8 +52,8 @@
       </function>
       <function name="nw_addch">
         <parameters>
-          <par name="win" nr="1"/>
           <par name="ch" nr="2"/>
+          <par name="win" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,13 +82,13 @@
       </function>
       <function name="nw_attr">
         <parameters>
-          <par name="win" nr="1"/>
-          <par name="B" nr="2"/>
-          <par name="I" nr="3"/>
-          <par name="U" nr="4"/>
-          <par name="EM" nr="5"/>
-          <par name="STRONG" nr="6"/>
           <par name="CODE" nr="7"/>
+          <par name="B" nr="2"/>
+          <par name="EM" nr="5"/>
+          <par name="win" nr="1"/>
+          <par name="I" nr="3"/>
+          <par name="STRONG" nr="6"/>
+          <par name="U" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -129,6 +160,16 @@
       </function>
       <function name="nw_getch">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>stdscr</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -155,8 +196,8 @@
       </function>
       <function name="nw_getline">
         <parameters>
-          <par name="win" nr="1"/>
           <par name="buf" nr="2"/>
+          <par name="win" nr="1"/>
           <par name="buflen" nr="3"/>
         </parameters>
         <postconditions>
@@ -171,10 +212,20 @@
       </function>
       <function name="nw_getpass">
         <parameters>
-          <par name="win" nr="1"/>
           <par name="pass" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="win" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>stdscr</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -201,8 +252,8 @@
       </function>
       <function name="nw_hline">
         <parameters>
-          <par name="win" nr="1"/>
           <par name="ch" nr="2"/>
+          <par name="win" nr="1"/>
           <par name="row" nr="3"/>
         </parameters>
         <postconditions>
@@ -217,8 +268,8 @@
       </function>
       <function name="nw_initwin">
         <parameters>
-          <par name="win" nr="1"/>
           <par name="bg" nr="2"/>
+          <par name="win" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -233,8 +284,8 @@
       <function name="nw_move">
         <parameters>
           <par name="win" nr="1"/>
-          <par name="row" nr="2"/>
           <par name="col" nr="3"/>
+          <par name="row" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -249,8 +300,8 @@
       <function name="nw_mvwin">
         <parameters>
           <par name="win" nr="1"/>
-          <par name="row" nr="2"/>
           <par name="col" nr="3"/>
+          <par name="row" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -278,10 +329,10 @@
       </function>
       <function name="nw_printf">
         <parameters>
-          <par name="win" nr="1"/>
-          <par name="pair" nr="2"/>
           <par name="bold" nr="3"/>
           <par name="format" nr="4"/>
+          <par name="win" nr="1"/>
+          <par name="pair" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -310,8 +361,8 @@
       <function name="nw_resize">
         <parameters>
           <par name="win" nr="1"/>
-          <par name="row" nr="2"/>
           <par name="col" nr="3"/>
+          <par name="row" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -367,8 +418,8 @@
       </function>
       <function name="nw_vline">
         <parameters>
-          <par name="win" nr="1"/>
           <par name="ch" nr="2"/>
+          <par name="win" nr="1"/>
           <par name="col" nr="3"/>
         </parameters>
         <postconditions>
@@ -383,6 +434,79 @@
       </function>
       <function name="statrefresh">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curscr</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="lastupdate"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="online"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>statusbar_text</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -395,6 +519,16 @@
       </function>
       <function name="whidecursor">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>stdscr</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -419,6 +553,16 @@
       </function>
       <function name="wsetup">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>stdscr</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -431,6 +575,21 @@
       </function>
       <function name="wsetup_colors">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <minus/>
+                  <ci>COLOR_PAIRS</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>32767</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -443,6 +602,24 @@
       </function>
       <function name="wshutitdown">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
