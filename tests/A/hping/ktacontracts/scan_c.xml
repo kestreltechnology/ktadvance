@@ -1,90 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-12 00:12:50.764731"/>
-  <cfile name="scan">
-    <data-structures/>
+  <header time="2018-12-02 13:17:33">
+    <application file="scan.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
-      <function name="tcp_strflags">
+      <function name="do_exit">
         <parameters>
-          <par name="s" nr="1"/>
-          <par name="flags" nr="2"/>
+          <par name="sid" nr="1"/>
+        </parameters>
+      </function>
+      <function name="parse_ports">
+        <parameters>
+          <par name="ports" nr="2"/>
+          <par name="pi" nr="1"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="receiver">
-        <parameters>
-          <par name="pi" nr="1"/>
-          <par name="childpid" nr="2"/>
-        </parameters>
-        <postconditions/>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="port_to_name">
         <parameters>
           <par name="port" nr="1"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><not-null/><return/></apply></math></post>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
-      <function name="shm_creat">
+      <function name="receiver">
         <parameters>
-          <par name="size" nr="1"/>
-        </parameters>
-        <postconditions/>
-      </function>
-      <function name="shm_attach">
-        <parameters/>
-        <postconditions/>
-      </function>
-      <function name="parse_ports">
-        <parameters>
+          <par name="childpid" nr="2"/>
           <par name="pi" nr="1"/>
-          <par name="ports" nr="2"/>
         </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
       </function>
-      <function name="shm_rm">
+      <function name="scanmain">
         <parameters/>
-        <postconditions/>
-      </function>
-      <function name="shm_detach">
-        <parameters>
-          <par name="addr" nr="1"/>
-        </parameters>
-        <postconditions/>
-      </function>
-      <function name="do_exit">
-        <parameters>
-          <par name="sid" nr="1"/>
-        </parameters>
-        <postconditions/>
-      </function>
-      <function name="shm_init">
-        <parameters>
-          <par name="size" nr="1"/>
-        </parameters>
-        <postconditions/>
       </function>
       <function name="sender">
         <parameters>
           <par name="pi" nr="1"/>
         </parameters>
-        <postconditions/>
       </function>
-      <function name="scanmain">
+      <function name="shm_attach">
         <parameters/>
-        <postconditions/>
       </function>
       <function name="shm_close">
         <parameters>
           <par name="addr" nr="1"/>
         </parameters>
-        <postconditions/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="shm_creat">
+        <parameters>
+          <par name="size" nr="1"/>
+        </parameters>
+      </function>
+      <function name="shm_detach">
+        <parameters>
+          <par name="addr" nr="1"/>
+        </parameters>
+      </function>
+      <function name="shm_init">
+        <parameters>
+          <par name="size" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="shm_rm">
+        <parameters/>
+      </function>
+      <function name="tcp_strflags">
+        <parameters>
+          <par name="s" nr="1"/>
+          <par name="flags" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
     </functions>
   </cfile>

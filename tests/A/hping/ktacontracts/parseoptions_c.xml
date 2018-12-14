@@ -1,39 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-12 00:12:51.236023"/>
-  <cfile name="parseoptions">
-    <data-structures/>
+  <header time="2018-12-02 13:16:08">
+    <application file="parseoptions.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="fail_parse_route">
         <parameters/>
         <postconditions>
-	  <post><math><apply><false/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <false/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_options">
+        <parameters>
+          <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="parse_route">
         <parameters>
-          <par name="route" nr="1"/>
           <par name="route_len" nr="2"/>
+          <par name="route" nr="1"/>
           <par name="str" nr="3"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="suidtester">
         <parameters/>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="parse_options">
-        <parameters>
-          <par name="argc" nr="1"/>
-          <par name="argv" nr="2"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
     </functions>
   </cfile>

@@ -1,55 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-12 00:12:51.367715"/>
-  <cfile name="antigetopt">
-    <data-structures/>
+  <header time="2018-12-02 13:13:48">
+    <application file="antigetopt.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
-      <function name="strinitcmp">
-        <parameters>
-          <par name="a" nr="1"/>
-          <par name="b" nr="2"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="antigetopt">
-        <parameters>
-          <par name="argc" nr="1"/>
-          <par name="argv" nr="2"/>
-          <par name="list" nr="3"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="ago_lookup">
-        <parameters>
-          <par name="list" nr="1"/>
-          <par name="arg" nr="2"/>
-          <par name="islong" nr="3"/>
-          <par name="amb" nr="4"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="ago_set_exception">
-        <parameters>
-          <par name="except_nr" nr="1"/>
-          <par name="tester" nr="2"/>
-          <par name="msg" nr="3"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
       <function name="ago_gnu_error">
         <parameters>
           <par name="pname" nr="1"/>
           <par name="error" nr="2"/>
         </parameters>
-        <postconditions/>
+      </function>
+      <function name="ago_lookup">
+        <parameters>
+          <par name="amb" nr="4"/>
+          <par name="arg" nr="2"/>
+          <par name="list" nr="1"/>
+          <par name="islong" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ao_id"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ao_flags"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ago_set_exception">
+        <parameters>
+          <par name="msg" nr="3"/>
+          <par name="except_nr" nr="1"/>
+          <par name="tester" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="antigetopt">
+        <parameters>
+          <par name="list" nr="3"/>
+          <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="strinitcmp">
+        <parameters>
+          <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
     </functions>
   </cfile>
