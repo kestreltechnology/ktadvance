@@ -70,6 +70,16 @@ if __name__ == '__main__':
             projectstats[p] = (0,0,0)
 
         for t in ppod:
+            if not 'violated' in ppod[t]: ppod[t]['violated'] = 0
+        for t in spod:
+            if not 'violated' in spod[t]: spod[t]['violated'] = 0
+
+        for t in ppod:
+            if not 'contract' in ppod[t]: ppod[t]['contract'] = 0
+        for t in spod:
+            if not 'contract' in spod[t]: spod[t]['contract'] = 0
+
+        for t in ppod:
             if not t in ppotagtotals: ppotagtotals[t] = {}
             for dm in ppod[t]:
                 if not dm in ppotagtotals[t]: ppotagtotals[t][dm] = 0
