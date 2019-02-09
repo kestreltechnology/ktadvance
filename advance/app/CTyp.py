@@ -143,6 +143,8 @@ class CTypVoid(CTypBase):
 
     def is_void(self): return True
 
+    def get_opaque_type(self): return self
+
     def __str__(self):
         return 'void' + '[' + str(self.get_attributes()) + ']'
         
@@ -163,6 +165,8 @@ class CTypInt(CTypBase):
     def is_int(self): return True
 
     def get_kind(self): return self.tags[1]
+
+    def get_opaque_type(self): return self
 
     def __str__(self):
         return (integernames[self.get_kind()] + str(self.get_attributes_string()))
@@ -185,6 +189,8 @@ class CTypFloat(CTypBase):
 
     def get_kind(self): return self.tags[1]
 
+    def get_opaque_type(self): return self
+
     def __str__(self): return floatnames[self.get_kind()]
 
 
@@ -206,6 +212,8 @@ class CTypNamed(CTypBase):
     def expand(self): return self.cd.decls.expand(self.get_name())
 
     def is_named_type(self): return True
+
+    def get_opaque_type(self): return self.expand().get_opaque_type()
 
     def __str__(self):
         return self.get_name() + str(self.get_attributes_string())
@@ -234,6 +242,11 @@ class CTypComp(CTypBase):
 
     def is_comp(self): return True
 
+    def get_opaque_type(self):
+        tags = [ 'tvoid' ]
+        args = []
+        return self.cd.get_typ(self.cd.mk_typ(tags,args))
+
     def __str__(self):
         if self.is_struct():
             return 'struct ' + self.get_name() + '(' + str(self.get_ckey()) + ')'
@@ -258,6 +271,11 @@ class CTypEnum(CTypBase):
 
     def is_enum(self): return True
 
+    def get_opaque_type(self):
+        tags = [ 'tint', 'iint' ]
+        args = [ ]
+        return  self.cd.get_typ(self.cd.mk_typ(tags,args))
+
     def __str__(self): return 'enum ' + self.get_name()
         
 
@@ -274,6 +292,8 @@ class CTypBuiltinVaargs(CTypBase):
         CTypBase.__init__(self,cd,index,tags,args)
 
     def is_builtin_vaargs(self): return True
+
+    def get_opaque_type(self): return self
 
     def __str__(self): return 'tbuiltin_va_args'
         
@@ -294,6 +314,12 @@ class CTypPtr(CTypBase):
     def get_pointedto_type(self): return self.get_typ(self.args[0])
 
     def is_pointer(self): return True
+
+    def get_opaque_type(self):
+        tgttype = self.get_pointedto_type().get_opaque_type()
+        tags = [ 'tptr' ]
+        args = [ self.cd.index_typ(tgttype) ]
+        return self.cd.get_typ(self.cd.mk_typ(tags,args))
 
     def __str__(self): return ('(' + str(self.get_pointedto_type()) + ' *)')
 
@@ -319,6 +345,11 @@ class CTypArray(CTypBase):
     def has_array_size_expr(self): return (self.args[1] >= 0)
 
     def is_array(self): return True
+
+    def get_opaque_type(self):
+        tags = [ 'tvoid' ]
+        args = [ ]
+        return  self.cd.get_typ(self.cd.mk_typ(tags,args))
 
     def __str__(self):
         size = self.get_array_size_expr()
@@ -346,6 +377,11 @@ class CTypFun(CTypBase):
     def get_args(self): return self.cd.get_funargs_opt(self.args[1])
 
     def is_function(self): return True
+
+    def get_opaque_type(self):
+        tags = [ 'tvoid' ]
+        args = [ ]
+        return  self.cd.get_typ(self.cd.mk_typ(tags,args))
 
     def is_default_function_prototype(self):
         args = self.get_args()

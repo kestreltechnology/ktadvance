@@ -335,7 +335,7 @@ class CDictionary(object):
         return self.offset_table_add(IT.get_key(tags,args),f)
 
     def varinfo_to_exp_index(self,vinfo):
-        lhostix = self.mk_lhost_index([ 'var', vinfo.vname ],[ vinfo.get_vid() ])
+        lhostix = self.mk_lhost_index([ 'var', vinfo.vname ],[ vinfo.get_real_vid() ])
         offsetix = self.mk_offset_index([ 'n' ],[])
         lvalix = self.mk_lval_index([],[ lhostix, offsetix ])
         return self.mk_exp_index([ 'lval' ],[ lvalix ])

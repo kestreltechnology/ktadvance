@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017-2018 Kestrel Technology LLC
+# Copyright (c) 2017-2019 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -135,9 +135,12 @@ class IndexManager(object):
                 else:
                     logging.warning(msg + 'Create new index for global variable: '
                                         + str(gvid))
+                    return None
+                '''
                     self.gvid2vid[gvid][fidtgt] = self.fidvidmax[fidtgt]
                     self.fidvidmax[fidtgt] += 1
                     return self.gvid2vid[gvid][fidtgt]
+                '''
 
     '''return the gvid of the vid in the file with index fid.'''
     def get_gvid(self,fid,vid):

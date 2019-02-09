@@ -32,7 +32,7 @@ class CVarInfo(CD.CDeclarationsRecord):
 
     tags:
         0: vname
-        1: vstorage     ('?' for global variable)
+        1: vstorage     ('?' for global variable, 'o_gvid' for opaque variable)
 
     args:
         0: vid          (-1 for global variable)
@@ -61,6 +61,8 @@ class CVarInfo(CD.CDeclarationsRecord):
         vid = int(self.args[0])
         return (vid if vid >= 0 else self.index)
 
+    def get_real_vid(self): return int(self.args[0])
+
     def get_vstorage(self):
         if len(self.tags) > 1:
             return self.tags[1]
@@ -75,4 +77,5 @@ class CVarInfo(CD.CDeclarationsRecord):
 
     def get_line(self):return self.vdecl.get_line()
 
-    def __str__(self): return self.vname + ':' + str(self.vtype) + '  ' + str(self.vdecl)
+    def __str__(self):
+        return self.vname + ':' + str(self.vtype) + '  ' + str(self.vdecl) + ' (' + str(self.args[0]) + ')'

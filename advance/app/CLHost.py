@@ -66,7 +66,7 @@ class CLHostVar(CLHostBase):
 
     def has_variable(self,vid): return self.get_vid() == vid
 
-    def __str__(self): return self.get_name()
+    def __str__(self): return self.get_name() +  ' (vid:' + str(self.get_vid()) + ')'
 
 
 class CLHostMem(CLHostBase):

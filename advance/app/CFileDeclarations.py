@@ -127,6 +127,13 @@ class CFileDeclarations(object):
         else:
             raise InvalidArgumentError
 
+    def make_opaque_global_varinfo(self,gvid,gname,gtypeix):
+        tags = [ gname, 'o_' + str(gvid) ]
+        args = [ -1, gtypeix, -1,1,0,-1,1,0 ]
+        def f(index,key): return CVarInfo(self,index,tags,args)
+        return self.varinfo_table.add(IT.get_key(tags,args),f)
+        
+
     def get_globalvar_definitions(self): return self.gvardefs.values()
 
     def get_global_functions(self): return self.gfunctions.values()
@@ -136,7 +143,8 @@ class CFileDeclarations(object):
         return [ x.compinfo for x in comptags ]
 
     def get_global_varinfos(self):
-        gvars = list(self.gvardefs.values()) + list(self.gvardecls.values()) + list(self.gfunctions.values())
+        gvars = (list(self.gvardefs.values()) + list(self.gvardecls.values())
+                + list(self.gfunctions.values()))
         return [ x.varinfo for x in gvars ]
 
     def get_global_varinfo(self,vid):
