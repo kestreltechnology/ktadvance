@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017-2018 Kestrel Technology LLC
+# Copyright (c) 2017-2019 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -69,6 +69,8 @@ class ATApiAssumptionType(ATDictionaryRecord):
 
     def get_apiid(self): return self.args[0]
 
+    def get_predid(self): return int(self.args[0])
+
     def get_predicate(self): return self.pd.get_predicate(int(self.args[0]))
 
     def is_api_assumption(self): return True
@@ -80,9 +82,7 @@ class ATGlobalApiAssumptionType(ATDictionaryRecord):
     def __init__(self,pod,index,tags,args):
         ATDictionaryRecord.__init__(self,pod,index,tags,args)
 
-    def get_xpredid(self): return self.args[1]
-
-    def get_callee(self): return self.args[0]
+    def get_predid(self): return int(self.args[0])
 
     def get_predicate(self): return self.pd.get_predicate(int(self.args[0]))
 
@@ -94,6 +94,10 @@ class ATPostconditionType(ATDictionaryRecord):
 
     def __init__(self,pod,index,tags,args):
         ATDictionaryRecord.__init__(self,pod,index,tags,args)
+
+    def get_xpredid(self): return self.args[1]
+
+    def get_callee(self): return self.args[0]
 
     def is_contract_assumption(self): return True
 

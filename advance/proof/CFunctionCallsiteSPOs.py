@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017-2018 Kestrel Technology LLC
+# Copyright (c) 2017-2019 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -128,20 +128,36 @@ class CFunctionCallsiteSPOs(object):
                         + ') in call to ' + calleefun.name + ' in function ' + self.cfun.name
                         + ' in file ' + cfile.name)
                 return
-            if calleefile.has_file_contracts() and calleefile.index != self.cfile.index:
-                gvarinfos = calleefile.contracts.globalvariables.values()
-                for othergvar in gvarinfos:
-                    othervid = othergvar.gvinfo.get_vid()
-                    thisvid = self.cfile.capp.convert_vid(calleefile.index,othervid,self.cfile.index)
-                    thisvinfo = self.cfile.declarations.get_global_varinfo(thisvid)
-                    if thisvinfo is None:
-                        logging.warning(cfile.name + ': ' + self.cfun.name + ' call to '
-                                            + calleefun.name + ' (' + str(calleefun.cfile.name)
-                                            + '): global api variable ' + othergvar.gvinfo.vname
-                                            + ' not found')
-                        return
-                    expindex = self.cfile.declarations.dictionary.varinfo_to_exp_index(thisvinfo)
-                    subst[othervid] = self.cfile.declarations.dictionary.get_exp(expindex)
+            if len(api.get_api_assumptions()) > 0:
+                if calleefile.has_file_contracts() and calleefile.index != self.cfile.index:
+                    gvarinfos = calleefile.contracts.globalvariables.values()
+                    for othergvar in gvarinfos:
+                        othervid = othergvar.gvinfo.get_vid()
+                        thisvid = self.cfile.capp.convert_vid(calleefile.index,othervid,self.cfile.index)
+                        if thisvid is None:
+                            gvid = self.cfile.capp.indexmanager.get_gvid(calleefile.index,othervid)
+                            gvarinfo = self.cfile.capp.declarations.get_varinfo(gvid)
+                            gvarname = gvarinfo.vname + '__' + str(gvid) + '__'
+                            gvartyp = othergvar.gvinfo.vtype.get_opaque_type()
+                            thisvtypeix = self.cfile.declarations.dictionary.index_typ(gvartyp)
+                            thisvinfoix = self.cfile.declarations.make_opaque_global_varinfo(gvid,gvarname,thisvtypeix)
+                            thisvinfo = self.cfile.declarations.get_varinfo(thisvinfoix)
+                            logging.warning(cfile.name + ': ' + self.cfun.name + ' call to '
+                                                + calleefun.name + ' (' + str(calleefun.cfile.name)
+                                                + '): global api variable ' + othergvar.gvinfo.vname
+                                                + ' (gvid:' + str(gvid) + ')'
+                                                + ' converted to opaque variable'
+                                                + ' (vinfo-ix:' + str(thisvinfoix) + ')')
+                        else:
+                            thisvinfo = self.cfile.declarations.get_global_varinfo(thisvid)
+                            if thisvinfo is None:
+                                logging.warning(cfile.name + ': ' + self.cfun.name + ' call to '
+                                                + calleefun.name + ' (' + str(calleefun.cfile.name)
+                                                + '): global api variable ' + othergvar.gvinfo.vname
+                                                + ' not found')
+                                return
+                        expindex = self.cfile.declarations.dictionary.varinfo_to_exp_index(thisvinfo)
+                        subst[othervid] = self.cfile.declarations.dictionary.get_exp(expindex)
             for a in api.get_api_assumptions():
                 if a.id in self.spos: continue
                 if a.isfile: continue       # file_level assumption

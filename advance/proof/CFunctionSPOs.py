@@ -73,7 +73,7 @@ class CFunctionSPOs(CFunctionPOs):
 
     def get_spo(self,id):
         for localspo in self.localspos.values():
-            if ls.id == id:
+            if localspo.id == id:
                 return localspo 
         for cs in self.callsitespos.values():
             if cs.has_spo(id):
