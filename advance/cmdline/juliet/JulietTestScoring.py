@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017-2018 Kestrel Technology LLC
+# Copyright (c) 2017-2019 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -66,39 +66,41 @@ def initialize_testsummary(testset,d):
             d[tindex][safecontrols][c] = 0
     testset.iter(f)
 
-def classify_tgt_violation(ppo,capp):
-    if ppo is None: return 'U'                                # unknown
-    if ppo.is_violated(): return 'V'                          # violation reported
-    if ppo.dependencies is None: return 'U'                   # unknown
-    dm = ppo.dependencies.level
+def classify_tgt_violation(po,capp):
+    if po is None: return 'U'                                # unknown
+    if po.is_open(): return 'U'                              # unknown
+    if po.is_violated(): return 'V'                          # violation reported
+    if po.dependencies is None: return 'U'                   # unknown
+    dm = po.dependencies.level
     if dm == 'f' or dm == 's': return 'S'                     # found safe
-    if ppo.is_delegated():
-        spos = get_associated_spos(ppo,capp)
+    if po.is_delegated():
+        spos = get_associated_spos(po,capp)
         if len(spos) > 0:
             classifications = [ classify_tgt_violation(spo,capp) for spo in spos ]
             if 'V' in classifications: return 'V'              # violation reported
             if all( [ x == 'S' for x in classifications ] ): return 'S'     # found safe
         else:
-            return 'S'
+            return 'O'                                         # no callsite found
         return 'D'                                             # found deferred
     return 'O'                                                 # other
 
-def classify_tgt_safecontrol(ppo,capp):
-    if ppo is None: return 'U'                                 # unknown
-    if ppo.is_violated(): return 'O'                           # violation
-    if ppo.dependencies is None: return 'U'                    # unknown
-    dm = ppo.dependencies.level
+def classify_tgt_safecontrol(po,capp):
+    if po is None: return 'U'                                 # unknown
+    if po.is_open(): return 'U'                               # unknown
+    if po.is_violated(): return 'O'                           # violation
+    if po.dependencies is None: return 'U'                    # unknown
+    dm = po.dependencies.level
     if dm == 's' or dm == 'f': return 'S'                      # safe
-    if ppo.is_delegated():
-        spos = get_associated_spos(ppo,capp)
+    if po.is_delegated():
+        spos = get_associated_spos(po,capp)
         if len(spos) > 0:
             classifications = [ classify_tgt_safecontrol(spo,capp) for spo in spos ]
             if all( [ x == 'S' for x in classifications ]):
                 return 'S'                                      # safe
             if 'O' in classifications: return 'O'
-            return 'D'                                           # deferred
+            return 'D'                                          # deferred
         else:
-            return 'S'
+            return 'O'
     if ppo.is_deadcode(): return 'X'                            # dead code
     return 'O'                                                  # other
 
@@ -123,7 +125,8 @@ def get_associated_spos(ppo,capp):
         callsites = capp.get_callsites(cfile.index,cfun.svar.get_vid())
         assumptions = ppo.dependencies.ids
         assumptions = [ cfun.podictionary.get_assumption_type(i) for i in assumptions ]
-        assumptions = [ a.get_apiid() for a in assumptions if a.is_api_assumption() ]
+        assumptions = [ a.get_predid() for a in assumptions
+                            if a.is_api_assumption() or a.is_global_api_assumption() ]
         if len(callsites) > 0:
             for ((fid,vid),cs) in callsites:
                 def f(spo):

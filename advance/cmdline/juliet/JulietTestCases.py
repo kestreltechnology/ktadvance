@@ -24,8 +24,17 @@
 # ------------------------------------------------------------------------------
 
 missingscorekeys = {
+    "CWE366": [
+        "int_byref"
+        ],
+    "CWE367": [
+        "access",
+        "stat"
+        ]
+    }
+
+worklist = {
     "CWE121": [
-        "s01/CWE129_connect_socket",
         "s01/CWE129_fgets",
         "s01/CWE129_fscanf",
         "s01/CWE129_listen_socket",
@@ -59,6 +68,23 @@ missingscorekeys = {
         "s02/rand_memmove",
         "s02/rand_strncpy"
         ],
+    "CWE197": [
+        "s01/int_fgets_to_short",
+        "s01/int_fscanf_to_char",
+        "s01/int_fscanf_to_short",
+        "s01/int_large_to_char",
+        "s01/int_large_to_short",
+        "s01/int_listen_socket_to_char",
+        "s01/int_listen_socket_to_short",
+        "s01/int_rand_to_char",
+        "s01/int_rand_to_short",
+        "s02/short_connect_socket",
+        "s02/short_fgets",
+        "s02/short_fscanf",
+        "s02/short_large",
+        "s02/short_listen_socket",
+        "s02/short_rand"
+        ],
     "CWE252": [
         "char_fprintf",
         "char_fputc",
@@ -75,16 +101,21 @@ missingscorekeys = {
         "char_snprintf",
         "char_sscanf"
         ],
+    "CWE253": [
+        "char_putc",
+        "char_putchar",
+        "char_puts",
+        "char_remove",
+        "char_rename",
+        "char_scanf",
+        "char_snprintf",
+        "char_sscanf"
+        ],
     "CWE364": [
         "basic"
         ],
     "CWE366": [
-        "global_int",
-        "int_byref"
-        ],
-    "CWE367": [
-        "access",
-        "stat"
+        "global_int"
         ],
     "CWE377": [
         "char_mktemp",
@@ -151,6 +182,12 @@ missingscorekeys = {
     "CWE404": [
         "open_fclose"
         ],
+    "CWE415": [
+        "s01/malloc_free_int",
+        "s01/malloc_free_int64_t",
+        "s01/malloc_free_long",
+        "s01/malloc_free_struct"
+        ],
     "CWE426": [
         "char_popen",
         "char_system"
@@ -163,8 +200,26 @@ missingscorekeys = {
         "char_listen_socket"
         ],
     "CWE457": [
+        "s01/double_array_declare_partial_init",
+        "s01/double_array_malloc_no_init",
+        "s01/double_array_malloc_partial_init",
+        "s01/double_pointer",
         "s01/int64_t",
         "s01/long"
+        "s01/int_array_alloca_no_init",
+        "s01/int_array_alloca_partial_init",
+        "s01/int_array_declare_no_init",
+        "s01/int_array_declare_partial_init",
+        "s01/int_array_malloc_no_init",
+        "s01/int_array_malloc_partial_init",
+        "s01/int_pointer",
+        "s01/struct_array_alloca_no_init",
+        "s01/struct_array_alloca_partial_init",
+        "s01/struct_array_declare_no_init",
+        "s01/struct_array_declare_partial_init",
+        "s01/struct_array_malloc_no_init",
+        "s01/struct_array_malloc_partial_init",
+        "s01/struct_pointer"
         ],
     "CWE459": [
         "char"
@@ -332,6 +387,22 @@ missingscorekeys = {
         "freopen",
         "open"
         ],
+    "CWE758": [
+        "double_pointer_malloc_use",
+        "int64_t_alloca_use",
+        "int64_t_malloc_use",
+        "int_alloca_use",
+        "int_malloc_use",
+        "int_pointer_alloca_use",
+        "int_pointer_malloc_use",
+        "long_alloca_use",
+        "long_malloc_use",
+        "no_return"        
+        "struct_alloca_use",
+        "struct_malloc_use",
+        "struct_pointer_alloca_use",
+        "struct_pointer_malloc_use"
+        ],
     "CWE773": [
         "fopen",
         "open"
@@ -366,83 +437,12 @@ missingscorekeys = {
         ]
     }
 
-worklist = {
-    "CWE197": [
-        "s01/int_fgets_to_short",
-        "s01/int_fscanf_to_char",
-        "s01/int_fscanf_to_short",
-        "s01/int_large_to_char",
-        "s01/int_large_to_short",
-        "s01/int_listen_socket_to_char",
-        "s01/int_listen_socket_to_short",
-        "s01/int_rand_to_char",
-        "s01/int_rand_to_short",
-        "s02/short_connect_socket",
-        "s02/short_fgets",
-        "s02/short_fscanf",
-        "s02/short_large",
-        "s02/short_listen_socket",
-        "s02/short_rand"
-        ],
-    "CWE253": [
-        "char_putc",
-        "char_putchar",
-        "char_puts",
-        "char_remove",
-        "char_rename",
-        "char_scanf",
-        "char_snprintf",
-        "char_sscanf"
-        ],
-    "CWE415": [
-        "s01/malloc_free_int",
-        "s01/malloc_free_int64_t",
-        "s01/malloc_free_long",
-        "s01/malloc_free_struct"
-        ],
-    "CWE457": [
-        "s01/double_array_declare_partial_init",
-        "s01/double_array_malloc_no_init",
-        "s01/double_array_malloc_partial_init",
-        "s01/double_pointer",
-        "s01/int_array_alloca_no_init",
-        "s01/int_array_alloca_partial_init",
-        "s01/int_array_declare_no_init",
-        "s01/int_array_declare_partial_init",
-        "s01/int_array_malloc_no_init",
-        "s01/int_array_malloc_partial_init",
-        "s01/int_pointer",
-        "s01/struct_array_alloca_no_init",
-        "s01/struct_array_alloca_partial_init",
-        "s01/struct_array_declare_no_init",
-        "s01/struct_array_declare_partial_init",
-        "s01/struct_array_malloc_no_init",
-        "s01/struct_array_malloc_partial_init",
-        "s01/struct_pointer"
-        ],
-    "CWE758": [
-        "double_pointer_malloc_use",
-        "int64_t_alloca_use",
-        "int64_t_malloc_use",
-        "int_alloca_use",
-        "int_malloc_use",
-        "int_pointer_alloca_use",
-        "int_pointer_malloc_use",
-        "long_alloca_use",
-        "long_malloc_use",
-        "no_return"        
-        "struct_alloca_use",
-        "struct_malloc_use",
-        "struct_pointer_alloca_use",
-        "struct_pointer_malloc_use"
-        ]
-    }
-
 
 testcases = {
     "CWE121": [
         "s01/char_type_overrun_memcpy",
         "s01/char_type_overrun_memmove",
+        "s01/CWE129_connect_socket",        
         "s01/CWE129_large",
         "s01/CWE129_rand",
         "s01/CWE131_loop",
