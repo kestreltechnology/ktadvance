@@ -59,6 +59,7 @@ class AnalysisManager(object):
         self.chsummaries = self.config.summaries
         self.path = self.capp.path
         self.canalyzer = self.config.canalyzer
+        self.gui = self.config.chc_gui
         self.onefile = onefile
         self.nofilter = nofilter
         self.wordsize = wordsize
@@ -132,7 +133,27 @@ class AnalysisManager(object):
         if self.wordsize > 0: cmd.extend(['-wordsize',str(self.wordsize)])
         cmd.append(self.path)
         cmd.append('-cfile')
-        return cmd        
+        return cmd
+
+    def rungui(self,name,outputpath=None):
+        semdir = os.path.dirname(self.path)
+        analysisdir = os.path.dirname(semdir)
+        if outputpath is None:
+            outputpath = analysisdir
+        cmd = [ self.gui, '-summaries', self.chsummaries,
+                    '-output', outputpath,
+                    '-name', name,
+                    '-xpm', self.config.utildir,
+                    '-analysisdir', analysisdir, '-contractpath',
+                    self.contractpath ]
+        print(cmd)
+        try:
+            result = subprocess.call(cmd,cwd=self.path,stdout=open(os.devnull,'w'),
+                                        stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as args:
+            print(args.output)
+            print(args)
+            exit(1)
 
     def create_file_primary_proofobligations(self,cfilename):
         """Call analyzer to create primary proof obligations for a single application file."""
