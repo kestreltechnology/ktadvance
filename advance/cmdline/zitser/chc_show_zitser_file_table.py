@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017-2018 Kestrel Technology LLC
+# Copyright (c) 2017-2019 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -59,8 +59,6 @@ if __name__ == '__main__':
         print(UP.semantics_not_found_err_msg(cpath))
         exit(1)
         
-    cfapp = CApplication(sempath,args.cfile)
-
     try:
         cfapp = CApplication(sempath,args.cfile)
         cfile = cfapp.get_cfile()
