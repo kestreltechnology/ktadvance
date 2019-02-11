@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017-2018 Kestrel Technology LLC
+# Copyright (c) 2017-2019 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -80,7 +80,7 @@ def parse():
                             default='WARNING',
                             choices=['DEBUG','INFO','WARNING','ERROR','CRITICAL'])
     parser.add_argument('--logfilename',help='name of file to collect log messages',
-                            default='ktadvance_project.log')
+                            default=None)
     args = parser.parse_args()
     return args
 
@@ -113,6 +113,12 @@ if __name__ == '__main__':
         elif args.logging == 'ERROR': loglevel = logging.ERROR
         elif args.logging == 'CRITICAL': loglevel = logging.CRITICAL
 
+    cpath = UF.get_project_path(args.path)
+    if args.logfilename is None:
+        logfilename = UF.get_project_logfilename(args.path)
+    else:
+        logfilename = args.logfilename
+    '''
     if args.path in config.projects:
         pdir = config.projects[args.path]
         cpath = os.path.join(config.testdir,pdir)
@@ -120,7 +126,8 @@ if __name__ == '__main__':
     else:
         cpath = os.path.abspath(args.path)
         logfilename = args.logfilename
-
+    '''
+        
     logging.basicConfig(filename=logfilename,level=loglevel)
 
     if not os.path.isfile(config.canalyzer):

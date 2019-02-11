@@ -60,17 +60,12 @@ def timing(activity):
 if __name__ == '__main__':
 
     args = parse()
-    config  = Config()
 
     if args.list_test_applications or args.path == '?':
-        print(UP.list_test_applications())
+        print(UF.list_test_applications())
         exit(0)
 
-    if args.path in config.projects:
-        pdir = config.projects[args.path]
-        cpath = os.path.join(config.testdir,pdir)
-    else:
-        cpath = os.path.abspath(args.path)
+    cpath = UF.get_project_path(args.path)
 
     if not os.path.isdir(cpath):
         print(UP.cpath_not_found_err_msg(cpath))

@@ -32,6 +32,7 @@ import advance.util.printutil as UP
 import advance.util.fileutil as UF
 import advance.reporting.DictionaryTables as DT
 
+from advance.util.Config import Config
 from advance.app.CApplication import CApplication
 from advance.app.CApplication import CFileNotFoundException
 
@@ -47,9 +48,14 @@ def parse():
 if __name__ == '__main__':
 
     args = parse()
+    config = Config()
 
-    cpath = UF.get_zitser_testpath(args.path)
-    
+    if args.path in config.projects:
+        pdir = config.projects[args.path]
+        cpath = os.path.join(config.testdir,pdir)
+    else:
+        cpath = os.path.abspath(args.path)
+
     if not os.path.isdir(cpath):
         print(UP.cpath_not_found_err_msg(cpath))
         exit(1)
@@ -58,7 +64,7 @@ if __name__ == '__main__':
     if not os.path.isdir(sempath):
         print(UP.semantics_not_found_err_msg(cpath))
         exit(1)
-        
+            
     cfapp = CApplication(sempath,args.cfile)
 
     try:
