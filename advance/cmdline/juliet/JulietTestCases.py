@@ -34,28 +34,7 @@ missingscorekeys = {
     }
 
 worklist = {
-    "CWE121": [
-        "s01/CWE129_fgets",
-        "s01/CWE129_fscanf",
-        "s01/CWE129_listen_socket",
-        "s01/CWE131_memcpy",
-        "s01/CWE135",
-        "s01/CWE193_char_alloca_cpy"
-        ],
-    "CWE124": [
-        "s01/CWE839_listen_socket"
-        ],
-    "CWE126": [
-        "s01/CWE129_listen_socket"
-        ],
-    "CWE127": [
-        "s01/CWE839_listen_socket"
-        ],
     "CWE194": [
-        "s01/fscanf_memcpy",
-        "s01/fscanf_memmove",
-        "s01/fscanf_strncpy",
-        "s02/listen_socket_malloc",
         "s02/listen_socket_memcpy",
         "s02/listen_socket_memmove",
         "s02/listen_socket_strncpy",
@@ -442,10 +421,16 @@ testcases = {
     "CWE121": [
         "s01/char_type_overrun_memcpy",
         "s01/char_type_overrun_memmove",
-        "s01/CWE129_connect_socket",        
+        "s01/CWE129_connect_socket",
+        "s01/CWE129_fgets",
+        "s01/CWE129_fscanf",        
         "s01/CWE129_large",
+        "s01/CWE129_listen_socket",
         "s01/CWE129_rand",
         "s01/CWE131_loop",
+        "s01/CWE131_memcpy",
+        "s01/CWE135",
+        "s01/CWE193_char_alloca_cpy",
         "s02/CWE193_char_alloca_loop",
         "s02/CWE193_char_alloca_memcpy",
         "s02/CWE193_char_alloca_ncpy",
@@ -563,6 +548,7 @@ testcases = {
         "s01/CWE839_connect_socket",
         "s01/CWE839_fgets",
         "s01/CWE839_fscanf",
+        "s01/CWE839_listen_socket",
         "s02/CWE839_negative",
         "s02/CWE839_rand",
         "s02/malloc_char_cpy",
@@ -582,6 +568,7 @@ testcases = {
         "s01/CWE129_fgets",
         "s01/CWE129_fscanf",
         "s01/CWE129_large",
+        "s01/CWE129_listen_socket",
         "s01/CWE129_rand",
         "s01/CWE170_char_loop",
         "s01/CWE170_char_memcpy",
@@ -604,6 +591,7 @@ testcases = {
         "s01/CWE839_connect_socket",
         "s01/CWE839_fgets",
         "s01/CWE839_fscanf",
+        "s01/CWE839_listen_socket",
         "s02/CWE839_negative",
         "s02/CWE839_rand",
         "s02/malloc_char_cpy",
@@ -815,7 +803,11 @@ testcases = {
         "s01/fgets_memcpy",
         "s01/fgets_memmove",
         "s01/fgets_strncpy",
-        "s01/fscanf_malloc"
+        "s01/fscanf_malloc",
+        "s01/fscanf_memcpy",
+        "s01/fscanf_memmove",
+        "s01/fscanf_strncpy",
+        "s02/listen_socket_malloc"
         ],
     "CWE195": [
         "s01/connect_socket_malloc",

@@ -84,6 +84,9 @@ def classify_tgt_violation(po,capp):
         return 'D'                                             # found deferred
     return 'O'                                                 # other
 
+def classify_tgt_safecontrol_contract_assumption(po,capp):
+    return 'S'
+
 def classify_tgt_safecontrol(po,capp):
     if po is None: return 'U'                                 # unknown
     if po.is_open(): return 'U'                               # unknown
@@ -92,6 +95,9 @@ def classify_tgt_safecontrol(po,capp):
     dm = po.dependencies.level
     if dm == 's' or dm == 'f': return 'S'                      # safe
     if po.is_delegated():
+        dependencies_type = po.get_dependencies_type()
+        if po.get_dependencies_type() == 'contract':
+            return classify_tgt_safecontrol_contract_assumption(po,capp)
         spos = get_associated_spos(po,capp)
         if len(spos) > 0:
             classifications = [ classify_tgt_safecontrol(spo,capp) for spo in spos ]
@@ -101,7 +107,7 @@ def classify_tgt_safecontrol(po,capp):
             return 'D'                                          # deferred
         else:
             return 'O'
-    if ppo.is_deadcode(): return 'X'                            # dead code
+    if po.is_deadcode(): return 'X'                            # dead code
     return 'O'                                                  # other
 
 def fill_testsummary(pairs,d,capp):
