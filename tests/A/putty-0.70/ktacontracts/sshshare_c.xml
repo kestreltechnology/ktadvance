@@ -1,0 +1,880 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2019-01-09 23:53:51.545986"/>
+  <cfile name="sshshare">
+    <data-structures/>
+    <functions>
+      <function name="getstring">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="datalen" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="getstring_inner">
+        <parameters>
+          <par name="vdata" nr="1"/>
+          <par name="datalen" nr="2"/>
+          <par name="out" nr="3"/>
+          <par name="outlen" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="getstring_size">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="datalen" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nullplug_closing">
+        <parameters>
+          <par name="plug" nr="1"/>
+          <par name="error_msg" nr="2"/>
+          <par name="error_code" nr="3"/>
+          <par name="calling_back" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nullplug_receive">
+        <parameters>
+          <par name="plug" nr="1"/>
+          <par name="urgent" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nullplug_sent">
+        <parameters>
+          <par name="plug" nr="1"/>
+          <par name="bufsize" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nullplug_socket_log">
+        <parameters>
+          <par name="plug" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="port" nr="4"/>
+          <par name="error_msg" nr="5"/>
+          <par name="error_code" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="send_packet_to_downstream">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="pkt" nr="3"/>
+          <par name="pktlen" nr="4"/>
+          <par name="chan" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_activate">
+        <parameters>
+          <par name="state" nr="1"/>
+          <par name="server_verstring" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_add_channel">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="downstream_id" nr="2"/>
+          <par name="upstream_id" nr="3"/>
+          <par name="server_id" nr="4"/>
+          <par name="state" nr="5"/>
+          <par name="maxpkt" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_add_forwarding">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="host" nr="2"/>
+          <par name="port" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_add_halfchannel">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="server_id" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_add_xchannel">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="upstream_id" nr="2"/>
+          <par name="server_id" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_begin_cleanup">
+        <parameters>
+          <par name="cs" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_channel_server_cmp">
+        <parameters>
+          <par name="av" nr="1"/>
+          <par name="bv" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_channel_set_server_id">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="chan" nr="2"/>
+          <par name="server_id" nr="3"/>
+          <par name="newstate" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_channel_us_cmp">
+        <parameters>
+          <par name="av" nr="1"/>
+          <par name="bv" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_closing">
+        <parameters>
+          <par name="plug" nr="1"/>
+          <par name="error_msg" nr="2"/>
+          <par name="error_code" nr="3"/>
+          <par name="calling_back" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_connstate_cmp">
+        <parameters>
+          <par name="av" nr="1"/>
+          <par name="bv" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_connstate_free">
+        <parameters>
+          <par name="cs" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_dead_xchannel_respond">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="xc" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_disconnect">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="message" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_find_channel_by_server">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="server_id" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_find_channel_by_upstream">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="upstream_id" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_find_forwarding">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="host" nr="2"/>
+          <par name="port" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_find_halfchannel">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="server_id" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_find_unused_id">
+        <parameters>
+          <par name="sharestate" nr="1"/>
+          <par name="first" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_find_xchannel_by_server">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="server_id" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_find_xchannel_by_upstream">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="upstream_id" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_forwarding_cmp">
+        <parameters>
+          <par name="av" nr="1"/>
+          <par name="bv" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_got_pkt_from_downstream">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="pkt" nr="3"/>
+          <par name="pktlen" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_got_pkt_from_server">
+        <parameters>
+          <par name="csv" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="pkt" nr="3"/>
+          <par name="pktlen" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_halfchannel_cmp">
+        <parameters>
+          <par name="av" nr="1"/>
+          <par name="bv" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_listen_accepting">
+        <parameters>
+          <par name="plug" nr="1"/>
+          <par name="constructor" nr="2"/>
+          <par name="ctx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_listen_closing">
+        <parameters>
+          <par name="plug" nr="1"/>
+          <par name="error_msg" nr="2"/>
+          <par name="error_code" nr="3"/>
+          <par name="calling_back" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_ndownstreams">
+        <parameters>
+          <par name="state" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_receive">
+        <parameters>
+          <par name="plug" nr="1"/>
+          <par name="urgent" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_remove_channel">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="chan" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_remove_forwarding">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="fwd" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_remove_halfchannel">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="hc" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_remove_xchannel">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="xc" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_send_verstring">
+        <parameters>
+          <par name="cs" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_sent">
+        <parameters>
+          <par name="plug" nr="1"/>
+          <par name="bufsize" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_setup_x11_channel">
+        <parameters>
+          <par name="csv" nr="1"/>
+          <par name="chanv" nr="2"/>
+          <par name="upstream_id" nr="3"/>
+          <par name="server_id" nr="4"/>
+          <par name="server_currwin" nr="5"/>
+          <par name="server_maxpkt" nr="6"/>
+          <par name="client_adjusted_window" nr="7"/>
+          <par name="peer_addr" nr="8"/>
+          <par name="peer_port" nr="9"/>
+          <par name="endian" nr="10"/>
+          <par name="protomajor" nr="11"/>
+          <par name="protominor" nr="12"/>
+          <par name="initial_data" nr="13"/>
+          <par name="initial_len" nr="14"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_try_cleanup">
+        <parameters>
+          <par name="cs" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_xchannel_add_message">
+        <parameters>
+          <par name="xc" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_xchannel_confirmation">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="xc" nr="2"/>
+          <par name="chan" nr="3"/>
+          <par name="downstream_window" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_xchannel_failure">
+        <parameters>
+          <par name="cs" nr="1"/>
+          <par name="xc" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_xchannel_free">
+        <parameters>
+          <par name="xc" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_xchannel_server_cmp">
+        <parameters>
+          <par name="av" nr="1"/>
+          <par name="bv" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="share_xchannel_us_cmp">
+        <parameters>
+          <par name="av" nr="1"/>
+          <par name="bv" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sharestate_free">
+        <parameters>
+          <par name="v" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_connection_sharing_init">
+        <parameters>
+          <par name="host" nr="1"/>
+          <par name="port" nr="2"/>
+          <par name="conf" nr="3"/>
+          <par name="ssh" nr="4"/>
+          <par name="state" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_share_sockname">
+        <parameters>
+          <par name="host" nr="1"/>
+          <par name="port" nr="2"/>
+          <par name="conf" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_share_test_for_upstream">
+        <parameters>
+          <par name="host" nr="1"/>
+          <par name="port" nr="2"/>
+          <par name="conf" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

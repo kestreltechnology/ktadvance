@@ -1,0 +1,3372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2019-01-09 23:53:50.543868"/>
+  <cfile name="ssh">
+    <data-structures/>
+    <functions>
+      <function name="alloc_channel_id">
+        <parameters>
+          <par name="ssh" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="bomb_out">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="text" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="c_write">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="buf" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="c_write_stderr">
+        <parameters>
+          <par name="trusted" nr="1"/>
+          <par name="buf" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="c_write_str">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="buf" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="c_write_untrusted">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="buf" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="connect_to_host">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="host" nr="2"/>
+          <par name="port" nr="3"/>
+          <par name="realhost" nr="4"/>
+          <par name="nodelay" nr="5"/>
+          <par name="keepalive" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="construct_packet">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pkttype" nr="2"/>
+          <par name="ap" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="defer_packet">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pkttype" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="do_ssh1_connection">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="in" nr="2"/>
+          <par name="inlen" nr="3"/>
+          <par name="pktin" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="do_ssh1_login">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="in" nr="2"/>
+          <par name="inlen" nr="3"/>
+          <par name="pktin" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="do_ssh2_authconn">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="in" nr="2"/>
+          <par name="inlen" nr="3"/>
+          <par name="pktin" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="do_ssh2_transport">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="vin" nr="2"/>
+          <par name="inlen" nr="3"/>
+          <par name="pktin" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="do_ssh_connection_init">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="c" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="do_ssh_init">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="c" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="first_in_commasep_string">
+        <parameters>
+          <par name="needle" nr="1"/>
+          <par name="haystack" nr="2"/>
+          <par name="haylen" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="free_rportfwd">
+        <parameters>
+          <par name="pf" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hash_mpint">
+        <parameters>
+          <par name="h" nr="1"/>
+          <par name="s" nr="2"/>
+          <par name="b" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hash_string">
+        <parameters>
+          <par name="h" nr="1"/>
+          <par name="s" nr="2"/>
+          <par name="str" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="hash_uint32">
+        <parameters>
+          <par name="h" nr="1"/>
+          <par name="s" nr="2"/>
+          <par name="i" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="in_commasep_string">
+        <parameters>
+          <par name="needle" nr="1"/>
+          <par name="haystack" nr="2"/>
+          <par name="haylen" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="logeventf">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="fmt" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="new_sock_channel">
+        <parameters>
+          <par name="handle" nr="1"/>
+          <par name="pf" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="nullstrcmp">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="parse_ttymodes">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="do_mode" nr="2"/>
+          <par name="data" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="s_write">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="s_wrpkt">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pkt" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="s_wrpkt_defer">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pkt" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="s_wrpkt_prepare">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pkt" nr="2"/>
+          <par name="offset_p" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="send_packet">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pkttype" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_log_incoming_packet">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pkt" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_log_outgoing_packet">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pkt" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_msg_channel_close">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_msg_channel_data">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_msg_channel_open_confirmation">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_msg_channel_open_failure">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_msg_debug">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_msg_disconnect">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_msg_port_open">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_pkt_addmp">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="b" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_pkt_getmp">
+        <parameters>
+          <par name="pkt" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_pkt_getrsakey">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="key" nr="2"/>
+          <par name="keystr" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_pkt_init">
+        <parameters>
+          <par name="pkt_type" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_pkt_type">
+        <parameters>
+          <par name="type" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_protocol">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="vin" nr="2"/>
+          <par name="inlen" nr="3"/>
+          <par name="pktin" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_protocol_setup">
+        <parameters>
+          <par name="ssh" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_rdpkt">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="datalen" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_send_ttymode">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="mode" nr="2"/>
+          <par name="val" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_smsg_agent_open">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_smsg_exit_status">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_smsg_stdout_stderr_data">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh1_smsg_x11_open">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_add_sigblob">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pkt" nr="2"/>
+          <par name="pkblob_v" nr="3"/>
+          <par name="pkblob_len" nr="4"/>
+          <par name="sigblob_v" nr="5"/>
+          <par name="sigblob_len" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_bare_connection_protocol">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="vin" nr="2"/>
+          <par name="inlen" nr="3"/>
+          <par name="pktin" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_bare_connection_protocol_setup">
+        <parameters>
+          <par name="ssh" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_bare_connection_rdpkt">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="datalen" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_channel_check_close">
+        <parameters>
+          <par name="c" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_channel_open_failure_error_text">
+        <parameters>
+          <par name="pktin" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_chanopen_init">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="type" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_chanreq_init">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="handler" nr="3"/>
+          <par name="ctx" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_handle_winadj_response">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="pktin" nr="2"/>
+          <par name="ctx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_kexinit_addalg">
+        <parameters>
+          <par name="list" nr="1"/>
+          <par name="name" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_log_incoming_packet">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pkt" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_log_outgoing_packet">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pkt" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_mkkey">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="K" nr="2"/>
+          <par name="H" nr="3"/>
+          <par name="chr" nr="4"/>
+          <par name="keylen" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_mpint_fmt">
+        <parameters>
+          <par name="b" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_msg_authconn">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_msg_channel_close">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_msg_channel_data">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_msg_channel_eof">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_msg_channel_open">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_msg_channel_open_confirmation">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_msg_channel_open_failure">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_msg_channel_request">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_msg_channel_response">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_msg_channel_window_adjust">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_msg_debug">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_msg_disconnect">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_msg_global_request">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_msg_something_unimplemented">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_msg_transport">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_msg_unexpected">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_msg_userauth_banner">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_pkt_addbool">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="value" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_pkt_addmp">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="b" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_pkt_addstring_commasep">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="data" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_pkt_construct">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pkt" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_pkt_defer">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pkt" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_pkt_defer_noqueue">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pkt" nr="2"/>
+          <par name="noignore" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_pkt_getbool">
+        <parameters>
+          <par name="pkt" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_pkt_getmp">
+        <parameters>
+          <par name="pkt" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_pkt_init">
+        <parameters>
+          <par name="pkt_type" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_pkt_queue">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pkt" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_pkt_queuesend">
+        <parameters>
+          <par name="ssh" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_pkt_send">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pkt" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_pkt_send_noqueue">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pkt" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_pkt_send_with_padding">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pkt" nr="2"/>
+          <par name="padsize" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_pkt_type">
+        <parameters>
+          <par name="pkt_kctx" nr="1"/>
+          <par name="pkt_actx" nr="2"/>
+          <par name="type" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_protocol">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="vin" nr="2"/>
+          <par name="inlen" nr="3"/>
+          <par name="pktin" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_protocol_setup">
+        <parameters>
+          <par name="ssh" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_queue_chanreq_handler">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="handler" nr="2"/>
+          <par name="ctx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_rdpkt">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="datalen" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_response_authconn">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="pktin" nr="2"/>
+          <par name="ctx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_send_ttymode">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="mode" nr="2"/>
+          <par name="val" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_set_window">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="newwin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_setup_agent">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="pktin" nr="2"/>
+          <par name="ctx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_setup_env">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="pktin" nr="2"/>
+          <par name="ctx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_setup_pty">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="pktin" nr="2"/>
+          <par name="ctx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_setup_x11">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="pktin" nr="2"/>
+          <par name="ctx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_timer">
+        <parameters>
+          <par name="ctx" nr="1"/>
+          <par name="now" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_try_send">
+        <parameters>
+          <par name="c" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh2_try_send_and_unthrottle">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="c" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_agent_callback">
+        <parameters>
+          <par name="sshv" nr="1"/>
+          <par name="reply" nr="2"/>
+          <par name="replylen" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_agent_channel_data">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="length" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_agent_forwarding_permitted">
+        <parameters>
+          <par name="ssh" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_agentf_callback">
+        <parameters>
+          <par name="cv" nr="1"/>
+          <par name="reply" nr="2"/>
+          <par name="replylen" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_agentf_got_response">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="reply" nr="2"/>
+          <par name="replylen" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_agentf_try_forward">
+        <parameters>
+          <par name="c" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_alloc_sharing_channel">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="sharing_ctx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_alloc_sharing_rportfwd">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="shost" nr="2"/>
+          <par name="sport" nr="3"/>
+          <par name="share_ctx" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_cache_conf_values">
+        <parameters>
+          <par name="ssh" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_cfg_info">
+        <parameters>
+          <par name="handle" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_channel_close_local">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="reason" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_channel_data">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="is_stderr" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="length" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_channel_destroy">
+        <parameters>
+          <par name="c" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_channel_got_eof">
+        <parameters>
+          <par name="c" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_channel_init">
+        <parameters>
+          <par name="c" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_channel_msg">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_channel_try_eof">
+        <parameters>
+          <par name="c" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_channel_unthrottle">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="bufsize" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_channelcmp">
+        <parameters>
+          <par name="av" nr="1"/>
+          <par name="bv" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_channelfind">
+        <parameters>
+          <par name="av" nr="1"/>
+          <par name="bv" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_check_termination">
+        <parameters>
+          <par name="ssh" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_closing">
+        <parameters>
+          <par name="plug" nr="1"/>
+          <par name="error_msg" nr="2"/>
+          <par name="error_code" nr="3"/>
+          <par name="calling_back" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_comp_none_block">
+        <parameters>
+          <par name="handle" nr="1"/>
+          <par name="block" nr="2"/>
+          <par name="len" nr="3"/>
+          <par name="outblock" nr="4"/>
+          <par name="outlen" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_comp_none_cleanup">
+        <parameters>
+          <par name="handle" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_comp_none_disable">
+        <parameters>
+          <par name="handle" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_comp_none_init">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_connected">
+        <parameters>
+          <par name="handle" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_connshare_log">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="event" nr="2"/>
+          <par name="logtext" nr="3"/>
+          <par name="ds_err" nr="4"/>
+          <par name="us_err" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_delete_sharing_channel">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="localid" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_detect_bugs">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="vstring" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_dialog_callback">
+        <parameters>
+          <par name="sshv" nr="1"/>
+          <par name="ret" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_disconnect">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="client_reason" nr="2"/>
+          <par name="wire_reason" nr="3"/>
+          <par name="code" nr="4"/>
+          <par name="clean_exit" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_do_close">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="notify_exit" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_fallback_cmd">
+        <parameters>
+          <par name="handle" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_fix_verstring">
+        <parameters>
+          <par name="str" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_free">
+        <parameters>
+          <par name="handle" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_free_packet">
+        <parameters>
+          <par name="pkt" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_get_specials">
+        <parameters>
+          <par name="handle" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_gotdata">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="datalen" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_hostport_setup">
+        <parameters>
+          <par name="host" nr="1"/>
+          <par name="port" nr="2"/>
+          <par name="conf" nr="3"/>
+          <par name="savedhost" nr="4"/>
+          <par name="savedport" nr="5"/>
+          <par name="loghost_ret" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_init">
+        <parameters>
+          <par name="frontend_handle" nr="1"/>
+          <par name="backend_handle" nr="2"/>
+          <par name="conf" nr="3"/>
+          <par name="host" nr="4"/>
+          <par name="port" nr="5"/>
+          <par name="realhost" nr="6"/>
+          <par name="nodelay" nr="7"/>
+          <par name="keepalive" nr="8"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_is_simple">
+        <parameters>
+          <par name="ssh" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_ldisc">
+        <parameters>
+          <par name="handle" nr="1"/>
+          <par name="option" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_msg_ignore">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_new_packet">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_pkt_addbyte">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="byte" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_pkt_adddata">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_pkt_addstring">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="data" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_pkt_addstring_data">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_pkt_addstring_start">
+        <parameters>
+          <par name="pkt" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_pkt_addstring_str">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="data" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_pkt_adduint32">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="value" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_pkt_defersend">
+        <parameters>
+          <par name="ssh" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_pkt_ensure">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="length" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_pkt_getdata">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="length" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_pkt_getstring">
+        <parameters>
+          <par name="pkt" nr="1"/>
+          <par name="p" nr="2"/>
+          <par name="length" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_pkt_getuint32">
+        <parameters>
+          <par name="pkt" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_pkt_type">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="type" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_portcmp">
+        <parameters>
+          <par name="av" nr="1"/>
+          <par name="bv" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_process_incoming_data">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="datalen" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_process_queued_incoming_data">
+        <parameters>
+          <par name="ssh" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_provide_ldisc">
+        <parameters>
+          <par name="handle" nr="1"/>
+          <par name="ldisc" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_provide_logctx">
+        <parameters>
+          <par name="handle" nr="1"/>
+          <par name="logctx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_queue_handler">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="msg1" nr="2"/>
+          <par name="msg2" nr="3"/>
+          <par name="handler" nr="4"/>
+          <par name="ctx" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_queue_incoming_data">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="datalen" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_queueing_handler">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_receive">
+        <parameters>
+          <par name="plug" nr="1"/>
+          <par name="urgent" nr="2"/>
+          <par name="data" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_reconfig">
+        <parameters>
+          <par name="handle" nr="1"/>
+          <par name="conf" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_return_exitcode">
+        <parameters>
+          <par name="handle" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_rportcmp_ssh1">
+        <parameters>
+          <par name="av" nr="1"/>
+          <par name="bv" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_rportcmp_ssh2">
+        <parameters>
+          <par name="av" nr="1"/>
+          <par name="bv" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_rportfwd_succfail">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+          <par name="ctx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_send">
+        <parameters>
+          <par name="handle" nr="1"/>
+          <par name="buf" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_send_channel_data">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="buf" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_send_packet_from_downstream">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="id" nr="2"/>
+          <par name="type" nr="3"/>
+          <par name="data" nr="4"/>
+          <par name="datalen" nr="5"/>
+          <par name="additional_log_text" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_send_port_open">
+        <parameters>
+          <par name="channel" nr="1"/>
+          <par name="hostname" nr="2"/>
+          <par name="port" nr="3"/>
+          <par name="org" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_send_verstring">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="protoname" nr="2"/>
+          <par name="svers" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_sendbuffer">
+        <parameters>
+          <par name="handle" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_sendok">
+        <parameters>
+          <par name="handle" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_sent">
+        <parameters>
+          <par name="plug" nr="1"/>
+          <par name="bufsize" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_set_frozen">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="frozen" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_setup_portfwd">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="conf" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_sharing_add_x11_display">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="authtype" nr="2"/>
+          <par name="share_cs" nr="3"/>
+          <par name="share_chan" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_sharing_downstream_connected">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="id" nr="2"/>
+          <par name="peerinfo" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_sharing_downstream_disconnected">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="id" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_sharing_global_request_response">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="pktin" nr="2"/>
+          <par name="ctx" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_sharing_logf">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="id" nr="2"/>
+          <par name="logfmt" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_sharing_queue_global_request">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="share_ctx" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_sharing_remove_x11_display">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="auth" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_size">
+        <parameters>
+          <par name="handle" nr="1"/>
+          <par name="width" nr="2"/>
+          <par name="height" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_socket_log">
+        <parameters>
+          <par name="plug" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="port" nr="4"/>
+          <par name="error_msg" nr="5"/>
+          <par name="error_code" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_special">
+        <parameters>
+          <par name="handle" nr="1"/>
+          <par name="code" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_test_for_upstream">
+        <parameters>
+          <par name="host" nr="1"/>
+          <par name="port" nr="2"/>
+          <par name="conf" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_throttle_all">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="enable" nr="2"/>
+          <par name="bufsize" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_throttle_conn">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="adjust" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_tty_parse_boolean">
+        <parameters>
+          <par name="s" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_tty_parse_specchar">
+        <parameters>
+          <par name="s" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_unthrottle">
+        <parameters>
+          <par name="handle" nr="1"/>
+          <par name="bufsize" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="ssh_versioncmp">
+        <parameters>
+          <par name="a" nr="1"/>
+          <par name="b" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sshfwd_get_conf">
+        <parameters>
+          <par name="c" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sshfwd_unclean_close">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="err" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sshfwd_unthrottle">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="bufsize" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sshfwd_write">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="buf" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sshfwd_write_eof">
+        <parameters>
+          <par name="c" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sshfwd_x11_is_local">
+        <parameters>
+          <par name="c" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sshfwd_x11_sharing_handover">
+        <parameters>
+          <par name="c" nr="1"/>
+          <par name="share_cs" nr="2"/>
+          <par name="share_chan" nr="3"/>
+          <par name="peer_addr" nr="4"/>
+          <par name="peer_port" nr="5"/>
+          <par name="endian" nr="6"/>
+          <par name="protomajor" nr="7"/>
+          <par name="protominor" nr="8"/>
+          <par name="initial_data" nr="9"/>
+          <par name="initial_len" nr="10"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="verify_ssh_manual_host_key">
+        <parameters>
+          <par name="ssh" nr="1"/>
+          <par name="fingerprint" nr="2"/>
+          <par name="ssh2keytype" nr="3"/>
+          <par name="ssh2keydata" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

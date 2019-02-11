@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2019-01-09 23:53:50.615667"/>
+  <cfile name="sshbcrypt">
+    <data-structures/>
+    <functions>
+      <function name="bcrypt_genblock">
+        <parameters>
+          <par name="counter" nr="1"/>
+          <par name="hashed_passphrase" nr="2"/>
+          <par name="salt" nr="3"/>
+          <par name="saltbytes" nr="4"/>
+          <par name="output" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="bcrypt_hash">
+        <parameters>
+          <par name="key" nr="1"/>
+          <par name="keybytes" nr="2"/>
+          <par name="salt" nr="3"/>
+          <par name="saltbytes" nr="4"/>
+          <par name="output" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="bcrypt_setup">
+        <parameters>
+          <par name="key" nr="1"/>
+          <par name="keybytes" nr="2"/>
+          <par name="salt" nr="3"/>
+          <par name="saltbytes" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="openssh_bcrypt">
+        <parameters>
+          <par name="passphrase" nr="1"/>
+          <par name="salt" nr="2"/>
+          <par name="saltbytes" nr="3"/>
+          <par name="rounds" nr="4"/>
+          <par name="out" nr="5"/>
+          <par name="outbytes" nr="6"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

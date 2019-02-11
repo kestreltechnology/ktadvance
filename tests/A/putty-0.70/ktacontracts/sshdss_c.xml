@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2019-01-09 23:53:50.935140"/>
+  <cfile name="sshdss">
+    <data-structures/>
+    <functions>
+      <function name="dss_createkey">
+        <parameters>
+          <par name="self" nr="1"/>
+          <par name="pub_blob" nr="2"/>
+          <par name="pub_len" nr="3"/>
+          <par name="priv_blob" nr="4"/>
+          <par name="priv_len" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dss_fmtkey">
+        <parameters>
+          <par name="key" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dss_freekey">
+        <parameters>
+          <par name="key" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dss_gen_k">
+        <parameters>
+          <par name="id_string" nr="1"/>
+          <par name="modulus" nr="2"/>
+          <par name="private_key" nr="3"/>
+          <par name="digest" nr="4"/>
+          <par name="digest_len" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dss_newkey">
+        <parameters>
+          <par name="self" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dss_openssh_createkey">
+        <parameters>
+          <par name="self" nr="1"/>
+          <par name="blob" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dss_openssh_fmtkey">
+        <parameters>
+          <par name="key" nr="1"/>
+          <par name="blob" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dss_private_blob">
+        <parameters>
+          <par name="key" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dss_pubkey_bits">
+        <parameters>
+          <par name="self" nr="1"/>
+          <par name="blob" nr="2"/>
+          <par name="len" nr="3"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dss_public_blob">
+        <parameters>
+          <par name="key" nr="1"/>
+          <par name="len" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dss_sign">
+        <parameters>
+          <par name="key" nr="1"/>
+          <par name="data" nr="2"/>
+          <par name="datalen" nr="3"/>
+          <par name="siglen" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="dss_verifysig">
+        <parameters>
+          <par name="key" nr="1"/>
+          <par name="sig" nr="2"/>
+          <par name="siglen" nr="3"/>
+          <par name="data" nr="4"/>
+          <par name="datalen" nr="5"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="get160">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="datalen" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="getmp">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="datalen" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="getstring">
+        <parameters>
+          <par name="data" nr="1"/>
+          <par name="datalen" nr="2"/>
+          <par name="p" nr="3"/>
+          <par name="length" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sha512_mpint">
+        <parameters>
+          <par name="s" nr="1"/>
+          <par name="b" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="sha_mpint">
+        <parameters>
+          <par name="s" nr="1"/>
+          <par name="b" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>

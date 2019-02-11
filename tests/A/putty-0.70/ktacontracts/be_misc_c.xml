@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c-analysis>
+  <header info="cfile" name="cfile" time="2019-01-09 23:53:47.247406"/>
+  <cfile name="be_misc">
+    <data-structures/>
+    <functions>
+      <function name="backend_socket_log">
+        <parameters>
+          <par name="frontend" nr="1"/>
+          <par name="type" nr="2"/>
+          <par name="addr" nr="3"/>
+          <par name="port" nr="4"/>
+          <par name="error_msg" nr="5"/>
+          <par name="error_code" nr="6"/>
+          <par name="conf" nr="7"/>
+          <par name="session_started" nr="8"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="log_proxy_stderr">
+        <parameters>
+          <par name="plug" nr="1"/>
+          <par name="buf" nr="2"/>
+          <par name="vdata" nr="3"/>
+          <par name="len" nr="4"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+    </functions>
+  </cfile>
+</c-analysis>
