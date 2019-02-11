@@ -44,6 +44,7 @@ testprojects = {
     "nginx114":  "A/nginx-1.14.0",
     "nginx1156": "A/nginx-1.15.6",
     "openssl": "A/openssl-1.0.1f",
+    "putty": "A/putty-0.70",
     "pvm": "sate/2009/pvm3.4.6",
     "wpa_supplicant": "A/wpa_supplicant-2.6"
     }

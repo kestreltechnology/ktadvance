@@ -73,6 +73,11 @@ def missing_analyzer_err_msg():
     return err_msg(['Analyzer not found at ' + config.canalyzer,
                         '  Please set analyzer location in Config.py'])
 
+def missing_gui_err_msg():
+    config = Config()
+    return err_msg(['Gui not found at ' + config.chc_gui,
+                        '  Please set gui location in Config.py'])
+
 def cpath_not_found_err_msg(cpath):
     return err_msg(['Directory ', '  ' + cpath, '  not found'])
 

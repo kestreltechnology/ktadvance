@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017-2018 Kestrel Technology LLC
+# Copyright (c) 2017-2019 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -437,6 +437,49 @@ def save_global_xml_contract(path,cnode):
 def save_candidate_cotracts_file(path,cfilename,cnode):
     filename = os.path.join(path,cfilename + '_cc.xml')
     _save_contracts_file_aux(path,filename,cnode)
+
+# ------------------------------------------------------------ projects --------
+
+def get_testdata_dict():
+    testdatapath = os.path.join(Config().testdir,'testdata')
+    testdatafile = os.path.join(testdatapath,'testprojects.json')
+    if os.path.isfile(testdatafile):
+        with open(testdatafile,'r') as fp:
+            testdata = json.load(fp)
+            return testdata
+    return {}
+
+def get_project_path(path):
+    testdir = Config().testdir
+    testdata = get_testdata_dict()
+    if path in testdata:
+        return  os.path.join(testdir,str(testdata[path]['path']))
+    else:
+        return os.path.abspath(path)
+
+def get_project_logfilename(path):
+    testdir = Config().testdir
+    testdata = get_testdata_dict()
+    if path in testdata:
+        logpath = os.path.join(testdir,str(testdata[path]['path']))
+        logfile = os.path.join(logpath,path + '.ktadvance_log')
+        return logfile
+    else:
+        logfile = os.path.join(path,'log.ktadvance_log')
+        return logfile
+
+def list_test_applications():
+    testdata = get_testdata_dict()
+    lines = []
+    lines.append('*' * 80)
+    lines.append('Test applications currently provided:')
+    lines.append('-' * 80)
+    maxlen = max(len(name) for name in testdata) + 5
+    for name in sorted(testdata):
+        lines.append(name.ljust(maxlen) + testdata[name]['path'])
+    lines.append('*' * 80)
+    return '\n'.join(lines)
+    
 
 
 # ------------------------------------------------------------ kendra tests ----

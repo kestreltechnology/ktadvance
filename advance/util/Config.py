@@ -53,11 +53,13 @@ class Config(object):
         self.binariesdir = os.path.join(self.bindir,'binaries')
         self.cparser = os.path.join(self.binariesdir,'parseFile_linux')
         self.canalyzer = os.path.join(self.binariesdir,'ktadvance_linux')
+        self.chc_gui = os.path.join(self.binariesdir,'ktadvance_gui_linux')
         self.bear = None
         self.libear = None
         if self.platform == 'mac':
             self.cparser = os.path.join(self.binariesdir,'parseFile_mac')
             self.canalyzer = os.path.join(self.binariesdir,'ktadvance_mac')
+            self.chc_gui = os.path.join(self.binariesdir,'ktadvance_gui_mac')
 
         '''test cases'''
         self.projects = TP.testprojects
