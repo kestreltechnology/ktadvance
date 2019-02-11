@@ -25,11 +25,18 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+import argparse
 import os
 import time
 
 import advance.util.fileutil as UF
 import advance.util.printutil as UP
+
+def parse():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--cwe',help='only list tests for this CWE')
+    args = parser.parse_args()
+    return args
 
 def getjulietstatus(dname):
     ktmodtime = 0
@@ -46,6 +53,10 @@ def getjulietstatus(dname):
 
 if __name__ == '__main__':
 
+    args = parse()
+    cwerequested = 'all'
+    if args.cwe is not None: cwerequested = args.cwe
+
     path = UF.get_juliet_path()
 
     result = {}
@@ -53,6 +64,7 @@ if __name__ == '__main__':
     if os.path.isdir(path):
         for d1 in os.listdir(path):
             if d1.startswith('CWE'):
+                if not (cwerequested == 'all' or cwerequested == d1): continue
                 fd1 = os.path.join(path,d1)
                 for d2 in os.listdir(fd1):
                     fd2 = os.path.join(fd1,d2)
@@ -68,7 +80,9 @@ if __name__ == '__main__':
                             result[dname] = getjulietstatus(fd2)
 
     print(UP.reportheader('Juliet test sets currently provided (' + str(len(result)) + ')'))
-    print('\n  ' + 'directory'.ljust(42) + 'analysis time    score time')
+    print('\n  ' + 'directory'.ljust(44) + 'analysis time    score time')
     print('-' * 80)
     for d in sorted(result):
-        print('  ' + d.ljust(40) + UP.chtime(result[d][0]) + '  ' + UP.chtime(result[d][1]))
+        print('  ' + d.ljust(44)
+                  + UP.chtime(result[d][0]).rjust(16) + '  '
+                  + UP.chtime(result[d][1]).rjust(16))
