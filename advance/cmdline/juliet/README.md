@@ -1,4 +1,4 @@
-# KT Advance: Juliet Test command scripts
+## KT Advance: Juliet Test command-line scripts
 Scripts to analyze, score, and report Juliet Tests with the KT Advance C Analyzer.
 
 ### quick start
@@ -52,15 +52,21 @@ listen_socket                             18    0    0   20    0   |     33    0
 total                                     61    0    0   53    0   |     97    0    0   62    0
 ```
 The headings of the columns under violations indicate the following:
-V: corresponding ppo's reported as violations
-S: corresponding ppo's reported as safe
-D: corresponding ppo's reported as delegated, but no closed spo's
-U: corresponding ppo's reported as open
-O: other result
+- V: corresponding ppo's reported as violations
+- S: corresponding ppo's reported as safe
+- D: corresponding ppo's reported as delegated, but no closed spo's
+- U: corresponding ppo's reported as open
+- O: other result
 
 The headings of the columns under safe-controls indicate the following:
-S: corresponding ppo's reported as safe
-D: corresponding ppo's reported as delegated, but no closed spo's
-X: corresponding ppo's reported as dead-code
-U: corresponding ppo's reported as open
-O: other result
+- S: corresponding ppo's reported as safe
+- D: corresponding ppo's reported as delegated, but no closed spo's
+- X: corresponding ppo's reported as dead-code
+- U: corresponding ppo's reported as open
+- O: other result
+
+Thus, for CWE123/connect_socket, the score key lists 38 violations
+and 53 safe-controls. The analyzer was able to prove a violation for
+18 of the indicated violations, while it was undecided for the other 20.
+Similarly, the analyzer was able to prove 31 of the indicated
+safe-controls safe, while it was undecided for the other 22.
