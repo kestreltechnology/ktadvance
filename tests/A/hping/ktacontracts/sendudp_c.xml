@@ -1,12 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-12 00:12:51.392086"/>
-  <cfile name="sendudp">
-    <data-structures/>
+  <header time="2018-12-18 18:29:53">
+    <application file="sendudp.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="data_size"/>
+      <gvar name="dst_port"/>
+      <gvar name="sequence"/>
+      <gvar name="src_port"/>
+    </global-variables>
     <functions>
       <function name="send_udp">
         <parameters/>
-        <postconditions/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <plus/>
+                  <ci>data_size</ci>
+                  <cn>8</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>dst_port</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <ci>dst_port</ci>
+                <cn>65535</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>src_port</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <ci>src_port</ci>
+                <cn>65535</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>sequence</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>dst_port</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>data_size</ci>
+                  <cn>8</cn>
+                </apply>
+                <cn>65535</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>data_size</ci>
+                  <cn>20</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
     </functions>
   </cfile>

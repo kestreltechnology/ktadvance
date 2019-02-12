@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-12 00:12:51.675836"/>
-  <cfile name="listen">
-    <data-structures/>
+  <header time="2018-12-18 18:23:42">
+    <application file="listen.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="linkhdr_size"/>
+    </global-variables>
     <functions>
       <function name="listenmain">
         <parameters/>
-        <postconditions/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>linkhdr_size</ci>
+                  <cn>65535</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
     </functions>
   </cfile>

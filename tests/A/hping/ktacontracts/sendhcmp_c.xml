@@ -1,15 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-12 00:12:51.377103"/>
-  <cfile name="sendhcmp">
-    <data-structures/>
+  <header time="2018-12-18 18:28:33">
+    <application file="sendhcmp.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="signlen"/>
+    </global-variables>
     <functions>
       <function name="send_hcmp">
         <parameters>
-          <par name="type" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="type" nr="1"/>
         </parameters>
-        <postconditions/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>signlen</ci>
+                  <cn>8</cn>
+                </apply>
+                <cn>65535</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>signlen</ci>
+                  <cn>8</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
     </functions>
   </cfile>

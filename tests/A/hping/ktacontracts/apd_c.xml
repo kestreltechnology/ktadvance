@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header time="2018-12-02 13:14:12">
+  <header time="2018-12-18 18:20:56">
     <application file="apd.c"/>
   </header>
   <cfile>
-    <global-variables/>
+    <global-variables>
+      <gvar name="hexdig"/>
+    </global-variables>
     <functions>
       <function name="ars_d_build">
         <parameters>
@@ -203,6 +205,24 @@
           <par name="s" nr="2"/>
           <par name="blen" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>hexdig</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>hexdig</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -227,6 +247,24 @@
           <par name="s" nr="2"/>
           <par name="blen" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>hexdig</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>hexdig</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-12 00:12:49.954051"/>
-  <cfile name="gethostname">
-    <data-structures/>
+  <header time="2018-12-18 18:22:21">
+    <application file="gethostname.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="last_answerp"/>
+    </global-variables>
     <functions>
       <function name="get_hostname">
         <parameters>
           <par name="addr" nr="1"/>
         </parameters>
-        <postconditions/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>last_answerp</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
     </functions>
   </cfile>

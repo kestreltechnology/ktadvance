@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-12 00:12:51.428078"/>
-  <cfile name="main">
-    <data-structures/>
+  <header time="2018-12-18 18:24:09">
+    <application file="main.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="opt_scanports"/>
+    </global-variables>
     <functions>
       <function name="main">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
-        <postconditions/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>opt_scanports</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>opt_scanports</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
     </functions>
   </cfile>

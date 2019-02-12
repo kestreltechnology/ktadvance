@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header time="2018-12-02 13:17:33">
+  <header time="2018-12-18 18:28:03">
     <application file="scan.c"/>
   </header>
   <cfile>
-    <global-variables/>
+    <global-variables>
+      <gvar name="linkhdr_size"/>
+      <gvar name="opt_scan_probes"/>
+      <gvar name="opt_scanports"/>
+      <gvar name="sending_wait"/>
+    </global-variables>
     <functions>
       <function name="do_exit">
         <parameters>
@@ -53,14 +58,71 @@
           <par name="childpid" nr="2"/>
           <par name="pi" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>linkhdr_size</ci>
+                  <cn>65535</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
       <function name="scanmain">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>opt_scanports</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>opt_scanports</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
       <function name="sender">
         <parameters>
           <par name="pi" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>sending_wait</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <minus/>
+                  <ci>opt_scan_probes</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
       <function name="shm_attach">
         <parameters/>

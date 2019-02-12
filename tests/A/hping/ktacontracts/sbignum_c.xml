@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header time="2018-12-02 13:17:23">
+  <header time="2018-12-18 18:27:45">
     <application file="sbignum.c"/>
   </header>
   <cfile>
-    <global-variables/>
+    <global-variables>
+      <gvar name="cset"/>
+    </global-variables>
     <functions>
       <function name="_mpz_selfdiv1_qr_raw">
         <parameters>
@@ -916,6 +918,24 @@
           <par name="z" nr="1"/>
           <par name="l" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cset</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cset</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

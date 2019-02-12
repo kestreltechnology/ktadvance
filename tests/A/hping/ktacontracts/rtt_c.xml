@@ -1,38 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-12 00:12:51.164232"/>
-  <cfile name="rtt">
-    <data-structures/>
+  <header time="2018-12-18 18:27:32">
+    <application file="rtt.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="avg_counter"/>
+      <gvar name="delaytable_index"/>
+    </global-variables>
     <functions>
       <function name="delaytable_add">
         <parameters>
           <par name="seq" nr="1"/>
+          <par name="status" nr="5"/>
           <par name="src" nr="2"/>
           <par name="sec" nr="3"/>
           <par name="usec" nr="4"/>
-          <par name="status" nr="5"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>delaytable_index</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="minavgmax">
         <parameters>
           <par name="ms_delay" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>avg_counter</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="rtt">
         <parameters>
           <par name="seqp" nr="1"/>
-          <par name="recvport" nr="2"/>
           <par name="ms_delay" nr="3"/>
+          <par name="recvport" nr="2"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
     </functions>
   </cfile>

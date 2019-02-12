@@ -1,15 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-12 00:12:51.871580"/>
-  <cfile name="relid">
-    <data-structures/>
+  <header time="2018-12-18 18:27:19">
+    <application file="relid.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="out_of_sequence_pkt"/>
+    </global-variables>
     <functions>
       <function name="relativize_id">
         <parameters>
           <par name="seqnum" nr="1"/>
           <par name="ip_id" nr="2"/>
         </parameters>
-        <postconditions/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>out_of_sequence_pkt</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
     </functions>
   </cfile>

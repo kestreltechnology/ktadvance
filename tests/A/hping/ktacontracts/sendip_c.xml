@@ -1,23 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-12 00:12:51.258888"/>
-  <cfile name="sendip">
-    <data-structures/>
+  <header time="2018-12-18 18:28:56">
+    <application file="sendip.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="ip_tos"/>
+      <gvar name="raw_ip_protocol"/>
+      <gvar name="src_id"/>
+      <gvar name="src_ttl"/>
+    </global-variables>
     <functions>
       <function name="send_ip">
         <parameters>
-          <par name="src" nr="1"/>
-          <par name="dst" nr="2"/>
-          <par name="data" nr="3"/>
+          <par name="fragoff" nr="6"/>
           <par name="datalen" nr="4"/>
           <par name="more_fragments" nr="5"/>
-          <par name="fragoff" nr="6"/>
+          <par name="dst" nr="2"/>
+          <par name="src" nr="1"/>
+          <par name="data" nr="3"/>
           <par name="options" nr="7"/>
           <par name="optlen" nr="8"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>raw_ip_protocol</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>src_ttl</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>src_id</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <ci>src_ttl</ci>
+                <cn>255</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <ci>src_id</ci>
+                <cn>65535</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <ci>ip_tos</ci>
+                <cn>255</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>src_id</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <ci>raw_ip_protocol</ci>
+                <cn>255</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
     </functions>
   </cfile>

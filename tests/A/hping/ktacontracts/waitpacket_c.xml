@@ -1,62 +1,176 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-12 00:12:51.666957"/>
-  <cfile name="waitpacket">
-    <data-structures/>
+  <header time="2018-12-18 18:30:42">
+    <application file="waitpacket.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="cs_vector_len"/>
+      <gvar name="cs_window"/>
+      <gvar name="cs_window_shift"/>
+      <gvar name="deltartt"/>
+      <gvar name="deltavect"/>
+      <gvar name="dst_port"/>
+      <gvar name="linkhdr_size"/>
+      <gvar name="sample"/>
+      <gvar name="samplelen"/>
+      <gvar name="samplelocal"/>
+      <gvar name="src_ttl"/>
+    </global-variables>
     <functions>
-      <function name="recv_beep">
-        <parameters/>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="wait_packet">
-        <parameters/>
-        <postconditions/>
-      </function>
       <function name="clock_skew">
         <parameters>
+          <par name="rttms" nr="3"/>
           <par name="hz" nr="1"/>
           <par name="tstamp" nr="2"/>
-          <par name="rttms" nr="3"/>
         </parameters>
-        <postconditions/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <plus/>
+                  <ci>samplelen</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>deltavect</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>cs_vector_len</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>deltartt</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <times/>
+                  <ci>cs_window</ci>
+                  <cn>1000</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>cs_window_shift</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>samplelen</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>samplelocal</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>samplelocal</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>sample</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <ci>cs_window</ci>
+                  <cn>1000</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <minus/>
+                  <apply>
+                    <minus/>
+                    <ci>cs_window_shift</ci>
+                    <cn>1</cn>
+                  </apply>
+                  <cn>0</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>sample</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
-      <function name="icmp_unreach_rtt">
-        <parameters>
-          <par name="quoted_ip" nr="1"/>
-          <par name="size" nr="2"/>
-          <par name="seqp" nr="3"/>
-          <par name="ms_delay" nr="4"/>
-        </parameters>
-        <postconditions/>
-      </function>
-      <function name="recv_udp">
+      <function name="handle_hcmp">
         <parameters>
           <par name="packet" nr="1"/>
           <par name="size" nr="2"/>
         </parameters>
-        <postconditions/>
-      </function>
-      <function name="log_icmp_ts">
-        <parameters>
-          <par name="ts" nr="1"/>
-        </parameters>
-        <postconditions/>
-      </function>
-      <function name="recv_tcp">
-        <parameters>
-          <par name="packet" nr="1"/>
-          <par name="size" nr="2"/>
-        </parameters>
-        <postconditions/>
-      </function>
-      <function name="recv_icmp">
-        <parameters>
-          <par name="packet" nr="1"/>
-          <par name="size" nr="2"/>
-        </parameters>
-        <postconditions/>
       </function>
       <function name="hex_dump">
         <parameters>
@@ -64,25 +178,14 @@
           <par name="size" nr="2"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="log_ip">
-        <parameters>
-          <par name="status" nr="1"/>
-          <par name="sequence___0" nr="2"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="log_icmp_addr">
-        <parameters>
-          <par name="addrptr" nr="1"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="human_dump">
         <parameters>
@@ -90,8 +193,56 @@
           <par name="size" nr="2"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="icmp_unreach_rtt">
+        <parameters>
+          <par name="seqp" nr="3"/>
+          <par name="ms_delay" nr="4"/>
+          <par name="size" nr="2"/>
+          <par name="quoted_ip" nr="1"/>
+        </parameters>
+      </function>
+      <function name="log_icmp_addr">
+        <parameters>
+          <par name="addrptr" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="log_icmp_ts">
+        <parameters>
+          <par name="ts" nr="1"/>
+        </parameters>
+      </function>
+      <function name="log_ip">
+        <parameters>
+          <par name="status" nr="1"/>
+          <par name="sequence___0" nr="2"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="log_traceroute">
         <parameters>
@@ -99,22 +250,28 @@
           <par name="size" nr="2"/>
           <par name="icmp_code" nr="3"/>
         </parameters>
-        <postconditions/>
-      </function>
-      <function name="handle_hcmp">
-        <parameters>
-          <par name="packet" nr="1"/>
-          <par name="size" nr="2"/>
-        </parameters>
-        <postconditions/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>src_ttl</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
       <function name="print_tcp_timestamp">
         <parameters>
-          <par name="tcp" nr="1"/>
-          <par name="tcpsize" nr="2"/>
           <par name="rttms" nr="3"/>
+          <par name="tcpsize" nr="2"/>
+          <par name="tcp" nr="1"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="read_packet">
         <parameters>
@@ -122,8 +279,92 @@
           <par name="size" nr="2"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="recv_beep">
+        <parameters/>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="recv_icmp">
+        <parameters>
+          <par name="packet" nr="1"/>
+          <par name="size" nr="2"/>
+        </parameters>
+      </function>
+      <function name="recv_tcp">
+        <parameters>
+          <par name="packet" nr="1"/>
+          <par name="size" nr="2"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>dst_port</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+      </function>
+      <function name="recv_udp">
+        <parameters>
+          <par name="packet" nr="1"/>
+          <par name="size" nr="2"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>dst_port</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+      </function>
+      <function name="wait_packet">
+        <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>linkhdr_size</ci>
+                  <cn>65535</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
     </functions>
   </cfile>

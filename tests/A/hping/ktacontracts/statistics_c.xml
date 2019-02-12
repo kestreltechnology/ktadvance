@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-12 00:12:49.948965"/>
-  <cfile name="statistics">
-    <data-structures/>
+  <header time="2018-12-18 18:30:20">
+    <application file="statistics.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="recv_pkt"/>
+    </global-variables>
     <functions>
       <function name="print_statistics">
         <parameters>
           <par name="signal_id" nr="1"/>
         </parameters>
-        <postconditions/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <ci>recv_pkt</ci>
+                  <cn>100</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <times/>
+                  <ci>recv_pkt</ci>
+                  <cn>100</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
     </functions>
   </cfile>

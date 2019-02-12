@@ -1,17 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-12 00:12:51.126784"/>
-  <cfile name="sendip_handler">
-    <data-structures/>
+  <header time="2018-12-18 18:29:23">
+    <application file="sendip_handler.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="h_if_mtu"/>
+      <gvar name="ip_frag_offset"/>
+    </global-variables>
     <functions>
       <function name="send_ip_handler">
         <parameters>
           <par name="packet" nr="1"/>
           <par name="size" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>h_if_mtu</ci>
+                  <cn>20</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <ci>ip_frag_offset</ci>
+                <cn>65535</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
     </functions>
   </cfile>

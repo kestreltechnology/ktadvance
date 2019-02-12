@@ -1,16 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-12 00:12:51.140337"/>
-  <cfile name="ip_opt_build">
-    <data-structures/>
+  <header time="2018-12-18 18:23:06">
+    <application file="ip_opt_build.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="lsr_length"/>
+      <gvar name="ssr_length"/>
+    </global-variables>
     <functions>
       <function name="ip_opt_build">
         <parameters>
           <par name="ip_opt___0" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>ssr_length</ci>
+                  <cn>39</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <ci>lsr_length</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>255</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <ci>lsr_length</ci>
+                <cn>255</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <ci>ssr_length</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>255</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
     </functions>
   </cfile>

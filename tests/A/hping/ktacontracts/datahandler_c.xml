@@ -1,17 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-12 00:12:51.859612"/>
-  <cfile name="datahandler">
-    <data-structures/>
+  <header time="2018-12-18 18:22:04">
+    <application file="datahandler.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="hcmphdr_p"/>
+      <gvar name="signlen"/>
+    </global-variables>
     <functions>
       <function name="data_handler">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="data_size___0" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>hcmphdr_p</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <ci>signlen</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>1024</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>hcmphdr_p</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
     </functions>
   </cfile>
