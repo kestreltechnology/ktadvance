@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 14:52:55.872032"/>
-  <cfile name="libfiretalk/irc">
-    <data-structures/>
+  <header time="2018-12-18 12:51:18">
+    <application file="libfiretalk/irc.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="data"/>
+      <gvar name="output"/>
+      <gvar name="output___0"/>
+    </global-variables>
     <functions>
       <function name="irc_addwhois">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="format" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -71,9 +77,9 @@
       <function name="irc_chat_kick">
         <parameters>
           <par name="c" nr="1"/>
+          <par name="reason" nr="4"/>
           <par name="room" nr="2"/>
           <par name="who" nr="3"/>
-          <par name="reason" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -120,8 +126,8 @@
         <parameters>
           <par name="c" nr="1"/>
           <par name="room" nr="2"/>
-          <par name="message" nr="3"/>
           <par name="auto_flag" nr="4"/>
+          <par name="message" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -137,8 +143,8 @@
         <parameters>
           <par name="c" nr="1"/>
           <par name="room" nr="2"/>
-          <par name="message" nr="3"/>
           <par name="auto_flag" nr="4"/>
+          <par name="message" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -152,9 +158,9 @@
       </function>
       <function name="irc_chat_set_topic">
         <parameters>
+          <par name="topic" nr="3"/>
           <par name="c" nr="1"/>
           <par name="room" nr="2"/>
-          <par name="topic" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -310,6 +316,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="irc_got_data">
@@ -363,6 +377,24 @@
         <parameters>
           <par name="string" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>output</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>output</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -371,14 +403,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="irc_im_add_buddy">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="group" nr="3"/>
           <par name="friendly" nr="4"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -423,8 +463,8 @@
       <function name="irc_im_remove_buddy">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="group" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -455,8 +495,8 @@
         <parameters>
           <par name="c" nr="1"/>
           <par name="dest" nr="2"/>
-          <par name="message" nr="3"/>
           <par name="auto_flag" nr="4"/>
+          <par name="message" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -472,8 +512,8 @@
         <parameters>
           <par name="c" nr="1"/>
           <par name="dest" nr="2"/>
-          <par name="message" nr="3"/>
           <par name="auto_flag" nr="4"/>
+          <par name="message" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -532,11 +572,37 @@
         <parameters>
           <par name="string" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>output___0</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>output___0</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -572,14 +638,22 @@
       </function>
       <function name="irc_mIRC_to_html">
         <parameters>
-          <par name="string" nr="1"/>
           <par name="pos" nr="2"/>
+          <par name="string" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -615,8 +689,8 @@
       </function>
       <function name="irc_postselect">
         <parameters>
-          <par name="c" nr="1"/>
           <par name="read___0" nr="2"/>
+          <par name="c" nr="1"/>
           <par name="write___0" nr="3"/>
           <par name="except" nr="4"/>
         </parameters>
@@ -632,11 +706,11 @@
       </function>
       <function name="irc_preselect">
         <parameters>
-          <par name="c" nr="1"/>
           <par name="read___0" nr="2"/>
+          <par name="c" nr="1"/>
           <par name="write___0" nr="3"/>
-          <par name="except" nr="4"/>
           <par name="n" nr="5"/>
+          <par name="except" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -654,11 +728,35 @@
           <par name="buffer" nr="2"/>
           <par name="bufferpos" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>data</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -682,8 +780,8 @@
       <function name="irc_set_away">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="message" nr="2"/>
           <par name="auto_flag" nr="3"/>
+          <par name="message" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -728,8 +826,8 @@
       <function name="irc_set_password">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="oldpass" nr="2"/>
           <par name="newpass" nr="3"/>
+          <par name="oldpass" nr="2"/>
         </parameters>
         <postconditions>
           <post>

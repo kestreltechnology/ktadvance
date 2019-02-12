@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header time="2018-12-05 22:49:59">
+  <header time="2018-12-18 14:21:30">
     <application file="src/conio.c"/>
   </header>
   <cfile>
@@ -52,6 +52,37 @@
           <par name="cmd" nr="2"/>
           <par name="argc" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -74,6 +105,27 @@
               <apply>
                 <valid-mem/>
                 <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
               </apply>
             </math>
           </pre>
@@ -103,6 +155,14 @@
               </apply>
             </math>
           </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
         </preconditions>
         <postconditions>
           <post>
@@ -120,6 +180,16 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -152,6 +222,32 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>conio_bind_ar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>conio_bind_ar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>conio_bind_ar</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -168,6 +264,14 @@
           <pre>
             <math>
               <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
                 <lt/>
                 <apply>
                   <minus/>
@@ -175,6 +279,27 @@
                   <cn>1</cn>
                 </apply>
                 <cn>56</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
               </apply>
             </math>
           </pre>
@@ -261,6 +386,22 @@
           <pre>
             <math>
               <apply>
+                <not-null/>
+                <ci>conio_bind_ar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>conio_bind_ar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
                 <lt/>
                 <apply>
                   <minus/>
@@ -286,6 +427,24 @@
         <parameters>
           <par name="key" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>conio_bind_ar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>conio_bind_ar</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -335,7 +494,7 @@
           <pre>
             <math>
               <apply>
-                <allocation-base/>
+                <not-null/>
                 <ci>conio_bind_ar</ci>
               </apply>
             </math>
@@ -343,7 +502,15 @@
           <pre>
             <math>
               <apply>
-                <not-null/>
+                <valid-mem/>
+                <ci>conio_bind_ar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
                 <ci>conio_bind_ar</ci>
               </apply>
             </math>
@@ -391,14 +558,6 @@
               </apply>
             </math>
           </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>conio_bind_ar</ci>
-              </apply>
-            </math>
-          </pre>
         </preconditions>
         <postconditions>
           <post>
@@ -416,6 +575,16 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -432,6 +601,37 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -511,6 +711,16 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -552,6 +762,27 @@
               </apply>
             </math>
           </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
         </preconditions>
         <postconditions>
           <post>
@@ -586,6 +817,35 @@
           <par name="argc" nr="2"/>
         </parameters>
         <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
           <pre>
             <math>
               <apply>
@@ -650,6 +910,19 @@
                 <initialized/>
                 <apply>
                   <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
                     <field name="next"/>
                   </addressed-value>
                   <ci>curconn</ci>
@@ -690,6 +963,37 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -925,6 +1229,54 @@
               </apply>
             </math>
           </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>html_cleanar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>html_cleanar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>home</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>scriptar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>scriptar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>home</ci>
+              </apply>
+            </math>
+          </pre>
         </preconditions>
         <postconditions>
           <post>
@@ -948,6 +1300,27 @@
               <apply>
                 <valid-mem/>
                 <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
               </apply>
             </math>
           </pre>
@@ -1031,20 +1404,6 @@
       </function>
       <function name="conio_filter_defaults">
         <parameters/>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
-      </function>
-      <function name="conio_handlecmd">
-        <parameters>
-          <par name="buf___0" nr="1"/>
-        </parameters>
         <preconditions>
           <pre>
             <math>
@@ -1075,6 +1434,30 @@
               </apply>
             </math>
           </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="conio_handlecmd">
+        <parameters>
+          <par name="buf___0" nr="1"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
           <pre>
             <math>
               <apply>
@@ -1085,6 +1468,27 @@
                   <cn>1</cn>
                 </apply>
                 <cn>58</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
               </apply>
             </math>
           </pre>
@@ -1165,19 +1569,6 @@
                 <initialized/>
                 <apply>
                   <addressed-value>
-                    <field name="lastupdate"/>
-                  </addressed-value>
-                  <ci>curconn</ci>
-                </apply>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <initialized/>
-                <apply>
-                  <addressed-value>
                     <field name="sn"/>
                   </addressed-value>
                   <ci>curconn</ci>
@@ -1192,6 +1583,19 @@
                 <apply>
                   <addressed-value>
                     <field name="logfile"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="lastupdate"/>
                   </addressed-value>
                   <ci>curconn</ci>
                 </apply>
@@ -1228,6 +1632,37 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1256,6 +1691,37 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1340,6 +1806,14 @@
             <math>
               <apply>
                 <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>curconn</ci>
               </apply>
             </math>
@@ -1439,6 +1913,37 @@
           <par name="conn" nr="1"/>
           <par name="prefix" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1455,6 +1960,16 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1488,6 +2003,35 @@
           <par name="argc" nr="2"/>
         </parameters>
         <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
           <pre>
             <math>
               <apply>
@@ -1605,6 +2149,16 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1737,6 +2291,19 @@
                 <initialized/>
                 <apply>
                   <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
                     <field name="next"/>
                   </addressed-value>
                   <ci>curconn</ci>
@@ -1777,6 +2344,16 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1809,6 +2386,50 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="winname"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1825,6 +2446,37 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1842,6 +2494,35 @@
           <par name="argc" nr="2"/>
         </parameters>
         <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
           <pre>
             <math>
               <apply>
@@ -1889,6 +2570,22 @@
           <pre>
             <math>
               <apply>
+                <not-null/>
+                <ci>html_cleanar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>html_cleanar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
                 <valid-mem/>
                 <ci>home</ci>
               </apply>
@@ -1907,22 +2604,6 @@
               <apply>
                 <valid-mem/>
                 <ci>scriptar</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>html_cleanar</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>html_cleanar</ci>
               </apply>
             </math>
           </pre>
@@ -1951,6 +2632,50 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="conn"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1967,6 +2692,16 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1983,6 +2718,16 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1999,6 +2744,37 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -2015,6 +2791,37 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -2031,6 +2838,37 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -2103,6 +2941,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="conio_tagbuddy">
@@ -2116,6 +2962,14 @@
             <math>
               <apply>
                 <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>curconn</ci>
               </apply>
             </math>
@@ -2137,6 +2991,37 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -2185,6 +3070,37 @@
           <par name="conn" nr="1"/>
           <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -2247,6 +3163,115 @@
           <par name="fd" nr="2"/>
           <par name="_buflen" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="conn"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="winname"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="sn"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="logfile"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="lastupdate"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="online"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -2277,38 +3302,6 @@
         </postconditions>
       </function>
       <function name="gotkey">
-        <parameters>
-          <par name="c" nr="1"/>
-        </parameters>
-        <preconditions>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>statusbar_text</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <allocation-base/>
-                <ci>statusbar_text</ci>
-              </apply>
-            </math>
-          </pre>
-        </preconditions>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
-      </function>
-      <function name="gotkey_real">
         <parameters>
           <par name="c" nr="1"/>
         </parameters>
@@ -2352,6 +3345,248 @@
                   </addressed-value>
                   <ci>curconn</ci>
                 </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="winname"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="lastupdate"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>statusbar_text</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>statusbar_text</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>histar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>histar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lastcomplete</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>stdscr</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="gotkey_real">
+        <parameters>
+          <par name="c" nr="1"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>conio_bind_ar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>conio_bind_ar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>curconn</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="curbwin"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="next"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="conn"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="winname"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="sn"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="logfile"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="lastupdate"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="online"/>
+                  </addressed-value>
+                  <ci>curconn</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>scriptar</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>scriptar</ci>
               </apply>
             </math>
           </pre>
@@ -2442,26 +3677,38 @@
           <pre>
             <math>
               <apply>
-                <initialized/>
+                <geq/>
                 <apply>
-                  <addressed-value>
-                    <field name="winname"/>
-                  </addressed-value>
-                  <ci>curconn</ci>
+                  <plus/>
+                  <ci>histc</ci>
+                  <cn>1</cn>
                 </apply>
+                <cn>0</cn>
               </apply>
             </math>
           </pre>
           <pre>
             <math>
               <apply>
-                <initialized/>
+                <leq/>
                 <apply>
-                  <addressed-value>
-                    <field name="lastupdate"/>
-                  </addressed-value>
-                  <ci>curconn</ci>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>histc</ci>
+                    <cn>1</cn>
+                  </apply>
+                  <cn>4</cn>
                 </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>histar</ci>
               </apply>
             </math>
           </pre>
@@ -2520,6 +3767,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="naim_basename">
@@ -2531,6 +3786,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header time="2018-12-05 22:43:01">
+  <header time="2018-12-18 14:25:06">
     <application file="libltdl/ltdl.c"/>
   </header>
   <cfile>
@@ -61,6 +61,40 @@
           <par name="pcanonical" nr="2"/>
           <par name="path" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -107,6 +141,72 @@
           <par name="search_path" nr="1"/>
           <par name="pdir" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -124,6 +224,22 @@
           <par name="filename" nr="1"/>
         </parameters>
         <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
           <pre>
             <math>
               <apply>
@@ -157,6 +273,72 @@
           <par name="search_path" nr="1"/>
           <par name="handle" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -173,6 +355,88 @@
           <par name="filename" nr="1"/>
           <par name="data" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_geterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_geterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -192,6 +456,88 @@
           <par name="installed" nr="6"/>
           <par name="handle" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_geterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_geterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -215,6 +561,38 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlmutex_unlock_func</ci>
               </apply>
             </math>
@@ -246,16 +624,8 @@
           <pre>
             <math>
               <apply>
-                <not-null/>
-                <ci>lt_dlfree</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
                 <valid-mem/>
-                <ci>lt_dlfree</ci>
+                <ci>lt_dlmalloc</ci>
               </apply>
             </math>
           </pre>
@@ -263,15 +633,7 @@
             <math>
               <apply>
                 <not-null/>
-                <ci>lt_dlmutex_seterror_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlmutex_seterror_func</ci>
+                <ci>lt_dlmalloc</ci>
               </apply>
             </math>
           </pre>
@@ -361,6 +723,24 @@
           <par name="dirnam" nr="1"/>
           <par name="pargz_len" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -433,6 +813,22 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlfree</ci>
               </apply>
             </math>
@@ -442,6 +838,22 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmalloc</ci>
               </apply>
             </math>
           </pre>
@@ -462,6 +874,24 @@
           <par name="entry" nr="3"/>
           <par name="pargz_len" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -477,6 +907,22 @@
           <par name="diagnostic" nr="1"/>
         </parameters>
         <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
           <pre>
             <math>
               <apply>
@@ -573,6 +1019,22 @@
               </apply>
             </math>
           </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlrealloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlrealloc</ci>
+              </apply>
+            </math>
+          </pre>
         </preconditions>
         <postconditions>
           <post>
@@ -589,6 +1051,22 @@
           <par name="search_dir" nr="1"/>
         </parameters>
         <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
           <pre>
             <math>
               <apply>
@@ -841,6 +1319,38 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlmutex_unlock_func</ci>
               </apply>
             </math>
@@ -866,38 +1376,6 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlmutex_unlock_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlfree</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlfree</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlmutex_seterror_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlmutex_seterror_func</ci>
               </apply>
             </math>
           </pre>
@@ -994,6 +1472,38 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlmutex_unlock_func</ci>
               </apply>
             </math>
@@ -1019,38 +1529,6 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlmutex_unlock_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlfree</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlfree</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlmutex_seterror_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlmutex_seterror_func</ci>
               </apply>
             </math>
           </pre>
@@ -1133,6 +1611,72 @@
           <par name="func" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1242,6 +1786,22 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlmutex_unlock_func</ci>
               </apply>
             </math>
@@ -1267,22 +1827,6 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlmutex_unlock_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlmutex_seterror_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlmutex_seterror_func</ci>
               </apply>
             </math>
           </pre>
@@ -1296,6 +1840,22 @@
                   <cn>1</cn>
                 </apply>
                 <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>loaders</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>default_preloaded_symbols</ci>
               </apply>
             </math>
           </pre>
@@ -1320,6 +1880,38 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlmutex_unlock_func</ci>
               </apply>
             </math>
@@ -1345,22 +1937,6 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlmutex_unlock_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlmutex_seterror_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlmutex_seterror_func</ci>
               </apply>
             </math>
           </pre>
@@ -1418,6 +1994,22 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlmutex_unlock_func</ci>
               </apply>
             </math>
@@ -1443,22 +2035,6 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlmutex_unlock_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlmutex_seterror_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlmutex_seterror_func</ci>
               </apply>
             </math>
           </pre>
@@ -1467,6 +2043,22 @@
               <apply>
                 <valid-mem/>
                 <ci>loaders</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmalloc</ci>
               </apply>
             </math>
           </pre>
@@ -1490,6 +2082,22 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlmutex_unlock_func</ci>
               </apply>
             </math>
@@ -1515,22 +2123,6 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlmutex_unlock_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlmutex_seterror_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlmutex_seterror_func</ci>
               </apply>
             </math>
           </pre>
@@ -1602,6 +2194,22 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlmutex_unlock_func</ci>
               </apply>
             </math>
@@ -1627,22 +2235,6 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlmutex_unlock_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlmutex_seterror_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlmutex_seterror_func</ci>
               </apply>
             </math>
           </pre>
@@ -1714,6 +2306,38 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlmutex_unlock_func</ci>
               </apply>
             </math>
@@ -1739,38 +2363,6 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlmutex_unlock_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlfree</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlfree</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlmutex_seterror_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlmutex_seterror_func</ci>
               </apply>
             </math>
           </pre>
@@ -1850,7 +2442,7 @@
             <math>
               <apply>
                 <not-null/>
-                <ci>lt_dlmutex_lock_func</ci>
+                <ci>lt_dlmutex_seterror_func</ci>
               </apply>
             </math>
           </pre>
@@ -1858,7 +2450,7 @@
             <math>
               <apply>
                 <valid-mem/>
-                <ci>lt_dlmutex_lock_func</ci>
+                <ci>lt_dlmutex_seterror_func</ci>
               </apply>
             </math>
           </pre>
@@ -1866,7 +2458,7 @@
             <math>
               <apply>
                 <not-null/>
-                <ci>lt_dlmutex_seterror_func</ci>
+                <ci>lt_dlmutex_lock_func</ci>
               </apply>
             </math>
           </pre>
@@ -1874,7 +2466,7 @@
             <math>
               <apply>
                 <valid-mem/>
-                <ci>lt_dlmutex_seterror_func</ci>
+                <ci>lt_dlmutex_lock_func</ci>
               </apply>
             </math>
           </pre>
@@ -1893,6 +2485,112 @@
         <parameters>
           <par name="filename" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_geterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_geterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlrealloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlrealloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>handles</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1912,6 +2610,38 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_geterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_geterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlfree</ci>
               </apply>
             </math>
@@ -1928,7 +2658,15 @@
             <math>
               <apply>
                 <not-null/>
-                <ci>lt_dlmutex_seterror_func</ci>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_lock_func</ci>
               </apply>
             </math>
           </pre>
@@ -1936,7 +2674,55 @@
             <math>
               <apply>
                 <valid-mem/>
-                <ci>lt_dlmutex_seterror_func</ci>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlrealloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlrealloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>handles</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmalloc</ci>
               </apply>
             </math>
           </pre>
@@ -1994,6 +2780,22 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlmutex_unlock_func</ci>
               </apply>
             </math>
@@ -2018,6 +2820,14 @@
             <math>
               <apply>
                 <valid-mem/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
                 <ci>default_preloaded_symbols</ci>
               </apply>
             </math>
@@ -2026,7 +2836,7 @@
             <math>
               <apply>
                 <valid-mem/>
-                <ci>lt_dlmutex_unlock_func</ci>
+                <ci>preloaded_symbols</ci>
               </apply>
             </math>
           </pre>
@@ -2098,6 +2908,22 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlmutex_unlock_func</ci>
               </apply>
             </math>
@@ -2123,22 +2949,6 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlmutex_unlock_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlmutex_seterror_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlmutex_seterror_func</ci>
               </apply>
             </math>
           </pre>
@@ -2178,6 +2988,22 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlmutex_unlock_func</ci>
               </apply>
             </math>
@@ -2203,22 +3029,6 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlmutex_unlock_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlfree</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlfree</ci>
               </apply>
             </math>
           </pre>
@@ -2243,22 +3053,6 @@
             <math>
               <apply>
                 <not-null/>
-                <ci>lt_dlfree</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlfree</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
                 <ci>lt_dlmutex_seterror_func</ci>
               </apply>
             </math>
@@ -2284,6 +3078,38 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlmutex_geterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmalloc</ci>
               </apply>
             </math>
           </pre>
@@ -2341,6 +3167,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -2416,6 +3250,22 @@
               </apply>
             </math>
           </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmalloc</ci>
+              </apply>
+            </math>
+          </pre>
         </preconditions>
         <postconditions>
           <post>
@@ -2436,6 +3286,22 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlmutex_unlock_func</ci>
               </apply>
             </math>
@@ -2461,6 +3327,22 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmalloc</ci>
               </apply>
             </math>
           </pre>
@@ -2502,6 +3384,56 @@
         <parameters>
           <par name="loader_data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -2519,6 +3451,22 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlmutex_unlock_func</ci>
               </apply>
             </math>
@@ -2544,22 +3492,6 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlmutex_unlock_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlfree</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlfree</ci>
               </apply>
             </math>
           </pre>
@@ -2607,7 +3539,7 @@
             <math>
               <apply>
                 <valid-mem/>
-                <ci>default_preloaded_symbols</ci>
+                <ci>lt_dlmutex_unlock_func</ci>
               </apply>
             </math>
           </pre>
@@ -2615,7 +3547,7 @@
             <math>
               <apply>
                 <valid-mem/>
-                <ci>lt_dlmutex_unlock_func</ci>
+                <ci>default_preloaded_symbols</ci>
               </apply>
             </math>
           </pre>
@@ -2640,6 +3572,22 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlmutex_unlock_func</ci>
               </apply>
             </math>
@@ -2665,22 +3613,6 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlmutex_unlock_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlmutex_seterror_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlmutex_seterror_func</ci>
               </apply>
             </math>
           </pre>
@@ -2871,6 +3803,22 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlfree</ci>
               </apply>
             </math>
@@ -2880,6 +3828,22 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmalloc</ci>
               </apply>
             </math>
           </pre>
@@ -2904,6 +3868,54 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_geterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_geterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlmutex_unlock_func</ci>
               </apply>
             </math>
@@ -2936,38 +3948,6 @@
             <math>
               <apply>
                 <not-null/>
-                <ci>lt_dlfree</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlfree</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlmutex_seterror_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlmutex_seterror_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
                 <ci>lt_dlrealloc</ci>
               </apply>
             </math>
@@ -2977,22 +3957,6 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlrealloc</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlmutex_geterror_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlmutex_geterror_func</ci>
               </apply>
             </math>
           </pre>
@@ -3001,6 +3965,22 @@
               <apply>
                 <valid-mem/>
                 <ci>handles</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmalloc</ci>
               </apply>
             </math>
           </pre>
@@ -3025,54 +4005,6 @@
             <math>
               <apply>
                 <not-null/>
-                <ci>lt_dlmutex_unlock_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlmutex_lock_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlmutex_lock_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlmutex_unlock_func</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>lt_dlfree</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>lt_dlfree</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
                 <ci>lt_dlmutex_seterror_func</ci>
               </apply>
             </math>
@@ -3098,6 +4030,54 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlmutex_geterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_unlock_func</ci>
               </apply>
             </math>
           </pre>
@@ -3124,6 +4104,38 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_geterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_geterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>lt_dlfree</ci>
               </apply>
             </math>
@@ -3133,6 +4145,54 @@
               <apply>
                 <valid-mem/>
                 <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmalloc</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmalloc</ci>
               </apply>
             </math>
           </pre>
@@ -3151,6 +4211,101 @@
         <parameters>
           <par name="handle" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_seterror_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlfree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_lock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lt_dlmutex_unlock_func</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>handles</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>handles</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="next"/>
+                  </addressed-value>
+                  <ci>handles</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
