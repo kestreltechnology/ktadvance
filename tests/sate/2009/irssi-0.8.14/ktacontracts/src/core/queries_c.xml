@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-25 00:03:04.028027"/>
-  <cfile name="src/core/queries">
-    <data-structures/>
+  <header time="2018-12-18 15:38:24">
+    <application file="src/core/queries.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="queries"/>
+    </global-variables>
     <functions>
       <function name="queries_deinit">
         <parameters/>
@@ -30,8 +34,8 @@
       </function>
       <function name="query_change_address">
         <parameters>
-          <par name="query" nr="1"/>
           <par name="address" nr="2"/>
+          <par name="query" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -77,6 +81,16 @@
         <parameters>
           <par name="query" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>queries</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -136,6 +150,16 @@
           <par name="query" nr="1"/>
           <par name="automatic" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>queries</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

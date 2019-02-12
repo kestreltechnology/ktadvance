@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-25 00:03:03.495672"/>
-  <cfile name="src/core/core">
-    <data-structures/>
+  <header time="2018-12-18 15:26:21">
+    <application file="src/core/core.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="dialog_text_queue"/>
+      <gvar name="dialog_type_queue"/>
+    </global-variables>
     <functions>
       <function name="core_deinit">
         <parameters/>
@@ -66,6 +71,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_irssi_config">
@@ -106,9 +119,27 @@
       </function>
       <function name="sig_gui_dialog">
         <parameters>
-          <par name="type" nr="1"/>
           <par name="text" nr="2"/>
+          <par name="type" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dialog_type_queue</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dialog_text_queue</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -121,6 +152,24 @@
       </function>
       <function name="sig_init_finished">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dialog_type_queue</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dialog_text_queue</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

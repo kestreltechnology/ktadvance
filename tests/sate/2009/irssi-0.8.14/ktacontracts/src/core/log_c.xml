@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-25 00:03:03.668349"/>
-  <cfile name="src/core/log">
-    <data-structures/>
+  <header time="2018-12-18 15:31:26">
+    <application file="src/core/log.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="log_dir_create_mode"/>
+      <gvar name="log_timestamp"/>
+      <gvar name="logs"/>
+      <gvar name="mainconfig"/>
+      <gvar name="rotate_tag"/>
+    </global-variables>
     <functions>
       <function name="itemcmp">
         <parameters>
-          <par name="patt" nr="1"/>
           <par name="item" nr="2"/>
+          <par name="patt" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -35,8 +43,8 @@
       </function>
       <function name="log_create_rec">
         <parameters>
-          <par name="fname" nr="1"/>
           <par name="level" nr="2"/>
+          <par name="fname" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -50,6 +58,46 @@
       </function>
       <function name="log_deinit">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>rotate_tag</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>logs</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="data"/>
+                  </addressed-value>
+                  <ci>logs</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>logs</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -64,6 +112,16 @@
         <parameters>
           <par name="log" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>logs</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -76,8 +134,8 @@
       </function>
       <function name="log_file_write">
         <parameters>
-          <par name="server_tag" nr="1"/>
           <par name="item" nr="2"/>
+          <par name="server_tag" nr="1"/>
           <par name="level" nr="3"/>
           <par name="str" nr="4"/>
           <par name="no_fallbacks" nr="5"/>
@@ -104,6 +162,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="log_find">
@@ -115,6 +181,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -135,9 +209,9 @@
       <function name="log_item_add">
         <parameters>
           <par name="log" nr="1"/>
+          <par name="servertag" nr="4"/>
           <par name="type" nr="2"/>
           <par name="name" nr="3"/>
-          <par name="servertag" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -151,8 +225,8 @@
       </function>
       <function name="log_item_destroy">
         <parameters>
-          <par name="log" nr="1"/>
           <par name="item" nr="2"/>
+          <par name="log" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -166,10 +240,10 @@
       </function>
       <function name="log_item_find">
         <parameters>
-          <par name="log" nr="1"/>
-          <par name="type" nr="2"/>
           <par name="item" nr="3"/>
+          <par name="log" nr="1"/>
           <par name="servertag" nr="4"/>
+          <par name="type" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -197,8 +271,8 @@
       </function>
       <function name="log_items_read_config">
         <parameters>
-          <par name="node" nr="1"/>
           <par name="log" nr="2"/>
+          <par name="node" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -215,6 +289,42 @@
           <par name="log" nr="1"/>
           <par name="parent" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>mainconfig</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="modifycounter"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="mainnode"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -227,6 +337,55 @@
       </function>
       <function name="log_read_config">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>mainconfig</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache_nodes"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="mainnode"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -241,6 +400,68 @@
         <parameters>
           <par name="log" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>mainconfig</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="modifycounter"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache_nodes"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="mainnode"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -269,6 +490,17 @@
         <parameters>
           <par name="log" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>log_dir_create_mode</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -297,6 +529,16 @@
         <parameters>
           <par name="log" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>logs</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -311,6 +553,68 @@
         <parameters>
           <par name="log" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>mainconfig</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="modifycounter"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache_nodes"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="mainnode"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -323,10 +627,31 @@
       </function>
       <function name="log_write_rec">
         <parameters>
+          <par name="level" nr="3"/>
           <par name="log" nr="1"/>
           <par name="str" nr="2"/>
-          <par name="level" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>log_timestamp</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>log_timestamp</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -339,10 +664,10 @@
       </function>
       <function name="log_write_timestamp">
         <parameters>
-          <par name="handle" nr="1"/>
           <par name="format" nr="2"/>
-          <par name="text" nr="3"/>
           <par name="stamp" nr="4"/>
+          <par name="text" nr="3"/>
+          <par name="handle" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -368,6 +693,16 @@
       </function>
       <function name="sig_rotate_check">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>logs</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-25 00:03:03.558712"/>
-  <cfile name="src/core/expandos">
-    <data-structures/>
+  <header time="2018-12-18 15:27:02">
+    <application file="src/core/expandos.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="expandos"/>
+      <gvar name="last_privmsg_from"/>
+      <gvar name="last_public_from"/>
+      <gvar name="last_sent_msg"/>
+      <gvar name="last_sent_msg_body"/>
+      <gvar name="sysarch"/>
+      <gvar name="sysname"/>
+      <gvar name="sysrelease"/>
+      <gvar name="timer_tag"/>
+      <gvar name="timestamp_format"/>
+    </global-variables>
     <functions>
       <function name="expando_add_signal">
         <parameters>
-          <par name="key" nr="1"/>
-          <par name="signal___0" nr="2"/>
           <par name="arg" nr="3"/>
+          <par name="signal___0" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -22,9 +35,9 @@
       </function>
       <function name="expando_awaymsg">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -38,9 +51,9 @@
       </function>
       <function name="expando_bind">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="funccount" nr="2"/>
           <par name="funcs" nr="3"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -54,9 +67,9 @@
       </function>
       <function name="expando_chanmode">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -70,9 +83,9 @@
       </function>
       <function name="expando_channel">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -86,9 +99,9 @@
       </function>
       <function name="expando_chanop">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -102,9 +115,9 @@
       </function>
       <function name="expando_chatnet">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -118,9 +131,9 @@
       </function>
       <function name="expando_clientstarted">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -134,9 +147,9 @@
       </function>
       <function name="expando_cmdchar">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -150,9 +163,9 @@
       </function>
       <function name="expando_cmdchars">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -166,9 +179,19 @@
       </function>
       <function name="expando_create">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="func" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>expandos</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -181,9 +204,19 @@
       </function>
       <function name="expando_destroy">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="func" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>expandos</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -196,9 +229,9 @@
       </function>
       <function name="expando_dollar">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -214,11 +247,34 @@
         <parameters>
           <par name="key" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>expandos</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="signals"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -242,6 +298,16 @@
         <parameters>
           <par name="key" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>expandos</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -268,9 +334,9 @@
       </function>
       <function name="expando_itemname">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -284,9 +350,9 @@
       </function>
       <function name="expando_last_invite">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -300,10 +366,20 @@
       </function>
       <function name="expando_lastmsg">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>last_privmsg_from</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -316,10 +392,20 @@
       </function>
       <function name="expando_lastmymsg">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>last_sent_msg</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -332,10 +418,20 @@
       </function>
       <function name="expando_lastmymsg_body">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>last_sent_msg_body</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -348,10 +444,20 @@
       </function>
       <function name="expando_lastpublic">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>last_public_from</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -364,9 +470,9 @@
       </function>
       <function name="expando_nick">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -380,9 +486,9 @@
       </function>
       <function name="expando_query">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -396,9 +502,9 @@
       </function>
       <function name="expando_realname">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -412,9 +518,9 @@
       </function>
       <function name="expando_releasedate">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -428,9 +534,9 @@
       </function>
       <function name="expando_releasetime">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -444,9 +550,9 @@
       </function>
       <function name="expando_servertag">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -460,9 +566,9 @@
       </function>
       <function name="expando_serverversion">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -476,9 +582,9 @@
       </function>
       <function name="expando_statusoper">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -492,10 +598,20 @@
       </function>
       <function name="expando_sysarch">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>sysarch</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -508,10 +624,20 @@
       </function>
       <function name="expando_sysname">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>sysname</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -524,10 +650,20 @@
       </function>
       <function name="expando_sysrelease">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>sysrelease</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -540,9 +676,9 @@
       </function>
       <function name="expando_target">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -556,10 +692,28 @@
       </function>
       <function name="expando_time">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>timestamp_format</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>timestamp_format</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -572,9 +726,9 @@
       </function>
       <function name="expando_topic">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -588,9 +742,9 @@
       </function>
       <function name="expando_unbind">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="funccount" nr="2"/>
           <par name="funcs" nr="3"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -604,9 +758,9 @@
       </function>
       <function name="expando_version">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -620,9 +774,9 @@
       </function>
       <function name="expando_workdir">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="item" nr="2"/>
           <par name="free_ret" nr="3"/>
+          <par name="server" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -636,6 +790,81 @@
       </function>
       <function name="expandos_deinit">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>last_sent_msg_body</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>last_sent_msg</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>last_public_from</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>timer_tag</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>last_privmsg_from</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>sysrelease</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>sysarch</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>expandos</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>sysname</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -660,9 +889,9 @@
       </function>
       <function name="free_expando">
         <parameters>
-          <par name="key" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="user_data" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -688,11 +917,29 @@
       </function>
       <function name="sig_message_own_private">
         <parameters>
+          <par name="target" nr="3"/>
           <par name="server" nr="1"/>
           <par name="msg" nr="2"/>
-          <par name="target" nr="3"/>
           <par name="origtarget" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>last_sent_msg_body</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>last_sent_msg</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -705,11 +952,21 @@
       </function>
       <function name="sig_message_private">
         <parameters>
-          <par name="server" nr="1"/>
-          <par name="msg" nr="2"/>
-          <par name="nick" nr="3"/>
           <par name="address" nr="4"/>
+          <par name="server" nr="1"/>
+          <par name="nick" nr="3"/>
+          <par name="msg" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>last_privmsg_from</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -722,12 +979,22 @@
       </function>
       <function name="sig_message_public">
         <parameters>
-          <par name="server" nr="1"/>
-          <par name="msg" nr="2"/>
-          <par name="nick" nr="3"/>
-          <par name="address" nr="4"/>
           <par name="target" nr="5"/>
+          <par name="address" nr="4"/>
+          <par name="server" nr="1"/>
+          <par name="nick" nr="3"/>
+          <par name="msg" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>last_public_from</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-25 00:03:04.011342"/>
-  <cfile name="src/core/pidwait">
-    <data-structures/>
+  <header time="2018-12-18 15:38:08">
+    <application file="src/core/pidwait.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="child_pids"/>
+      <gvar name="pids"/>
+    </global-variables>
     <functions>
       <function name="pidwait_add">
         <parameters>
           <par name="pid" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>pids</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>child_pids</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -20,6 +43,24 @@
       </function>
       <function name="pidwait_deinit">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>pids</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>child_pids</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -32,6 +73,16 @@
       </function>
       <function name="pidwait_get_pids">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>pids</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -58,6 +109,24 @@
         <parameters>
           <par name="pid" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>pids</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>child_pids</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -70,10 +139,28 @@
       </function>
       <function name="sig_child">
         <parameters>
-          <par name="pid" nr="1"/>
           <par name="status" nr="2"/>
+          <par name="pid" nr="1"/>
           <par name="data" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>pids</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>child_pids</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

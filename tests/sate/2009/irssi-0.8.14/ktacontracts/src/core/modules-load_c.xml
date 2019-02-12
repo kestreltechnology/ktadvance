@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-25 00:03:03.842258"/>
-  <cfile name="src/core/modules-load">
-    <data-structures/>
+  <header time="2018-12-18 15:34:04">
+    <application file="src/core/modules-load.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="modules"/>
+    </global-variables>
     <functions>
       <function name="module_file_deinit_gmodule">
         <parameters>
@@ -22,6 +26,16 @@
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>modules</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -34,9 +48,9 @@
       </function>
       <function name="module_get_func">
         <parameters>
-          <par name="rootmodule" nr="1"/>
-          <par name="submodule" nr="2"/>
           <par name="function" nr="3"/>
+          <par name="submodule" nr="2"/>
+          <par name="rootmodule" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -50,15 +64,23 @@
       </function>
       <function name="module_get_name">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="start" nr="2"/>
           <par name="end" nr="3"/>
+          <par name="start" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -66,14 +88,22 @@
       </function>
       <function name="module_get_root">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="prefixes" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -81,8 +111,8 @@
       </function>
       <function name="module_get_sub">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="root" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -92,12 +122,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="module_load">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="prefixes" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -111,12 +149,12 @@
       </function>
       <function name="module_load_full">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="rootmodule" nr="2"/>
-          <par name="submodule" nr="3"/>
-          <par name="start" nr="4"/>
           <par name="end" nr="5"/>
           <par name="prefixes" nr="6"/>
+          <par name="submodule" nr="3"/>
+          <par name="start" nr="4"/>
+          <par name="path" nr="1"/>
+          <par name="rootmodule" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -130,10 +168,10 @@
       </function>
       <function name="module_load_name">
         <parameters>
+          <par name="silent" nr="4"/>
+          <par name="submodule" nr="3"/>
           <par name="path" nr="1"/>
           <par name="rootmodule" nr="2"/>
-          <par name="submodule" nr="3"/>
-          <par name="silent" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -147,11 +185,11 @@
       </function>
       <function name="module_load_prefixes">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="module" nr="2"/>
-          <par name="start" nr="3"/>
           <par name="end" nr="4"/>
           <par name="prefixes" nr="5"/>
+          <par name="start" nr="3"/>
+          <par name="path" nr="1"/>
+          <par name="module" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -165,9 +203,9 @@
       </function>
       <function name="module_load_sub">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="submodule" nr="2"/>
           <par name="prefixes" nr="3"/>
+          <par name="submodule" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -181,8 +219,8 @@
       </function>
       <function name="module_open">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="found" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -198,6 +236,16 @@
         <parameters>
           <par name="module" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>modules</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

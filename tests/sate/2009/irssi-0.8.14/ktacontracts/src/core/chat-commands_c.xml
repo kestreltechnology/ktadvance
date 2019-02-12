@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-25 00:03:03.363044"/>
-  <cfile name="src/core/chat-commands">
-    <data-structures/>
+  <header time="2018-12-18 15:22:10">
+    <application file="src/core/chat-commands.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="channels"/>
+      <gvar name="queries"/>
+      <gvar name="servers"/>
+    </global-variables>
     <functions>
       <function name="chat_commands_deinit">
         <parameters/>
@@ -44,8 +50,8 @@
       </function>
       <function name="cmd_disconnect">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="server" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -59,9 +65,9 @@
       </function>
       <function name="cmd_foreach">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="server" nr="2"/>
           <par name="item" nr="3"/>
+          <par name="server" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -77,6 +83,16 @@
         <parameters>
           <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>channels</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -91,6 +107,16 @@
         <parameters>
           <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>queries</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -103,9 +129,19 @@
       </function>
       <function name="cmd_foreach_server">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="server" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>servers</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -118,9 +154,9 @@
       </function>
       <function name="cmd_msg">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="server" nr="2"/>
           <par name="item" nr="3"/>
+          <par name="server" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -148,9 +184,9 @@
       </function>
       <function name="cmd_server">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="server" nr="2"/>
           <par name="item" nr="3"/>
+          <par name="server" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -164,8 +200,8 @@
       </function>
       <function name="cmd_server_connect">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="server" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -179,15 +215,28 @@
       </function>
       <function name="find_reconnect_server">
         <parameters>
-          <par name="chat_type" nr="1"/>
-          <par name="addr" nr="2"/>
           <par name="port" nr="3"/>
+          <par name="addr" nr="2"/>
+          <par name="chat_type" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="conn"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -195,9 +244,9 @@
       </function>
       <function name="get_server_connect">
         <parameters>
+          <par name="rawlog_file" nr="3"/>
           <par name="data" nr="1"/>
           <par name="plus_addr" nr="2"/>
-          <par name="rawlog_file" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -207,13 +256,312 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="proxy"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ssl_cert"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ssl_cafile"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="chat_type"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="chatnet"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ssl_capath"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="realname"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="proxy_password"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="refcount"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nick"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="own_ip4"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ssl_pkey"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="address"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="own_ip6"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="tag"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="proxy_string"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="proxy_string_after"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="connect_handle"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="password"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="away_reason"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="username"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="channels"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="port"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="sig_default_command_server">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="server" nr="2"/>
           <par name="item" nr="3"/>
+          <par name="server" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -227,10 +575,10 @@
       </function>
       <function name="sig_server_sendmsg">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="target" nr="2"/>
-          <par name="msg" nr="3"/>
+          <par name="server" nr="1"/>
           <par name="target_type_p" nr="4"/>
+          <par name="msg" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -244,8 +592,8 @@
       </function>
       <function name="update_reconnection">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="server" nr="2"/>
+          <par name="conn" nr="1"/>
         </parameters>
         <postconditions>
           <post>

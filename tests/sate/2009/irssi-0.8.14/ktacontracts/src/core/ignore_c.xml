@@ -1,13 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-25 00:03:03.600226"/>
-  <cfile name="src/core/ignore">
-    <data-structures/>
+  <header time="2018-12-18 15:27:45">
+    <application file="src/core/ignore.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="ignores"/>
+      <gvar name="mainconfig"/>
+      <gvar name="nickmatch"/>
+      <gvar name="time_tag"/>
+    </global-variables>
     <functions>
       <function name="ignore_add_rec">
         <parameters>
           <par name="rec" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>nickmatch</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>ignores</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nicks"/>
+                  </addressed-value>
+                  <ci>nickmatch</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>nickmatch</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -20,13 +66,44 @@
       </function>
       <function name="ignore_check">
         <parameters>
+          <par name="channel" nr="4"/>
+          <par name="host" nr="3"/>
+          <par name="level" nr="6"/>
           <par name="server" nr="1"/>
           <par name="nick" nr="2"/>
-          <par name="host" nr="3"/>
-          <par name="channel" nr="4"/>
           <par name="text" nr="5"/>
-          <par name="level" nr="6"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>nickmatch</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nicks"/>
+                  </addressed-value>
+                  <ci>nickmatch</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>nickmatch</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -54,9 +131,9 @@
       </function>
       <function name="ignore_check_replies_rec">
         <parameters>
-          <par name="rec" nr="1"/>
           <par name="channel" nr="2"/>
           <par name="text" nr="3"/>
+          <par name="rec" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -70,6 +147,75 @@
       </function>
       <function name="ignore_deinit">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>nickmatch</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>ignores</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nicks"/>
+                  </addressed-value>
+                  <ci>nickmatch</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>nickmatch</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>time_tag</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>ignores</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="data"/>
+                  </addressed-value>
+                  <ci>ignores</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -82,9 +228,48 @@
       </function>
       <function name="ignore_destroy">
         <parameters>
-          <par name="rec" nr="1"/>
           <par name="send_signal" nr="2"/>
+          <par name="rec" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>nickmatch</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>ignores</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nicks"/>
+                  </addressed-value>
+                  <ci>nickmatch</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>nickmatch</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -97,9 +282,9 @@
       </function>
       <function name="ignore_find">
         <parameters>
-          <par name="servertag" nr="1"/>
-          <par name="mask" nr="2"/>
           <par name="channels___0" nr="3"/>
+          <par name="mask" nr="2"/>
+          <par name="servertag" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -153,8 +338,8 @@
       </function>
       <function name="ignore_match_pattern">
         <parameters>
-          <par name="rec" nr="1"/>
           <par name="text" nr="2"/>
+          <par name="rec" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -168,8 +353,8 @@
       </function>
       <function name="ignore_nick_cache">
         <parameters>
-          <par name="list" nr="1"/>
           <par name="channel" nr="2"/>
+          <par name="list" nr="1"/>
           <par name="nick" nr="3"/>
         </parameters>
         <postconditions>
@@ -186,6 +371,76 @@
         <parameters>
           <par name="rec" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>mainconfig</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="modifycounter"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache_nodes"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="mainnode"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>mainconfig</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -200,6 +455,68 @@
         <parameters>
           <par name="rec" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>mainconfig</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="modifycounter"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache_nodes"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="mainnode"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -214,6 +531,45 @@
         <parameters>
           <par name="rec" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>nickmatch</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>ignores</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nicks"/>
+                  </addressed-value>
+                  <ci>nickmatch</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>nickmatch</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -226,6 +582,113 @@
       </function>
       <function name="read_ignores">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>mainconfig</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>nickmatch</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>ignores</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nicks"/>
+                  </addressed-value>
+                  <ci>nickmatch</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>nickmatch</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>ignores</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="data"/>
+                  </addressed-value>
+                  <ci>ignores</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache_nodes"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="mainnode"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

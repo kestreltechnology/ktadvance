@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-25 00:03:02.866934"/>
-  <cfile name="src/core/args">
-    <data-structures/>
+  <header time="2018-12-18 15:19:47">
+    <application file="src/core/args.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="context"/>
+    </global-variables>
     <functions>
       <function name="args_execute">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>context</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

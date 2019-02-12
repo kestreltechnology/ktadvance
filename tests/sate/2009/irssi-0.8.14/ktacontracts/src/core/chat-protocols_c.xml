@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-25 00:03:03.385505"/>
-  <cfile name="src/core/chat-protocols">
-    <data-structures/>
+  <header time="2018-12-18 15:23:54">
+    <application file="src/core/chat-protocols.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="chat_protocols"/>
+      <gvar name="default_proto"/>
+    </global-variables>
     <functions>
       <function name="chat_protocol_check_cast">
         <parameters>
-          <par name="object" nr="1"/>
           <par name="type_pos" nr="2"/>
+          <par name="object" nr="1"/>
           <par name="id" nr="3"/>
         </parameters>
         <postconditions>
@@ -24,6 +29,16 @@
         <parameters>
           <par name="rec" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>chat_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -43,6 +58,40 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="id"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="name"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -78,6 +127,16 @@
       </function>
       <function name="chat_protocol_get_default">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>default_proto</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -120,6 +179,16 @@
         <parameters>
           <par name="rec" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>chat_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -160,6 +229,37 @@
       </function>
       <function name="chat_protocols_deinit">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>chat_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>chat_protocols</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="data"/>
+                  </addressed-value>
+                  <ci>chat_protocols</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

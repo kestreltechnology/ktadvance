@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-25 00:03:03.808416"/>
-  <cfile name="src/core/modules">
-    <data-structures/>
+  <header time="2018-12-18 15:34:56">
+    <application file="src/core/modules.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="idlookup"/>
+      <gvar name="modules"/>
+      <gvar name="next_uniq_id"/>
+      <gvar name="stridlookup"/>
+      <gvar name="uniqids"/>
+      <gvar name="uniqstrids"/>
+    </global-variables>
     <functions>
       <function name="module_check_cast">
         <parameters>
-          <par name="object" nr="1"/>
           <par name="type_pos" nr="2"/>
+          <par name="object" nr="1"/>
           <par name="id" nr="3"/>
         </parameters>
         <postconditions>
@@ -22,10 +31,10 @@
       </function>
       <function name="module_check_cast_module">
         <parameters>
-          <par name="object" nr="1"/>
           <par name="type_pos" nr="2"/>
-          <par name="module" nr="3"/>
+          <par name="object" nr="1"/>
           <par name="id" nr="4"/>
+          <par name="module" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -64,13 +73,39 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="module_find_id">
         <parameters>
-          <par name="module" nr="1"/>
           <par name="uniqid" nr="2"/>
+          <par name="module" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>uniqids</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>idlookup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -83,9 +118,27 @@
       </function>
       <function name="module_find_id_str">
         <parameters>
-          <par name="module" nr="1"/>
           <par name="uniqid" nr="2"/>
+          <par name="module" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>uniqstrids</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>stridlookup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -98,9 +151,40 @@
       </function>
       <function name="module_get_uniq_id">
         <parameters>
-          <par name="module" nr="1"/>
           <par name="id" nr="2"/>
+          <par name="module" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>uniqids</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>next_uniq_id</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>idlookup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -113,9 +197,40 @@
       </function>
       <function name="module_get_uniq_id_str">
         <parameters>
-          <par name="module" nr="1"/>
           <par name="id" nr="2"/>
+          <par name="module" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>uniqstrids</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>stridlookup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>next_uniq_id</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -128,10 +243,20 @@
       </function>
       <function name="module_register_full">
         <parameters>
-          <par name="name" nr="1"/>
-          <par name="submodule" nr="2"/>
           <par name="defined_module_name" nr="3"/>
+          <par name="submodule" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>modules</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -146,6 +271,24 @@
         <parameters>
           <par name="module" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>stridlookup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>idlookup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -158,6 +301,40 @@
       </function>
       <function name="modules_deinit">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>uniqids</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>uniqstrids</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>stridlookup</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>idlookup</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -182,9 +359,19 @@
       </function>
       <function name="uniq_destroy">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>uniqids</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -197,9 +384,19 @@
       </function>
       <function name="uniq_destroy_str">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>uniqstrids</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -212,9 +409,9 @@
       </function>
       <function name="uniq_get_modules">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="value" nr="2"/>
           <par name="list" nr="3"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>

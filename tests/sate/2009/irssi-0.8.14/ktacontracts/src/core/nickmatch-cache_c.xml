@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-25 00:03:04.004499"/>
-  <cfile name="src/core/nickmatch-cache">
-    <data-structures/>
+  <header time="2018-12-18 15:37:51">
+    <application file="src/core/nickmatch-cache.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="channels"/>
+      <gvar name="lists"/>
+    </global-variables>
     <functions>
       <function name="nickmatch_cache_deinit">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lists</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -47,6 +62,16 @@
         <parameters>
           <par name="rec" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lists</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -61,6 +86,16 @@
         <parameters>
           <par name="func" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lists</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -75,6 +110,16 @@
         <parameters>
           <par name="rec" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>channels</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

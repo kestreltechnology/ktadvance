@@ -1,14 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-25 00:03:04.073949"/>
-  <cfile name="src/core/recode">
-    <data-structures/>
+  <header time="2018-12-18 15:39:32">
+    <application file="src/core/recode.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="mainconfig"/>
+      <gvar name="translit_charset"/>
+    </global-variables>
     <functions>
       <function name="find_conversion">
         <parameters>
-          <par name="server" nr="1"/>
           <par name="target" nr="2"/>
+          <par name="server" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>mainconfig</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache_nodes"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="mainnode"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -61,6 +115,16 @@
       </function>
       <function name="recode_deinit">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>translit_charset</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -73,10 +137,20 @@
       </function>
       <function name="recode_in">
         <parameters>
+          <par name="target" nr="3"/>
           <par name="server" nr="1"/>
           <par name="str" nr="2"/>
-          <par name="target" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>translit_charset</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -101,10 +175,20 @@
       </function>
       <function name="recode_out">
         <parameters>
+          <par name="target" nr="3"/>
           <par name="server" nr="1"/>
           <par name="str" nr="2"/>
-          <par name="target" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>translit_charset</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -117,6 +201,16 @@
       </function>
       <function name="recode_update_charset">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>translit_charset</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

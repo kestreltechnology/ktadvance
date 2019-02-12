@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-25 00:03:02.896218"/>
-  <cfile name="src/core/channels">
-    <data-structures/>
+  <header time="2018-12-18 15:20:33">
+    <application file="src/core/channels.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="channels"/>
+      <gvar name="servers"/>
+    </global-variables>
     <functions>
       <function name="channel_change_name">
         <parameters>
@@ -38,6 +43,16 @@
         <parameters>
           <par name="channel" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>channels</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -53,6 +68,16 @@
           <par name="server" nr="1"/>
           <par name="name" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>servers</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -110,11 +135,21 @@
       <function name="channel_init">
         <parameters>
           <par name="channel" nr="1"/>
-          <par name="server" nr="2"/>
-          <par name="name" nr="3"/>
           <par name="visible_name" nr="4"/>
+          <par name="server" nr="2"/>
           <par name="automatic" nr="5"/>
+          <par name="name" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>channels</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -193,9 +228,9 @@
       </function>
       <function name="match_nick_flags">
         <parameters>
+          <par name="flag" nr="3"/>
           <par name="server" nr="1"/>
           <par name="nick" nr="2"/>
-          <par name="flag" nr="3"/>
         </parameters>
         <postconditions>
           <post>

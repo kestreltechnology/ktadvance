@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-25 00:03:03.680716"/>
-  <cfile name="src/core/log-away">
-    <data-structures/>
+  <header time="2018-12-18 15:29:26">
+    <application file="src/core/log-away.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="away_msgs"/>
+    </global-variables>
     <functions>
       <function name="awaylog_close">
         <parameters/>
@@ -70,6 +74,21 @@
         <parameters>
           <par name="log" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>away_msgs</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

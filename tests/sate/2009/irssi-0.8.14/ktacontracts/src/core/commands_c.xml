@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-25 00:03:03.478584"/>
-  <cfile name="src/core/commands">
-    <data-structures/>
+  <header time="2018-12-18 15:24:32">
+    <application file="src/core/commands.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="alias_runstack"/>
+      <gvar name="commands"/>
+      <gvar name="current_command"/>
+      <gvar name="eval_recursion_depth"/>
+      <gvar name="mainconfig"/>
+    </global-variables>
     <functions>
       <function name="cmd_cd">
         <parameters>
@@ -20,10 +28,25 @@
       </function>
       <function name="cmd_eval">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="server" nr="2"/>
           <par name="item" nr="3"/>
+          <par name="server" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>eval_recursion_depth</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -50,9 +73,9 @@
       </function>
       <function name="cmd_get_params">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="free_me" nr="2"/>
           <par name="count" nr="3"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -109,14 +132,24 @@
       </function>
       <function name="command_bind_full">
         <parameters>
-          <par name="module" nr="1"/>
-          <par name="priority" nr="2"/>
-          <par name="cmd" nr="3"/>
-          <par name="protocol" nr="4"/>
           <par name="category" nr="5"/>
-          <par name="func" nr="6"/>
           <par name="user_data" nr="7"/>
+          <par name="cmd" nr="3"/>
+          <par name="priority" nr="2"/>
+          <par name="func" nr="6"/>
+          <par name="protocol" nr="4"/>
+          <par name="module" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>commands</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -129,8 +162,8 @@
       </function>
       <function name="command_calc_options">
         <parameters>
-          <par name="rec" nr="1"/>
           <par name="options" nr="2"/>
+          <par name="rec" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -174,6 +207,16 @@
         <parameters>
           <par name="rec" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>commands</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -215,8 +258,8 @@
       </function>
       <function name="command_module_destroy">
         <parameters>
-          <par name="rec" nr="1"/>
           <par name="modrec" nr="2"/>
+          <par name="rec" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -245,8 +288,8 @@
       </function>
       <function name="command_module_find_and_remove">
         <parameters>
-          <par name="rec" nr="1"/>
           <par name="func" nr="2"/>
+          <par name="rec" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -276,8 +319,8 @@
       <function name="command_module_get">
         <parameters>
           <par name="rec" nr="1"/>
-          <par name="module" nr="2"/>
           <par name="protocol" nr="3"/>
+          <par name="module" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -291,9 +334,19 @@
       </function>
       <function name="command_module_unbind_all">
         <parameters>
-          <par name="rec" nr="1"/>
           <par name="modrec" nr="2"/>
+          <par name="rec" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>commands</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -306,10 +359,10 @@
       </function>
       <function name="command_runsub">
         <parameters>
-          <par name="cmd" nr="1"/>
-          <par name="data" nr="2"/>
-          <par name="server" nr="3"/>
           <par name="item" nr="4"/>
+          <par name="cmd" nr="1"/>
+          <par name="server" nr="3"/>
+          <par name="data" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -323,9 +376,9 @@
       </function>
       <function name="command_set_options_module">
         <parameters>
-          <par name="module" nr="1"/>
           <par name="cmd" nr="2"/>
           <par name="options" nr="3"/>
+          <par name="module" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -339,9 +392,9 @@
       </function>
       <function name="command_unbind_full">
         <parameters>
+          <par name="user_data" nr="3"/>
           <par name="cmd" nr="1"/>
           <par name="func" nr="2"/>
-          <par name="user_data" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -369,6 +422,16 @@
       </function>
       <function name="commands_deinit">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>current_command</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -407,9 +470,9 @@
       </function>
       <function name="event_command">
         <parameters>
+          <par name="item" nr="3"/>
           <par name="line" nr="1"/>
           <par name="server" nr="2"/>
-          <par name="item" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -423,9 +486,9 @@
       </function>
       <function name="get_cmd_options">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="ignore_unknown" nr="2"/>
           <par name="cmd" nr="3"/>
+          <par name="data" nr="1"/>
           <par name="options" nr="4"/>
         </parameters>
         <postconditions>
@@ -440,9 +503,9 @@
       </function>
       <function name="get_optional_channel">
         <parameters>
+          <par name="require_name" nr="3"/>
           <par name="active_item" nr="1"/>
           <par name="data" nr="2"/>
-          <par name="require_name" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -471,8 +534,8 @@
       </function>
       <function name="optlist_find">
         <parameters>
-          <par name="optlist" nr="1"/>
           <par name="option" nr="2"/>
+          <par name="optlist" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -486,11 +549,76 @@
       </function>
       <function name="parse_command">
         <parameters>
+          <par name="item" nr="4"/>
+          <par name="server" nr="3"/>
           <par name="command" nr="1"/>
           <par name="expand_aliases" nr="2"/>
-          <par name="server" nr="3"/>
-          <par name="item" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>current_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>mainconfig</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>alias_runstack</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache_nodes"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="mainnode"/>
+                  </addressed-value>
+                  <ci>mainconfig</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
