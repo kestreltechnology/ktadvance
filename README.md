@@ -69,9 +69,7 @@ directory, as follows:
 - **zitser**: scripts to analyze and report on the test cases in
      ```tests/sard/zitser```
 - **juliet**: scripts to analyze and report on sets of test cases in
-     ```tests/sard/juliet-1.2``` or ```tests/sard/juliet-1.3```
-- **svcomp**: scripts to analyze and report on sets of test cases in
-     ```tests/svcomp/c```
+     ```tests/sard/juliet-1.3``` ([quickstart instructions](advance/cmdline/juliet/README.md))
 
 The remaining two subdirectories in the ```advance/cmdline``` directory
 contain scripts that can be used to parse, analyze, and
