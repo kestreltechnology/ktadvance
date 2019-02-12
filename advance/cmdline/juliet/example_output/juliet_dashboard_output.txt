@@ -1,0 +1,691 @@
+
+
+Summary
+
+
+test                                             violations                     safe-controls
+                                           V    S    D    U    O          S    D    X    U    O
+-------------------------------------------------------------------------------------------------------
+
+CWE121
+s01/char_type_overrun_memcpy              54    0    0    0    0   |     96    0    0    0    0
+s01/char_type_overrun_memmove             54    0    0    0    0   |     96    0    0    0    0
+s01/CWE129_connect_socket                 33    0    2    3    0   |    104    0    0    3    0
+s01/CWE129_fgets                          33    0    2    3    0   |    104    0    0    3    0
+s01/CWE129_fscanf                         35    0    0    3    0   |    104    0    0    3    0
+s01/CWE129_large                          32    0    0    6    0   |     69    0   33    3    0
+s01/CWE129_listen_socket                  33    0    2    3    0   |    104    0    0    3    0
+s01/CWE129_rand                            2    0   11   25    0   |    102    0    0    3    0
+s01/CWE131_loop                           33    0    0    5    0   |     39    0    0    8    0
+s01/CWE131_memcpy                         33    0    0    5    0   |     41    0    0    6    0
+s01/CWE135                                 0    0    0   38    0   |      0    0    0  107    0
+s01/CWE193_char_alloca_cpy                 4    0    0   34    0   |      0    0    0   47    0
+s02/CWE193_char_alloca_loop               32    0    0    6    0   |     39    0    0    7    1
+s02/CWE193_char_alloca_memcpy             33    0    0    5    0   |     41    0    0    6    0
+s02/CWE193_char_alloca_ncpy               33    0    0    5    0   |     41    0    0    6    0
+s02/CWE193_char_declare_cpy                4    0    0   34    0   |      0    0    0   47    0
+s02/CWE193_char_declare_memcpy            32    0    0    6    0   |     41    0    0    6    0
+s02/CWE193_char_declare_memmove           32    0    0    6    0   |     41    0    0    6    0
+s02/CWE193_char_declare_ncpy              32    0    0    6    0   |     41    0    0    6    0
+s02/CWE193_char_declare_loop              32    0    0    6    0   |     41    0    0    6    0
+s03/CWE805_char_alloca_loop               33    0    0    5    0   |     41    0    0    6    0
+s03/CWE805_char_alloca_memcpy             33    0    0    5    0   |     41    0    0    6    0
+s03/CWE805_char_alloca_memmove            33    0    0    5    0   |     41    0    0    6    0
+s03/CWE805_char_alloca_ncat                4    0    0   34    0   |      0    0    0   47    0
+s03/CWE805_char_alloca_ncpy               33    0    0    5    0   |     41    0    0    6    0
+s03/CWE805_char_alloca_snprintf           33    0    0    5    0   |     41    0    0    6    0
+s03/CWE805_char_declare_loop              60    0    0   12    0   |     81    0    0   12    0
+s03/CWE805_char_declare_memcpy            60    0    0   12    0   |     82    0    0   12    0
+s03/CWE805_char_declare_memmove           60    0    0   12    0   |     82    0    0   12    0
+s03/CWE805_char_declare_ncat               4    0    0   34    0   |      0    0    0   47    0
+s03/CWE805_char_declare_ncpy              60    0    0   12    0   |     82    0    0   12    0
+s04/CWE805_char_declare_snprintf          32    0    0    6    0   |     41    0    0    6    0
+s04/CWE805_int64_t_alloca_loop            33    0    0    5    0   |     41    0    0    6    0
+s04/CWE805_int64_t_alloca_memcpy          33    0    0    5    0   |     41    0    0    6    0
+s04/CWE805_int64_t_alloca_memmove         33    0    0    5    0   |     41    0    0    6    0
+s04/CWE805_int64_t_declare_loop           32    0    0    6    0   |     41    0    0    6    0
+s04/CWE805_int64_t_declare_memcpy         32    0    0    6    0   |     41    0    0    6    0
+s04/CWE805_int64_t_declare_memmove        32    0    0    6    0   |     41    0    0    6    0
+s04/CWE805_int_alloca_loop                33    0    0    5    0   |     41    0    0    6    0
+s04/CWE805_int_alloca_memcpy              33    0    0    5    0   |     41    0    0    6    0
+s04/CWE805_int_alloca_memmove             33    0    0    5    0   |     41    0    0    6    0
+s04/CWE805_int_declare_loop               32    0    0    6    0   |     41    0    0    6    0
+s04/CWE805_int_declare_memcpy             26    0    0    8    0   |     39    0    0    8    0
+s04/CWE805_int_declare_memmove            26    0    0    8    0   |     39    0    0    8    0
+s04/CWE805_struct_alloca_loop             27    0    0    7    0   |     39    0    0    8    0
+s04/CWE805_struct_alloca_memcpy           27    0    0    7    0   |     39    0    0    8    0
+s05/CWE805_struct_alloca_memmove          27    0    0    7    0   |     39    0    0    8    0
+s05/CWE805_struct_declare_loop            26    0    0    8    0   |     39    0    0    8    0
+s05/CWE805_struct_declare_memcpy          26    0    0    8    0   |     39    0    0    8    0
+s05/CWE805_struct_declare_memmove         26    0    0    8    0   |     39    0    0    8    0
+s06/CWE806_char_alloca_loop                0    0    0   38    0   |      0    0    0   53    0
+s06/CWE806_char_alloca_memcpy              0    0    0   38    0   |      0    0    0   53    0
+s06/CWE806_char_alloca_memmove             0    0    0   38    0   |      0    0    0   53    0
+s06/CWE806_char_alloca_ncat                0    0    0   38    0   |      0    0    0   53    0
+s06/CWE806_char_alloca_ncpy                0    0    0   38    0   |      0    0    0   53    0
+s06/CWE806_char_alloca_snprintf            0    0    0   38    0   |      0    0    0   53    0
+s06/CWE806_char_declare_loop               0    0    0   38    0   |      0    0    0   53    0
+s06/CWE806_char_declare_memcpy            20    0    0   18    0   |      0    0    0   20   33
+s06/CWE806_char_declare_memmove           20    0    0   18    0   |      0    0    0   20   33
+s06/CWE806_char_declare_ncat               0    0    0   38    0   |      0    0    0   53    0
+s06/CWE806_char_declare_ncpy              20    0    0   18    0   |      0    0    0   20   33
+s07/CWE806_char_declare_snprintf          20    0    0   18    0   |      0    0    0   20   33
+-------------------------------------------------------------------------------------------------------
+total                                   1638    0   17  837    0   |   2439    0   33 1082  133
+
+CWE122
+s01/char_type_overrun_memcpy              54    0    0    0    0   |     99    0    0    0    0
+s01/char_type_overrun_memmove             54    0    0    0    0   |     99    0    0    0    0
+s05/CWE131_loop                           31    0    0    7    0   |     43    0    0   10    0
+s05/CWE131_memcpy                         30    0    0    8    0   |     44    0    0    9    0
+s06/CWE131_memmove                        28    0    0   10    0   |     40    0    0   13    0
+s06/CWE135                                 0    0    0   39    0   |      0    0    0  106    0
+s06/c_CWE129_connect_socket               22    0   13    3    0   |    102    2    0    3    0
+s06/c_CWE129_fgets                        22    0   13    3    0   |    101    2    0    3    0
+s06/c_CWE129_fscanf                       11    0    2   25    0   |     98    2    0    7    0
+s06/c_CWE129_large                        33    0    2    3    0   |     71    2   31    3    0
+s06/c_CWE129_listen_socket                22    0   13    3    0   |    102    2    0    3    0
+s06/c_CWE129_rand                          2    0   13   23    0   |    102    2    0    3    0
+s06/c_CWE193_char_cpy                      0    0    0   38    0   |      0    0    0   53    0
+s06/c_CWE193_char_loop                    27    0    0   11    0   |     37    0    0   16    0
+s06/c_CWE193_char_memcpy                  27    0    0   11    0   |     39    0    0   14    0
+s07/c_CWE193_char_memmove                 27    0    0   11    0   |     39    0    0   14    0
+s07/c_CWE193_char_ncpy                    27    0    0   11    0   |     39    0    0   14    0
+s07/c_CWE805_char_loop                    58    0    0   18    0   |     78    0    0   28    0
+s07/c_CWE805_char_memcpy                  56    0    0   20    0   |     76    0    0   30    0
+s07/c_CWE805_char_memmove                 56    0    0   20    0   |     76    0    0   30    0
+s07/c_CWE805_char_ncat                     0    0    0   38    0   |      0    0    0   53    0
+s07/c_CWE805_char_ncpy                    56    0    0   20    0   |     76    0    0   30    0
+s08/c_CWE805_char_snprintf                28    0    0   10    0   |     38    0    0   15    0
+s08/c_CWE805_int64_t_loop                 28    0    0   10    0   |     38    0    0   15    0
+s08/c_CWE805_int64_t_memcpy               28    0    0   10    0   |     38    0    0   15    0
+s08/c_CWE805_int64_t_memmove              28    0    0   10    0   |     38    0    0   15    0
+s08/c_CWE805_int_loop                     28    0    0   10    0   |     38    0    0   15    0
+s08/c_CWE805_int_memcpy                   28    0    0   10    0   |     38    0    0   15    0
+s08/c_CWE805_int_memmove                  28    0    0   10    0   |     38    0    0   15    0
+s08/c_CWE805_struct_loop                  28    0    0   10    0   |     38    0    0   15    0
+s08/c_CWE805_struct_memcpy                28    0    0   10    0   |     38    0    0   15    0
+s08/c_CWE805_struct_memmove               28    0    0   10    0   |     38    0    0   15    0
+s09/c_CWE806_char_loop                     0    0    0   38    0   |      0    0    0   53    0
+s09/c_CWE806_char_memcpy                   0    0    0   38    0   |      0    0    0   53    0
+s09/c_CWE806_char_memmove                  0    0    0   38    0   |      0    0    0   53    0
+s09/c_CWE806_char_ncat                     0    0    0   38    0   |      0    0    0   53    0
+s09/c_CWE806_char_ncpy                     0    0    0   38    0   |      0    0    0   53    0
+s09/c_CWE806_char_snprintf                 0    0    0   38    0   |      0    0    0   53    0
+s10/c_dest_char_cat                        0    0    0   38    0   |      0    0    0   53    0
+s10/c_dest_char_cpy                        0    0    0   38    0   |      0    0    0   53    0
+s10/c_src_char_cat                         0    0    0   38    0   |      0    0    0   53    0
+s10/c_src_char_cpy                         0    0    0   38    0   |      0    0    0   53    0
+s11/sizeof_double                          0   38    0    0    0   |     55    0    0    0    0
+s11/sizeof_int64_t                         0   38    0    0    0   |     55    0    0    0    0
+s11/sizeof_struct                          0   38    0    0    0   |     57    0    0    0    0
+-------------------------------------------------------------------------------------------------------
+total                                    923  114   56  802    0   |   1908   12   31 1122    0
+
+CWE123
+connect_socket                            18    0    0   20    0   |     31    0    0   22    0
+fgets                                     25    0    0   13    0   |     33    0    0   20    0
+listen_socket                             18    0    0   20    0   |     33    0    0   20    0
+-------------------------------------------------------------------------------------------------------
+total                                     61    0    0   53    0   |     97    0    0   62    0
+
+CWE124
+s01/char_alloca_cpy                       84    0    0   12    0   |     41    0    0    6    0
+s01/char_alloca_loop                      62    0    0    3    0   |     47    0    0    0    0
+s01/char_alloca_memcpy                    34    0    0    0    0   |     41    0    0    6    0
+s01/char_alloca_memmove                   34    0    0    0    0   |     41    0    0    6    0
+s01/char_alloca_ncpy                      34    0    0    0    0   |     41    0    0    6    0
+s01/char_declare_cpy                      78    0    0   12    0   |     41    0    0    6    0
+s01/char_declare_loop                     34    0    0    0    0   |     47    0    0    0    0
+s01/char_declare_memcpy                   34    0    0    0    0   |     41    0    0    6    0
+s01/char_declare_memmove                  34    0    0    0    0   |     41    0    0    6    0
+s01/char_declare_ncpy                     34    0    0    0    0   |     40    0    0    7    0
+s01/CWE839_connect_socket                 32    0    2    4    0   |    101    0    0    6    0
+s01/CWE839_fgets                          32    0    2    4    0   |    101    0    0    6    0
+s01/CWE839_fscanf                         34    0    0    4    0   |    100    0    0    7    0
+s01/CWE839_listen_socket                  32    0    2    4    0   |    101    0    0    6    0
+s02/CWE839_negative                       34    0    0    4    0   |     67    0   34    6    0
+s02/CWE839_rand                            2    0   13   23    0   |    101    0    0    6    0
+s02/malloc_char_cpy                       38    0    0    0    0   |     50    0    0    3    0
+s02/malloc_char_loop                      38    0    0    0    0   |     53    0    0    0    0
+s02/malloc_char_memcpy                    38    0    0    0    0   |     50    0    0    3    0
+s02/malloc_char_memmove                   38    0    0    0    0   |     50    0    0    3    0
+s02/malloc_char_ncpy                      38    0    0    0    0   |     50    0    0    3    0
+-------------------------------------------------------------------------------------------------------
+total                                    818    0   19   70    0   |   1245    0   34   98    0
+
+CWE126
+s01/char_alloca_loop                      27    0    0    7    0   |     39    0    0    8    0
+s01/char_alloca_memcpy                    25    0    0    6    0   |     37    0    0    7    0
+s01/char_alloca_memmove                   25    0    0    6    0   |     37    0    0    7    0
+s01/char_declare_loop                     26    0    0    8    0   |     39    0    0    8    0
+s01/char_declare_memcpy                   24    0    0    7    0   |     37    0    0    7    0
+s01/char_declare_memmove                  24    0    0    7    0   |     37    0    0    7    0
+s01/CWE129_connect_socket                 33    0    2    3    0   |    104    0    0    3    0
+s01/CWE129_fgets                          33    0    0    5    0   |    102    0    0    5    0
+s01/CWE129_fscanf                         31    0    0    7    0   |    100    0    0    7    0
+s01/CWE129_large                          32    0    0    6    0   |     71    0   33    3    0
+s01/CWE129_listen_socket                  33    0    2    3    0   |    104    0    0    3    0
+s01/CWE129_rand                            2    0   11   25    0   |    102    0    0    5    0
+s01/CWE170_char_loop                       0    0    0   36    0   |      0    0    0   66    0
+s01/CWE170_char_memcpy                     0    0    0   36    0   |      0    0    0   66    0
+s01/CWE170_char_strncpy                    0    0    0   36    0   |      0    0    0   66    0
+s02/malloc_char_loop                      28    0    1    9    0   |     38    1    0   14    0
+s02/malloc_char_memcpy                    28    0    1    9    0   |     40    1    0   12    0
+s02/malloc_char_memmove                   28    0    1    9    0   |     38    1    0   14    0
+-------------------------------------------------------------------------------------------------------
+total                                    399    0   18  225    0   |    925    3   33  308    0
+
+CWE127
+s01/char_alloca_cpy                       65    0    0    6    0   |     41    0    0    6    0
+s01/char_alloca_loop                      34    0    0    0    0   |     47    0    0    0    0
+s01/char_alloca_memcpy                    34    0    0    0    0   |     41    0    0    6    0
+s01/char_alloca_memmove                   34    0    0    0    0   |     41    0    0    6    0
+s01/char_alloca_ncpy                      34    0    0    0    0   |     41    0    0    6    0
+s01/char_declare_cpy                      34    0    0    0    0   |     40    0    0    6    0
+s01/char_declare_loop                     34    0    0    0    0   |     47    0    0    0    0
+s01/char_declare_memcpy                   34    0    0    0    0   |     41    0    0    6    0
+s01/char_declare_memmove                  34    0    0    0    0   |     41    0    0    6    0
+s01/char_declare_ncpy                     34    0    0    0    0   |     41    0    0    6    0
+s01/CWE839_connect_socket                 30    0    0    8    0   |     97    0    0   10    0
+s01/CWE839_fgets                          30    0    0    8    0   |     97    0    0   10    0
+s01/CWE839_fscanf                         30    0    0    8    0   |     97    0    0   10    0
+s01/CWE839_listen_socket                  32    0    0    6    0   |     99    0    0    8    0
+s02/CWE839_negative                       30    0    0    8    0   |     63    0   34   10    0
+s02/CWE839_rand                            0    0   11   27    0   |     97    0    0   10    0
+s02/malloc_char_cpy                       38    0    0    0    0   |     50    0    0    3    0
+s02/malloc_char_loop                      38    0    0    0    0   |     53    0    0    0    0
+s02/malloc_char_memcpy                    38    0    0    0    0   |     50    0    0    3    0
+s02/malloc_char_memmove                   38    0    0    0    0   |     50    0    0    3    0
+s02/malloc_char_ncpy                      38    0    0    0    0   |     50    0    0    3    0
+-------------------------------------------------------------------------------------------------------
+total                                    713    0   11   71    0   |   1224    0   34  118    0
+
+CWE134
+s01/char_connect_socket_fprintf            0    0    0   76    0   |    108    0    0  104    0
+s01/char_connect_socket_printf             0    0    0   76    0   |    108    0    0  104    0
+s01/char_connect_socket_snprintf           0    0    0   76    0   |    108    0    0  104    0
+s01/char_connect_socket_vfprintf           0    0    0   76    0   |    106    0    0  102    0
+s01/char_connect_socket_vprintf            0    0    0   76    0   |    106    0    0  102    0
+s01/char_console_fprintf                   0    0    0   76    0   |    108    0    0  104    0
+s01/char_console_printf                    0    0    0   76    0   |    108    0    0  104    0
+s01/char_console_snprintf                  0    0    0   76    0   |    108    0    0  104    0
+s01/char_console_vfprintf                  0    0    0   76    0   |    106    0    0  102    0
+s01/char_console_vprintf                   0    0    0   76    0   |    106    0    0  102    0
+s02/char_environment_fprintf               0    0    0   76    0   |    108    0    0  104    0
+s02/char_environment_printf                0    0    0   76    0   |    108    0    0  104    0
+s02/char_environment_snprintf              0    0    0   76    0   |    108    0    0  104    0
+s02/char_environment_vfprintf              0    0    0   76    0   |    106    0    0  102    0
+s02/char_environment_vprintf               0    0    0   76    0   |    106    0    0  102    0
+s02/char_file_fprintf                      0    0    0   76    0   |    108    0    0  104    0
+s02/char_file_printf                       0    0    0   76    0   |    108    0    0  104    0
+s02/char_file_snprintf                     0    0    0   76    0   |    108    0    0  104    0
+s02/char_file_vfprintf                     0    0    0   76    0   |    106    0    0  102    0
+s03/char_file_vprintf                      0    0    0   76    0   |    106    0    0  102    0
+s03/char_listen_socket_fprintf             0    0    0   76    0   |    108    0    0  104    0
+s03/char_listen_socket_printf              0    0    0   76    0   |    108    0    0  104    0
+s03/char_listen_socket_snprintf            0    0    0   76    0   |    108    0    0  104    0
+s03/char_listen_socket_vfprintf            0    0    0   76    0   |    106    0    0  102    0
+s03/char_listen_socket_vprintf             0    0    0   76    0   |    106    0    0  102    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    0 1900    0   |   2680    0    0 2580    0
+
+CWE188
+modify_local                               0   36    0   18    0   |      0    0    0    0    0
+union                                      0    0    0    0    0   |      0    0    0    0    0
+-------------------------------------------------------------------------------------------------------
+total                                      0   36    0   18    0   |      0    0    0    0    0
+
+CWE190
+s01/char_fscanf_add                       32    0    0    6    0   |    104    0    0    3    0
+s01/char_fscanf_multiply                  32    0    0    6    0   |    104    0    0    3    0
+s01/char_fscanf_square                     0    0    0   38    0   |     32    0    0   75    0
+s01/char_max_add                          32    0    0    6    0   |     73    0   31    3    0
+s01/char_max_multiply                     32    0    0    6    0   |     73    0   31    3    0
+s01/char_max_square                       21    0    0   17    0   |     32    0    0   41   34
+s01/char_rand_add                          2    0   13   23    0   |    104    0    0    3    0
+s01/char_rand_multiply                     2    0   11   25    0   |    102    0    0    5    0
+s01/char_rand_square                       0    0    0   38    0   |     31    0    0   76    0
+s01/int64_t_fscanf_add                    35    0    0    3    0   |    103    0    0    4    0
+s01/int64_t_fscanf_multiply               31    0    0    7    0   |    102    0    0    5    0
+s02/int64_t_fscanf_square                 33    0    0    5    0   |     47    0    0   18   42
+s02/int64_t_max_add                       32    0    0    6    0   |     73    0   31    3    0
+s02/int64_t_max_multiply                  32    0    0    6    0   |     73    0   31    3    0
+s02/int64_t_max_square                    30    0    0    8    0   |     47    0    0   16   44
+s02/int64_t_rand_add                       2    0   13   23    0   |    104    0    0    3    0
+s02/int64_t_rand_multiply                  2    0   11   25    0   |    102    0    0    5    0
+s02/int64_t_rand_square                    2    0   11   25    0   |     47   13    0   47    0
+s02/int_connect_socket_add                33    0    2    3    0   |    104    0    0    3    0
+s02/int_connect_socket_multiply           14    0    2   22    0   |    104    0    0    3    0
+s02/int_connect_socket_square             33    0    0    5    0   |     47    0    0    7   53
+s02/int_fgets_add                         33    0    2    3    0   |    104    0    0    3    0
+s03/int_fgets_multiply                    14    0    0   24    0   |    102    0    0    5    0
+s03/int_fgets_square                      33    0    0    5    0   |     47    0    0    7   53
+s03/int_fscanf_add                        35    0    0    3    0   |    104    0    0    3    0
+s03/int_fscanf_multiply                   31    0    0    7    0   |    102    0    0    5    0
+s03/int_fscanf_square                     33    0    0    5    0   |     47    0    0    7   53
+s03/int_listen_socket_add                 33    0    2    3    0   |    104    0    0    3    0
+s03/int_listen_socket_multiply            14    0    2   22    0   |    104    0    0    3    0
+s03/int_listen_socket_square              33    0    0    5    0   |     47    0    0    7   53
+s03/int_max_add                           30    0    0    8    0   |     71    0   31    5    0
+s03/int_max_multiply                      30    0    0    8    0   |     71    0   31    5    0
+s03/int_max_square                        30    0    0    8    0   |     47    0    0   11   49
+s04/int_rand_add                           2    0   13   23    0   |    104    0    0    3    0
+s04/int_rand_multiply                      2    0   13   23    0   |    104    0    0    3    0
+s04/int_rand_square                        2    0   11   25    0   |     47   13    0    7   40
+s04/short_fscanf_add                      32    0    0    6    0   |    104    0    0    3    0
+s04/short_fscanf_multiply                 32    0    0    6    0   |    104    0    0    3    0
+s04/short_fscanf_square                    0    0    0   38    0   |     36    0    0   71    0
+s04/short_max_add                         32    0    0    6    0   |     73    0   31    3    0
+s04/short_max_multiply                    32    0    0    6    0   |     72    0   31    4    0
+s04/short_max_square                      17    0    0   21    0   |     34    0    0   42   31
+s04/short_rand_add                         2    0   13   23    0   |    104    0    0    3    0
+s04/short_rand_multiply                    2    0   13   23    0   |    104    0    0    3    0
+s05/short_rand_square                      0    0    0   38    0   |     36    0    0   71    0
+s05/unsigned_int_fscanf_add               35    0    0    3    0   |    104    0    0    3    0
+s05/unsigned_int_fscanf_multiply          33    0    0    5    0   |    104    0    0    3    0
+s05/unsigned_int_fscanf_square            33    0    0    5    0   |     47    0    0   12   48
+s05/unsigned_int_max_add                  32    0    0    6    0   |     73    0   31    3    0
+s05/unsigned_int_max_multiply             31    0    0    7    0   |     72    0   31    4    0
+s05/unsigned_int_max_square               30    0    0    8    0   |     47    0    0   16   44
+s05/unsigned_int_rand_add                  2    0   13   23    0   |    104    0    0    3    0
+s05/unsigned_int_rand_multiply             2    0   13   23    0   |    104    0    0    3    0
+s05/unsigned_int_rand_square               2    0   11   25    0   |     47   13    0   47    0
+s06/char_fscanf_postinc                   32    0    0    6    0   |    103    0    0    4    0
+s06/char_max_postinc                      32    0    0    6    0   |     71    0   31    5    0
+s06/char_rand_postinc                      2    0   13   23    0   |    103    0    0    4    0
+s06/int64_t_fscanf_postinc                34    0    0    4    0   |    103    0    0    4    0
+s06/int64_t_max_postinc                   32    0    0    6    0   |     72    0   31    4    0
+s06/int64_t_rand_postinc                   2    0   13   23    0   |    103    0    0    4    0
+s06/int_connect_socket_postinc            32    0    2    4    0   |    103    0    0    4    0
+s06/int_fgets_postinc                     32    0    2    4    0   |    103    0    0    4    0
+s06/int_fscanf_postinc                    34    0    0    4    0   |    103    0    0    4    0
+s06/int_listen_socket_postinc             32    0    2    4    0   |    103    0    0    4    0
+s06/int_max_postinc                       32    0    0    6    0   |     72    0   31    4    0
+s06/int_rand_postinc                       2    0   13   23    0   |    103    0    0    4    0
+s06/short_fscanf_postinc                  32    0    0    6    0   |    103    0    0    4    0
+s06/short_max_postinc                     32    0    0    6    0   |     72    0   31    4    0
+s06/short_rand_postinc                     2    0   13   23    0   |    103    0    0    4    0
+s06/unsigned_int_fscanf_postinc           34    0    0    4    0   |    103    0    0    4    0
+s06/unsigned_int_max_postinc              32    0    0    6    0   |     72    0   31    4    0
+s06/unsigned_int_rand_postinc              2    0   13   23    0   |    103    0    0    4    0
+s07/char_fscanf_preinc                    32    0    0    6    0   |    103    0    0    4    0
+s07/char_max_preinc                       32    0    0    6    0   |     72    0   31    4    0
+s07/char_rand_preinc                       2    0   13   23    0   |    103    0    0    4    0
+s07/int64_t_fscanf_preinc                 34    0    0    4    0   |    103    0    0    4    0
+s07/int64_t_max_preinc                    32    0    0    6    0   |     72    0   31    4    0
+s07/int64_t_rand_preinc                    2    0   13   23    0   |    103    0    0    4    0
+s07/int_connect_socket_preinc             32    0    2    4    0   |    103    0    0    4    0
+s07/int_fgets_preinc                      32    0    2    4    0   |    103    0    0    4    0
+s07/int_fscanf_preinc                     34    0    0    4    0   |    103    0    0    4    0
+s07/int_listen_socket_preinc              32    0    2    4    0   |    103    0    0    4    0
+s07/int_max_preinc                        32    0    0    6    0   |     72    0   31    4    0
+s07/int_rand_preinc                        2    0   12   24    0   |    103    0    0    4    0
+s07/short_fscanf_preinc                   32    0    0    6    0   |    103    0    0    4    0
+s07/short_max_preinc                      32    0    0    6    0   |     72    0   31    4    0
+s07/short_rand_preinc                      2    0   13   23    0   |    103    0    0    4    0
+s07/unsigned_int_fscanf_preinc            34    0    0    4    0   |    103    0    0    4    0
+s07/unsigned_int_max_preinc               32    0    0    6    0   |     72    0   31    4    0
+s07/unsigned_int_rand_preinc               2    0   13   23    0   |    103    0    0    4    0
+-------------------------------------------------------------------------------------------------------
+total                                   2000    0  310 1110    0   |   7579   39  620  848  544
+
+CWE191
+s01/char_fscanf_multiply                  32    0    0    6    0   |    104    0    0    3    0
+s01/char_fscanf_sub                       32    0    0    6    0   |    104    0    0    3    0
+s01/char_min_multiply                     32    0    0    6    0   |     71    0   33    3    0
+s01/char_min_sub                          32    0    0    6    0   |     73    0   31    3    0
+s01/char_rand_multiply                     2    0   13   23    0   |    102    0    2    3    0
+s01/char_rand_sub                          2    0   13   23    0   |    104    0    0    3    0
+s01/int64_t_fscanf_multiply               33    0    0    5    0   |    104    0    0    3    0
+s01/int64_t_fscanf_sub                    33    0    0    5    0   |    102    0    0    5    0
+s01/int64_t_min_multiply                  32    0    0    6    0   |     73    0   31    3    0
+s01/int64_t_min_sub                       32    0    0    6    0   |     73    0   31    3    0
+s01/int64_t_rand_multiply                  2    0   13   23    0   |    102    0    0    5    0
+s02/int64_t_rand_sub                       2    0   13   23    0   |    104    0    0    3    0
+s02/int_connect_socket_multiply           14    0    2   22    0   |    104    0    0    3    0
+s02/int_connect_socket_sub                33    0    2    3    0   |    104    0    0    3    0
+s02/int_fgets_multiply                    12    0    0   26    0   |    100    0    0    7    0
+s02/int_fgets_sub                         31    0    0    7    0   |    101    0    0    6    0
+s02/int_fscanf_multiply                   29    0    0    9    0   |    101    0    0    6    0
+s02/int_fscanf_sub                        31    0    0    7    0   |    101    0    0    6    0
+s02/int_listen_socket_multiply            12    0    0   26    0   |    101    0    0    6    0
+s02/int_listen_socket_sub                 31    0    0    7    0   |    101    0    0    6    0
+s02/int_min_multiply                      29    0    0    9    0   |     70    0   31    6    0
+s02/int_min_sub                           29    0    0    9    0   |     70    0   31    6    0
+s03/int_rand_multiply                      0    0   11   27    0   |    101    0    0    6    0
+s03/int_rand_sub                           0    0   11   27    0   |    100    0    0    7    0
+s03/short_fscanf_multiply                 28    0    0   10    0   |    100    0    0    7    0
+s03/short_fscanf_sub                      28    0    0   10    0   |    100    0    0    7    0
+s03/short_min_multiply                    28    0    0   10    0   |     69    0   31    7    0
+s03/short_min_sub                         28    0    0   10    0   |     69    0   31    7    0
+s03/short_rand_multiply                    0    0   11   27    0   |    100    0    0    7    0
+s03/short_rand_sub                         0    0   11   27    0   |    100    0    0    7    0
+s03/unsigned_int_fscanf_sub               31    0    0    7    0   |     97    0    0   10    0
+s03/unsigned_int_min_sub                  30    0    0    8    0   |     63    0   34   10    0
+s03/unsigned_int_rand_sub                  0    0   11   27    0   |     97    0    0   10    0
+s04/char_fscanf_postdec                   28    0    0   10    0   |     99    0    0    8    0
+s04/char_min_postdec                      28    0    0   10    0   |     68    0   31    8    0
+s04/char_rand_postdec                      0    0   11   27    0   |     99    0    0    8    0
+s04/int64_t_fscanf_postdec                30    0    0    8    0   |     99    0    0    8    0
+s04/int64_t_min_postdec                   28    0    0   10    0   |     68    0   31    8    0
+s04/int64_t_rand_postdec                   0    0   11   27    0   |     99    0    0    8    0
+s04/int_connect_socket_postdec            30    0    0    8    0   |     99    0    0    8    0
+s04/int_fgets_postdec                     30    0    0    8    0   |     99    0    0    8    0
+s04/int_fscanf_postdec                    30    0    0    8    0   |     99    0    0    8    0
+s04/int_listen_socket_postdec             30    0    0    8    0   |     99    0    0    8    0
+s04/int_min_postdec                       28    0    0   10    0   |     68    0   31    8    0
+s04/int_rand_postdec                       0    0   11   27    0   |     99    0    0    8    0
+s04/short_fscanf_postdec                  28    0    0   10    0   |     99    0    0    8    0
+s04/short_min_postdec                     28    0    0   10    0   |     68    0   31    8    0
+s04/short_rand_postdec                     0    0   11   27    0   |     99    0    0    8    0
+s04/unsigned_int_fscanf_postdec           30    0    0    8    0   |     97    0    0   10    0
+s04/unsigned_int_min_postdec              30    0    0    8    0   |     63    0   34   10    0
+s04/unsigned_int_rand_postdec              0    0   11   27    0   |     97    0    0   10    0
+s05/char_fscanf_predec                    28    0    0   10    0   |     99    0    0    8    0
+s05/char_min_predec                       28    0    0   10    0   |     68    0   31    8    0
+s05/char_rand_predec                       0    0   11   27    0   |     99    0    0    8    0
+s05/int64_t_fscanf_predec                 30    0    0    8    0   |     99    0    0    8    0
+s05/int64_t_min_predec                    28    0    0   10    0   |     68    0   31    8    0
+s05/int64_t_rand_predec                    0    0   11   27    0   |     99    0    0    8    0
+s05/int_connect_socket_predec             30    0    0    8    0   |     99    0    0    8    0
+s05/int_fgets_predec                      30    0    0    8    0   |     99    0    0    8    0
+s05/int_fscanf_predec                     30    0    0    8    0   |     99    0    0    8    0
+s05/int_listen_socket_predec              30    0    0    8    0   |     99    0    0    8    0
+s05/int_min_predec                        28    0    0   10    0   |     68    0   31    8    0
+s05/int_rand_predec                        0    0   11   27    0   |     99    0    0    8    0
+s05/short_fscanf_predec                   28    0    0   10    0   |     99    0    0    8    0
+s05/short_min_predec                      28    0    0   10    0   |     68    0   31    8    0
+s05/short_rand_predec                      0    0   11   27    0   |     99    0    0    8    0
+s05/unsigned_int_fscanf_predec            30    0    0    8    0   |     97    0    0   10    0
+s05/unsigned_int_min_predec               30    0    0    8    0   |     63    0   34   10    0
+s05/unsigned_int_rand_predec               0    0   11   27    0   |     97    0    0   10    0
+-------------------------------------------------------------------------------------------------------
+total                                   1446    0  221  955    0   |   6301    0  602  480    0
+
+CWE194
+s01/connect_socket_malloc                  0    0   18  134    0   |    111    0    0  101    0
+s01/connect_socket_memcpy                  0    0   18   58    0   |     84    0    0   22    0
+s01/connect_socket_memmove                 0    0   18   58    0   |     84    0    0   22    0
+s01/connect_socket_strncpy                 0    0   18   58    0   |     84    0    0   22    0
+s01/fgets_malloc                          58    0   18  114    0   |    195    0    0   70    0
+s01/fgets_memcpy                           0    0   18   58    0   |     84    0    0   22    0
+s01/fgets_memmove                          0    0   18   58    0   |     84    0    0   22    0
+s01/fgets_strncpy                          0    0   18   58    0   |     84    0    0   22    0
+s01/fscanf_malloc                         52    0   18  120    0   |    195    0    0   70    0
+s01/fscanf_memcpy                         59    0    0   16    0   |     91    0    0   14    0
+s01/fscanf_memmove                        59    0    0   16    0   |     91    0    0   14    0
+s01/fscanf_strncpy                        51    0    0   24    0   |     83    0    0   22    0
+s02/listen_socket_malloc                   4    0    9   63    0   |     46    0    0   60    0
+-------------------------------------------------------------------------------------------------------
+total                                    283    0  171  835    0   |   1316    0    0  483    0
+
+CWE195
+s01/connect_socket_malloc                 66    0   24  100    0   |    208    0    0   57    0
+s01/connect_socket_memcpy                 32    0   13   31    0   |     86    0    0   20    0
+s01/connect_socket_memmove                28    0    9   39    0   |     78    0    0   28    0
+s01/connect_socket_strncpy                28    0    9   39    0   |     78    0    0   28    0
+s01/fgets_malloc                          58    0   18  114    0   |    189    0    0   72    0
+s01/fgets_memcpy                          28    0    9   39    0   |     78    0    0   28    0
+s01/fgets_memmove                         28    0    9   39    0   |     78    0    0   28    0
+s01/fgets_strncpy                         28    0    9   39    0   |     78    0    0   28    0
+s01/fscanf_malloc                        110    0    0   80    0   |    192    0    0   73    0
+s01/fscanf_memcpy                         66    0    0   10    0   |     94    0    0   12    0
+s01/fscanf_memmove                        66    0    0   10    0   |     94    0    0   12    0
+s01/fscanf_strncpy                        54    0    0   22    0   |     78    0    0   28    0
+s02/listen_socket_malloc                  58    0   18  112    0   |    192    0    0   73    0
+s02/listen_socket_memcpy                  28    0    9   39    0   |     78    0    0   28    0
+s02/listen_socket_memmove                 28    0    9   39    0   |     78    0    0   28    0
+s02/listen_socket_strncpy                 28    0    9   39    0   |     78    0    0   28    0
+s02/negative_malloc                       56    0    0   56    0   |    107    0    0   50    0
+s02/negative_memcpy                      116   36    0   38    0   |    178    0    0   78    9
+s02/negative_memmove                     116   36    0   38    0   |    178    0    0   78    9
+s02/negative_strncpy                     116   36    0   38    0   |    178    0    0   78    9
+s02/rand_malloc                            0    0    9   29    0   |     39    0    0   14    0
+s02/rand_memcpy                            0    0    9   29    0   |     39    0    0   14    0
+s02/rand_memmove                           0    0    9   29    0   |     39    0    0   14    0
+s02/rand_strncpy                           0    0    9   29    0   |     39    0    0   14    0
+-------------------------------------------------------------------------------------------------------
+total                                   1138  108  181 1077    0   |   2554    0    0  911   27
+
+CWE196
+basic                                      0    0    0   18    0   |     33    0    0    0    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    0   18    0   |     33    0    0    0    0
+
+CWE197
+s01/int_connect_socket_to_char             0    0   18   58    0   |     84    0    0   20    0
+s01/int_connect_socket_to_short            0    0   18   58    0   |     84    0    0   22    0
+s01/int_fgets_to_char                      0    0   18   58    0   |     84    0    0   22    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0   54  174    0   |    252    0    0   64    0
+
+CWE242
+basic                                      0    0    0   18    0   |     32    0    0    0    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    0   18    0   |     32    0    0    0    0
+
+CWE252
+char_fgets                                 0    0    0   18    0   |      0    0    0   33    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    0   18    0   |      0    0    0   33    0
+
+CWE253
+char_fgets                                 0    0    0   18    0   |      0    0    0   32    0
+char_fprintf                               0    0    0    0    0   |      0    0    0    0    0
+char_fputc                                 0    0    0    0    0   |      0    0    0    0    0
+char_fputs                                 0    0    0    0    0   |      0    0    0    0    0
+char_fread                                 0    0    0    0    0   |      0    0    0    0    0
+char_fscanf                                0    0    0    0    0   |      0    0    0    0    0
+char_fwrite                                0    0    0    0    0   |      0    0    0    0    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    0   18    0   |      0    0    0   32    0
+
+CWE369
+s01/float_connect_socket                   0    0   11   28    0   |      0   24    0   82    0
+s01/float_fgets                            0    0   11   28    0   |      0   24    0   82    0
+s01/float_fscanf                           0    0   11   28    0   |      0   24    0   82    0
+s01/float_listenSocket                     0    0   11   28    0   |      0   24    0   82    0
+s01/float_rand                             0    0   11   28    0   |      0   24    0   82    0
+s01/float_zero                             0    0   11   28    0   |      0   24    0   82    0
+s01/int_connect_socket_divide              0    0   11   28    0   |     42   13    0   51    0
+s01/int_connect_socket_modulo              0    0   11   28    0   |     42   13    0   51    0
+s01/int_fgets_divide                       0    0   11   28    0   |     42   13    0   51    0
+s01/int_fgets_modulo                       0    0   11   28    0   |     42   13    0   51    0
+s01/int_fscanf_divide                      0    0   11   28    0   |     42   13    0   51    0
+s02/int_fscanf_modulo                      0    0   11   28    0   |     42   13    0   51    0
+s02/int_listen_socket_divide               0    0   11   28    0   |     42   13    0   51    0
+s02/int_listen_socket_modulo               0    0   11   28    0   |     42   13    0   51    0
+s02/int_rand_divide                        0    0   11   28    0   |     42   13    0   51    0
+s02/int_rand_modulo                        0    0   11   28    0   |     42   13    0   51    0
+s02/int_zero_divide                       28    0    0   10    0   |     46    0   31   17   13
+s02/int_zero_modulo                       11    1    0   27    0   |     45    0    0   48   13
+-------------------------------------------------------------------------------------------------------
+total                                     39    1  176  485    0   |    511  274   31 1067   26
+
+CWE391
+strtol                                     0    0    0    0    0   |      0    0    0    0    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    0    0    0   |      0    0    0    0    0
+
+CWE415
+s01/malloc_free_char                       0    0    1   41    0   |     83    0    0   12    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    1   41    0   |     83    0    0   12    0
+
+CWE416
+malloc_free_char                           0    0    1   19    0   |     31    0    0    3    0
+malloc_free_int                            0    0    1   19    0   |     31    0    0    3    0
+malloc_free_int64_t                        0    0    1   19    0   |     31    0    0    3    0
+malloc_free_long                           0    0    1   19    0   |     31    0    0    3    0
+malloc_free_struct                         0    0    1   19    0   |     31    0    0    3    0
+return_freed_ptr                           0    0    0   18    0   |     18    0    0    0    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    5  113    0   |    173    0    0   15    0
+
+CWE457
+s01/char_pointer                           0    0    4  116    0   |    389    0    0   25    0
+s01/double_array_alloca_no_init            0    0    0   20    0   |      0    0    0   69    0
+s01/double_array_alloca_partial_init       0    0    0   20    0   |      0    0    0   69    0
+s01/double_array_declare_no_init           0    0    0   20    0   |      0    0    0   69    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    4  176    0   |    389    0    0  232    0
+
+CWE467
+char                                       0    0    0    0    0   |      0    0    0    0    0
+int                                        0    0    0    0    0   |      0    0    0    0    0
+short                                      0    0    0    0    0   |      0    0    0    0    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    0    0    0   |      0    0    0    0    0
+
+CWE468
+char_ptr_to_int                            0    0    0   18    0   |      0    0    0   31    0
+int                                        0    0    0    0    0   |      0    0    0    0    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    0   18    0   |      0    0    0   31    0
+
+CWE469
+char                                       0    0    0   36    0   |      0    0    0   64    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    0   36    0   |      0    0    0   64    0
+
+CWE476
+binary_if                                  0    0    0   18    0   |      0    0   33    0    0
+char                                       0    0   10   25    0   |     41   12   31   17    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0   10   43    0   |     41   12   64   17    0
+
+CWE562
+return_buf                                 1    0    0    0    0   |      1    0    0    0    0
+return_pointer_buf                         1    0    0    0    0   |      0    0    0    1    0
+-------------------------------------------------------------------------------------------------------
+total                                      2    0    0    0    0   |      1    0    0    1    0
+
+CWE587
+basic                                      0    0    0    0    0   |      0    0    0    0    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    0    0    0   |      0    0    0    0    0
+
+CWE588
+struct                                     0    0    0   34    0   |     12    0    0   35    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    0   34    0   |     12    0    0   35    0
+
+CWE590
+s04/free_char_alloca                      28    0    0    6    0   |     40    0    0    7    0
+s04/free_char_declare                     28    0    0    6    0   |     40    0    0    7    0
+s04/free_char_static                      28    0    0    6    0   |     40    0    0    7    0
+s04/free_int64_t_alloca                   28    0    0    6    0   |     40    0    0    7    0
+s04/free_int64_t_declare                  28    0    0    6    0   |     40    0    0    7    0
+s04/free_int64_t_static                   28    0    0    6    0   |     40    0    0    7    0
+s04/free_int_alloca                       28    0    0    6    0   |     40    0    0    7    0
+s04/free_int_declare                      28    0    0    6    0   |     40    0    0    7    0
+s04/free_int_static                       28    0    0    6    0   |     40    0    0    7    0
+s04/free_long_alloca                      26    0    0    8    0   |     38    0    0    9    0
+s04/free_long_declare                     26    0    0    8    0   |     38    0    0    9    0
+s05/free_long_static                      26    0    0    8    0   |     38    0    0    9    0
+s05/free_struct_alloca                    26    0    0    8    0   |     38    0    0    9    0
+s05/free_struct_declare                   26    0    0    8    0   |     38    0    0    9    0
+s05/free_struct_static                    26    0    0    8    0   |     38    0    0    9    0
+-------------------------------------------------------------------------------------------------------
+total                                    408    0    0  102    0   |    588    0    0  117    0
+
+CWE665
+char_cat                                   0    0    0   76    0   |      0    0    0  106    0
+char_ncat                                  0    0    0   76    0   |      0    0    0  106    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    0  152    0   |      0    0    0  212    0
+
+CWE680
+malloc_fgets                               0    0    0   38    0   |      9    0    0   44    0
+malloc_fixed                               0   38    0    0    0   |     53    0    0    0    0
+malloc_fscanf                              0    0    0   38    0   |      5    0    0   48    0
+malloc_rand                                0    0    0   38    0   |      5    0    0   48    0
+malloc_connect_socket                      0    0    0   38    0   |     16    0    0   37    0
+malloc_listen_socket                       0    0    0   38    0   |     13    0    0   40    0
+-------------------------------------------------------------------------------------------------------
+total                                      0   38    0  190    0   |    101    0    0  217    0
+
+CWE681
+double2float                               0    0    0   18    0   |      0    0    0   33    0
+double2int                                 0    0    0   18    0   |      0    0    0   33    0
+doubleNaN2int                              0    0    0   18    0   |      0    0    0   33    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    0   54    0   |      0    0    0   99    0
+
+CWE685
+basic                                     18    0    0    0    0   |     33    0    0    0    0
+-------------------------------------------------------------------------------------------------------
+total                                     18    0    0    0    0   |     33    0    0    0    0
+
+CWE688
+basic                                     18    0    0    0    0   |     33    0    0    0    0
+-------------------------------------------------------------------------------------------------------
+total                                     18    0    0    0    0   |     33    0    0    0    0
+
+CWE690
+s01/char_calloc                            0    0   11   27    0   |     37   13    0    5    0
+s01/char_malloc                            0    0   11   27    0   |     37   13    0    5    0
+s01/char_realloc                           0    0   11   27    0   |      4   13    0   38    0
+s01/fopen                                  0    0   11   27    0   |     46    2    0    7    0
+s01/int64_t_calloc                         0    0   11   27    0   |     36   13    0    6    0
+s01/int64_t_malloc                         0    0   11   27    0   |     36   13    0    6    0
+s01/int64_t_realloc                        0    0   11   27    0   |      7   13    0   35    0
+s01/int_calloc                             0    0   11   27    0   |     35   13    0    7    0
+s01/int_malloc                             0    0   11   27    0   |     35   13    0    7    0
+s01/int_realloc                            0    0   11   27    0   |     10   13    0   32    0
+s01/long_calloc                            0    0   11   27    0   |     35   13    0    7    0
+s01/long_malloc                            0    0   11   27    0   |     35   13    0    7    0
+s02/long_realloc                           0    0   11   27    0   |     10   13    0   32    0
+s02/struct_calloc                          0    0   22   54    0   |     96    4    0   10    0
+s02/struct_malloc                          0    0   22   54    0   |     96    4    0   10    0
+s02/struct_realloc                         0    0   22   54    0   |     30    4    0   76    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0  209  513    0   |    585  170    0  290    0
+
+CWE758
+char_alloca_use                            0    0    0   18    0   |     33    0    0    0    0
+char_malloc_use                            0    0    0   18    0   |     33    0    0    0    0
+char_pointer_alloca_use                    0    0    0   18    0   |     33    0    0    0    0
+char_pointer_malloc_use                    0    0    0   18    0   |     33    0    0    0    0
+double_pointer_alloca_use                  0    0    0   18    0   |     33    0    0    0    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    0   90    0   |    165    0    0    0    0
+
+CWE761
+char_connect_socket                       20    0    0   18    0   |     47    1    0    7    0
+char_console                              22    0    0   16    0   |     51    1    0    3    0
+char_environment                          22    0    0   16    0   |     52    0    0    3    0
+char_file                                 20    0    0   18    0   |     47    1    0    7    0
+char_fixed_string                         20    0    0   18    0   |     48    0    0    7    0
+char_listen_socket                        20    0    0   18    0   |     47    1    0    7    0
+-------------------------------------------------------------------------------------------------------
+total                                    124    0    0  104    0   |    292    4    0   34    0
+
+CWE789
+s01/malloc_char_connect_socket             0    0    0   38    0   |      0    0    0  107    0
+s01/malloc_char_fgets                      0    0    0   38    0   |      0    0    0  107    0
+s01/malloc_char_fscanf                     0    0    0   38    0   |      0    0    0  107    0
+s01/malloc_char_listen_socket              0    0    0   38    0   |      0    0    0  107    0
+s01/malloc_char_rand                       0    0    0   38    0   |      0    0    0  107    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    0  190    0   |      0    0    0  535    0
+
+CWE843
+char                                       0    0    0   34    0   |     29    0    0   18    0
+short                                      0    0    0   34    0   |     29    0    0   18    0
+-------------------------------------------------------------------------------------------------------
+total                                      0    0    0   68    0   |     58    0    0   36    0
+
+
+
+=======================================================================================================
+grand total                            10028  297 146310608    0   |  31650  514 148211235  730
+
+
+                            violation      safe-control     total
+--------------------------------------------------------------------------------
+ppos                          22396          45611          68007
+reported                      10028          33132          43160
+percent reported               44.8           72.6           63.5
+--------------------------------------------------------------------------------
