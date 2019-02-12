@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header time="2018-12-12 10:06:20">
+  <header time="2018-12-18 14:38:03">
     <application file="src/radv.c"/>
   </header>
   <cfile>
@@ -16,6 +16,16 @@
           <par name="type" nr="2"/>
           <par name="mac" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -41,6 +51,14 @@
           <pre>
             <math>
               <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
                 <initialized/>
                 <apply>
                   <addressed-value>
@@ -48,14 +66,6 @@
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>dnsmasq_daemon</ci>
               </apply>
             </math>
           </pre>
@@ -173,6 +183,45 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="interval"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="prio"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="lifetime"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="icmp6_packet">
@@ -183,6 +232,14 @@
           <pre>
             <math>
               <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
                 <initialized/>
                 <apply>
                   <addressed-value>
@@ -190,14 +247,6 @@
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>dnsmasq_daemon</ci>
               </apply>
             </math>
           </pre>
@@ -221,6 +270,19 @@
                 <apply>
                   <addressed-value>
                     <field name="dhcp6"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ra_interfaces"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
@@ -378,6 +440,71 @@
               </apply>
             </math>
           </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="dhcp"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="netlinkfd"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="tag_if"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="soa_sn"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
         </preconditions>
         <postconditions>
           <post>
@@ -416,6 +543,19 @@
                 <apply>
                   <addressed-value>
                     <field name="dhcp6"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ra_interfaces"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
@@ -493,6 +633,14 @@
           <pre>
             <math>
               <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
                 <initialized/>
                 <apply>
                   <addressed-value>
@@ -500,14 +648,6 @@
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>dnsmasq_daemon</ci>
               </apply>
             </math>
           </pre>
@@ -531,6 +671,19 @@
                 <apply>
                   <addressed-value>
                     <field name="dhcp6"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ra_interfaces"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
@@ -675,6 +828,32 @@
               </apply>
             </math>
           </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="netlinkfd"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="tag_if"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
         </preconditions>
         <postconditions>
           <post>
@@ -719,6 +898,19 @@
                 <apply>
                   <addressed-value>
                     <field name="doing_ra"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
@@ -785,19 +977,6 @@
           <pre>
             <math>
               <apply>
-                <initialized/>
-                <apply>
-                  <addressed-value>
-                    <field name="addrbuff"/>
-                  </addressed-value>
-                  <ci>dnsmasq_daemon</ci>
-                </apply>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
                 <valid-mem/>
                 <ci>dnsmasq_daemon</ci>
               </apply>
@@ -809,116 +988,10 @@
                 <initialized/>
                 <apply>
                   <addressed-value>
-                    <field name="options2"/>
-                  </addressed-value>
-                  <ci>dnsmasq_daemon</ci>
-                </apply>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <initialized/>
-                <apply>
-                  <addressed-value>
-                    <field name="dhcp6"/>
-                  </addressed-value>
-                  <ci>dnsmasq_daemon</ci>
-                </apply>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <initialized/>
-                <apply>
-                  <addressed-value>
-                    <field name="icmp6fd"/>
-                  </addressed-value>
-                  <ci>dnsmasq_daemon</ci>
-                </apply>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <initialized/>
-                <apply>
-                  <addressed-value>
-                    <field name="namebuff"/>
-                  </addressed-value>
-                  <ci>dnsmasq_daemon</ci>
-                </apply>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <initialized/>
-                <apply>
-                  <addressed-value>
-                    <field name="port"/>
-                  </addressed-value>
-                  <ci>dnsmasq_daemon</ci>
-                </apply>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <initialized/>
-                <apply>
-                  <addressed-value>
-                    <field name="dhcp_opts6"/>
-                  </addressed-value>
-                  <ci>dnsmasq_daemon</ci>
-                </apply>
-              </apply>
-            </math>
-          </pre>
-        </preconditions>
-        <postconditions>
-          <post>
-            <math>
-              <apply>
-                <preserves-all-memory/>
-              </apply>
-            </math>
-          </post>
-        </postconditions>
-      </function>
-      <function name="send_ra_alias">
-        <parameters>
-          <par name="dest" nr="4"/>
-          <par name="iface_name" nr="3"/>
-          <par name="send_iface" nr="5"/>
-          <par name="iface" nr="2"/>
-          <par name="now" nr="1"/>
-        </parameters>
-        <preconditions>
-          <pre>
-            <math>
-              <apply>
-                <initialized/>
-                <apply>
-                  <addressed-value>
                     <field name="addrbuff"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>dnsmasq_daemon</ci>
               </apply>
             </math>
           </pre>
@@ -1015,6 +1088,198 @@
                 <apply>
                   <addressed-value>
                     <field name="dhcp_opts6"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="netlinkfd"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="tag_if"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="send_ra_alias">
+        <parameters>
+          <par name="dest" nr="4"/>
+          <par name="iface_name" nr="3"/>
+          <par name="send_iface" nr="5"/>
+          <par name="iface" nr="2"/>
+          <par name="now" nr="1"/>
+        </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="addrbuff"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options2"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="dhcp6"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ra_interfaces"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="icmp6fd"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="namebuff"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="port"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="dhcp_opts6"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="netlinkfd"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="tag_if"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>

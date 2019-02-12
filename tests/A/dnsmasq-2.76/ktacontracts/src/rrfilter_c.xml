@@ -1,62 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-05-18 17:30:57.958220"/>
-  <cfile name="src/rrfilter">
-    <data-structures/>
+  <header time="2018-12-18 14:40:59">
+    <application file="src/rrfilter.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
-      <function name="check_rrs">
+      <function name="check_name">
         <parameters>
-          <par name="p" nr="1"/>
-          <par name="header" nr="2"/>
+          <par name="namep" nr="1"/>
+          <par name="rr_count" nr="6"/>
           <par name="plen" nr="3"/>
           <par name="fixup" nr="4"/>
+          <par name="header" nr="2"/>
           <par name="rrs" nr="5"/>
-          <par name="rr_count" nr="6"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
-      <function name="rrfilter">
+      <function name="check_rrs">
         <parameters>
-          <par name="header" nr="1"/>
-          <par name="plen" nr="2"/>
-          <par name="mode" nr="3"/>
+          <par name="rr_count" nr="6"/>
+          <par name="plen" nr="3"/>
+          <par name="fixup" nr="4"/>
+          <par name="header" nr="2"/>
+          <par name="rrs" nr="5"/>
+          <par name="p" nr="1"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="expand_workspace">
         <parameters>
-          <par name="wkspc" nr="1"/>
           <par name="szp" nr="2"/>
+          <par name="wkspc" nr="1"/>
           <par name="new" nr="3"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
+      </function>
+      <function name="rrfilter">
+        <parameters>
+          <par name="plen" nr="2"/>
+          <par name="mode" nr="3"/>
+          <par name="header" nr="1"/>
+        </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="rrfilter_desc">
         <parameters>
           <par name="type" nr="1"/>
         </parameters>
         <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
-      </function>
-      <function name="check_name">
-        <parameters>
-          <par name="namep" nr="1"/>
-          <par name="header" nr="2"/>
-          <par name="plen" nr="3"/>
-          <par name="fixup" nr="4"/>
-          <par name="rrs" nr="5"/>
-          <par name="rr_count" nr="6"/>
-        </parameters>
-        <postconditions>
-	  <post><math><apply><preserves-all-memory/></apply></math></post>
-	</postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
     </functions>
   </cfile>

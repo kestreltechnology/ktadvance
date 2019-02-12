@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header time="2018-12-05 23:13:27">
+  <header time="2018-12-18 12:04:17">
     <application file="src/arp.c"/>
   </header>
   <cfile>
@@ -105,6 +105,19 @@
               </apply>
             </math>
           </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="helperfd"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
         </preconditions>
         <postconditions>
           <post>
@@ -184,6 +197,14 @@
           <pre>
             <math>
               <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
                 <not-null/>
                 <ci>freelist</ci>
               </apply>
@@ -198,6 +219,19 @@
                     <field name="next"/>
                   </addressed-value>
                   <ci>freelist</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="netlinkfd"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
                 </apply>
               </apply>
             </math>

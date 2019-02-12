@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header time="2018-12-12 10:12:29">
+  <header time="2018-12-18 14:41:45">
     <application file="src/tftp.c"/>
   </header>
   <cfile>
@@ -202,12 +202,42 @@
               </apply>
             </math>
           </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="helperfd"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
         </preconditions>
       </function>
       <function name="free_transfer">
         <parameters>
           <par name="transfer" nr="1"/>
         </parameters>
+        <postconditions>
+          <post>
+            <math>
+              <apply>
+                <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+        </postconditions>
       </function>
       <function name="get_block">
         <parameters>
@@ -219,6 +249,15 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -403,6 +442,14 @@
           <pre>
             <math>
               <apply>
+                <not-null/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
                 <initialized/>
                 <apply>
                   <addressed-value>
@@ -488,14 +535,6 @@
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
-                <ci>dnsmasq_daemon</ci>
               </apply>
             </math>
           </pre>
@@ -636,6 +675,19 @@
                 <apply>
                   <addressed-value>
                     <field name="listeners"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="netlinkfd"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>

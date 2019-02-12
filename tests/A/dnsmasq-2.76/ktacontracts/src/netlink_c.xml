@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header time="2018-12-05 23:36:16">
+  <header time="2018-12-18 12:29:09">
     <application file="src/netlink.c"/>
   </header>
   <cfile>
@@ -111,6 +111,19 @@
               </apply>
             </math>
           </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
         </preconditions>
         <postconditions>
           <post>
@@ -187,6 +200,15 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>

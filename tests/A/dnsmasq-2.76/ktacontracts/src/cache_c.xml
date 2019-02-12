@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header time="2018-12-05 23:18:44">
+  <header time="2018-12-18 14:29:56">
     <application file="src/cache.c"/>
   </header>
   <cfile>
@@ -24,6 +24,64 @@
           <par name="now" nr="2"/>
           <par name="name" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>hash_table</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cache_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cache_head</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>hash_table</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cache_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>big_free</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cache_head</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -40,6 +98,22 @@
           <par name="target" nr="1"/>
         </parameters>
         <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>hash_table</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>hash_table</ci>
+              </apply>
+            </math>
+          </pre>
           <pre>
             <math>
               <apply>
@@ -85,6 +159,22 @@
           <par name="target" nr="1"/>
         </parameters>
         <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>hash_table</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>hash_table</ci>
+              </apply>
+            </math>
+          </pre>
           <pre>
             <math>
               <apply>
@@ -147,7 +237,76 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>cache_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cache_head</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>hash_table</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cache_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>big_free</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cache_head</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cnames"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
               </apply>
             </math>
           </pre>
@@ -182,7 +341,7 @@
             <math>
               <apply>
                 <not-null/>
-                <ci>dnsmasq_daemon</ci>
+                <ci>cache_tail</ci>
               </apply>
             </math>
           </pre>
@@ -190,7 +349,47 @@
             <math>
               <apply>
                 <not-null/>
-                <ci>dhcp_spare</ci>
+                <ci>cache_head</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>hash_table</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cache_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>big_free</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cache_head</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>dnsmasq_daemon</ci>
               </apply>
             </math>
           </pre>
@@ -199,6 +398,27 @@
               <apply>
                 <valid-mem/>
                 <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cnames"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>dhcp_spare</ci>
               </apply>
             </math>
           </pre>
@@ -249,6 +469,32 @@
               </apply>
             </math>
           </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="addn_hosts"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="dynamic_dirs"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
         </preconditions>
         <postconditions>
           <post>
@@ -267,6 +513,14 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>hash_table</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>cache_tail</ci>
               </apply>
             </math>
@@ -275,6 +529,38 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>cache_head</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>hash_table</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cache_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>big_free</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
                 <ci>cache_head</ci>
               </apply>
             </math>
@@ -370,14 +656,6 @@
           <pre>
             <math>
               <apply>
-                <valid-mem/>
-                <ci>hash_table</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
                 <not-null/>
                 <ci>cache_tail</ci>
               </apply>
@@ -387,6 +665,38 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>cache_head</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>hash_table</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cache_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>big_free</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
                 <ci>cache_head</ci>
               </apply>
             </math>
@@ -443,6 +753,38 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>cache_head</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>hash_table</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cache_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>big_free</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
                 <ci>cache_head</ci>
               </apply>
             </math>
@@ -537,6 +879,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="cache_hash">
@@ -548,6 +898,14 @@
             <math>
               <apply>
                 <not-null/>
+                <ci>hash_table</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
                 <ci>hash_table</ci>
               </apply>
             </math>
@@ -578,30 +936,6 @@
             <math>
               <apply>
                 <not-null/>
-                <ci>dnsmasq_daemon</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>hash_table</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <allocation-base/>
-                <ci>hash_table</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <not-null/>
                 <ci>cache_head</ci>
               </apply>
             </math>
@@ -610,7 +944,39 @@
             <math>
               <apply>
                 <valid-mem/>
+                <ci>hash_table</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cache_head</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>hash_table</ci>
               </apply>
             </math>
           </pre>
@@ -659,7 +1025,31 @@
             <math>
               <apply>
                 <not-null/>
-                <ci>dnsmasq_daemon</ci>
+                <ci>cache_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>hash_table</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cache_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>big_free</ci>
               </apply>
             </math>
           </pre>
@@ -667,7 +1057,28 @@
             <math>
               <apply>
                 <not-null/>
-                <ci>cache_tail</ci>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="addrbuff"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
               </apply>
             </math>
           </pre>
@@ -682,14 +1093,6 @@
           <pre>
             <math>
               <apply>
-                <valid-mem/>
-                <ci>cache_tail</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
                 <geq/>
                 <apply>
                   <minus/>
@@ -697,14 +1100,6 @@
                   <cn>1</cn>
                 </apply>
                 <cn>-2147483648</cn>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>dnsmasq_daemon</ci>
               </apply>
             </math>
           </pre>
@@ -771,14 +1166,6 @@
           <pre>
             <math>
               <apply>
-                <valid-mem/>
-                <ci>big_free</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
                 <initialized/>
                 <apply>
                   <addressed-value>
@@ -798,6 +1185,71 @@
                     <field name="next"/>
                   </addressed-value>
                   <ci>cache_tail</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="addrbuff2"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options2"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="log_source_addr"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="log_display_id"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
                 </apply>
               </apply>
             </math>
@@ -885,6 +1337,19 @@
                 <initialized/>
                 <apply>
                   <addressed-value>
+                    <field name="cachesize"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
                     <field name="servers"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
@@ -931,19 +1396,6 @@
               </apply>
             </math>
           </pre>
-          <pre>
-            <math>
-              <apply>
-                <initialized/>
-                <apply>
-                  <addressed-value>
-                    <field name="cachesize"/>
-                  </addressed-value>
-                  <ci>dnsmasq_daemon</ci>
-                </apply>
-              </apply>
-            </math>
-          </pre>
         </preconditions>
         <postconditions>
           <post>
@@ -970,7 +1422,15 @@
             <math>
               <apply>
                 <not-null/>
-                <ci>dnsmasq_daemon</ci>
+                <ci>cache_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cache_head</ci>
               </apply>
             </math>
           </pre>
@@ -986,6 +1446,22 @@
             <math>
               <apply>
                 <valid-mem/>
+                <ci>cache_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cache_head</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
                 <ci>dnsmasq_daemon</ci>
               </apply>
             </math>
@@ -993,13 +1469,8 @@
           <pre>
             <math>
               <apply>
-                <initialized/>
-                <apply>
-                  <addressed-value>
-                    <field name="addn_hosts"/>
-                  </addressed-value>
-                  <ci>dnsmasq_daemon</ci>
-                </apply>
+                <valid-mem/>
+                <ci>dnsmasq_daemon</ci>
               </apply>
             </math>
           </pre>
@@ -1022,7 +1493,67 @@
                 <initialized/>
                 <apply>
                   <addressed-value>
+                    <field name="namebuff"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="addn_hosts"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="dynamic_dirs"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>hash_table</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
                     <field name="cachesize"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
@@ -1074,7 +1605,7 @@
                 <initialized/>
                 <apply>
                   <addressed-value>
-                    <field name="options"/>
+                    <field name="host_records"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
@@ -1087,7 +1618,46 @@
                 <initialized/>
                 <apply>
                   <addressed-value>
-                    <field name="host_records"/>
+                    <field name="local_ttl"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="domain_suffix"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cond_domain"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="inotifyfd"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
@@ -1124,6 +1694,14 @@
           <pre>
             <math>
               <apply>
+                <not-null/>
+                <ci>cache_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
                 <valid-mem/>
                 <ci>hash_table</ci>
               </apply>
@@ -1132,8 +1710,16 @@
           <pre>
             <math>
               <apply>
-                <not-null/>
+                <valid-mem/>
                 <ci>cache_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>big_free</ci>
               </apply>
             </math>
           </pre>
@@ -1180,6 +1766,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="cache_start_insert">
@@ -1190,6 +1784,22 @@
               <apply>
                 <not-null/>
                 <ci>cache_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cache_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>big_free</ci>
               </apply>
             </math>
           </pre>
@@ -1264,16 +1874,16 @@
           <pre>
             <math>
               <apply>
-                <not-null/>
-                <ci>dnsmasq_daemon</ci>
+                <valid-mem/>
+                <ci>hash_table</ci>
               </apply>
             </math>
           </pre>
           <pre>
             <math>
               <apply>
-                <valid-mem/>
-                <ci>hash_table</ci>
+                <not-null/>
+                <ci>dnsmasq_daemon</ci>
               </apply>
             </math>
           </pre>
@@ -1305,6 +1915,32 @@
                 <apply>
                   <addressed-value>
                     <field name="addrbuff"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cachesize"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
@@ -1357,32 +1993,6 @@
                 <apply>
                   <addressed-value>
                     <field name="queries_forwarded"/>
-                  </addressed-value>
-                  <ci>dnsmasq_daemon</ci>
-                </apply>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <initialized/>
-                <apply>
-                  <addressed-value>
-                    <field name="cachesize"/>
-                  </addressed-value>
-                  <ci>dnsmasq_daemon</ci>
-                </apply>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <initialized/>
-                <apply>
-                  <addressed-value>
-                    <field name="options"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
@@ -1476,6 +2086,14 @@
                   <addressed-value/>
                   <return/>
                 </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1712,7 +2330,15 @@
             <math>
               <apply>
                 <not-null/>
-                <ci>dnsmasq_daemon</ci>
+                <ci>cache_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cache_head</ci>
               </apply>
             </math>
           </pre>
@@ -1727,8 +2353,32 @@
           <pre>
             <math>
               <apply>
-                <allocation-base/>
-                <ci>hash_table</ci>
+                <valid-mem/>
+                <ci>cache_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>big_free</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cache_head</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>dnsmasq_daemon</ci>
               </apply>
             </math>
           </pre>
@@ -1746,10 +2396,31 @@
                 <initialized/>
                 <apply>
                   <addressed-value>
+                    <field name="cnames"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
                     <field name="namebuff"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>hash_table</ci>
               </apply>
             </math>
           </pre>
@@ -1773,6 +2444,32 @@
                 <apply>
                   <addressed-value>
                     <field name="local_ttl"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="domain_suffix"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cond_domain"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
@@ -1817,7 +2514,7 @@
                 <initialized/>
                 <apply>
                   <addressed-value>
-                    <field name="dynamic_dirs"/>
+                    <field name="addn_hosts"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
@@ -1830,7 +2527,7 @@
                 <initialized/>
                 <apply>
                   <addressed-value>
-                    <field name="addn_hosts"/>
+                    <field name="dynamic_dirs"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
@@ -1864,6 +2561,22 @@
           <pre>
             <math>
               <apply>
+                <valid-mem/>
+                <ci>hash_table</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>hash_table</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
                 <leq/>
                 <apply>
                   <times/>
@@ -1887,22 +2600,6 @@
               </apply>
             </math>
           </pre>
-          <pre>
-            <math>
-              <apply>
-                <valid-mem/>
-                <ci>hash_table</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
-                <allocation-base/>
-                <ci>hash_table</ci>
-              </apply>
-            </math>
-          </pre>
         </preconditions>
         <postconditions>
           <post>
@@ -1923,6 +2620,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>

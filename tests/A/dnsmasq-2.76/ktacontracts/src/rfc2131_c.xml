@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header time="2018-12-12 10:09:00">
+  <header time="2018-12-18 14:39:25">
     <application file="src/rfc2131.c"/>
   </header>
   <cfile>
@@ -104,6 +104,19 @@
               </apply>
             </math>
           </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="addrbuff"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
         </preconditions>
         <postconditions>
           <post>
@@ -156,6 +169,27 @@
                 <apply>
                   <addressed-value>
                     <field name="namebuff"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="addrbuff"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
@@ -425,14 +459,6 @@
           <pre>
             <math>
               <apply>
-                <not-null/>
-                <ci>dnsmasq_daemon</ci>
-              </apply>
-            </math>
-          </pre>
-          <pre>
-            <math>
-              <apply>
                 <initialized/>
                 <apply>
                   <addressed-value>
@@ -573,6 +599,79 @@
               </apply>
             </math>
           </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>fake_opts</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="dhcp6"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="icmp6fd"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="doing_ra"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="soa_sn"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="netlinkfd"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
         </preconditions>
         <postconditions>
           <post>
@@ -593,6 +692,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -709,6 +816,27 @@
           <pre>
             <math>
               <apply>
+                <not-null/>
+                <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="addrbuff"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
                 <initialized/>
                 <apply>
                   <addressed-value>
@@ -748,8 +876,13 @@
           <pre>
             <math>
               <apply>
-                <not-null/>
-                <ci>dnsmasq_daemon</ci>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="dhcp_buff"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
               </apply>
             </math>
           </pre>
@@ -798,10 +931,18 @@
                 <initialized/>
                 <apply>
                   <addressed-value>
-                    <field name="addrbuff"/>
+                    <field name="tag_if"/>
                   </addressed-value>
                   <ci>dnsmasq_daemon</ci>
                 </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>fake_opts</ci>
               </apply>
             </math>
           </pre>
@@ -830,6 +971,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1158,6 +1307,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="option_find1">
@@ -1358,6 +1515,19 @@
               <apply>
                 <valid-mem/>
                 <ci>dnsmasq_daemon</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="options"/>
+                  </addressed-value>
+                  <ci>dnsmasq_daemon</ci>
+                </apply>
               </apply>
             </math>
           </pre>
