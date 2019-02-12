@@ -69,7 +69,7 @@ if __name__ == '__main__':
                 for d2 in os.listdir(fd1):
                     fd2 = os.path.join(fd1,d2)
                     if os.path.isdir(fd2):
-                        if d2.startswith('s'):
+                        if d2.startswith('s0')  or d2.startswith('s1'):
                             for d3 in os.listdir(fd2):
                                 fd3 = os.path.join(fd2,d3)
                                 if os.path.isdir(fd3):
@@ -82,7 +82,12 @@ if __name__ == '__main__':
     print(UP.reportheader('Juliet test sets currently provided (' + str(len(result)) + ')'))
     print('\n  ' + 'directory'.ljust(44) + 'analysis time    score time')
     print('-' * 80)
-    for d in sorted(result):
+    for d in sorted(result):    
+        ktmodtime = UP.chtime(result[d][0])
+        scmodtime = UP.chtime(result[d][1])
+        if ktmodtime == '0': ktmodtime = 'no results'
+        if scmodtime == '0': scmodtime = 'no results'
         print('  ' + d.ljust(44)
-                  + UP.chtime(result[d][0]).rjust(16) + '  '
-                  + UP.chtime(result[d][1]).rjust(16))
+                  + ktmodtime.rjust(16) + '  '
+                  + scmodtime.rjust(16))
+    print(('-' * 80) + '\n')
