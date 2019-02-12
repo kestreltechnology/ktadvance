@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 13:16:38.192309"/>
-  <cfile name="base/events">
-    <data-structures/>
+  <header time="2018-12-18 14:53:25">
+    <application file="base/events.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="auto_rescheduling_interval"/>
+      <gvar name="auto_rescheduling_window"/>
+      <gvar name="command_check_interval"/>
+      <gvar name="event_list_high"/>
+      <gvar name="event_list_low"/>
+      <gvar name="host_freshness_check_interval"/>
+      <gvar name="interval_length"/>
+      <gvar name="retention_update_interval"/>
+      <gvar name="service_check_reaper_interval"/>
+      <gvar name="service_check_timeout"/>
+      <gvar name="service_freshness_check_interval"/>
+      <gvar name="status_update_interval"/>
+    </global-variables>
     <functions>
       <function name="add_event">
         <parameters>
-          <par name="event" nr="1"/>
           <par name="event_list" nr="2"/>
+          <par name="event" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -21,6 +36,17 @@
       </function>
       <function name="adjust_check_scheduling">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>auto_rescheduling_window</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -65,8 +91,8 @@
       </function>
       <function name="deschedule_event">
         <parameters>
-          <par name="event_type" nr="1"/>
           <par name="high_priority" nr="2"/>
+          <par name="event_type" nr="1"/>
           <par name="event_data" nr="3"/>
           <par name="event_args" nr="4"/>
         </parameters>
@@ -94,6 +120,86 @@
       </function>
       <function name="event_execution_loop">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="run_time"/>
+                  </addressed-value>
+                  <ci>event_list_low</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="run_time"/>
+                  </addressed-value>
+                  <ci>event_list_high</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="event_data"/>
+                  </addressed-value>
+                  <ci>event_list_low</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="event_type"/>
+                  </addressed-value>
+                  <ci>event_list_low</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="next"/>
+                  </addressed-value>
+                  <ci>event_list_high</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="next"/>
+                  </addressed-value>
+                  <ci>event_list_low</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -120,6 +226,123 @@
       </function>
       <function name="init_timing_loop">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>interval_length</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <ci>service_check_timeout</ci>
+                  <cn>2</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>auto_rescheduling_interval</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <ci>retention_update_interval</ci>
+                  <cn>60</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <times/>
+                  <ci>retention_update_interval</ci>
+                  <cn>60</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>service_check_reaper_interval</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <times/>
+                  <ci>service_check_timeout</ci>
+                  <cn>2</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>host_freshness_check_interval</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>status_update_interval</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>service_freshness_check_interval</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>command_check_interval</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -132,8 +355,8 @@
       </function>
       <function name="remove_event">
         <parameters>
-          <par name="event" nr="1"/>
           <par name="event_list" nr="2"/>
+          <par name="event" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -147,8 +370,8 @@
       </function>
       <function name="reschedule_event">
         <parameters>
-          <par name="event" nr="1"/>
           <par name="event_list" nr="2"/>
+          <par name="event" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -176,15 +399,15 @@
       </function>
       <function name="schedule_new_event">
         <parameters>
-          <par name="event_type" nr="1"/>
-          <par name="high_priority" nr="2"/>
-          <par name="run_time" nr="3"/>
-          <par name="recurring" nr="4"/>
-          <par name="event_interval" nr="5"/>
-          <par name="timing_func" nr="6"/>
           <par name="compensate_for_time_change" nr="7"/>
+          <par name="high_priority" nr="2"/>
+          <par name="recurring" nr="4"/>
+          <par name="event_type" nr="1"/>
+          <par name="run_time" nr="3"/>
+          <par name="event_interval" nr="5"/>
           <par name="event_data" nr="8"/>
           <par name="event_args" nr="9"/>
+          <par name="timing_func" nr="6"/>
         </parameters>
         <postconditions>
           <post>

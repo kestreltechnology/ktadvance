@@ -1,14 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 13:16:38.260161"/>
-  <cfile name="base/nagios">
-    <data-structures/>
+  <header time="2018-12-18 14:54:54">
+    <application file="base/nagios.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="lock_file"/>
+      <gvar name="nagios_group"/>
+      <gvar name="nagios_user"/>
+      <gvar name="sig_id"/>
+    </global-variables>
     <functions>
       <function name="main">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>nagios_group</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>nagios_user</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <lt/>
+                <ci>sig_id</ci>
+                <cn>35</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>sig_id</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lock_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lock_file</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

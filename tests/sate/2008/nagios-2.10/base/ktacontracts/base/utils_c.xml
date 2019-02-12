@@ -1,8 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 13:16:38.869599"/>
-  <cfile name="base/utils">
-    <data-structures/>
+  <header time="2018-12-18 15:00:35">
+    <application file="base/utils.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="auth_file"/>
+      <gvar name="check_result_buffer_slots"/>
+      <gvar name="command_file"/>
+      <gvar name="command_file_fp"/>
+      <gvar name="external_command_buffer_slots"/>
+      <gvar name="global_host_event_handler"/>
+      <gvar name="global_service_event_handler"/>
+      <gvar name="illegal_object_chars"/>
+      <gvar name="illegal_output_chars"/>
+      <gvar name="lock_file"/>
+      <gvar name="log_archive_path"/>
+      <gvar name="log_file"/>
+      <gvar name="logging_options"/>
+      <gvar name="macro_ondemand"/>
+      <gvar name="my_strtok_buffer"/>
+      <gvar name="nagios_group"/>
+      <gvar name="nagios_user"/>
+      <gvar name="ochp_command"/>
+      <gvar name="ocsp_command"/>
+      <gvar name="original_my_strtok_buffer"/>
+      <gvar name="p1_file"/>
+      <gvar name="temp_file"/>
+    </global-variables>
     <functions>
       <function name="add_macrox_name">
         <parameters>
@@ -21,8 +46,8 @@
       </function>
       <function name="check_time_against_period">
         <parameters>
-          <par name="check_time" nr="1"/>
           <par name="period_name" nr="2"/>
+          <par name="check_time" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -39,11 +64,37 @@
           <par name="macro" nr="1"/>
           <par name="options" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>illegal_output_chars</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>illegal_output_chars</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -115,6 +166,24 @@
       </function>
       <function name="clear_volatile_macros">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>macro_ondemand</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>macro_ondemand</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -127,6 +196,35 @@
       </function>
       <function name="close_command_file">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>command_file_fp</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>command_file_fp</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>command_file_fp</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -141,6 +239,35 @@
         <parameters>
           <par name="arg" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>command_file_fp</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>command_file_fp</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>command_file_fp</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -168,10 +295,10 @@
       </function>
       <function name="compare_hashdata2">
         <parameters>
-          <par name="val1a" nr="1"/>
-          <par name="val1b" nr="2"/>
           <par name="val2a" nr="3"/>
           <par name="val2b" nr="4"/>
+          <par name="val1b" nr="2"/>
+          <par name="val1a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -187,6 +314,24 @@
         <parameters>
           <par name="name" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>illegal_object_chars</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>illegal_object_chars</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -199,6 +344,24 @@
       </function>
       <function name="daemon_init">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lock_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>lock_file</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -223,8 +386,8 @@
       </function>
       <function name="drop_privileges">
         <parameters>
-          <par name="user" nr="1"/>
           <par name="group" nr="2"/>
+          <par name="user" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -250,6 +413,264 @@
       </function>
       <function name="free_memory">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>command_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>log_archive_path</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>lock_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>auth_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>illegal_object_chars</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>temp_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>nagios_group</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>nagios_user</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>illegal_object_chars</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>log_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>nagios_user</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>ochp_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>illegal_output_chars</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>p1_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>original_my_strtok_buffer</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>command_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>temp_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>ocsp_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>illegal_output_chars</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>ocsp_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>original_my_strtok_buffer</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>global_host_event_handler</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>p1_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>nagios_group</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>log_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>lock_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>ochp_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>auth_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>global_service_event_handler</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>log_archive_path</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>global_host_event_handler</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>global_service_event_handler</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -275,8 +696,8 @@
       <function name="get_datetime_string">
         <parameters>
           <par name="raw_time" nr="1"/>
-          <par name="buffer" nr="2"/>
           <par name="buffer_length" nr="3"/>
+          <par name="buffer" nr="2"/>
           <par name="type" nr="4"/>
         </parameters>
         <postconditions>
@@ -303,8 +724,8 @@
       </function>
       <function name="get_next_valid_time">
         <parameters>
-          <par name="preferred_time" nr="1"/>
           <par name="valid_time" nr="2"/>
+          <par name="preferred_time" nr="1"/>
           <par name="period_name" nr="3"/>
         </parameters>
         <postconditions>
@@ -344,8 +765,8 @@
       <function name="get_raw_command_line">
         <parameters>
           <par name="cmd" nr="1"/>
-          <par name="raw_command" nr="2"/>
           <par name="buffer_length" nr="3"/>
+          <par name="raw_command" nr="2"/>
           <par name="macro_options" nr="4"/>
         </parameters>
         <postconditions>
@@ -431,6 +852,24 @@
         <parameters>
           <par name="str" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>macro_ondemand</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>macro_ondemand</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -443,8 +882,8 @@
       </function>
       <function name="grab_on_demand_service_macro">
         <parameters>
-          <par name="svc" nr="1"/>
           <par name="macro" nr="2"/>
+          <par name="svc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -486,8 +925,8 @@
       </function>
       <function name="hashfunc1">
         <parameters>
-          <par name="name1" nr="1"/>
           <par name="hashslots" nr="2"/>
+          <par name="name1" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -501,9 +940,9 @@
       </function>
       <function name="hashfunc2">
         <parameters>
-          <par name="name1" nr="1"/>
-          <par name="name2" nr="2"/>
           <par name="hashslots" nr="3"/>
+          <par name="name2" nr="2"/>
+          <par name="name1" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -517,6 +956,30 @@
       </function>
       <function name="init_command_file_worker_thread">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>external_command_buffer_slots</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <ci>external_command_buffer_slots</ci>
+                  <cn>4</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -555,6 +1018,30 @@
       </function>
       <function name="init_service_result_worker_thread">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>check_result_buffer_slots</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <ci>check_result_buffer_slots</ci>
+                  <cn>4</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -591,6 +1078,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="mmap_fgets_multiline">
@@ -623,8 +1118,8 @@
       </function>
       <function name="my_rename">
         <parameters>
-          <par name="source" nr="1"/>
           <par name="dest" nr="2"/>
+          <par name="source" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -653,9 +1148,35 @@
       </function>
       <function name="my_strtok">
         <parameters>
-          <par name="buffer" nr="1"/>
           <par name="tokens" nr="2"/>
+          <par name="buffer" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>original_my_strtok_buffer</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>original_my_strtok_buffer</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>my_strtok_buffer</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -668,12 +1189,12 @@
       </function>
       <function name="my_system">
         <parameters>
+          <par name="output_length" nr="6"/>
           <par name="cmd" nr="1"/>
           <par name="timeout" nr="2"/>
-          <par name="early_timeout" nr="3"/>
-          <par name="exectime" nr="4"/>
           <par name="output" nr="5"/>
-          <par name="output_length" nr="6"/>
+          <par name="exectime" nr="4"/>
+          <par name="early_timeout" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -701,6 +1222,24 @@
       </function>
       <function name="open_command_file">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>command_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>command_file</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -713,9 +1252,9 @@
       </function>
       <function name="process_macros">
         <parameters>
-          <par name="input_buffer" nr="1"/>
-          <par name="output_buffer" nr="2"/>
           <par name="buffer_length" nr="3"/>
+          <par name="output_buffer" nr="2"/>
+          <par name="input_buffer" nr="1"/>
           <par name="options" nr="4"/>
         </parameters>
         <postconditions>
@@ -784,6 +1323,17 @@
         <parameters>
           <par name="arg" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <ci>logging_options</ci>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -824,9 +1374,9 @@
       </function>
       <function name="set_macro_environment_var">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="value" nr="2"/>
           <par name="set" nr="3"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -918,8 +1468,8 @@
       </function>
       <function name="submit_external_command">
         <parameters>
-          <par name="cmd" nr="1"/>
           <par name="buffer_items" nr="2"/>
+          <par name="cmd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -933,9 +1483,9 @@
       </function>
       <function name="submit_raw_external_command">
         <parameters>
+          <par name="buffer_items" nr="3"/>
           <par name="cmd" nr="1"/>
           <par name="ts" nr="2"/>
-          <par name="buffer_items" nr="3"/>
         </parameters>
         <postconditions>
           <post>

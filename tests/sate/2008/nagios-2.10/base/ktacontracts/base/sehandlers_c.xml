@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 13:16:38.610916"/>
-  <cfile name="base/sehandlers">
-    <data-structures/>
+  <header time="2018-12-18 14:58:24">
+    <application file="base/sehandlers.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="event_handler_timeout"/>
+      <gvar name="global_host_event_handler"/>
+      <gvar name="global_service_event_handler"/>
+      <gvar name="ochp_command"/>
+      <gvar name="ochp_timeout"/>
+      <gvar name="ocsp_command"/>
+      <gvar name="ocsp_timeout"/>
+    </global-variables>
     <functions>
       <function name="handle_host_event">
         <parameters>
@@ -50,6 +60,25 @@
         <parameters>
           <par name="hst" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>ochp_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>ochp_timeout</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -64,6 +93,25 @@
         <parameters>
           <par name="svc" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>ocsp_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>ocsp_timeout</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -78,6 +126,33 @@
         <parameters>
           <par name="hst" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>global_host_event_handler</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>global_host_event_handler</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>event_handler_timeout</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -92,6 +167,33 @@
         <parameters>
           <par name="svc" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>global_service_event_handler</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>global_service_event_handler</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>event_handler_timeout</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -106,6 +208,17 @@
         <parameters>
           <par name="hst" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>event_handler_timeout</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -120,6 +233,17 @@
         <parameters>
           <par name="svc" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>event_handler_timeout</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

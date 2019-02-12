@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 13:16:38.218276"/>
-  <cfile name="base/flapping">
-    <data-structures/>
+  <header time="2018-12-18 14:53:44">
+    <application file="base/flapping.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="interval_length"/>
+    </global-variables>
     <functions>
       <function name="check_for_host_flapping">
         <parameters>
           <par name="hst" nr="1"/>
           <par name="update_history" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>interval_length</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -21,8 +36,8 @@
       </function>
       <function name="check_for_service_flapping">
         <parameters>
-          <par name="svc" nr="1"/>
           <par name="update_history" nr="2"/>
+          <par name="svc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -36,10 +51,10 @@
       </function>
       <function name="clear_host_flap">
         <parameters>
-          <par name="hst" nr="1"/>
-          <par name="percent_change" nr="2"/>
           <par name="high_threshold" nr="3"/>
+          <par name="hst" nr="1"/>
           <par name="low_threshold" nr="4"/>
+          <par name="percent_change" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -53,10 +68,10 @@
       </function>
       <function name="clear_service_flap">
         <parameters>
-          <par name="svc" nr="1"/>
-          <par name="percent_change" nr="2"/>
           <par name="high_threshold" nr="3"/>
           <par name="low_threshold" nr="4"/>
+          <par name="svc" nr="1"/>
+          <par name="percent_change" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -150,10 +165,10 @@
       </function>
       <function name="set_host_flap">
         <parameters>
-          <par name="hst" nr="1"/>
-          <par name="percent_change" nr="2"/>
           <par name="high_threshold" nr="3"/>
+          <par name="hst" nr="1"/>
           <par name="low_threshold" nr="4"/>
+          <par name="percent_change" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -167,10 +182,10 @@
       </function>
       <function name="set_service_flap">
         <parameters>
-          <par name="svc" nr="1"/>
-          <par name="percent_change" nr="2"/>
           <par name="high_threshold" nr="3"/>
           <par name="low_threshold" nr="4"/>
+          <par name="svc" nr="1"/>
+          <par name="percent_change" nr="2"/>
         </parameters>
         <postconditions>
           <post>

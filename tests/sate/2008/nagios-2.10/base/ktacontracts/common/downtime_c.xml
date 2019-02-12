@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 13:16:38.965248"/>
-  <cfile name="common/downtime">
-    <data-structures/>
+  <header time="2018-12-18 15:02:05">
+    <application file="common/downtime.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="scheduled_downtime_list"/>
+    </global-variables>
     <functions>
       <function name="add_downtime">
         <parameters>
-          <par name="downtime_type" nr="1"/>
-          <par name="host_name" nr="2"/>
-          <par name="svc_description" nr="3"/>
           <par name="entry_time" nr="4"/>
           <par name="author" nr="5"/>
-          <par name="comment_data" nr="6"/>
-          <par name="start_time" nr="7"/>
-          <par name="end_time" nr="8"/>
-          <par name="fixed" nr="9"/>
           <par name="triggered_by" nr="10"/>
+          <par name="fixed" nr="9"/>
+          <par name="comment_data" nr="6"/>
+          <par name="svc_description" nr="3"/>
+          <par name="start_time" nr="7"/>
+          <par name="downtime_type" nr="1"/>
+          <par name="host_name" nr="2"/>
           <par name="duration" nr="11"/>
+          <par name="end_time" nr="8"/>
           <par name="downtime_id" nr="12"/>
         </parameters>
         <postconditions>
@@ -31,15 +35,15 @@
       </function>
       <function name="add_host_downtime">
         <parameters>
-          <par name="host_name" nr="1"/>
           <par name="entry_time" nr="2"/>
           <par name="author" nr="3"/>
+          <par name="triggered_by" nr="8"/>
+          <par name="fixed" nr="7"/>
           <par name="comment_data" nr="4"/>
           <par name="start_time" nr="5"/>
-          <par name="end_time" nr="6"/>
-          <par name="fixed" nr="7"/>
-          <par name="triggered_by" nr="8"/>
+          <par name="host_name" nr="1"/>
           <par name="duration" nr="9"/>
+          <par name="end_time" nr="6"/>
           <par name="downtime_id" nr="10"/>
         </parameters>
         <postconditions>
@@ -54,17 +58,17 @@
       </function>
       <function name="add_new_downtime">
         <parameters>
-          <par name="type" nr="1"/>
-          <par name="host_name" nr="2"/>
-          <par name="service_description" nr="3"/>
           <par name="entry_time" nr="4"/>
           <par name="author" nr="5"/>
+          <par name="triggered_by" nr="10"/>
+          <par name="fixed" nr="9"/>
           <par name="comment_data" nr="6"/>
           <par name="start_time" nr="7"/>
-          <par name="end_time" nr="8"/>
-          <par name="fixed" nr="9"/>
-          <par name="triggered_by" nr="10"/>
+          <par name="service_description" nr="3"/>
+          <par name="type" nr="1"/>
+          <par name="host_name" nr="2"/>
           <par name="duration" nr="11"/>
+          <par name="end_time" nr="8"/>
           <par name="downtime_id" nr="12"/>
         </parameters>
         <postconditions>
@@ -79,15 +83,15 @@
       </function>
       <function name="add_new_host_downtime">
         <parameters>
-          <par name="host_name" nr="1"/>
           <par name="entry_time" nr="2"/>
           <par name="author" nr="3"/>
+          <par name="triggered_by" nr="8"/>
+          <par name="fixed" nr="7"/>
           <par name="comment_data" nr="4"/>
           <par name="start_time" nr="5"/>
-          <par name="end_time" nr="6"/>
-          <par name="fixed" nr="7"/>
-          <par name="triggered_by" nr="8"/>
+          <par name="host_name" nr="1"/>
           <par name="duration" nr="9"/>
+          <par name="end_time" nr="6"/>
           <par name="downtime_id" nr="10"/>
         </parameters>
         <postconditions>
@@ -102,16 +106,16 @@
       </function>
       <function name="add_new_service_downtime">
         <parameters>
-          <par name="host_name" nr="1"/>
-          <par name="service_description" nr="2"/>
           <par name="entry_time" nr="3"/>
           <par name="author" nr="4"/>
+          <par name="triggered_by" nr="9"/>
+          <par name="fixed" nr="8"/>
           <par name="comment_data" nr="5"/>
           <par name="start_time" nr="6"/>
-          <par name="end_time" nr="7"/>
-          <par name="fixed" nr="8"/>
-          <par name="triggered_by" nr="9"/>
+          <par name="service_description" nr="2"/>
+          <par name="host_name" nr="1"/>
           <par name="duration" nr="10"/>
+          <par name="end_time" nr="7"/>
           <par name="downtime_id" nr="11"/>
         </parameters>
         <postconditions>
@@ -126,16 +130,16 @@
       </function>
       <function name="add_service_downtime">
         <parameters>
-          <par name="host_name" nr="1"/>
-          <par name="svc_description" nr="2"/>
           <par name="entry_time" nr="3"/>
           <par name="author" nr="4"/>
-          <par name="comment_data" nr="5"/>
-          <par name="start_time" nr="6"/>
-          <par name="end_time" nr="7"/>
-          <par name="fixed" nr="8"/>
           <par name="triggered_by" nr="9"/>
+          <par name="fixed" nr="8"/>
+          <par name="comment_data" nr="5"/>
+          <par name="svc_description" nr="2"/>
+          <par name="start_time" nr="6"/>
+          <par name="host_name" nr="1"/>
           <par name="duration" nr="10"/>
+          <par name="end_time" nr="7"/>
           <par name="downtime_id" nr="11"/>
         </parameters>
         <postconditions>
@@ -207,6 +211,37 @@
           <par name="type" nr="1"/>
           <par name="downtime_id" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>scheduled_downtime_list</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>scheduled_downtime_list</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="next"/>
+                  </addressed-value>
+                  <ci>scheduled_downtime_list</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -255,6 +290,201 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="type"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="start_time"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="triggered_by"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="host_name"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="duration"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="fixed"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="service_description"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="incremented_pending_downtime"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="downtime_id"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="end_time"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="comment"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="author"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="is_in_effect"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="entry_time"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="start_flex_downtime"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -359,18 +589,18 @@
       </function>
       <function name="schedule_downtime">
         <parameters>
-          <par name="type" nr="1"/>
-          <par name="host_name" nr="2"/>
-          <par name="service_description" nr="3"/>
           <par name="entry_time" nr="4"/>
           <par name="author" nr="5"/>
+          <par name="triggered_by" nr="10"/>
+          <par name="fixed" nr="9"/>
+          <par name="new_downtime_id" nr="12"/>
           <par name="comment_data" nr="6"/>
           <par name="start_time" nr="7"/>
-          <par name="end_time" nr="8"/>
-          <par name="fixed" nr="9"/>
-          <par name="triggered_by" nr="10"/>
+          <par name="service_description" nr="3"/>
+          <par name="type" nr="1"/>
+          <par name="host_name" nr="2"/>
           <par name="duration" nr="11"/>
-          <par name="new_downtime_id" nr="12"/>
+          <par name="end_time" nr="8"/>
         </parameters>
         <postconditions>
           <post>

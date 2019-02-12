@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 13:16:38.913366"/>
-  <cfile name="common/comments">
-    <data-structures/>
+  <header time="2018-12-18 15:01:09">
+    <application file="common/comments.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="comment_hashlist"/>
+      <gvar name="comment_list"/>
+    </global-variables>
     <functions>
       <function name="add_comment">
         <parameters>
-          <par name="comment_type" nr="1"/>
-          <par name="entry_type" nr="2"/>
-          <par name="host_name" nr="3"/>
-          <par name="svc_description" nr="4"/>
           <par name="entry_time" nr="5"/>
           <par name="author" nr="6"/>
-          <par name="comment_data" nr="7"/>
-          <par name="comment_id" nr="8"/>
+          <par name="entry_type" nr="2"/>
           <par name="persistent" nr="9"/>
           <par name="expires" nr="10"/>
+          <par name="comment_data" nr="7"/>
+          <par name="svc_description" nr="4"/>
           <par name="expire_time" nr="11"/>
+          <par name="comment_type" nr="1"/>
+          <par name="comment_id" nr="8"/>
+          <par name="host_name" nr="3"/>
           <par name="source" nr="12"/>
         </parameters>
         <postconditions>
@@ -33,6 +38,16 @@
         <parameters>
           <par name="new_comment" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>comment_hashlist</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -45,15 +60,15 @@
       </function>
       <function name="add_host_comment">
         <parameters>
-          <par name="entry_type" nr="1"/>
-          <par name="host_name" nr="2"/>
           <par name="entry_time" nr="3"/>
           <par name="author" nr="4"/>
-          <par name="comment_data" nr="5"/>
-          <par name="comment_id" nr="6"/>
+          <par name="entry_type" nr="1"/>
           <par name="persistent" nr="7"/>
           <par name="expires" nr="8"/>
+          <par name="comment_data" nr="5"/>
           <par name="expire_time" nr="9"/>
+          <par name="comment_id" nr="6"/>
+          <par name="host_name" nr="2"/>
           <par name="source" nr="10"/>
         </parameters>
         <postconditions>
@@ -68,18 +83,18 @@
       </function>
       <function name="add_new_comment">
         <parameters>
-          <par name="type" nr="1"/>
-          <par name="entry_type" nr="2"/>
-          <par name="host_name" nr="3"/>
-          <par name="svc_description" nr="4"/>
           <par name="entry_time" nr="5"/>
           <par name="author_name" nr="6"/>
-          <par name="comment_data" nr="7"/>
+          <par name="entry_type" nr="2"/>
           <par name="persistent" nr="8"/>
-          <par name="source" nr="9"/>
           <par name="expires" nr="10"/>
+          <par name="comment_data" nr="7"/>
+          <par name="svc_description" nr="4"/>
           <par name="expire_time" nr="11"/>
           <par name="comment_id" nr="12"/>
+          <par name="type" nr="1"/>
+          <par name="host_name" nr="3"/>
+          <par name="source" nr="9"/>
         </parameters>
         <postconditions>
           <post>
@@ -93,16 +108,16 @@
       </function>
       <function name="add_new_host_comment">
         <parameters>
-          <par name="entry_type" nr="1"/>
-          <par name="host_name" nr="2"/>
           <par name="entry_time" nr="3"/>
           <par name="author_name" nr="4"/>
-          <par name="comment_data" nr="5"/>
+          <par name="entry_type" nr="1"/>
           <par name="persistent" nr="6"/>
-          <par name="source" nr="7"/>
           <par name="expires" nr="8"/>
+          <par name="comment_data" nr="5"/>
           <par name="expire_time" nr="9"/>
           <par name="comment_id" nr="10"/>
+          <par name="host_name" nr="2"/>
+          <par name="source" nr="7"/>
         </parameters>
         <postconditions>
           <post>
@@ -116,17 +131,17 @@
       </function>
       <function name="add_new_service_comment">
         <parameters>
-          <par name="entry_type" nr="1"/>
-          <par name="host_name" nr="2"/>
-          <par name="svc_description" nr="3"/>
           <par name="entry_time" nr="4"/>
           <par name="author_name" nr="5"/>
-          <par name="comment_data" nr="6"/>
+          <par name="entry_type" nr="1"/>
           <par name="persistent" nr="7"/>
-          <par name="source" nr="8"/>
           <par name="expires" nr="9"/>
+          <par name="comment_data" nr="6"/>
+          <par name="svc_description" nr="3"/>
           <par name="expire_time" nr="10"/>
           <par name="comment_id" nr="11"/>
+          <par name="host_name" nr="2"/>
+          <par name="source" nr="8"/>
         </parameters>
         <postconditions>
           <post>
@@ -140,16 +155,16 @@
       </function>
       <function name="add_service_comment">
         <parameters>
-          <par name="entry_type" nr="1"/>
-          <par name="host_name" nr="2"/>
-          <par name="svc_description" nr="3"/>
           <par name="entry_time" nr="4"/>
           <par name="author" nr="5"/>
-          <par name="comment_data" nr="6"/>
-          <par name="comment_id" nr="7"/>
+          <par name="entry_type" nr="1"/>
           <par name="persistent" nr="8"/>
           <par name="expires" nr="9"/>
+          <par name="comment_data" nr="6"/>
+          <par name="svc_description" nr="3"/>
           <par name="expire_time" nr="10"/>
+          <par name="comment_id" nr="7"/>
+          <par name="host_name" nr="2"/>
           <par name="source" nr="11"/>
         </parameters>
         <postconditions>
@@ -192,9 +207,9 @@
       </function>
       <function name="delete_all_comments">
         <parameters>
+          <par name="svc_description" nr="3"/>
           <par name="type" nr="1"/>
           <par name="host_name" nr="2"/>
-          <par name="svc_description" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -222,8 +237,8 @@
       </function>
       <function name="delete_all_service_comments">
         <parameters>
-          <par name="host_name" nr="1"/>
           <par name="svc_description" nr="2"/>
+          <par name="host_name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -237,9 +252,56 @@
       </function>
       <function name="delete_comment">
         <parameters>
-          <par name="type" nr="1"/>
           <par name="comment_id" nr="2"/>
+          <par name="type" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>comment_hashlist</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>comment_hashlist</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>comment_list</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>comment_list</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="next"/>
+                  </addressed-value>
+                  <ci>comment_list</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -280,8 +342,8 @@
       </function>
       <function name="find_comment">
         <parameters>
-          <par name="comment_id" nr="1"/>
           <par name="comment_type" nr="2"/>
+          <par name="comment_id" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -323,6 +385,24 @@
       </function>
       <function name="free_comment_data">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>comment_hashlist</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>comment_hashlist</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -345,13 +425,39 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_next_comment_by_host">
         <parameters>
-          <par name="host_name" nr="1"/>
           <par name="start" nr="2"/>
+          <par name="host_name" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>comment_hashlist</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>comment_hashlist</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -392,8 +498,8 @@
       </function>
       <function name="number_of_service_comments">
         <parameters>
-          <par name="host_name" nr="1"/>
           <par name="svc_description" nr="2"/>
+          <par name="host_name" nr="1"/>
         </parameters>
         <postconditions>
           <post>

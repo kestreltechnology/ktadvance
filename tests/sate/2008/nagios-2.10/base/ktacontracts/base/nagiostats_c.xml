@@ -1,11 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 13:16:38.339755"/>
-  <cfile name="base/nagiostats">
-    <data-structures/>
+  <header time="2018-12-18 14:55:11">
+    <application file="base/nagiostats.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="mrtg_variables"/>
+      <gvar name="optarg"/>
+      <gvar name="status_version"/>
+    </global-variables>
     <functions>
       <function name="display_mrtg_values">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>status_version</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>status_version</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>mrtg_variables</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -18,6 +50,24 @@
       </function>
       <function name="display_stats">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>status_version</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>status_version</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -31,10 +81,10 @@
       <function name="get_time_breakdown">
         <parameters>
           <par name="raw_time" nr="1"/>
-          <par name="days" nr="2"/>
           <par name="hours" nr="3"/>
-          <par name="minutes" nr="4"/>
+          <par name="days" nr="2"/>
           <par name="seconds" nr="5"/>
+          <par name="minutes" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -48,9 +98,27 @@
       </function>
       <function name="main">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>optarg</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>optarg</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

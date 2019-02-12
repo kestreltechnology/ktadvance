@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 13:16:40.603814"/>
-  <cfile name="xdata/xpddefault">
-    <data-structures/>
+  <header time="2018-12-18 15:11:44">
+    <application file="xdata/xpddefault.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="xpddefault_host_perfdata_command"/>
+      <gvar name="xpddefault_host_perfdata_file"/>
+      <gvar name="xpddefault_host_perfdata_file_processing_command"/>
+      <gvar name="xpddefault_host_perfdata_file_template"/>
+      <gvar name="xpddefault_host_perfdata_fp"/>
+      <gvar name="xpddefault_perfdata_timeout"/>
+      <gvar name="xpddefault_service_perfdata_command"/>
+      <gvar name="xpddefault_service_perfdata_file"/>
+      <gvar name="xpddefault_service_perfdata_file_processing_command"/>
+      <gvar name="xpddefault_service_perfdata_file_template"/>
+      <gvar name="xpddefault_service_perfdata_fp"/>
+    </global-variables>
     <functions>
       <function name="xpddefault_cleanup_performance_data">
         <parameters>
@@ -20,6 +34,35 @@
       </function>
       <function name="xpddefault_close_host_perfdata_file">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_host_perfdata_fp</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>xpddefault_host_perfdata_fp</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>xpddefault_host_perfdata_fp</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -32,6 +75,35 @@
       </function>
       <function name="xpddefault_close_service_perfdata_file">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>xpddefault_service_perfdata_fp</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_service_perfdata_fp</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>xpddefault_service_perfdata_fp</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -44,6 +116,136 @@
       </function>
       <function name="xpddefault_free_memory">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_host_perfdata_file_template</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_service_perfdata_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_host_perfdata_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_service_perfdata_file_processing_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_host_perfdata_file_processing_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_service_perfdata_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_host_perfdata_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_service_perfdata_file_template</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>xpddefault_service_perfdata_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>xpddefault_host_perfdata_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>xpddefault_service_perfdata_file_processing_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>xpddefault_service_perfdata_file_template</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>xpddefault_host_perfdata_file_processing_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>xpddefault_host_perfdata_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>xpddefault_host_perfdata_file_template</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>xpddefault_service_perfdata_file</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -84,6 +286,24 @@
       </function>
       <function name="xpddefault_open_host_perfdata_file">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_host_perfdata_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>xpddefault_host_perfdata_file</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -96,6 +316,24 @@
       </function>
       <function name="xpddefault_open_service_perfdata_file">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_service_perfdata_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>xpddefault_service_perfdata_file</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -122,6 +360,25 @@
       </function>
       <function name="xpddefault_process_host_perfdata_file">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_host_perfdata_file_processing_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>xpddefault_perfdata_timeout</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -134,6 +391,25 @@
       </function>
       <function name="xpddefault_process_service_perfdata_file">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_service_perfdata_file_processing_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>xpddefault_perfdata_timeout</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -148,6 +424,25 @@
         <parameters>
           <par name="hst" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_host_perfdata_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>xpddefault_perfdata_timeout</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -162,6 +457,25 @@
         <parameters>
           <par name="svc" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_service_perfdata_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>xpddefault_perfdata_timeout</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -190,6 +504,51 @@
         <parameters>
           <par name="hst" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>xpddefault_host_perfdata_file_template</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_host_perfdata_fp</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>xpddefault_host_perfdata_fp</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_host_perfdata_file_template</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>xpddefault_host_perfdata_fp</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -218,6 +577,51 @@
         <parameters>
           <par name="svc" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>xpddefault_service_perfdata_fp</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_service_perfdata_fp</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>xpddefault_service_perfdata_fp</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>xpddefault_service_perfdata_file_template</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>xpddefault_service_perfdata_file_template</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header time="2018-12-06 16:17:56">
+  <header time="2018-12-18 14:51:35">
     <application file="base/commands.c"/>
   </header>
   <cfile>
@@ -63,6 +63,14 @@
                   <cn>10</cn>
                 </apply>
                 <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>config_file</ci>
               </apply>
             </math>
           </pre>
@@ -269,6 +277,24 @@
           <par name="cmd" nr="1"/>
           <par name="check_time" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>passive_check_result_list_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>passive_check_result_list_tail</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -743,6 +769,38 @@
           <par name="cmd" nr="1"/>
         </parameters>
         <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>global_service_event_handler</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>global_host_event_handler</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>global_host_event_handler</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>global_service_event_handler</ci>
+              </apply>
+            </math>
+          </pre>
           <pre>
             <math>
               <apply>

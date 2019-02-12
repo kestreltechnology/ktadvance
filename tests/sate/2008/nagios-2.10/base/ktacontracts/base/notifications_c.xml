@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-12 13:16:38.576057"/>
-  <cfile name="base/notifications">
-    <data-structures/>
+  <header time="2018-12-18 14:57:23">
+    <application file="base/notifications.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="notification_list"/>
+      <gvar name="notification_timeout"/>
+    </global-variables>
     <functions>
       <function name="add_notification">
         <parameters>
           <par name="cntct" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>notification_list</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -20,9 +35,9 @@
       </function>
       <function name="check_contact_host_notification_viability">
         <parameters>
-          <par name="cntct" nr="1"/>
           <par name="hst" nr="2"/>
           <par name="type" nr="3"/>
+          <par name="cntct" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -36,9 +51,9 @@
       </function>
       <function name="check_contact_service_notification_viability">
         <parameters>
-          <par name="cntct" nr="1"/>
           <par name="svc" nr="2"/>
           <par name="type" nr="3"/>
+          <par name="cntct" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -97,8 +112,8 @@
       </function>
       <function name="create_notification_list_from_service">
         <parameters>
-          <par name="svc" nr="1"/>
           <par name="escalated" nr="2"/>
+          <par name="svc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -157,9 +172,9 @@
       <function name="host_notification">
         <parameters>
           <par name="hst" nr="1"/>
-          <par name="type" nr="2"/>
-          <par name="ack_author" nr="3"/>
           <par name="ack_data" nr="4"/>
+          <par name="ack_author" nr="3"/>
+          <par name="type" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -173,8 +188,8 @@
       </function>
       <function name="is_valid_escalation_for_service_notification">
         <parameters>
-          <par name="svc" nr="1"/>
           <par name="se" nr="2"/>
+          <par name="svc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -188,8 +203,8 @@
       </function>
       <function name="is_valid_host_escalation_for_host_notification">
         <parameters>
-          <par name="hst" nr="1"/>
           <par name="he" nr="2"/>
+          <par name="hst" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -203,13 +218,24 @@
       </function>
       <function name="notify_contact_of_host">
         <parameters>
-          <par name="cntct" nr="1"/>
           <par name="hst" nr="2"/>
-          <par name="type" nr="3"/>
-          <par name="ack_author" nr="4"/>
           <par name="ack_data" nr="5"/>
           <par name="escalated" nr="6"/>
+          <par name="ack_author" nr="4"/>
+          <par name="type" nr="3"/>
+          <par name="cntct" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>notification_timeout</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -222,13 +248,24 @@
       </function>
       <function name="notify_contact_of_service">
         <parameters>
-          <par name="cntct" nr="1"/>
-          <par name="svc" nr="2"/>
-          <par name="type" nr="3"/>
-          <par name="ack_author" nr="4"/>
           <par name="ack_data" nr="5"/>
           <par name="escalated" nr="6"/>
+          <par name="svc" nr="2"/>
+          <par name="ack_author" nr="4"/>
+          <par name="type" nr="3"/>
+          <par name="cntct" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>notification_timeout</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -241,10 +278,10 @@
       </function>
       <function name="service_notification">
         <parameters>
-          <par name="svc" nr="1"/>
-          <par name="type" nr="2"/>
-          <par name="ack_author" nr="3"/>
           <par name="ack_data" nr="4"/>
+          <par name="svc" nr="1"/>
+          <par name="ack_author" nr="3"/>
+          <par name="type" nr="2"/>
         </parameters>
         <postconditions>
           <post>
