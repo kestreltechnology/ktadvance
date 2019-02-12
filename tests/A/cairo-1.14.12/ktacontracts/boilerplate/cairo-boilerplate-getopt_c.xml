@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-14 00:27:10.370768"/>
-  <cfile name="boilerplate/cairo-boilerplate-getopt">
-    <data-structures/>
+  <header time="2018-12-20 07:54:46">
+    <application file="boilerplate/cairo-boilerplate-getopt.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="argv_index"/>
+      <gvar name="argv_index2"/>
+      <gvar name="nonopt"/>
+      <gvar name="prev_argc"/>
+      <gvar name="prev_argv"/>
+    </global-variables>
     <functions>
       <function name="_cairo_getopt">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
           <par name="optstr" nr="3"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -22,6 +30,50 @@
       </function>
       <function name="increment_index">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>prev_argv</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>argv_index</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>prev_argv</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>argv_index2</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -34,6 +86,97 @@
       </function>
       <function name="permute_argv_once">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>prev_argv</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>argv_index</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <apply>
+                    <minus/>
+                    <ci>prev_argc</ci>
+                    <ci>argv_index</ci>
+                  </apply>
+                  <cn>1</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>prev_argv</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>prev_argc</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>nonopt</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <apply>
+                    <minus/>
+                    <ci>prev_argc</ci>
+                    <ci>argv_index</ci>
+                  </apply>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

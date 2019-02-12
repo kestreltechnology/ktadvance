@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-14 00:27:10.425224"/>
-  <cfile name="boilerplate/cairo-boilerplate-svg">
-    <data-structures/>
+  <header time="2018-12-20 07:58:35">
+    <application file="boilerplate/cairo-boilerplate-svg.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="_cairo_boilerplate_svg11_create_surface">
         <parameters>
-          <par name="name" nr="1"/>
-          <par name="content" nr="2"/>
           <par name="width" nr="3"/>
-          <par name="height" nr="4"/>
           <par name="max_width" nr="5"/>
-          <par name="max_height" nr="6"/>
+          <par name="content" nr="2"/>
           <par name="mode" nr="7"/>
+          <par name="max_height" nr="6"/>
+          <par name="height" nr="4"/>
           <par name="closure" nr="8"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -27,14 +29,14 @@
       </function>
       <function name="_cairo_boilerplate_svg12_create_surface">
         <parameters>
-          <par name="name" nr="1"/>
-          <par name="content" nr="2"/>
           <par name="width" nr="3"/>
-          <par name="height" nr="4"/>
           <par name="max_width" nr="5"/>
-          <par name="max_height" nr="6"/>
+          <par name="content" nr="2"/>
           <par name="mode" nr="7"/>
+          <par name="max_height" nr="6"/>
+          <par name="height" nr="4"/>
           <par name="closure" nr="8"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -72,19 +74,139 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="status"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="snapshot_of"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="finished"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="device_transform"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="device"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="owns_device"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="damage"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="backend"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="_cairo_boilerplate_svg_create_surface">
         <parameters>
-          <par name="name" nr="1"/>
-          <par name="content" nr="2"/>
-          <par name="version" nr="3"/>
           <par name="width" nr="4"/>
-          <par name="height" nr="5"/>
+          <par name="version" nr="3"/>
           <par name="max_width" nr="6"/>
-          <par name="max_height" nr="7"/>
+          <par name="content" nr="2"/>
           <par name="mode" nr="8"/>
+          <par name="max_height" nr="7"/>
+          <par name="height" nr="5"/>
           <par name="closure" nr="9"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -112,8 +234,8 @@
       </function>
       <function name="_cairo_boilerplate_svg_force_fallbacks">
         <parameters>
-          <par name="abstract_surface" nr="1"/>
           <par name="x_pixels_per_inch" nr="2"/>
+          <par name="abstract_surface" nr="1"/>
           <par name="y_pixels_per_inch" nr="3"/>
         </parameters>
         <postconditions>
@@ -128,10 +250,10 @@
       </function>
       <function name="_cairo_boilerplate_svg_get_image_surface">
         <parameters>
-          <par name="surface" nr="1"/>
-          <par name="page" nr="2"/>
           <par name="width" nr="3"/>
+          <par name="page" nr="2"/>
           <par name="height" nr="4"/>
+          <par name="surface" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -145,8 +267,8 @@
       </function>
       <function name="_cairo_boilerplate_svg_surface_write_to_png">
         <parameters>
-          <par name="surface" nr="1"/>
           <par name="filename" nr="2"/>
+          <par name="surface" nr="1"/>
         </parameters>
         <postconditions>
           <post>

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-14 00:27:10.562257"/>
-  <cfile name="perf/cairo-analyse-trace">
-    <data-structures/>
+  <header time="2018-12-20 10:01:46">
+    <application file="perf/cairo-analyse-trace.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="optarg"/>
+    </global-variables>
     <functions>
       <function name="basename_no_ext">
         <parameters>
@@ -21,8 +25,8 @@
       <function name="cairo_perf_can_run">
         <parameters>
           <par name="perf" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="is_explicit" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -50,8 +54,8 @@
       </function>
       <function name="cairo_perf_trace">
         <parameters>
-          <par name="perf" nr="1"/>
           <par name="target" nr="2"/>
+          <par name="perf" nr="1"/>
           <par name="trace" nr="3"/>
         </parameters>
         <postconditions>
@@ -66,8 +70,8 @@
       </function>
       <function name="cairo_perf_trace_dir">
         <parameters>
-          <par name="perf" nr="1"/>
           <par name="target" nr="2"/>
+          <par name="perf" nr="1"/>
           <par name="dirname___0" nr="3"/>
         </parameters>
         <postconditions>
@@ -97,8 +101,8 @@
       </function>
       <function name="execute">
         <parameters>
-          <par name="perf" nr="1"/>
           <par name="args" nr="2"/>
+          <par name="perf" nr="1"/>
           <par name="trace" nr="3"/>
         </parameters>
         <postconditions>
@@ -141,8 +145,8 @@
       </function>
       <function name="main">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -157,9 +161,27 @@
       <function name="parse_options">
         <parameters>
           <par name="perf" nr="1"/>
-          <par name="argc" nr="2"/>
           <par name="argv" nr="3"/>
+          <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>optarg</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>optarg</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -172,9 +194,9 @@
       </function>
       <function name="print">
         <parameters>
-          <par name="closure" nr="1"/>
-          <par name="data" nr="2"/>
           <par name="length" nr="3"/>
+          <par name="data" nr="2"/>
+          <par name="closure" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -203,10 +225,10 @@
       </function>
       <function name="surface_create">
         <parameters>
-          <par name="closure" nr="1"/>
-          <par name="content" nr="2"/>
           <par name="width" nr="3"/>
+          <par name="content" nr="2"/>
           <par name="height" nr="4"/>
+          <par name="closure" nr="1"/>
           <par name="uid" nr="5"/>
         </parameters>
         <postconditions>
@@ -235,8 +257,8 @@
       </function>
       <function name="warn_no_traces">
         <parameters>
-          <par name="message" nr="1"/>
           <par name="trace_dir" nr="2"/>
+          <par name="message" nr="1"/>
         </parameters>
         <postconditions>
           <post>

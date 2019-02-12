@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-14 00:27:10.406462"/>
-  <cfile name="boilerplate/cairo-boilerplate-script">
-    <data-structures/>
+  <header time="2018-12-20 07:57:22">
+    <application file="boilerplate/cairo-boilerplate-script.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="_cairo_boilerplate_script_cleanup">
         <parameters>
@@ -20,8 +22,8 @@
       </function>
       <function name="_cairo_boilerplate_script_convert_to_image">
         <parameters>
-          <par name="surface" nr="1"/>
           <par name="page" nr="2"/>
+          <par name="surface" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -31,18 +33,34 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="_cairo_boilerplate_script_create_surface">
         <parameters>
-          <par name="name" nr="1"/>
-          <par name="content" nr="2"/>
           <par name="width" nr="3"/>
-          <par name="height" nr="4"/>
           <par name="max_width" nr="5"/>
-          <par name="max_height" nr="6"/>
+          <par name="content" nr="2"/>
           <par name="mode" nr="7"/>
+          <par name="max_height" nr="6"/>
+          <par name="height" nr="4"/>
           <par name="closure" nr="8"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -70,10 +88,10 @@
       </function>
       <function name="_cairo_boilerplate_script_get_image_surface">
         <parameters>
-          <par name="surface" nr="1"/>
-          <par name="page" nr="2"/>
           <par name="width" nr="3"/>
+          <par name="page" nr="2"/>
           <par name="height" nr="4"/>
+          <par name="surface" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -87,8 +105,8 @@
       </function>
       <function name="_cairo_boilerplate_script_surface_write_to_png">
         <parameters>
-          <par name="surface" nr="1"/>
           <par name="filename" nr="2"/>
+          <par name="surface" nr="1"/>
         </parameters>
         <postconditions>
           <post>
