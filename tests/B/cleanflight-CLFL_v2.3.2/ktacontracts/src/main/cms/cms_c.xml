@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-05 16:14:16.286853"/>
-  <cfile name="src/main/cms/cms">
-    <data-structures/>
+  <header time="2019-01-25 12:19:32">
+    <application file="src/main/cms/cms.c"/>
+  </header>
+  <cfile>
     <global-variables>
+      <gvar name="cmsDeviceCount"/>
       <gvar name="pageTop"/>
     </global-variables>
     <functions>
@@ -11,37 +13,48 @@
         <parameters>
           <par name="instance" nr="1"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="cmsDisplayPortRegister">
         <parameters>
           <par name="pDisplay" nr="1"/>
         </parameters>
-        <postconditions/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>cmsDeviceCount</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
       <function name="cmsDisplayPortSelectCurrent">
         <parameters/>
-        <postconditions/>
       </function>
       <function name="cmsDisplayPortSelectNext">
         <parameters/>
-        <postconditions/>
       </function>
       <function name="cmsDrawMenu">
         <parameters>
-          <par name="pDisplay" nr="1"/>
           <par name="currentTimeUs" nr="2"/>
+          <par name="pDisplay" nr="1"/>
         </parameters>
-	<preconditions>
-	  <pre>
-	    <math>
-	      <apply>
-		<not-null/>
-		<ci>pageTop</ci>
-	      </apply>
-	    </math>
-	  </pre>
-	</preconditions>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>pageTop</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
       <function name="cmsDrawMenuEntry">
         <parameters>
@@ -49,156 +62,139 @@
           <par name="p" nr="2"/>
           <par name="row" nr="3"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="cmsDrawMenuItemValue">
         <parameters>
           <par name="pDisplay" nr="1"/>
           <par name="buff" nr="2"/>
-          <par name="row" nr="3"/>
           <par name="maxSize" nr="4"/>
+          <par name="row" nr="3"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="cmsFormatFloat">
         <parameters>
-          <par name="value" nr="1"/>
           <par name="floatString" nr="2"/>
+          <par name="value" nr="1"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="cmsHandleKey">
         <parameters>
           <par name="pDisplay" nr="1"/>
           <par name="key" nr="2"/>
         </parameters>
-	<preconditions>
-	  <pre>
-	    <math>
-	      <apply>
-		<not-null/>
-		<ci>pageTop</ci>
-	      </apply>
-	    </math>
-	  </pre>
-	</preconditions>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>pageTop</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
       <function name="cmsHandleKeyWithRepeat">
         <parameters>
           <par name="pDisplay" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="repeatCount" nr="3"/>
+          <par name="key" nr="2"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="cmsHandler">
         <parameters>
           <par name="currentTimeUs" nr="1"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="cmsInit">
         <parameters/>
-        <postconditions/>
       </function>
       <function name="cmsMenuBack">
         <parameters>
           <par name="pDisplay" nr="1"/>
         </parameters>
-	<preconditions>
-	  <pre>
-	    <math>
-	      <apply>
-		<not-null/>
-		<ci>pageTop</ci>
-	      </apply>
-	    </math>
-	  </pre>
-	</preconditions>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>pageTop</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
       <function name="cmsMenuChange">
         <parameters>
           <par name="pDisplay" nr="1"/>
           <par name="ptr" nr="2"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="cmsMenuCountPage">
         <parameters>
           <par name="pDisplay" nr="1"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="cmsMenuExit">
         <parameters>
           <par name="pDisplay" nr="1"/>
           <par name="ptr" nr="2"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="cmsMenuOpen">
         <parameters/>
-        <postconditions/>
       </function>
       <function name="cmsPadLeftToSize">
         <parameters>
           <par name="buf" nr="1"/>
           <par name="size" nr="2"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="cmsPadToSize">
         <parameters>
           <par name="buf" nr="1"/>
           <par name="size" nr="2"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="cmsPageNext">
         <parameters>
           <par name="instance" nr="1"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="cmsPagePrev">
         <parameters>
           <par name="instance" nr="1"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="cmsPageSelect">
         <parameters>
           <par name="instance" nr="1"/>
           <par name="newpage" nr="2"/>
         </parameters>
-	<preconditions>
-	  <pre>
-	    <math>
-	      <apply>
-		<not-null/>
-		<ci>pageTop</ci>
-	      </apply>
-	    </math>
-	  </pre>
-	</preconditions>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>pageTop</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
       </function>
       <function name="cmsTraverseGlobalExit">
         <parameters>
           <par name="pMenu" nr="1"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="cmsUpdate">
         <parameters>
           <par name="currentTimeUs" nr="1"/>
         </parameters>
-        <postconditions/>
       </function>
       <function name="cmsUpdateMaxRow">
         <parameters>
           <par name="instance" nr="1"/>
         </parameters>
-        <postconditions/>
       </function>
     </functions>
   </cfile>
