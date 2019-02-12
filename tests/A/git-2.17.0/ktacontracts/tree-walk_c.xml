@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:09.880069"/>
-  <cfile name="tree-walk">
-    <data-structures/>
+  <header time="2018-12-19 17:35:24">
+    <application file="tree-walk.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="tree_type"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -16,14 +20,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="basecmp">
         <parameters>
           <par name="item" nr="1"/>
-          <par name="base" nr="2"/>
-          <par name="match" nr="3"/>
           <par name="len" nr="4"/>
+          <par name="match" nr="3"/>
+          <par name="base" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,9 +63,9 @@
       </function>
       <function name="check_entry_match">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="a_len" nr="2"/>
           <par name="b" nr="3"/>
+          <par name="a" nr="1"/>
           <par name="b_len" nr="4"/>
         </parameters>
         <postconditions>
@@ -97,11 +109,11 @@
       </function>
       <function name="do_match">
         <parameters>
-          <par name="entry" nr="1"/>
-          <par name="base" nr="2"/>
           <par name="base_offset" nr="3"/>
           <par name="ps" nr="4"/>
+          <par name="entry" nr="1"/>
           <par name="exclude" nr="5"/>
+          <par name="base" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -144,10 +156,10 @@
       </function>
       <function name="extended_entry_extract">
         <parameters>
-          <par name="t" nr="1"/>
-          <par name="a" nr="2"/>
           <par name="first" nr="3"/>
           <par name="first_len" nr="4"/>
+          <par name="t" nr="1"/>
+          <par name="a" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -164,6 +176,24 @@
           <par name="desc" nr="1"/>
           <par name="oid" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tree_type</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>tree_type</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -176,10 +206,10 @@
       </function>
       <function name="find_tree_entry">
         <parameters>
-          <par name="t" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="result" nr="3"/>
           <par name="mode" nr="4"/>
+          <par name="t" nr="1"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -207,8 +237,8 @@
       </function>
       <function name="get_mode">
         <parameters>
-          <par name="str" nr="1"/>
           <par name="modep" nr="2"/>
+          <par name="str" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -218,15 +248,44 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_tree_entry">
         <parameters>
+          <par name="mode" nr="4"/>
+          <par name="sha1" nr="3"/>
           <par name="tree_sha1" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="sha1" nr="3"/>
-          <par name="mode" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tree_type</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>tree_type</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -239,12 +298,30 @@
       </function>
       <function name="get_tree_entry_follow_symlinks">
         <parameters>
-          <par name="tree_sha1" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="result" nr="3"/>
-          <par name="result_path" nr="4"/>
           <par name="mode" nr="5"/>
+          <par name="tree_sha1" nr="1"/>
+          <par name="result_path" nr="4"/>
+          <par name="name" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tree_type</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>tree_type</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -321,9 +398,9 @@
       </function>
       <function name="make_traverse_path">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="info" nr="2"/>
           <par name="n" nr="3"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -338,9 +415,9 @@
       <function name="match_dir_prefix">
         <parameters>
           <par name="item" nr="1"/>
-          <par name="base" nr="2"/>
-          <par name="match" nr="3"/>
           <par name="matchlen" nr="4"/>
+          <par name="match" nr="3"/>
+          <par name="base" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -355,11 +432,11 @@
       <function name="match_entry">
         <parameters>
           <par name="item" nr="1"/>
-          <par name="entry" nr="2"/>
           <par name="pathlen" nr="3"/>
-          <par name="match" nr="4"/>
+          <par name="entry" nr="2"/>
           <par name="matchlen" nr="5"/>
           <par name="never_interesting" nr="6"/>
+          <par name="match" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -374,8 +451,8 @@
       <function name="match_wildcard_base">
         <parameters>
           <par name="item" nr="1"/>
-          <par name="base" nr="2"/>
           <par name="baselen" nr="3"/>
+          <par name="base" nr="2"/>
           <par name="matched" nr="4"/>
         </parameters>
         <postconditions>
@@ -390,10 +467,10 @@
       </function>
       <function name="prune_traversal">
         <parameters>
-          <par name="e" nr="1"/>
-          <par name="info" nr="2"/>
-          <par name="base" nr="3"/>
           <par name="still_interesting" nr="4"/>
+          <par name="info" nr="2"/>
+          <par name="e" nr="1"/>
+          <par name="base" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -408,9 +485,9 @@
       <function name="ps_strncmp">
         <parameters>
           <par name="item" nr="1"/>
-          <par name="s1" nr="2"/>
           <par name="s2" nr="3"/>
           <par name="n" nr="4"/>
+          <par name="s1" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -424,15 +501,23 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -455,8 +540,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -485,8 +570,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -500,9 +585,9 @@
       </function>
       <function name="traverse_trees">
         <parameters>
-          <par name="n" nr="1"/>
-          <par name="t" nr="2"/>
           <par name="info" nr="3"/>
+          <par name="t" nr="2"/>
+          <par name="n" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -532,14 +617,22 @@
       <function name="tree_entry_extract">
         <parameters>
           <par name="desc" nr="1"/>
-          <par name="pathp" nr="2"/>
           <par name="modep" nr="3"/>
+          <par name="pathp" nr="2"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -562,10 +655,10 @@
       </function>
       <function name="tree_entry_interesting">
         <parameters>
-          <par name="entry" nr="1"/>
-          <par name="base" nr="2"/>
           <par name="base_offset" nr="3"/>
           <par name="ps" nr="4"/>
+          <par name="entry" nr="1"/>
+          <par name="base" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -586,6 +679,15 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>

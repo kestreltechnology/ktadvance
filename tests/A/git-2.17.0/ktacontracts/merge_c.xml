@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:59.500504"/>
-  <cfile name="merge">
-    <data-structures/>
+  <header time="2018-12-19 16:12:24">
+    <application file="merge.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="_">
         <parameters>
@@ -20,9 +22,9 @@
       </function>
       <function name="checkout_fast_forward">
         <parameters>
+          <par name="overwrite_ignore" nr="3"/>
           <par name="head" nr="1"/>
           <par name="remote" nr="2"/>
-          <par name="overwrite_ignore" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -72,6 +74,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="parse_tree">
@@ -104,8 +114,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -151,9 +161,9 @@
           <par name="strategy" nr="1"/>
           <par name="xopts_nr" nr="2"/>
           <par name="xopts" nr="3"/>
+          <par name="remotes" nr="6"/>
           <par name="common" nr="4"/>
           <par name="head_arg" nr="5"/>
-          <par name="remotes" nr="6"/>
         </parameters>
         <postconditions>
           <post>

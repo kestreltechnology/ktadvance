@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:49.781842"/>
-  <cfile name="builtin/pack-objects">
-    <data-structures/>
+  <header time="2018-12-19 14:17:10">
+    <application file="builtin/pack-objects.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="base_name"/>
+      <gvar name="check"/>
+      <gvar name="done_pbase_paths"/>
+      <gvar name="done_pbase_paths_alloc"/>
+      <gvar name="done_pbase_paths_num"/>
+      <gvar name="indexed_commits"/>
+      <gvar name="indexed_commits_alloc"/>
+      <gvar name="indexed_commits_nr"/>
+      <gvar name="last_found"/>
+      <gvar name="nr_result"/>
+      <gvar name="nr_written"/>
+      <gvar name="num_preferred_base"/>
+      <gvar name="old_try_to_free_routine"/>
+      <gvar name="pbase_tree"/>
+      <gvar name="reuse_packfile"/>
+      <gvar name="reused"/>
+      <gvar name="reused_delta"/>
+      <gvar name="tree_type"/>
+      <gvar name="warned"/>
+      <gvar name="warned___0"/>
+      <gvar name="written"/>
+      <gvar name="written_delta"/>
+      <gvar name="written_list"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -35,9 +61,9 @@
       </function>
       <function name="add_descendants_to_write_order">
         <parameters>
-          <par name="wo" nr="1"/>
           <par name="endp" nr="2"/>
           <par name="e" nr="3"/>
+          <par name="wo" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,9 +77,9 @@
       </function>
       <function name="add_family_to_write_order">
         <parameters>
-          <par name="wo" nr="1"/>
           <par name="endp" nr="2"/>
           <par name="e" nr="3"/>
+          <par name="wo" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -68,8 +94,8 @@
       <function name="add_loose_object">
         <parameters>
           <par name="oid" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -85,8 +111,8 @@
         <parameters>
           <par name="oid" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="name" nr="3"/>
           <par name="exclude" nr="4"/>
+          <par name="name" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -100,12 +126,12 @@
       </function>
       <function name="add_object_entry_from_bitmap">
         <parameters>
+          <par name="name_hash" nr="4"/>
           <par name="oid" nr="1"/>
+          <par name="offset" nr="6"/>
           <par name="type" nr="2"/>
           <par name="flags" nr="3"/>
-          <par name="name_hash" nr="4"/>
           <par name="pack" nr="5"/>
-          <par name="offset" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -133,10 +159,10 @@
       </function>
       <function name="add_pbase_object">
         <parameters>
-          <par name="tree" nr="1"/>
-          <par name="name" nr="2"/>
-          <par name="cmplen" nr="3"/>
           <par name="fullname" nr="4"/>
+          <par name="tree" nr="1"/>
+          <par name="cmplen" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -152,6 +178,45 @@
         <parameters>
           <par name="oid" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tree_type</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>num_preferred_base</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>pbase_tree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>tree_type</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -178,10 +243,10 @@
       </function>
       <function name="add_ref_tag">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="oid" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -209,9 +274,9 @@
       </function>
       <function name="add_to_write_order">
         <parameters>
-          <par name="wo" nr="1"/>
           <par name="endp" nr="2"/>
           <par name="e" nr="3"/>
+          <par name="wo" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -280,10 +345,10 @@
       </function>
       <function name="check_pack_inflate">
         <parameters>
-          <par name="p" nr="1"/>
-          <par name="w_curs" nr="2"/>
-          <par name="offset" nr="3"/>
           <par name="len" nr="4"/>
+          <par name="w_curs" nr="2"/>
+          <par name="p" nr="1"/>
+          <par name="offset" nr="3"/>
           <par name="expect" nr="5"/>
         </parameters>
         <postconditions>
@@ -300,6 +365,109 @@
         <parameters>
           <par name="hash" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>done_pbase_paths_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>done_pbase_paths_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>done_pbase_paths_alloc</ci>
+                  <cn>16</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>done_pbase_paths</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <apply>
+                    <plus/>
+                    <ci>done_pbase_paths_num</ci>
+                    <cn>1</cn>
+                  </apply>
+                  <cn>-2</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>done_pbase_paths</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>done_pbase_paths_num</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>done_pbase_paths</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -312,6 +480,24 @@
       </function>
       <function name="cleanup_preferred_base">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>done_pbase_paths</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>done_pbase_paths</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -324,6 +510,16 @@
       </function>
       <function name="cleanup_threaded_search">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>old_try_to_free_routine</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -336,8 +532,8 @@
       </function>
       <function name="cmd_pack_objects">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -360,6 +556,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="const_error">
@@ -376,11 +588,11 @@
       </function>
       <function name="copy_pack_data">
         <parameters>
-          <par name="f" nr="1"/>
-          <par name="p" nr="2"/>
-          <par name="w_curs" nr="3"/>
-          <par name="offset" nr="4"/>
           <par name="len" nr="5"/>
+          <par name="w_curs" nr="3"/>
+          <par name="p" nr="2"/>
+          <par name="offset" nr="4"/>
+          <par name="f" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -394,15 +606,30 @@
       </function>
       <function name="create_object_entry">
         <parameters>
-          <par name="oid" nr="1"/>
-          <par name="type" nr="2"/>
           <par name="hash" nr="3"/>
-          <par name="exclude" nr="4"/>
-          <par name="no_try_delta___0" nr="5"/>
-          <par name="index_pos" nr="6"/>
+          <par name="oid" nr="1"/>
           <par name="found_pack" nr="7"/>
+          <par name="no_try_delta___0" nr="5"/>
           <par name="found_offset" nr="8"/>
+          <par name="type" nr="2"/>
+          <par name="exclude" nr="4"/>
+          <par name="index_pos" nr="6"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>nr_result</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -415,9 +642,9 @@
       </function>
       <function name="delta_cacheable">
         <parameters>
-          <par name="src_size" nr="1"/>
-          <par name="trg_size" nr="2"/>
           <par name="delta_size" nr="3"/>
+          <par name="trg_size" nr="2"/>
+          <par name="src_size" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -431,11 +658,11 @@
       </function>
       <function name="diff_delta">
         <parameters>
-          <par name="src_buf" nr="1"/>
+          <par name="delta_size" nr="5"/>
+          <par name="trg_bufsize" nr="4"/>
           <par name="src_bufsize" nr="2"/>
           <par name="trg_buf" nr="3"/>
-          <par name="trg_bufsize" nr="4"/>
-          <par name="delta_size" nr="5"/>
+          <par name="src_buf" nr="1"/>
           <par name="max_delta_size" nr="6"/>
         </parameters>
         <postconditions>
@@ -450,8 +677,8 @@
       </function>
       <function name="do_compress">
         <parameters>
-          <par name="pptr" nr="1"/>
           <par name="size" nr="2"/>
+          <par name="pptr" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -467,6 +694,24 @@
         <parameters>
           <par name="hash" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>done_pbase_paths</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>done_pbase_paths</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -493,11 +738,11 @@
       </function>
       <function name="find_deltas">
         <parameters>
+          <par name="processed" nr="5"/>
+          <par name="window___0" nr="3"/>
           <par name="list" nr="1"/>
           <par name="list_size" nr="2"/>
-          <par name="window___0" nr="3"/>
           <par name="depth___0" nr="4"/>
-          <par name="processed" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -580,9 +825,9 @@
       </function>
       <function name="git_pack_config">
         <parameters>
-          <par name="k" nr="1"/>
-          <par name="v" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="v" nr="2"/>
+          <par name="k" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -598,6 +843,37 @@
         <parameters>
           <par name="oid" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>last_found</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="next"/>
+                  </addressed-value>
+                  <ci>last_found</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>last_found</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -644,6 +920,21 @@
           <par name="exclude" nr="2"/>
           <par name="index_pos" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>nr_result</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -658,6 +949,75 @@
         <parameters>
           <par name="commit" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>indexed_commits_alloc</ci>
+                  <cn>32</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>indexed_commits_nr</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>indexed_commits</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>indexed_commits_alloc</ci>
+                    <cn>32</cn>
+                  </apply>
+                  <cn>2</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>indexed_commits</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>indexed_commits</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -682,8 +1042,8 @@
       </function>
       <function name="list_add">
         <parameters>
-          <par name="newp" nr="1"/>
           <par name="head" nr="2"/>
+          <par name="newp" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -712,11 +1072,11 @@
       </function>
       <function name="ll_find_deltas">
         <parameters>
+          <par name="processed" nr="5"/>
+          <par name="window___0" nr="3"/>
           <par name="list" nr="1"/>
           <par name="list_size" nr="2"/>
-          <par name="window___0" nr="3"/>
           <par name="depth___0" nr="4"/>
-          <par name="processed" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -775,10 +1135,10 @@
       </function>
       <function name="mark_tagged">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="oid" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -793,9 +1153,9 @@
       <function name="move_array">
         <parameters>
           <par name="dst" nr="1"/>
+          <par name="size" nr="4"/>
           <par name="src" nr="2"/>
           <par name="n" nr="3"/>
-          <par name="size" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -819,12 +1179,31 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="no_try_delta">
         <parameters>
           <par name="path" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>check</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -896,8 +1275,8 @@
       </function>
       <function name="option_parse_index_version">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -912,8 +1291,8 @@
       </function>
       <function name="option_parse_missing_action">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -928,8 +1307,8 @@
       </function>
       <function name="option_parse_unpack_unreachable">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -1023,6 +1402,66 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="tree_data"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="tree_size"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ref"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="temporary"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="pbase_tree_put">
@@ -1068,15 +1507,23 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1100,8 +1547,8 @@
       <function name="record_recent_object">
         <parameters>
           <par name="obj" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1115,10 +1562,10 @@
       </function>
       <function name="sane_qsort">
         <parameters>
-          <par name="base" nr="1"/>
           <par name="nmemb" nr="2"/>
-          <par name="size" nr="3"/>
           <par name="compar" nr="4"/>
+          <par name="size" nr="3"/>
+          <par name="base" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1162,8 +1609,8 @@
       <function name="show_object">
         <parameters>
           <par name="obj" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1178,8 +1625,8 @@
       <function name="show_object__ma_allow_any">
         <parameters>
           <par name="obj" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1194,8 +1641,8 @@
       <function name="show_object__ma_allow_promisor">
         <parameters>
           <par name="obj" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1209,8 +1656,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1252,11 +1699,39 @@
       </function>
       <function name="try_delta">
         <parameters>
-          <par name="trg" nr="1"/>
-          <par name="src" nr="2"/>
           <par name="max_depth" nr="3"/>
+          <par name="src" nr="2"/>
+          <par name="trg" nr="1"/>
           <par name="mem_usage" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>warned___0</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>warned</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1298,8 +1773,8 @@
       </function>
       <function name="want_found_object">
         <parameters>
-          <par name="exclude" nr="1"/>
           <par name="p" nr="2"/>
+          <par name="exclude" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1314,9 +1789,9 @@
       <function name="want_object_in_pack">
         <parameters>
           <par name="oid" nr="1"/>
-          <par name="exclude" nr="2"/>
           <par name="found_pack" nr="3"/>
           <par name="found_offset" nr="4"/>
+          <par name="exclude" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1331,8 +1806,8 @@
       <function name="write_large_blob_data">
         <parameters>
           <par name="st" nr="1"/>
-          <par name="f" nr="2"/>
           <par name="oid" nr="3"/>
+          <par name="f" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1346,10 +1821,10 @@
       </function>
       <function name="write_no_reuse_object">
         <parameters>
-          <par name="f" nr="1"/>
-          <par name="entry" nr="2"/>
-          <par name="limit" nr="3"/>
           <par name="usable_delta" nr="4"/>
+          <par name="entry" nr="2"/>
+          <par name="f" nr="1"/>
+          <par name="limit" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1363,10 +1838,38 @@
       </function>
       <function name="write_object">
         <parameters>
-          <par name="f" nr="1"/>
           <par name="entry" nr="2"/>
+          <par name="f" nr="1"/>
           <par name="write_offset" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>written_delta</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>written</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1379,10 +1882,41 @@
       </function>
       <function name="write_one">
         <parameters>
-          <par name="f" nr="1"/>
           <par name="e" nr="2"/>
           <par name="offset" nr="3"/>
+          <par name="f" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>nr_written</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>written_list</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>written_list</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1395,6 +1929,45 @@
       </function>
       <function name="write_pack_file">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>indexed_commits</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>indexed_commits</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>base_name</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <ci>indexed_commits_nr</ci>
+                  <cn>4</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1407,11 +1980,39 @@
       </function>
       <function name="write_reuse_object">
         <parameters>
-          <par name="f" nr="1"/>
-          <par name="entry" nr="2"/>
-          <par name="limit" nr="3"/>
           <par name="usable_delta" nr="4"/>
+          <par name="entry" nr="2"/>
+          <par name="f" nr="1"/>
+          <par name="limit" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>reused_delta</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>reused</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1426,6 +2027,47 @@
         <parameters>
           <par name="f" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="pack_size"/>
+                  </addressed-value>
+                  <ci>reuse_packfile</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="pack_fd"/>
+                  </addressed-value>
+                  <ci>reuse_packfile</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="windows"/>
+                  </addressed-value>
+                  <ci>reuse_packfile</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

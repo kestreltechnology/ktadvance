@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:46.123500"/>
-  <cfile name="builtin/clone">
-    <data-structures/>
+  <header time="2018-12-19 13:26:23">
+    <application file="builtin/clone.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="junk_git_dir"/>
+      <gvar name="junk_work_tree"/>
+      <gvar name="tag_refspec"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -13,6 +19,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -49,8 +63,8 @@
       </function>
       <function name="clone_local">
         <parameters>
-          <par name="src_repo" nr="1"/>
           <par name="dest_repo" nr="2"/>
+          <par name="src_repo" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -64,8 +78,8 @@
       </function>
       <function name="cmd_clone">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv___0" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -80,9 +94,9 @@
       </function>
       <function name="copy_alternates">
         <parameters>
-          <par name="src" nr="1"/>
           <par name="dst" nr="2"/>
           <par name="src_repo" nr="3"/>
+          <par name="src" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -96,10 +110,10 @@
       </function>
       <function name="copy_or_link_directory">
         <parameters>
-          <par name="src" nr="1"/>
+          <par name="src_baselen" nr="4"/>
           <par name="dest" nr="2"/>
           <par name="src_repo" nr="3"/>
-          <par name="src_baselen" nr="4"/>
+          <par name="src" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -154,8 +168,8 @@
       </function>
       <function name="find_remote_branch">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="branch" nr="2"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -184,14 +198,25 @@
       </function>
       <function name="get_repo_path_1">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="is_bundle" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -345,8 +370,8 @@
       </function>
       <function name="recurse_submodules_cb">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -361,6 +386,40 @@
       </function>
       <function name="remove_junk">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>junk_work_tree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>junk_git_dir</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>junk_git_dir</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>junk_work_tree</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -399,9 +458,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -415,8 +474,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -459,8 +518,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -474,9 +533,9 @@
       </function>
       <function name="strip_suffix">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="str" nr="1"/>
           <par name="suffix" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -490,8 +549,8 @@
       </function>
       <function name="strip_suffix_mem">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="suffix" nr="3"/>
         </parameters>
         <postconditions>
@@ -536,13 +595,13 @@
       </function>
       <function name="update_remote_refs">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="mapped_refs" nr="2"/>
-          <par name="remote_head_points_at" nr="3"/>
-          <par name="branch_top" nr="4"/>
-          <par name="msg" nr="5"/>
           <par name="transport" nr="6"/>
           <par name="check_connectivity" nr="7"/>
+          <par name="remote_head_points_at" nr="3"/>
+          <par name="msg" nr="5"/>
+          <par name="branch_top" nr="4"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -556,9 +615,92 @@
       </function>
       <function name="wanted_peer_refs">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="refspec" nr="2"/>
+          <par name="refs" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tag_refspec</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="exact_sha1"/>
+                  </addressed-value>
+                  <ci>tag_refspec</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="pattern"/>
+                  </addressed-value>
+                  <ci>tag_refspec</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="dst"/>
+                  </addressed-value>
+                  <ci>tag_refspec</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>tag_refspec</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="src"/>
+                  </addressed-value>
+                  <ci>tag_refspec</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="force"/>
+                  </addressed-value>
+                  <ci>tag_refspec</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -585,8 +727,8 @@
       </function>
       <function name="write_followtags">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="msg" nr="2"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -600,8 +742,8 @@
       </function>
       <function name="write_one_config">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
           <par name="data" nr="3"/>
         </parameters>
         <postconditions>

@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:44.415720"/>
-  <cfile name="archive">
-    <data-structures/>
+  <header time="2018-12-19 12:06:11">
+    <application file="archive.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="alloc_archivers"/>
+      <gvar name="archivers"/>
+      <gvar name="nr_archivers"/>
+      <gvar name="startup_info"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -22,6 +29,24 @@
         <parameters>
           <par name="filename" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>archivers</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>archivers</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -62,10 +87,10 @@
       </function>
       <function name="format_subst">
         <parameters>
-          <par name="commit" nr="1"/>
-          <par name="src" nr="2"/>
           <par name="len" nr="3"/>
           <par name="buf" nr="4"/>
+          <par name="src" nr="2"/>
+          <par name="commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -110,6 +135,24 @@
         <parameters>
           <par name="name" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>archivers</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>archivers</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -122,8 +165,8 @@
       </function>
       <function name="match_extension">
         <parameters>
-          <par name="filename" nr="1"/>
           <par name="ext" nr="2"/>
+          <par name="filename" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -137,13 +180,31 @@
       </function>
       <function name="parse_archive_args">
         <parameters>
-          <par name="argc" nr="1"/>
-          <par name="argv" nr="2"/>
-          <par name="ar" nr="3"/>
           <par name="args" nr="4"/>
+          <par name="ar" nr="3"/>
+          <par name="argv" nr="2"/>
           <par name="name_hint" nr="5"/>
           <par name="is_remote" nr="6"/>
+          <par name="argc" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>archivers</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>archivers</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -156,8 +217,8 @@
       </function>
       <function name="parse_pathspec_arg">
         <parameters>
-          <par name="pathspec" nr="1"/>
           <par name="ar_args" nr="2"/>
+          <par name="pathspec" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -172,9 +233,9 @@
       <function name="parse_treeish_arg">
         <parameters>
           <par name="argv" nr="1"/>
+          <par name="remote" nr="4"/>
           <par name="ar_args" nr="2"/>
           <par name="prefix" nr="3"/>
-          <par name="remote" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -188,8 +249,8 @@
       </function>
       <function name="path_exists">
         <parameters>
-          <par name="tree" nr="1"/>
           <par name="path___0" nr="2"/>
+          <par name="tree" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -203,12 +264,12 @@
       </function>
       <function name="queue_directory">
         <parameters>
-          <par name="sha1" nr="1"/>
-          <par name="base" nr="2"/>
-          <par name="filename" nr="3"/>
-          <par name="mode" nr="4"/>
-          <par name="stage" nr="5"/>
           <par name="c" nr="6"/>
+          <par name="mode" nr="4"/>
+          <par name="sha1" nr="1"/>
+          <par name="filename" nr="3"/>
+          <par name="stage" nr="5"/>
+          <par name="base" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -222,12 +283,12 @@
       </function>
       <function name="queue_or_write_archive_entry">
         <parameters>
-          <par name="sha1" nr="1"/>
-          <par name="base" nr="2"/>
-          <par name="filename" nr="3"/>
-          <par name="mode" nr="4"/>
-          <par name="stage" nr="5"/>
           <par name="context" nr="6"/>
+          <par name="mode" nr="4"/>
+          <par name="sha1" nr="1"/>
+          <par name="filename" nr="3"/>
+          <par name="stage" nr="5"/>
+          <par name="base" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -241,9 +302,9 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -259,6 +320,92 @@
         <parameters>
           <par name="ar" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>archivers</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>archivers</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>alloc_archivers</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>nr_archivers</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>alloc_archivers</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>alloc_archivers</ci>
+                  <cn>16</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>archivers</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -271,12 +418,12 @@
       </function>
       <function name="reject_entry">
         <parameters>
-          <par name="sha1" nr="1"/>
-          <par name="base" nr="2"/>
-          <par name="filename" nr="3"/>
-          <par name="mode" nr="4"/>
-          <par name="stage" nr="5"/>
           <par name="context" nr="6"/>
+          <par name="mode" nr="4"/>
+          <par name="sha1" nr="1"/>
+          <par name="filename" nr="3"/>
+          <par name="stage" nr="5"/>
+          <par name="base" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -291,11 +438,11 @@
       <function name="sha1_file_to_archive">
         <parameters>
           <par name="args" nr="1"/>
-          <par name="path" nr="2"/>
-          <par name="sha1" nr="3"/>
           <par name="mode" nr="4"/>
-          <par name="type" nr="5"/>
+          <par name="sha1" nr="3"/>
           <par name="sizep" nr="6"/>
+          <par name="type" nr="5"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -309,8 +456,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -324,8 +471,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -339,8 +486,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -383,8 +530,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -398,12 +545,43 @@
       </function>
       <function name="write_archive">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
-          <par name="prefix" nr="3"/>
           <par name="name_hint" nr="4"/>
           <par name="remote" nr="5"/>
+          <par name="argc" nr="1"/>
+          <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="have_repository"/>
+                  </addressed-value>
+                  <ci>startup_info</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -431,13 +609,13 @@
       </function>
       <function name="write_archive_entry">
         <parameters>
+          <par name="context" nr="7"/>
+          <par name="mode" nr="5"/>
           <par name="sha1" nr="1"/>
-          <par name="base" nr="2"/>
           <par name="baselen" nr="3"/>
           <par name="filename" nr="4"/>
-          <par name="mode" nr="5"/>
           <par name="stage" nr="6"/>
-          <par name="context" nr="7"/>
+          <par name="base" nr="2"/>
         </parameters>
         <postconditions>
           <post>

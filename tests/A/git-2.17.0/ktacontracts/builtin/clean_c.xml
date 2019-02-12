@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:46.000609"/>
-  <cfile name="builtin/clean">
-    <data-structures/>
+  <header time="2018-12-19 13:25:06">
+    <application file="builtin/clean.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="msg_remove"/>
+      <gvar name="msg_skip_git_dir"/>
+      <gvar name="msg_warn_remove_failed"/>
+      <gvar name="msg_would_remove"/>
+      <gvar name="msg_would_skip_git_dir"/>
+    </global-variables>
     <functions>
       <function name="Q_">
         <parameters>
           <par name="msgid" nr="1"/>
-          <par name="plu" nr="2"/>
           <par name="n" nr="3"/>
+          <par name="plu" nr="2"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -29,6 +45,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -70,6 +94,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="clean_print_color">
@@ -88,10 +120,85 @@
       </function>
       <function name="cmd_clean">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>msg_warn_remove_failed</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>msg_remove</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>msg_would_remove</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>msg_remove</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>msg_warn_remove_failed</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>msg_warn_remove_failed</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>msg_would_remove</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>msg_remove</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -130,10 +237,10 @@
       </function>
       <function name="dir_path_match">
         <parameters>
-          <par name="ent" nr="1"/>
-          <par name="pathspec" nr="2"/>
-          <par name="prefix" nr="3"/>
           <par name="seen" nr="4"/>
+          <par name="pathspec" nr="2"/>
+          <par name="ent" nr="1"/>
+          <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -147,8 +254,8 @@
       </function>
       <function name="exclude_cb">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -175,8 +282,8 @@
       </function>
       <function name="find_unique">
         <parameters>
-          <par name="choice" nr="1"/>
           <par name="menu_stuff" nr="2"/>
+          <par name="choice" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -190,9 +297,9 @@
       </function>
       <function name="git_clean_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -255,14 +362,41 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="parse_choice">
         <parameters>
-          <par name="menu_stuff" nr="1"/>
           <par name="is_single" nr="2"/>
           <par name="input" nr="3"/>
           <par name="chosen" nr="4"/>
+          <par name="menu_stuff" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -316,8 +450,8 @@
       </function>
       <function name="print_highlight_menu_stuff">
         <parameters>
-          <par name="stuff" nr="1"/>
           <par name="chosen" nr="2"/>
+          <par name="stuff" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -357,13 +491,134 @@
       </function>
       <function name="remove_dirs">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="prefix" nr="2"/>
           <par name="force_flag" nr="3"/>
           <par name="dry_run" nr="4"/>
-          <par name="quiet" nr="5"/>
           <par name="dir_gone" nr="6"/>
+          <par name="quiet" nr="5"/>
+          <par name="path" nr="1"/>
+          <par name="prefix" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>msg_warn_remove_failed</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>msg_remove</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>msg_would_skip_git_dir</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>msg_skip_git_dir</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>msg_would_remove</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>msg_remove</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>msg_warn_remove_failed</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>msg_warn_remove_failed</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>msg_skip_git_dir</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>msg_skip_git_dir</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>msg_would_remove</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>msg_would_skip_git_dir</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>msg_would_skip_git_dir</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -388,9 +643,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -404,8 +659,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -419,8 +674,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -434,8 +689,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -478,8 +733,8 @@
       </function>
       <function name="strbuf_complete">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="term" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -493,8 +748,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -509,14 +764,22 @@
       <function name="strbuf_split_max">
         <parameters>
           <par name="sb" nr="1"/>
-          <par name="terminator" nr="2"/>
           <par name="max" nr="3"/>
+          <par name="terminator" nr="2"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>

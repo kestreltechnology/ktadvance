@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:47.297745"/>
-  <cfile name="builtin/count-objects">
-    <data-structures/>
+  <header time="2018-12-19 13:29:02">
+    <application file="builtin/count-objects.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="garbage"/>
+      <gvar name="loose"/>
+      <gvar name="packed_loose"/>
+      <gvar name="report_garbage"/>
+    </global-variables>
     <functions>
       <function name="bits_to_msg">
         <parameters>
@@ -20,8 +27,8 @@
       </function>
       <function name="cmd_count_objects">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -37,8 +44,8 @@
       <function name="count_cruft">
         <parameters>
           <par name="__xpg_basename___0" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -53,9 +60,37 @@
       <function name="count_loose">
         <parameters>
           <par name="oid" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="path" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>packed_loose</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>loose</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -70,6 +105,24 @@
         <parameters>
           <par name="path" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>report_garbage</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>report_garbage</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -100,6 +153,21 @@
           <par name="seen_bits" nr="1"/>
           <par name="path" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>garbage</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

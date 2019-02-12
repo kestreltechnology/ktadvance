@@ -1,15 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:48.854328"/>
-  <cfile name="builtin/mailinfo">
-    <data-structures/>
+  <header time="2018-12-19 13:53:29">
+    <application file="builtin/mailinfo.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="stdin"/>
+      <gvar name="stdout"/>
+    </global-variables>
     <functions>
       <function name="cmd_mailinfo">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>stdin</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>stdin</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>stdout</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>stdout</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

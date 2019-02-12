@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:58.728642"/>
-  <cfile name="imap-send">
-    <data-structures/>
+  <header time="2018-12-19 16:00:47">
+    <application file="imap-send.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="content_type"/>
+      <gvar name="pre_close"/>
+      <gvar name="pre_open"/>
+    </global-variables>
     <functions>
       <function name="append_msgs_to_imap">
         <parameters>
-          <par name="server___0" nr="1"/>
           <par name="all_msgs" nr="2"/>
           <par name="total" nr="3"/>
+          <par name="server___0" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -22,9 +28,9 @@
       </function>
       <function name="auth_cram_md5">
         <parameters>
-          <par name="ctx" nr="1"/>
           <par name="cmd" nr="2"/>
           <par name="prompt" nr="3"/>
+          <par name="ctx" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -38,8 +44,8 @@
       </function>
       <function name="buffer_gets">
         <parameters>
-          <par name="b" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="b" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -53,8 +59,8 @@
       </function>
       <function name="cmd_main">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -103,6 +109,22 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -165,8 +187,8 @@
       </function>
       <function name="imap_exec">
         <parameters>
-          <par name="ctx" nr="1"/>
           <par name="cb" nr="2"/>
+          <par name="ctx" nr="1"/>
           <par name="fmt" nr="3"/>
         </parameters>
         <postconditions>
@@ -181,8 +203,8 @@
       </function>
       <function name="imap_exec_m">
         <parameters>
-          <par name="ctx" nr="1"/>
           <par name="cb" nr="2"/>
+          <par name="ctx" nr="1"/>
           <par name="fmt" nr="3"/>
         </parameters>
         <postconditions>
@@ -211,14 +233,48 @@
       </function>
       <function name="imap_open_store">
         <parameters>
-          <par name="srvc" nr="1"/>
           <par name="folder" nr="2"/>
+          <par name="srvc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="prefix"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="imap"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -255,10 +311,10 @@
       </function>
       <function name="issue_imap_cmd">
         <parameters>
-          <par name="ctx" nr="1"/>
           <par name="cb" nr="2"/>
-          <par name="fmt" nr="3"/>
           <par name="ap" nr="4"/>
+          <par name="ctx" nr="1"/>
+          <par name="fmt" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -296,6 +352,25 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="nfsnprintf">
@@ -312,13 +387,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="nfvasprintf">
         <parameters>
+          <par name="ap" nr="3"/>
           <par name="strp" nr="1"/>
           <par name="fmt" nr="2"/>
-          <par name="ap" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -347,9 +431,9 @@
       </function>
       <function name="parse_response_code">
         <parameters>
-          <par name="ctx" nr="1"/>
           <par name="cb" nr="2"/>
           <par name="s" nr="3"/>
+          <par name="ctx" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -363,8 +447,8 @@
       </function>
       <function name="read_message">
         <parameters>
-          <par name="f" nr="1"/>
           <par name="all_msgs" nr="2"/>
+          <par name="f" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -393,8 +477,8 @@
       </function>
       <function name="skip_imap_list_l">
         <parameters>
-          <par name="sp" nr="1"/>
           <par name="level" nr="2"/>
+          <par name="sp" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -422,8 +506,8 @@
       </function>
       <function name="socket_perror">
         <parameters>
-          <par name="func" nr="1"/>
           <par name="sock" nr="2"/>
+          <par name="func" nr="1"/>
           <par name="ret" nr="3"/>
         </parameters>
         <postconditions>
@@ -438,9 +522,9 @@
       </function>
       <function name="socket_read">
         <parameters>
-          <par name="sock" nr="1"/>
-          <par name="buf" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="buf" nr="2"/>
+          <par name="sock" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -468,15 +552,24 @@
       </function>
       <function name="socket_write">
         <parameters>
-          <par name="sock" nr="1"/>
-          <par name="buf" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="buf" nr="2"/>
+          <par name="sock" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -516,8 +609,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -562,6 +655,56 @@
         <parameters>
           <par name="msg" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>pre_open</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>pre_close</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>content_type</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>content_type</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>pre_open</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>pre_close</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -581,6 +724,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>

@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:59.239264"/>
-  <cfile name="log-tree">
-    <data-structures/>
+  <header time="2018-12-19 16:06:51">
+    <application file="log-tree.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="git_replace_ref_base"/>
+    </global-variables>
     <functions>
       <function name="add_graft_decoration">
         <parameters>
-          <par name="graft" nr="1"/>
           <par name="cb_data" nr="2"/>
+          <par name="graft" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -21,9 +25,9 @@
       </function>
       <function name="add_name_decoration">
         <parameters>
+          <par name="obj" nr="3"/>
           <par name="type" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="obj" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -37,11 +41,29 @@
       </function>
       <function name="add_ref_decoration">
         <parameters>
+          <par name="cb_data" nr="4"/>
           <par name="refname" nr="1"/>
           <par name="oid" nr="2"/>
           <par name="flags" nr="3"/>
-          <par name="cb_data" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>git_replace_ref_base</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>git_replace_ref_base</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -90,6 +112,19 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="type"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="decorate_get_color">
@@ -102,6 +137,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -138,9 +181,9 @@
       </function>
       <function name="fmt_output_commit">
         <parameters>
-          <par name="filename" nr="1"/>
-          <par name="commit" nr="2"/>
           <par name="info" nr="3"/>
+          <par name="commit" nr="2"/>
+          <par name="filename" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -154,8 +197,8 @@
       </function>
       <function name="fmt_output_email_subject">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="opt" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -169,9 +212,9 @@
       </function>
       <function name="fmt_output_subject">
         <parameters>
-          <par name="filename" nr="1"/>
-          <par name="subject" nr="2"/>
           <par name="info" nr="3"/>
+          <par name="subject" nr="2"/>
+          <par name="filename" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -185,12 +228,12 @@
       </function>
       <function name="format_decorations_extended">
         <parameters>
+          <par name="separator" nr="5"/>
           <par name="sb" nr="1"/>
+          <par name="suffix" nr="6"/>
           <par name="commit" nr="2"/>
           <par name="use_color" nr="3"/>
           <par name="prefix" nr="4"/>
-          <par name="separator" nr="5"/>
-          <par name="suffix" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -278,8 +321,8 @@
       <function name="log_tree_diff">
         <parameters>
           <par name="opt" nr="1"/>
-          <par name="commit" nr="2"/>
           <par name="log" nr="3"/>
+          <par name="commit" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -339,9 +382,9 @@
       </function>
       <function name="parse_decorate_color_config">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="slot_name" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -461,8 +504,8 @@
       <function name="show_parents">
         <parameters>
           <par name="commit" nr="1"/>
-          <par name="abbrev" nr="2"/>
           <par name="file" nr="3"/>
+          <par name="abbrev" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -476,9 +519,9 @@
       </function>
       <function name="show_sig_lines">
         <parameters>
-          <par name="opt" nr="1"/>
-          <par name="status" nr="2"/>
           <par name="bol" nr="3"/>
+          <par name="status" nr="2"/>
+          <par name="opt" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -507,8 +550,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -537,8 +580,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

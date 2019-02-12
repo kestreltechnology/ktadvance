@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:56.304576"/>
-  <cfile name="diff-lib">
-    <data-structures/>
+  <header time="2018-12-19 15:35:36">
+    <application file="diff-lib.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="ce_mode_from_stat">
         <parameters>
@@ -22,8 +26,8 @@
       <function name="ce_path_match">
         <parameters>
           <par name="ce" nr="1"/>
-          <par name="pathspec" nr="2"/>
           <par name="seen" nr="3"/>
+          <par name="pathspec" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -37,8 +41,8 @@
       </function>
       <function name="check_removed">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="st" nr="2"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -78,10 +82,10 @@
       </function>
       <function name="diff_cache">
         <parameters>
-          <par name="revs" nr="1"/>
-          <par name="tree_oid" nr="2"/>
           <par name="tree_name" nr="3"/>
           <par name="cached" nr="4"/>
+          <par name="tree_oid" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -95,8 +99,8 @@
       </function>
       <function name="diff_flags_or">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -110,13 +114,13 @@
       </function>
       <function name="diff_index_show_file">
         <parameters>
-          <par name="revs" nr="1"/>
-          <par name="prefix" nr="2"/>
+          <par name="oid_valid" nr="5"/>
           <par name="ce" nr="3"/>
           <par name="oid" nr="4"/>
-          <par name="oid_valid" nr="5"/>
           <par name="mode" nr="6"/>
           <par name="dirty_submodule" nr="7"/>
+          <par name="revs" nr="1"/>
+          <par name="prefix" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -130,8 +134,8 @@
       </function>
       <function name="do_diff_cache">
         <parameters>
-          <par name="tree_oid" nr="1"/>
           <par name="opt" nr="2"/>
+          <par name="tree_oid" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -145,8 +149,8 @@
       </function>
       <function name="do_oneway_diff">
         <parameters>
-          <par name="o" nr="1"/>
           <par name="idx" nr="2"/>
+          <par name="o" nr="1"/>
           <par name="tree" nr="3"/>
         </parameters>
         <postconditions>
@@ -161,13 +165,13 @@
       </function>
       <function name="get_stat_data">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="oidp" nr="2"/>
-          <par name="modep" nr="3"/>
-          <par name="cached" nr="4"/>
-          <par name="match_missing" nr="5"/>
-          <par name="dirty_submodule" nr="6"/>
           <par name="diffopt" nr="7"/>
+          <par name="modep" nr="3"/>
+          <par name="ce" nr="1"/>
+          <par name="cached" nr="4"/>
+          <par name="dirty_submodule" nr="6"/>
+          <par name="match_missing" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -211,9 +215,9 @@
       </function>
       <function name="index_differs_from">
         <parameters>
+          <par name="ita_invisible_in_index" nr="3"/>
           <par name="def" nr="1"/>
           <par name="flags" nr="2"/>
-          <par name="ita_invisible_in_index" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -270,10 +274,10 @@
       <function name="match_stat_with_submodule">
         <parameters>
           <par name="diffopt" nr="1"/>
-          <par name="ce" nr="2"/>
           <par name="st" nr="3"/>
-          <par name="ce_option" nr="4"/>
+          <par name="ce" nr="2"/>
           <par name="dirty_submodule" nr="5"/>
+          <par name="ce_option" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -331,8 +335,8 @@
       </function>
       <function name="oneway_diff">
         <parameters>
-          <par name="src" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="src" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -346,9 +350,40 @@
       </function>
       <function name="run_diff_files">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="option" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -361,8 +396,8 @@
       </function>
       <function name="run_diff_index">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="cached" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -376,12 +411,12 @@
       </function>
       <function name="show_modified">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="old_entry" nr="2"/>
+          <par name="cached" nr="5"/>
           <par name="new_entry" nr="3"/>
           <par name="report_missing" nr="4"/>
-          <par name="cached" nr="5"/>
           <par name="match_missing" nr="6"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -395,10 +430,10 @@
       </function>
       <function name="show_new_file">
         <parameters>
-          <par name="revs" nr="1"/>
-          <par name="new_file" nr="2"/>
           <par name="cached" nr="3"/>
+          <par name="new_file" nr="2"/>
           <par name="match_missing" nr="4"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -412,8 +447,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -427,8 +462,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>

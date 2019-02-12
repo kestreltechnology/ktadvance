@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:50.727187"/>
-  <cfile name="builtin/replace">
-    <data-structures/>
+  <header time="2018-12-19 14:27:00">
+    <application file="builtin/replace.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="commit_type"/>
+      <gvar name="git_replace_ref_base"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -20,9 +25,9 @@
       </function>
       <function name="check_mergetags">
         <parameters>
+          <par name="argv" nr="3"/>
           <par name="commit" nr="1"/>
           <par name="argc" nr="2"/>
-          <par name="argv" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -52,11 +57,21 @@
       </function>
       <function name="check_ref_valid">
         <parameters>
-          <par name="object" nr="1"/>
           <par name="prev" nr="2"/>
           <par name="ref" nr="3"/>
+          <par name="object" nr="1"/>
           <par name="force" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>git_replace_ref_base</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -69,8 +84,8 @@
       </function>
       <function name="cmd_replace">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -97,10 +112,20 @@
       </function>
       <function name="create_graft">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
           <par name="force" nr="3"/>
+          <par name="argc" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>commit_type</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -113,9 +138,9 @@
       </function>
       <function name="delete_replace_ref">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="ref" nr="2"/>
           <par name="oid" nr="3"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -129,9 +154,9 @@
       </function>
       <function name="edit_and_replace">
         <parameters>
+          <par name="raw" nr="3"/>
           <par name="object_ref" nr="1"/>
           <par name="force" nr="2"/>
-          <par name="raw" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -146,8 +171,8 @@
       <function name="export_object">
         <parameters>
           <par name="oid" nr="1"/>
-          <par name="type" nr="2"/>
           <par name="raw" nr="3"/>
+          <par name="type" nr="2"/>
           <par name="filename" nr="4"/>
         </parameters>
         <postconditions>
@@ -162,9 +187,27 @@
       </function>
       <function name="for_each_replace_name">
         <parameters>
-          <par name="argv" nr="1"/>
           <par name="fn" nr="2"/>
+          <par name="argv" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>git_replace_ref_base</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>git_replace_ref_base</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -193,8 +236,8 @@
       <function name="import_object">
         <parameters>
           <par name="oid" nr="1"/>
-          <par name="type" nr="2"/>
           <par name="raw" nr="3"/>
+          <par name="type" nr="2"/>
           <par name="filename" nr="4"/>
         </parameters>
         <postconditions>
@@ -209,8 +252,8 @@
       </function>
       <function name="list_replace_refs">
         <parameters>
-          <par name="pattern" nr="1"/>
           <par name="format" nr="2"/>
+          <par name="pattern" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -269,8 +312,8 @@
       </function>
       <function name="replace_object_oid">
         <parameters>
-          <par name="object_ref" nr="1"/>
           <par name="object" nr="2"/>
+          <par name="object_ref" nr="1"/>
           <par name="replace_ref" nr="3"/>
           <par name="repl" nr="4"/>
           <par name="force" nr="5"/>
@@ -288,8 +331,8 @@
       <function name="replace_parents">
         <parameters>
           <par name="buf" nr="1"/>
-          <par name="argc" nr="2"/>
           <par name="argv" nr="3"/>
+          <par name="argc" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -303,10 +346,10 @@
       </function>
       <function name="show_reference">
         <parameters>
-          <par name="refname" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="refname" nr="1"/>
+          <par name="oid" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -335,8 +378,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

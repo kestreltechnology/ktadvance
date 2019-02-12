@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:49.160670"/>
-  <cfile name="builtin/merge-recursive">
-    <data-structures/>
+  <header time="2018-12-19 14:09:36">
+    <application file="builtin/merge-recursive.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="Q_">
         <parameters>
           <par name="msgid" nr="1"/>
-          <par name="plu" nr="2"/>
           <par name="n" nr="3"/>
+          <par name="plu" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -32,6 +34,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="better_branch_name">
@@ -46,12 +56,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="cmd_merge_recursive">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -81,9 +99,9 @@
       </function>
       <function name="strip_suffix">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="str" nr="1"/>
           <par name="suffix" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -97,8 +115,8 @@
       </function>
       <function name="strip_suffix_mem">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="suffix" nr="3"/>
         </parameters>
         <postconditions>

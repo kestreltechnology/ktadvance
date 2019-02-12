@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:56.199692"/>
-  <cfile name="diff">
-    <data-structures/>
+  <header time="2018-12-19 15:39:19">
+    <application file="diff.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="diff_queued_diff"/>
+      <gvar name="err"/>
+      <gvar name="external_diff_cmd"/>
+      <gvar name="nneof"/>
+      <gvar name="startup_info"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -20,9 +28,9 @@
       </function>
       <function name="add_external_diff_name">
         <parameters>
+          <par name="df" nr="3"/>
           <par name="argv" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="df" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -52,8 +60,8 @@
       <function name="add_lines_to_move_detection">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="add_lines" nr="2"/>
           <par name="del_lines" nr="3"/>
+          <par name="add_lines" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -68,8 +76,8 @@
       <function name="adjust_last_block">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="n" nr="2"/>
           <par name="block_length" nr="3"/>
+          <par name="n" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -93,6 +101,152 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="count"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="size"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="oid_valid"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="mode"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="data"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="driver"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="path"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="dirty_submodule"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cnt_data"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="is_binary"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="append_emitted_diff_symbol">
@@ -112,13 +266,23 @@
       </function>
       <function name="builtin_checkdiff">
         <parameters>
+          <par name="o" nr="6"/>
           <par name="name_a" nr="1"/>
-          <par name="name_b" nr="2"/>
           <par name="attr_path" nr="3"/>
           <par name="one" nr="4"/>
           <par name="two" nr="5"/>
-          <par name="o" nr="6"/>
+          <par name="name_b" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>err</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -131,14 +295,14 @@
       </function>
       <function name="builtin_diff">
         <parameters>
+          <par name="o" nr="7"/>
+          <par name="xfrm_msg" nr="5"/>
+          <par name="complete_rewrite" nr="8"/>
           <par name="name_a" nr="1"/>
-          <par name="name_b" nr="2"/>
           <par name="one" nr="3"/>
           <par name="two" nr="4"/>
-          <par name="xfrm_msg" nr="5"/>
           <par name="must_show_header" nr="6"/>
-          <par name="o" nr="7"/>
-          <par name="complete_rewrite" nr="8"/>
+          <par name="name_b" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -152,13 +316,13 @@
       </function>
       <function name="builtin_diffstat">
         <parameters>
-          <par name="name_a" nr="1"/>
-          <par name="name_b" nr="2"/>
-          <par name="one" nr="3"/>
-          <par name="two" nr="4"/>
           <par name="diffstat" nr="5"/>
           <par name="o" nr="6"/>
+          <par name="name_a" nr="1"/>
+          <par name="one" nr="3"/>
           <par name="p" nr="7"/>
+          <par name="two" nr="4"/>
+          <par name="name_b" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -216,9 +380,9 @@
       </function>
       <function name="checkdiff_consume">
         <parameters>
-          <par name="priv" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="priv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -237,6 +401,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -270,8 +442,8 @@
       </function>
       <function name="count_lines">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="size" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -281,12 +453,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="count_trailing_blank">
         <parameters>
-          <par name="mf" nr="1"/>
           <par name="ws_rule" nr="2"/>
+          <par name="mf" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -300,15 +481,23 @@
       </function>
       <function name="deflate_it">
         <parameters>
-          <par name="data" nr="1"/>
-          <par name="size" nr="2"/>
           <par name="result_size" nr="3"/>
+          <par name="size" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -333,6 +522,37 @@
           <par name="oid" nr="1"/>
           <par name="abbrev" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="have_repository"/>
+                  </addressed-value>
+                  <ci>startup_info</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -341,17 +561,25 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="diff_addremove">
         <parameters>
+          <par name="concatpath" nr="6"/>
+          <par name="oid_valid" nr="5"/>
+          <par name="oid" nr="4"/>
+          <par name="mode" nr="3"/>
+          <par name="dirty_submodule" nr="7"/>
           <par name="options" nr="1"/>
           <par name="addremove" nr="2"/>
-          <par name="mode" nr="3"/>
-          <par name="oid" nr="4"/>
-          <par name="oid_valid" nr="5"/>
-          <par name="concatpath" nr="6"/>
-          <par name="dirty_submodule" nr="7"/>
         </parameters>
         <postconditions>
           <post>
@@ -365,14 +593,22 @@
       </function>
       <function name="diff_aligned_abbrev">
         <parameters>
-          <par name="oid" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="oid" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -394,16 +630,16 @@
       </function>
       <function name="diff_change">
         <parameters>
-          <par name="options" nr="1"/>
-          <par name="old_mode" nr="2"/>
-          <par name="new_mode" nr="3"/>
-          <par name="old_oid" nr="4"/>
-          <par name="new_oid" nr="5"/>
-          <par name="old_oid_valid" nr="6"/>
           <par name="new_oid_valid" nr="7"/>
           <par name="concatpath" nr="8"/>
+          <par name="new_oid" nr="5"/>
+          <par name="old_mode" nr="2"/>
           <par name="old_dirty_submodule" nr="9"/>
+          <par name="new_mode" nr="3"/>
+          <par name="options" nr="1"/>
           <par name="new_dirty_submodule" nr="10"/>
+          <par name="old_oid" nr="4"/>
+          <par name="old_oid_valid" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -417,11 +653,11 @@
       </function>
       <function name="diff_delta">
         <parameters>
-          <par name="src_buf" nr="1"/>
+          <par name="delta_size" nr="5"/>
+          <par name="trg_bufsize" nr="4"/>
           <par name="src_bufsize" nr="2"/>
           <par name="trg_buf" nr="3"/>
-          <par name="trg_bufsize" nr="4"/>
-          <par name="delta_size" nr="5"/>
+          <par name="src_buf" nr="1"/>
           <par name="max_delta_size" nr="6"/>
         </parameters>
         <postconditions>
@@ -429,6 +665,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -512,8 +756,8 @@
       <function name="diff_emit_submodule_pipethrough">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="line" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -629,6 +873,34 @@
         <parameters>
           <par name="options" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="queue"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -641,8 +913,8 @@
       </function>
       <function name="diff_flush_checkdiff">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="p" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -656,8 +928,8 @@
       </function>
       <function name="diff_flush_patch">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="p" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -673,6 +945,34 @@
         <parameters>
           <par name="o" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="queue"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -685,10 +985,38 @@
       </function>
       <function name="diff_flush_patch_id">
         <parameters>
-          <par name="options" nr="1"/>
           <par name="oid" nr="2"/>
           <par name="diff_header_only" nr="3"/>
+          <par name="options" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="queue"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -701,8 +1029,8 @@
       </function>
       <function name="diff_flush_raw">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="opt" nr="2"/>
+          <par name="p" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -716,9 +1044,9 @@
       </function>
       <function name="diff_flush_stat">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="o" nr="2"/>
           <par name="diffstat" nr="3"/>
+          <par name="p" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -788,8 +1116,8 @@
       </function>
       <function name="diff_get_color">
         <parameters>
-          <par name="diff_use_color" nr="1"/>
           <par name="ix" nr="2"/>
+          <par name="diff_use_color" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -799,14 +1127,61 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="diff_get_patch_id">
         <parameters>
-          <par name="options" nr="1"/>
           <par name="oid" nr="2"/>
           <par name="diff_header_only" nr="3"/>
+          <par name="options" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="queue"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -829,13 +1204,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="diff_opt_parse">
         <parameters>
-          <par name="options" nr="1"/>
-          <par name="av" nr="2"/>
           <par name="ac" nr="3"/>
+          <par name="av" nr="2"/>
+          <par name="options" nr="1"/>
           <par name="prefix" nr="4"/>
         </parameters>
         <postconditions>
@@ -865,8 +1248,8 @@
       </function>
       <function name="diff_populate_gitlink">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="size_only" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -880,8 +1263,8 @@
       </function>
       <function name="diff_q">
         <parameters>
-          <par name="queue" nr="1"/>
           <par name="dp" nr="2"/>
+          <par name="queue" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -895,9 +1278,9 @@
       </function>
       <function name="diff_queue">
         <parameters>
-          <par name="queue" nr="1"/>
           <par name="one" nr="2"/>
           <par name="two" nr="3"/>
+          <par name="queue" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -907,10 +1290,98 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="one"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="skip_stat_unmatch_result"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="two"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="done_skip_stat_unmatch"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="diff_queue_is_empty">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="queue"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -923,6 +1394,34 @@
       </function>
       <function name="diff_resolve_rename_copy">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="queue"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -935,8 +1434,8 @@
       </function>
       <function name="diff_result_code">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="status" nr="2"/>
+          <par name="opt" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -964,9 +1463,9 @@
       </function>
       <function name="diff_set_mnemonic_prefix">
         <parameters>
+          <par name="b" nr="3"/>
           <par name="options" nr="1"/>
           <par name="a" nr="2"/>
-          <par name="b" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1052,9 +1551,9 @@
       </function>
       <function name="diff_warn_rename_limit">
         <parameters>
-          <par name="varname" nr="1"/>
-          <par name="needed" nr="2"/>
           <par name="degraded_cc" nr="3"/>
+          <par name="needed" nr="2"/>
+          <par name="varname" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1068,9 +1567,9 @@
       </function>
       <function name="diff_words_append">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
           <par name="buffer" nr="3"/>
+          <par name="line" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1084,8 +1583,8 @@
       </function>
       <function name="diff_words_fill">
         <parameters>
-          <par name="buffer" nr="1"/>
           <par name="out" nr="2"/>
+          <par name="buffer" nr="1"/>
           <par name="word_regex" nr="3"/>
         </parameters>
         <postconditions>
@@ -1130,6 +1629,34 @@
         <parameters>
           <par name="options" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="queue"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1144,6 +1671,34 @@
         <parameters>
           <par name="options" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="queue"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1158,6 +1713,34 @@
         <parameters>
           <par name="diffopt" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="queue"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1211,13 +1794,34 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="is_renamed"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="diffstat_consume">
         <parameters>
-          <par name="priv" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="priv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1260,10 +1864,10 @@
       </function>
       <function name="emit_add_line">
         <parameters>
+          <par name="len" nr="4"/>
+          <par name="line" nr="3"/>
           <par name="reset" nr="1"/>
           <par name="ecbdata" nr="2"/>
-          <par name="line" nr="3"/>
-          <par name="len" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1309,10 +1913,10 @@
       </function>
       <function name="emit_context_line">
         <parameters>
+          <par name="len" nr="4"/>
+          <par name="line" nr="3"/>
           <par name="reset" nr="1"/>
           <par name="ecbdata" nr="2"/>
-          <par name="line" nr="3"/>
-          <par name="len" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1326,10 +1930,10 @@
       </function>
       <function name="emit_del_line">
         <parameters>
+          <par name="len" nr="4"/>
+          <par name="line" nr="3"/>
           <par name="reset" nr="1"/>
           <par name="ecbdata" nr="2"/>
-          <par name="line" nr="3"/>
-          <par name="len" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1344,9 +1948,9 @@
       <function name="emit_diff_symbol">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="s" nr="2"/>
-          <par name="line" nr="3"/>
           <par name="len" nr="4"/>
+          <par name="line" nr="3"/>
+          <par name="s" nr="2"/>
           <par name="flags" nr="5"/>
         </parameters>
         <postconditions>
@@ -1364,6 +1968,24 @@
           <par name="o" nr="1"/>
           <par name="eds" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>nneof</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>nneof</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1376,9 +1998,9 @@
       </function>
       <function name="emit_hunk_header">
         <parameters>
-          <par name="ecbdata" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="ecbdata" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1393,10 +2015,10 @@
       <function name="emit_line">
         <parameters>
           <par name="o" nr="1"/>
+          <par name="len" nr="5"/>
+          <par name="line" nr="4"/>
           <par name="set" nr="2"/>
           <par name="reset" nr="3"/>
-          <par name="line" nr="4"/>
-          <par name="len" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -1410,12 +2032,12 @@
       </function>
       <function name="emit_line_0">
         <parameters>
+          <par name="first" nr="4"/>
           <par name="o" nr="1"/>
+          <par name="len" nr="6"/>
+          <par name="line" nr="5"/>
           <par name="set" nr="2"/>
           <par name="reset" nr="3"/>
-          <par name="first" nr="4"/>
-          <par name="line" nr="5"/>
-          <par name="len" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -1430,13 +2052,13 @@
       <function name="emit_line_ws_markup">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="set" nr="2"/>
-          <par name="reset" nr="3"/>
-          <par name="line" nr="4"/>
           <par name="len" nr="5"/>
-          <par name="sign" nr="6"/>
           <par name="ws_rule" nr="7"/>
+          <par name="line" nr="4"/>
           <par name="blank_at_eof" nr="8"/>
+          <par name="set" nr="2"/>
+          <par name="sign" nr="6"/>
+          <par name="reset" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1450,13 +2072,13 @@
       </function>
       <function name="emit_rewrite_diff">
         <parameters>
+          <par name="o" nr="7"/>
+          <par name="textconv_two" nr="6"/>
+          <par name="textconv_one" nr="5"/>
           <par name="name_a" nr="1"/>
-          <par name="name_b" nr="2"/>
           <par name="one" nr="3"/>
           <par name="two" nr="4"/>
-          <par name="textconv_one" nr="5"/>
-          <par name="textconv_two" nr="6"/>
-          <par name="o" nr="7"/>
+          <par name="name_b" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1470,10 +2092,10 @@
       </function>
       <function name="emit_rewrite_lines">
         <parameters>
-          <par name="ecb" nr="1"/>
-          <par name="prefix" nr="2"/>
-          <par name="data" nr="3"/>
           <par name="size" nr="4"/>
+          <par name="ecb" nr="1"/>
+          <par name="data" nr="3"/>
+          <par name="prefix" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1501,6 +2123,16 @@
       </function>
       <function name="external_diff">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>external_diff_cmd</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1513,9 +2145,9 @@
       </function>
       <function name="fill_filespec">
         <parameters>
+          <par name="oid_valid" nr="3"/>
           <par name="spec" nr="1"/>
           <par name="oid" nr="2"/>
-          <par name="oid_valid" nr="3"/>
           <par name="mode" nr="4"/>
         </parameters>
         <postconditions>
@@ -1530,15 +2162,15 @@
       </function>
       <function name="fill_metainfo">
         <parameters>
+          <par name="o" nr="6"/>
           <par name="msg" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="other" nr="3"/>
           <par name="one" nr="4"/>
-          <par name="two" nr="5"/>
-          <par name="o" nr="6"/>
           <par name="p" nr="7"/>
-          <par name="must_show_header" nr="8"/>
           <par name="use_color" nr="9"/>
+          <par name="two" nr="5"/>
+          <par name="must_show_header" nr="8"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1581,8 +2213,8 @@
       </function>
       <function name="fill_textconv">
         <parameters>
-          <par name="driver" nr="1"/>
           <par name="df" nr="2"/>
+          <par name="driver" nr="1"/>
           <par name="outbuf" nr="3"/>
         </parameters>
         <postconditions>
@@ -1590,6 +2222,15 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -1628,9 +2269,9 @@
       <function name="find_word_boundaries">
         <parameters>
           <par name="buffer" nr="1"/>
+          <par name="end" nr="4"/>
           <par name="word_regex" nr="2"/>
           <par name="begin" nr="3"/>
-          <par name="end" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1644,8 +2285,8 @@
       </function>
       <function name="flush_one_pair">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="opt" nr="2"/>
+          <par name="p" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1659,9 +2300,9 @@
       </function>
       <function name="fn_out_consume">
         <parameters>
-          <par name="priv" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="priv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1675,9 +2316,9 @@
       </function>
       <function name="fn_out_diff_words_aux">
         <parameters>
-          <par name="priv" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="priv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1693,9 +2334,9 @@
         <parameters>
           <par name="o" nr="1"/>
           <par name="st_el" nr="2"/>
-          <par name="newline" nr="3"/>
           <par name="count" nr="4"/>
           <par name="buf" nr="5"/>
+          <par name="newline" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1751,17 +2392,26 @@
       </function>
       <function name="gather_dirstat">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="dir" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="changed" nr="3"/>
-          <par name="base" nr="4"/>
           <par name="baselen" nr="5"/>
+          <par name="base" nr="4"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -1794,12 +2444,38 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="textconv"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="textconv_cache"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_config_rename">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1813,9 +2489,9 @@
       </function>
       <function name="git_diff_basic_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1829,9 +2505,9 @@
       </function>
       <function name="git_diff_heuristic_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1845,9 +2521,9 @@
       </function>
       <function name="git_diff_ui_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1903,10 +2579,10 @@
       </function>
       <function name="init_diff_words_data">
         <parameters>
-          <par name="ecbdata" nr="1"/>
           <par name="orig_opts" nr="2"/>
           <par name="one" nr="3"/>
           <par name="two" nr="4"/>
+          <par name="ecbdata" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1920,9 +2596,9 @@
       </function>
       <function name="is_conflict_marker">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="line" nr="1"/>
           <par name="marker_size" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1950,8 +2626,8 @@
       </function>
       <function name="is_submodule_ignored">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="options" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1994,8 +2670,8 @@
       <function name="mark_color_as_moved">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="add_lines" nr="2"/>
           <par name="del_lines" nr="3"/>
+          <par name="add_lines" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -2009,8 +2685,8 @@
       </function>
       <function name="match_filter">
         <parameters>
-          <par name="options" nr="1"/>
           <par name="p" nr="2"/>
+          <par name="options" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2035,14 +2711,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="moved_entry_cmp">
         <parameters>
           <par name="diffopt" nr="1"/>
-          <par name="a" nr="2"/>
-          <par name="b" nr="3"/>
           <par name="keydata" nr="4"/>
+          <par name="b" nr="3"/>
+          <par name="a" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -2056,9 +2740,9 @@
       </function>
       <function name="new_blank_line_at_eof">
         <parameters>
-          <par name="ecbdata" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="ecbdata" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2175,8 +2859,8 @@
       </function>
       <function name="parse_diff_filter_opt">
         <parameters>
-          <par name="optarg___0" nr="1"/>
           <par name="opt" nr="2"/>
+          <par name="optarg___0" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2190,8 +2874,8 @@
       </function>
       <function name="parse_dirstat_opt">
         <parameters>
-          <par name="options" nr="1"/>
           <par name="params" nr="2"/>
+          <par name="options" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2205,9 +2889,9 @@
       </function>
       <function name="parse_dirstat_params">
         <parameters>
-          <par name="options" nr="1"/>
-          <par name="params_string" nr="2"/>
           <par name="errmsg" nr="3"/>
+          <par name="params_string" nr="2"/>
+          <par name="options" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2237,8 +2921,8 @@
       </function>
       <function name="parse_objfind_opt">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2252,8 +2936,8 @@
       </function>
       <function name="parse_one_token">
         <parameters>
-          <par name="arg" nr="1"/>
           <par name="token" nr="2"/>
+          <par name="arg" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2281,8 +2965,8 @@
       </function>
       <function name="parse_submodule_opt">
         <parameters>
-          <par name="options" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="options" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2296,8 +2980,8 @@
       </function>
       <function name="parse_submodule_params">
         <parameters>
-          <par name="options" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="options" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2325,8 +3009,8 @@
       </function>
       <function name="parse_ws_error_highlight_opt">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2340,8 +3024,8 @@
       </function>
       <function name="patch_id_add_mode">
         <parameters>
-          <par name="ctx" nr="1"/>
           <par name="mode" nr="2"/>
+          <par name="ctx" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2370,9 +3054,9 @@
       </function>
       <function name="patch_id_consume">
         <parameters>
-          <par name="priv" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="priv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2386,9 +3070,9 @@
       </function>
       <function name="pprint_rename">
         <parameters>
-          <par name="name" nr="1"/>
-          <par name="a" nr="2"/>
           <par name="b" nr="3"/>
+          <par name="a" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2402,12 +3086,12 @@
       </function>
       <function name="prep_temp_blob">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="temp" nr="2"/>
-          <par name="blob" nr="3"/>
           <par name="size" nr="4"/>
           <par name="oid" nr="5"/>
           <par name="mode" nr="6"/>
+          <par name="temp" nr="2"/>
+          <par name="path" nr="1"/>
+          <par name="blob" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -2432,6 +3116,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="prepare_filter_bits">
@@ -2448,8 +3148,8 @@
       </function>
       <function name="prepare_temp_file">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="one" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2459,14 +3159,35 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="name"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="print_stat_summary">
         <parameters>
-          <par name="fp" nr="1"/>
-          <par name="files" nr="2"/>
-          <par name="insertions" nr="3"/>
           <par name="deletions" nr="4"/>
+          <par name="fp" nr="1"/>
+          <par name="insertions" nr="3"/>
+          <par name="files" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -2480,10 +3201,10 @@
       </function>
       <function name="print_stat_summary_inserts_deletes">
         <parameters>
-          <par name="options" nr="1"/>
-          <par name="files" nr="2"/>
-          <par name="insertions" nr="3"/>
           <par name="deletions" nr="4"/>
+          <par name="insertions" nr="3"/>
+          <par name="files" nr="2"/>
+          <par name="options" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2508,13 +3229,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -2528,12 +3257,12 @@
       </function>
       <function name="regexec_buf">
         <parameters>
-          <par name="preg" nr="1"/>
           <par name="buf" nr="2"/>
           <par name="size" nr="3"/>
-          <par name="nmatch" nr="4"/>
           <par name="pmatch" nr="5"/>
+          <par name="nmatch" nr="4"/>
           <par name="eflags" nr="6"/>
+          <par name="preg" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2547,14 +3276,23 @@
       </function>
       <function name="remove_space">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="line" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -2574,9 +3312,9 @@
       </function>
       <function name="reuse_worktree_file">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="oid" nr="2"/>
           <par name="want_file" nr="3"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2590,8 +3328,8 @@
       </function>
       <function name="run_checkdiff">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="p" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2605,8 +3343,8 @@
       </function>
       <function name="run_diff">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="p" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2620,15 +3358,15 @@
       </function>
       <function name="run_diff_cmd">
         <parameters>
+          <par name="o" nr="8"/>
           <par name="pgm" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="other" nr="3"/>
+          <par name="msg" nr="7"/>
           <par name="attr_path" nr="4"/>
           <par name="one" nr="5"/>
-          <par name="two" nr="6"/>
-          <par name="msg" nr="7"/>
-          <par name="o" nr="8"/>
           <par name="p" nr="9"/>
+          <par name="two" nr="6"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -2642,9 +3380,9 @@
       </function>
       <function name="run_diffstat">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="o" nr="2"/>
           <par name="diffstat" nr="3"/>
+          <par name="p" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2658,15 +3396,30 @@
       </function>
       <function name="run_external_diff">
         <parameters>
+          <par name="o" nr="8"/>
+          <par name="xfrm_msg" nr="6"/>
+          <par name="complete_rewrite" nr="7"/>
           <par name="pgm" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="other" nr="3"/>
           <par name="one" nr="4"/>
           <par name="two" nr="5"/>
-          <par name="xfrm_msg" nr="6"/>
-          <par name="complete_rewrite" nr="7"/>
-          <par name="o" nr="8"/>
+          <par name="name" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -2679,9 +3432,9 @@
       </function>
       <function name="run_textconv">
         <parameters>
-          <par name="pgm" nr="1"/>
-          <par name="spec" nr="2"/>
           <par name="outsize" nr="3"/>
+          <par name="spec" nr="2"/>
+          <par name="pgm" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2695,8 +3448,8 @@
       </function>
       <function name="sane_case">
         <parameters>
-          <par name="x" nr="1"/>
           <par name="high" nr="2"/>
+          <par name="x" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2710,10 +3463,10 @@
       </function>
       <function name="sane_qsort">
         <parameters>
-          <par name="base" nr="1"/>
           <par name="nmemb" nr="2"/>
-          <par name="size" nr="3"/>
           <par name="compar" nr="4"/>
+          <par name="size" nr="3"/>
+          <par name="base" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2727,9 +3480,9 @@
       </function>
       <function name="sane_truncate_line">
         <parameters>
-          <par name="ecb" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="ecb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2743,9 +3496,9 @@
       </function>
       <function name="scale_linear">
         <parameters>
-          <par name="it" nr="1"/>
           <par name="width" nr="2"/>
           <par name="max_change" nr="3"/>
+          <par name="it" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2791,6 +3544,34 @@
         <parameters>
           <par name="options" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="queue"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -2818,8 +3599,8 @@
       </function>
       <function name="show_file_mode_name">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="newdelete" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="fs" nr="3"/>
         </parameters>
         <postconditions>
@@ -2929,8 +3710,8 @@
       </function>
       <function name="shrink_potential_moved_blocks">
         <parameters>
-          <par name="pmb" nr="1"/>
           <par name="pmb_nr" nr="2"/>
+          <par name="pmb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2958,9 +3739,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -2974,9 +3755,9 @@
       </function>
       <function name="skip_to_optional_arg">
         <parameters>
+          <par name="arg" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="arg" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -2990,8 +3771,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -3005,8 +3786,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -3020,8 +3801,8 @@
       </function>
       <function name="stat_opt">
         <parameters>
-          <par name="options" nr="1"/>
           <par name="av" nr="2"/>
+          <par name="options" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -3035,8 +3816,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -3079,8 +3860,8 @@
       </function>
       <function name="strbuf_complete">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="term" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -3108,8 +3889,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -3123,8 +3904,8 @@
       </function>
       <function name="strip_prefix">
         <parameters>
-          <par name="prefix_length" nr="1"/>
           <par name="namep" nr="2"/>
+          <par name="prefix_length" nr="1"/>
           <par name="otherp" nr="3"/>
         </parameters>
         <postconditions>
@@ -3139,12 +3920,12 @@
       </function>
       <function name="textconv_object">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="mode" nr="2"/>
-          <par name="oid" nr="3"/>
           <par name="oid_valid" nr="4"/>
+          <par name="oid" nr="3"/>
           <par name="buf" nr="5"/>
           <par name="buf_size" nr="6"/>
+          <par name="mode" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>

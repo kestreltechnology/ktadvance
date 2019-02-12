@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:45.409130"/>
-  <cfile name="builtin/bisect--helper">
-    <data-structures/>
+  <header time="2018-12-19 12:48:59">
+    <application file="builtin/bisect--helper.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="_">
         <parameters>
@@ -16,12 +18,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="check_expected_revs">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="rev_nr" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -50,8 +60,8 @@
       </function>
       <function name="cmd_bisect__helper">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -86,6 +96,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_path_bisect_expected_rev">
@@ -98,6 +116,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_path_bisect_terms">
@@ -107,6 +133,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>

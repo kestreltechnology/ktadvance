@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:05.813184"/>
-  <cfile name="rerere">
-    <data-structures/>
+  <header time="2018-12-19 16:47:27">
+    <application file="rerere.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="rerere_dir"/>
+      <gvar name="rerere_dir_alloc"/>
+      <gvar name="rerere_dir_nr"/>
+    </global-variables>
     <functions>
       <function name="assign_variant">
         <parameters>
@@ -28,6 +34,15 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -62,8 +77,8 @@
       </function>
       <function name="do_rerere_one_path">
         <parameters>
-          <par name="rr_item" nr="1"/>
           <par name="update" nr="2"/>
+          <par name="rr_item" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -93,9 +108,9 @@
       </function>
       <function name="ferr_write">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="count" nr="2"/>
           <par name="fp" nr="3"/>
+          <par name="p" nr="1"/>
           <par name="err" nr="4"/>
         </parameters>
         <postconditions>
@@ -126,6 +141,131 @@
         <parameters>
           <par name="hex" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>rerere_dir_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>rerere_dir</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>rerere_dir_alloc</ci>
+                  <cn>16</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>rerere_dir</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>rerere_dir_nr</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>rerere_dir_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <minus/>
+                  <apply>
+                    <plus/>
+                    <ci>rerere_dir_nr</ci>
+                    <cn>1</cn>
+                  </apply>
+                  <cn>0</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>rerere_dir_nr</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>rerere_dir</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>rerere_dir_nr</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -153,6 +293,32 @@
       </function>
       <function name="free_rerere_dirs">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>rerere_dir</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>rerere_dir</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>rerere_dir</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -187,6 +353,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_rerere_config">
@@ -203,9 +377,9 @@
       </function>
       <function name="handle_cache">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="sha1" nr="2"/>
           <par name="output" nr="3"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -219,9 +393,9 @@
       </function>
       <function name="handle_file">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="sha1" nr="2"/>
           <par name="output" nr="3"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -235,8 +409,8 @@
       </function>
       <function name="handle_path">
         <parameters>
-          <par name="sha1" nr="1"/>
           <par name="io" nr="2"/>
+          <par name="sha1" nr="1"/>
           <par name="marker_size" nr="3"/>
         </parameters>
         <postconditions>
@@ -280,9 +454,9 @@
       </function>
       <function name="hold_lock_file_for_update">
         <parameters>
-          <par name="lk" nr="1"/>
           <par name="path" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -338,9 +512,9 @@
       </function>
       <function name="is_rr_file">
         <parameters>
-          <par name="name" nr="1"/>
-          <par name="filename" nr="2"/>
           <par name="variant" nr="3"/>
+          <par name="filename" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -370,9 +544,9 @@
       <function name="move_array">
         <parameters>
           <par name="dst" nr="1"/>
+          <par name="size" nr="4"/>
           <par name="src" nr="2"/>
           <par name="n" nr="3"/>
-          <par name="size" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -396,6 +570,35 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="collection"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="new_rerere_id_hex">
@@ -410,13 +613,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="prune_one">
         <parameters>
+          <par name="cutoff_noresolve" nr="3"/>
           <par name="id" nr="1"/>
           <par name="cutoff_resolve" nr="2"/>
-          <par name="cutoff_noresolve" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -444,9 +655,9 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -531,8 +742,8 @@
       </function>
       <function name="rerere_file_getline">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="io_" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -560,8 +771,8 @@
       </function>
       <function name="rerere_forget_one_path">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="rr" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -604,8 +815,8 @@
       <function name="rerere_io_putconflict">
         <parameters>
           <par name="ch" nr="1"/>
-          <par name="size" nr="2"/>
           <par name="io" nr="3"/>
+          <par name="size" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -619,9 +830,9 @@
       </function>
       <function name="rerere_io_putmem">
         <parameters>
+          <par name="io" nr="3"/>
           <par name="mem" nr="1"/>
           <par name="sz" nr="2"/>
-          <par name="io" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -635,8 +846,8 @@
       </function>
       <function name="rerere_io_putstr">
         <parameters>
-          <par name="str" nr="1"/>
           <par name="io" nr="2"/>
+          <par name="str" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -664,8 +875,8 @@
       </function>
       <function name="rerere_mem_getline">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="io_" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -679,14 +890,22 @@
       </function>
       <function name="rerere_path">
         <parameters>
-          <par name="id" nr="1"/>
           <par name="file" nr="2"/>
+          <par name="id" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -751,9 +970,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -767,8 +986,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -782,8 +1001,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -797,8 +1016,8 @@
       </function>
       <function name="strbuf_swap">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -812,10 +1031,10 @@
       </function>
       <function name="try_merge">
         <parameters>
+          <par name="result" nr="4"/>
+          <par name="cur" nr="3"/>
           <par name="id" nr="1"/>
           <par name="path" nr="2"/>
-          <par name="cur" nr="3"/>
-          <par name="result" nr="4"/>
         </parameters>
         <postconditions>
           <post>

@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:08.687958"/>
-  <cfile name="t/helper/test-date">
-    <data-structures/>
+  <header time="2018-12-19 17:18:34">
+    <application file="t/helper/test-date.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="usage_msg"/>
+    </global-variables>
     <functions>
       <function name="cmd_main">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>usage_msg</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -66,8 +80,8 @@
       </function>
       <function name="show_dates">
         <parameters>
-          <par name="argv" nr="1"/>
           <par name="format" nr="2"/>
+          <par name="argv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -96,9 +110,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -112,8 +126,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

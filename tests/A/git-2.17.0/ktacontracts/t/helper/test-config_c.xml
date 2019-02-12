@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:08.659208"/>
-  <cfile name="t/helper/test-config">
-    <data-structures/>
+  <header time="2018-12-19 17:18:20">
+    <application file="t/helper/test-config.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="nr"/>
+    </global-variables>
     <functions>
       <function name="cmd_main">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -21,9 +25,9 @@
       </function>
       <function name="early_config_cb">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="vdata" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -37,10 +41,25 @@
       </function>
       <function name="iterate_cb">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="value" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="var" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>nr</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -60,6 +79,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>

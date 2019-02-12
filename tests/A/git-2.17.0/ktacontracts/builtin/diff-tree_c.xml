@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:47.460741"/>
-  <cfile name="builtin/diff-tree">
-    <data-structures/>
+  <header time="2018-12-19 13:30:58">
+    <application file="builtin/diff-tree.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="opt"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -20,10 +24,28 @@
       </function>
       <function name="cmd_diff_tree">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>opt</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>opt</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

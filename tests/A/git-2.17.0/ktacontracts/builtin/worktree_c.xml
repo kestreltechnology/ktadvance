@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:51.975833"/>
-  <cfile name="builtin/worktree">
-    <data-structures/>
+  <header time="2018-12-19 14:41:23">
+    <application file="builtin/worktree.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="junk_git_dir"/>
+      <gvar name="junk_work_tree"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -36,9 +41,9 @@
       </function>
       <function name="add_worktree">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="refname" nr="2"/>
           <par name="opts" nr="3"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -133,6 +138,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_is_dir_sep">
@@ -151,9 +164,9 @@
       </function>
       <function name="git_worktree_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -261,8 +274,8 @@
       </function>
       <function name="prune_worktree">
         <parameters>
-          <par name="id" nr="1"/>
           <par name="reason" nr="2"/>
+          <par name="id" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -288,6 +301,40 @@
       </function>
       <function name="remove_junk">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>junk_work_tree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>junk_git_dir</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>junk_work_tree</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>junk_git_dir</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -375,8 +422,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -420,14 +467,22 @@
       </function>
       <function name="worktree_basename">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="olen" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>

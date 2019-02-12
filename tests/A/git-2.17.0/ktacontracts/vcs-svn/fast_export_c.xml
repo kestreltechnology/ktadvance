@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:10.519717"/>
-  <cfile name="vcs-svn/fast_export">
-    <data-structures/>
+  <header time="2018-12-19 17:40:11">
+    <application file="vcs-svn/fast_export.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="apply_delta">
         <parameters>
+          <par name="old_data" nr="3"/>
           <par name="len" nr="1"/>
           <par name="input" nr="2"/>
-          <par name="old_data" nr="3"/>
           <par name="old_mode" nr="4"/>
         </parameters>
         <postconditions>
@@ -19,12 +21,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="check_preimage_overflow">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -79,12 +90,12 @@
       </function>
       <function name="fast_export_begin_commit">
         <parameters>
-          <par name="revision" nr="1"/>
           <par name="author" nr="2"/>
+          <par name="revision" nr="1"/>
+          <par name="timestamp" nr="6"/>
+          <par name="url" nr="5"/>
           <par name="log" nr="3"/>
           <par name="uuid" nr="4"/>
-          <par name="url" nr="5"/>
-          <par name="timestamp" nr="6"/>
           <par name="local_ref" nr="7"/>
         </parameters>
         <postconditions>
@@ -99,10 +110,10 @@
       </function>
       <function name="fast_export_begin_note">
         <parameters>
-          <par name="revision" nr="1"/>
           <par name="author" nr="2"/>
-          <par name="log" nr="3"/>
+          <par name="revision" nr="1"/>
           <par name="timestamp" nr="4"/>
+          <par name="log" nr="3"/>
           <par name="note_ref" nr="5"/>
         </parameters>
         <postconditions>
@@ -117,11 +128,11 @@
       </function>
       <function name="fast_export_blob_delta">
         <parameters>
-          <par name="mode" nr="1"/>
-          <par name="old_mode" nr="2"/>
           <par name="old_data" nr="3"/>
           <par name="len" nr="4"/>
+          <par name="mode" nr="1"/>
           <par name="input" nr="5"/>
+          <par name="old_mode" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -150,8 +161,8 @@
       <function name="fast_export_copy">
         <parameters>
           <par name="revision" nr="1"/>
-          <par name="src" nr="2"/>
           <par name="dst" nr="3"/>
+          <par name="src" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -165,8 +176,8 @@
       </function>
       <function name="fast_export_data">
         <parameters>
-          <par name="mode" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="mode" nr="1"/>
           <par name="input" nr="3"/>
         </parameters>
         <postconditions>
@@ -235,9 +246,9 @@
       </function>
       <function name="fast_export_ls">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="mode" nr="2"/>
           <par name="dataref" nr="3"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -252,9 +263,9 @@
       <function name="fast_export_ls_rev">
         <parameters>
           <par name="rev" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="mode" nr="3"/>
           <par name="dataref" nr="4"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -268,9 +279,9 @@
       </function>
       <function name="fast_export_modify">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="mode" nr="2"/>
           <par name="dataref" nr="3"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -299,8 +310,8 @@
       </function>
       <function name="fast_export_read_path">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="mode_out" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -314,8 +325,8 @@
       </function>
       <function name="fast_export_truncate">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="mode" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -334,6 +345,25 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -382,8 +412,8 @@
       </function>
       <function name="parse_cat_response_line">
         <parameters>
-          <par name="header" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="header" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -428,8 +458,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -443,9 +473,9 @@
       </function>
       <function name="strip_suffix">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="str" nr="1"/>
           <par name="suffix" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -459,8 +489,8 @@
       </function>
       <function name="strip_suffix_mem">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="suffix" nr="3"/>
         </parameters>
         <postconditions>

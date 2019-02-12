@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:50.791631"/>
-  <cfile name="builtin/reset">
-    <data-structures/>
+  <header time="2018-12-19 14:28:30">
+    <application file="builtin/reset.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="_">
         <parameters>
@@ -16,12 +18,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="cmd_reset">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -62,9 +72,9 @@
       </function>
       <function name="git_reset_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -149,11 +159,11 @@
       </function>
       <function name="parse_args">
         <parameters>
-          <par name="pathspec" nr="1"/>
-          <par name="argv" nr="2"/>
-          <par name="prefix" nr="3"/>
-          <par name="patch_mode" nr="4"/>
           <par name="rev_ret" nr="5"/>
+          <par name="patch_mode" nr="4"/>
+          <par name="argv" nr="2"/>
+          <par name="pathspec" nr="1"/>
+          <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -181,9 +191,9 @@
       </function>
       <function name="read_from_tree">
         <parameters>
-          <par name="pathspec" nr="1"/>
-          <par name="tree_oid" nr="2"/>
           <par name="intent_to_add" nr="3"/>
+          <par name="tree_oid" nr="2"/>
+          <par name="pathspec" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -198,8 +208,8 @@
       <function name="reset_index">
         <parameters>
           <par name="oid" nr="1"/>
-          <par name="reset_type" nr="2"/>
           <par name="quiet" nr="3"/>
+          <par name="reset_type" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -228,9 +238,9 @@
       </function>
       <function name="set_reflog_message">
         <parameters>
+          <par name="rev" nr="3"/>
           <par name="sb" nr="1"/>
           <par name="action" nr="2"/>
-          <par name="rev" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -244,8 +254,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -259,9 +269,9 @@
       </function>
       <function name="update_index_from_diff">
         <parameters>
-          <par name="q" nr="1"/>
           <par name="opt" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="q" nr="1"/>
         </parameters>
         <postconditions>
           <post>

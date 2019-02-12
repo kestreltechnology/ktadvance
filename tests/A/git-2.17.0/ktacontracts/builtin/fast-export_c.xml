@@ -1,13 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:47.665262"/>
-  <cfile name="builtin/fast-export">
-    <data-structures/>
+  <header time="2018-12-19 13:33:23">
+    <application file="builtin/fast-export.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="counter"/>
+      <gvar name="counter___0"/>
+      <gvar name="counter___1"/>
+      <gvar name="counter___2"/>
+      <gvar name="counter___3"/>
+      <gvar name="counter___4"/>
+      <gvar name="counter___5"/>
+      <gvar name="counter___6"/>
+      <gvar name="git_commit_encoding"/>
+      <gvar name="last_idnum"/>
+      <gvar name="refspecs"/>
+      <gvar name="which_buffer"/>
+    </global-variables>
     <functions>
       <function name="anonymize_blob">
         <parameters>
           <par name="size" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>counter___0</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -22,6 +52,21 @@
         <parameters>
           <par name="old" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>counter___4</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -37,6 +82,21 @@
           <par name="old" nr="1"/>
           <par name="len" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>counter___5</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -49,9 +109,33 @@
       </function>
       <function name="anonymize_ident_line">
         <parameters>
-          <par name="beg" nr="1"/>
           <par name="end" nr="2"/>
+          <par name="beg" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>which_buffer</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <lt/>
+                <ci>which_buffer</ci>
+                <cn>2</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -64,10 +148,10 @@
       </function>
       <function name="anonymize_mem">
         <parameters>
-          <par name="map" nr="1"/>
-          <par name="generate" nr="2"/>
-          <par name="orig" nr="3"/>
           <par name="len" nr="4"/>
+          <par name="map" nr="1"/>
+          <par name="orig" nr="3"/>
+          <par name="generate" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -82,9 +166,9 @@
       <function name="anonymize_path">
         <parameters>
           <par name="out" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="map" nr="3"/>
           <par name="generate" nr="4"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -98,9 +182,24 @@
       </function>
       <function name="anonymize_path_component">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>counter___1</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -116,6 +215,21 @@
           <par name="old" nr="1"/>
           <par name="len" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>counter___3</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -159,6 +273,21 @@
           <par name="old" nr="1"/>
           <par name="len" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>counter___6</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -171,10 +300,10 @@
       </function>
       <function name="anonymized_entry_cmp">
         <parameters>
-          <par name="unused_cmp_data" nr="1"/>
           <par name="va" nr="2"/>
-          <par name="vb" nr="3"/>
           <par name="unused_keydata" nr="4"/>
+          <par name="vb" nr="3"/>
+          <par name="unused_cmp_data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -188,10 +317,28 @@
       </function>
       <function name="cmd_fast_export">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>refspecs</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>refspecs</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -259,9 +406,19 @@
       </function>
       <function name="find_encoding">
         <parameters>
-          <par name="begin" nr="1"/>
           <par name="end" nr="2"/>
+          <par name="begin" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>git_commit_encoding</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -277,6 +434,21 @@
           <par name="old" nr="1"/>
           <par name="len" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>counter___2</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -289,8 +461,8 @@
       </function>
       <function name="get_commit">
         <parameters>
-          <par name="e" nr="1"/>
           <par name="full_name" nr="2"/>
+          <par name="e" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -320,6 +492,24 @@
         <parameters>
           <par name="info" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>refspecs</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>refspecs</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -346,9 +536,9 @@
       </function>
       <function name="handle_commit">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="rev" nr="2"/>
           <par name="paths_of_changed_objects" nr="3"/>
+          <par name="commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -362,6 +552,24 @@
       </function>
       <function name="handle_deletes">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>refspecs</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>refspecs</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -374,8 +582,8 @@
       </function>
       <function name="handle_tag">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="tag" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -401,9 +609,9 @@
       </function>
       <function name="handle_tail">
         <parameters>
+          <par name="paths_of_changed_objects" nr="3"/>
           <par name="commits" nr="1"/>
           <par name="revs" nr="2"/>
-          <par name="paths_of_changed_objects" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -446,8 +654,8 @@
       </function>
       <function name="hashmap_entry_init">
         <parameters>
-          <par name="entry" nr="1"/>
           <par name="hash" nr="2"/>
+          <par name="entry" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -491,6 +699,21 @@
         <parameters>
           <par name="object" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>last_idnum</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -547,8 +770,8 @@
       </function>
       <function name="parse_opt_signed_tag_mode">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -563,8 +786,8 @@
       </function>
       <function name="parse_opt_tag_of_filtered_mode">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -621,9 +844,9 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -637,9 +860,9 @@
       </function>
       <function name="reencode_string">
         <parameters>
-          <par name="in" nr="1"/>
-          <par name="out_encoding" nr="2"/>
           <par name="in_encoding" nr="3"/>
+          <par name="out_encoding" nr="2"/>
+          <par name="in" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -653,10 +876,10 @@
       </function>
       <function name="sane_qsort">
         <parameters>
-          <par name="base" nr="1"/>
           <par name="nmemb" nr="2"/>
-          <par name="size" nr="3"/>
           <par name="compar" nr="4"/>
+          <par name="size" nr="3"/>
+          <par name="base" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -670,9 +893,9 @@
       </function>
       <function name="show_filemodify">
         <parameters>
-          <par name="q" nr="1"/>
-          <par name="options" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="options" nr="2"/>
+          <par name="q" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -686,6 +909,21 @@
       </function>
       <function name="show_progress">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>counter</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -698,9 +936,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -714,8 +952,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -729,8 +967,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -773,8 +1011,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

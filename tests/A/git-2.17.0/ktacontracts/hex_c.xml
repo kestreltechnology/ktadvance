@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:58.451704"/>
-  <cfile name="hex">
-    <data-structures/>
+  <header time="2018-12-19 15:57:42">
+    <application file="hex.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="bufno"/>
+    </global-variables>
     <functions>
       <function name="get_oid_hex">
         <parameters>
-          <par name="hex" nr="1"/>
           <par name="oid" nr="2"/>
+          <par name="hex" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -21,8 +25,8 @@
       </function>
       <function name="get_sha1_hex">
         <parameters>
-          <par name="hex" nr="1"/>
           <par name="sha1" nr="2"/>
+          <par name="hex" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -46,13 +50,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <leq/>
+                <return/>
+                <cn>255</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="hex_to_bytes">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="binary" nr="1"/>
           <par name="hex" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -109,9 +122,9 @@
       </function>
       <function name="parse_oid_hex">
         <parameters>
-          <par name="hex" nr="1"/>
           <par name="oid" nr="2"/>
           <par name="end" nr="3"/>
+          <par name="hex" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -127,6 +140,34 @@
         <parameters>
           <par name="sha1" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <plus/>
+                  <ci>bufno</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>bufno</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

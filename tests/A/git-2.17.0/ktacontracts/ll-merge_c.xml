@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:59.108208"/>
-  <cfile name="ll-merge">
-    <data-structures/>
+  <header time="2018-12-19 16:05:13">
+    <application file="ll-merge.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="check"/>
+      <gvar name="check___0"/>
+      <gvar name="ll_user_merge_tail"/>
+    </global-variables>
     <functions>
       <function name="const_error">
         <parameters/>
@@ -18,9 +24,9 @@
       </function>
       <function name="create_temp">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="src" nr="1"/>
           <par name="path" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -60,16 +66,16 @@
       </function>
       <function name="ll_binary_merge">
         <parameters>
-          <par name="drv_unused" nr="1"/>
           <par name="result" nr="2"/>
-          <par name="path" nr="3"/>
-          <par name="orig" nr="4"/>
-          <par name="orig_name" nr="5"/>
           <par name="src1" nr="6"/>
-          <par name="name1" nr="7"/>
+          <par name="orig" nr="4"/>
           <par name="src2" nr="8"/>
-          <par name="name2" nr="9"/>
           <par name="opts" nr="10"/>
+          <par name="name2" nr="9"/>
+          <par name="drv_unused" nr="1"/>
+          <par name="path" nr="3"/>
+          <par name="orig_name" nr="5"/>
+          <par name="name1" nr="7"/>
           <par name="marker_size" nr="11"/>
         </parameters>
         <postconditions>
@@ -84,16 +90,16 @@
       </function>
       <function name="ll_ext_merge">
         <parameters>
-          <par name="fn" nr="1"/>
           <par name="result" nr="2"/>
-          <par name="path" nr="3"/>
-          <par name="orig" nr="4"/>
-          <par name="orig_name" nr="5"/>
           <par name="src1" nr="6"/>
-          <par name="name1" nr="7"/>
+          <par name="orig" nr="4"/>
+          <par name="fn" nr="1"/>
           <par name="src2" nr="8"/>
-          <par name="name2" nr="9"/>
           <par name="opts" nr="10"/>
+          <par name="name2" nr="9"/>
+          <par name="path" nr="3"/>
+          <par name="orig_name" nr="5"/>
+          <par name="name1" nr="7"/>
           <par name="marker_size" nr="11"/>
         </parameters>
         <postconditions>
@@ -108,16 +114,26 @@
       </function>
       <function name="ll_merge">
         <parameters>
-          <par name="result_buf" nr="1"/>
-          <par name="path" nr="2"/>
-          <par name="ancestor" nr="3"/>
           <par name="ancestor_label" nr="4"/>
-          <par name="ours" nr="5"/>
-          <par name="our_label" nr="6"/>
           <par name="theirs" nr="7"/>
           <par name="their_label" nr="8"/>
+          <par name="result_buf" nr="1"/>
+          <par name="ancestor" nr="3"/>
           <par name="opts" nr="9"/>
+          <par name="ours" nr="5"/>
+          <par name="our_label" nr="6"/>
+          <par name="path" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>check</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -132,6 +148,16 @@
         <parameters>
           <par name="path" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>check___0</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -144,16 +170,16 @@
       </function>
       <function name="ll_union_merge">
         <parameters>
-          <par name="drv_unused" nr="1"/>
           <par name="result" nr="2"/>
           <par name="path_unused" nr="3"/>
-          <par name="orig" nr="4"/>
-          <par name="orig_name" nr="5"/>
           <par name="src1" nr="6"/>
-          <par name="name1" nr="7"/>
+          <par name="orig" nr="4"/>
           <par name="src2" nr="8"/>
-          <par name="name2" nr="9"/>
           <par name="opts" nr="10"/>
+          <par name="name2" nr="9"/>
+          <par name="drv_unused" nr="1"/>
+          <par name="orig_name" nr="5"/>
+          <par name="name1" nr="7"/>
           <par name="marker_size" nr="11"/>
         </parameters>
         <postconditions>
@@ -168,16 +194,16 @@
       </function>
       <function name="ll_xdl_merge">
         <parameters>
-          <par name="drv_unused" nr="1"/>
           <par name="result" nr="2"/>
-          <par name="path" nr="3"/>
-          <par name="orig" nr="4"/>
-          <par name="orig_name" nr="5"/>
           <par name="src1" nr="6"/>
-          <par name="name1" nr="7"/>
+          <par name="orig" nr="4"/>
           <par name="src2" nr="8"/>
-          <par name="name2" nr="9"/>
           <par name="opts" nr="10"/>
+          <par name="name2" nr="9"/>
+          <par name="drv_unused" nr="1"/>
+          <par name="path" nr="3"/>
+          <par name="orig_name" nr="5"/>
+          <par name="name1" nr="7"/>
           <par name="marker_size" nr="11"/>
         </parameters>
         <postconditions>
@@ -207,10 +233,28 @@
       </function>
       <function name="read_merge_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>ll_user_merge_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>ll_user_merge_tail</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

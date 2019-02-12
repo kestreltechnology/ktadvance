@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:06.233339"/>
-  <cfile name="revision">
-    <data-structures/>
+  <header time="2018-12-19 16:50:05">
+    <application file="revision.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="default_abbrev"/>
+      <gvar name="minimum_abbrev"/>
+      <gvar name="stat_saved_parentsrealloc"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -36,9 +42,9 @@
       </function>
       <function name="add_child">
         <parameters>
+          <par name="child" nr="3"/>
           <par name="revs" nr="1"/>
           <par name="parent" nr="2"/>
-          <par name="child" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -52,9 +58,9 @@
       </function>
       <function name="add_grep">
         <parameters>
+          <par name="what" nr="3"/>
           <par name="revs" nr="1"/>
           <par name="ptn" nr="2"/>
-          <par name="what" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -82,9 +88,9 @@
       </function>
       <function name="add_header_grep">
         <parameters>
+          <par name="pattern" nr="3"/>
           <par name="revs" nr="1"/>
           <par name="field" nr="2"/>
-          <par name="pattern" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -113,8 +119,8 @@
       </function>
       <function name="add_message_grep">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="pattern" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -142,10 +148,10 @@
       </function>
       <function name="add_parents_only">
         <parameters>
+          <par name="exclude_parent" nr="4"/>
           <par name="revs" nr="1"/>
           <par name="arg_" nr="2"/>
           <par name="flags" nr="3"/>
-          <par name="exclude_parent" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -159,10 +165,10 @@
       </function>
       <function name="add_parents_to_list">
         <parameters>
-          <par name="revs" nr="1"/>
-          <par name="commit" nr="2"/>
-          <par name="list" nr="3"/>
           <par name="cache_ptr" nr="4"/>
+          <par name="list" nr="3"/>
+          <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -176,8 +182,8 @@
       </function>
       <function name="add_pending_commit_list">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit_list" nr="2"/>
+          <par name="revs" nr="1"/>
           <par name="flags" nr="3"/>
         </parameters>
         <postconditions>
@@ -192,8 +198,8 @@
       </function>
       <function name="add_pending_object">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="obj" nr="2"/>
+          <par name="revs" nr="1"/>
           <par name="name" nr="3"/>
         </parameters>
         <postconditions>
@@ -208,10 +214,10 @@
       </function>
       <function name="add_pending_object_with_mode">
         <parameters>
-          <par name="revs" nr="1"/>
-          <par name="obj" nr="2"/>
-          <par name="name" nr="3"/>
           <par name="mode" nr="4"/>
+          <par name="obj" nr="2"/>
+          <par name="revs" nr="1"/>
+          <par name="name" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -225,11 +231,11 @@
       </function>
       <function name="add_pending_object_with_path">
         <parameters>
-          <par name="revs" nr="1"/>
-          <par name="obj" nr="2"/>
-          <par name="name" nr="3"/>
           <par name="mode" nr="4"/>
+          <par name="obj" nr="2"/>
+          <par name="revs" nr="1"/>
           <par name="path" nr="5"/>
+          <par name="name" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -243,10 +249,10 @@
       </function>
       <function name="add_pending_oid">
         <parameters>
-          <par name="revs" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="oid" nr="3"/>
+          <par name="revs" nr="1"/>
           <par name="flags" nr="4"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -290,11 +296,11 @@
       </function>
       <function name="add_rev_cmdline">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="item" nr="2"/>
-          <par name="name" nr="3"/>
           <par name="whence" nr="4"/>
+          <par name="revs" nr="1"/>
           <par name="flags" nr="5"/>
+          <par name="name" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -308,9 +314,9 @@
       </function>
       <function name="add_rev_cmdline_list">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit_list" nr="2"/>
           <par name="whence" nr="3"/>
+          <par name="revs" nr="1"/>
           <par name="flags" nr="4"/>
         </parameters>
         <postconditions>
@@ -326,8 +332,8 @@
       <function name="ce_path_match">
         <parameters>
           <par name="ce" nr="1"/>
-          <par name="pathspec" nr="2"/>
           <par name="seen" nr="3"/>
+          <par name="pathspec" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -398,10 +404,10 @@
       </function>
       <function name="commit_list_insert_by_date_cached">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="head" nr="2"/>
-          <par name="cached_base" nr="3"/>
           <par name="cache" nr="4"/>
+          <par name="cached_base" nr="3"/>
+          <par name="p" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -415,8 +421,8 @@
       </function>
       <function name="commit_match">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="opt" nr="2"/>
+          <par name="commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -446,9 +452,9 @@
       </function>
       <function name="compact_treesame">
         <parameters>
-          <par name="revs" nr="1"/>
-          <par name="commit" nr="2"/>
           <par name="nth_parent" nr="3"/>
+          <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -462,8 +468,8 @@
       </function>
       <function name="comparison_date">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -532,10 +538,10 @@
       </function>
       <function name="dotdot_missing">
         <parameters>
-          <par name="arg" nr="1"/>
-          <par name="dotdot" nr="2"/>
-          <par name="revs" nr="3"/>
           <par name="symmetric" nr="4"/>
+          <par name="dotdot" nr="2"/>
+          <par name="arg" nr="1"/>
+          <par name="revs" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -579,13 +585,13 @@
       </function>
       <function name="file_add_remove">
         <parameters>
-          <par name="options" nr="1"/>
-          <par name="addremove" nr="2"/>
-          <par name="mode" nr="3"/>
-          <par name="oid" nr="4"/>
           <par name="oid_valid" nr="5"/>
-          <par name="fullpath" nr="6"/>
+          <par name="oid" nr="4"/>
+          <par name="mode" nr="3"/>
           <par name="dirty_submodule" nr="7"/>
+          <par name="options" nr="1"/>
+          <par name="fullpath" nr="6"/>
+          <par name="addremove" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -599,16 +605,16 @@
       </function>
       <function name="file_change">
         <parameters>
-          <par name="options" nr="1"/>
-          <par name="old_mode" nr="2"/>
-          <par name="new_mode" nr="3"/>
-          <par name="old_oid" nr="4"/>
-          <par name="new_oid" nr="5"/>
-          <par name="old_oid_valid" nr="6"/>
           <par name="new_oid_valid" nr="7"/>
-          <par name="fullpath" nr="8"/>
+          <par name="new_oid" nr="5"/>
+          <par name="old_mode" nr="2"/>
           <par name="old_dirty_submodule" nr="9"/>
+          <par name="new_mode" nr="3"/>
+          <par name="options" nr="1"/>
+          <par name="fullpath" nr="8"/>
           <par name="new_dirty_submodule" nr="10"/>
+          <par name="old_oid" nr="4"/>
+          <par name="old_oid_valid" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -622,9 +628,9 @@
       </function>
       <function name="for_each_bad_bisect_ref">
         <parameters>
-          <par name="refs" nr="1"/>
-          <par name="fn" nr="2"/>
           <par name="cb_data" nr="3"/>
+          <par name="fn" nr="2"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -638,10 +644,10 @@
       </function>
       <function name="for_each_bisect_ref">
         <parameters>
-          <par name="refs" nr="1"/>
-          <par name="fn" nr="2"/>
-          <par name="cb_data" nr="3"/>
           <par name="term" nr="4"/>
+          <par name="cb_data" nr="3"/>
+          <par name="fn" nr="2"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -655,9 +661,9 @@
       </function>
       <function name="for_each_good_bisect_ref">
         <parameters>
-          <par name="refs" nr="1"/>
-          <par name="fn" nr="2"/>
           <par name="cb_data" nr="3"/>
+          <par name="fn" nr="2"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -699,8 +705,8 @@
       </function>
       <function name="get_commit_action">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -714,16 +720,63 @@
       </function>
       <function name="get_reference">
         <parameters>
-          <par name="revs" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="oid" nr="3"/>
+          <par name="revs" nr="1"/>
           <par name="flags" nr="4"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="flags"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="parents"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="type"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -773,8 +826,8 @@
       </function>
       <function name="get_revision_mark">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -784,12 +837,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_saved_parents">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -803,14 +864,29 @@
       </function>
       <function name="handle_commit">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="entry" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="object">
+                      <field name="flags"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -835,13 +911,13 @@
       </function>
       <function name="handle_dotdot_1">
         <parameters>
-          <par name="arg" nr="1"/>
+          <par name="b_oc" nr="7"/>
           <par name="dotdot" nr="2"/>
+          <par name="arg" nr="1"/>
+          <par name="a_oc" nr="6"/>
           <par name="revs" nr="3"/>
           <par name="flags" nr="4"/>
           <par name="cant_be_filename" nr="5"/>
-          <par name="a_oc" nr="6"/>
-          <par name="b_oc" nr="7"/>
         </parameters>
         <postconditions>
           <post>
@@ -855,10 +931,10 @@
       </function>
       <function name="handle_one_ref">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="oid" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -872,10 +948,10 @@
       </function>
       <function name="handle_one_reflog">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="oid" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -889,8 +965,8 @@
       </function>
       <function name="handle_one_reflog_commit">
         <parameters>
-          <par name="oid" nr="1"/>
           <par name="cb_data" nr="2"/>
+          <par name="oid" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -905,12 +981,12 @@
       <function name="handle_one_reflog_ent">
         <parameters>
           <par name="ooid" nr="1"/>
-          <par name="noid" nr="2"/>
+          <par name="cb_data" nr="7"/>
           <par name="email" nr="3"/>
           <par name="timestamp" nr="4"/>
           <par name="tz" nr="5"/>
+          <par name="noid" nr="2"/>
           <par name="message" nr="6"/>
-          <par name="cb_data" nr="7"/>
         </parameters>
         <postconditions>
           <post>
@@ -924,10 +1000,10 @@
       </function>
       <function name="handle_refs">
         <parameters>
+          <par name="for_each" nr="4"/>
           <par name="refs" nr="1"/>
           <par name="revs" nr="2"/>
           <par name="flags" nr="3"/>
-          <par name="for_each" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -941,10 +1017,10 @@
       </function>
       <function name="handle_revision_arg">
         <parameters>
+          <par name="revarg_opt" nr="4"/>
           <par name="arg_" nr="1"/>
           <par name="revs" nr="2"/>
           <par name="flags" nr="3"/>
-          <par name="revarg_opt" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -958,12 +1034,32 @@
       </function>
       <function name="handle_revision_opt">
         <parameters>
-          <par name="revs" nr="1"/>
-          <par name="argc" nr="2"/>
+          <par name="unkv" nr="5"/>
           <par name="argv" nr="3"/>
           <par name="unkc" nr="4"/>
-          <par name="unkv" nr="5"/>
+          <par name="revs" nr="1"/>
+          <par name="argc" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>default_abbrev</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>minimum_abbrev</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -977,10 +1073,10 @@
       <function name="handle_revision_pseudo_opt">
         <parameters>
           <par name="submodule" nr="1"/>
-          <par name="revs" nr="2"/>
-          <par name="argc" nr="3"/>
           <par name="argv" nr="4"/>
+          <par name="revs" nr="2"/>
           <par name="flags" nr="5"/>
+          <par name="argc" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1043,6 +1139,17 @@
           <par name="revs" nr="1"/>
           <par name="prefix" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>default_abbrev</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1069,8 +1176,8 @@
       </function>
       <function name="init_saved_parents_with_stride">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="stride" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1084,14 +1191,22 @@
       </function>
       <function name="initialise_treesame">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1113,8 +1228,8 @@
       </function>
       <function name="leave_one_treesame_to_parent">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1157,8 +1272,8 @@
       </function>
       <function name="limit_to_ancestry">
         <parameters>
-          <par name="bottom" nr="1"/>
           <par name="list" nr="2"/>
+          <par name="bottom" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1186,14 +1301,35 @@
       </function>
       <function name="locate_simplify_state">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="simplified"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -1229,8 +1365,8 @@
       </function>
       <function name="mark_redundant_parents">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1272,8 +1408,8 @@
       </function>
       <function name="mark_treesame_root_parents">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1287,10 +1423,10 @@
       </function>
       <function name="mark_uninteresting">
         <parameters>
-          <par name="oid" nr="1"/>
-          <par name="pack" nr="2"/>
           <par name="pos" nr="3"/>
+          <par name="oid" nr="1"/>
           <par name="unused" nr="4"/>
+          <par name="pack" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1348,8 +1484,8 @@
       </function>
       <function name="one_relevant_parent">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="orig" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1377,10 +1513,10 @@
       </function>
       <function name="parse_revision_opt">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="ctx" nr="2"/>
-          <par name="options" nr="3"/>
           <par name="usagestr" nr="4"/>
+          <par name="options" nr="3"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1436,8 +1572,8 @@
       </function>
       <function name="put_revision_mark">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1451,9 +1587,9 @@
       </function>
       <function name="read_pathspec_from_stdin">
         <parameters>
-          <par name="revs" nr="1"/>
-          <par name="sb" nr="2"/>
           <par name="prune" nr="3"/>
+          <par name="sb" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1467,8 +1603,8 @@
       </function>
       <function name="read_revisions_from_stdin">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="prune" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1511,8 +1647,8 @@
       </function>
       <function name="remove_duplicate_parents">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1526,8 +1662,8 @@
       </function>
       <function name="remove_marked_parents">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1553,9 +1689,9 @@
       </function>
       <function name="rev_compare_tree">
         <parameters>
+          <par name="commit" nr="3"/>
           <par name="revs" nr="1"/>
           <par name="parent" nr="2"/>
-          <par name="commit" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1569,8 +1705,8 @@
       </function>
       <function name="rev_same_tree_as_empty">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1599,9 +1735,9 @@
       </function>
       <function name="rewrite_parents">
         <parameters>
-          <par name="revs" nr="1"/>
-          <par name="commit" nr="2"/>
           <par name="rewrite_parent" nr="3"/>
+          <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1615,8 +1751,8 @@
       </function>
       <function name="save_parents">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1630,8 +1766,8 @@
       </function>
       <function name="saved_parents_at">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1641,14 +1777,48 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="saved_parents_at_peek">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="s" nr="1"/>
           <par name="add_if_missing" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>stat_saved_parentsrealloc</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1675,10 +1845,10 @@
       </function>
       <function name="setup_revisions">
         <parameters>
-          <par name="argc" nr="1"/>
+          <par name="opt" nr="4"/>
           <par name="argv" nr="2"/>
           <par name="revs" nr="3"/>
-          <par name="opt" nr="4"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1708,8 +1878,8 @@
       </function>
       <function name="simplify_commit">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1737,9 +1907,9 @@
       </function>
       <function name="simplify_one">
         <parameters>
-          <par name="revs" nr="1"/>
-          <par name="commit" nr="2"/>
           <par name="tail" nr="3"/>
+          <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1753,9 +1923,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1769,8 +1939,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1784,8 +1954,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1799,8 +1969,8 @@
       </function>
       <function name="still_interesting">
         <parameters>
-          <par name="src" nr="1"/>
           <par name="date" nr="2"/>
+          <par name="src" nr="1"/>
           <par name="slop" nr="3"/>
           <par name="interesting_cache" nr="4"/>
         </parameters>
@@ -1816,8 +1986,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1860,8 +2030,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1875,9 +2045,9 @@
       </function>
       <function name="strtol_i">
         <parameters>
+          <par name="result" nr="3"/>
           <par name="s" nr="1"/>
           <par name="base" nr="2"/>
-          <par name="result" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1891,9 +2061,9 @@
       </function>
       <function name="strtoul_ui">
         <parameters>
+          <par name="result" nr="3"/>
           <par name="s" nr="1"/>
           <par name="base" nr="2"/>
-          <par name="result" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1907,8 +2077,8 @@
       </function>
       <function name="track_linear">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1922,8 +2092,8 @@
       </function>
       <function name="try_to_simplify_commit">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1937,8 +2107,8 @@
       </function>
       <function name="update_treesame">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>

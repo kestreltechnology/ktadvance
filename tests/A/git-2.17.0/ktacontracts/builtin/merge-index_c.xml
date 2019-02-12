@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:49.142620"/>
-  <cfile name="builtin/merge-index">
-    <data-structures/>
+  <header time="2018-12-19 13:55:06">
+    <application file="builtin/merge-index.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="err"/>
+    </global-variables>
     <functions>
       <function name="cmd_merge_index">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -37,6 +41,21 @@
           <par name="pos" nr="1"/>
           <par name="path" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>err</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

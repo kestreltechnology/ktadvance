@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:45.368148"/>
-  <cfile name="builtin/am">
-    <data-structures/>
+  <header time="2018-12-19 12:42:06">
+    <application file="builtin/am.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -145,8 +149,8 @@
       </function>
       <function name="am_run">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="resume" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -160,9 +164,9 @@
       </function>
       <function name="am_setup">
         <parameters>
+          <par name="paths" nr="3"/>
           <par name="state" nr="1"/>
           <par name="patch_format" nr="2"/>
-          <par name="paths" nr="3"/>
           <par name="keep_cr" nr="4"/>
         </parameters>
         <postconditions>
@@ -219,8 +223,8 @@
       </function>
       <function name="build_fake_ancestor">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="index_file" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -234,8 +238,8 @@
       </function>
       <function name="capture_command">
         <parameters>
-          <par name="cmd" nr="1"/>
           <par name="out" nr="2"/>
+          <par name="cmd" nr="1"/>
           <par name="hint" nr="3"/>
         </parameters>
         <postconditions>
@@ -265,8 +269,8 @@
       </function>
       <function name="cmd_am">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -363,8 +367,8 @@
       </function>
       <function name="fall_back_threeway">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="index_path___0" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -394,8 +398,8 @@
       </function>
       <function name="get_commit_info">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -424,9 +428,9 @@
       </function>
       <function name="git_am_config">
         <parameters>
-          <par name="k" nr="1"/>
-          <par name="v" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="v" nr="2"/>
+          <par name="k" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -701,8 +705,8 @@
       </function>
       <function name="parse_opt_patchformat">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -759,10 +763,10 @@
       </function>
       <function name="read_state_file">
         <parameters>
-          <par name="sb" nr="1"/>
-          <par name="state" nr="2"/>
-          <par name="file" nr="3"/>
           <par name="trim" nr="4"/>
+          <par name="sb" nr="1"/>
+          <par name="file" nr="3"/>
+          <par name="state" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -802,8 +806,8 @@
       </function>
       <function name="run_apply">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="index_file" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -859,9 +863,9 @@
       </function>
       <function name="say">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="fp" nr="2"/>
           <par name="fmt" nr="3"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -889,9 +893,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -905,9 +909,9 @@
       </function>
       <function name="split_mail">
         <parameters>
+          <par name="paths" nr="3"/>
           <par name="state" nr="1"/>
           <par name="patch_format" nr="2"/>
-          <par name="paths" nr="3"/>
           <par name="keep_cr" nr="4"/>
         </parameters>
         <postconditions>
@@ -923,8 +927,8 @@
       <function name="split_mail_conv">
         <parameters>
           <par name="fn" nr="1"/>
-          <par name="state" nr="2"/>
           <par name="paths" nr="3"/>
+          <par name="state" nr="2"/>
           <par name="keep_cr" nr="4"/>
         </parameters>
         <postconditions>
@@ -939,10 +943,10 @@
       </function>
       <function name="split_mail_mbox">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="paths" nr="2"/>
-          <par name="keep_cr" nr="3"/>
           <par name="mboxrd" nr="4"/>
+          <par name="state" nr="1"/>
+          <par name="keep_cr" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -956,8 +960,8 @@
       </function>
       <function name="split_mail_stgit_series">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="paths" nr="2"/>
+          <par name="state" nr="1"/>
           <par name="keep_cr" nr="3"/>
         </parameters>
         <postconditions>
@@ -1002,8 +1006,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1046,8 +1050,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1103,8 +1107,8 @@
       </function>
       <function name="write_commit_patch">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1120,6 +1124,37 @@
         <parameters>
           <par name="state" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1132,9 +1167,9 @@
       </function>
       <function name="write_state_bool">
         <parameters>
+          <par name="value" nr="3"/>
           <par name="state" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="value" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1148,9 +1183,9 @@
       </function>
       <function name="write_state_count">
         <parameters>
+          <par name="value" nr="3"/>
           <par name="state" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="value" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1164,9 +1199,9 @@
       </function>
       <function name="write_state_text">
         <parameters>
+          <par name="string" nr="3"/>
           <par name="state" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="string" nr="3"/>
         </parameters>
         <postconditions>
           <post>

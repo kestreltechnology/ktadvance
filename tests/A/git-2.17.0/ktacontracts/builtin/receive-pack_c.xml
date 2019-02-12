@@ -1,8 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:50.328278"/>
-  <cfile name="builtin/receive-pack">
-    <data-structures/>
+  <header time="2018-12-19 14:21:59">
+    <application file="builtin/receive-pack.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="alt_shallow_file"/>
+      <gvar name="head_name"/>
+      <gvar name="head_name_to_free"/>
+      <gvar name="max_input_size"/>
+      <gvar name="namespaced_name"/>
+      <gvar name="pack_lockfile"/>
+      <gvar name="push_cert_nonce"/>
+      <gvar name="push_to_checkout_hook"/>
+      <gvar name="refuse_unconfigured_deny_delete_current_msg"/>
+      <gvar name="refuse_unconfigured_deny_msg"/>
+      <gvar name="service_dir"/>
+      <gvar name="tmp_objdir"/>
+      <gvar name="transaction"/>
+      <gvar name="unpack_limit"/>
+      <gvar name="use_sideband"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -63,9 +81,43 @@
       </function>
       <function name="check_nonce">
         <parameters>
-          <par name="buf___0" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf___0" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>push_cert_nonce</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>service_dir</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>push_cert_nonce</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>push_cert_nonce</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -78,10 +130,28 @@
       </function>
       <function name="cmd_receive_pack">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>pack_lockfile</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>pack_lockfile</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -121,10 +191,38 @@
       </function>
       <function name="copy_to_sideband">
         <parameters>
-          <par name="in" nr="1"/>
           <par name="out" nr="2"/>
           <par name="arg" nr="3"/>
+          <par name="in" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>use_sideband</ci>
+                  <cn>5</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>use_sideband</ci>
+                  <cn>5</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -151,11 +249,37 @@
       </function>
       <function name="execute_commands">
         <parameters>
-          <par name="commands" nr="1"/>
           <par name="unpacker_error" nr="2"/>
+          <par name="commands" nr="1"/>
           <par name="si" nr="3"/>
           <par name="push_options" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tmp_objdir</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>head_name_to_free</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>head_name_to_free</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -199,8 +323,8 @@
       <function name="feed_receive_hook">
         <parameters>
           <par name="state_" nr="1"/>
-          <par name="bufp" nr="2"/>
           <par name="sizep" nr="3"/>
+          <par name="bufp" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -214,8 +338,8 @@
       </function>
       <function name="find_header">
         <parameters>
-          <par name="msg" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="msg" nr="1"/>
           <par name="key" nr="3"/>
           <par name="next_line" nr="4"/>
         </parameters>
@@ -289,9 +413,9 @@
         <parameters>
           <par name="out" nr="1"/>
           <par name="key_in" nr="2"/>
+          <par name="text_len" nr="5"/>
           <par name="key_len" nr="3"/>
           <par name="text" nr="4"/>
-          <par name="text_len" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -321,6 +445,24 @@
         <parameters>
           <par name="ref" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>head_name</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>head_name</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -392,8 +534,8 @@
       </function>
       <function name="parse_deny_action">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -421,8 +563,8 @@
       </function>
       <function name="prepare_push_cert_nonce">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="stamp" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -438,6 +580,16 @@
         <parameters>
           <par name="proc" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>push_cert_nonce</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -453,6 +605,24 @@
           <par name="commands" nr="1"/>
           <par name="si" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>alt_shallow_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>alt_shallow_file</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -480,10 +650,20 @@
       </function>
       <function name="push_to_checkout">
         <parameters>
-          <par name="sha1" nr="1"/>
           <par name="env" nr="2"/>
+          <par name="sha1" nr="1"/>
           <par name="work_tree" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>push_to_checkout_hook</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -496,8 +676,8 @@
       </function>
       <function name="push_to_deploy">
         <parameters>
-          <par name="sha1" nr="1"/>
           <par name="env" nr="2"/>
+          <par name="sha1" nr="1"/>
           <par name="work_tree" nr="3"/>
         </parameters>
         <postconditions>
@@ -512,9 +692,9 @@
       </function>
       <function name="queue_command">
         <parameters>
-          <par name="tail" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="linelen" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="tail" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -528,8 +708,8 @@
       </function>
       <function name="queue_commands_from_cert">
         <parameters>
-          <par name="tail" nr="1"/>
           <par name="push_cert___0" nr="2"/>
+          <par name="tail" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -571,9 +751,9 @@
       </function>
       <function name="receive_pack_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -587,6 +767,24 @@
       </function>
       <function name="refuse_unconfigured_deny">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>refuse_unconfigured_deny_msg</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>refuse_unconfigured_deny_msg</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -599,6 +797,24 @@
       </function>
       <function name="refuse_unconfigured_deny_delete_current">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>refuse_unconfigured_deny_delete_current_msg</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>refuse_unconfigured_deny_delete_current_msg</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -628,6 +844,34 @@
           <par name="commands" nr="1"/>
           <par name="unpack_status" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>use_sideband</ci>
+                  <cn>5</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>use_sideband</ci>
+                  <cn>5</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -640,10 +884,38 @@
       </function>
       <function name="report_message">
         <parameters>
+          <par name="params" nr="3"/>
           <par name="prefix" nr="1"/>
           <par name="err" nr="2"/>
-          <par name="params" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>use_sideband</ci>
+                  <cn>5</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>use_sideband</ci>
+                  <cn>5</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -699,9 +971,19 @@
       <function name="run_and_feed_hook">
         <parameters>
           <par name="hook_name" nr="1"/>
-          <par name="feed" nr="2"/>
           <par name="feed_state" nr="3"/>
+          <par name="feed" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tmp_objdir</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -714,9 +996,9 @@
       </function>
       <function name="run_receive_hook">
         <parameters>
+          <par name="skip_broken" nr="3"/>
           <par name="commands" nr="1"/>
           <par name="hook_name" nr="2"/>
-          <par name="skip_broken" nr="3"/>
           <par name="push_options" nr="4"/>
         </parameters>
         <postconditions>
@@ -762,6 +1044,16 @@
           <par name="commands" nr="1"/>
           <par name="si" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tmp_objdir</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -804,9 +1096,19 @@
       </function>
       <function name="show_ref">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="oid" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>push_cert_nonce</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -820,8 +1122,8 @@
       <function name="show_ref_cb">
         <parameters>
           <par name="path_full" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
+          <par name="oid" nr="2"/>
           <par name="data" nr="4"/>
         </parameters>
         <postconditions>
@@ -836,9 +1138,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -852,8 +1154,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -867,8 +1169,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -897,8 +1199,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -926,9 +1228,29 @@
       </function>
       <function name="unpack">
         <parameters>
-          <par name="err_fd" nr="1"/>
           <par name="si" nr="2"/>
+          <par name="err_fd" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>max_input_size</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>unpack_limit</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -958,6 +1280,48 @@
           <par name="cmd" nr="1"/>
           <par name="si" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>namespaced_name</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>transaction</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>head_name</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>head_name</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>namespaced_name</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -970,9 +1334,9 @@
       </function>
       <function name="update_shallow_info">
         <parameters>
+          <par name="ref" nr="3"/>
           <par name="commands" nr="1"/>
           <par name="si" nr="2"/>
-          <par name="ref" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -989,6 +1353,16 @@
           <par name="cmd" nr="1"/>
           <par name="si" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tmp_objdir</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1003,6 +1377,16 @@
         <parameters>
           <par name="sha1" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>push_to_checkout_hook</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

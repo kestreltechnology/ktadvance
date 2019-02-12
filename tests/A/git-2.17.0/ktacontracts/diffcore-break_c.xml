@@ -1,13 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:56.366194"/>
-  <cfile name="diffcore-break">
-    <data-structures/>
+  <header time="2018-12-19 15:39:26">
+    <application file="diffcore-break.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="diff_queued_diff"/>
+    </global-variables>
     <functions>
       <function name="diffcore_break">
         <parameters>
           <par name="break_score" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="queue"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -20,6 +52,34 @@
       </function>
       <function name="diffcore_merge_broken">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="queue"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -48,8 +108,8 @@
       <function name="merge_broken">
         <parameters>
           <par name="p" nr="1"/>
-          <par name="pp" nr="2"/>
           <par name="outq" nr="3"/>
+          <par name="pp" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -92,8 +152,8 @@
       </function>
       <function name="should_break">
         <parameters>
-          <par name="src" nr="1"/>
           <par name="dst" nr="2"/>
+          <par name="src" nr="1"/>
           <par name="break_score" nr="3"/>
           <par name="merge_score_p" nr="4"/>
         </parameters>

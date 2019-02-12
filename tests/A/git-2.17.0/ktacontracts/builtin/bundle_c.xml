@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:45.600874"/>
-  <cfile name="builtin/bundle">
-    <data-structures/>
+  <header time="2018-12-19 12:58:05">
+    <application file="builtin/bundle.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="startup_info"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -20,10 +24,41 @@
       </function>
       <function name="cmd_bundle">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="have_repository"/>
+                  </addressed-value>
+                  <ci>startup_info</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

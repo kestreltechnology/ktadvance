@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:53.282677"/>
-  <cfile name="connected">
-    <data-structures/>
+  <header time="2018-12-19 15:30:11">
+    <application file="connected.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="_">
         <parameters>
@@ -16,13 +18,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="check_connected">
         <parameters>
-          <par name="fn" nr="1"/>
           <par name="cb_data" nr="2"/>
           <par name="opt" nr="3"/>
+          <par name="fn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -63,9 +73,9 @@
       </function>
       <function name="strip_suffix">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="str" nr="1"/>
           <par name="suffix" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -79,8 +89,8 @@
       </function>
       <function name="strip_suffix_mem">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="suffix" nr="3"/>
         </parameters>
         <postconditions>

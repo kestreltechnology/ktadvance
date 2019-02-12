@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:08.600315"/>
-  <cfile name="submodule-config">
-    <data-structures/>
+  <header time="2018-12-19 17:15:37">
+    <application file="submodule-config.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -98,9 +102,9 @@
       <function name="config_from">
         <parameters>
           <par name="cache" nr="1"/>
+          <par name="lookup_type" nr="4"/>
           <par name="treeish_name" nr="2"/>
           <par name="key" nr="3"/>
-          <par name="lookup_type" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -114,10 +118,10 @@
       </function>
       <function name="config_name_cmp">
         <parameters>
+          <par name="unused_keydata" nr="4"/>
           <par name="unused_cmp_data" nr="1"/>
           <par name="entry" nr="2"/>
           <par name="entry_or_key" nr="3"/>
-          <par name="unused_keydata" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -131,10 +135,10 @@
       </function>
       <function name="config_path_cmp">
         <parameters>
+          <par name="unused_keydata" nr="4"/>
           <par name="unused_cmp_data" nr="1"/>
           <par name="entry" nr="2"/>
           <par name="entry_or_key" nr="3"/>
-          <par name="unused_keydata" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -174,9 +178,9 @@
       </function>
       <function name="gitmodule_oid_from_commit">
         <parameters>
+          <par name="rev" nr="3"/>
           <par name="treeish_name" nr="1"/>
           <par name="gitmodules_oid" nr="2"/>
-          <par name="rev" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -190,9 +194,9 @@
       </function>
       <function name="gitmodules_cb">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="value" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -208,6 +212,37 @@
         <parameters>
           <par name="commit_oid" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="submodule_cache"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -234,8 +269,8 @@
       </function>
       <function name="hash_sha1_string">
         <parameters>
-          <par name="sha1" nr="1"/>
           <par name="string" nr="2"/>
+          <par name="sha1" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -279,8 +314,8 @@
       </function>
       <function name="hashmap_entry_init">
         <parameters>
-          <par name="entry" nr="1"/>
           <par name="hash" nr="2"/>
+          <par name="entry" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -294,8 +329,8 @@
       </function>
       <function name="hashmap_iter_first">
         <parameters>
-          <par name="map" nr="1"/>
           <par name="iter" nr="2"/>
+          <par name="map" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -349,13 +384,127 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="name"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="update_strategy">
+                      <field name="type"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ignore"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="branch"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="path"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="url"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="recommend_shallow"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="fetch_recurse"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="name_and_item_from_var">
         <parameters>
+          <par name="item" nr="3"/>
           <par name="var" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="item" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -383,8 +532,8 @@
       </function>
       <function name="option_fetch_parse_recurse_submodules">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -399,9 +548,9 @@
       </function>
       <function name="parse_config">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="value" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -415,8 +564,8 @@
       </function>
       <function name="parse_fetch_recurse">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="die_on_error" nr="3"/>
         </parameters>
         <postconditions>
@@ -431,8 +580,8 @@
       </function>
       <function name="parse_fetch_recurse_submodules_arg">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -446,8 +595,8 @@
       </function>
       <function name="parse_push_recurse">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="die_on_error" nr="3"/>
         </parameters>
         <postconditions>
@@ -462,8 +611,8 @@
       </function>
       <function name="parse_push_recurse_submodules_arg">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -477,8 +626,8 @@
       </function>
       <function name="parse_submodule_fetchjobs">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -492,8 +641,8 @@
       </function>
       <function name="parse_update_recurse">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="die_on_error" nr="3"/>
         </parameters>
         <postconditions>
@@ -508,8 +657,8 @@
       </function>
       <function name="parse_update_recurse_submodules_arg">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -523,15 +672,23 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -573,6 +730,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -636,6 +801,37 @@
       </function>
       <function name="submodule_free">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="submodule_cache"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -648,8 +844,8 @@
       </function>
       <function name="submodule_from_cache">
         <parameters>
-          <par name="repo" nr="1"/>
           <par name="treeish_name" nr="2"/>
+          <par name="repo" nr="1"/>
           <par name="key" nr="3"/>
         </parameters>
         <postconditions>
@@ -667,6 +863,63 @@
           <par name="treeish_name" nr="1"/>
           <par name="name" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="submodule_cache"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="index"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="worktree"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -682,6 +935,63 @@
           <par name="treeish_name" nr="1"/>
           <par name="path" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="submodule_cache"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="index"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="worktree"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -695,8 +1005,8 @@
       <function name="warn_multiple_config">
         <parameters>
           <par name="treeish_name" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="option" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>

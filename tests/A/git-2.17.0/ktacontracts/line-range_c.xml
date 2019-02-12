@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:58.983721"/>
-  <cfile name="line-range">
-    <data-structures/>
+  <header time="2018-12-19 16:03:01">
+    <application file="line-range.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="find_funcname_matching_regexp">
         <parameters>
@@ -18,12 +20,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="match_funcname">
         <parameters>
-          <par name="xecfg" nr="1"/>
           <par name="bol" nr="2"/>
+          <par name="xecfg" nr="1"/>
           <par name="eol" nr="3"/>
         </parameters>
         <postconditions>
@@ -38,12 +48,12 @@
       </function>
       <function name="parse_loc">
         <parameters>
-          <par name="spec" nr="1"/>
-          <par name="nth_line" nr="2"/>
-          <par name="data" nr="3"/>
           <par name="lines" nr="4"/>
-          <par name="begin" nr="5"/>
+          <par name="nth_line" nr="2"/>
+          <par name="spec" nr="1"/>
           <par name="ret" nr="6"/>
+          <par name="data" nr="3"/>
+          <par name="begin" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -53,18 +63,37 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="parse_range_arg">
         <parameters>
-          <par name="arg" nr="1"/>
-          <par name="nth_line_cb" nr="2"/>
-          <par name="cb_data" nr="3"/>
           <par name="lines" nr="4"/>
-          <par name="anchor" nr="5"/>
-          <par name="begin" nr="6"/>
+          <par name="cb_data" nr="3"/>
+          <par name="arg" nr="1"/>
           <par name="end" nr="7"/>
+          <par name="nth_line_cb" nr="2"/>
+          <par name="anchor" nr="5"/>
           <par name="path" nr="8"/>
+          <par name="begin" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -78,20 +107,31 @@
       </function>
       <function name="parse_range_funcname">
         <parameters>
-          <par name="arg" nr="1"/>
-          <par name="nth_line_cb" nr="2"/>
-          <par name="cb_data" nr="3"/>
           <par name="lines" nr="4"/>
-          <par name="anchor" nr="5"/>
-          <par name="begin" nr="6"/>
+          <par name="cb_data" nr="3"/>
+          <par name="arg" nr="1"/>
           <par name="end" nr="7"/>
+          <par name="nth_line_cb" nr="2"/>
+          <par name="anchor" nr="5"/>
           <par name="path" nr="8"/>
+          <par name="begin" nr="6"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>

@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:52.097141"/>
-  <cfile name="bundle">
-    <data-structures/>
+  <header time="2018-12-19 14:42:21">
+    <application file="bundle.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="Q_">
         <parameters>
           <par name="msgid" nr="1"/>
-          <par name="plu" nr="2"/>
           <par name="n" nr="3"/>
+          <par name="plu" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -32,13 +34,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="add_to_ref_list">
         <parameters>
           <par name="oid" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="list" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -52,10 +62,10 @@
       </function>
       <function name="compute_and_write_prerequisites">
         <parameters>
-          <par name="bundle_fd" nr="1"/>
-          <par name="revs" nr="2"/>
-          <par name="argc" nr="3"/>
           <par name="argv" nr="4"/>
+          <par name="revs" nr="2"/>
+          <par name="bundle_fd" nr="1"/>
+          <par name="argc" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -82,9 +92,9 @@
       <function name="create_bundle">
         <parameters>
           <par name="header" nr="1"/>
+          <par name="argv" nr="4"/>
           <par name="path" nr="2"/>
           <par name="argc" nr="3"/>
-          <par name="argv" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -128,9 +138,9 @@
       </function>
       <function name="hold_lock_file_for_update">
         <parameters>
-          <par name="lk" nr="1"/>
           <par name="path" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -144,8 +154,8 @@
       </function>
       <function name="is_bundle">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="quiet" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -175,8 +185,8 @@
       <function name="list_bundle_refs">
         <parameters>
           <par name="header" nr="1"/>
-          <par name="argc" nr="2"/>
           <par name="argv" nr="3"/>
+          <par name="argc" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -191,8 +201,8 @@
       <function name="list_refs">
         <parameters>
           <par name="r" nr="1"/>
-          <par name="argc" nr="2"/>
           <par name="argv" nr="3"/>
+          <par name="argc" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -236,9 +246,9 @@
       </function>
       <function name="parse_bundle_header">
         <parameters>
-          <par name="fd" nr="1"/>
-          <par name="header" nr="2"/>
           <par name="report_path" nr="3"/>
+          <par name="header" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -252,8 +262,8 @@
       </function>
       <function name="read_bundle_header">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="header" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -267,9 +277,9 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -297,8 +307,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -313,8 +323,8 @@
       <function name="unbundle">
         <parameters>
           <par name="header" nr="1"/>
-          <par name="bundle_fd" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="bundle_fd" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -328,8 +338,8 @@
       </function>
       <function name="verify_bundle">
         <parameters>
-          <par name="header" nr="1"/>
           <par name="verbose" nr="2"/>
+          <par name="header" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -343,8 +353,8 @@
       </function>
       <function name="write_bundle_refs">
         <parameters>
-          <par name="bundle_fd" nr="1"/>
           <par name="revs" nr="2"/>
+          <par name="bundle_fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -358,8 +368,8 @@
       </function>
       <function name="write_pack_data">
         <parameters>
-          <par name="bundle_fd" nr="1"/>
           <par name="revs" nr="2"/>
+          <par name="bundle_fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>

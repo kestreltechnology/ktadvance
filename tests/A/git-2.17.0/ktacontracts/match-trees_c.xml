@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:59.477281"/>
-  <cfile name="match-trees">
-    <data-structures/>
+  <header time="2018-12-19 16:09:32">
+    <application file="match-trees.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="tree_type"/>
+    </global-variables>
     <functions>
       <function name="base_name_entries_compare">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -29,6 +33,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -67,11 +79,11 @@
       <function name="match_trees">
         <parameters>
           <par name="hash1" nr="1"/>
-          <par name="hash2" nr="2"/>
-          <par name="best_score" nr="3"/>
           <par name="best_match" nr="4"/>
-          <par name="base" nr="5"/>
+          <par name="best_score" nr="3"/>
+          <par name="hash2" nr="2"/>
           <par name="recurse_limit" nr="6"/>
+          <par name="base" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -115,15 +127,31 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -193,10 +221,10 @@
       </function>
       <function name="shift_tree">
         <parameters>
+          <par name="depth_limit" nr="4"/>
           <par name="hash1" nr="1"/>
           <par name="hash2" nr="2"/>
           <par name="shifted" nr="3"/>
-          <par name="depth_limit" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -212,8 +240,8 @@
         <parameters>
           <par name="hash1" nr="1"/>
           <par name="hash2" nr="2"/>
-          <par name="shifted" nr="3"/>
           <par name="shift_prefix" nr="4"/>
+          <par name="shifted" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -228,10 +256,20 @@
       <function name="splice_tree">
         <parameters>
           <par name="oid1" nr="1"/>
-          <par name="prefix" nr="2"/>
-          <par name="oid2" nr="3"/>
           <par name="result" nr="4"/>
+          <par name="oid2" nr="3"/>
+          <par name="prefix" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tree_type</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -245,14 +283,22 @@
       <function name="tree_entry_extract">
         <parameters>
           <par name="desc" nr="1"/>
-          <par name="pathp" nr="2"/>
           <par name="modep" nr="3"/>
+          <par name="pathp" nr="2"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>

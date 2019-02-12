@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:50.018489"/>
-  <cfile name="builtin/pull">
-    <data-structures/>
+  <header time="2018-12-19 14:19:24">
+    <application file="builtin/pull.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -13,6 +17,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -48,8 +60,8 @@
       </function>
       <function name="capture_command">
         <parameters>
-          <par name="cmd" nr="1"/>
           <par name="out" nr="2"/>
+          <par name="cmd" nr="1"/>
           <par name="hint" nr="3"/>
         </parameters>
         <postconditions>
@@ -64,8 +76,8 @@
       </function>
       <function name="cmd_pull">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -85,6 +97,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -116,8 +136,8 @@
       </function>
       <function name="die_no_merge_candidates">
         <parameters>
-          <par name="repo" nr="1"/>
           <par name="refspecs" nr="2"/>
+          <par name="repo" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -146,9 +166,9 @@
       <function name="get_octopus_merge_base">
         <parameters>
           <par name="merge_base" nr="1"/>
-          <par name="curr_head" nr="2"/>
           <par name="merge_head" nr="3"/>
           <par name="fork_point" nr="4"/>
+          <par name="curr_head" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -162,8 +182,8 @@
       </function>
       <function name="get_only_remote">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="cb_data" nr="2"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -177,9 +197,9 @@
       </function>
       <function name="get_rebase_fork_point">
         <parameters>
-          <par name="fork_point" nr="1"/>
           <par name="repo" nr="2"/>
           <par name="refspec" nr="3"/>
+          <par name="fork_point" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -193,8 +213,8 @@
       </function>
       <function name="get_tracking_branch">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="refspec" nr="2"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -222,9 +242,9 @@
       </function>
       <function name="git_pull_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -326,8 +346,8 @@
       </function>
       <function name="parse_config_rebase">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
           <par name="fatal" nr="3"/>
         </parameters>
         <postconditions>
@@ -342,8 +362,8 @@
       </function>
       <function name="parse_opt_rebase">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -358,10 +378,10 @@
       </function>
       <function name="parse_repo_refspecs">
         <parameters>
-          <par name="argc" nr="1"/>
-          <par name="argv" nr="2"/>
-          <par name="repo" nr="3"/>
           <par name="refspecs" nr="4"/>
+          <par name="repo" nr="3"/>
+          <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -378,6 +398,37 @@
           <par name="merge_head" nr="1"/>
           <par name="curr_head" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -402,8 +453,8 @@
       </function>
       <function name="run_fetch">
         <parameters>
-          <par name="repo" nr="1"/>
           <par name="refspecs" nr="2"/>
+          <par name="repo" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -429,9 +480,9 @@
       </function>
       <function name="run_rebase">
         <parameters>
-          <par name="curr_head" nr="1"/>
           <par name="merge_head" nr="2"/>
           <par name="fork_point" nr="3"/>
+          <par name="curr_head" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -445,8 +496,8 @@
       </function>
       <function name="set_reflog_message">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -460,9 +511,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -476,8 +527,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:47.281244"/>
-  <cfile name="builtin/config">
-    <data-structures/>
+  <header time="2018-12-19 13:28:50">
+    <application file="builtin/config.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="get_color_slot"/>
+      <gvar name="get_colorbool_slot"/>
+      <gvar name="key_regexp"/>
+      <gvar name="regexp"/>
+      <gvar name="startup_info"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -20,9 +28,9 @@
       </function>
       <function name="check_argc">
         <parameters>
-          <par name="argc" nr="1"/>
-          <par name="min" nr="2"/>
           <par name="max" nr="3"/>
+          <par name="min" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -36,6 +44,37 @@
       </function>
       <function name="check_write">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="have_repository"/>
+                  </addressed-value>
+                  <ci>startup_info</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -48,10 +87,41 @@
       </function>
       <function name="cmd_config">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="have_repository"/>
+                  </addressed-value>
+                  <ci>startup_info</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -64,10 +134,44 @@
       </function>
       <function name="collect_config">
         <parameters>
-          <par name="key_" nr="1"/>
           <par name="value_" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="key_" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>key_regexp</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>regexp</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>regexp</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>key_regexp</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -104,9 +208,9 @@
       </function>
       <function name="format_config">
         <parameters>
+          <par name="value_" nr="3"/>
           <par name="buf" nr="1"/>
           <par name="key_" nr="2"/>
-          <par name="value_" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -120,8 +224,8 @@
       </function>
       <function name="get_color">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="def_color" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -135,8 +239,8 @@
       </function>
       <function name="get_colorbool">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="print" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -150,8 +254,8 @@
       </function>
       <function name="get_urlmatch">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="url" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -165,8 +269,8 @@
       </function>
       <function name="get_value">
         <parameters>
-          <par name="key_" nr="1"/>
           <par name="regex_" nr="2"/>
+          <par name="key_" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -180,10 +284,28 @@
       </function>
       <function name="git_get_color_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>get_color_slot</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>get_color_slot</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -196,10 +318,28 @@
       </function>
       <function name="git_get_colorbool_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>get_colorbool_slot</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>get_colorbool_slot</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -254,8 +394,8 @@
       </function>
       <function name="normalize_value">
         <parameters>
-          <par name="key___0" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="key___0" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -269,8 +409,8 @@
       </function>
       <function name="sane_case">
         <parameters>
-          <par name="x" nr="1"/>
           <par name="high" nr="2"/>
+          <par name="x" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -284,9 +424,9 @@
       </function>
       <function name="show_all_config">
         <parameters>
-          <par name="key_" nr="1"/>
           <par name="value_" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="key_" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -314,8 +454,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -329,8 +469,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -373,8 +513,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -388,9 +528,9 @@
       </function>
       <function name="urlmatch_collect_fn">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -404,8 +544,8 @@
       </function>
       <function name="write_str_in_full">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="str" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>

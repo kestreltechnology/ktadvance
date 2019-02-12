@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:51.622334"/>
-  <cfile name="builtin/unpack-objects">
-    <data-structures/>
+  <header time="2018-12-19 14:37:53">
+    <application file="builtin/unpack-objects.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="len"/>
+      <gvar name="obj_list"/>
+      <gvar name="offset"/>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -20,11 +27,11 @@
       </function>
       <function name="add_delta_to_list">
         <parameters>
-          <par name="nr" nr="1"/>
-          <par name="base_oid" nr="2"/>
           <par name="base_offset" nr="3"/>
           <par name="delta" nr="4"/>
           <par name="size" nr="5"/>
+          <par name="nr" nr="1"/>
+          <par name="base_oid" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -38,9 +45,9 @@
       </function>
       <function name="add_object_buffer">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="object" nr="1"/>
           <par name="buffer___0" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -54,11 +61,29 @@
       </function>
       <function name="added_object">
         <parameters>
+          <par name="size" nr="4"/>
           <par name="nr" nr="1"/>
           <par name="type" nr="2"/>
           <par name="data" nr="3"/>
-          <par name="size" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>obj_list</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>obj_list</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -88,10 +113,41 @@
       </function>
       <function name="cmd_unpack_objects">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -118,11 +174,126 @@
         <parameters>
           <par name="min" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <ci>len</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4096</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <lt/>
+                <apply>
+                  <times/>
+                  <ci>offset</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4096</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hdr_signature"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hdr_entries"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hdr_version"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -137,6 +308,22 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -212,6 +399,40 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="size"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="buffer"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="oidclr">
@@ -260,9 +481,9 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -272,14 +493,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="resolve_against_held">
         <parameters>
-          <par name="nr" nr="1"/>
-          <par name="base" nr="2"/>
-          <par name="delta_data" nr="3"/>
           <par name="delta_size" nr="4"/>
+          <par name="nr" nr="1"/>
+          <par name="delta_data" nr="3"/>
+          <par name="base" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -293,12 +522,12 @@
       </function>
       <function name="resolve_delta">
         <parameters>
-          <par name="nr" nr="1"/>
-          <par name="type" nr="2"/>
-          <par name="base" nr="3"/>
-          <par name="base_size" nr="4"/>
           <par name="delta" nr="5"/>
           <par name="delta_size" nr="6"/>
+          <par name="nr" nr="1"/>
+          <par name="base_size" nr="4"/>
+          <par name="type" nr="2"/>
+          <par name="base" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -312,9 +541,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -340,10 +569,57 @@
       </function>
       <function name="unpack_delta_entry">
         <parameters>
-          <par name="type" nr="1"/>
           <par name="delta_size" nr="2"/>
           <par name="nr" nr="3"/>
+          <par name="type" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>obj_list</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>obj_list</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -356,9 +632,9 @@
       </function>
       <function name="unpack_non_delta_entry">
         <parameters>
-          <par name="type" nr="1"/>
           <par name="size" nr="2"/>
           <par name="nr" nr="3"/>
+          <par name="type" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -374,6 +650,24 @@
         <parameters>
           <par name="nr" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>obj_list</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>obj_list</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -415,11 +709,29 @@
       </function>
       <function name="write_object">
         <parameters>
-          <par name="nr" nr="1"/>
-          <par name="type" nr="2"/>
           <par name="buf" nr="3"/>
           <par name="size" nr="4"/>
+          <par name="nr" nr="1"/>
+          <par name="type" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>obj_list</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>obj_list</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -432,6 +744,24 @@
       </function>
       <function name="write_rest">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>obj_list</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>obj_list</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

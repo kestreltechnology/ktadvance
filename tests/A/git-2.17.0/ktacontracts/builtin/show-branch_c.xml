@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:51.233395"/>
-  <cfile name="builtin/show-branch">
-    <data-structures/>
+  <header time="2018-12-19 14:32:01">
+    <application file="builtin/show-branch.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="fake_av"/>
+      <gvar name="match_ref_pattern"/>
+      <gvar name="ref_name_cnt"/>
+    </global-variables>
     <functions>
       <function name="Q_">
         <parameters>
           <par name="msgid" nr="1"/>
-          <par name="plu" nr="2"/>
           <par name="n" nr="3"/>
+          <par name="plu" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -36,10 +42,10 @@
       </function>
       <function name="append_head_ref">
         <parameters>
-          <par name="refname" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="refname" nr="1"/>
+          <par name="oid" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -53,11 +59,29 @@
       </function>
       <function name="append_matching_ref">
         <parameters>
-          <par name="refname" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="refname" nr="1"/>
+          <par name="oid" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>match_ref_pattern</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>match_ref_pattern</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -88,6 +112,78 @@
           <par name="oid" nr="2"/>
           <par name="allow_dups" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>ref_name_cnt</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>ref_name_cnt</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <lt/>
+                <apply>
+                  <plus/>
+                  <ci>ref_name_cnt</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>26</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <lt/>
+                <apply>
+                  <minus/>
+                  <ci>ref_name_cnt</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>26</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <plus/>
+                  <ci>ref_name_cnt</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <lt/>
+                <ci>ref_name_cnt</ci>
+                <cn>26</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -100,10 +196,10 @@
       </function>
       <function name="append_remote_ref">
         <parameters>
-          <par name="refname" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="refname" nr="1"/>
+          <par name="oid" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -117,10 +213,10 @@
       </function>
       <function name="append_tag_ref">
         <parameters>
-          <par name="refname" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="refname" nr="1"/>
+          <par name="oid" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -138,6 +234,19 @@
           <par name="av" nr="2"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>fake_av</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -177,14 +286,22 @@
       </function>
       <function name="find_digit_prefix">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="v" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -202,6 +319,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_color_reset_code">
@@ -214,13 +339,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_show_branch_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -263,10 +396,10 @@
       </function>
       <function name="join_revs">
         <parameters>
-          <par name="list_p" nr="1"/>
-          <par name="seen_p" nr="2"/>
           <par name="num_rev" nr="3"/>
+          <par name="list_p" nr="1"/>
           <par name="extra" nr="4"/>
+          <par name="seen_p" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -295,8 +428,8 @@
       </function>
       <function name="name_commit">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="head_name" nr="2"/>
+          <par name="commit" nr="1"/>
           <par name="nth" nr="3"/>
         </parameters>
         <postconditions>
@@ -311,10 +444,10 @@
       </function>
       <function name="name_commits">
         <parameters>
-          <par name="list" nr="1"/>
           <par name="rev" nr="2"/>
           <par name="ref_name" nr="3"/>
           <par name="num_rev" nr="4"/>
+          <par name="list" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -372,8 +505,8 @@
       </function>
       <function name="omit_in_dense">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="rev" nr="2"/>
+          <par name="commit" nr="1"/>
           <par name="n" nr="3"/>
         </parameters>
         <postconditions>
@@ -402,8 +535,8 @@
       </function>
       <function name="parse_reflog_param">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -419,9 +552,9 @@
       <function name="rev_is_head">
         <parameters>
           <par name="head" nr="1"/>
-          <par name="name" nr="2"/>
-          <par name="head_sha1" nr="3"/>
           <par name="sha1" nr="4"/>
+          <par name="head_sha1" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -435,10 +568,10 @@
       </function>
       <function name="sane_qsort">
         <parameters>
-          <par name="base" nr="1"/>
           <par name="nmemb" nr="2"/>
-          <par name="size" nr="3"/>
           <par name="compar" nr="4"/>
+          <par name="size" nr="3"/>
+          <par name="base" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -452,10 +585,10 @@
       </function>
       <function name="show_independent">
         <parameters>
-          <par name="rev" nr="1"/>
-          <par name="num_rev" nr="2"/>
           <par name="ref_name___0" nr="3"/>
           <par name="rev_mask" nr="4"/>
+          <par name="rev" nr="1"/>
+          <par name="num_rev" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -469,8 +602,8 @@
       </function>
       <function name="show_merge_base">
         <parameters>
-          <par name="seen" nr="1"/>
           <par name="num_rev" nr="2"/>
+          <par name="seen" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -499,9 +632,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -530,8 +663,8 @@
       </function>
       <function name="sort_ref_range">
         <parameters>
-          <par name="bottom" nr="1"/>
           <par name="top" nr="2"/>
+          <par name="bottom" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -545,8 +678,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -589,8 +722,8 @@
       </function>
       <function name="version_cmp">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>

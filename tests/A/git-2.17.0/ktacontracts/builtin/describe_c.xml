@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:47.378648"/>
-  <cfile name="builtin/describe">
-    <data-structures/>
+  <header time="2018-12-19 13:30:17">
+    <application file="builtin/describe.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="suffix"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -16,14 +20,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="add_to_known_names">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="peeled" nr="2"/>
-          <par name="prio" nr="3"/>
           <par name="oid" nr="4"/>
+          <par name="prio" nr="3"/>
+          <par name="peeled" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -37,8 +49,8 @@
       </function>
       <function name="append_name">
         <parameters>
-          <par name="n" nr="1"/>
           <par name="dst" nr="2"/>
+          <par name="n" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -52,9 +64,9 @@
       </function>
       <function name="append_suffix">
         <parameters>
-          <par name="depth" nr="1"/>
           <par name="oid" nr="2"/>
           <par name="dst" nr="3"/>
+          <par name="depth" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -68,8 +80,8 @@
       </function>
       <function name="cmd_describe">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -86,8 +98,8 @@
         <parameters>
           <par name="unused_cmp_data" nr="1"/>
           <par name="entry" nr="2"/>
-          <par name="entry_or_key" nr="3"/>
           <par name="peeled" nr="4"/>
+          <par name="entry_or_key" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -116,8 +128,8 @@
       </function>
       <function name="describe">
         <parameters>
-          <par name="arg" nr="1"/>
           <par name="last_one" nr="2"/>
+          <par name="arg" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -149,6 +161,24 @@
           <par name="oid" nr="1"/>
           <par name="dst" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>suffix</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>suffix</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -171,12 +201,72 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="prio"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="tag"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="path"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="name_checked"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="finish_depth_computation">
         <parameters>
-          <par name="list" nr="1"/>
           <par name="best" nr="2"/>
+          <par name="list" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -190,10 +280,10 @@
       </function>
       <function name="get_name">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="oid" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -237,8 +327,8 @@
       </function>
       <function name="hashmap_entry_init">
         <parameters>
-          <par name="entry" nr="1"/>
           <par name="hash" nr="2"/>
+          <par name="entry" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -282,14 +372,22 @@
       </function>
       <function name="hashmap_iter_first">
         <parameters>
-          <par name="map" nr="1"/>
           <par name="iter" nr="2"/>
+          <par name="map" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -357,8 +455,8 @@
       <function name="process_object">
         <parameters>
           <par name="obj" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -372,10 +470,10 @@
       </function>
       <function name="replace_name">
         <parameters>
-          <par name="e" nr="1"/>
-          <par name="prio" nr="2"/>
           <par name="oid" nr="3"/>
+          <par name="prio" nr="2"/>
           <par name="tag" nr="4"/>
+          <par name="e" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -389,10 +487,10 @@
       </function>
       <function name="sane_qsort">
         <parameters>
-          <par name="base" nr="1"/>
           <par name="nmemb" nr="2"/>
-          <par name="size" nr="3"/>
           <par name="compar" nr="4"/>
+          <par name="size" nr="3"/>
+          <par name="base" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -420,9 +518,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>

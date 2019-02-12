@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:53.264968"/>
-  <cfile name="connect">
-    <data-structures/>
+  <header time="2018-12-19 15:21:59">
+    <application file="connect.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="git_proxy_command"/>
+      <gvar name="server_capabilities"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -30,12 +35,30 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="annotate_refs_with_symref_info">
         <parameters>
           <par name="ref" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>server_capabilities</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -62,8 +85,8 @@
       </function>
       <function name="check_ref">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="flags" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -147,9 +170,9 @@
       </function>
       <function name="fill_ssh_args">
         <parameters>
-          <par name="conn" nr="1"/>
           <par name="ssh_host" nr="2"/>
           <par name="port" nr="3"/>
+          <par name="conn" nr="1"/>
           <par name="flags" nr="4"/>
         </parameters>
         <postconditions>
@@ -203,6 +226,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_protocol">
@@ -221,13 +252,13 @@
       </function>
       <function name="get_remote_heads">
         <parameters>
-          <par name="in" nr="1"/>
-          <par name="src_buf" nr="2"/>
           <par name="src_len" nr="3"/>
-          <par name="list" nr="4"/>
-          <par name="flags" nr="5"/>
-          <par name="extra_have" nr="6"/>
           <par name="shallow_points" nr="7"/>
+          <par name="list" nr="4"/>
+          <par name="in" nr="1"/>
+          <par name="extra_have" nr="6"/>
+          <par name="src_buf" nr="2"/>
+          <par name="flags" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -249,13 +280,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_connect">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="url" nr="2"/>
           <par name="prog" nr="3"/>
+          <par name="fd" nr="1"/>
           <par name="flags" nr="4"/>
         </parameters>
         <postconditions>
@@ -270,10 +309,10 @@
       </function>
       <function name="git_connect_git">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="hostandport" nr="2"/>
-          <par name="path" nr="3"/>
           <par name="prog" nr="4"/>
+          <par name="fd" nr="1"/>
+          <par name="path" nr="3"/>
           <par name="flags" nr="5"/>
         </parameters>
         <postconditions>
@@ -316,9 +355,9 @@
       </function>
       <function name="git_proxy_command_options">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -332,9 +371,27 @@
       </function>
       <function name="git_proxy_connect">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="host" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>git_proxy_command</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>git_proxy_command</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -347,8 +404,8 @@
       </function>
       <function name="git_tcp_connect">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="host" nr="2"/>
+          <par name="fd" nr="1"/>
           <par name="flags" nr="3"/>
         </parameters>
         <postconditions>
@@ -422,14 +479,33 @@
       </function>
       <function name="host_end">
         <parameters>
-          <par name="hoststart" nr="1"/>
           <par name="removebrackets" nr="2"/>
+          <par name="hoststart" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -482,8 +558,8 @@
       <function name="parse_connect_url">
         <parameters>
           <par name="url_orig" nr="1"/>
-          <par name="ret_host" nr="2"/>
           <par name="ret_path" nr="3"/>
+          <par name="ret_host" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -497,8 +573,8 @@
       </function>
       <function name="parse_feature_request">
         <parameters>
-          <par name="feature_list" nr="1"/>
           <par name="feature" nr="2"/>
+          <par name="feature_list" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -512,8 +588,8 @@
       </function>
       <function name="parse_feature_value">
         <parameters>
-          <par name="feature_list" nr="1"/>
           <par name="feature" nr="2"/>
+          <par name="feature_list" nr="1"/>
           <par name="lenp" nr="3"/>
         </parameters>
         <postconditions>
@@ -528,9 +604,9 @@
       </function>
       <function name="parse_one_symref_info">
         <parameters>
-          <par name="symref" nr="1"/>
-          <par name="val" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="val" nr="2"/>
+          <par name="symref" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -584,8 +660,8 @@
         <parameters>
           <par name="len" nr="1"/>
           <par name="list" nr="2"/>
-          <par name="flags" nr="3"/>
           <par name="extra_have" nr="4"/>
+          <par name="flags" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -624,14 +700,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="push_ssh_options">
         <parameters>
           <par name="args" nr="1"/>
           <par name="env" nr="2"/>
-          <par name="variant" nr="3"/>
           <par name="port" nr="4"/>
+          <par name="variant" nr="3"/>
           <par name="flags" nr="5"/>
         </parameters>
         <postconditions>
@@ -646,16 +730,25 @@
       </function>
       <function name="read_remote_ref">
         <parameters>
-          <par name="in" nr="1"/>
-          <par name="src_buf" nr="2"/>
           <par name="src_len" nr="3"/>
           <par name="responded" nr="4"/>
+          <par name="in" nr="1"/>
+          <par name="src_buf" nr="2"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -666,6 +759,24 @@
           <par name="feature" nr="1"/>
           <par name="len" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>server_capabilities</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>server_capabilities</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -692,9 +803,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -708,8 +819,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

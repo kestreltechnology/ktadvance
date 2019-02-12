@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:43.763979"/>
-  <cfile name="abspath">
-    <data-structures/>
+  <header time="2018-12-19 11:56:28">
+    <application file="abspath.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="absolute_path">
         <parameters>
@@ -102,6 +104,15 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="is_absolute_path">
@@ -134,8 +145,8 @@
       </function>
       <function name="prefix_filename">
         <parameters>
-          <par name="pfx" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="pfx" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -177,8 +188,8 @@
       </function>
       <function name="real_pathdup">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="die_on_error" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -192,8 +203,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -236,9 +247,9 @@
       </function>
       <function name="strbuf_realpath">
         <parameters>
+          <par name="die_on_error" nr="3"/>
           <par name="resolved" nr="1"/>
           <par name="path" nr="2"/>
-          <par name="die_on_error" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -252,8 +263,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -267,8 +278,8 @@
       </function>
       <function name="strbuf_swap">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>

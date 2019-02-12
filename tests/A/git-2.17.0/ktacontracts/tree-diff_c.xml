@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:09.776253"/>
-  <cfile name="tree-diff">
-    <data-structures/>
+  <header time="2018-12-19 17:34:48">
+    <application file="tree-diff.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="diff_queued_diff"/>
+    </global-variables>
     <functions>
       <function name="diff_might_be_rename">
         <parameters/>
@@ -19,8 +23,8 @@
       <function name="diff_root_tree_oid">
         <parameters>
           <par name="new_oid" nr="1"/>
-          <par name="base" nr="2"/>
           <par name="opt" nr="3"/>
+          <par name="base" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -34,10 +38,10 @@
       </function>
       <function name="diff_tree_oid">
         <parameters>
-          <par name="old_oid" nr="1"/>
           <par name="new_oid" nr="2"/>
-          <par name="base_str" nr="3"/>
           <par name="opt" nr="4"/>
+          <par name="base_str" nr="3"/>
+          <par name="old_oid" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,12 +55,12 @@
       </function>
       <function name="diff_tree_paths">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="oid" nr="2"/>
-          <par name="parents_oid" nr="3"/>
-          <par name="nparent" nr="4"/>
-          <par name="base" nr="5"/>
           <par name="opt" nr="6"/>
+          <par name="nparent" nr="4"/>
+          <par name="p" nr="1"/>
+          <par name="parents_oid" nr="3"/>
+          <par name="base" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -85,13 +89,13 @@
       </function>
       <function name="emit_path">
         <parameters>
-          <par name="p" nr="1"/>
-          <par name="base" nr="2"/>
-          <par name="opt" nr="3"/>
-          <par name="nparent" nr="4"/>
-          <par name="t" nr="5"/>
           <par name="tp" nr="6"/>
+          <par name="opt" nr="3"/>
           <par name="imin" nr="7"/>
+          <par name="nparent" nr="4"/>
+          <par name="p" nr="1"/>
+          <par name="t" nr="5"/>
+          <par name="base" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -135,10 +139,10 @@
       </function>
       <function name="ll_diff_tree_oid">
         <parameters>
-          <par name="old_oid" nr="1"/>
           <par name="new_oid" nr="2"/>
-          <par name="base" nr="3"/>
           <par name="opt" nr="4"/>
+          <par name="old_oid" nr="1"/>
+          <par name="base" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -152,18 +156,39 @@
       </function>
       <function name="ll_diff_tree_paths">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="oid" nr="2"/>
-          <par name="parents_oid" nr="3"/>
-          <par name="nparent" nr="4"/>
-          <par name="base" nr="5"/>
           <par name="opt" nr="6"/>
+          <par name="nparent" nr="4"/>
+          <par name="p" nr="1"/>
+          <par name="parents_oid" nr="3"/>
+          <par name="base" nr="5"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="next"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -202,12 +227,12 @@
       <function name="path_appendnew">
         <parameters>
           <par name="last" nr="1"/>
-          <par name="nparent" nr="2"/>
-          <par name="base" nr="3"/>
-          <par name="path" nr="4"/>
+          <par name="oid" nr="7"/>
           <par name="pathlen" nr="5"/>
           <par name="mode" nr="6"/>
-          <par name="oid" nr="7"/>
+          <par name="nparent" nr="2"/>
+          <par name="path" nr="4"/>
+          <par name="base" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -217,13 +242,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="skip_uninteresting">
         <parameters>
+          <par name="opt" nr="3"/>
           <par name="t" nr="1"/>
           <par name="base" nr="2"/>
-          <par name="opt" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -237,8 +270,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -252,8 +285,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -267,8 +300,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -311,8 +344,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -327,8 +360,8 @@
       <function name="tree_entry_extract">
         <parameters>
           <par name="desc" nr="1"/>
-          <par name="pathp" nr="2"/>
           <par name="modep" nr="3"/>
+          <par name="pathp" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -352,6 +385,15 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="tree_entry_pathcmp">
@@ -371,11 +413,26 @@
       </function>
       <function name="try_to_follow_renames">
         <parameters>
-          <par name="old_oid" nr="1"/>
           <par name="new_oid" nr="2"/>
-          <par name="base" nr="3"/>
           <par name="opt" nr="4"/>
+          <par name="old_oid" nr="1"/>
+          <par name="base" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="queue"/>
+                  </addressed-value>
+                  <ci>diff_queued_diff</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

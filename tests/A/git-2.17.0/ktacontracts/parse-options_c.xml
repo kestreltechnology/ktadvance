@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:00.930932"/>
-  <cfile name="parse-options">
-    <data-structures/>
+  <header time="2018-12-19 16:23:35">
+    <application file="parse-options.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="stdout"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -13,6 +17,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -47,8 +59,8 @@
       </function>
       <function name="fix_filename">
         <parameters>
-          <par name="prefix" nr="1"/>
           <par name="file" nr="2"/>
+          <par name="prefix" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -62,10 +74,10 @@
       </function>
       <function name="get_arg">
         <parameters>
-          <par name="p" nr="1"/>
-          <par name="opt" nr="2"/>
-          <par name="flags" nr="3"/>
           <par name="arg" nr="4"/>
+          <par name="opt" nr="2"/>
+          <par name="p" nr="1"/>
+          <par name="flags" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -79,9 +91,9 @@
       </function>
       <function name="get_value">
         <parameters>
-          <par name="p" nr="1"/>
-          <par name="opt" nr="2"/>
           <par name="all_opts" nr="3"/>
+          <par name="opt" nr="2"/>
+          <par name="p" nr="1"/>
           <par name="flags" nr="4"/>
         </parameters>
         <postconditions>
@@ -139,9 +151,9 @@
       <function name="move_array">
         <parameters>
           <par name="dst" nr="1"/>
+          <par name="size" nr="4"/>
           <par name="src" nr="2"/>
           <par name="n" nr="3"/>
-          <par name="size" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -155,8 +167,8 @@
       </function>
       <function name="opt_command_mode_error">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="all_opts" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="flags" nr="3"/>
         </parameters>
         <postconditions>
@@ -171,8 +183,8 @@
       </function>
       <function name="optbug">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="reason" nr="2"/>
+          <par name="opt" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -186,8 +198,8 @@
       </function>
       <function name="opterror">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="reason" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="flags" nr="3"/>
         </parameters>
         <postconditions>
@@ -202,8 +214,8 @@
       </function>
       <function name="parse_long_opt">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="p" nr="1"/>
           <par name="options" nr="3"/>
         </parameters>
         <postconditions>
@@ -218,8 +230,8 @@
       </function>
       <function name="parse_nodash_opt">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="p" nr="1"/>
           <par name="options" nr="3"/>
         </parameters>
         <postconditions>
@@ -234,12 +246,12 @@
       </function>
       <function name="parse_options">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
-          <par name="prefix" nr="3"/>
-          <par name="options" nr="4"/>
           <par name="usagestr" nr="5"/>
+          <par name="options" nr="4"/>
           <par name="flags" nr="6"/>
+          <par name="argc" nr="1"/>
+          <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -282,11 +294,11 @@
       <function name="parse_options_start">
         <parameters>
           <par name="ctx" nr="1"/>
-          <par name="argc" nr="2"/>
           <par name="argv" nr="3"/>
-          <par name="prefix" nr="4"/>
           <par name="options" nr="5"/>
           <par name="flags" nr="6"/>
+          <par name="argc" nr="2"/>
+          <par name="prefix" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -301,8 +313,8 @@
       <function name="parse_options_step">
         <parameters>
           <par name="ctx" nr="1"/>
-          <par name="options" nr="2"/>
           <par name="usagestr" nr="3"/>
+          <par name="options" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -346,9 +358,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -362,8 +374,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -388,6 +400,15 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="usage_msg_opt">
@@ -408,8 +429,8 @@
       </function>
       <function name="usage_with_options">
         <parameters>
-          <par name="usagestr" nr="1"/>
           <par name="opts" nr="2"/>
+          <par name="usagestr" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -423,12 +444,22 @@
       </function>
       <function name="usage_with_options_internal">
         <parameters>
-          <par name="ctx" nr="1"/>
-          <par name="usagestr" nr="2"/>
-          <par name="opts" nr="3"/>
           <par name="full" nr="4"/>
+          <par name="ctx" nr="1"/>
+          <par name="opts" nr="3"/>
+          <par name="usagestr" nr="2"/>
           <par name="err" nr="5"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>stdout</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

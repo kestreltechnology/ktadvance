@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:08.966361"/>
-  <cfile name="t/helper/test-run-command">
-    <data-structures/>
+  <header time="2018-12-19 17:28:42">
+    <application file="t/helper/test-run-command.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="number_callbacks"/>
+    </global-variables>
     <functions>
       <function name="cmd_main">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -21,10 +25,10 @@
       </function>
       <function name="no_job">
         <parameters>
-          <par name="cp" nr="1"/>
-          <par name="err" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="cp" nr="1"/>
           <par name="task_cb" nr="4"/>
+          <par name="err" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -38,11 +42,26 @@
       </function>
       <function name="parallel_next">
         <parameters>
-          <par name="cp" nr="1"/>
-          <par name="err" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="cp" nr="1"/>
           <par name="task_cb" nr="4"/>
+          <par name="err" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>number_callbacks</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -71,9 +90,9 @@
       <function name="task_finished">
         <parameters>
           <par name="result" nr="1"/>
-          <par name="err" nr="2"/>
-          <par name="pp_cb" nr="3"/>
           <par name="pp_task_cb" nr="4"/>
+          <par name="pp_cb" nr="3"/>
+          <par name="err" nr="2"/>
         </parameters>
         <postconditions>
           <post>

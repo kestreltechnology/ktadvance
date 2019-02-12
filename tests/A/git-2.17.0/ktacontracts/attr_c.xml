@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:44.681451"/>
-  <cfile name="attr">
-    <data-structures/>
+  <header time="2018-12-19 12:08:16">
+    <application file="attr.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="startup_info"/>
+      <gvar name="use_index"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -43,6 +48,40 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="items"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="attr_check_append">
@@ -55,6 +94,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -132,10 +179,10 @@
       </function>
       <function name="attr_hash_entry_cmp">
         <parameters>
+          <par name="unused_keydata" nr="4"/>
           <par name="unused_cmp_data" nr="1"/>
           <par name="entry" nr="2"/>
           <par name="entry_or_key" nr="3"/>
-          <par name="unused_keydata" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -149,10 +196,10 @@
       </function>
       <function name="attr_hashmap_add">
         <parameters>
-          <par name="map" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="keylen" nr="3"/>
+          <par name="map" nr="1"/>
           <par name="value" nr="4"/>
+          <par name="key" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -166,9 +213,9 @@
       </function>
       <function name="attr_hashmap_get">
         <parameters>
+          <par name="keylen" nr="3"/>
           <par name="map" nr="1"/>
           <par name="key" nr="2"/>
-          <par name="keylen" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -196,8 +243,8 @@
       </function>
       <function name="attr_name_valid">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="namelen" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -239,6 +286,37 @@
         <parameters>
           <par name="stack" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="have_repository"/>
+                  </addressed-value>
+                  <ci>startup_info</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -279,8 +357,8 @@
       </function>
       <function name="collect_some_attrs">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="check" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -295,9 +373,9 @@
       <function name="copy_array">
         <parameters>
           <par name="dst" nr="1"/>
+          <par name="size" nr="4"/>
           <par name="src" nr="2"/>
           <par name="n" nr="3"/>
-          <par name="size" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -352,12 +430,12 @@
       </function>
       <function name="fill">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="pathlen" nr="2"/>
           <par name="basename_offset" nr="3"/>
-          <par name="stack" nr="4"/>
+          <par name="pathlen" nr="2"/>
           <par name="all_attrs" nr="5"/>
+          <par name="stack" nr="4"/>
           <par name="rem" nr="6"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -373,8 +451,8 @@
         <parameters>
           <par name="what" nr="1"/>
           <par name="all_attrs" nr="2"/>
-          <par name="a" nr="3"/>
           <par name="rem" nr="4"/>
+          <par name="a" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -400,8 +478,8 @@
       </function>
       <function name="git_all_attrs">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="check" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -429,8 +507,8 @@
       </function>
       <function name="git_attr_internal">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="namelen" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -485,8 +563,8 @@
       </function>
       <function name="git_check_attr">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="check" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -541,8 +619,8 @@
           <par name="res" nr="1"/>
           <par name="line" nr="2"/>
           <par name="src" nr="3"/>
-          <par name="lineno" nr="4"/>
           <par name="macro_ok" nr="5"/>
+          <par name="lineno" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -556,8 +634,8 @@
       </function>
       <function name="hashmap_entry_init">
         <parameters>
-          <par name="entry" nr="1"/>
           <par name="hash" nr="2"/>
+          <par name="entry" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -578,6 +656,15 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -629,10 +716,10 @@
       </function>
       <function name="parse_attr">
         <parameters>
-          <par name="src" nr="1"/>
-          <par name="lineno" nr="2"/>
           <par name="cp" nr="3"/>
+          <par name="src" nr="1"/>
           <par name="e" nr="4"/>
+          <par name="lineno" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -648,8 +735,8 @@
         <parameters>
           <par name="line" nr="1"/>
           <par name="src" nr="2"/>
-          <par name="lineno" nr="3"/>
           <par name="macro_ok" nr="4"/>
+          <par name="lineno" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -663,12 +750,12 @@
       </function>
       <function name="path_matches">
         <parameters>
-          <par name="pathname" nr="1"/>
-          <par name="pathlen" nr="2"/>
           <par name="basename_offset" nr="3"/>
+          <par name="pathlen" nr="2"/>
           <par name="pat" nr="4"/>
-          <par name="base" nr="5"/>
           <par name="baselen" nr="6"/>
+          <par name="pathname" nr="1"/>
+          <par name="base" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -682,9 +769,9 @@
       </function>
       <function name="prepare_attr_stack">
         <parameters>
+          <par name="stack" nr="3"/>
           <par name="path" nr="1"/>
           <par name="dirlen" nr="2"/>
-          <par name="stack" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -698,10 +785,10 @@
       </function>
       <function name="push_stack">
         <parameters>
-          <par name="attr_stack_p" nr="1"/>
-          <par name="elem" nr="2"/>
           <par name="origin" nr="3"/>
+          <par name="elem" nr="2"/>
           <par name="originlen" nr="4"/>
+          <par name="attr_stack_p" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -715,8 +802,8 @@
       </function>
       <function name="read_attr">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="macro_ok" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -744,8 +831,8 @@
       </function>
       <function name="read_attr_from_file">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="macro_ok" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -759,9 +846,19 @@
       </function>
       <function name="read_attr_from_index">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="macro_ok" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>use_index</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -774,9 +871,9 @@
       </function>
       <function name="report_invalid_attr">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="len" nr="2"/>
           <par name="src" nr="3"/>
+          <par name="name" nr="1"/>
           <par name="lineno" nr="4"/>
         </parameters>
         <postconditions>
@@ -791,8 +888,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -806,8 +903,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -821,8 +918,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -865,8 +962,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

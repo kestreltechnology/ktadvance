@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:50.110011"/>
-  <cfile name="builtin/read-tree">
-    <data-structures/>
+  <header time="2018-12-19 14:21:29">
+    <application file="builtin/read-tree.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="nr_trees"/>
+    </global-variables>
     <functions>
       <function name="cmd_read_tree">
         <parameters>
-          <par name="argc" nr="1"/>
-          <par name="argv" nr="2"/>
           <par name="unused_prefix" nr="3"/>
+          <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>nr_trees</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -22,8 +37,8 @@
       </function>
       <function name="debug_merge">
         <parameters>
-          <par name="stages" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="stages" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -37,9 +52,9 @@
       </function>
       <function name="debug_stage">
         <parameters>
-          <par name="label" nr="1"/>
-          <par name="ce" nr="2"/>
           <par name="o" nr="3"/>
+          <par name="ce" nr="2"/>
+          <par name="label" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -53,8 +68,8 @@
       </function>
       <function name="exclude_per_directory_cb">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -69,9 +84,9 @@
       </function>
       <function name="git_read_tree_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -85,8 +100,8 @@
       </function>
       <function name="index_output_cb">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -103,6 +118,39 @@
         <parameters>
           <par name="oid" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>nr_trees</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <lt/>
+                <ci>nr_trees</ci>
+                <cn>8</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>nr_trees</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

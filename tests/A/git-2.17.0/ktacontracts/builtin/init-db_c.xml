@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:48.519097"/>
-  <cfile name="builtin/init-db">
-    <data-structures/>
+  <header time="2018-12-19 13:45:19">
+    <application file="builtin/init-db.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="startup_info"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -20,8 +24,8 @@
       </function>
       <function name="cmd_init_db">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -62,9 +66,9 @@
       </function>
       <function name="copy_templates_1">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="template_path" nr="2"/>
           <par name="dir" nr="3"/>
+          <par name="template_path" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -78,8 +82,8 @@
       </function>
       <function name="create_default_files">
         <parameters>
-          <par name="template_path" nr="1"/>
           <par name="original_git_dir" nr="2"/>
+          <par name="template_path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -119,9 +123,9 @@
       </function>
       <function name="git_init_db_config">
         <parameters>
-          <par name="k" nr="1"/>
-          <par name="v" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="v" nr="2"/>
+          <par name="k" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -163,11 +167,29 @@
       </function>
       <function name="init_db">
         <parameters>
-          <par name="git_dir" nr="1"/>
-          <par name="real_git_dir" nr="2"/>
           <par name="template_dir" nr="3"/>
+          <par name="git_dir" nr="1"/>
           <par name="flags" nr="4"/>
+          <par name="real_git_dir" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -194,8 +216,8 @@
       </function>
       <function name="needs_work_tree_config">
         <parameters>
-          <par name="git_dir" nr="1"/>
           <par name="work_tree" nr="2"/>
+          <par name="git_dir" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -224,8 +246,8 @@
       </function>
       <function name="shared_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -240,9 +262,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -256,8 +278,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -300,8 +322,8 @@
       </function>
       <function name="strbuf_complete">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="term" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -315,8 +337,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

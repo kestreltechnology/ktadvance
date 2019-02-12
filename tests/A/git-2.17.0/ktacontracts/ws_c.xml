@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:10.980837"/>
-  <cfile name="ws">
-    <data-structures/>
+  <header time="2018-12-19 17:43:19">
+    <application file="ws.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="attr_whitespace_rule"/>
+    </global-variables>
     <functions>
       <function name="parse_whitespace_rule">
         <parameters>
@@ -20,8 +24,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -80,6 +84,16 @@
         <parameters>
           <par name="pathname" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>attr_whitespace_rule</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -92,9 +106,9 @@
       </function>
       <function name="ws_blank_line">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
           <par name="ws_rule" nr="3"/>
+          <par name="line" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -108,9 +122,9 @@
       </function>
       <function name="ws_check">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
           <par name="ws_rule" nr="3"/>
+          <par name="line" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -124,13 +138,13 @@
       </function>
       <function name="ws_check_emit">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
           <par name="ws_rule" nr="3"/>
           <par name="stream" nr="4"/>
+          <par name="line" nr="1"/>
           <par name="set" nr="5"/>
-          <par name="reset" nr="6"/>
           <par name="ws" nr="7"/>
+          <par name="reset" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -144,13 +158,13 @@
       </function>
       <function name="ws_check_emit_1">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
           <par name="ws_rule" nr="3"/>
           <par name="stream" nr="4"/>
+          <par name="line" nr="1"/>
           <par name="set" nr="5"/>
-          <par name="reset" nr="6"/>
           <par name="ws" nr="7"/>
+          <par name="reset" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -164,11 +178,11 @@
       </function>
       <function name="ws_fix_copy">
         <parameters>
-          <par name="dst" nr="1"/>
-          <par name="src" nr="2"/>
           <par name="len" nr="3"/>
           <par name="ws_rule" nr="4"/>
+          <par name="dst" nr="1"/>
           <par name="error_count" nr="5"/>
+          <par name="src" nr="2"/>
         </parameters>
         <postconditions>
           <post>

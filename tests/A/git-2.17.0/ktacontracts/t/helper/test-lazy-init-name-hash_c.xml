@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:08.810573"/>
-  <cfile name="t/helper/test-lazy-init-name-hash">
-    <data-structures/>
+  <header time="2018-12-19 17:26:36">
+    <application file="t/helper/test-lazy-init-name-hash.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="analyze_run">
         <parameters/>
@@ -18,8 +20,8 @@
       </function>
       <function name="cmd_main">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -45,14 +47,22 @@
       </function>
       <function name="hashmap_iter_first">
         <parameters>
-          <par name="map" nr="1"/>
           <par name="iter" nr="2"/>
+          <par name="map" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>

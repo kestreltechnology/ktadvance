@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:09.065088"/>
-  <cfile name="tag">
-    <data-structures/>
+  <header time="2018-12-19 17:30:01">
+    <application file="tag.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="const_error">
         <parameters/>
@@ -19,8 +21,8 @@
       <function name="deref_tag">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="warn" nr="2"/>
           <par name="warnlen" nr="3"/>
+          <par name="warn" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -93,8 +95,8 @@
       <function name="parse_tag_buffer">
         <parameters>
           <par name="item" nr="1"/>
-          <par name="data" nr="2"/>
           <par name="size" nr="3"/>
+          <par name="data" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -123,15 +125,23 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>

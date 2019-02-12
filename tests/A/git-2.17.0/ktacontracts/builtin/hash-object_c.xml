@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:48.197231"/>
-  <cfile name="builtin/hash-object">
-    <data-structures/>
+  <header time="2018-12-19 13:40:43">
+    <application file="builtin/hash-object.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="blob_type"/>
+    </global-variables>
     <functions>
       <function name="cmd_hash_object">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>blob_type</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -34,11 +48,11 @@
       </function>
       <function name="hash_fd">
         <parameters>
-          <par name="fd" nr="1"/>
+          <par name="literally" nr="5"/>
           <par name="type" nr="2"/>
+          <par name="fd" nr="1"/>
           <par name="path" nr="3"/>
           <par name="flags" nr="4"/>
-          <par name="literally" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -53,8 +67,8 @@
       <function name="hash_literally">
         <parameters>
           <par name="oid" nr="1"/>
-          <par name="fd" nr="2"/>
           <par name="type" nr="3"/>
+          <par name="fd" nr="2"/>
           <par name="flags" nr="4"/>
         </parameters>
         <postconditions>
@@ -69,11 +83,11 @@
       </function>
       <function name="hash_object">
         <parameters>
-          <par name="path" nr="1"/>
+          <par name="literally" nr="5"/>
           <par name="type" nr="2"/>
           <par name="vpath" nr="3"/>
+          <par name="path" nr="1"/>
           <par name="flags" nr="4"/>
-          <par name="literally" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -87,10 +101,10 @@
       </function>
       <function name="hash_stdin_paths">
         <parameters>
-          <par name="type" nr="1"/>
           <par name="no_filters" nr="2"/>
-          <par name="flags" nr="3"/>
           <par name="literally" nr="4"/>
+          <par name="type" nr="1"/>
+          <par name="flags" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -104,8 +118,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -119,8 +133,8 @@
       </function>
       <function name="strbuf_swap">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>

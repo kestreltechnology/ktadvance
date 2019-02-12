@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:01.605150"/>
-  <cfile name="prompt">
-    <data-structures/>
+  <header time="2018-12-19 16:27:54">
+    <application file="prompt.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="askpass_program"/>
+    </global-variables>
     <functions>
       <function name="const_error">
         <parameters/>
@@ -36,6 +40,16 @@
           <par name="prompt" nr="1"/>
           <par name="flags" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>askpass_program</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -48,8 +62,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

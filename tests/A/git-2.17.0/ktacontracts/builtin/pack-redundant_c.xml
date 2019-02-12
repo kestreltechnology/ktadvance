@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:49.864115"/>
-  <cfile name="builtin/pack-redundant">
-    <data-structures/>
+  <header time="2018-12-19 14:17:57">
+    <application file="builtin/pack-redundant.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="all_objects"/>
+      <gvar name="free_nodes"/>
+    </global-variables>
     <functions>
       <function name="add_pack">
         <parameters>
@@ -34,10 +39,51 @@
       </function>
       <function name="cmd_pack_redundant">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="size"/>
+                  </addressed-value>
+                  <ci>all_objects</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="front"/>
+                  </addressed-value>
+                  <ci>all_objects</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="back"/>
+                  </addressed-value>
+                  <ci>all_objects</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -146,6 +192,61 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="size"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="front"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="back"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="llist_free">
@@ -178,9 +279,9 @@
       </function>
       <function name="llist_insert">
         <parameters>
+          <par name="sha1" nr="3"/>
           <par name="list" nr="1"/>
           <par name="after" nr="2"/>
-          <par name="sha1" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -194,8 +295,8 @@
       </function>
       <function name="llist_insert_back">
         <parameters>
-          <par name="list" nr="1"/>
           <par name="sha1" nr="2"/>
+          <par name="list" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -209,8 +310,8 @@
       </function>
       <function name="llist_insert_sorted_unique">
         <parameters>
-          <par name="list" nr="1"/>
           <par name="sha1" nr="2"/>
+          <par name="list" nr="1"/>
           <par name="hint" nr="3"/>
         </parameters>
         <postconditions>
@@ -225,11 +326,50 @@
       </function>
       <function name="llist_item_get">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>free_nodes</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="next"/>
+                  </addressed-value>
+                  <ci>free_nodes</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>free_nodes</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -239,6 +379,16 @@
         <parameters>
           <par name="item" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>free_nodes</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -251,8 +401,8 @@
       </function>
       <function name="llist_sorted_difference_inplace">
         <parameters>
-          <par name="A" nr="1"/>
           <par name="B" nr="2"/>
+          <par name="A" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -266,8 +416,8 @@
       </function>
       <function name="llist_sorted_remove">
         <parameters>
-          <par name="list" nr="1"/>
           <par name="sha1" nr="2"/>
+          <par name="list" nr="1"/>
           <par name="hint" nr="3"/>
         </parameters>
         <postconditions>
@@ -294,6 +444,47 @@
       </function>
       <function name="load_all_objects">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="size"/>
+                  </addressed-value>
+                  <ci>all_objects</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="front"/>
+                  </addressed-value>
+                  <ci>all_objects</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="back"/>
+                  </addressed-value>
+                  <ci>all_objects</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -308,6 +499,34 @@
         <parameters>
           <par name="min" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="size"/>
+                  </addressed-value>
+                  <ci>all_objects</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="front"/>
+                  </addressed-value>
+                  <ci>all_objects</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -320,8 +539,8 @@
       </function>
       <function name="pack_list_difference">
         <parameters>
-          <par name="A" nr="1"/>
           <par name="B" nr="2"/>
+          <par name="A" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -374,6 +593,15 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="pll_free">
@@ -392,6 +620,47 @@
       </function>
       <function name="scan_alt_odb_packs">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="size"/>
+                  </addressed-value>
+                  <ci>all_objects</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="front"/>
+                  </addressed-value>
+                  <ci>all_objects</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="back"/>
+                  </addressed-value>
+                  <ci>all_objects</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -419,8 +688,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>

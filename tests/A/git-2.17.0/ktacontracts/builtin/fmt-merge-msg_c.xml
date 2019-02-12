@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:47.923575"/>
-  <cfile name="builtin/fmt-merge-msg">
-    <data-structures/>
+  <header time="2018-12-19 13:36:47">
+    <application file="builtin/fmt-merge-msg.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="stdin"/>
+    </global-variables>
     <functions>
       <function name="add_branch_desc">
         <parameters>
@@ -53,8 +57,8 @@
       <function name="add_people_info">
         <parameters>
           <par name="out" nr="1"/>
-          <par name="authors" nr="2"/>
           <par name="committers" nr="3"/>
+          <par name="authors" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -68,10 +72,39 @@
       </function>
       <function name="cmd_fmt_merge_msg">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>stdin</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>stdin</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>stdin</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -144,8 +177,8 @@
       <function name="find_merge_parents">
         <parameters>
           <par name="result" nr="1"/>
-          <par name="in" nr="2"/>
           <par name="head" nr="3"/>
+          <par name="in" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -159,9 +192,9 @@
       </function>
       <function name="fmt_merge_msg">
         <parameters>
-          <par name="in" nr="1"/>
           <par name="out" nr="2"/>
           <par name="opts" nr="3"/>
+          <par name="in" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -175,9 +208,9 @@
       </function>
       <function name="fmt_merge_msg_config">
         <parameters>
-          <par name="key" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -220,10 +253,10 @@
       </function>
       <function name="fmt_tag_signature">
         <parameters>
+          <par name="len" nr="4"/>
+          <par name="buf" nr="3"/>
           <par name="tagbuf" nr="1"/>
           <par name="sig" nr="2"/>
-          <par name="buf" nr="3"/>
-          <par name="len" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -326,10 +359,10 @@
       </function>
       <function name="print_joined">
         <parameters>
-          <par name="singular" nr="1"/>
+          <par name="out" nr="4"/>
           <par name="plural" nr="2"/>
           <par name="list" nr="3"/>
-          <par name="out" nr="4"/>
+          <par name="singular" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -343,9 +376,9 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -355,13 +388,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="record_person">
         <parameters>
           <par name="which" nr="1"/>
-          <par name="people" nr="2"/>
           <par name="commit" nr="3"/>
+          <par name="people" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -376,8 +417,8 @@
       <function name="record_person_from_buf">
         <parameters>
           <par name="which" nr="1"/>
-          <par name="people" nr="2"/>
           <par name="buffer" nr="3"/>
+          <par name="people" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -391,10 +432,10 @@
       </function>
       <function name="sane_qsort">
         <parameters>
-          <par name="base" nr="1"/>
           <par name="nmemb" nr="2"/>
-          <par name="size" nr="3"/>
           <par name="compar" nr="4"/>
+          <par name="size" nr="3"/>
+          <par name="base" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -408,12 +449,12 @@
       </function>
       <function name="shortlog">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="origin_data" nr="2"/>
-          <par name="head" nr="3"/>
-          <par name="rev" nr="4"/>
-          <par name="opts" nr="5"/>
           <par name="out" nr="6"/>
+          <par name="rev" nr="4"/>
+          <par name="head" nr="3"/>
+          <par name="opts" nr="5"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -427,9 +468,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -443,8 +484,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -458,8 +499,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -502,8 +543,8 @@
       </function>
       <function name="strbuf_complete">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="term" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

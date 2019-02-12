@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:58.542301"/>
-  <cfile name="http-backend">
-    <data-structures/>
+  <header time="2018-12-19 15:59:08">
+    <application file="http-backend.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="dead"/>
+    </global-variables>
     <functions>
       <function name="bad_request">
         <parameters>
-          <par name="hdr" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="hdr" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -36,8 +40,8 @@
       </function>
       <function name="cmd_main">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,8 +55,8 @@
       </function>
       <function name="copy_request">
         <parameters>
-          <par name="prog_name" nr="1"/>
           <par name="out" nr="2"/>
+          <par name="prog_name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -66,8 +70,8 @@
       </function>
       <function name="die_webcgi">
         <parameters>
-          <par name="err" nr="1"/>
           <par name="params" nr="2"/>
+          <par name="err" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -81,6 +85,21 @@
       </function>
       <function name="die_webcgi_recursing">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>dead</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -122,8 +141,8 @@
       </function>
       <function name="format_write">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="fmt" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -137,8 +156,8 @@
       </function>
       <function name="get_head">
         <parameters>
-          <par name="hdr" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="hdr" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -167,8 +186,8 @@
       </function>
       <function name="get_info_packs">
         <parameters>
-          <par name="hdr" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="hdr" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -182,8 +201,8 @@
       </function>
       <function name="get_info_refs">
         <parameters>
-          <par name="hdr" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="hdr" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -249,6 +268,53 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="items"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cmp"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_text_file">
@@ -273,6 +339,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -311,8 +385,8 @@
       <function name="hdr_int">
         <parameters>
           <par name="hdr" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -341,8 +415,8 @@
       <function name="hdr_str">
         <parameters>
           <par name="hdr" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -384,9 +458,9 @@
       </function>
       <function name="inflate_request">
         <parameters>
-          <par name="prog_name" nr="1"/>
           <par name="out" nr="2"/>
           <par name="buffer_input" nr="3"/>
+          <par name="prog_name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -415,8 +489,8 @@
       </function>
       <function name="read_request">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="out" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -426,12 +500,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="run_service">
         <parameters>
-          <par name="argv" nr="1"/>
           <par name="buffer_input" nr="2"/>
+          <par name="argv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -470,6 +553,40 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="name"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="buffer_input"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="send_local_file">
@@ -490,9 +607,9 @@
       </function>
       <function name="send_strbuf">
         <parameters>
+          <par name="buf" nr="3"/>
           <par name="hdr" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="buf" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -521,10 +638,10 @@
       </function>
       <function name="show_head_ref">
         <parameters>
-          <par name="refname" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="refname" nr="1"/>
+          <par name="oid" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -538,10 +655,10 @@
       </function>
       <function name="show_text_ref">
         <parameters>
-          <par name="name" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="oid" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -555,9 +672,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -571,8 +688,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -586,8 +703,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -630,8 +747,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:45.860132"/>
-  <cfile name="builtin/checkout">
-    <data-structures/>
+  <header time="2018-12-19 13:23:15">
+    <application file="builtin/checkout.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="blob_type"/>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="Q_">
         <parameters>
           <par name="msgid" nr="1"/>
-          <par name="plu" nr="2"/>
           <par name="n" nr="3"/>
+          <par name="plu" nr="2"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -32,14 +45,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="add_pending_uninteresting_ref">
         <parameters>
+          <par name="cb_data" nr="4"/>
           <par name="refname" nr="1"/>
           <par name="oid" nr="2"/>
           <par name="flags" nr="3"/>
-          <par name="cb_data" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -54,8 +75,8 @@
       <function name="ce_path_match">
         <parameters>
           <par name="ce" nr="1"/>
-          <par name="pathspec" nr="2"/>
           <par name="seen" nr="3"/>
+          <par name="pathspec" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -69,9 +90,9 @@
       </function>
       <function name="check_stage">
         <parameters>
-          <par name="stage" nr="1"/>
-          <par name="ce" nr="2"/>
           <par name="pos" nr="3"/>
+          <par name="ce" nr="2"/>
+          <par name="stage" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -85,9 +106,9 @@
       </function>
       <function name="check_stages">
         <parameters>
-          <par name="stages" nr="1"/>
-          <par name="ce" nr="2"/>
           <par name="pos" nr="3"/>
+          <par name="ce" nr="2"/>
+          <par name="stages" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -119,6 +140,16 @@
           <par name="pos" nr="1"/>
           <par name="state" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>blob_type</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -131,8 +162,8 @@
       </function>
       <function name="checkout_paths">
         <parameters>
-          <par name="opts" nr="1"/>
           <par name="revision" nr="2"/>
+          <par name="opts" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -146,9 +177,9 @@
       </function>
       <function name="checkout_stage">
         <parameters>
-          <par name="stage" nr="1"/>
-          <par name="ce" nr="2"/>
           <par name="pos" nr="3"/>
+          <par name="ce" nr="2"/>
+          <par name="stage" nr="1"/>
           <par name="state" nr="4"/>
         </parameters>
         <postconditions>
@@ -163,8 +194,8 @@
       </function>
       <function name="cmd_checkout">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -249,9 +280,9 @@
       </function>
       <function name="git_checkout_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -310,10 +341,41 @@
       <function name="merge_working_tree">
         <parameters>
           <par name="opts" nr="1"/>
-          <par name="old_branch_info" nr="2"/>
           <par name="new_branch_info" nr="3"/>
+          <par name="old_branch_info" nr="2"/>
           <par name="writeout_error" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -356,8 +418,8 @@
       </function>
       <function name="orphaned_commit_warning">
         <parameters>
-          <par name="old_commit" nr="1"/>
           <par name="new_commit" nr="2"/>
+          <par name="old_commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -371,12 +433,12 @@
       </function>
       <function name="parse_branchname_arg">
         <parameters>
-          <par name="argc" nr="1"/>
-          <par name="argv" nr="2"/>
-          <par name="dwim_new_local_branch_ok" nr="3"/>
-          <par name="new_branch_info" nr="4"/>
-          <par name="opts" nr="5"/>
           <par name="rev" nr="6"/>
+          <par name="dwim_new_local_branch_ok" nr="3"/>
+          <par name="argv" nr="2"/>
+          <par name="opts" nr="5"/>
+          <par name="new_branch_info" nr="4"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -418,8 +480,8 @@
       </function>
       <function name="post_checkout_hook">
         <parameters>
-          <par name="old_commit" nr="1"/>
           <par name="new_commit" nr="2"/>
+          <par name="old_commit" nr="1"/>
           <par name="changed" nr="3"/>
         </parameters>
         <postconditions>
@@ -463,9 +525,9 @@
       </function>
       <function name="reset_tree">
         <parameters>
-          <par name="tree" nr="1"/>
           <par name="o" nr="2"/>
           <par name="worktree" nr="3"/>
+          <par name="tree" nr="1"/>
           <par name="writeout_error" nr="4"/>
         </parameters>
         <postconditions>
@@ -509,9 +571,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -525,8 +587,8 @@
       </function>
       <function name="skip_same_name">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="pos" nr="2"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -536,12 +598,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -629,8 +700,8 @@
       <function name="update_refs_for_switch">
         <parameters>
           <par name="opts" nr="1"/>
-          <par name="old_branch_info" nr="2"/>
           <par name="new_branch_info" nr="3"/>
+          <par name="old_branch_info" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -644,12 +715,12 @@
       </function>
       <function name="update_some">
         <parameters>
+          <par name="context" nr="6"/>
+          <par name="mode" nr="4"/>
           <par name="sha1" nr="1"/>
+          <par name="stage" nr="5"/>
           <par name="base" nr="2"/>
           <par name="pathname" nr="3"/>
-          <par name="mode" nr="4"/>
-          <par name="stage" nr="5"/>
-          <par name="context" nr="6"/>
         </parameters>
         <postconditions>
           <post>

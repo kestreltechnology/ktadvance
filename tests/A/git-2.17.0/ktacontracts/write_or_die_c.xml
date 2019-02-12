@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:10.946137"/>
-  <cfile name="write_or_die">
-    <data-structures/>
+  <header time="2018-12-19 17:43:09">
+    <application file="write_or_die.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="stdout"/>
+    </global-variables>
     <functions>
       <function name="fprintf_or_die">
         <parameters>
-          <par name="f" nr="1"/>
           <par name="fmt" nr="2"/>
+          <par name="f" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -21,8 +25,8 @@
       </function>
       <function name="fsync_or_die">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="msg" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -36,9 +40,38 @@
       </function>
       <function name="maybe_flush_or_die">
         <parameters>
-          <par name="f" nr="1"/>
           <par name="desc" nr="2"/>
+          <par name="f" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>stdout</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>stdout</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>stdout</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -51,9 +84,9 @@
       </function>
       <function name="write_or_die">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="buf" nr="2"/>
           <par name="count" nr="3"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>

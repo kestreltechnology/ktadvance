@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:51.034885"/>
-  <cfile name="builtin/rm">
-    <data-structures/>
+  <header time="2018-12-19 14:30:33">
+    <application file="builtin/rm.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="Q_">
         <parameters>
           <par name="msgid" nr="1"/>
-          <par name="plu" nr="2"/>
           <par name="n" nr="3"/>
+          <par name="plu" nr="2"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -32,13 +42,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="ce_path_match">
         <parameters>
           <par name="ce" nr="1"/>
-          <par name="pathspec" nr="2"/>
           <par name="seen" nr="3"/>
+          <par name="pathspec" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -67,8 +85,8 @@
       </function>
       <function name="cmd_rm">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -109,8 +127,8 @@
       </function>
       <function name="get_ours_cache_pos">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="pos" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -196,10 +214,10 @@
       </function>
       <function name="print_error_files">
         <parameters>
-          <par name="files_list" nr="1"/>
-          <par name="main_msg" nr="2"/>
-          <par name="hints_msg" nr="3"/>
           <par name="errs" nr="4"/>
+          <par name="files_list" nr="1"/>
+          <par name="hints_msg" nr="3"/>
+          <par name="main_msg" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -213,8 +231,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -243,8 +261,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

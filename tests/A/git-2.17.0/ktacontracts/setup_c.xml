@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:07.126208"/>
-  <cfile name="setup">
-    <data-structures/>
+  <header time="2018-12-19 17:02:41">
+    <application file="setup.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="git_work_tree_cfg"/>
+      <gvar name="startup_info"/>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -13,6 +19,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -49,8 +63,8 @@
       </function>
       <function name="check_filename">
         <parameters>
-          <par name="prefix" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="prefix" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -64,9 +78,9 @@
       </function>
       <function name="check_repo_format">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="vdata" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -80,6 +94,24 @@
       </function>
       <function name="check_repository_format">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -92,10 +124,28 @@
       </function>
       <function name="check_repository_format_gently">
         <parameters>
-          <par name="gitdir" nr="1"/>
           <par name="candidate" nr="2"/>
+          <par name="gitdir" nr="1"/>
           <par name="nongit_ok" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>git_work_tree_cfg</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>git_work_tree_cfg</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -132,9 +182,9 @@
       </function>
       <function name="die_verify_filename">
         <parameters>
-          <par name="prefix" nr="1"/>
-          <par name="arg" nr="2"/>
           <par name="diagnose_misspelt_rev" nr="3"/>
+          <par name="arg" nr="2"/>
+          <par name="prefix" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -148,8 +198,8 @@
       </function>
       <function name="discover_git_directory">
         <parameters>
-          <par name="commondir" nr="1"/>
           <par name="gitdir___0" nr="2"/>
+          <par name="commondir" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -193,9 +243,9 @@
       </function>
       <function name="get_device_or_die">
         <parameters>
+          <par name="prefix_len" nr="3"/>
           <par name="path" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="prefix_len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -209,8 +259,8 @@
       </function>
       <function name="git_config_perm">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -360,8 +410,8 @@
       </function>
       <function name="path_inside_repo">
         <parameters>
-          <par name="prefix" nr="1"/>
           <par name="path" nr="2"/>
+          <par name="prefix" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -375,9 +425,9 @@
       </function>
       <function name="prefix_path">
         <parameters>
-          <par name="prefix" nr="1"/>
           <par name="len" nr="2"/>
           <par name="path" nr="3"/>
+          <par name="prefix" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -391,10 +441,10 @@
       </function>
       <function name="prefix_path_gently">
         <parameters>
-          <par name="prefix" nr="1"/>
-          <par name="len" nr="2"/>
           <par name="remaining_prefix" nr="3"/>
+          <par name="len" nr="2"/>
           <par name="path" nr="4"/>
+          <par name="prefix" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -404,13 +454,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="read_gitfile_error_die">
         <parameters>
           <par name="error_code" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="dir" nr="3"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -424,14 +482,22 @@
       </function>
       <function name="read_gitfile_gently">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="return_error_code" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -454,8 +520,8 @@
       </function>
       <function name="resolve_gitdir_gently">
         <parameters>
-          <par name="suspect" nr="1"/>
           <par name="return_error_code" nr="2"/>
+          <par name="suspect" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -482,8 +548,8 @@
       <function name="setup_bare_git_dir">
         <parameters>
           <par name="cwd" nr="1"/>
-          <par name="offset" nr="2"/>
           <par name="repo_fmt" nr="3"/>
+          <par name="offset" nr="2"/>
           <par name="nongit_ok" nr="4"/>
         </parameters>
         <postconditions>
@@ -498,10 +564,10 @@
       </function>
       <function name="setup_discovered_git_dir">
         <parameters>
-          <par name="gitdir" nr="1"/>
           <par name="cwd" nr="2"/>
-          <par name="offset" nr="3"/>
           <par name="repo_fmt" nr="4"/>
+          <par name="gitdir" nr="1"/>
+          <par name="offset" nr="3"/>
           <par name="nongit_ok" nr="5"/>
         </parameters>
         <postconditions>
@@ -516,11 +582,29 @@
       </function>
       <function name="setup_explicit_git_dir">
         <parameters>
-          <par name="gitdirenv" nr="1"/>
           <par name="cwd" nr="2"/>
           <par name="repo_fmt" nr="3"/>
           <par name="nongit_ok" nr="4"/>
+          <par name="gitdirenv" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>git_work_tree_cfg</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>git_work_tree_cfg</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -547,6 +631,53 @@
         <parameters>
           <par name="nongit_ok" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="gitdir"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -602,9 +733,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -618,8 +749,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -662,8 +793,8 @@
       </function>
       <function name="strbuf_complete">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="term" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -677,8 +808,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -692,9 +823,9 @@
       </function>
       <function name="verify_filename">
         <parameters>
-          <par name="prefix" nr="1"/>
-          <par name="arg" nr="2"/>
           <par name="diagnose_misspelt_rev" nr="3"/>
+          <par name="arg" nr="2"/>
+          <par name="prefix" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -708,8 +839,8 @@
       </function>
       <function name="verify_non_filename">
         <parameters>
-          <par name="prefix" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="prefix" nr="1"/>
         </parameters>
         <postconditions>
           <post>

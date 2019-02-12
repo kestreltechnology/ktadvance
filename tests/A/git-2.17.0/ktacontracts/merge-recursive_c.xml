@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:59.757069"/>
-  <cfile name="merge-recursive">
-    <data-structures/>
+  <header time="2018-12-19 16:12:12">
+    <application file="merge-recursive.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="blob_type"/>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="Q_">
         <parameters>
           <par name="msgid" nr="1"/>
-          <par name="plu" nr="2"/>
           <par name="n" nr="3"/>
+          <par name="plu" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -32,17 +37,25 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="add_cacheinfo">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="mode" nr="2"/>
           <par name="oid" nr="3"/>
-          <par name="path" nr="4"/>
-          <par name="stage" nr="5"/>
+          <par name="mode" nr="2"/>
           <par name="refresh" nr="6"/>
+          <par name="stage" nr="5"/>
           <par name="options" nr="7"/>
+          <par name="path" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -71,13 +84,13 @@
       </function>
       <function name="blob_unchanged">
         <parameters>
-          <par name="opt" nr="1"/>
-          <par name="o_oid" nr="2"/>
-          <par name="o_mode" nr="3"/>
-          <par name="a_oid" nr="4"/>
-          <par name="a_mode" nr="5"/>
           <par name="renormalize" nr="6"/>
+          <par name="opt" nr="1"/>
+          <par name="a_oid" nr="4"/>
+          <par name="o_mode" nr="3"/>
           <par name="path" nr="7"/>
+          <par name="o_oid" nr="2"/>
+          <par name="a_mode" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -91,10 +104,10 @@
       </function>
       <function name="conflict_rename_delete">
         <parameters>
-          <par name="o" nr="1"/>
-          <par name="pair" nr="2"/>
           <par name="rename_branch" nr="3"/>
+          <par name="o" nr="1"/>
           <par name="delete_branch" nr="4"/>
+          <par name="pair" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -150,9 +163,9 @@
       </function>
       <function name="dir_in_way">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="check_working_copy" nr="2"/>
           <par name="empty_ok" nr="3"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -190,6 +203,19 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="mode"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -237,22 +263,111 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="util"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="tree"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_renames">
         <parameters>
+          <par name="entries" nr="6"/>
           <par name="o" nr="1"/>
-          <par name="tree" nr="2"/>
           <par name="o_tree" nr="3"/>
           <par name="a_tree" nr="4"/>
+          <par name="tree" nr="2"/>
           <par name="b_tree" nr="5"/>
-          <par name="entries" nr="6"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="items"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="strdup_strings"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -268,14 +383,69 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="items"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="strdup_strings"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_merge_trees">
         <parameters>
-          <par name="index_only" nr="1"/>
-          <par name="common" nr="2"/>
           <par name="head" nr="3"/>
+          <par name="common" nr="2"/>
           <par name="merge" nr="4"/>
+          <par name="index_only" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -289,17 +459,17 @@
       </function>
       <function name="handle_change_delete">
         <parameters>
-          <par name="o" nr="1"/>
-          <par name="path" nr="2"/>
-          <par name="old_path" nr="3"/>
-          <par name="o_oid" nr="4"/>
-          <par name="o_mode" nr="5"/>
-          <par name="changed_oid" nr="6"/>
           <par name="changed_mode" nr="7"/>
+          <par name="o" nr="1"/>
           <par name="change_branch" nr="8"/>
-          <par name="delete_branch" nr="9"/>
           <par name="change" nr="10"/>
           <par name="change_past" nr="11"/>
+          <par name="changed_oid" nr="6"/>
+          <par name="delete_branch" nr="9"/>
+          <par name="old_path" nr="3"/>
+          <par name="path" nr="2"/>
+          <par name="o_mode" nr="5"/>
+          <par name="o_oid" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -331,13 +501,13 @@
       <function name="handle_modify_delete">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="path" nr="2"/>
-          <par name="o_oid" nr="3"/>
-          <par name="o_mode" nr="4"/>
-          <par name="a_oid" nr="5"/>
-          <par name="a_mode" nr="6"/>
           <par name="b_oid" nr="7"/>
+          <par name="a_oid" nr="5"/>
           <par name="b_mode" nr="8"/>
+          <par name="path" nr="2"/>
+          <par name="o_mode" nr="4"/>
+          <par name="o_oid" nr="3"/>
+          <par name="a_mode" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -381,8 +551,8 @@
       </function>
       <function name="hashmap_entry_init">
         <parameters>
-          <par name="entry" nr="1"/>
           <par name="hash" nr="2"/>
+          <par name="entry" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -441,11 +611,11 @@
       </function>
       <function name="insert_stage_data">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="o" nr="2"/>
-          <par name="a" nr="3"/>
-          <par name="b" nr="4"/>
           <par name="entries" nr="5"/>
+          <par name="o" nr="2"/>
+          <par name="b" nr="4"/>
+          <par name="path" nr="1"/>
+          <par name="a" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -499,17 +669,25 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="merge_3way">
         <parameters>
           <par name="o" nr="1"/>
+          <par name="branch2" nr="7"/>
+          <par name="branch1" nr="6"/>
           <par name="result_buf" nr="2"/>
+          <par name="b" nr="5"/>
           <par name="one" nr="3"/>
           <par name="a" nr="4"/>
-          <par name="b" nr="5"/>
-          <par name="branch1" nr="6"/>
-          <par name="branch2" nr="7"/>
         </parameters>
         <postconditions>
           <post>
@@ -524,14 +702,14 @@
       <function name="merge_content">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="path" nr="2"/>
-          <par name="o_oid" nr="3"/>
-          <par name="o_mode" nr="4"/>
-          <par name="a_oid" nr="5"/>
-          <par name="a_mode" nr="6"/>
-          <par name="b_oid" nr="7"/>
-          <par name="b_mode" nr="8"/>
           <par name="rename_conflict_info" nr="9"/>
+          <par name="b_oid" nr="7"/>
+          <par name="a_oid" nr="5"/>
+          <par name="b_mode" nr="8"/>
+          <par name="path" nr="2"/>
+          <par name="o_mode" nr="4"/>
+          <par name="o_oid" nr="3"/>
+          <par name="a_mode" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -545,14 +723,24 @@
       </function>
       <function name="merge_file_1">
         <parameters>
+          <par name="result" nr="7"/>
           <par name="o" nr="1"/>
+          <par name="branch2" nr="6"/>
+          <par name="branch1" nr="5"/>
+          <par name="b" nr="4"/>
           <par name="one" nr="2"/>
           <par name="a" nr="3"/>
-          <par name="b" nr="4"/>
-          <par name="branch1" nr="5"/>
-          <par name="branch2" nr="6"/>
-          <par name="result" nr="7"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>blob_type</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -566,16 +754,16 @@
       <function name="merge_file_one">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="path" nr="2"/>
-          <par name="o_oid" nr="3"/>
-          <par name="o_mode" nr="4"/>
-          <par name="a_oid" nr="5"/>
-          <par name="a_mode" nr="6"/>
-          <par name="b_oid" nr="7"/>
-          <par name="b_mode" nr="8"/>
-          <par name="branch1" nr="9"/>
           <par name="branch2" nr="10"/>
+          <par name="branch1" nr="9"/>
           <par name="mfi" nr="11"/>
+          <par name="b_oid" nr="7"/>
+          <par name="a_oid" nr="5"/>
+          <par name="b_mode" nr="8"/>
+          <par name="path" nr="2"/>
+          <par name="o_mode" nr="4"/>
+          <par name="o_oid" nr="3"/>
+          <par name="a_mode" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -590,14 +778,14 @@
       <function name="merge_file_special_markers">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="one" nr="2"/>
-          <par name="a" nr="3"/>
-          <par name="b" nr="4"/>
-          <par name="branch1" nr="5"/>
-          <par name="filename1" nr="6"/>
           <par name="branch2" nr="7"/>
+          <par name="branch1" nr="5"/>
           <par name="filename2" nr="8"/>
           <par name="mfi" nr="9"/>
+          <par name="b" nr="4"/>
+          <par name="one" nr="2"/>
+          <par name="filename1" nr="6"/>
+          <par name="a" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -611,12 +799,43 @@
       </function>
       <function name="merge_recursive">
         <parameters>
-          <par name="o" nr="1"/>
-          <par name="h1" nr="2"/>
-          <par name="h2" nr="3"/>
-          <par name="ca" nr="4"/>
           <par name="result" nr="5"/>
+          <par name="h2" nr="3"/>
+          <par name="o" nr="1"/>
+          <par name="ca" nr="4"/>
+          <par name="h1" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -643,12 +862,12 @@
       </function>
       <function name="merge_recursive_generic">
         <parameters>
+          <par name="base_list" nr="5"/>
+          <par name="result" nr="6"/>
           <par name="o" nr="1"/>
           <par name="head" nr="2"/>
           <par name="merge" nr="3"/>
           <par name="num_base_list" nr="4"/>
-          <par name="base_list" nr="5"/>
-          <par name="result" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -662,11 +881,11 @@
       </function>
       <function name="merge_trees">
         <parameters>
+          <par name="result" nr="5"/>
           <par name="o" nr="1"/>
           <par name="head" nr="2"/>
-          <par name="merge" nr="3"/>
           <par name="common" nr="4"/>
-          <par name="result" nr="5"/>
+          <par name="merge" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -680,8 +899,8 @@
       </function>
       <function name="oid_eq">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -814,9 +1033,9 @@
       <function name="path_hashmap_cmp">
         <parameters>
           <par name="cmp_data" nr="1"/>
+          <par name="keydata" nr="4"/>
           <par name="entry" nr="2"/>
           <par name="entry_or_key" nr="3"/>
-          <par name="keydata" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -831,8 +1050,8 @@
       <function name="process_entry">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="entry" nr="3"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -846,8 +1065,8 @@
       </function>
       <function name="process_renames">
         <parameters>
-          <par name="o" nr="1"/>
           <par name="a_renames" nr="2"/>
+          <par name="o" nr="1"/>
           <par name="b_renames" nr="3"/>
         </parameters>
         <postconditions>
@@ -878,9 +1097,9 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -890,12 +1109,28 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="record_df_conflict_files">
         <parameters>
-          <par name="o" nr="1"/>
           <par name="entries" nr="2"/>
+          <par name="o" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -910,9 +1145,9 @@
       <function name="remove_file">
         <parameters>
           <par name="o" nr="1"/>
+          <par name="no_wd" nr="4"/>
           <par name="clean" nr="2"/>
           <par name="path" nr="3"/>
-          <par name="no_wd" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -954,12 +1189,12 @@
       </function>
       <function name="save_files_dirs">
         <parameters>
-          <par name="sha1" nr="1"/>
-          <par name="base" nr="2"/>
-          <par name="path" nr="3"/>
-          <par name="mode" nr="4"/>
-          <par name="stage" nr="5"/>
           <par name="context" nr="6"/>
+          <par name="mode" nr="4"/>
+          <par name="sha1" nr="1"/>
+          <par name="stage" nr="5"/>
+          <par name="path" nr="3"/>
+          <par name="base" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -973,16 +1208,16 @@
       </function>
       <function name="setup_rename_conflict_info">
         <parameters>
-          <par name="rename_type" nr="1"/>
+          <par name="src_entry1" nr="9"/>
+          <par name="branch2" nr="5"/>
+          <par name="o" nr="8"/>
+          <par name="branch1" nr="4"/>
           <par name="pair1" nr="2"/>
           <par name="pair2" nr="3"/>
-          <par name="branch1" nr="4"/>
-          <par name="branch2" nr="5"/>
           <par name="dst_entry1" nr="6"/>
           <par name="dst_entry2" nr="7"/>
-          <par name="o" nr="8"/>
-          <par name="src_entry1" nr="9"/>
           <par name="src_entry2" nr="10"/>
+          <par name="rename_type" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -996,15 +1231,23 @@
       </function>
       <function name="shift_tree_object">
         <parameters>
+          <par name="subtree_shift" nr="3"/>
           <par name="one" nr="1"/>
           <par name="two" nr="2"/>
-          <par name="subtree_shift" nr="3"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1027,9 +1270,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1043,8 +1286,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1073,8 +1316,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1117,8 +1360,8 @@
       </function>
       <function name="strbuf_complete">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="term" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1132,8 +1375,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1163,8 +1406,8 @@
       <function name="unique_path">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="branch" nr="3"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1174,14 +1417,30 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="update_entry">
         <parameters>
-          <par name="entry" nr="1"/>
           <par name="o" nr="2"/>
-          <par name="a" nr="3"/>
+          <par name="entry" nr="1"/>
           <par name="b" nr="4"/>
+          <par name="a" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1196,9 +1455,9 @@
       <function name="update_file">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="clean" nr="2"/>
           <par name="oid" nr="3"/>
           <par name="mode" nr="4"/>
+          <par name="clean" nr="2"/>
           <par name="path" nr="5"/>
         </parameters>
         <postconditions>
@@ -1213,12 +1472,12 @@
       </function>
       <function name="update_file_flags">
         <parameters>
+          <par name="update_wd" nr="6"/>
           <par name="o" nr="1"/>
           <par name="oid" nr="2"/>
           <par name="mode" nr="3"/>
-          <par name="path" nr="4"/>
           <par name="update_cache" nr="5"/>
-          <par name="update_wd" nr="6"/>
+          <par name="path" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1232,11 +1491,11 @@
       </function>
       <function name="update_stages">
         <parameters>
-          <par name="opt" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="o" nr="3"/>
-          <par name="a" nr="4"/>
+          <par name="opt" nr="1"/>
           <par name="b" nr="5"/>
+          <par name="path" nr="2"/>
+          <par name="a" nr="4"/>
         </parameters>
         <postconditions>
           <post>

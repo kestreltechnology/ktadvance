@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:51.545654"/>
-  <cfile name="builtin/tag">
-    <data-structures/>
+  <header time="2018-12-19 14:36:31">
+    <application file="builtin/tag.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="sorting_tail"/>
+      <gvar name="tag_type"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -16,14 +21,32 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="build_tag_object">
         <parameters>
+          <par name="result" nr="3"/>
           <par name="buf" nr="1"/>
           <par name="sign" nr="2"/>
-          <par name="result" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tag_type</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -36,10 +59,20 @@
       </function>
       <function name="cmd_tag">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>sorting_tail</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -93,12 +126,12 @@
       </function>
       <function name="create_tag">
         <parameters>
-          <par name="object" nr="1"/>
-          <par name="tag" nr="2"/>
+          <par name="result" nr="6"/>
+          <par name="prev" nr="5"/>
           <par name="buf" nr="3"/>
           <par name="opt" nr="4"/>
-          <par name="prev" nr="5"/>
-          <par name="result" nr="6"/>
+          <par name="object" nr="1"/>
+          <par name="tag" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -112,10 +145,10 @@
       </function>
       <function name="delete_tag">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="ref" nr="2"/>
-          <par name="oid" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="oid" nr="3"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -143,9 +176,9 @@
       </function>
       <function name="for_each_tag_name">
         <parameters>
-          <par name="argv" nr="1"/>
-          <par name="fn" nr="2"/>
           <par name="cb_data" nr="3"/>
+          <par name="fn" nr="2"/>
+          <par name="argv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -159,9 +192,9 @@
       </function>
       <function name="git_tag_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -204,9 +237,9 @@
       </function>
       <function name="list_tags">
         <parameters>
+          <par name="format" nr="3"/>
           <par name="filter" nr="1"/>
           <par name="sorting" nr="2"/>
-          <par name="format" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -249,8 +282,8 @@
       </function>
       <function name="parse_msg_arg">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -265,9 +298,9 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -277,12 +310,28 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -340,8 +389,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -355,10 +404,10 @@
       </function>
       <function name="verify_tag">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="ref" nr="2"/>
-          <par name="oid" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="oid" nr="3"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -372,8 +421,8 @@
       </function>
       <function name="write_tag_body">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="oid" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>

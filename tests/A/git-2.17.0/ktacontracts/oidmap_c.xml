@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:00.243707"/>
-  <cfile name="oidmap">
-    <data-structures/>
+  <header time="2018-12-19 16:16:30">
+    <application file="oidmap.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="cmpfn">
         <parameters>
+          <par name="keydata" nr="4"/>
           <par name="hashmap_cmp_fn_data" nr="1"/>
           <par name="entry" nr="2"/>
           <par name="entry_or_key" nr="3"/>
-          <par name="keydata" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -33,6 +35,15 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="hashcmp">
@@ -52,8 +63,8 @@
       </function>
       <function name="hashmap_entry_init">
         <parameters>
-          <par name="entry" nr="1"/>
           <par name="hash" nr="2"/>
+          <par name="entry" nr="1"/>
         </parameters>
         <postconditions>
           <post>

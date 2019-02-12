@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:52.188184"/>
-  <cfile name="cache-tree">
-    <data-structures/>
+  <header time="2018-12-19 14:43:13">
+    <application file="cache-tree.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="tree_type"/>
+    </global-variables>
     <functions>
       <function name="cache_tree">
         <parameters/>
@@ -11,6 +15,27 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="subtree_nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -26,6 +51,19 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="entry_count"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -76,9 +114,9 @@
       </function>
       <function name="cache_tree_matches_traversal">
         <parameters>
+          <par name="info" nr="3"/>
           <par name="root" nr="1"/>
           <par name="ent" nr="2"/>
-          <par name="info" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -115,6 +153,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -193,8 +239,8 @@
       </function>
       <function name="find_cache_tree_from_traversal">
         <parameters>
-          <par name="root" nr="1"/>
           <par name="info" nr="2"/>
+          <par name="root" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -208,16 +254,50 @@
       </function>
       <function name="find_subtree">
         <parameters>
-          <par name="it" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="pathlen" nr="3"/>
+          <par name="it" nr="1"/>
           <par name="create" nr="4"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache_tree"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="count"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -269,9 +349,9 @@
       </function>
       <function name="hold_lock_file_for_update">
         <parameters>
-          <par name="lk" nr="1"/>
           <par name="path" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -300,9 +380,9 @@
       <function name="move_array">
         <parameters>
           <par name="dst" nr="1"/>
+          <par name="size" nr="4"/>
           <par name="src" nr="2"/>
           <par name="n" nr="3"/>
-          <par name="size" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -360,8 +440,8 @@
       </function>
       <function name="prime_cache_tree">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="tree" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -375,8 +455,8 @@
       </function>
       <function name="prime_cache_tree_rec">
         <parameters>
-          <par name="it" nr="1"/>
           <par name="tree" nr="2"/>
+          <par name="it" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -390,8 +470,8 @@
       </function>
       <function name="read_one">
         <parameters>
-          <par name="buffer" nr="1"/>
           <par name="size_p" nr="2"/>
+          <par name="buffer" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -419,8 +499,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -434,8 +514,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -449,10 +529,10 @@
       </function>
       <function name="subtree_name_cmp">
         <parameters>
-          <par name="one" nr="1"/>
           <par name="onelen" nr="2"/>
-          <par name="two" nr="3"/>
           <par name="twolen" nr="4"/>
+          <par name="one" nr="1"/>
+          <par name="two" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -466,9 +546,9 @@
       </function>
       <function name="subtree_pos">
         <parameters>
+          <par name="pathlen" nr="3"/>
           <par name="it" nr="1"/>
           <par name="path" nr="2"/>
-          <par name="pathlen" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -496,14 +576,24 @@
       </function>
       <function name="update_one">
         <parameters>
-          <par name="it" nr="1"/>
-          <par name="cache" nr="2"/>
           <par name="entries" nr="3"/>
-          <par name="base" nr="4"/>
-          <par name="baselen" nr="5"/>
           <par name="skip_count" nr="6"/>
+          <par name="cache" nr="2"/>
+          <par name="it" nr="1"/>
+          <par name="baselen" nr="5"/>
           <par name="flags" nr="7"/>
+          <par name="base" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tree_type</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -516,8 +606,8 @@
       </function>
       <function name="verify_cache">
         <parameters>
-          <par name="cache" nr="1"/>
           <par name="entries" nr="2"/>
+          <par name="cache" nr="1"/>
           <par name="flags" nr="3"/>
         </parameters>
         <postconditions>
@@ -548,9 +638,9 @@
       </function>
       <function name="write_index_as_tree">
         <parameters>
-          <par name="sha1" nr="1"/>
           <par name="index_state" nr="2"/>
           <par name="index_path___0" nr="3"/>
+          <par name="sha1" nr="1"/>
           <par name="flags" nr="4"/>
           <par name="prefix" nr="5"/>
         </parameters>
@@ -567,9 +657,9 @@
       <function name="write_one">
         <parameters>
           <par name="buffer" nr="1"/>
+          <par name="pathlen" nr="4"/>
           <par name="it" nr="2"/>
           <par name="path" nr="3"/>
-          <par name="pathlen" nr="4"/>
         </parameters>
         <postconditions>
           <post>

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:51.760779"/>
-  <cfile name="builtin/update-index">
-    <data-structures/>
+  <header time="2018-12-19 14:38:50">
+    <application file="builtin/update-index.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="startup_info"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -16,14 +20,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="add_cacheinfo">
         <parameters>
-          <par name="mode" nr="1"/>
           <par name="oid" nr="2"/>
-          <par name="path" nr="3"/>
+          <par name="mode" nr="1"/>
           <par name="stage" nr="4"/>
+          <par name="path" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -38,9 +50,9 @@
       <function name="add_one_path">
         <parameters>
           <par name="old" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="len" nr="3"/>
           <par name="st" nr="4"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -66,9 +78,9 @@
       </function>
       <function name="cacheinfo_callback">
         <parameters>
-          <par name="ctx" nr="1"/>
           <par name="opt" nr="2"/>
           <par name="unset" nr="3"/>
+          <par name="ctx" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -98,8 +110,8 @@
       <function name="ce_path_match">
         <parameters>
           <par name="ce" nr="1"/>
-          <par name="pathspec" nr="2"/>
           <par name="seen" nr="3"/>
+          <par name="pathspec" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -113,8 +125,8 @@
       </function>
       <function name="chmod_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -144,8 +156,8 @@
       </function>
       <function name="cmd_update_index">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -214,10 +226,10 @@
       </function>
       <function name="do_reupdate">
         <parameters>
+          <par name="prefix_length" nr="4"/>
           <par name="ac" nr="1"/>
           <par name="av" nr="2"/>
           <par name="prefix" nr="3"/>
-          <par name="prefix_length" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -231,10 +243,10 @@
       </function>
       <function name="do_unresolve">
         <parameters>
+          <par name="prefix_length" nr="4"/>
           <par name="ac" nr="1"/>
           <par name="av" nr="2"/>
           <par name="prefix" nr="3"/>
-          <par name="prefix_length" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -255,6 +267,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -306,9 +326,9 @@
       </function>
       <function name="mark_ce_flags">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="flag" nr="2"/>
           <par name="mark" nr="3"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -322,8 +342,8 @@
       </function>
       <function name="mark_fsmonitor_invalid">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="ce" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -368,8 +388,8 @@
       <function name="parse_new_style_cacheinfo">
         <parameters>
           <par name="arg" nr="1"/>
-          <par name="mode" nr="2"/>
           <par name="oid" nr="3"/>
+          <par name="mode" nr="2"/>
           <par name="path" nr="4"/>
         </parameters>
         <postconditions>
@@ -384,9 +404,9 @@
       </function>
       <function name="process_directory">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="len" nr="2"/>
           <par name="st" nr="3"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -456,10 +476,10 @@
       <function name="read_one_ent">
         <parameters>
           <par name="which" nr="1"/>
-          <par name="ent" nr="2"/>
-          <par name="path" nr="3"/>
           <par name="namelen" nr="4"/>
           <par name="stage" nr="5"/>
+          <par name="path" nr="3"/>
+          <par name="ent" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -469,12 +489,51 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ce_mode"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ce_namelen"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ce_flags"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="really_refresh_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -504,8 +563,8 @@
       </function>
       <function name="refresh_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -560,8 +619,8 @@
       </function>
       <function name="resolve_undo_clear_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -576,10 +635,41 @@
       </function>
       <function name="reupdate_callback">
         <parameters>
-          <par name="ctx" nr="1"/>
           <par name="opt" nr="2"/>
+          <par name="ctx" nr="1"/>
           <par name="flags" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="prefix"/>
+                  </addressed-value>
+                  <ci>startup_info</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -606,9 +696,9 @@
       </function>
       <function name="stdin_cacheinfo_callback">
         <parameters>
-          <par name="ctx" nr="1"/>
           <par name="opt" nr="2"/>
           <par name="unset" nr="3"/>
+          <par name="ctx" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -622,9 +712,9 @@
       </function>
       <function name="stdin_callback">
         <parameters>
-          <par name="ctx" nr="1"/>
           <par name="opt" nr="2"/>
           <par name="unset" nr="3"/>
+          <par name="ctx" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -653,8 +743,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -668,8 +758,8 @@
       </function>
       <function name="strbuf_swap">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -683,9 +773,9 @@
       </function>
       <function name="strtoul_ui">
         <parameters>
+          <par name="result" nr="3"/>
           <par name="s" nr="1"/>
           <par name="base" nr="2"/>
-          <par name="result" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -725,10 +815,41 @@
       </function>
       <function name="unresolve_callback">
         <parameters>
-          <par name="ctx" nr="1"/>
           <par name="opt" nr="2"/>
+          <par name="ctx" nr="1"/>
           <par name="flags" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="prefix"/>
+                  </addressed-value>
+                  <ci>startup_info</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

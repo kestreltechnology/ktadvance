@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:50.616229"/>
-  <cfile name="builtin/remote-ext">
-    <data-structures/>
+  <header time="2018-12-19 14:24:02">
+    <application file="builtin/remote-ext.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="git_req"/>
+      <gvar name="git_req_vhost"/>
+    </global-variables>
     <functions>
       <function name="cmd_remote_ext">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -37,8 +42,8 @@
       <function name="parse_argv">
         <parameters>
           <par name="out" nr="1"/>
-          <par name="arg" nr="2"/>
           <par name="service" nr="3"/>
+          <par name="arg" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -52,9 +57,27 @@
       </function>
       <function name="run_child">
         <parameters>
-          <par name="arg" nr="1"/>
           <par name="service" nr="2"/>
+          <par name="arg" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>git_req_vhost</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>git_req</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -67,10 +90,10 @@
       </function>
       <function name="send_git_request">
         <parameters>
-          <par name="stdin_fd" nr="1"/>
           <par name="serv" nr="2"/>
-          <par name="repo" nr="3"/>
+          <par name="stdin_fd" nr="1"/>
           <par name="vhost" nr="4"/>
+          <par name="repo" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -84,9 +107,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -100,8 +123,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -144,15 +167,23 @@
       </function>
       <function name="strip_escapes">
         <parameters>
-          <par name="str" nr="1"/>
           <par name="service" nr="2"/>
           <par name="next" nr="3"/>
+          <par name="str" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>

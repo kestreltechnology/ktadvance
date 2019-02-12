@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:50.590793"/>
-  <cfile name="builtin/remote">
-    <data-structures/>
+  <header time="2018-12-19 14:26:32">
+    <application file="builtin/remote.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="Q_">
         <parameters>
           <par name="msgid" nr="1"/>
-          <par name="plu" nr="2"/>
           <par name="n" nr="3"/>
+          <par name="plu" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -32,6 +34,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="abbrev_ref">
@@ -47,12 +57,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="add">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -66,11 +84,11 @@
       </function>
       <function name="add_branch">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="branchname" nr="2"/>
-          <par name="remotename" nr="3"/>
-          <par name="mirror" nr="4"/>
           <par name="tmp" nr="5"/>
+          <par name="remotename" nr="3"/>
+          <par name="key" nr="1"/>
+          <par name="mirror" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -84,10 +102,10 @@
       </function>
       <function name="add_branch_for_removal">
         <parameters>
+          <par name="cb_data" nr="4"/>
           <par name="refname" nr="1"/>
           <par name="oid" nr="2"/>
           <par name="flags" nr="3"/>
-          <par name="cb_data" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -101,8 +119,8 @@
       </function>
       <function name="add_branches">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="branches" nr="2"/>
+          <par name="remote" nr="1"/>
           <par name="key" nr="3"/>
         </parameters>
         <postconditions>
@@ -117,8 +135,8 @@
       </function>
       <function name="add_known_remote">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="cb_data" nr="2"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -132,8 +150,8 @@
       </function>
       <function name="add_local_to_show_info">
         <parameters>
-          <par name="branch_item" nr="1"/>
           <par name="cb_data" nr="2"/>
+          <par name="branch_item" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -147,8 +165,8 @@
       </function>
       <function name="add_push_to_show_info">
         <parameters>
-          <par name="push_item" nr="1"/>
           <par name="cb_data" nr="2"/>
+          <par name="push_item" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -177,10 +195,10 @@
       </function>
       <function name="append_ref_to_tracked_list">
         <parameters>
+          <par name="cb_data" nr="4"/>
           <par name="refname" nr="1"/>
           <par name="oid" nr="2"/>
           <par name="flags" nr="3"/>
-          <par name="cb_data" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -194,8 +212,8 @@
       </function>
       <function name="clear_push_info">
         <parameters>
-          <par name="util" nr="1"/>
           <par name="string" nr="2"/>
+          <par name="util" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -209,8 +227,8 @@
       </function>
       <function name="cmd_remote">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -240,9 +258,9 @@
       </function>
       <function name="config_read_branches">
         <parameters>
-          <par name="key" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -296,8 +314,8 @@
       </function>
       <function name="get_head_names">
         <parameters>
-          <par name="remote_refs" nr="1"/>
           <par name="states" nr="2"/>
+          <par name="remote_refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -326,8 +344,8 @@
       </function>
       <function name="get_push_ref_states">
         <parameters>
-          <par name="remote_refs" nr="1"/>
           <par name="states" nr="2"/>
+          <par name="remote_refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -355,8 +373,8 @@
       </function>
       <function name="get_ref_states">
         <parameters>
-          <par name="remote_refs" nr="1"/>
           <par name="states" nr="2"/>
+          <par name="remote_refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -370,8 +388,8 @@
       </function>
       <function name="get_remote_default">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
           <par name="priv" nr="3"/>
         </parameters>
         <postconditions>
@@ -386,9 +404,9 @@
       </function>
       <function name="get_remote_ref_states">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="states" nr="2"/>
           <par name="query" nr="3"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -402,8 +420,8 @@
       </function>
       <function name="get_url">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -475,8 +493,8 @@
       </function>
       <function name="mv">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -520,8 +538,8 @@
       </function>
       <function name="parse_mirror_opt">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="not" nr="3"/>
         </parameters>
         <postconditions>
@@ -536,8 +554,8 @@
       </function>
       <function name="prune">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -551,8 +569,8 @@
       </function>
       <function name="prune_remote">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="dry_run" nr="2"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -578,10 +596,10 @@
       </function>
       <function name="read_remote_branches">
         <parameters>
+          <par name="cb_data" nr="4"/>
           <par name="refname" nr="1"/>
           <par name="oid" nr="2"/>
           <par name="flags" nr="3"/>
-          <par name="cb_data" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -610,8 +628,8 @@
       </function>
       <function name="rm">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -625,10 +643,10 @@
       </function>
       <function name="sane_qsort">
         <parameters>
-          <par name="base" nr="1"/>
           <par name="nmemb" nr="2"/>
-          <par name="size" nr="3"/>
           <par name="compar" nr="4"/>
+          <par name="size" nr="3"/>
+          <par name="base" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -642,8 +660,8 @@
       </function>
       <function name="set_branches">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -657,8 +675,8 @@
       </function>
       <function name="set_head">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -672,8 +690,8 @@
       </function>
       <function name="set_remote_branches">
         <parameters>
-          <par name="remotename" nr="1"/>
           <par name="branches" nr="2"/>
+          <par name="remotename" nr="1"/>
           <par name="add_mode" nr="3"/>
         </parameters>
         <postconditions>
@@ -688,8 +706,8 @@
       </function>
       <function name="set_url">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -703,8 +721,8 @@
       </function>
       <function name="show">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -775,9 +793,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -791,8 +809,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -835,8 +853,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -850,9 +868,9 @@
       </function>
       <function name="strip_suffix">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="str" nr="1"/>
           <par name="suffix" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -866,8 +884,8 @@
       </function>
       <function name="strip_suffix_mem">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="suffix" nr="3"/>
         </parameters>
         <postconditions>
@@ -882,8 +900,8 @@
       </function>
       <function name="update">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>

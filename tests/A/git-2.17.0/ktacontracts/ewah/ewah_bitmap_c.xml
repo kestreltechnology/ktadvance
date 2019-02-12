@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:57.109591"/>
-  <cfile name="ewah/ewah_bitmap">
-    <data-structures/>
+  <header time="2018-12-19 15:46:55">
+    <application file="ewah/ewah_bitmap.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="bitmap_pool_size"/>
+    </global-variables>
     <functions>
       <function name="add_empty_word">
         <parameters>
@@ -22,8 +26,8 @@
       <function name="add_empty_words">
         <parameters>
           <par name="self" nr="1"/>
-          <par name="v" nr="2"/>
           <par name="number" nr="3"/>
+          <par name="v" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -52,8 +56,8 @@
       </function>
       <function name="buffer_grow">
         <parameters>
-          <par name="self" nr="1"/>
           <par name="new_size" nr="2"/>
+          <par name="self" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -113,9 +117,9 @@
       <function name="ewah_add_dirty_words">
         <parameters>
           <par name="self" nr="1"/>
-          <par name="buffer" nr="2"/>
           <par name="number" nr="3"/>
           <par name="negate" nr="4"/>
+          <par name="buffer" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -130,8 +134,8 @@
       <function name="ewah_add_empty_words">
         <parameters>
           <par name="self" nr="1"/>
-          <par name="v" nr="2"/>
           <par name="number" nr="3"/>
+          <par name="v" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -145,9 +149,9 @@
       </function>
       <function name="ewah_and">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="ewah_i" nr="1"/>
           <par name="ewah_j" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -161,9 +165,9 @@
       </function>
       <function name="ewah_and_not">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="ewah_i" nr="1"/>
           <par name="ewah_j" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -205,8 +209,8 @@
       </function>
       <function name="ewah_each_bit">
         <parameters>
-          <par name="self" nr="1"/>
           <par name="callback" nr="2"/>
+          <par name="self" nr="1"/>
           <par name="payload" nr="3"/>
         </parameters>
         <postconditions>
@@ -291,9 +295,9 @@
       </function>
       <function name="ewah_or">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="ewah_i" nr="1"/>
           <par name="ewah_j" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -309,6 +313,30 @@
         <parameters>
           <par name="self" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <lt/>
+                <ci>bitmap_pool_size</ci>
+                <cn>16</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>bitmap_pool_size</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -321,6 +349,34 @@
       </function>
       <function name="ewah_pool_new">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>bitmap_pool_size</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <lt/>
+                <apply>
+                  <minus/>
+                  <ci>bitmap_pool_size</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>16</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -333,8 +389,8 @@
       </function>
       <function name="ewah_set">
         <parameters>
-          <par name="self" nr="1"/>
           <par name="i" nr="2"/>
+          <par name="self" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -348,9 +404,9 @@
       </function>
       <function name="ewah_xor">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="ewah_i" nr="1"/>
           <par name="ewah_j" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -364,8 +420,8 @@
       </function>
       <function name="max_size">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -379,8 +435,8 @@
       </function>
       <function name="min_size">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -450,8 +506,8 @@
       </function>
       <function name="rlw_set_literal_words">
         <parameters>
-          <par name="word" nr="1"/>
           <par name="l" nr="2"/>
+          <par name="word" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -465,8 +521,8 @@
       </function>
       <function name="rlw_set_run_bit">
         <parameters>
-          <par name="word" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="word" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -480,8 +536,8 @@
       </function>
       <function name="rlw_set_running_len">
         <parameters>
-          <par name="word" nr="1"/>
           <par name="l" nr="2"/>
+          <par name="word" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -537,8 +593,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>

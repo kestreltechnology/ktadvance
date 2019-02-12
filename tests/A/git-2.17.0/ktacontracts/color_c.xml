@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:52.248465"/>
-  <cfile name="color">
-    <data-structures/>
+  <header time="2018-12-19 14:45:04">
+    <application file="color.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="_">
         <parameters>
@@ -47,8 +49,8 @@
       <function name="color_fprintf">
         <parameters>
           <par name="fp" nr="1"/>
-          <par name="color" nr="2"/>
           <par name="fmt" nr="3"/>
+          <par name="color" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -63,8 +65,8 @@
       <function name="color_fprintf_ln">
         <parameters>
           <par name="fp" nr="1"/>
-          <par name="color" nr="2"/>
           <par name="fmt" nr="3"/>
+          <par name="color" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -93,8 +95,8 @@
       <function name="color_output">
         <parameters>
           <par name="out" nr="1"/>
-          <par name="len" nr="2"/>
           <par name="c" nr="3"/>
+          <par name="len" nr="2"/>
           <par name="type" nr="4"/>
         </parameters>
         <postconditions>
@@ -109,8 +111,8 @@
       </function>
       <function name="color_parse">
         <parameters>
-          <par name="value" nr="1"/>
           <par name="dst" nr="2"/>
+          <par name="value" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -124,9 +126,9 @@
       </function>
       <function name="color_parse_mem">
         <parameters>
-          <par name="value" nr="1"/>
           <par name="value_len" nr="2"/>
           <par name="dst" nr="3"/>
+          <par name="value" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -140,9 +142,9 @@
       </function>
       <function name="color_print_strbuf">
         <parameters>
+          <par name="sb" nr="3"/>
           <par name="fp" nr="1"/>
           <par name="color" nr="2"/>
-          <par name="sb" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -156,11 +158,11 @@
       </function>
       <function name="color_vfprintf">
         <parameters>
-          <par name="fp" nr="1"/>
-          <par name="color" nr="2"/>
-          <par name="fmt" nr="3"/>
           <par name="args" nr="4"/>
+          <par name="fp" nr="1"/>
           <par name="trail" nr="5"/>
+          <par name="fmt" nr="3"/>
+          <par name="color" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -186,8 +188,8 @@
       </function>
       <function name="get_hex_color">
         <parameters>
-          <par name="in" nr="1"/>
           <par name="out" nr="2"/>
+          <par name="in" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -201,9 +203,9 @@
       </function>
       <function name="git_color_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -217,9 +219,9 @@
       </function>
       <function name="git_color_default_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -233,8 +235,8 @@
       </function>
       <function name="git_config_colorbool">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -262,9 +264,9 @@
       </function>
       <function name="match_word">
         <parameters>
-          <par name="word" nr="1"/>
           <par name="len" nr="2"/>
           <par name="match" nr="3"/>
+          <par name="word" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -278,8 +280,8 @@
       </function>
       <function name="parse_attr">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -289,13 +291,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <lt/>
+                <return/>
+                <cn>32</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="parse_color">
         <parameters>
           <par name="out" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -309,11 +320,11 @@
       </function>
       <function name="skip_prefix_mem">
         <parameters>
-          <par name="buf" nr="1"/>
-          <par name="len" nr="2"/>
-          <par name="prefix" nr="3"/>
           <par name="out" nr="4"/>
           <par name="outlen" nr="5"/>
+          <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
+          <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
           <post>

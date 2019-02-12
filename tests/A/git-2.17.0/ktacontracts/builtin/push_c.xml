@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:50.084240"/>
-  <cfile name="builtin/push">
-    <data-structures/>
+  <header time="2018-12-19 14:20:15">
+    <application file="builtin/push.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="push_options_config"/>
+      <gvar name="refspec"/>
+      <gvar name="refspec_alloc"/>
+      <gvar name="refspec_nr"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -16,12 +23,106 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="add_refspec">
         <parameters>
           <par name="ref" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>refspec_alloc</ci>
+                  <cn>16</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>refspec_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>refspec</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>refspec_nr</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>refspec_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>refspec</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>refspec</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -94,10 +195,38 @@
       </function>
       <function name="cmd_push">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="items"/>
+                  </addressed-value>
+                  <ci>push_options_config</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <ci>push_options_config</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -138,9 +267,38 @@
       <function name="do_push">
         <parameters>
           <par name="repo" nr="1"/>
-          <par name="flags" nr="2"/>
           <par name="push_options" nr="3"/>
+          <par name="flags" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>refspec</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>refspec</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>refspec</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -153,9 +311,9 @@
       </function>
       <function name="git_push_config">
         <parameters>
-          <par name="k" nr="1"/>
-          <par name="v" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="v" nr="2"/>
+          <par name="k" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -184,8 +342,8 @@
       <function name="map_refspec">
         <parameters>
           <par name="ref" nr="1"/>
-          <par name="remote" nr="2"/>
           <par name="local_refs" nr="3"/>
+          <par name="remote" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -199,8 +357,8 @@
       </function>
       <function name="option_parse_recurse_submodules">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -215,8 +373,8 @@
       </function>
       <function name="push_url_of_remote">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="url_p" nr="2"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -233,6 +391,16 @@
           <par name="transport" nr="1"/>
           <par name="flags" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>refspec</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -245,8 +413,8 @@
       </function>
       <function name="set_push_cert_flags">
         <parameters>
-          <par name="flags" nr="1"/>
           <par name="v" nr="2"/>
+          <par name="flags" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -260,9 +428,9 @@
       </function>
       <function name="set_refspecs">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="nr" nr="2"/>
           <par name="repo" nr="3"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -290,8 +458,8 @@
       </function>
       <function name="setup_push_current">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="branch" nr="2"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -305,9 +473,9 @@
       </function>
       <function name="setup_push_upstream">
         <parameters>
-          <par name="remote" nr="1"/>
-          <par name="branch" nr="2"/>
           <par name="triangular" nr="3"/>
+          <par name="branch" nr="2"/>
+          <par name="remote" nr="1"/>
           <par name="simple" nr="4"/>
         </parameters>
         <postconditions>
@@ -322,9 +490,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -338,8 +506,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>

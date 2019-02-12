@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:11.547137"/>
-  <cfile name="xdiff/xpatience">
-    <data-structures/>
+  <header time="2018-12-19 17:46:34">
+    <application file="xdiff/xpatience.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="binary_search">
         <parameters>
           <par name="sequence" nr="1"/>
-          <par name="longest" nr="2"/>
           <par name="entry" nr="3"/>
+          <par name="longest" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -23,10 +25,10 @@
       <function name="fall_back_to_classic_diff">
         <parameters>
           <par name="map" nr="1"/>
-          <par name="line1" nr="2"/>
           <par name="count1" nr="3"/>
-          <par name="line2" nr="4"/>
           <par name="count2" nr="5"/>
+          <par name="line1" nr="2"/>
+          <par name="line2" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -40,15 +42,15 @@
       </function>
       <function name="fill_hashmap">
         <parameters>
-          <par name="file1" nr="1"/>
+          <par name="result" nr="5"/>
           <par name="file2" nr="2"/>
+          <par name="file1" nr="1"/>
           <par name="xpp" nr="3"/>
           <par name="env" nr="4"/>
-          <par name="result" nr="5"/>
-          <par name="line1" nr="6"/>
           <par name="count1" nr="7"/>
-          <par name="line2" nr="8"/>
           <par name="count2" nr="9"/>
+          <par name="line1" nr="6"/>
+          <par name="line2" nr="8"/>
         </parameters>
         <postconditions>
           <post>
@@ -76,10 +78,10 @@
       </function>
       <function name="insert_record">
         <parameters>
+          <par name="pass" nr="4"/>
+          <par name="map" nr="3"/>
           <par name="xpp" nr="1"/>
           <par name="line" nr="2"/>
-          <par name="map" nr="3"/>
-          <par name="pass" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -104,6 +106,15 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="match">
@@ -124,14 +135,14 @@
       </function>
       <function name="patience_diff">
         <parameters>
-          <par name="file1" nr="1"/>
           <par name="file2" nr="2"/>
+          <par name="file1" nr="1"/>
           <par name="xpp" nr="3"/>
           <par name="env" nr="4"/>
-          <par name="line1" nr="5"/>
           <par name="count1" nr="6"/>
-          <par name="line2" nr="7"/>
           <par name="count2" nr="8"/>
+          <par name="line1" nr="5"/>
+          <par name="line2" nr="7"/>
         </parameters>
         <postconditions>
           <post>
@@ -145,12 +156,12 @@
       </function>
       <function name="walk_common_sequence">
         <parameters>
-          <par name="map" nr="1"/>
           <par name="first" nr="2"/>
-          <par name="line1" nr="3"/>
+          <par name="map" nr="1"/>
           <par name="count1" nr="4"/>
-          <par name="line2" nr="5"/>
           <par name="count2" nr="6"/>
+          <par name="line1" nr="3"/>
+          <par name="line2" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -164,8 +175,8 @@
       </function>
       <function name="xdl_do_patience_diff">
         <parameters>
-          <par name="file1" nr="1"/>
           <par name="file2" nr="2"/>
+          <par name="file1" nr="1"/>
           <par name="xpp" nr="3"/>
           <par name="env" nr="4"/>
         </parameters>

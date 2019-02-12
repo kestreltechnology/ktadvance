@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:05.670920"/>
-  <cfile name="repository">
-    <data-structures/>
+  <header time="2018-12-19 16:46:22">
+    <application file="repository.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="find_common_dir">
         <parameters>
+          <par name="fromenv" nr="3"/>
           <par name="sb" nr="1"/>
           <par name="gitdir" nr="2"/>
-          <par name="fromenv" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -18,14 +20,23 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_path_from_env">
         <parameters>
           <par name="envvar" nr="1"/>
+          <par name="fromenv" nr="4"/>
           <par name="git_dir" nr="2"/>
           <par name="path" nr="3"/>
-          <par name="fromenv" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -68,9 +79,9 @@
       </function>
       <function name="repo_init">
         <parameters>
+          <par name="worktree" nr="3"/>
           <par name="repo" nr="1"/>
           <par name="gitdir" nr="2"/>
-          <par name="worktree" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -172,8 +183,8 @@
       </function>
       <function name="repo_submodule_init">
         <parameters>
-          <par name="submodule" nr="1"/>
           <par name="superproject" nr="2"/>
+          <par name="submodule" nr="1"/>
           <par name="path" nr="3"/>
         </parameters>
         <postconditions>
@@ -203,8 +214,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

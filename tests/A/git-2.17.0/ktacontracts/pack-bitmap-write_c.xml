@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:00.475152"/>
-  <cfile name="pack-bitmap-write">
-    <data-structures/>
+  <header time="2018-12-19 16:17:35">
+    <application file="pack-bitmap-write.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="seen_objects"/>
+      <gvar name="seen_objects_alloc"/>
+      <gvar name="seen_objects_nr"/>
+    </global-variables>
     <functions>
       <function name="add_to_include_set">
         <parameters>
-          <par name="base" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="base" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -35,8 +41,8 @@
       </function>
       <function name="bitmap_writer_build_type_index">
         <parameters>
-          <par name="index___0" nr="1"/>
           <par name="index_nr" nr="2"/>
+          <par name="index___0" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -50,8 +56,8 @@
       </function>
       <function name="bitmap_writer_finish">
         <parameters>
-          <par name="index___0" nr="1"/>
           <par name="index_nr" nr="2"/>
+          <par name="index___0" nr="1"/>
           <par name="filename" nr="3"/>
           <par name="options" nr="4"/>
         </parameters>
@@ -152,8 +158,8 @@
       </function>
       <function name="dump_bitmap">
         <parameters>
-          <par name="f" nr="1"/>
           <par name="bitmap" nr="2"/>
+          <par name="f" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -254,9 +260,9 @@
       </function>
       <function name="hashwrite_ewah_helper">
         <parameters>
-          <par name="f" nr="1"/>
-          <par name="buf" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="buf" nr="2"/>
+          <par name="f" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -285,8 +291,8 @@
       </function>
       <function name="kh_get_sha1">
         <parameters>
-          <par name="h" nr="1"/>
           <par name="key" nr="2"/>
+          <par name="h" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -308,13 +314,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="kh_put_sha1">
         <parameters>
-          <par name="h" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="ret" nr="3"/>
+          <par name="key" nr="2"/>
+          <par name="h" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -328,8 +342,8 @@
       </function>
       <function name="kh_resize_sha1">
         <parameters>
-          <par name="h" nr="1"/>
           <par name="new_n_buckets" nr="2"/>
+          <par name="h" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -345,6 +359,75 @@
         <parameters>
           <par name="object" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>seen_objects</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>seen_objects</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>seen_objects_nr</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>seen_objects_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>seen_objects_alloc</ci>
+                  <cn>16</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>seen_objects</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -371,8 +454,8 @@
       </function>
       <function name="push_bitmapped_commit">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="reused" nr="2"/>
+          <par name="commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -386,6 +469,24 @@
       </function>
       <function name="reset_all_seen">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>seen_objects</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>seen_objects</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -398,10 +499,10 @@
       </function>
       <function name="sane_qsort">
         <parameters>
-          <par name="base" nr="1"/>
           <par name="nmemb" nr="2"/>
-          <par name="size" nr="3"/>
           <par name="compar" nr="4"/>
+          <par name="size" nr="3"/>
+          <par name="base" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -415,8 +516,8 @@
       </function>
       <function name="sha1_access">
         <parameters>
-          <par name="pos" nr="1"/>
           <par name="table" nr="2"/>
+          <par name="pos" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -444,8 +545,8 @@
       </function>
       <function name="should_include">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="_data" nr="2"/>
+          <par name="commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -475,8 +576,8 @@
       <function name="show_object">
         <parameters>
           <par name="object" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -490,8 +591,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -505,9 +606,9 @@
       </function>
       <function name="write_hash_cache">
         <parameters>
+          <par name="index_nr" nr="3"/>
           <par name="f" nr="1"/>
           <par name="index___0" nr="2"/>
-          <par name="index_nr" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -521,9 +622,9 @@
       </function>
       <function name="write_selected_commits_v1">
         <parameters>
+          <par name="index_nr" nr="3"/>
           <par name="f" nr="1"/>
           <par name="index___0" nr="2"/>
-          <par name="index_nr" nr="3"/>
         </parameters>
         <postconditions>
           <post>

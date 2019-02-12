@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:11.631363"/>
-  <cfile name="xdiff/xutils">
-    <data-structures/>
+  <header time="2018-12-19 17:46:59">
+    <application file="xdiff/xutils.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="ends_with_optional_cr">
         <parameters>
-          <par name="l" nr="1"/>
-          <par name="s" nr="2"/>
           <par name="i" nr="3"/>
+          <par name="s" nr="2"/>
+          <par name="l" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -22,8 +24,8 @@
       </function>
       <function name="xdl_blankline">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="size" nr="2"/>
+          <par name="line" nr="1"/>
           <par name="flags" nr="3"/>
         </parameters>
         <postconditions>
@@ -80,9 +82,9 @@
       </function>
       <function name="xdl_cha_init">
         <parameters>
-          <par name="cha" nr="1"/>
           <par name="isize" nr="2"/>
           <par name="icount" nr="3"/>
+          <par name="cha" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -96,11 +98,11 @@
       </function>
       <function name="xdl_emit_diffrec">
         <parameters>
-          <par name="rec" nr="1"/>
           <par name="size" nr="2"/>
           <par name="pre" nr="3"/>
-          <par name="psize" nr="4"/>
           <par name="ecb" nr="5"/>
+          <par name="psize" nr="4"/>
+          <par name="rec" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -114,13 +116,13 @@
       </function>
       <function name="xdl_emit_hunk_hdr">
         <parameters>
-          <par name="s1" nr="1"/>
           <par name="c1" nr="2"/>
-          <par name="s2" nr="3"/>
           <par name="c2" nr="4"/>
-          <par name="func" nr="5"/>
           <par name="funclen" nr="6"/>
+          <par name="s2" nr="3"/>
+          <par name="func" nr="5"/>
           <par name="ecb" nr="7"/>
+          <par name="s1" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -134,12 +136,12 @@
       </function>
       <function name="xdl_fall_back_diff">
         <parameters>
-          <par name="diff_env" nr="1"/>
           <par name="xpp" nr="2"/>
-          <par name="line1" nr="3"/>
           <par name="count1" nr="4"/>
-          <par name="line2" nr="5"/>
           <par name="count2" nr="6"/>
+          <par name="line1" nr="3"/>
+          <par name="diff_env" nr="1"/>
+          <par name="line2" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -153,8 +155,8 @@
       </function>
       <function name="xdl_guess_lines">
         <parameters>
-          <par name="mf" nr="1"/>
           <par name="sample" nr="2"/>
+          <par name="mf" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -168,8 +170,8 @@
       </function>
       <function name="xdl_hash_record">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="top" nr="2"/>
+          <par name="data" nr="1"/>
           <par name="flags" nr="3"/>
         </parameters>
         <postconditions>
@@ -184,8 +186,8 @@
       </function>
       <function name="xdl_hash_record_with_whitespace">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="top" nr="2"/>
+          <par name="data" nr="1"/>
           <par name="flags" nr="3"/>
         </parameters>
         <postconditions>
@@ -214,14 +216,22 @@
       </function>
       <function name="xdl_mmfile_first">
         <parameters>
-          <par name="mmf" nr="1"/>
           <par name="size" nr="2"/>
+          <par name="mmf" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -259,9 +269,9 @@
       <function name="xdl_recmatch">
         <parameters>
           <par name="l1" nr="1"/>
+          <par name="s2" nr="4"/>
           <par name="s1" nr="2"/>
           <par name="l2" nr="3"/>
-          <par name="s2" nr="4"/>
           <par name="flags" nr="5"/>
         </parameters>
         <postconditions>

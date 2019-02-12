@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:10.328987"/>
-  <cfile name="urlmatch">
-    <data-structures/>
+  <header time="2018-12-19 17:38:44">
+    <application file="urlmatch.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="_">
         <parameters>
@@ -21,10 +23,10 @@
       <function name="append_normalized_escapes">
         <parameters>
           <par name="buf" nr="1"/>
-          <par name="from" nr="2"/>
           <par name="from_len" nr="3"/>
-          <par name="esc_extra" nr="4"/>
+          <par name="from" nr="2"/>
           <par name="esc_ok" nr="5"/>
+          <par name="esc_extra" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -38,8 +40,8 @@
       </function>
       <function name="cmp_matches">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -53,8 +55,8 @@
       </function>
       <function name="end_of_token">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="s" nr="1"/>
           <par name="n" nr="3"/>
         </parameters>
         <postconditions>
@@ -62,6 +64,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -97,8 +107,8 @@
       </function>
       <function name="match_host">
         <parameters>
-          <par name="url_info" nr="1"/>
           <par name="pattern_info" nr="2"/>
+          <par name="url_info" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -128,8 +138,8 @@
       </function>
       <function name="sane_case">
         <parameters>
-          <par name="x" nr="1"/>
           <par name="high" nr="2"/>
+          <par name="x" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -139,13 +149,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>-128</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -159,8 +178,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -203,8 +222,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -219,8 +238,8 @@
       <function name="url_match_prefix">
         <parameters>
           <par name="url" nr="1"/>
-          <par name="url_prefix" nr="2"/>
           <par name="url_prefix_len" nr="3"/>
+          <par name="url_prefix" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -261,13 +280,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="urlmatch_config_entry">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>

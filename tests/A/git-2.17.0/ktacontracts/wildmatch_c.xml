@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:10.764278"/>
-  <cfile name="wildmatch">
-    <data-structures/>
+  <header time="2018-12-19 17:41:48">
+    <application file="wildmatch.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="dowild">
         <parameters>
@@ -22,8 +24,8 @@
       </function>
       <function name="sane_case">
         <parameters>
-          <par name="x" nr="1"/>
           <par name="high" nr="2"/>
+          <par name="x" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -33,12 +35,30 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <leq/>
+                <return/>
+                <cn>255</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="sane_iscase">
         <parameters>
-          <par name="x" nr="1"/>
           <par name="is_lower" nr="2"/>
+          <par name="x" nr="1"/>
         </parameters>
         <postconditions>
           <post>

@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:51.259556"/>
-  <cfile name="builtin/show-ref">
-    <data-structures/>
+  <header time="2018-12-19 14:32:10">
+    <application file="builtin/show-ref.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="found_match"/>
+      <gvar name="pattern"/>
+    </global-variables>
     <functions>
       <function name="add_existing">
         <parameters>
+          <par name="cbdata" nr="4"/>
+          <par name="flag" nr="3"/>
           <par name="refname" nr="1"/>
           <par name="oid" nr="2"/>
-          <par name="flag" nr="3"/>
-          <par name="cbdata" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -23,8 +28,8 @@
       </function>
       <function name="cmd_show_ref">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -53,8 +58,8 @@
       </function>
       <function name="exclude_existing_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -83,8 +88,8 @@
       </function>
       <function name="hash_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -114,11 +119,42 @@
       </function>
       <function name="show_ref">
         <parameters>
+          <par name="cbdata" nr="4"/>
+          <par name="flag" nr="3"/>
           <par name="refname" nr="1"/>
           <par name="oid" nr="2"/>
-          <par name="flag" nr="3"/>
-          <par name="cbdata" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>found_match</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>pattern</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>pattern</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

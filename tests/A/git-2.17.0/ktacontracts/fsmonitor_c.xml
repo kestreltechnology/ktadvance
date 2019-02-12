@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:57.868996"/>
-  <cfile name="fsmonitor">
-    <data-structures/>
+  <header time="2018-12-19 15:53:10">
+    <application file="fsmonitor.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="core_fsmonitor"/>
+    </global-variables>
     <functions>
       <function name="add_fsmonitor">
         <parameters>
@@ -20,8 +24,8 @@
       </function>
       <function name="capture_command">
         <parameters>
-          <par name="cmd" nr="1"/>
           <par name="out" nr="2"/>
+          <par name="cmd" nr="1"/>
           <par name="hint" nr="3"/>
         </parameters>
         <postconditions>
@@ -136,9 +140,9 @@
       </function>
       <function name="read_fsmonitor_extension">
         <parameters>
-          <par name="istate" nr="1"/>
-          <par name="data" nr="2"/>
           <par name="sz" nr="3"/>
+          <par name="data" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -154,6 +158,16 @@
         <parameters>
           <par name="istate" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>core_fsmonitor</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

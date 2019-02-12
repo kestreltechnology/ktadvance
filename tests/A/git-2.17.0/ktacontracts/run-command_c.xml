@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:06.419581"/>
-  <cfile name="run-command">
-    <data-structures/>
+  <header time="2018-12-19 16:50:57">
+    <application file="run-command.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="environ"/>
+      <gvar name="pp_for_signal"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -13,6 +18,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -74,8 +87,8 @@
       </function>
       <function name="bug_die">
         <parameters>
-          <par name="err" nr="1"/>
           <par name="msg" nr="2"/>
+          <par name="err" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -145,8 +158,8 @@
       </function>
       <function name="child_die_fn">
         <parameters>
-          <par name="err" nr="1"/>
           <par name="params" nr="2"/>
+          <par name="err" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -160,8 +173,8 @@
       </function>
       <function name="child_dup2">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="to" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -190,8 +203,8 @@
       </function>
       <function name="child_error_fn">
         <parameters>
-          <par name="err" nr="1"/>
           <par name="params" nr="2"/>
+          <par name="err" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -233,8 +246,8 @@
       </function>
       <function name="child_warn_fn">
         <parameters>
-          <par name="err" nr="1"/>
           <par name="params" nr="2"/>
+          <par name="err" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -248,8 +261,8 @@
       </function>
       <function name="cleanup_children">
         <parameters>
-          <par name="sig" nr="1"/>
           <par name="in_signal" nr="2"/>
+          <par name="sig" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -330,8 +343,8 @@
       <function name="default_start_failure">
         <parameters>
           <par name="out" nr="1"/>
-          <par name="pp_cb" nr="2"/>
           <par name="pp_task_cb" nr="3"/>
+          <par name="pp_cb" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -347,8 +360,8 @@
         <parameters>
           <par name="result" nr="1"/>
           <par name="out" nr="2"/>
-          <par name="pp_cb" nr="3"/>
           <par name="pp_task_cb" nr="4"/>
+          <par name="pp_cb" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -362,8 +375,8 @@
       </function>
       <function name="die_async">
         <parameters>
-          <par name="err" nr="1"/>
           <par name="params" nr="2"/>
+          <par name="err" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -391,8 +404,8 @@
       </function>
       <function name="fake_fatal">
         <parameters>
-          <par name="err" nr="1"/>
           <par name="params" nr="2"/>
+          <par name="err" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -464,6 +477,50 @@
         <parameters>
           <par name="signo" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>pp_for_signal</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="max_processes"/>
+                  </addressed-value>
+                  <ci>pp_for_signal</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="children"/>
+                  </addressed-value>
+                  <ci>pp_for_signal</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>pp_for_signal</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -502,8 +559,8 @@
       </function>
       <function name="kill_children">
         <parameters>
-          <par name="pp" nr="1"/>
           <par name="signo" nr="2"/>
+          <par name="pp" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -527,12 +584,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="mark_child_for_cleanup">
         <parameters>
-          <par name="pid" nr="1"/>
           <par name="process" nr="2"/>
+          <par name="pid" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -546,13 +611,13 @@
       </function>
       <function name="pipe_command">
         <parameters>
-          <par name="cmd" nr="1"/>
-          <par name="in" nr="2"/>
-          <par name="in_len" nr="3"/>
           <par name="out" nr="4"/>
-          <par name="out_hint" nr="5"/>
-          <par name="err" nr="6"/>
           <par name="err_hint" nr="7"/>
+          <par name="in_len" nr="3"/>
+          <par name="cmd" nr="1"/>
+          <par name="out_hint" nr="5"/>
+          <par name="in" nr="2"/>
+          <par name="err" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -566,8 +631,8 @@
       </function>
       <function name="pp_buffer_stderr">
         <parameters>
-          <par name="pp" nr="1"/>
           <par name="output_timeout" nr="2"/>
+          <par name="pp" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -609,12 +674,12 @@
       </function>
       <function name="pp_init">
         <parameters>
-          <par name="pp" nr="1"/>
-          <par name="n" nr="2"/>
-          <par name="get_next_task" nr="3"/>
           <par name="start_failure" nr="4"/>
           <par name="task_finished" nr="5"/>
           <par name="data" nr="6"/>
+          <par name="n" nr="2"/>
+          <par name="get_next_task" nr="3"/>
+          <par name="pp" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -658,11 +723,45 @@
         <parameters>
           <par name="deltaenv" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>environ</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>environ</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -700,8 +799,8 @@
       </function>
       <function name="pump_io">
         <parameters>
-          <par name="slots" nr="1"/>
           <par name="nr" nr="2"/>
+          <par name="slots" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -715,9 +814,9 @@
       </function>
       <function name="pump_io_round">
         <parameters>
-          <par name="slots" nr="1"/>
-          <par name="nr" nr="2"/>
           <par name="pfd" nr="3"/>
+          <par name="nr" nr="2"/>
+          <par name="slots" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -745,8 +844,8 @@
       </function>
       <function name="run_command_v_opt">
         <parameters>
-          <par name="argv" nr="1"/>
           <par name="opt" nr="2"/>
+          <par name="argv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -760,10 +859,10 @@
       </function>
       <function name="run_command_v_opt_cd_env">
         <parameters>
-          <par name="argv" nr="1"/>
-          <par name="opt" nr="2"/>
           <par name="dir" nr="3"/>
+          <par name="opt" nr="2"/>
           <par name="env" nr="4"/>
+          <par name="argv" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -792,9 +891,9 @@
       </function>
       <function name="run_hook_ve">
         <parameters>
+          <par name="args" nr="3"/>
           <par name="env" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="args" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -808,11 +907,11 @@
       </function>
       <function name="run_processes_parallel">
         <parameters>
-          <par name="n" nr="1"/>
-          <par name="get_next_task" nr="2"/>
           <par name="start_failure" nr="3"/>
           <par name="task_finished" nr="4"/>
           <par name="pp_cb" nr="5"/>
+          <par name="n" nr="1"/>
+          <par name="get_next_task" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -840,8 +939,8 @@
       </function>
       <function name="sane_execvp">
         <parameters>
-          <par name="file" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="file" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -869,8 +968,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -912,8 +1011,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -956,8 +1055,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -971,8 +1070,8 @@
       </function>
       <function name="trace_add_env">
         <parameters>
-          <par name="dst" nr="1"/>
           <par name="deltaenv" nr="2"/>
+          <par name="dst" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1014,9 +1113,9 @@
       </function>
       <function name="wait_or_whine">
         <parameters>
+          <par name="in_signal" nr="3"/>
           <par name="pid" nr="1"/>
           <par name="argv0" nr="2"/>
-          <par name="in_signal" nr="3"/>
         </parameters>
         <postconditions>
           <post>

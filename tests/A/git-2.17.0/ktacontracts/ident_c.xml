@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:58.611450"/>
-  <cfile name="ident">
-    <data-structures/>
+  <header time="2018-12-19 15:59:33">
+    <application file="ident.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="env_hint"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -13,6 +17,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -61,10 +73,10 @@
       </function>
       <function name="buf_cmp">
         <parameters>
-          <par name="a_begin" nr="1"/>
+          <par name="b_end" nr="4"/>
           <par name="a_end" nr="2"/>
           <par name="b_begin" nr="3"/>
-          <par name="b_end" nr="4"/>
+          <par name="a_begin" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -78,8 +90,8 @@
       </function>
       <function name="canonical_name">
         <parameters>
-          <par name="host" nr="1"/>
           <par name="out" nr="2"/>
+          <par name="host" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -117,8 +129,8 @@
       </function>
       <function name="copy_email">
         <parameters>
-          <par name="pw" nr="1"/>
           <par name="email" nr="2"/>
+          <par name="pw" nr="1"/>
           <par name="is_bogus" nr="3"/>
         </parameters>
         <postconditions>
@@ -162,11 +174,40 @@
       </function>
       <function name="fmt_ident">
         <parameters>
-          <par name="name" nr="1"/>
-          <par name="email" nr="2"/>
           <par name="date_str" nr="3"/>
           <par name="flag" nr="4"/>
+          <par name="email" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>env_hint</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>env_hint</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>env_hint</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -179,8 +220,8 @@
       </function>
       <function name="fmt_name">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="email" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -222,9 +263,9 @@
       </function>
       <function name="git_ident_config">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="value" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -252,8 +293,8 @@
       </function>
       <function name="ident_cmp">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -275,6 +316,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="ident_default_email">
@@ -287,6 +336,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="ident_default_name">
@@ -296,6 +353,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -329,8 +394,8 @@
       </function>
       <function name="sane_case">
         <parameters>
-          <par name="x" nr="1"/>
           <par name="high" nr="2"/>
+          <par name="x" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -340,13 +405,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>-128</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="split_ident_line">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="split" nr="1"/>
           <par name="line" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -360,8 +434,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -419,8 +493,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -441,6 +515,27 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="pw_name"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>

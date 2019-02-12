@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:49.310143"/>
-  <cfile name="builtin/mv">
-    <data-structures/>
+  <header time="2018-12-19 14:12:45">
+    <application file="builtin/mv.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="_">
         <parameters>
@@ -13,6 +15,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -30,12 +40,28 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="cmd_mv">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -64,9 +90,9 @@
       </function>
       <function name="index_range_of_same_dir">
         <parameters>
-          <par name="src" nr="1"/>
           <par name="length" nr="2"/>
           <par name="first_p" nr="3"/>
+          <par name="src" nr="1"/>
           <par name="last_p" nr="4"/>
         </parameters>
         <postconditions>
@@ -81,10 +107,10 @@
       </function>
       <function name="internal_prefix_pathspec">
         <parameters>
-          <par name="prefix" nr="1"/>
-          <par name="pathspec" nr="2"/>
           <par name="count" nr="3"/>
+          <par name="pathspec" nr="2"/>
           <par name="flags" nr="4"/>
+          <par name="prefix" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -94,12 +120,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="prepare_move_submodule">
         <parameters>
-          <par name="src" nr="1"/>
           <par name="first" nr="2"/>
+          <par name="src" nr="1"/>
           <par name="submodule_gitfile" nr="3"/>
         </parameters>
         <postconditions>
@@ -114,8 +148,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -129,8 +163,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>

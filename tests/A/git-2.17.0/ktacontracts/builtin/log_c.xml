@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:48.737424"/>
-  <cfile name="builtin/log">
-    <data-structures/>
+  <header time="2018-12-19 13:47:05">
+    <application file="builtin/log.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="default_abbrev_commit"/>
+      <gvar name="default_show_root"/>
+      <gvar name="default_show_signature"/>
+      <gvar name="keep_subject"/>
+      <gvar name="signature"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -13,6 +21,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -65,8 +81,8 @@
       </function>
       <function name="attach_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -93,8 +109,8 @@
       </function>
       <function name="cc_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -119,12 +135,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="cmd_cherry">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -139,10 +163,21 @@
       </function>
       <function name="cmd_format_patch">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>keep_subject</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -155,8 +190,8 @@
       </function>
       <function name="cmd_log">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -171,11 +206,11 @@
       </function>
       <function name="cmd_log_init">
         <parameters>
-          <par name="argc" nr="1"/>
-          <par name="argv" nr="2"/>
-          <par name="prefix" nr="3"/>
           <par name="rev" nr="4"/>
           <par name="opt" nr="5"/>
+          <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
+          <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -191,6 +226,35 @@
         <parameters>
           <par name="rev" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>default_abbrev_commit</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>default_show_signature</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>default_show_root</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -203,11 +267,11 @@
       </function>
       <function name="cmd_log_init_finish">
         <parameters>
-          <par name="argc" nr="1"/>
-          <par name="argv" nr="2"/>
-          <par name="prefix" nr="3"/>
           <par name="rev" nr="4"/>
           <par name="opt" nr="5"/>
+          <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
+          <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -221,8 +285,8 @@
       </function>
       <function name="cmd_log_reflog">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -251,8 +315,8 @@
       </function>
       <function name="cmd_show">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -267,8 +331,8 @@
       </function>
       <function name="cmd_whatchanged">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -309,8 +373,8 @@
       </function>
       <function name="decorate_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -382,8 +446,8 @@
       </function>
       <function name="from_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -413,9 +477,9 @@
       </function>
       <function name="get_base_commit">
         <parameters>
-          <par name="base_commit" nr="1"/>
           <par name="list" nr="2"/>
           <par name="total" nr="3"/>
+          <par name="base_commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -429,8 +493,8 @@
       </function>
       <function name="get_patch_ids">
         <parameters>
-          <par name="rev" nr="1"/>
           <par name="ids" nr="2"/>
+          <par name="rev" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -444,9 +508,9 @@
       </function>
       <function name="git_format_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -488,9 +552,9 @@
       </function>
       <function name="git_log_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -534,8 +598,8 @@
       </function>
       <function name="header_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -562,8 +626,8 @@
       </function>
       <function name="inline_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -606,8 +670,8 @@
       </function>
       <function name="keep_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -622,9 +686,9 @@
       </function>
       <function name="log_line_range_callback">
         <parameters>
-          <par name="option" nr="1"/>
           <par name="arg" nr="2"/>
           <par name="unset" nr="3"/>
+          <par name="option" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -653,8 +717,8 @@
       </function>
       <function name="log_show_early">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="list" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -668,13 +732,13 @@
       </function>
       <function name="make_cover_letter">
         <parameters>
+          <par name="origin" nr="3"/>
           <par name="rev" nr="1"/>
           <par name="use_stdout" nr="2"/>
-          <par name="origin" nr="3"/>
           <par name="nr" nr="4"/>
           <par name="list" nr="5"/>
-          <par name="branch_name" nr="6"/>
           <par name="quiet" nr="7"/>
+          <par name="branch_name" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -688,8 +752,8 @@
       </function>
       <function name="no_numbered_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -704,8 +768,8 @@
       </function>
       <function name="numbered_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -764,9 +828,9 @@
       </function>
       <function name="open_next_file">
         <parameters>
+          <par name="rev" nr="3"/>
           <par name="commit" nr="1"/>
           <par name="subject" nr="2"/>
-          <par name="rev" nr="3"/>
           <par name="quiet" nr="4"/>
         </parameters>
         <postconditions>
@@ -781,8 +845,8 @@
       </function>
       <function name="output_directory_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -812,9 +876,9 @@
       <function name="prepare_bases">
         <parameters>
           <par name="bases" nr="1"/>
-          <par name="base" nr="2"/>
           <par name="list" nr="3"/>
           <par name="total" nr="4"/>
+          <par name="base" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -843,11 +907,11 @@
       </function>
       <function name="print_commit">
         <parameters>
-          <par name="sign" nr="1"/>
-          <par name="commit" nr="2"/>
           <par name="verbose" nr="3"/>
-          <par name="abbrev" nr="4"/>
+          <par name="commit" nr="2"/>
           <par name="file" nr="5"/>
+          <par name="sign" nr="1"/>
+          <par name="abbrev" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -863,6 +927,19 @@
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>signature</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -875,9 +952,9 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -887,12 +964,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="rfc_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -907,8 +992,8 @@
       </function>
       <function name="set_outdir">
         <parameters>
-          <par name="prefix" nr="1"/>
           <par name="output_directory___0" nr="2"/>
+          <par name="prefix" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -936,8 +1021,8 @@
       </function>
       <function name="show_blob_object">
         <parameters>
-          <par name="oid" nr="1"/>
           <par name="rev" nr="2"/>
+          <par name="oid" nr="1"/>
           <par name="obj_name" nr="3"/>
         </parameters>
         <postconditions>
@@ -953,8 +1038,8 @@
       <function name="show_early_header">
         <parameters>
           <par name="rev" nr="1"/>
-          <par name="stage" nr="2"/>
           <par name="nr" nr="3"/>
+          <par name="stage" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -983,8 +1068,8 @@
       </function>
       <function name="show_tag_object">
         <parameters>
-          <par name="oid" nr="1"/>
           <par name="rev" nr="2"/>
+          <par name="oid" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -998,9 +1083,9 @@
       </function>
       <function name="show_tagger">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
           <par name="rev" nr="3"/>
+          <par name="buf" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1014,12 +1099,12 @@
       </function>
       <function name="show_tree_object">
         <parameters>
+          <par name="context" nr="6"/>
+          <par name="mode" nr="4"/>
           <par name="sha1" nr="1"/>
+          <par name="stage" nr="5"/>
           <par name="base" nr="2"/>
           <par name="pathname" nr="3"/>
-          <par name="mode" nr="4"/>
-          <par name="stage" nr="5"/>
-          <par name="context" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -1033,9 +1118,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1049,8 +1134,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1064,8 +1149,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1108,8 +1193,8 @@
       </function>
       <function name="strbuf_complete">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="term" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1123,8 +1208,8 @@
       </function>
       <function name="subject_prefix_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -1139,8 +1224,8 @@
       </function>
       <function name="thread_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -1155,8 +1240,8 @@
       </function>
       <function name="to_callback">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>

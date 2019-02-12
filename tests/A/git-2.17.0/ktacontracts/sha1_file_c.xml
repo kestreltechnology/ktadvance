@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:07.495514"/>
-  <cfile name="sha1_file">
-    <data-structures/>
+  <header time="2018-12-19 17:04:34">
+    <application file="sha1_file.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="alt_odb_tail"/>
+      <gvar name="blob_type"/>
+      <gvar name="cached_object_alloc"/>
+      <gvar name="cached_object_nr"/>
+      <gvar name="cached_objects"/>
+      <gvar name="repository_format_partial_clone"/>
+      <gvar name="startup_info"/>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -58,12 +69,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="alt_odb_usable">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="normalized_objdir" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -87,6 +106,40 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="buf"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="len"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="alt_sha1_path">
@@ -99,6 +152,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -196,11 +257,42 @@
       </function>
       <function name="check_sha1_signature">
         <parameters>
-          <par name="sha1" nr="1"/>
           <par name="map" nr="2"/>
           <par name="size" nr="3"/>
+          <par name="sha1" nr="1"/>
           <par name="type" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -214,11 +306,42 @@
       <function name="check_stream_sha1">
         <parameters>
           <par name="stream" nr="1"/>
-          <par name="hdr" nr="2"/>
           <par name="size" nr="3"/>
-          <par name="path" nr="4"/>
+          <par name="hdr" nr="2"/>
           <par name="expected_sha1" nr="5"/>
+          <par name="path" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -327,12 +450,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="fdopen_lock_file">
         <parameters>
-          <par name="lk" nr="1"/>
           <par name="mode" nr="2"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -378,6 +510,24 @@
         <parameters>
           <par name="sha1" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cached_objects</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cached_objects</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -386,16 +536,55 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="buf"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="size"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="type"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="for_each_file_in_obj_subdir">
         <parameters>
           <par name="subdir_nr" nr="1"/>
-          <par name="path" nr="2"/>
-          <par name="obj_cb" nr="3"/>
-          <par name="cruft_cb" nr="4"/>
           <par name="subdir_cb" nr="5"/>
           <par name="data" nr="6"/>
+          <par name="cruft_cb" nr="4"/>
+          <par name="path" nr="2"/>
+          <par name="obj_cb" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -409,11 +598,11 @@
       </function>
       <function name="for_each_loose_file_in_objdir">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="obj_cb" nr="2"/>
-          <par name="cruft_cb" nr="3"/>
           <par name="subdir_cb" nr="4"/>
           <par name="data" nr="5"/>
+          <par name="cruft_cb" nr="3"/>
+          <par name="path" nr="1"/>
+          <par name="obj_cb" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -427,11 +616,11 @@
       </function>
       <function name="for_each_loose_file_in_objdir_buf">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="obj_cb" nr="2"/>
-          <par name="cruft_cb" nr="3"/>
           <par name="subdir_cb" nr="4"/>
           <par name="data" nr="5"/>
+          <par name="cruft_cb" nr="3"/>
+          <par name="path" nr="1"/>
+          <par name="obj_cb" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -476,8 +665,8 @@
       </function>
       <function name="foreach_alt_odb">
         <parameters>
-          <par name="fn" nr="1"/>
           <par name="cb" nr="2"/>
+          <par name="fn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -604,9 +793,9 @@
       </function>
       <function name="git_hash_sha1_update">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="ctx" nr="1"/>
           <par name="data" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -649,9 +838,9 @@
       </function>
       <function name="git_hash_unknown_update">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="ctx" nr="1"/>
           <par name="data" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -693,8 +882,8 @@
       </function>
       <function name="git_open_cloexec">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="flags" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -782,6 +971,37 @@
           <par name="sha1" nr="1"/>
           <par name="flags" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="have_repository"/>
+                  </addressed-value>
+                  <ci>startup_info</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -794,10 +1014,10 @@
       </function>
       <function name="hash_object_file">
         <parameters>
-          <par name="buf___2" nr="1"/>
           <par name="len" nr="2"/>
-          <par name="type" nr="3"/>
+          <par name="buf___2" nr="1"/>
           <par name="oid" nr="4"/>
+          <par name="type" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -811,10 +1031,10 @@
       </function>
       <function name="hash_object_file_literally">
         <parameters>
-          <par name="buf___2" nr="1"/>
           <par name="len" nr="2"/>
-          <par name="type" nr="3"/>
+          <par name="buf___2" nr="1"/>
           <par name="oid" nr="4"/>
+          <par name="type" nr="3"/>
           <par name="flags" nr="5"/>
         </parameters>
         <postconditions>
@@ -873,9 +1093,9 @@
       </function>
       <function name="hold_lock_file_for_update">
         <parameters>
-          <par name="lk" nr="1"/>
           <par name="path" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -890,9 +1110,9 @@
       <function name="index_core">
         <parameters>
           <par name="oid" nr="1"/>
-          <par name="fd" nr="2"/>
           <par name="size" nr="3"/>
           <par name="type" nr="4"/>
+          <par name="fd" nr="2"/>
           <par name="path" nr="5"/>
           <par name="flags" nr="6"/>
         </parameters>
@@ -908,10 +1128,10 @@
       </function>
       <function name="index_fd">
         <parameters>
-          <par name="oid" nr="1"/>
-          <par name="fd" nr="2"/>
           <par name="st" nr="3"/>
+          <par name="oid" nr="1"/>
           <par name="type" nr="4"/>
+          <par name="fd" nr="2"/>
           <par name="path" nr="5"/>
           <par name="flags" nr="6"/>
         </parameters>
@@ -946,11 +1166,21 @@
       </function>
       <function name="index_path">
         <parameters>
+          <par name="st" nr="3"/>
           <par name="oid" nr="1"/>
           <par name="path" nr="2"/>
-          <par name="st" nr="3"/>
           <par name="flags" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>blob_type</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -964,8 +1194,8 @@
       <function name="index_pipe">
         <parameters>
           <par name="oid" nr="1"/>
-          <par name="fd" nr="2"/>
           <par name="type" nr="3"/>
+          <par name="fd" nr="2"/>
           <par name="path" nr="4"/>
           <par name="flags" nr="5"/>
         </parameters>
@@ -982,9 +1212,9 @@
       <function name="index_stream">
         <parameters>
           <par name="oid" nr="1"/>
-          <par name="fd" nr="2"/>
           <par name="size" nr="3"/>
           <par name="type" nr="4"/>
+          <par name="fd" nr="2"/>
           <par name="path" nr="5"/>
           <par name="flags" nr="6"/>
         </parameters>
@@ -1059,10 +1289,10 @@
       </function>
       <function name="link_alt_odb_entries">
         <parameters>
-          <par name="alt" nr="1"/>
-          <par name="sep" nr="2"/>
           <par name="relative_base" nr="3"/>
+          <par name="alt" nr="1"/>
           <par name="depth" nr="4"/>
+          <par name="sep" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1076,11 +1306,29 @@
       </function>
       <function name="link_alt_odb_entry">
         <parameters>
-          <par name="entry" nr="1"/>
           <par name="relative_base" nr="2"/>
           <par name="depth" nr="3"/>
+          <par name="entry" nr="1"/>
           <par name="normalized_objdir" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>alt_odb_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>alt_odb_tail</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1103,12 +1351,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="loose_from_alt_odb">
         <parameters>
-          <par name="alt" nr="1"/>
           <par name="vdata" nr="2"/>
+          <par name="alt" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1122,8 +1378,8 @@
       </function>
       <function name="map_sha1_file">
         <parameters>
-          <par name="sha1" nr="1"/>
           <par name="size" nr="2"/>
+          <par name="sha1" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1137,9 +1393,9 @@
       </function>
       <function name="map_sha1_file_1">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="sha1" nr="2"/>
           <par name="size" nr="3"/>
+          <par name="sha1" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1211,15 +1467,23 @@
       </function>
       <function name="parse_alt_odb_entry">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="string" nr="1"/>
           <par name="sep" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1270,11 +1534,97 @@
       </function>
       <function name="pretend_object_file">
         <parameters>
-          <par name="buf___2" nr="1"/>
           <par name="len" nr="2"/>
-          <par name="type" nr="3"/>
+          <par name="buf___2" nr="1"/>
           <par name="oid" nr="4"/>
+          <par name="type" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>cached_object_alloc</ci>
+                  <cn>16</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>cached_object_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>cached_object_nr</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>cached_object_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cached_objects</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cached_objects</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>cached_objects</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1287,9 +1637,9 @@
       </function>
       <function name="raceproof_create_file">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="fn" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="fn" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1318,11 +1668,11 @@
       </function>
       <function name="read_loose_object">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="expected_sha1" nr="2"/>
-          <par name="type" nr="3"/>
           <par name="size" nr="4"/>
           <par name="contents" nr="5"/>
+          <par name="expected_sha1" nr="2"/>
+          <par name="type" nr="3"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1336,9 +1686,9 @@
       </function>
       <function name="read_object">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1348,13 +1698,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="read_object_with_reference">
         <parameters>
-          <par name="sha1" nr="1"/>
           <par name="required_type_name" nr="2"/>
           <par name="size" nr="3"/>
+          <par name="sha1" nr="1"/>
           <par name="actual_sha1_return" nr="4"/>
         </parameters>
         <postconditions>
@@ -1369,8 +1727,8 @@
       </function>
       <function name="read_pack_header">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="header" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1384,9 +1742,9 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1396,14 +1754,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="read_sha1_file_extended">
         <parameters>
+          <par name="lookup_replace" nr="4"/>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
-          <par name="lookup_replace" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1509,6 +1875,16 @@
           <par name="oi" nr="2"/>
           <par name="flags" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>repository_format_partial_clone</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1521,8 +1897,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1536,8 +1912,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1551,8 +1927,8 @@
       </function>
       <function name="stat_sha1_file">
         <parameters>
-          <par name="sha1" nr="1"/>
           <par name="st" nr="2"/>
+          <par name="sha1" nr="1"/>
           <par name="path" nr="3"/>
         </parameters>
         <postconditions>
@@ -1567,8 +1943,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1611,8 +1987,8 @@
       </function>
       <function name="strbuf_complete">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="term" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1626,8 +2002,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1641,11 +2017,11 @@
       </function>
       <function name="unpack_sha1_header">
         <parameters>
-          <par name="stream" nr="1"/>
           <par name="map" nr="2"/>
-          <par name="mapsize" nr="3"/>
+          <par name="stream" nr="1"/>
           <par name="buffer" nr="4"/>
           <par name="bufsiz" nr="5"/>
+          <par name="mapsize" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1659,12 +2035,12 @@
       </function>
       <function name="unpack_sha1_header_to_strbuf">
         <parameters>
-          <par name="stream" nr="1"/>
           <par name="map" nr="2"/>
-          <par name="mapsize" nr="3"/>
+          <par name="stream" nr="1"/>
           <par name="buffer" nr="4"/>
           <par name="bufsiz" nr="5"/>
           <par name="header" nr="6"/>
+          <par name="mapsize" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1691,15 +2067,23 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="unpack_sha1_short_header">
         <parameters>
-          <par name="stream" nr="1"/>
           <par name="map" nr="2"/>
-          <par name="mapsize" nr="3"/>
+          <par name="stream" nr="1"/>
           <par name="buffer" nr="4"/>
           <par name="bufsiz" nr="5"/>
+          <par name="mapsize" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1728,9 +2112,9 @@
       </function>
       <function name="write_buffer">
         <parameters>
-          <par name="fd" nr="1"/>
-          <par name="buf___2" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="buf___2" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1744,13 +2128,44 @@
       </function>
       <function name="write_loose_object">
         <parameters>
+          <par name="len" nr="5"/>
           <par name="oid" nr="1"/>
+          <par name="buf___2" nr="4"/>
+          <par name="mtime" nr="6"/>
           <par name="hdr" nr="2"/>
           <par name="hdrlen" nr="3"/>
-          <par name="buf___2" nr="4"/>
-          <par name="len" nr="5"/>
-          <par name="mtime" nr="6"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1763,10 +2178,10 @@
       </function>
       <function name="write_object_file">
         <parameters>
-          <par name="buf___2" nr="1"/>
           <par name="len" nr="2"/>
-          <par name="type" nr="3"/>
+          <par name="buf___2" nr="1"/>
           <par name="oid" nr="4"/>
+          <par name="type" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1780,13 +2195,44 @@
       </function>
       <function name="write_object_file_prepare">
         <parameters>
-          <par name="buf___2" nr="1"/>
           <par name="len" nr="2"/>
-          <par name="type" nr="3"/>
+          <par name="buf___2" nr="1"/>
           <par name="oid" nr="4"/>
           <par name="hdr" nr="5"/>
+          <par name="type" nr="3"/>
           <par name="hdrlen" nr="6"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1799,12 +2245,12 @@
       </function>
       <function name="xmmap">
         <parameters>
-          <par name="start" nr="1"/>
           <par name="length" nr="2"/>
           <par name="prot" nr="3"/>
-          <par name="flags" nr="4"/>
-          <par name="fd" nr="5"/>
+          <par name="start" nr="1"/>
           <par name="offset" nr="6"/>
+          <par name="fd" nr="5"/>
+          <par name="flags" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1814,16 +2260,24 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="xmmap_gently">
         <parameters>
-          <par name="start" nr="1"/>
           <par name="length" nr="2"/>
           <par name="prot" nr="3"/>
-          <par name="flags" nr="4"/>
-          <par name="fd" nr="5"/>
+          <par name="start" nr="1"/>
           <par name="offset" nr="6"/>
+          <par name="fd" nr="5"/>
+          <par name="flags" nr="4"/>
         </parameters>
         <postconditions>
           <post>

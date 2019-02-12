@@ -1,17 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:00.500302"/>
-  <cfile name="pack-check">
-    <data-structures/>
+  <header time="2018-12-19 16:19:45">
+    <application file="pack-check.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="check_pack_crc">
         <parameters>
-          <par name="p" nr="1"/>
-          <par name="w_curs" nr="2"/>
-          <par name="offset" nr="3"/>
           <par name="len" nr="4"/>
+          <par name="w_curs" nr="2"/>
           <par name="nr" nr="5"/>
+          <par name="p" nr="1"/>
+          <par name="offset" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -80,10 +115,10 @@
       </function>
       <function name="sane_qsort">
         <parameters>
-          <par name="base" nr="1"/>
           <par name="nmemb" nr="2"/>
-          <par name="size" nr="3"/>
           <par name="compar" nr="4"/>
+          <par name="size" nr="3"/>
+          <par name="base" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -97,8 +132,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -112,9 +147,9 @@
       </function>
       <function name="verify_pack">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="fn" nr="2"/>
           <par name="progress" nr="3"/>
+          <par name="p" nr="1"/>
           <par name="base_count" nr="4"/>
         </parameters>
         <postconditions>
@@ -131,6 +166,37 @@
         <parameters>
           <par name="p" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -143,12 +209,43 @@
       </function>
       <function name="verify_packfile">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="w_curs" nr="2"/>
           <par name="fn" nr="3"/>
           <par name="progress" nr="4"/>
+          <par name="p" nr="1"/>
           <par name="base_count" nr="5"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:57.026668"/>
-  <cfile name="ewah/bitmap">
-    <data-structures/>
+  <header time="2018-12-19 15:45:34">
+    <application file="ewah/bitmap.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="bitmap_and_not">
         <parameters>
@@ -21,8 +23,8 @@
       </function>
       <function name="bitmap_clear">
         <parameters>
-          <par name="self" nr="1"/>
           <par name="pos" nr="2"/>
+          <par name="self" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -36,8 +38,8 @@
       </function>
       <function name="bitmap_each_bit">
         <parameters>
-          <par name="self" nr="1"/>
           <par name="callback" nr="2"/>
+          <par name="self" nr="1"/>
           <par name="data" nr="3"/>
         </parameters>
         <postconditions>
@@ -81,8 +83,8 @@
       </function>
       <function name="bitmap_get">
         <parameters>
-          <par name="self" nr="1"/>
           <par name="pos" nr="2"/>
+          <par name="self" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -101,6 +103,40 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="word_alloc"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="words"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -151,8 +187,8 @@
       </function>
       <function name="bitmap_set">
         <parameters>
-          <par name="self" nr="1"/>
           <par name="pos" nr="2"/>
+          <par name="self" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -208,8 +244,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>

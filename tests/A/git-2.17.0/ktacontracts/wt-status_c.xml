@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:11.255390"/>
-  <cfile name="wt-status">
-    <data-structures/>
+  <header time="2018-12-19 17:45:27">
+    <application file="wt-status.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="Q_">
         <parameters>
           <par name="msgid" nr="1"/>
-          <par name="plu" nr="2"/>
           <par name="n" nr="3"/>
+          <par name="plu" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -32,6 +34,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="abbrev_sha1_in_line">
@@ -50,8 +60,8 @@
       </function>
       <function name="capture_command">
         <parameters>
-          <par name="cmd" nr="1"/>
           <par name="out" nr="2"/>
+          <par name="cmd" nr="1"/>
           <par name="hint" nr="3"/>
         </parameters>
         <postconditions>
@@ -67,8 +77,8 @@
       <function name="ce_path_match">
         <parameters>
           <par name="ce" nr="1"/>
-          <par name="pathspec" nr="2"/>
           <par name="seen" nr="3"/>
+          <par name="pathspec" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -82,14 +92,33 @@
       </function>
       <function name="color">
         <parameters>
-          <par name="slot" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="slot" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -123,10 +152,10 @@
       </function>
       <function name="dir_path_match">
         <parameters>
-          <par name="ent" nr="1"/>
-          <par name="pathspec" nr="2"/>
-          <par name="prefix" nr="3"/>
           <par name="seen" nr="4"/>
+          <par name="pathspec" nr="2"/>
+          <par name="ent" nr="1"/>
+          <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -156,12 +185,12 @@
       <function name="grab_1st_switch">
         <parameters>
           <par name="ooid" nr="1"/>
-          <par name="noid" nr="2"/>
+          <par name="cb_data" nr="7"/>
           <par name="email" nr="3"/>
           <par name="timestamp" nr="4"/>
           <par name="tz" nr="5"/>
+          <par name="noid" nr="2"/>
           <par name="message" nr="6"/>
-          <par name="cb_data" nr="7"/>
         </parameters>
         <postconditions>
           <post>
@@ -247,15 +276,24 @@
       </function>
       <function name="maxwidth">
         <parameters>
-          <par name="label" nr="1"/>
           <par name="minval" nr="2"/>
           <par name="maxval" nr="3"/>
+          <par name="label" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -319,12 +357,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="read_rebase_todolist">
         <parameters>
-          <par name="fname" nr="1"/>
           <par name="lines" nr="2"/>
+          <par name="fname" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -338,10 +384,10 @@
       </function>
       <function name="require_clean_work_tree">
         <parameters>
-          <par name="action" nr="1"/>
           <par name="hint" nr="2"/>
-          <par name="ignore_submodules" nr="3"/>
+          <par name="action" nr="1"/>
           <par name="gently" nr="4"/>
+          <par name="ignore_submodules" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -495,9 +541,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -526,12 +572,12 @@
       <function name="stash_count_refs">
         <parameters>
           <par name="ooid" nr="1"/>
-          <par name="noid" nr="2"/>
+          <par name="cb_data" nr="7"/>
           <par name="email" nr="3"/>
           <par name="timestamp" nr="4"/>
           <par name="tz" nr="5"/>
+          <par name="noid" nr="2"/>
           <par name="message" nr="6"/>
-          <par name="cb_data" nr="7"/>
         </parameters>
         <postconditions>
           <post>
@@ -546,8 +592,8 @@
       <function name="status_printf">
         <parameters>
           <par name="s" nr="1"/>
-          <par name="color___0" nr="2"/>
           <par name="fmt" nr="3"/>
+          <par name="color___0" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -562,8 +608,8 @@
       <function name="status_printf_ln">
         <parameters>
           <par name="s" nr="1"/>
-          <par name="color___0" nr="2"/>
           <par name="fmt" nr="3"/>
+          <par name="color___0" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -578,8 +624,8 @@
       <function name="status_printf_more">
         <parameters>
           <par name="s" nr="1"/>
-          <par name="color___0" nr="2"/>
           <par name="fmt" nr="3"/>
+          <par name="color___0" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -593,12 +639,12 @@
       </function>
       <function name="status_vprintf">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="at_bol" nr="2"/>
-          <par name="color___0" nr="3"/>
-          <par name="fmt" nr="4"/>
           <par name="ap" nr="5"/>
+          <par name="s" nr="1"/>
           <par name="trail" nr="6"/>
+          <par name="fmt" nr="4"/>
+          <par name="color___0" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -612,8 +658,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -656,8 +702,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -672,14 +718,30 @@
       <function name="strbuf_split_max">
         <parameters>
           <par name="sb" nr="1"/>
-          <par name="terminator" nr="2"/>
           <par name="max" nr="3"/>
+          <par name="terminator" nr="2"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -730,8 +792,8 @@
       <function name="wt_longstatus_print_change_data">
         <parameters>
           <par name="s" nr="1"/>
-          <par name="change_type" nr="2"/>
           <par name="it" nr="3"/>
+          <par name="change_type" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -759,9 +821,9 @@
       </function>
       <function name="wt_longstatus_print_dirty_header">
         <parameters>
+          <par name="has_dirty_submodules" nr="3"/>
           <par name="s" nr="1"/>
           <par name="has_deleted" nr="2"/>
-          <par name="has_dirty_submodules" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -775,10 +837,10 @@
       </function>
       <function name="wt_longstatus_print_other">
         <parameters>
+          <par name="how" nr="4"/>
+          <par name="what" nr="3"/>
           <par name="s" nr="1"/>
           <par name="l" nr="2"/>
-          <par name="what" nr="3"/>
-          <par name="how" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -792,9 +854,9 @@
       </function>
       <function name="wt_longstatus_print_other_header">
         <parameters>
-          <par name="s" nr="1"/>
-          <par name="what" nr="2"/>
           <par name="how" nr="3"/>
+          <par name="what" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -837,8 +899,8 @@
       </function>
       <function name="wt_longstatus_print_submodule_summary">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="uncommitted" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -965,8 +1027,8 @@
       </function>
       <function name="wt_porcelain_v2_fix_up_changed">
         <parameters>
-          <par name="it" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="it" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -994,8 +1056,8 @@
       </function>
       <function name="wt_porcelain_v2_print_changed_entry">
         <parameters>
-          <par name="it" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="it" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1009,8 +1071,8 @@
       </function>
       <function name="wt_porcelain_v2_print_other">
         <parameters>
-          <par name="it" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="it" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -1039,8 +1101,8 @@
       </function>
       <function name="wt_porcelain_v2_print_unmerged_entry">
         <parameters>
-          <par name="it" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="it" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1054,8 +1116,8 @@
       </function>
       <function name="wt_porcelain_v2_submodule_state">
         <parameters>
-          <par name="d" nr="1"/>
           <par name="sub" nr="2"/>
+          <par name="d" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1069,8 +1131,8 @@
       </function>
       <function name="wt_shortstatus_other">
         <parameters>
-          <par name="it" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="it" nr="1"/>
           <par name="sign" nr="3"/>
         </parameters>
         <postconditions>
@@ -1113,8 +1175,8 @@
       </function>
       <function name="wt_shortstatus_status">
         <parameters>
-          <par name="it" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="it" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1128,8 +1190,8 @@
       </function>
       <function name="wt_shortstatus_unmerged">
         <parameters>
-          <par name="it" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="it" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1187,8 +1249,8 @@
       </function>
       <function name="wt_status_check_worktree_changes">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="dirty_submodules" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1216,9 +1278,9 @@
       </function>
       <function name="wt_status_collect_changed_cb">
         <parameters>
-          <par name="q" nr="1"/>
-          <par name="options" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="options" nr="2"/>
+          <par name="q" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1288,9 +1350,9 @@
       </function>
       <function name="wt_status_collect_updated_cb">
         <parameters>
-          <par name="q" nr="1"/>
-          <par name="options" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="options" nr="2"/>
+          <par name="q" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1332,8 +1394,8 @@
       </function>
       <function name="wt_status_get_state">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="get_detached_from" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1347,8 +1409,8 @@
       </function>
       <function name="wt_status_locate_end">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:00.124571"/>
-  <cfile name="notes-merge">
-    <data-structures/>
+  <header time="2018-12-19 16:14:07">
+    <application file="notes-merge.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -37,8 +41,8 @@
           <par name="o" nr="1"/>
           <par name="changes" nr="2"/>
           <par name="len" nr="3"/>
-          <par name="base" nr="4"/>
           <par name="local" nr="5"/>
+          <par name="base" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -53,9 +57,9 @@
       <function name="diff_tree_remote">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="base" nr="2"/>
           <par name="remote" nr="3"/>
           <par name="num_changes" nr="4"/>
+          <par name="base" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -65,14 +69,30 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="find_notes_merge_pair_pos">
         <parameters>
-          <par name="list" nr="1"/>
           <par name="len" nr="2"/>
-          <par name="obj" nr="3"/>
           <par name="insert_new" nr="4"/>
+          <par name="list" nr="1"/>
+          <par name="obj" nr="3"/>
           <par name="occupied" nr="5"/>
         </parameters>
         <postconditions>
@@ -80,6 +100,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -176,8 +204,8 @@
         <parameters>
           <par name="o" nr="1"/>
           <par name="changes" nr="2"/>
-          <par name="num_changes" nr="3"/>
           <par name="t" nr="4"/>
+          <par name="num_changes" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -192,10 +220,10 @@
       <function name="merge_from_diffs">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="base" nr="2"/>
-          <par name="local" nr="3"/>
           <par name="remote" nr="4"/>
           <par name="t" nr="5"/>
+          <par name="local" nr="3"/>
+          <par name="base" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -242,9 +270,9 @@
       <function name="move_array">
         <parameters>
           <par name="dst" nr="1"/>
+          <par name="size" nr="4"/>
           <par name="src" nr="2"/>
           <par name="n" nr="3"/>
-          <par name="size" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -259,9 +287,40 @@
       <function name="notes_merge">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="local_tree" nr="2"/>
           <par name="result_oid" nr="3"/>
+          <par name="local_tree" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -289,9 +348,9 @@
       <function name="notes_merge_commit">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="partial_tree" nr="2"/>
-          <par name="partial_commit" nr="3"/>
           <par name="result_oid" nr="4"/>
+          <par name="partial_commit" nr="3"/>
+          <par name="partial_tree" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -349,8 +408,8 @@
       </function>
       <function name="path_to_oid">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="oid" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -364,9 +423,9 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -376,12 +435,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -395,8 +462,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -439,8 +506,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -468,8 +535,8 @@
       </function>
       <function name="verify_notes_filepair">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="oid" nr="2"/>
+          <par name="p" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -483,9 +550,9 @@
       </function>
       <function name="write_buf_to_worktree">
         <parameters>
-          <par name="obj" nr="1"/>
           <par name="buf" nr="2"/>
           <par name="size" nr="3"/>
+          <par name="obj" nr="1"/>
         </parameters>
         <postconditions>
           <post>

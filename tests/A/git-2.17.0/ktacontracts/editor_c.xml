@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:56.881856"/>
-  <cfile name="editor">
-    <data-structures/>
+  <header time="2018-12-19 15:43:50">
+    <application file="editor.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="_">
         <parameters>
@@ -13,6 +15,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -56,9 +66,9 @@
       </function>
       <function name="launch_editor">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="buffer" nr="2"/>
           <par name="env" nr="3"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>

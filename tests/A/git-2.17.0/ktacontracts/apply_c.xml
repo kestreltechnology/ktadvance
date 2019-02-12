@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:44.334152"/>
-  <cfile name="apply">
-    <data-structures/>
+  <header time="2018-12-19 12:01:31">
+    <application file="apply.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="blob_type"/>
+      <gvar name="stamp"/>
+      <gvar name="startup_info"/>
+    </global-variables>
     <functions>
       <function name="Q_">
         <parameters>
           <par name="msgid" nr="1"/>
-          <par name="plu" nr="2"/>
           <par name="n" nr="3"/>
+          <par name="plu" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -32,12 +38,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="add_conflicted_stages_file">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="patch" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,12 +65,22 @@
       </function>
       <function name="add_index_file">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="path" nr="2"/>
-          <par name="mode" nr="3"/>
           <par name="buf" nr="4"/>
           <par name="size" nr="5"/>
+          <par name="mode" nr="3"/>
+          <par name="state" nr="1"/>
+          <par name="path" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>blob_type</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -69,10 +93,10 @@
       </function>
       <function name="add_line_info">
         <parameters>
-          <par name="img" nr="1"/>
           <par name="bol" nr="2"/>
           <par name="len" nr="3"/>
           <par name="flag" nr="4"/>
+          <par name="img" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -86,9 +110,9 @@
       </function>
       <function name="add_name_limit">
         <parameters>
+          <par name="exclude" nr="3"/>
           <par name="state" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="exclude" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -102,8 +126,8 @@
       </function>
       <function name="add_to_fn_table">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="patch" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -117,10 +141,10 @@
       </function>
       <function name="apply_all_patches">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="argc" nr="2"/>
           <par name="argv" nr="3"/>
           <par name="options" nr="4"/>
+          <par name="state" nr="1"/>
+          <par name="argc" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -134,10 +158,20 @@
       </function>
       <function name="apply_binary">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="img" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="img" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>blob_type</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -150,9 +184,9 @@
       </function>
       <function name="apply_binary_fragment">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="img" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="img" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -166,10 +200,10 @@
       </function>
       <function name="apply_data">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="patch" nr="2"/>
           <par name="st" nr="3"/>
           <par name="ce" nr="4"/>
+          <par name="patch" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -183,9 +217,9 @@
       </function>
       <function name="apply_fragments">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="img" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="img" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -199,12 +233,12 @@
       </function>
       <function name="apply_one_fragment">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="img" nr="2"/>
           <par name="frag" nr="3"/>
-          <par name="inaccurate_eof" nr="4"/>
           <par name="ws_rule" nr="5"/>
           <par name="nth_fragment" nr="6"/>
+          <par name="inaccurate_eof" nr="4"/>
+          <par name="img" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -218,8 +252,8 @@
       </function>
       <function name="apply_option_parse_directory">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -234,8 +268,8 @@
       </function>
       <function name="apply_option_parse_exclude">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -250,8 +284,8 @@
       </function>
       <function name="apply_option_parse_include">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -266,8 +300,8 @@
       </function>
       <function name="apply_option_parse_p">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -282,8 +316,8 @@
       </function>
       <function name="apply_option_parse_space_change">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -298,8 +332,8 @@
       </function>
       <function name="apply_option_parse_whitespace">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -314,12 +348,12 @@
       </function>
       <function name="apply_parse_options">
         <parameters>
-          <par name="argc" nr="1"/>
-          <par name="argv" nr="2"/>
-          <par name="state" nr="3"/>
-          <par name="force_apply" nr="4"/>
-          <par name="options" nr="5"/>
           <par name="apply_usage" nr="6"/>
+          <par name="force_apply" nr="4"/>
+          <par name="argv" nr="2"/>
+          <par name="options" nr="5"/>
+          <par name="state" nr="3"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -333,10 +367,10 @@
       </function>
       <function name="apply_patch">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="fd" nr="2"/>
           <par name="filename" nr="3"/>
+          <par name="fd" nr="2"/>
           <par name="options" nr="4"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -350,8 +384,8 @@
       </function>
       <function name="build_fake_ancestor">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="list" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -380,9 +414,40 @@
       </function>
       <function name="check_apply_state">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="force_apply" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="have_repository"/>
+                  </addressed-value>
+                  <ci>startup_info</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -395,8 +460,8 @@
       </function>
       <function name="check_header_line">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="patch" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -410,9 +475,9 @@
       </function>
       <function name="check_old_for_crlf">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="patch" nr="1"/>
           <par name="line" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -426,8 +491,8 @@
       </function>
       <function name="check_patch">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="patch" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -441,8 +506,8 @@
       </function>
       <function name="check_patch_list">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="patch" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -456,10 +521,10 @@
       </function>
       <function name="check_preimage">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="patch" nr="2"/>
-          <par name="ce" nr="3"/>
           <par name="st" nr="4"/>
+          <par name="ce" nr="3"/>
+          <par name="patch" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -488,9 +553,9 @@
       </function>
       <function name="check_to_create">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="new_name" nr="2"/>
           <par name="ok_if_exists" nr="3"/>
+          <par name="new_name" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -518,10 +583,10 @@
       </function>
       <function name="check_whitespace">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="len" nr="3"/>
           <par name="ws_rule" nr="4"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -535,9 +600,9 @@
       </function>
       <function name="checkout_target">
         <parameters>
-          <par name="istate" nr="1"/>
-          <par name="ce" nr="2"/>
           <par name="st" nr="3"/>
+          <par name="ce" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -592,9 +657,9 @@
       <function name="copy_array">
         <parameters>
           <par name="dst" nr="1"/>
+          <par name="size" nr="4"/>
           <par name="src" nr="2"/>
           <par name="n" nr="3"/>
-          <par name="size" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -636,8 +701,8 @@
       </function>
       <function name="create_file">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="patch" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -651,11 +716,11 @@
       </function>
       <function name="create_one_file">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="path" nr="2"/>
-          <par name="mode" nr="3"/>
           <par name="buf" nr="4"/>
           <par name="size" nr="5"/>
+          <par name="mode" nr="3"/>
+          <par name="state" nr="1"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -669,8 +734,8 @@
       </function>
       <function name="date_len">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="line" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -684,8 +749,8 @@
       </function>
       <function name="diff_timestamp_len">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="line" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -699,11 +764,11 @@
       </function>
       <function name="find_header">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
-          <par name="size" nr="3"/>
           <par name="hdrsize" nr="4"/>
+          <par name="size" nr="3"/>
           <par name="patch" nr="5"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -717,11 +782,11 @@
       </function>
       <function name="find_name">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="line" nr="2"/>
           <par name="def" nr="3"/>
-          <par name="p_value" nr="4"/>
           <par name="terminate" nr="5"/>
+          <par name="state" nr="1"/>
+          <par name="p_value" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -731,16 +796,24 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="find_name_common">
         <parameters>
-          <par name="state" nr="1"/>
+          <par name="end" nr="5"/>
           <par name="line" nr="2"/>
           <par name="def" nr="3"/>
-          <par name="p_value" nr="4"/>
-          <par name="end" nr="5"/>
           <par name="terminate" nr="6"/>
+          <par name="state" nr="1"/>
+          <par name="p_value" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -754,9 +827,9 @@
       </function>
       <function name="find_name_gnu">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="line" nr="2"/>
           <par name="def" nr="3"/>
+          <par name="state" nr="1"/>
           <par name="p_value" nr="4"/>
         </parameters>
         <postconditions>
@@ -771,9 +844,9 @@
       </function>
       <function name="find_name_traditional">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="line" nr="2"/>
           <par name="def" nr="3"/>
+          <par name="state" nr="1"/>
           <par name="p_value" nr="4"/>
         </parameters>
         <postconditions>
@@ -784,18 +857,34 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="find_pos">
         <parameters>
-          <par name="state" nr="1"/>
+          <par name="postimage" nr="4"/>
+          <par name="ws_rule" nr="6"/>
+          <par name="line" nr="5"/>
+          <par name="match_end" nr="8"/>
+          <par name="match_beginning" nr="7"/>
           <par name="img" nr="2"/>
           <par name="preimage" nr="3"/>
-          <par name="postimage" nr="4"/>
-          <par name="line" nr="5"/>
-          <par name="ws_rule" nr="6"/>
-          <par name="match_beginning" nr="7"/>
-          <par name="match_end" nr="8"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -809,8 +898,8 @@
       </function>
       <function name="fractional_time_len">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="line" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -866,9 +955,9 @@
       </function>
       <function name="fuzzy_matchlines">
         <parameters>
-          <par name="s1" nr="1"/>
-          <par name="n1" nr="2"/>
           <par name="s2" nr="3"/>
+          <par name="n1" nr="2"/>
+          <par name="s1" nr="1"/>
           <par name="n2" nr="4"/>
         </parameters>
         <postconditions>
@@ -883,9 +972,9 @@
       </function>
       <function name="get_current_oid">
         <parameters>
+          <par name="oid" nr="3"/>
           <par name="state" nr="1"/>
           <par name="path" nr="2"/>
-          <par name="oid" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -911,9 +1000,9 @@
       </function>
       <function name="git_header_name">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="line" nr="2"/>
           <par name="llen" nr="3"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -923,13 +1012,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="gitdiff_copydst">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -943,9 +1040,9 @@
       </function>
       <function name="gitdiff_copysrc">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -959,9 +1056,9 @@
       </function>
       <function name="gitdiff_delete">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -975,9 +1072,9 @@
       </function>
       <function name="gitdiff_dissimilarity">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -991,9 +1088,9 @@
       </function>
       <function name="gitdiff_hdrend">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1007,9 +1104,9 @@
       </function>
       <function name="gitdiff_index">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1023,9 +1120,9 @@
       </function>
       <function name="gitdiff_newfile">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1039,9 +1136,9 @@
       </function>
       <function name="gitdiff_newmode">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1055,9 +1152,9 @@
       </function>
       <function name="gitdiff_newname">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1071,9 +1168,9 @@
       </function>
       <function name="gitdiff_oldmode">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1087,9 +1184,9 @@
       </function>
       <function name="gitdiff_oldname">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1103,9 +1200,9 @@
       </function>
       <function name="gitdiff_renamedst">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1119,9 +1216,9 @@
       </function>
       <function name="gitdiff_renamesrc">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1135,9 +1232,9 @@
       </function>
       <function name="gitdiff_similarity">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1151,9 +1248,9 @@
       </function>
       <function name="gitdiff_unrecognized">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1167,11 +1264,11 @@
       </function>
       <function name="gitdiff_verify_name">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="isnull" nr="3"/>
-          <par name="name" nr="4"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
           <par name="side" nr="5"/>
+          <par name="name" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1185,8 +1282,8 @@
       </function>
       <function name="guess_p_value">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="nameline" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1202,6 +1299,16 @@
         <parameters>
           <par name="nameline" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>stamp</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1228,8 +1335,8 @@
       </function>
       <function name="hash_line">
         <parameters>
-          <par name="cp" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="cp" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1273,9 +1380,9 @@
       </function>
       <function name="hold_lock_file_for_update">
         <parameters>
-          <par name="lk" nr="1"/>
           <par name="path" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1304,9 +1411,9 @@
       </function>
       <function name="inflate_it">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="size" nr="2"/>
           <par name="inflated_size" nr="3"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1405,12 +1512,12 @@
       </function>
       <function name="line_by_line_fuzzy_match">
         <parameters>
+          <par name="postimage" nr="3"/>
+          <par name="preimage_limit" nr="6"/>
+          <par name="current_lno" nr="5"/>
+          <par name="current" nr="4"/>
           <par name="img" nr="1"/>
           <par name="preimage" nr="2"/>
-          <par name="postimage" nr="3"/>
-          <par name="current" nr="4"/>
-          <par name="current_lno" nr="5"/>
-          <par name="preimage_limit" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -1435,13 +1542,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="load_current">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="image" nr="2"/>
           <par name="patch" nr="3"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1455,13 +1571,13 @@
       </function>
       <function name="load_patch_target">
         <parameters>
-          <par name="state" nr="1"/>
+          <par name="st" nr="4"/>
           <par name="buf" nr="2"/>
           <par name="ce" nr="3"/>
-          <par name="st" nr="4"/>
           <par name="patch" nr="5"/>
-          <par name="name" nr="6"/>
           <par name="expected_mode" nr="7"/>
+          <par name="state" nr="1"/>
+          <par name="name" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -1475,11 +1591,11 @@
       </function>
       <function name="load_preimage">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="image" nr="2"/>
-          <par name="patch" nr="3"/>
           <par name="st" nr="4"/>
           <par name="ce" nr="5"/>
+          <par name="patch" nr="3"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1493,15 +1609,15 @@
       </function>
       <function name="match_fragment">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="img" nr="2"/>
-          <par name="preimage" nr="3"/>
           <par name="postimage" nr="4"/>
-          <par name="current" nr="5"/>
           <par name="current_lno" nr="6"/>
           <par name="ws_rule" nr="7"/>
-          <par name="match_beginning" nr="8"/>
           <par name="match_end" nr="9"/>
+          <par name="match_beginning" nr="8"/>
+          <par name="current" nr="5"/>
+          <par name="img" nr="2"/>
+          <par name="preimage" nr="3"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1530,9 +1646,9 @@
       <function name="move_array">
         <parameters>
           <par name="dst" nr="1"/>
+          <par name="size" nr="4"/>
           <par name="src" nr="2"/>
           <par name="n" nr="3"/>
-          <par name="size" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1546,8 +1662,8 @@
       </function>
       <function name="mute_routine">
         <parameters>
-          <par name="msg" nr="1"/>
           <par name="params" nr="2"/>
+          <par name="msg" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1576,8 +1692,8 @@
       </function>
       <function name="numstat_patch_list">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="patch" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1620,10 +1736,10 @@
       </function>
       <function name="parse_binary">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="buffer" nr="2"/>
           <par name="size" nr="3"/>
           <par name="patch" nr="4"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1637,17 +1753,46 @@
       </function>
       <function name="parse_binary_hunk">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="buf_p" nr="2"/>
           <par name="sz_p" nr="3"/>
-          <par name="status_p" nr="4"/>
           <par name="used_p" nr="5"/>
+          <par name="status_p" nr="4"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="patch"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -1655,10 +1800,10 @@
       </function>
       <function name="parse_chunk">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="buffer" nr="2"/>
           <par name="size" nr="3"/>
           <par name="patch" nr="4"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1668,14 +1813,23 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="parse_fragment">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="size" nr="3"/>
           <par name="patch" nr="4"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
           <par name="fragment" nr="5"/>
         </parameters>
         <postconditions>
@@ -1690,8 +1844,8 @@
       </function>
       <function name="parse_fragment_header">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="line" nr="1"/>
           <par name="fragment" nr="3"/>
         </parameters>
         <postconditions>
@@ -1706,11 +1860,11 @@
       </function>
       <function name="parse_git_header">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="len" nr="3"/>
           <par name="size" nr="4"/>
           <par name="patch" nr="5"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1724,8 +1878,8 @@
       </function>
       <function name="parse_ignorewhitespace_option">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="option" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1739,9 +1893,9 @@
       </function>
       <function name="parse_mode_line">
         <parameters>
+          <par name="mode" nr="3"/>
           <par name="line" nr="1"/>
           <par name="linenr" nr="2"/>
-          <par name="mode" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1770,12 +1924,12 @@
       </function>
       <function name="parse_range">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
-          <par name="offset" nr="3"/>
-          <par name="expect" nr="4"/>
           <par name="p1" nr="5"/>
+          <par name="line" nr="1"/>
+          <par name="offset" nr="3"/>
           <par name="p2" nr="6"/>
+          <par name="expect" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1789,10 +1943,10 @@
       </function>
       <function name="parse_single_patch">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="line" nr="2"/>
           <par name="size" nr="3"/>
           <par name="patch" nr="4"/>
+          <par name="line" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1806,10 +1960,10 @@
       </function>
       <function name="parse_traditional_patch">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="first" nr="2"/>
-          <par name="second" nr="3"/>
           <par name="patch" nr="4"/>
+          <par name="second" nr="3"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1823,8 +1977,8 @@
       </function>
       <function name="parse_whitespace_option">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="option" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1838,8 +1992,8 @@
       </function>
       <function name="patch_stats">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="patch" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1853,8 +2007,8 @@
       </function>
       <function name="path_is_beyond_symlink">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="name_" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1898,8 +2052,8 @@
       </function>
       <function name="prefix_patch">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="p" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1913,8 +2067,8 @@
       </function>
       <function name="preimage_oid_in_gitlink_patch">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="oid" nr="2"/>
+          <par name="p" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1928,8 +2082,8 @@
       </function>
       <function name="prepare_fn_table">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="patch" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1944,9 +2098,9 @@
       <function name="prepare_image">
         <parameters>
           <par name="image" nr="1"/>
-          <par name="buf" nr="2"/>
-          <par name="len" nr="3"/>
           <par name="prepare_linetable" nr="4"/>
+          <par name="len" nr="3"/>
+          <par name="buf" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1960,8 +2114,8 @@
       </function>
       <function name="prepare_symlink_changes">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="patch" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1975,8 +2129,8 @@
       </function>
       <function name="previous_patch">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="patch" nr="2"/>
+          <par name="state" nr="1"/>
           <par name="gone" nr="3"/>
         </parameters>
         <postconditions>
@@ -1984,6 +2138,45 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="result"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="resultsize"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="new_mode"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -2037,9 +2230,9 @@
       <function name="read_old_data">
         <parameters>
           <par name="st" nr="1"/>
+          <par name="buf" nr="4"/>
           <par name="patch" nr="2"/>
           <par name="path" nr="3"/>
-          <par name="buf" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -2068,9 +2261,9 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -2084,11 +2277,11 @@
       </function>
       <function name="record_ws_error">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="result" nr="2"/>
-          <par name="line" nr="3"/>
           <par name="len" nr="4"/>
+          <par name="line" nr="3"/>
           <par name="linenr" nr="5"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2102,8 +2295,8 @@
       </function>
       <function name="recount_diff">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="size" nr="2"/>
+          <par name="line" nr="1"/>
           <par name="fragment" nr="3"/>
         </parameters>
         <postconditions>
@@ -2118,9 +2311,9 @@
       </function>
       <function name="register_symlink_changes">
         <parameters>
+          <par name="what" nr="3"/>
           <par name="state" nr="1"/>
           <par name="path" nr="2"/>
-          <par name="what" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -2134,9 +2327,9 @@
       </function>
       <function name="remove_file">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="patch" nr="2"/>
           <par name="rmdir_empty" nr="3"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2206,8 +2399,8 @@
       </function>
       <function name="sane_tz_len">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="line" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2221,9 +2414,9 @@
       </function>
       <function name="say_patch_name">
         <parameters>
+          <par name="patch" nr="3"/>
           <par name="output" nr="1"/>
           <par name="fmt" nr="2"/>
-          <par name="patch" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -2251,8 +2444,8 @@
       </function>
       <function name="short_time_len">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="line" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2311,8 +2504,8 @@
       </function>
       <function name="show_stats">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="patch" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2326,9 +2519,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -2342,15 +2535,23 @@
       </function>
       <function name="skip_tree_prefix">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="line" nr="2"/>
           <par name="llen" nr="3"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -2372,8 +2573,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2387,8 +2588,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2402,8 +2603,8 @@
       </function>
       <function name="st_sub">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2417,8 +2618,8 @@
       </function>
       <function name="stat_patch_list">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="patch" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2432,8 +2633,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2476,8 +2677,8 @@
       </function>
       <function name="strbuf_complete">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="term" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2491,8 +2692,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2521,10 +2722,10 @@
       <function name="three_way_merge">
         <parameters>
           <par name="image" nr="1"/>
+          <par name="theirs" nr="5"/>
+          <par name="ours" nr="4"/>
           <par name="path" nr="2"/>
           <par name="base" nr="3"/>
-          <par name="ours" nr="4"/>
-          <par name="theirs" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -2552,8 +2753,8 @@
       </function>
       <function name="trailing_spaces_len">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="line" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2567,10 +2768,10 @@
       </function>
       <function name="try_create_file">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="mode" nr="2"/>
           <par name="buf" nr="3"/>
           <par name="size" nr="4"/>
+          <par name="mode" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2584,12 +2785,22 @@
       </function>
       <function name="try_threeway">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="image" nr="2"/>
-          <par name="patch" nr="3"/>
           <par name="st" nr="4"/>
           <par name="ce" nr="5"/>
+          <par name="patch" nr="3"/>
+          <par name="state" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>blob_type</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -2602,8 +2813,8 @@
       </function>
       <function name="tz_with_colon_len">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="line" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2617,11 +2828,11 @@
       </function>
       <function name="update_image">
         <parameters>
-          <par name="state" nr="1"/>
-          <par name="img" nr="2"/>
-          <par name="applied_pos" nr="3"/>
-          <par name="preimage" nr="4"/>
           <par name="postimage" nr="5"/>
+          <par name="applied_pos" nr="3"/>
+          <par name="img" nr="2"/>
+          <par name="preimage" nr="4"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2635,11 +2846,11 @@
       </function>
       <function name="update_pre_post_images">
         <parameters>
-          <par name="preimage" nr="1"/>
           <par name="postimage" nr="2"/>
-          <par name="buf" nr="3"/>
           <par name="len" nr="4"/>
           <par name="postlen" nr="5"/>
+          <par name="buf" nr="3"/>
+          <par name="preimage" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2653,8 +2864,8 @@
       </function>
       <function name="use_patch">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="p" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2668,8 +2879,8 @@
       </function>
       <function name="verify_index_match">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="st" nr="2"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2697,8 +2908,8 @@
       </function>
       <function name="write_out_one_reject">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="patch" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2712,9 +2923,9 @@
       </function>
       <function name="write_out_one_result">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="patch" nr="2"/>
           <par name="phase" nr="3"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2728,8 +2939,8 @@
       </function>
       <function name="write_out_results">
         <parameters>
-          <par name="state" nr="1"/>
           <par name="list" nr="2"/>
+          <par name="state" nr="1"/>
         </parameters>
         <postconditions>
           <post>

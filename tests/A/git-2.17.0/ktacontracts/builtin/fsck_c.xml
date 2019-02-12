@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:48.013755"/>
-  <cfile name="builtin/fsck">
-    <data-structures/>
+  <header time="2018-12-19 13:38:40">
+    <application file="builtin/fsck.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="default_refs"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -74,8 +78,8 @@
       </function>
       <function name="cmd_fsck">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -112,6 +116,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="fsck_cache_tree">
@@ -130,9 +142,9 @@
       </function>
       <function name="fsck_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -147,8 +159,8 @@
       <function name="fsck_cruft">
         <parameters>
           <par name="__xpg_basename___0" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -179,11 +191,26 @@
       </function>
       <function name="fsck_handle_ref">
         <parameters>
-          <par name="refname" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="refname" nr="1"/>
+          <par name="oid" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>default_refs</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -196,10 +223,10 @@
       </function>
       <function name="fsck_handle_reflog">
         <parameters>
-          <par name="logname" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="logname" nr="1"/>
+          <par name="oid" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -214,12 +241,12 @@
       <function name="fsck_handle_reflog_ent">
         <parameters>
           <par name="ooid" nr="1"/>
-          <par name="noid" nr="2"/>
+          <par name="cb_data" nr="7"/>
           <par name="email" nr="3"/>
           <par name="timestamp" nr="4"/>
           <par name="tz" nr="5"/>
+          <par name="noid" nr="2"/>
           <par name="message" nr="6"/>
-          <par name="cb_data" nr="7"/>
         </parameters>
         <postconditions>
           <post>
@@ -234,8 +261,8 @@
       <function name="fsck_handle_reflog_oid">
         <parameters>
           <par name="refname" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="timestamp" nr="3"/>
+          <par name="oid" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -262,8 +289,8 @@
       <function name="fsck_loose">
         <parameters>
           <par name="oid" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -292,10 +319,10 @@
       <function name="fsck_obj_buffer">
         <parameters>
           <par name="oid" nr="1"/>
-          <par name="type" nr="2"/>
           <par name="size" nr="3"/>
           <par name="buffer" nr="4"/>
           <par name="eaten" nr="5"/>
+          <par name="type" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -324,8 +351,8 @@
       <function name="fsck_subdir">
         <parameters>
           <par name="nr" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="progress" nr="3"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -381,8 +408,8 @@
       <function name="mark_loose_for_connectivity">
         <parameters>
           <par name="oid" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -441,10 +468,10 @@
       </function>
       <function name="mark_packed_for_connectivity">
         <parameters>
-          <par name="oid" nr="1"/>
-          <par name="pack" nr="2"/>
           <par name="pos" nr="3"/>
+          <par name="oid" nr="1"/>
           <par name="data" nr="4"/>
+          <par name="pack" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -517,6 +544,71 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="flags"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="type"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="tag"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="tagged"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="parents"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="printable_type">
@@ -531,13 +623,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -566,8 +666,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

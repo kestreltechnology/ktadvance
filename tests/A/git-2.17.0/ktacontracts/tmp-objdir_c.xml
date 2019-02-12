@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:09.152882"/>
-  <cfile name="tmp-objdir">
-    <data-structures/>
+  <header time="2018-12-19 17:30:46">
+    <application file="tmp-objdir.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="installed_handlers"/>
+      <gvar name="the_tmp_objdir"/>
+    </global-variables>
     <functions>
       <function name="ends_with">
         <parameters>
@@ -53,8 +58,8 @@
       </function>
       <function name="migrate_one">
         <parameters>
-          <par name="src" nr="1"/>
           <par name="dst" nr="2"/>
+          <par name="src" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -68,8 +73,8 @@
       </function>
       <function name="migrate_paths">
         <parameters>
-          <par name="src" nr="1"/>
           <par name="dst" nr="2"/>
+          <par name="src" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -83,8 +88,8 @@
       </function>
       <function name="pack_copy_cmp">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -127,6 +132,16 @@
       </function>
       <function name="remove_tmp_objdir">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_tmp_objdir</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -141,6 +156,24 @@
         <parameters>
           <par name="signo" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_tmp_objdir</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>the_tmp_objdir</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -167,8 +200,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -211,8 +244,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -226,9 +259,9 @@
       </function>
       <function name="strip_suffix">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="str" nr="1"/>
           <par name="suffix" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -242,8 +275,8 @@
       </function>
       <function name="strip_suffix_mem">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="suffix" nr="3"/>
         </parameters>
         <postconditions>
@@ -272,6 +305,21 @@
       </function>
       <function name="tmp_objdir_create">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>installed_handlers</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -298,8 +346,8 @@
       </function>
       <function name="tmp_objdir_destroy_1">
         <parameters>
-          <par name="t" nr="1"/>
           <par name="on_signal" nr="2"/>
+          <par name="t" nr="1"/>
         </parameters>
         <postconditions>
           <post>

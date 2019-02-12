@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:02.029129"/>
-  <cfile name="read-cache">
-    <data-structures/>
+  <header time="2018-12-19 16:30:41">
+    <application file="read-cache.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="alternate_index_output"/>
+      <gvar name="blob_type"/>
+      <gvar name="the_repository"/>
+      <gvar name="write_buffer_len"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -36,9 +43,9 @@
       </function>
       <function name="add_index_entry">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="ce" nr="2"/>
           <par name="option" nr="3"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -52,9 +59,9 @@
       </function>
       <function name="add_index_entry_with_check">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="ce" nr="2"/>
           <par name="option" nr="3"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -64,13 +71,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="add_to_index">
         <parameters>
+          <par name="st" nr="3"/>
           <par name="istate" nr="1"/>
           <par name="path" nr="2"/>
-          <par name="st" nr="3"/>
           <par name="flags" nr="4"/>
         </parameters>
         <postconditions>
@@ -85,12 +101,12 @@
       </function>
       <function name="base_name_compare">
         <parameters>
+          <par name="len2" nr="5"/>
+          <par name="name2" nr="4"/>
+          <par name="mode1" nr="3"/>
+          <par name="mode2" nr="6"/>
           <par name="name1" nr="1"/>
           <par name="len1" nr="2"/>
-          <par name="mode1" nr="3"/>
-          <par name="name2" nr="4"/>
-          <par name="len2" nr="5"/>
-          <par name="mode2" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -104,10 +120,10 @@
       </function>
       <function name="cache_entry_from_ondisk">
         <parameters>
+          <par name="len" nr="4"/>
           <par name="ondisk" nr="1"/>
           <par name="flags" nr="2"/>
           <par name="name" nr="3"/>
-          <par name="len" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -117,16 +133,50 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ce_flags"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ce_namelen"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="cache_name_stage_compare">
         <parameters>
-          <par name="name1" nr="1"/>
-          <par name="len1" nr="2"/>
           <par name="stage1" nr="3"/>
-          <par name="name2" nr="4"/>
           <par name="len2" nr="5"/>
           <par name="stage2" nr="6"/>
+          <par name="name2" nr="4"/>
+          <par name="name1" nr="1"/>
+          <par name="len1" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -140,8 +190,8 @@
       </function>
       <function name="ce_compare_data">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="st" nr="2"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -185,9 +235,62 @@
       <function name="ce_flush">
         <parameters>
           <par name="context" nr="1"/>
-          <par name="fd" nr="2"/>
           <par name="hash" nr="3"/>
+          <par name="fd" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <lt/>
+                <apply>
+                  <times/>
+                  <ci>write_buffer_len</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>8192</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <ci>write_buffer_len</ci>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -200,14 +303,23 @@
       </function>
       <function name="ce_match_stat_basic">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="st" nr="2"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -230,8 +342,8 @@
       </function>
       <function name="ce_modified_check_fs">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="st" nr="2"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -241,13 +353,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="ce_path_match">
         <parameters>
           <par name="ce" nr="1"/>
-          <par name="pathspec" nr="2"/>
           <par name="seen" nr="3"/>
+          <par name="pathspec" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -261,8 +382,8 @@
       </function>
       <function name="ce_same_name">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -290,10 +411,10 @@
       </function>
       <function name="ce_write">
         <parameters>
-          <par name="context" nr="1"/>
-          <par name="fd" nr="2"/>
-          <par name="data" nr="3"/>
           <par name="len" nr="4"/>
+          <par name="context" nr="1"/>
+          <par name="data" nr="3"/>
+          <par name="fd" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -308,9 +429,9 @@
       <function name="ce_write_entry">
         <parameters>
           <par name="c" nr="1"/>
-          <par name="fd" nr="2"/>
           <par name="ce" nr="3"/>
           <par name="previous_name" nr="4"/>
+          <par name="fd" nr="2"/>
           <par name="ondisk" nr="5"/>
         </parameters>
         <postconditions>
@@ -328,6 +449,46 @@
           <par name="context" nr="1"/>
           <par name="fd" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <ci>write_buffer_len</ci>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -354,9 +515,9 @@
       </function>
       <function name="check_file_directory_conflict">
         <parameters>
-          <par name="istate" nr="1"/>
-          <par name="ce" nr="2"/>
           <par name="pos" nr="3"/>
+          <par name="ce" nr="2"/>
+          <par name="istate" nr="1"/>
           <par name="ok_to_replace" nr="4"/>
         </parameters>
         <postconditions>
@@ -371,9 +532,9 @@
       </function>
       <function name="chmod_index_entry">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="ce" nr="2"/>
           <par name="flip" nr="3"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -415,8 +576,8 @@
       </function>
       <function name="commit_lock_file_to">
         <parameters>
-          <par name="lk" nr="1"/>
           <par name="path" nr="2"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -432,6 +593,24 @@
         <parameters>
           <par name="lk" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>alternate_index_output</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>alternate_index_output</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -444,9 +623,9 @@
       </function>
       <function name="compare_name">
         <parameters>
+          <par name="namelen" nr="3"/>
           <par name="ce" nr="1"/>
           <par name="path" nr="2"/>
-          <par name="namelen" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -487,8 +666,8 @@
       </function>
       <function name="copy_cache_entry_to_ondisk">
         <parameters>
-          <par name="ondisk" nr="1"/>
           <par name="ce" nr="2"/>
+          <par name="ondisk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -502,9 +681,9 @@
       </function>
       <function name="create_alias_ce">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="ce" nr="2"/>
           <par name="alias" nr="3"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -546,9 +725,9 @@
       </function>
       <function name="create_from_disk">
         <parameters>
-          <par name="ondisk" nr="1"/>
-          <par name="ent_size" nr="2"/>
           <par name="previous_name" nr="3"/>
+          <par name="ent_size" nr="2"/>
+          <par name="ondisk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -562,12 +741,12 @@
       </function>
       <function name="df_name_compare">
         <parameters>
+          <par name="len2" nr="5"/>
+          <par name="name2" nr="4"/>
+          <par name="mode1" nr="3"/>
+          <par name="mode2" nr="6"/>
           <par name="name1" nr="1"/>
           <par name="len1" nr="2"/>
-          <par name="mode1" nr="3"/>
-          <par name="name2" nr="4"/>
-          <par name="len2" nr="5"/>
-          <par name="mode2" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -610,10 +789,41 @@
       </function>
       <function name="do_read_index">
         <parameters>
+          <par name="must_exist" nr="3"/>
           <par name="istate" nr="1"/>
           <par name="path" nr="2"/>
-          <par name="must_exist" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -626,10 +836,41 @@
       </function>
       <function name="do_write_index">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="tempfile" nr="2"/>
           <par name="strip_extensions" nr="3"/>
+          <par name="istate" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -642,8 +883,8 @@
       </function>
       <function name="do_write_locked_index">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="lock" nr="2"/>
+          <par name="istate" nr="1"/>
           <par name="flags" nr="3"/>
         </parameters>
         <postconditions>
@@ -658,8 +899,8 @@
       </function>
       <function name="expand_name_field">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="cp_" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -673,8 +914,8 @@
       </function>
       <function name="fill_stat_cache_info">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="st" nr="2"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -688,8 +929,8 @@
       </function>
       <function name="fill_stat_data">
         <parameters>
-          <par name="sd" nr="1"/>
           <par name="st" nr="2"/>
+          <par name="sd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -784,9 +1025,9 @@
       </function>
       <function name="has_dir_name">
         <parameters>
-          <par name="istate" nr="1"/>
-          <par name="ce" nr="2"/>
           <par name="pos" nr="3"/>
+          <par name="ce" nr="2"/>
+          <par name="istate" nr="1"/>
           <par name="ok_to_replace" nr="4"/>
         </parameters>
         <postconditions>
@@ -801,9 +1042,9 @@
       </function>
       <function name="has_file_name">
         <parameters>
-          <par name="istate" nr="1"/>
-          <par name="ce" nr="2"/>
           <par name="pos" nr="3"/>
+          <par name="ce" nr="2"/>
+          <par name="istate" nr="1"/>
           <par name="ok_to_replace" nr="4"/>
         </parameters>
         <postconditions>
@@ -876,9 +1117,9 @@
       </function>
       <function name="hold_lock_file_for_update">
         <parameters>
-          <par name="lk" nr="1"/>
           <par name="path" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -892,8 +1133,8 @@
       </function>
       <function name="hold_locked_index">
         <parameters>
-          <par name="lk" nr="1"/>
           <par name="lock_flags" nr="2"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -907,10 +1148,10 @@
       </function>
       <function name="ie_match_stat">
         <parameters>
-          <par name="istate" nr="1"/>
-          <par name="ce" nr="2"/>
           <par name="st" nr="3"/>
+          <par name="ce" nr="2"/>
           <par name="options" nr="4"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -924,10 +1165,10 @@
       </function>
       <function name="ie_modified">
         <parameters>
-          <par name="istate" nr="1"/>
-          <par name="ce" nr="2"/>
           <par name="st" nr="3"/>
+          <par name="ce" nr="2"/>
           <par name="options" nr="4"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -941,9 +1182,9 @@
       </function>
       <function name="index_name_is_other">
         <parameters>
+          <par name="namelen" nr="3"/>
           <par name="istate" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="namelen" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -957,9 +1198,9 @@
       </function>
       <function name="index_name_pos">
         <parameters>
+          <par name="namelen" nr="3"/>
           <par name="istate" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="namelen" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -973,9 +1214,9 @@
       </function>
       <function name="index_name_pos_also_unmerged">
         <parameters>
+          <par name="namelen" nr="3"/>
           <par name="istate" nr="1"/>
           <par name="path" nr="2"/>
-          <par name="namelen" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -989,10 +1230,10 @@
       </function>
       <function name="index_name_stage_pos">
         <parameters>
-          <par name="istate" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="namelen" nr="3"/>
           <par name="stage" nr="4"/>
+          <par name="istate" nr="1"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1008,6 +1249,37 @@
         <parameters>
           <par name="sha1" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1062,8 +1334,8 @@
       </function>
       <function name="is_racy_stat">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="sd" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1077,8 +1349,8 @@
       </function>
       <function name="is_racy_timestamp">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="ce" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1108,9 +1380,9 @@
         <parameters>
           <par name="mode" nr="1"/>
           <par name="sha1" nr="2"/>
-          <par name="path" nr="3"/>
-          <par name="stage" nr="4"/>
           <par name="refresh_options" nr="5"/>
+          <par name="stage" nr="4"/>
+          <par name="path" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1124,8 +1396,8 @@
       </function>
       <function name="mark_fsmonitor_invalid">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="ce" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1153,8 +1425,8 @@
       </function>
       <function name="match_stat_data">
         <parameters>
-          <par name="sd" nr="1"/>
           <par name="st" nr="2"/>
+          <par name="sd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1164,13 +1436,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="match_stat_data_racy">
         <parameters>
-          <par name="istate" nr="1"/>
-          <par name="sd" nr="2"/>
           <par name="st" nr="3"/>
+          <par name="sd" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1194,14 +1475,35 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="active"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="move_array">
         <parameters>
           <par name="dst" nr="1"/>
+          <par name="size" nr="4"/>
           <par name="src" nr="2"/>
           <par name="n" nr="3"/>
-          <par name="size" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1230,10 +1532,10 @@
       </function>
       <function name="name_compare">
         <parameters>
+          <par name="len2" nr="4"/>
+          <par name="name2" nr="3"/>
           <par name="name1" nr="1"/>
           <par name="len1" nr="2"/>
-          <par name="name2" nr="3"/>
-          <par name="len2" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1291,9 +1593,9 @@
       </function>
       <function name="read_blob_data_from_index">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="istate" nr="1"/>
           <par name="path" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1321,10 +1623,10 @@
       </function>
       <function name="read_index_extension">
         <parameters>
-          <par name="istate" nr="1"/>
+          <par name="sz" nr="4"/>
           <par name="ext" nr="2"/>
           <par name="data" nr="3"/>
-          <par name="sz" nr="4"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1338,9 +1640,9 @@
       </function>
       <function name="read_index_from">
         <parameters>
+          <par name="gitdir" nr="3"/>
           <par name="istate" nr="1"/>
           <par name="path" nr="2"/>
-          <par name="gitdir" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1368,9 +1670,9 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1380,21 +1682,42 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="refresh_cache_ent">
         <parameters>
-          <par name="istate" nr="1"/>
+          <par name="changed_ret" nr="5"/>
           <par name="ce" nr="2"/>
           <par name="options" nr="3"/>
+          <par name="istate" nr="1"/>
           <par name="err" nr="4"/>
-          <par name="changed_ret" nr="5"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ce_flags"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -1417,11 +1740,11 @@
       </function>
       <function name="refresh_index">
         <parameters>
+          <par name="header_msg" nr="5"/>
+          <par name="seen" nr="4"/>
+          <par name="pathspec" nr="3"/>
           <par name="istate" nr="1"/>
           <par name="flags" nr="2"/>
-          <par name="pathspec" nr="3"/>
-          <par name="seen" nr="4"/>
-          <par name="header_msg" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -1450,8 +1773,8 @@
       </function>
       <function name="remove_index_entry_at">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="pos" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1479,9 +1802,9 @@
       </function>
       <function name="rename_index_entry_at">
         <parameters>
-          <par name="istate" nr="1"/>
-          <par name="nr" nr="2"/>
           <par name="new_name" nr="3"/>
+          <par name="nr" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1495,9 +1818,9 @@
       </function>
       <function name="replace_index_entry">
         <parameters>
-          <par name="istate" nr="1"/>
-          <par name="nr" nr="2"/>
           <par name="ce" nr="3"/>
+          <par name="nr" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1539,9 +1862,9 @@
       </function>
       <function name="set_index_entry">
         <parameters>
-          <par name="istate" nr="1"/>
-          <par name="nr" nr="2"/>
           <par name="ce" nr="3"/>
+          <par name="nr" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1557,6 +1880,16 @@
         <parameters>
           <par name="ce" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>blob_type</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1583,11 +1916,11 @@
       </function>
       <function name="show_file">
         <parameters>
-          <par name="fmt" nr="1"/>
-          <par name="name" nr="2"/>
-          <par name="in_porcelain" nr="3"/>
           <par name="first" nr="4"/>
           <par name="header_msg" nr="5"/>
+          <par name="in_porcelain" nr="3"/>
+          <par name="fmt" nr="1"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1601,9 +1934,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1617,8 +1950,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1676,9 +2009,9 @@
       </function>
       <function name="strcmp_offset">
         <parameters>
-          <par name="s1" nr="1"/>
           <par name="s2" nr="2"/>
           <par name="first_change" nr="3"/>
+          <par name="s1" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1762,8 +2095,8 @@
       </function>
       <function name="update_index_if_able">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="lockfile" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1791,9 +2124,40 @@
       </function>
       <function name="verify_hdr">
         <parameters>
-          <par name="hdr" nr="1"/>
           <par name="size" nr="2"/>
+          <par name="hdr" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1823,6 +2187,37 @@
           <par name="istate" nr="1"/>
           <par name="path" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1850,9 +2245,9 @@
       <function name="write_index_ext_header">
         <parameters>
           <par name="context" nr="1"/>
-          <par name="fd" nr="2"/>
-          <par name="ext" nr="3"/>
           <par name="sz" nr="4"/>
+          <par name="ext" nr="3"/>
+          <par name="fd" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1866,8 +2261,8 @@
       </function>
       <function name="write_locked_index">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="lock" nr="2"/>
+          <par name="istate" nr="1"/>
           <par name="flags" nr="3"/>
         </parameters>
         <postconditions>
@@ -1882,8 +2277,8 @@
       </function>
       <function name="write_shared_index">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="temp" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1897,8 +2292,8 @@
       </function>
       <function name="write_split_index">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="lock" nr="2"/>
+          <par name="istate" nr="1"/>
           <par name="flags" nr="3"/>
         </parameters>
         <postconditions>

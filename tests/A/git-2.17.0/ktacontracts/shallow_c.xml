@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:07.872641"/>
-  <cfile name="shallow">
-    <data-structures/>
+  <header time="2018-12-19 17:07:33">
+    <application file="shallow.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="alternate_shallow_file"/>
+      <gvar name="stat_ref_bitmaprealloc"/>
+    </global-variables>
     <functions>
       <function name="add_ref">
         <parameters>
+          <par name="cb_data" nr="4"/>
           <par name="refname" nr="1"/>
           <par name="oid" nr="2"/>
           <par name="flags" nr="3"/>
-          <par name="cb_data" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -37,8 +42,8 @@
       </function>
       <function name="advertise_shallow_grafts_cb">
         <parameters>
-          <par name="graft" nr="1"/>
           <par name="cb" nr="2"/>
+          <par name="graft" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -108,8 +113,8 @@
       </function>
       <function name="delayed_reachability_test">
         <parameters>
-          <par name="si" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="si" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -155,8 +160,8 @@
       <function name="get_shallow_commits_by_rev_list">
         <parameters>
           <par name="ac" nr="1"/>
-          <par name="av" nr="2"/>
           <par name="shallow_flag" nr="3"/>
+          <par name="av" nr="2"/>
           <par name="not_shallow_flag" nr="4"/>
         </parameters>
         <postconditions>
@@ -186,9 +191,9 @@
       </function>
       <function name="hold_lock_file_for_update">
         <parameters>
-          <par name="lk" nr="1"/>
           <par name="path" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -216,8 +221,8 @@
       </function>
       <function name="init_ref_bitmap_with_stride">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="stride" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -231,6 +236,16 @@
       </function>
       <function name="is_repository_shallow">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>alternate_shallow_file</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -243,10 +258,10 @@
       </function>
       <function name="mark_uninteresting">
         <parameters>
+          <par name="cb_data" nr="4"/>
           <par name="refname" nr="1"/>
           <par name="oid" nr="2"/>
           <par name="flags" nr="3"/>
-          <par name="cb_data" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -285,12 +300,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="paint_down">
         <parameters>
-          <par name="info" nr="1"/>
           <par name="oid" nr="2"/>
+          <par name="info" nr="1"/>
           <par name="id" nr="3"/>
         </parameters>
         <postconditions>
@@ -319,8 +342,8 @@
       </function>
       <function name="post_assign_shallow">
         <parameters>
-          <par name="info" nr="1"/>
           <par name="ref_bitmap" nr="2"/>
+          <par name="info" nr="1"/>
           <par name="ref_status" nr="3"/>
         </parameters>
         <postconditions>
@@ -364,8 +387,8 @@
       </function>
       <function name="ref_bitmap_at">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -375,14 +398,48 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="ref_bitmap_at_peek">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="s" nr="1"/>
           <par name="add_if_missing" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>stat_ref_bitmaprealloc</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -437,9 +494,27 @@
       </function>
       <function name="set_alternate_shallow_file">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="override" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>alternate_shallow_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>alternate_shallow_file</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -452,8 +527,8 @@
       </function>
       <function name="setup_alternate_shallow">
         <parameters>
-          <par name="shallow_lock" nr="1"/>
           <par name="alternate_shallow_file___0" nr="2"/>
+          <par name="shallow_lock" nr="1"/>
           <par name="extra" nr="3"/>
         </parameters>
         <postconditions>
@@ -497,8 +572,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -512,8 +587,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -570,9 +645,9 @@
       </function>
       <function name="update_refstatus">
         <parameters>
-          <par name="ref_status" nr="1"/>
           <par name="nr" nr="2"/>
           <par name="bitmap" nr="3"/>
+          <par name="ref_status" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -586,8 +661,8 @@
       </function>
       <function name="write_one_shallow">
         <parameters>
-          <par name="graft" nr="1"/>
           <par name="cb_data" nr="2"/>
+          <par name="graft" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -641,6 +716,68 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="fd"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="filename">
+                      <field name="buf"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="fp"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="active"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>

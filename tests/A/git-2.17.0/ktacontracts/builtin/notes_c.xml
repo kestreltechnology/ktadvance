@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:49.503506"/>
-  <cfile name="builtin/notes">
-    <data-structures/>
+  <header time="2018-12-19 14:14:43">
+    <application file="builtin/notes.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="blob_type"/>
+      <gvar name="default_notes_tree"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -16,12 +21,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="add">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -36,8 +49,8 @@
       </function>
       <function name="append_edit">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -52,8 +65,8 @@
       </function>
       <function name="cmd_notes">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -80,8 +93,8 @@
       </function>
       <function name="copy">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -96,8 +109,8 @@
       </function>
       <function name="copy_obj_to_fd">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="sha1" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -125,8 +138,8 @@
       </function>
       <function name="get_ref">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -141,8 +154,8 @@
       </function>
       <function name="git_config_get_notes_strategy">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="strategy" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -189,11 +202,86 @@
           <par name="subcommand" nr="1"/>
           <par name="flags" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ref"/>
+                  </addressed-value>
+                  <ci>default_notes_tree</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="update_ref"/>
+                  </addressed-value>
+                  <ci>default_notes_tree</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ref"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="initialized"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="dirty"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -215,8 +303,8 @@
       </function>
       <function name="list">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -231,10 +319,10 @@
       </function>
       <function name="list_each_note">
         <parameters>
-          <par name="object_oid" nr="1"/>
-          <par name="note_oid" nr="2"/>
           <par name="note_path" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="note_oid" nr="2"/>
+          <par name="object_oid" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -248,8 +336,8 @@
       </function>
       <function name="merge">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -292,8 +380,8 @@
       </function>
       <function name="notes_copy_from_stdin">
         <parameters>
-          <par name="force" nr="1"/>
           <par name="rewrite_cmd" nr="2"/>
+          <par name="force" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -350,8 +438,8 @@
       </function>
       <function name="parse_file_arg">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -366,8 +454,8 @@
       </function>
       <function name="parse_msg_arg">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -382,8 +470,8 @@
       </function>
       <function name="parse_reedit_arg">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -398,8 +486,8 @@
       </function>
       <function name="parse_reuse_arg">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -430,8 +518,8 @@
       </function>
       <function name="prune">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -446,9 +534,9 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -458,12 +546,28 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="remove_cmd">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -478,9 +582,9 @@
       </function>
       <function name="remove_one_note">
         <parameters>
+          <par name="flag" nr="3"/>
           <par name="t" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="flag" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -494,8 +598,8 @@
       </function>
       <function name="show">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -510,9 +614,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -526,8 +630,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -570,8 +674,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -596,13 +700,29 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="strbuf_split_max">
         <parameters>
           <par name="sb" nr="1"/>
-          <par name="terminator" nr="2"/>
           <par name="max" nr="3"/>
+          <par name="terminator" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -616,8 +736,8 @@
       </function>
       <function name="write_commented_object">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="object" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -631,9 +751,19 @@
       </function>
       <function name="write_note_data">
         <parameters>
-          <par name="d" nr="1"/>
           <par name="oid" nr="2"/>
+          <par name="d" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>blob_type</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

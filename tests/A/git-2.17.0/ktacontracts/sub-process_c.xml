@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:08.283425"/>
-  <cfile name="sub-process">
-    <data-structures/>
+  <header time="2018-12-19 17:14:48">
+    <application file="sub-process.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="cmd2process_cmp">
         <parameters>
+          <par name="unused_keydata" nr="4"/>
           <par name="unused_cmp_data" nr="1"/>
           <par name="entry" nr="2"/>
           <par name="entry_or_key" nr="3"/>
-          <par name="unused_keydata" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -68,8 +70,8 @@
       </function>
       <function name="hashmap_entry_init">
         <parameters>
-          <par name="entry" nr="1"/>
           <par name="hash" nr="2"/>
+          <par name="entry" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -83,9 +85,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -99,8 +101,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -115,8 +117,8 @@
       <function name="strbuf_split_str">
         <parameters>
           <par name="str" nr="1"/>
-          <par name="terminator" nr="2"/>
           <par name="max" nr="3"/>
+          <par name="terminator" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -126,13 +128,29 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="strtol_i">
         <parameters>
+          <par name="result" nr="3"/>
           <par name="s" nr="1"/>
           <par name="base" nr="2"/>
-          <par name="result" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -175,12 +193,12 @@
       </function>
       <function name="subprocess_handshake">
         <parameters>
-          <par name="entry" nr="1"/>
           <par name="welcome_prefix" nr="2"/>
           <par name="versions" nr="3"/>
-          <par name="chosen_version" nr="4"/>
           <par name="capabilities" nr="5"/>
           <par name="supported_capabilities" nr="6"/>
+          <par name="entry" nr="1"/>
+          <par name="chosen_version" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -194,8 +212,8 @@
       </function>
       <function name="subprocess_read_status">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="status" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -210,8 +228,8 @@
       <function name="subprocess_start">
         <parameters>
           <par name="hashmap" nr="1"/>
-          <par name="entry" nr="2"/>
           <par name="cmd" nr="3"/>
+          <par name="entry" nr="2"/>
           <par name="startfn" nr="4"/>
         </parameters>
         <postconditions>

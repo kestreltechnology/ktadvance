@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:09.106752"/>
-  <cfile name="tempfile">
-    <data-structures/>
+  <header time="2018-12-19 17:30:26">
+    <application file="tempfile.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="__volatile_list_del">
         <parameters>
@@ -190,8 +192,8 @@
       <function name="mks_tempfile_sm">
         <parameters>
           <par name="filename_template" nr="1"/>
-          <par name="suffixlen" nr="2"/>
           <par name="mode" nr="3"/>
+          <par name="suffixlen" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -206,8 +208,8 @@
       <function name="mks_tempfile_tsm">
         <parameters>
           <par name="filename_template" nr="1"/>
-          <par name="suffixlen" nr="2"/>
           <par name="mode" nr="3"/>
+          <par name="suffixlen" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -226,6 +228,50 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="filename">
+                      <field name="buf"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="active"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -316,8 +362,8 @@
       </function>
       <function name="volatile_list_add">
         <parameters>
-          <par name="newp" nr="1"/>
           <par name="head" nr="2"/>
+          <par name="newp" nr="1"/>
         </parameters>
         <postconditions>
           <post>

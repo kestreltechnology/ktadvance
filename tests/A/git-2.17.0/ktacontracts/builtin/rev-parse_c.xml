@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:50.958951"/>
-  <cfile name="builtin/rev-parse">
-    <data-structures/>
+  <header time="2018-12-19 14:29:37">
+    <application file="builtin/rev-parse.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="def"/>
+      <gvar name="flag_chars"/>
+      <gvar name="ref_excludes"/>
+      <gvar name="startup_info"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -20,10 +27,10 @@
       </function>
       <function name="anti_reference">
         <parameters>
-          <par name="refname" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="refname" nr="1"/>
+          <par name="oid" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -37,10 +44,28 @@
       </function>
       <function name="cmd_parseopt">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>flag_chars</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>flag_chars</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -53,10 +78,28 @@
       </function>
       <function name="cmd_rev_parse">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -69,8 +112,8 @@
       </function>
       <function name="cmd_sq_quote">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -117,6 +160,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -199,8 +250,8 @@
       </function>
       <function name="show_abbrev">
         <parameters>
-          <par name="oid" nr="1"/>
           <par name="cb_data" nr="2"/>
+          <par name="oid" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -214,8 +265,8 @@
       </function>
       <function name="show_datestring">
         <parameters>
-          <par name="flag" nr="1"/>
           <par name="datestr" nr="2"/>
+          <par name="flag" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -229,6 +280,16 @@
       </function>
       <function name="show_default">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>def</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -244,6 +305,37 @@
           <par name="arg" nr="1"/>
           <par name="output_prefix" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="prefix"/>
+                  </addressed-value>
+                  <ci>startup_info</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -270,11 +362,39 @@
       </function>
       <function name="show_reference">
         <parameters>
-          <par name="refname" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="refname" nr="1"/>
+          <par name="oid" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="items"/>
+                  </addressed-value>
+                  <ci>ref_excludes</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <ci>ref_excludes</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -287,8 +407,8 @@
       </function>
       <function name="show_rev">
         <parameters>
-          <par name="type" nr="1"/>
           <par name="oid" nr="2"/>
+          <par name="type" nr="1"/>
           <par name="name" nr="3"/>
         </parameters>
         <postconditions>
@@ -303,8 +423,8 @@
       </function>
       <function name="show_with_type">
         <parameters>
-          <par name="type" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="type" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -318,9 +438,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -344,12 +464,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -363,8 +491,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -407,8 +535,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

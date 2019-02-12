@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:10.361792"/>
-  <cfile name="usage">
-    <data-structures/>
+  <header time="2018-12-19 17:38:53">
+    <application file="usage.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="die_is_recursing"/>
+      <gvar name="die_routine"/>
+      <gvar name="dying"/>
+      <gvar name="error_routine"/>
+      <gvar name="usage_routine"/>
+      <gvar name="warn_routine"/>
+    </global-variables>
     <functions>
       <function name="BUG_fl">
         <parameters>
-          <par name="file" nr="1"/>
           <par name="line" nr="2"/>
           <par name="fmt" nr="3"/>
+          <par name="file" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -22,10 +31,10 @@
       </function>
       <function name="BUG_vfl">
         <parameters>
-          <par name="file" nr="1"/>
           <par name="line" nr="2"/>
-          <par name="fmt" nr="3"/>
           <par name="params" nr="4"/>
+          <par name="fmt" nr="3"/>
+          <par name="file" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -41,6 +50,40 @@
         <parameters>
           <par name="err" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>die_is_recursing</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>die_is_recursing</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>die_routine</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>die_routine</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -53,8 +96,8 @@
       </function>
       <function name="die_builtin">
         <parameters>
-          <par name="err" nr="1"/>
           <par name="params" nr="2"/>
+          <par name="err" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -70,6 +113,40 @@
         <parameters>
           <par name="fmt" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>die_is_recursing</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>die_is_recursing</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>die_routine</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>die_routine</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -82,6 +159,21 @@
       </function>
       <function name="die_is_recursing_builtin">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>dying</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -96,6 +188,24 @@
         <parameters>
           <par name="err" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>error_routine</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>error_routine</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -108,8 +218,8 @@
       </function>
       <function name="error_builtin">
         <parameters>
-          <par name="err" nr="1"/>
           <par name="params" nr="2"/>
+          <par name="err" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -125,6 +235,24 @@
         <parameters>
           <par name="fmt" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>error_routine</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>error_routine</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -138,8 +266,8 @@
       <function name="fmt_with_err">
         <parameters>
           <par name="buf" nr="1"/>
-          <par name="n" nr="2"/>
           <par name="fmt" nr="3"/>
+          <par name="n" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -153,6 +281,16 @@
       </function>
       <function name="get_error_routine">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>error_routine</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -165,6 +303,16 @@
       </function>
       <function name="get_warn_routine">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>warn_routine</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -247,8 +395,8 @@
       </function>
       <function name="usage_builtin">
         <parameters>
-          <par name="err" nr="1"/>
           <par name="params" nr="2"/>
+          <par name="err" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -264,6 +412,24 @@
         <parameters>
           <par name="err" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>usage_routine</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>usage_routine</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -276,9 +442,9 @@
       </function>
       <function name="vreportf">
         <parameters>
+          <par name="params" nr="3"/>
           <par name="prefix" nr="1"/>
           <par name="err" nr="2"/>
-          <par name="params" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -292,8 +458,8 @@
       </function>
       <function name="warn_builtin">
         <parameters>
-          <par name="warn" nr="1"/>
           <par name="params" nr="2"/>
+          <par name="warn" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -309,6 +475,24 @@
         <parameters>
           <par name="warn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>warn_routine</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>warn_routine</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -323,6 +507,24 @@
         <parameters>
           <par name="warn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>warn_routine</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>warn_routine</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:02.929917"/>
-  <cfile name="refs/files-backend">
-    <data-structures/>
+  <header time="2018-12-19 16:38:59">
+    <application file="refs/files-backend.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="_">
         <parameters>
@@ -92,10 +94,10 @@
       </function>
       <function name="commit_ref_update">
         <parameters>
-          <par name="refs" nr="1"/>
-          <par name="lock" nr="2"/>
-          <par name="oid" nr="3"/>
           <par name="logmsg" nr="4"/>
+          <par name="oid" nr="3"/>
+          <par name="lock" nr="2"/>
+          <par name="refs" nr="1"/>
           <par name="err" nr="5"/>
         </parameters>
         <postconditions>
@@ -122,8 +124,8 @@
       </function>
       <function name="create_ref_symlink">
         <parameters>
-          <par name="lock" nr="1"/>
           <par name="target" nr="2"/>
+          <par name="lock" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -137,8 +139,8 @@
       </function>
       <function name="create_reflock">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="cb" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -152,11 +154,11 @@
       </function>
       <function name="create_symref_locked">
         <parameters>
-          <par name="refs" nr="1"/>
-          <par name="lock" nr="2"/>
-          <par name="refname" nr="3"/>
-          <par name="target" nr="4"/>
           <par name="logmsg" nr="5"/>
+          <par name="target" nr="4"/>
+          <par name="refname" nr="3"/>
+          <par name="lock" nr="2"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -186,12 +188,12 @@
       <function name="expire_reflog_ent">
         <parameters>
           <par name="ooid" nr="1"/>
-          <par name="noid" nr="2"/>
+          <par name="cb_data" nr="7"/>
           <par name="email" nr="3"/>
           <par name="timestamp" nr="4"/>
           <par name="tz" nr="5"/>
+          <par name="noid" nr="2"/>
           <par name="message" nr="6"/>
-          <par name="cb_data" nr="7"/>
         </parameters>
         <postconditions>
           <post>
@@ -205,8 +207,8 @@
       </function>
       <function name="fdopen_lock_file">
         <parameters>
-          <par name="lk" nr="1"/>
           <par name="mode" nr="2"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -220,8 +222,8 @@
       </function>
       <function name="files_assert_main_repository">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="caller" nr="2"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -235,11 +237,11 @@
       </function>
       <function name="files_copy_or_rename_ref">
         <parameters>
+          <par name="logmsg" nr="4"/>
           <par name="ref_store" nr="1"/>
           <par name="oldrefname" nr="2"/>
-          <par name="newrefname" nr="3"/>
-          <par name="logmsg" nr="4"/>
           <par name="copy" nr="5"/>
+          <par name="newrefname" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -253,10 +255,10 @@
       </function>
       <function name="files_copy_ref">
         <parameters>
+          <par name="logmsg" nr="4"/>
           <par name="ref_store" nr="1"/>
           <par name="oldrefname" nr="2"/>
           <par name="newrefname" nr="3"/>
-          <par name="logmsg" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -287,10 +289,10 @@
       </function>
       <function name="files_create_symref">
         <parameters>
+          <par name="logmsg" nr="4"/>
+          <par name="target" nr="3"/>
           <par name="ref_store" nr="1"/>
           <par name="refname" nr="2"/>
-          <par name="target" nr="3"/>
-          <par name="logmsg" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -320,8 +322,8 @@
       <function name="files_delete_refs">
         <parameters>
           <par name="ref_store" nr="1"/>
-          <par name="msg" nr="2"/>
           <par name="refnames" nr="3"/>
+          <par name="msg" nr="2"/>
           <par name="flags" nr="4"/>
         </parameters>
         <postconditions>
@@ -348,14 +350,87 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="packed_ref_store"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="gitcommondir"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="gitdir"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="loose"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="store_flags"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="files_for_each_reflog_ent">
         <parameters>
           <par name="ref_store" nr="1"/>
+          <par name="cb_data" nr="4"/>
           <par name="refname" nr="2"/>
           <par name="fn" nr="3"/>
-          <par name="cb_data" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -370,9 +445,9 @@
       <function name="files_for_each_reflog_ent_reverse">
         <parameters>
           <par name="ref_store" nr="1"/>
+          <par name="cb_data" nr="4"/>
           <par name="refname" nr="2"/>
           <par name="fn" nr="3"/>
-          <par name="cb_data" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -417,11 +492,11 @@
       </function>
       <function name="files_log_ref_write">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="refname" nr="2"/>
-          <par name="old_oid" nr="3"/>
           <par name="new_oid" nr="4"/>
           <par name="msg" nr="5"/>
+          <par name="refs" nr="1"/>
+          <par name="old_oid" nr="3"/>
           <par name="flags" nr="6"/>
           <par name="err" nr="7"/>
         </parameters>
@@ -499,8 +574,8 @@
       <function name="files_ref_iterator_begin">
         <parameters>
           <par name="ref_store" nr="1"/>
-          <par name="prefix" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="prefix" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -514,8 +589,8 @@
       </function>
       <function name="files_ref_iterator_peel">
         <parameters>
-          <par name="ref_iterator" nr="1"/>
           <par name="peeled" nr="2"/>
+          <par name="ref_iterator" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -529,9 +604,9 @@
       </function>
       <function name="files_ref_path">
         <parameters>
-          <par name="refs" nr="1"/>
-          <par name="sb" nr="2"/>
           <par name="refname" nr="3"/>
+          <par name="sb" nr="2"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -578,11 +653,11 @@
           <par name="ref_store" nr="1"/>
           <par name="refname" nr="2"/>
           <par name="oid" nr="3"/>
+          <par name="policy_cb_data" nr="8"/>
+          <par name="should_prune_fn" nr="6"/>
           <par name="flags" nr="4"/>
           <par name="prepare_fn" nr="5"/>
-          <par name="should_prune_fn" nr="6"/>
           <par name="cleanup_fn" nr="7"/>
-          <par name="policy_cb_data" nr="8"/>
         </parameters>
         <postconditions>
           <post>
@@ -638,8 +713,8 @@
       </function>
       <function name="files_reflog_iterator_peel">
         <parameters>
-          <par name="ref_iterator" nr="1"/>
           <par name="peeled" nr="2"/>
+          <par name="ref_iterator" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -653,9 +728,9 @@
       </function>
       <function name="files_reflog_path">
         <parameters>
-          <par name="refs" nr="1"/>
-          <par name="sb" nr="2"/>
           <par name="refname" nr="3"/>
+          <par name="sb" nr="2"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -669,10 +744,10 @@
       </function>
       <function name="files_rename_ref">
         <parameters>
+          <par name="logmsg" nr="4"/>
           <par name="ref_store" nr="1"/>
           <par name="oldrefname" nr="2"/>
           <par name="newrefname" nr="3"/>
-          <par name="logmsg" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -760,6 +835,25 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_lock_file_fd">
@@ -802,6 +896,27 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="root"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="hashcmp">
@@ -836,9 +951,9 @@
       </function>
       <function name="hold_lock_file_for_update">
         <parameters>
-          <par name="lk" nr="1"/>
           <par name="path" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -866,14 +981,14 @@
       </function>
       <function name="lock_raw_ref">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="refname" nr="2"/>
-          <par name="mustexist" nr="3"/>
-          <par name="extras" nr="4"/>
           <par name="skip" nr="5"/>
+          <par name="extras" nr="4"/>
           <par name="lock_p" nr="6"/>
           <par name="referent" nr="7"/>
           <par name="type" nr="8"/>
+          <par name="refs" nr="1"/>
+          <par name="mustexist" nr="3"/>
           <par name="err" nr="9"/>
         </parameters>
         <postconditions>
@@ -888,11 +1003,11 @@
       </function>
       <function name="lock_ref_for_update">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="update" nr="2"/>
-          <par name="transaction" nr="3"/>
           <par name="head_ref___0" nr="4"/>
           <par name="affected_refnames" nr="5"/>
+          <par name="refs" nr="1"/>
+          <par name="transaction" nr="3"/>
           <par name="err" nr="6"/>
         </parameters>
         <postconditions>
@@ -907,13 +1022,13 @@
       </function>
       <function name="lock_ref_oid_basic">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="refname" nr="2"/>
-          <par name="old_oid" nr="3"/>
-          <par name="extras" nr="4"/>
           <par name="skip" nr="5"/>
-          <par name="flags" nr="6"/>
+          <par name="extras" nr="4"/>
           <par name="type" nr="7"/>
+          <par name="refs" nr="1"/>
+          <par name="old_oid" nr="3"/>
+          <par name="flags" nr="6"/>
           <par name="err" nr="8"/>
         </parameters>
         <postconditions>
@@ -924,14 +1039,50 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ref_name"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="lk">
+                      <field name="tempfile"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="log_ref_setup">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="refname" nr="2"/>
-          <par name="force_create" nr="3"/>
           <par name="logfd" nr="4"/>
+          <par name="refs" nr="1"/>
+          <par name="force_create" nr="3"/>
           <par name="err" nr="5"/>
         </parameters>
         <postconditions>
@@ -946,11 +1097,11 @@
       </function>
       <function name="log_ref_write_fd">
         <parameters>
+          <par name="new_oid" nr="3"/>
+          <par name="msg" nr="5"/>
+          <par name="committer" nr="4"/>
           <par name="fd" nr="1"/>
           <par name="old_oid" nr="2"/>
-          <par name="new_oid" nr="3"/>
-          <par name="committer" nr="4"/>
-          <par name="msg" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -964,8 +1115,8 @@
       </function>
       <function name="loose_fill_ref_dir">
         <parameters>
-          <par name="ref_store" nr="1"/>
           <par name="dir" nr="2"/>
+          <par name="ref_store" nr="1"/>
           <par name="dirname___0" nr="3"/>
         </parameters>
         <postconditions>
@@ -1024,8 +1175,8 @@
       </function>
       <function name="open_or_create_logfile">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="cb" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1053,8 +1204,8 @@
       </function>
       <function name="prune_ref">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="r" nr="2"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1068,8 +1219,8 @@
       </function>
       <function name="prune_refs">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="refs_to_prune" nr="2"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1083,10 +1234,10 @@
       </function>
       <function name="ref_present">
         <parameters>
+          <par name="cb_data" nr="4"/>
           <par name="refname" nr="1"/>
           <par name="oid" nr="2"/>
           <par name="flags" nr="3"/>
-          <par name="cb_data" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1115,9 +1266,9 @@
       </function>
       <function name="reflog_iterator_select">
         <parameters>
+          <par name="cb_data" nr="3"/>
           <par name="iter_worktree" nr="1"/>
           <par name="iter_common" nr="2"/>
-          <par name="cb_data" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1145,8 +1296,8 @@
       </function>
       <function name="rename_tmp_log">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="newrefname" nr="2"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1160,8 +1311,8 @@
       </function>
       <function name="rename_tmp_log_callback">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="cb_data" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1206,9 +1357,9 @@
       </function>
       <function name="show_one_reflog_ent">
         <parameters>
+          <par name="cb_data" nr="3"/>
           <par name="sb" nr="1"/>
           <par name="fn" nr="2"/>
-          <par name="cb_data" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1223,9 +1374,9 @@
       <function name="split_head_update">
         <parameters>
           <par name="update" nr="1"/>
-          <par name="transaction" nr="2"/>
           <par name="head_ref___0" nr="3"/>
           <par name="affected_refnames" nr="4"/>
+          <par name="transaction" nr="2"/>
           <par name="err" nr="5"/>
         </parameters>
         <postconditions>
@@ -1240,11 +1391,11 @@
       </function>
       <function name="split_symref_update">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="update" nr="2"/>
-          <par name="referent" nr="3"/>
-          <par name="transaction" nr="4"/>
           <par name="affected_refnames" nr="5"/>
+          <par name="referent" nr="3"/>
+          <par name="refs" nr="1"/>
+          <par name="transaction" nr="4"/>
           <par name="err" nr="6"/>
         </parameters>
         <postconditions>
@@ -1259,8 +1410,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1274,8 +1425,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1318,8 +1469,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1333,8 +1484,8 @@
       </function>
       <function name="strbuf_swap">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1348,9 +1499,9 @@
       </function>
       <function name="strip_suffix">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="str" nr="1"/>
           <par name="suffix" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1364,8 +1515,8 @@
       </function>
       <function name="strip_suffix_mem">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="suffix" nr="3"/>
         </parameters>
         <postconditions>
@@ -1380,8 +1531,8 @@
       </function>
       <function name="try_remove_empty_parents">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="refname" nr="2"/>
+          <par name="refs" nr="1"/>
           <par name="flags" nr="3"/>
         </parameters>
         <postconditions>
@@ -1410,11 +1561,11 @@
       </function>
       <function name="update_symref_reflog">
         <parameters>
-          <par name="refs" nr="1"/>
-          <par name="lock" nr="2"/>
-          <par name="refname" nr="3"/>
-          <par name="target" nr="4"/>
           <par name="logmsg" nr="5"/>
+          <par name="target" nr="4"/>
+          <par name="refname" nr="3"/>
+          <par name="lock" nr="2"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1446,8 +1597,8 @@
       </function>
       <function name="write_ref_to_lockfile">
         <parameters>
-          <par name="lock" nr="1"/>
           <par name="oid" nr="2"/>
+          <par name="lock" nr="1"/>
           <par name="err" nr="3"/>
         </parameters>
         <postconditions>
@@ -1462,8 +1613,8 @@
       </function>
       <function name="write_str_in_full">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="str" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>

@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:01.544815"/>
-  <cfile name="pretty">
-    <data-structures/>
+  <header time="2018-12-19 16:27:26">
+    <application file="pretty.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="builtin_formats_len"/>
+      <gvar name="commit_formats"/>
+      <gvar name="commit_formats_alloc"/>
+      <gvar name="commit_formats_len"/>
+      <gvar name="mail_map"/>
+      <gvar name="user_format"/>
+      <gvar name="utf8"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -20,9 +30,9 @@
       </function>
       <function name="add_merge_info">
         <parameters>
-          <par name="pp" nr="1"/>
           <par name="sb" nr="2"/>
           <par name="commit" nr="3"/>
+          <par name="pp" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -36,9 +46,9 @@
       </function>
       <function name="add_rfc2047">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="sb" nr="1"/>
           <par name="line" nr="2"/>
-          <par name="len" nr="3"/>
           <par name="encoding" nr="4"/>
           <par name="type" nr="5"/>
         </parameters>
@@ -55,8 +65,8 @@
       <function name="add_rfc822_quoted">
         <parameters>
           <par name="out" nr="1"/>
-          <par name="s" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="s" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -86,6 +96,35 @@
         <parameters>
           <par name="fmt" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>user_format</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>user_format</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>user_format</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -108,6 +147,66 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="is_tformat"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="format"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="user_format"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="expand_tabs_in_log"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="find_commit_format_recursive">
@@ -116,6 +215,24 @@
           <par name="original" nr="2"/>
           <par name="num_redirections" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>commit_formats</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>commit_formats</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -128,9 +245,9 @@
       </function>
       <function name="format_and_pad_commit">
         <parameters>
+          <par name="c" nr="3"/>
           <par name="sb" nr="1"/>
           <par name="placeholder" nr="2"/>
-          <par name="c" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -140,13 +257,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="format_commit_item">
         <parameters>
+          <par name="context" nr="3"/>
           <par name="sb" nr="1"/>
           <par name="placeholder" nr="2"/>
-          <par name="context" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -160,10 +286,10 @@
       </function>
       <function name="format_commit_message">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="format" nr="2"/>
           <par name="sb" nr="3"/>
           <par name="pretty_ctx" nr="4"/>
+          <par name="commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -177,9 +303,9 @@
       </function>
       <function name="format_commit_one">
         <parameters>
+          <par name="context" nr="3"/>
           <par name="sb" nr="1"/>
           <par name="placeholder" nr="2"/>
-          <par name="context" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -193,10 +319,10 @@
       </function>
       <function name="format_person_part">
         <parameters>
-          <par name="sb" nr="1"/>
-          <par name="part" nr="2"/>
-          <par name="msg" nr="3"/>
           <par name="len" nr="4"/>
+          <par name="part" nr="2"/>
+          <par name="sb" nr="1"/>
+          <par name="msg" nr="3"/>
           <par name="dmode" nr="5"/>
         </parameters>
         <postconditions>
@@ -211,9 +337,9 @@
       </function>
       <function name="format_reflog_person">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="part" nr="2"/>
           <par name="log" nr="3"/>
+          <par name="sb" nr="1"/>
           <par name="dmode" nr="4"/>
         </parameters>
         <postconditions>
@@ -243,9 +369,9 @@
       </function>
       <function name="format_subject">
         <parameters>
+          <par name="line_separator" nr="3"/>
           <par name="sb" nr="1"/>
           <par name="msg" nr="2"/>
-          <par name="line_separator" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -259,8 +385,8 @@
       </function>
       <function name="get_commit_format">
         <parameters>
-          <par name="arg" nr="1"/>
           <par name="rev" nr="2"/>
+          <par name="arg" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -285,6 +411,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_one_line">
@@ -299,14 +433,110 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_pretty_formats_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>commit_formats_len</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>commit_formats_alloc</ci>
+                  <cn>16</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>commit_formats</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>commit_formats_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>commit_formats</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <ci>builtin_formats_len</ci>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>builtin_formats_len</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>commit_formats</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -376,8 +606,8 @@
       </function>
       <function name="is_mboxrd_from">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="line" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -444,6 +674,15 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="logmsg_reencode">
@@ -452,6 +691,16 @@
           <par name="commit_encoding" nr="2"/>
           <par name="output_encoding" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>utf8</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -460,15 +709,41 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="mailmap_name">
         <parameters>
           <par name="email" nr="1"/>
+          <par name="name_len" nr="4"/>
           <par name="email_len" nr="2"/>
           <par name="name" nr="3"/>
-          <par name="name_len" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>mail_map</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -481,9 +756,9 @@
       </function>
       <function name="match_placeholder_arg">
         <parameters>
-          <par name="to_parse" nr="1"/>
           <par name="candidate" nr="2"/>
           <par name="end" nr="3"/>
+          <par name="to_parse" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -497,8 +772,8 @@
       </function>
       <function name="needs_rfc2047_encoding">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="line" nr="1"/>
           <par name="type" nr="3"/>
         </parameters>
         <postconditions>
@@ -513,8 +788,8 @@
       </function>
       <function name="needs_rfc822_quoting">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -542,15 +817,24 @@
       </function>
       <function name="parse_color">
         <parameters>
+          <par name="c" nr="3"/>
           <par name="sb" nr="1"/>
           <par name="placeholder" nr="2"/>
-          <par name="c" nr="3"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -586,9 +870,9 @@
       </function>
       <function name="parse_padding_placeholder">
         <parameters>
+          <par name="c" nr="3"/>
           <par name="sb" nr="1"/>
           <par name="placeholder" nr="2"/>
-          <par name="c" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -602,9 +886,9 @@
       </function>
       <function name="pp_commit_easy">
         <parameters>
-          <par name="fmt" nr="1"/>
-          <par name="commit" nr="2"/>
           <par name="sb" nr="3"/>
+          <par name="commit" nr="2"/>
+          <par name="fmt" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -618,11 +902,11 @@
       </function>
       <function name="pp_handle_indent">
         <parameters>
-          <par name="pp" nr="1"/>
-          <par name="sb" nr="2"/>
-          <par name="indent" nr="3"/>
-          <par name="line" nr="4"/>
           <par name="linelen" nr="5"/>
+          <par name="indent" nr="3"/>
+          <par name="sb" nr="2"/>
+          <par name="line" nr="4"/>
+          <par name="pp" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -636,11 +920,11 @@
       </function>
       <function name="pp_header">
         <parameters>
-          <par name="pp" nr="1"/>
-          <par name="encoding" nr="2"/>
-          <par name="commit" nr="3"/>
-          <par name="msg_p" nr="4"/>
           <par name="sb" nr="5"/>
+          <par name="commit" nr="3"/>
+          <par name="encoding" nr="2"/>
+          <par name="msg_p" nr="4"/>
+          <par name="pp" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -654,10 +938,10 @@
       </function>
       <function name="pp_remainder">
         <parameters>
-          <par name="pp" nr="1"/>
-          <par name="msg_p" nr="2"/>
-          <par name="sb" nr="3"/>
           <par name="indent" nr="4"/>
+          <par name="sb" nr="3"/>
+          <par name="msg_p" nr="2"/>
+          <par name="pp" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -671,11 +955,11 @@
       </function>
       <function name="pp_title_line">
         <parameters>
-          <par name="pp" nr="1"/>
-          <par name="msg_p" nr="2"/>
           <par name="sb" nr="3"/>
           <par name="encoding" nr="4"/>
           <par name="need_8bit_cte" nr="5"/>
+          <par name="msg_p" nr="2"/>
+          <par name="pp" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -689,11 +973,11 @@
       </function>
       <function name="pp_user_info">
         <parameters>
-          <par name="pp" nr="1"/>
           <par name="what" nr="2"/>
           <par name="sb" nr="3"/>
           <par name="line" nr="4"/>
           <par name="encoding" nr="5"/>
+          <par name="pp" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -707,8 +991,8 @@
       </function>
       <function name="pp_utf8_width">
         <parameters>
-          <par name="start" nr="1"/>
           <par name="end" nr="2"/>
+          <par name="start" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -722,10 +1006,20 @@
       </function>
       <function name="pretty_print_commit">
         <parameters>
-          <par name="pp" nr="1"/>
-          <par name="commit" nr="2"/>
           <par name="sb" nr="3"/>
+          <par name="commit" nr="2"/>
+          <par name="pp" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>user_format</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -738,9 +1032,9 @@
       </function>
       <function name="reencode_string">
         <parameters>
-          <par name="in" nr="1"/>
-          <par name="out_encoding" nr="2"/>
           <par name="in_encoding" nr="3"/>
+          <par name="out_encoding" nr="2"/>
+          <par name="in" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -769,11 +1063,11 @@
       </function>
       <function name="rewrap_message_tail">
         <parameters>
-          <par name="sb" nr="1"/>
+          <par name="new_indent2" nr="5"/>
           <par name="c" nr="2"/>
           <par name="new_width" nr="3"/>
+          <par name="sb" nr="1"/>
           <par name="new_indent1" nr="4"/>
-          <par name="new_indent2" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -787,10 +1081,28 @@
       </function>
       <function name="save_user_format">
         <parameters>
+          <par name="is_tformat" nr="3"/>
           <par name="rev" nr="1"/>
           <par name="cp" nr="2"/>
-          <par name="is_tformat" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>user_format</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>user_format</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -803,6 +1115,62 @@
       </function>
       <function name="setup_commit_formats">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>commit_formats_alloc</ci>
+                  <cn>16</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>commit_formats</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>commit_formats_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>commit_formats</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>commit_formats</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -815,14 +1183,22 @@
       </function>
       <function name="show_ident_date">
         <parameters>
-          <par name="ident" nr="1"/>
           <par name="mode" nr="2"/>
+          <par name="ident" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -840,13 +1216,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -860,8 +1244,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -875,10 +1259,10 @@
       </function>
       <function name="strbuf_add_tabexpand">
         <parameters>
-          <par name="sb" nr="1"/>
-          <par name="tabwidth" nr="2"/>
-          <par name="line" nr="3"/>
           <par name="linelen" nr="4"/>
+          <par name="sb" nr="1"/>
+          <par name="line" nr="3"/>
+          <par name="tabwidth" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -892,8 +1276,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -936,8 +1320,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -951,8 +1335,8 @@
       </function>
       <function name="strbuf_swap">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -966,11 +1350,11 @@
       </function>
       <function name="strbuf_wrap">
         <parameters>
-          <par name="sb" nr="1"/>
-          <par name="pos" nr="2"/>
           <par name="width" nr="3"/>
+          <par name="pos" nr="2"/>
           <par name="indent1" nr="4"/>
           <par name="indent2" nr="5"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -984,8 +1368,8 @@
       </function>
       <function name="userformat_find_requirements">
         <parameters>
-          <par name="fmt" nr="1"/>
           <par name="w" nr="2"/>
+          <par name="fmt" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -999,9 +1383,9 @@
       </function>
       <function name="userformat_want_item">
         <parameters>
+          <par name="context" nr="3"/>
           <par name="sb" nr="1"/>
           <par name="placeholder" nr="2"/>
-          <par name="context" nr="3"/>
         </parameters>
         <postconditions>
           <post>

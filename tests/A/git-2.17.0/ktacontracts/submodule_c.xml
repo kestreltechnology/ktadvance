@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:08.504584"/>
-  <cfile name="submodule">
-    <data-structures/>
+  <header time="2018-12-19 17:17:31">
+    <application file="submodule.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -16,13 +20,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="absorb_git_dir_into_superproject">
         <parameters>
-          <par name="prefix" nr="1"/>
           <par name="path" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="prefix" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -67,8 +79,8 @@
         <parameters>
           <par name="ref" nr="1"/>
           <par name="oid" nr="2"/>
-          <par name="flags" nr="3"/>
           <par name="data" nr="4"/>
+          <par name="flags" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -109,8 +121,8 @@
       </function>
       <function name="capture_command">
         <parameters>
-          <par name="cmd" nr="1"/>
           <par name="out" nr="2"/>
+          <par name="cmd" nr="1"/>
           <par name="hint" nr="3"/>
         </parameters>
         <postconditions>
@@ -154,8 +166,8 @@
       </function>
       <function name="collect_changed_submodules">
         <parameters>
-          <par name="changed" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="changed" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -169,9 +181,9 @@
       </function>
       <function name="collect_changed_submodules_cb">
         <parameters>
-          <par name="q" nr="1"/>
-          <par name="options" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="options" nr="2"/>
+          <par name="q" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -226,8 +238,8 @@
       </function>
       <function name="die_path_inside_submodule">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="ps" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -241,10 +253,10 @@
       </function>
       <function name="fetch_finish">
         <parameters>
-          <par name="retvalue" nr="1"/>
-          <par name="err" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="retvalue" nr="1"/>
           <par name="task_cb" nr="4"/>
+          <par name="err" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -259,12 +271,12 @@
       <function name="fetch_populated_submodules">
         <parameters>
           <par name="r" nr="1"/>
-          <par name="options" nr="2"/>
-          <par name="prefix" nr="3"/>
-          <par name="command_line_option" nr="4"/>
           <par name="default_option" nr="5"/>
+          <par name="command_line_option" nr="4"/>
           <par name="quiet" nr="6"/>
+          <par name="options" nr="2"/>
           <par name="max_parallel_jobs" nr="7"/>
+          <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -278,9 +290,9 @@
       </function>
       <function name="fetch_start_failure">
         <parameters>
-          <par name="err" nr="1"/>
           <par name="cb" nr="2"/>
           <par name="task_cb" nr="3"/>
+          <par name="err" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -295,9 +307,9 @@
       <function name="find_first_merges">
         <parameters>
           <par name="result" nr="1"/>
+          <par name="b" nr="4"/>
           <par name="path" nr="2"/>
           <par name="a" nr="3"/>
-          <par name="b" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -327,9 +339,9 @@
       </function>
       <function name="for_each_remote_ref_submodule">
         <parameters>
+          <par name="cb_data" nr="3"/>
           <par name="submodule" nr="1"/>
           <par name="fn" nr="2"/>
-          <par name="cb_data" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -373,9 +385,9 @@
       <function name="get_next_submodule">
         <parameters>
           <par name="cp" nr="1"/>
-          <par name="err" nr="2"/>
           <par name="data" nr="3"/>
           <par name="task_cb" nr="4"/>
+          <par name="err" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -413,9 +425,9 @@
       </function>
       <function name="git_default_submodule_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -444,10 +456,10 @@
       </function>
       <function name="has_remote">
         <parameters>
+          <par name="cb_data" nr="4"/>
           <par name="refname" nr="1"/>
           <par name="oid" nr="2"/>
           <par name="flags" nr="3"/>
-          <par name="cb_data" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -548,8 +560,8 @@
       </function>
       <function name="is_submodule_modified">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="ignore_untracked" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -563,8 +575,8 @@
       </function>
       <function name="is_submodule_populated_gently">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="return_error_code" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -579,11 +591,11 @@
       <function name="merge_submodule">
         <parameters>
           <par name="result" nr="1"/>
-          <par name="path" nr="2"/>
-          <par name="base" nr="3"/>
-          <par name="a" nr="4"/>
-          <par name="b" nr="5"/>
           <par name="search" nr="6"/>
+          <par name="b" nr="5"/>
+          <par name="path" nr="2"/>
+          <par name="a" nr="4"/>
+          <par name="base" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -627,8 +639,8 @@
       </function>
       <function name="option_parse_recurse_submodules_worktree_updater">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -643,8 +655,8 @@
       </function>
       <function name="parse_submodule_update_strategy">
         <parameters>
-          <par name="value" nr="1"/>
           <par name="dst" nr="2"/>
+          <par name="value" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -701,10 +713,10 @@
       <function name="prepare_submodule_summary">
         <parameters>
           <par name="rev" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="left" nr="3"/>
           <par name="right" nr="4"/>
           <par name="merge_bases" nr="5"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -747,12 +759,12 @@
       </function>
       <function name="push_submodule">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="remote" nr="2"/>
-          <par name="refspec" nr="3"/>
           <par name="refspec_nr" nr="4"/>
-          <par name="push_options" nr="5"/>
           <par name="dry_run" nr="6"/>
+          <par name="refspec" nr="3"/>
+          <par name="remote" nr="2"/>
+          <par name="push_options" nr="5"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -767,11 +779,11 @@
       <function name="push_unpushed_submodules">
         <parameters>
           <par name="commits" nr="1"/>
-          <par name="remote" nr="2"/>
-          <par name="refspec" nr="3"/>
           <par name="refspec_nr" nr="4"/>
-          <par name="push_options" nr="5"/>
           <par name="dry_run" nr="6"/>
+          <par name="refspec" nr="3"/>
+          <par name="remote" nr="2"/>
+          <par name="push_options" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -785,8 +797,8 @@
       </function>
       <function name="relocate_single_git_dir_into_superproject">
         <parameters>
-          <par name="prefix" nr="1"/>
           <par name="path" nr="2"/>
+          <par name="prefix" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -817,6 +829,37 @@
           <par name="diffopt" nr="1"/>
           <par name="path" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -842,13 +885,13 @@
       <function name="show_submodule_header">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="path" nr="2"/>
-          <par name="one" nr="3"/>
-          <par name="two" nr="4"/>
-          <par name="dirty_submodule" nr="5"/>
           <par name="left" nr="6"/>
+          <par name="dirty_submodule" nr="5"/>
           <par name="right" nr="7"/>
+          <par name="one" nr="3"/>
           <par name="merge_bases" nr="8"/>
+          <par name="two" nr="4"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -863,11 +906,42 @@
       <function name="show_submodule_inline_diff">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="path" nr="2"/>
+          <par name="dirty_submodule" nr="5"/>
           <par name="one" nr="3"/>
           <par name="two" nr="4"/>
-          <par name="dirty_submodule" nr="5"/>
+          <par name="path" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -881,10 +955,10 @@
       <function name="show_submodule_summary">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="path" nr="2"/>
+          <par name="dirty_submodule" nr="5"/>
           <par name="one" nr="3"/>
           <par name="two" nr="4"/>
-          <par name="dirty_submodule" nr="5"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -912,8 +986,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -956,8 +1030,8 @@
       </function>
       <function name="strbuf_complete">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="term" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -971,8 +1045,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1015,8 +1089,8 @@
       </function>
       <function name="submodule_has_commits">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="commits" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1044,11 +1118,42 @@
       </function>
       <function name="submodule_move_head">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="old_head" nr="2"/>
           <par name="new_head" nr="3"/>
+          <par name="path" nr="1"/>
           <par name="flags" nr="4"/>
+          <par name="old_head" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1061,8 +1166,8 @@
       </function>
       <function name="submodule_needs_pushing">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="commits" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1076,11 +1181,11 @@
       </function>
       <function name="submodule_push_check">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="head" nr="2"/>
-          <par name="remote" nr="3"/>
-          <par name="refspec" nr="4"/>
           <par name="refspec_nr" nr="5"/>
+          <par name="refspec" nr="4"/>
+          <par name="remote" nr="3"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1137,8 +1242,8 @@
       </function>
       <function name="submodule_touches_in_range">
         <parameters>
-          <par name="excl_oid" nr="1"/>
           <par name="incl_oid" nr="2"/>
+          <par name="excl_oid" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1166,8 +1271,8 @@
       </function>
       <function name="update_path_in_gitmodules">
         <parameters>
-          <par name="oldpath" nr="1"/>
           <par name="newpath" nr="2"/>
+          <par name="oldpath" nr="1"/>
         </parameters>
         <postconditions>
           <post>

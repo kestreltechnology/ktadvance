@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:49.208563"/>
-  <cfile name="builtin/merge-tree">
-    <data-structures/>
+  <header time="2018-12-19 14:09:45">
+    <application file="builtin/merge-tree.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="merge_result_end"/>
+    </global-variables>
     <functions>
       <function name="add_merge_entry">
         <parameters>
           <par name="entry" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>merge_result_end</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>merge_result_end</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -20,8 +42,8 @@
       </function>
       <function name="both_empty">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -35,8 +57,8 @@
       </function>
       <function name="cmd_merge_tree">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -51,9 +73,9 @@
       </function>
       <function name="create_entry">
         <parameters>
-          <par name="stage" nr="1"/>
-          <par name="mode" nr="2"/>
           <par name="oid" nr="3"/>
+          <par name="mode" nr="2"/>
+          <par name="stage" nr="1"/>
           <par name="path" nr="4"/>
         </parameters>
         <postconditions>
@@ -82,8 +104,8 @@
       </function>
       <function name="get_tree_descriptor">
         <parameters>
-          <par name="desc___0" nr="1"/>
           <par name="rev" nr="2"/>
+          <par name="desc___0" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -112,10 +134,10 @@
       </function>
       <function name="link_entry">
         <parameters>
-          <par name="stage" nr="1"/>
-          <par name="info" nr="2"/>
-          <par name="n" nr="3"/>
           <par name="entry" nr="4"/>
+          <par name="info" nr="2"/>
+          <par name="stage" nr="1"/>
+          <par name="n" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -159,8 +181,8 @@
       </function>
       <function name="origin">
         <parameters>
-          <par name="entry" nr="1"/>
           <par name="size" nr="2"/>
+          <par name="entry" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -174,9 +196,9 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -206,8 +228,8 @@
       </function>
       <function name="result">
         <parameters>
-          <par name="entry" nr="1"/>
           <par name="size" nr="2"/>
+          <par name="entry" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -221,8 +243,8 @@
       </function>
       <function name="same_entry">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -292,11 +314,11 @@
       </function>
       <function name="threeway_callback">
         <parameters>
-          <par name="n" nr="1"/>
           <par name="mask" nr="2"/>
           <par name="dirmask" nr="3"/>
           <par name="entry" nr="4"/>
           <par name="info" nr="5"/>
+          <par name="n" nr="1"/>
         </parameters>
         <postconditions>
           <post>

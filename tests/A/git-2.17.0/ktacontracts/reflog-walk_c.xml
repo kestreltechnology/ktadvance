@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:02.362627"/>
-  <cfile name="reflog-walk">
-    <data-structures/>
+  <header time="2018-12-19 16:33:16">
+    <application file="reflog-walk.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="add_reflog_for_walk">
         <parameters>
@@ -65,8 +67,8 @@
       </function>
       <function name="get_reflog_recno_by_time">
         <parameters>
-          <par name="array" nr="1"/>
           <par name="timestamp" nr="2"/>
+          <par name="array" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -80,11 +82,11 @@
       </function>
       <function name="get_reflog_selector">
         <parameters>
+          <par name="shorten" nr="5"/>
           <par name="sb" nr="1"/>
           <par name="reflog_info" nr="2"/>
-          <par name="dmode" nr="3"/>
           <par name="force_date" nr="4"/>
-          <par name="shorten" nr="5"/>
+          <par name="dmode" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -208,17 +210,72 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="items"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ref"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="read_one_reflog">
         <parameters>
           <par name="ooid" nr="1"/>
-          <par name="noid" nr="2"/>
+          <par name="cb_data" nr="7"/>
           <par name="email" nr="3"/>
           <par name="timestamp" nr="4"/>
           <par name="tz" nr="5"/>
+          <par name="noid" nr="2"/>
           <par name="message" nr="6"/>
-          <par name="cb_data" nr="7"/>
         </parameters>
         <postconditions>
           <post>
@@ -246,10 +303,10 @@
       </function>
       <function name="show_reflog_message">
         <parameters>
-          <par name="reflog_info" nr="1"/>
           <par name="oneline" nr="2"/>
-          <par name="dmode" nr="3"/>
+          <par name="reflog_info" nr="1"/>
           <par name="force_date" nr="4"/>
+          <par name="dmode" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -263,8 +320,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -278,8 +335,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:10.935201"/>
-  <cfile name="wrapper">
-    <data-structures/>
+  <header time="2018-12-19 17:43:02">
+    <application file="wrapper.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="num_letters"/>
+      <gvar name="try_to_free_routine"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -16,12 +21,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="access_error_is_ok">
         <parameters>
-          <par name="err" nr="1"/>
           <par name="flag" nr="2"/>
+          <par name="err" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -35,9 +48,9 @@
       </function>
       <function name="access_or_die">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="mode" nr="2"/>
           <par name="flag" nr="3"/>
+          <par name="mode" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,9 +64,9 @@
       </function>
       <function name="access_or_warn">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="mode" nr="2"/>
           <par name="flag" nr="3"/>
+          <par name="mode" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -93,9 +106,27 @@
       </function>
       <function name="do_xmalloc">
         <parameters>
-          <par name="size" nr="1"/>
           <par name="gentle" nr="2"/>
+          <par name="size" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>try_to_free_routine</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>try_to_free_routine</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -108,8 +139,8 @@
       </function>
       <function name="do_xmallocz">
         <parameters>
-          <par name="size" nr="1"/>
           <par name="gentle" nr="2"/>
+          <par name="size" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -137,8 +168,8 @@
       </function>
       <function name="fopen_or_warn">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="mode" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -171,6 +202,17 @@
           <par name="suffix_len" nr="2"/>
           <par name="mode" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>num_letters</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -213,8 +255,8 @@
       </function>
       <function name="memory_limit_check">
         <parameters>
-          <par name="size" nr="1"/>
           <par name="gentle" nr="2"/>
+          <par name="size" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -228,10 +270,10 @@
       </function>
       <function name="pread_in_full">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="buf" nr="2"/>
           <par name="count" nr="3"/>
           <par name="offset" nr="4"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -245,9 +287,9 @@
       </function>
       <function name="read_in_full">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="buf" nr="2"/>
           <par name="count" nr="3"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -292,6 +334,16 @@
         <parameters>
           <par name="routine" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>try_to_free_routine</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -318,8 +370,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -347,8 +399,8 @@
       </function>
       <function name="strbuf_complete">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="term" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -405,9 +457,9 @@
       </function>
       <function name="warn_if_unremovable">
         <parameters>
+          <par name="rc" nr="3"/>
           <par name="op" nr="1"/>
           <par name="file" nr="2"/>
-          <par name="rc" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -449,8 +501,8 @@
       </function>
       <function name="write_file">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="fmt" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -464,9 +516,9 @@
       </function>
       <function name="write_file_buf">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="buf" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="buf" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -480,9 +532,9 @@
       </function>
       <function name="write_in_full">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="buf" nr="2"/>
           <par name="count" nr="3"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -499,6 +551,24 @@
           <par name="nmemb" nr="1"/>
           <par name="size" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>try_to_free_routine</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>try_to_free_routine</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -525,8 +595,8 @@
       </function>
       <function name="xfdopen">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="mode" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -540,8 +610,8 @@
       </function>
       <function name="xfopen">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="mode" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -567,8 +637,8 @@
       </function>
       <function name="xgethostname">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -606,6 +676,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="xmallocz_gently">
@@ -624,8 +702,8 @@
       </function>
       <function name="xmemdupz">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -668,8 +746,8 @@
       </function>
       <function name="xopen">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="oflag" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -683,10 +761,10 @@
       </function>
       <function name="xpread">
         <parameters>
-          <par name="fd" nr="1"/>
-          <par name="buf" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="buf" nr="2"/>
           <par name="offset" nr="4"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -700,9 +778,9 @@
       </function>
       <function name="xread">
         <parameters>
-          <par name="fd" nr="1"/>
-          <par name="buf" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="buf" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -716,9 +794,27 @@
       </function>
       <function name="xrealloc">
         <parameters>
-          <par name="ptr" nr="1"/>
           <par name="size" nr="2"/>
+          <par name="ptr" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>try_to_free_routine</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>try_to_free_routine</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -749,6 +845,24 @@
         <parameters>
           <par name="str" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>try_to_free_routine</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>try_to_free_routine</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -761,8 +875,8 @@
       </function>
       <function name="xstrndup">
         <parameters>
-          <par name="str" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="str" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -776,9 +890,9 @@
       </function>
       <function name="xwrite">
         <parameters>
-          <par name="fd" nr="1"/>
-          <par name="buf" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="buf" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>

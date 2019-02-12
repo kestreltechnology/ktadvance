@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:06.501669"/>
-  <cfile name="send-pack">
-    <data-structures/>
+  <header time="2018-12-19 16:51:24">
+    <application file="send-pack.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="_">
         <parameters>
@@ -34,8 +36,8 @@
       </function>
       <function name="advertise_shallow_grafts_cb">
         <parameters>
-          <par name="graft" nr="1"/>
           <par name="cb" nr="2"/>
+          <par name="graft" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -50,8 +52,8 @@
       <function name="atomic_push_failure">
         <parameters>
           <par name="args" nr="1"/>
-          <par name="remote_refs" nr="2"/>
           <par name="failing_ref" nr="3"/>
+          <par name="remote_refs" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -65,8 +67,8 @@
       </function>
       <function name="check_to_send_update">
         <parameters>
-          <par name="ref" nr="1"/>
           <par name="args" nr="2"/>
+          <par name="ref" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -93,8 +95,8 @@
       <function name="feed_object">
         <parameters>
           <par name="sha1" nr="1"/>
-          <par name="fh" nr="2"/>
           <par name="negative" nr="3"/>
+          <par name="fh" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -108,17 +110,26 @@
       </function>
       <function name="generate_push_cert">
         <parameters>
-          <par name="req_buf" nr="1"/>
-          <par name="remote_refs" nr="2"/>
           <par name="args" nr="3"/>
-          <par name="cap_string" nr="4"/>
+          <par name="req_buf" nr="1"/>
           <par name="push_cert_nonce" nr="5"/>
+          <par name="cap_string" nr="4"/>
+          <par name="remote_refs" nr="2"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -169,8 +180,8 @@
       </function>
       <function name="next_line">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="line" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -180,12 +191,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="option_parse_push_signed">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -200,10 +219,10 @@
       </function>
       <function name="pack_objects">
         <parameters>
+          <par name="args" nr="4"/>
+          <par name="extra" nr="3"/>
           <par name="fd" nr="1"/>
           <par name="refs" nr="2"/>
-          <par name="extra" nr="3"/>
-          <par name="args" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -262,10 +281,10 @@
       <function name="send_pack">
         <parameters>
           <par name="args" nr="1"/>
-          <par name="fd" nr="2"/>
           <par name="conn" nr="3"/>
-          <par name="remote_refs" nr="4"/>
           <par name="extra_have" nr="5"/>
+          <par name="fd" nr="2"/>
+          <par name="remote_refs" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -279,8 +298,8 @@
       </function>
       <function name="sideband_demux">
         <parameters>
-          <par name="in" nr="1"/>
           <par name="out" nr="2"/>
+          <par name="in" nr="1"/>
           <par name="data" nr="3"/>
         </parameters>
         <postconditions>
@@ -295,9 +314,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -311,8 +330,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

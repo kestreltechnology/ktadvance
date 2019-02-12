@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:07.902768"/>
-  <cfile name="shell">
-    <data-structures/>
+  <header time="2018-12-19 17:07:59">
+    <application file="shell.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="cd_to_homedir">
         <parameters/>
@@ -18,8 +20,8 @@
       </function>
       <function name="cmd_main">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -33,8 +35,8 @@
       </function>
       <function name="do_generic_cmd">
         <parameters>
-          <par name="me" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="me" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -69,6 +71,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>

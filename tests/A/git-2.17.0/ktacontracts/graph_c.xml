@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:58.082559"/>
-  <cfile name="graph">
-    <data-structures/>
+  <header time="2018-12-19 15:55:03">
+    <application file="graph.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="column_colors"/>
+      <gvar name="column_colors_ansi_max"/>
+      <gvar name="column_colors_max"/>
+      <gvar name="default_diffopt"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -22,11 +29,37 @@
         <parameters>
           <par name="color" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>column_colors</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>column_colors</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -71,6 +104,27 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="item"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -153,6 +207,52 @@
         <parameters>
           <par name="opt" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>column_colors_ansi_max</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>column_colors_max</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <ci>column_colors_ansi_max</ci>
+                <cn>65535</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>column_colors_max</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -344,9 +444,9 @@
       </function>
       <function name="graph_pad_horizontally">
         <parameters>
+          <par name="chars_written" nr="3"/>
           <par name="graph" nr="1"/>
           <par name="sb" nr="2"/>
-          <par name="chars_written" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -375,8 +475,8 @@
       </function>
       <function name="graph_set_column_colors">
         <parameters>
-          <par name="colors" nr="1"/>
           <par name="colors_max" nr="2"/>
+          <par name="colors" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -406,6 +506,55 @@
         <parameters>
           <par name="graph" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>default_diffopt</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="line_prefix_length"/>
+                  </addressed-value>
+                  <ci>default_diffopt</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="line_prefix"/>
+                  </addressed-value>
+                  <ci>default_diffopt</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="file"/>
+                  </addressed-value>
+                  <ci>default_diffopt</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -419,8 +568,8 @@
       <function name="graph_show_commit_msg">
         <parameters>
           <par name="graph" nr="1"/>
-          <par name="file" nr="2"/>
           <par name="sb" nr="3"/>
+          <par name="file" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -450,6 +599,55 @@
         <parameters>
           <par name="graph" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>default_diffopt</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="line_prefix_length"/>
+                  </addressed-value>
+                  <ci>default_diffopt</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="line_prefix"/>
+                  </addressed-value>
+                  <ci>default_diffopt</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="file"/>
+                  </addressed-value>
+                  <ci>default_diffopt</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -464,6 +662,55 @@
         <parameters>
           <par name="graph" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>default_diffopt</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="line_prefix_length"/>
+                  </addressed-value>
+                  <ci>default_diffopt</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="line_prefix"/>
+                  </addressed-value>
+                  <ci>default_diffopt</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="file"/>
+                  </addressed-value>
+                  <ci>default_diffopt</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -478,6 +725,55 @@
         <parameters>
           <par name="graph" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>default_diffopt</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="line_prefix_length"/>
+                  </addressed-value>
+                  <ci>default_diffopt</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="line_prefix"/>
+                  </addressed-value>
+                  <ci>default_diffopt</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="file"/>
+                  </addressed-value>
+                  <ci>default_diffopt</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -491,8 +787,8 @@
       <function name="graph_show_strbuf">
         <parameters>
           <par name="graph" nr="1"/>
-          <par name="file" nr="2"/>
           <par name="sb" nr="3"/>
+          <par name="file" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -579,8 +875,8 @@
       </function>
       <function name="next_interesting_parent">
         <parameters>
-          <par name="graph" nr="1"/>
           <par name="orig" nr="2"/>
+          <par name="graph" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -590,12 +886,33 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="item"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="parse_graph_colors_config">
         <parameters>
-          <par name="colors" nr="1"/>
           <par name="string" nr="2"/>
+          <par name="colors" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -609,8 +926,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -624,8 +941,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -668,8 +985,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -683,8 +1000,8 @@
       </function>
       <function name="strbuf_write_column">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
           <par name="col_char" nr="3"/>
         </parameters>
         <postconditions>

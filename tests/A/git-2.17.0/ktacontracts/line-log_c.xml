@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:58.954664"/>
-  <cfile name="line-log">
-    <data-structures/>
+  <header time="2018-12-19 16:02:23">
+    <application file="line-log.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="add_line_range">
         <parameters>
-          <par name="revs" nr="1"/>
-          <par name="commit" nr="2"/>
           <par name="range" nr="3"/>
+          <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -32,12 +34,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="clear_commit_line_range">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,9 +61,9 @@
       </function>
       <function name="collect_diff">
         <parameters>
-          <par name="parent" nr="1"/>
-          <par name="target" nr="2"/>
           <par name="out" nr="3"/>
+          <par name="target" nr="2"/>
+          <par name="parent" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -67,11 +77,11 @@
       </function>
       <function name="collect_diff_cb">
         <parameters>
-          <par name="start_a" nr="1"/>
           <par name="count_a" nr="2"/>
-          <par name="start_b" nr="3"/>
           <par name="count_b" nr="4"/>
+          <par name="start_a" nr="1"/>
           <par name="data" nr="5"/>
+          <par name="start_b" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -86,9 +96,9 @@
       <function name="copy_array">
         <parameters>
           <par name="dst" nr="1"/>
+          <par name="size" nr="4"/>
           <par name="src" nr="2"/>
           <par name="n" nr="3"/>
-          <par name="size" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -129,8 +139,8 @@
       <function name="diff_ranges_filter_touched">
         <parameters>
           <par name="out" nr="1"/>
-          <par name="diff" nr="2"/>
           <par name="rs" nr="3"/>
+          <par name="diff" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -202,8 +212,8 @@
       </function>
       <function name="fill_blob_sha1">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="spec" nr="2"/>
+          <par name="commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -217,8 +227,8 @@
       </function>
       <function name="fill_line_ends">
         <parameters>
-          <par name="spec" nr="1"/>
           <par name="lines" nr="2"/>
+          <par name="spec" nr="1"/>
           <par name="line_ends" nr="3"/>
         </parameters>
         <postconditions>
@@ -289,6 +299,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="line_log_data_clear">
@@ -331,6 +349,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="line_log_data_init">
@@ -349,10 +375,10 @@
       </function>
       <function name="line_log_data_insert">
         <parameters>
+          <par name="end" nr="4"/>
           <par name="list" nr="1"/>
           <par name="path" nr="2"/>
           <par name="begin" nr="3"/>
-          <par name="end" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -366,8 +392,8 @@
       </function>
       <function name="line_log_data_merge">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -395,9 +421,9 @@
       </function>
       <function name="line_log_init">
         <parameters>
+          <par name="args" nr="3"/>
           <par name="rev" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="args" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -441,8 +467,8 @@
       </function>
       <function name="lookup_line_range">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -471,8 +497,8 @@
       </function>
       <function name="nth_line">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="line" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -496,13 +522,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="parse_lines">
         <parameters>
+          <par name="args" nr="3"/>
           <par name="commit" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="args" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -512,18 +546,31 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="next"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="print_line">
         <parameters>
-          <par name="prefix" nr="1"/>
           <par name="first" nr="2"/>
           <par name="line" nr="3"/>
           <par name="ends" nr="4"/>
           <par name="data" nr="5"/>
-          <par name="color" nr="6"/>
-          <par name="reset" nr="7"/>
           <par name="file" nr="8"/>
+          <par name="color" nr="6"/>
+          <par name="prefix" nr="1"/>
+          <par name="reset" nr="7"/>
         </parameters>
         <postconditions>
           <post>
@@ -537,10 +584,10 @@
       </function>
       <function name="process_all_files">
         <parameters>
-          <par name="range_out" nr="1"/>
           <par name="rev" nr="2"/>
-          <par name="queue" nr="3"/>
           <par name="range" nr="4"/>
+          <par name="range_out" nr="1"/>
+          <par name="queue" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -555,8 +602,8 @@
       <function name="process_diff_filepair">
         <parameters>
           <par name="rev" nr="1"/>
-          <par name="pair" nr="2"/>
           <par name="range" nr="3"/>
+          <par name="pair" nr="2"/>
           <par name="diff_out" nr="4"/>
         </parameters>
         <postconditions>
@@ -587,8 +634,8 @@
       <function name="process_ranges_merge_commit">
         <parameters>
           <par name="rev" nr="1"/>
-          <par name="commit" nr="2"/>
           <par name="range" nr="3"/>
+          <par name="commit" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -603,8 +650,8 @@
       <function name="process_ranges_ordinary_commit">
         <parameters>
           <par name="rev" nr="1"/>
-          <par name="commit" nr="2"/>
           <par name="range" nr="3"/>
+          <par name="commit" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -618,10 +665,10 @@
       </function>
       <function name="queue_diffs">
         <parameters>
-          <par name="range" nr="1"/>
           <par name="opt" nr="2"/>
-          <par name="queue" nr="3"/>
+          <par name="range" nr="1"/>
           <par name="commit" nr="4"/>
+          <par name="queue" nr="3"/>
           <par name="parent" nr="5"/>
         </parameters>
         <postconditions>
@@ -652,8 +699,8 @@
       <function name="range_set_append">
         <parameters>
           <par name="rs" nr="1"/>
-          <par name="a" nr="2"/>
           <par name="b" nr="3"/>
+          <par name="a" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -668,8 +715,8 @@
       <function name="range_set_append_unsafe">
         <parameters>
           <par name="rs" nr="1"/>
-          <par name="a" nr="2"/>
           <par name="b" nr="3"/>
+          <par name="a" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -713,8 +760,8 @@
       <function name="range_set_difference">
         <parameters>
           <par name="out" nr="1"/>
-          <par name="a" nr="2"/>
           <par name="b" nr="3"/>
+          <par name="a" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -759,9 +806,9 @@
       <function name="range_set_map_across_diff">
         <parameters>
           <par name="out" nr="1"/>
+          <par name="touched_out" nr="4"/>
           <par name="rs" nr="2"/>
           <par name="diff" nr="3"/>
-          <par name="touched_out" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -821,8 +868,8 @@
       <function name="range_set_union">
         <parameters>
           <par name="out" nr="1"/>
-          <par name="a" nr="2"/>
           <par name="b" nr="3"/>
+          <par name="a" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -836,8 +883,8 @@
       </function>
       <function name="ranges_overlap">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -851,10 +898,10 @@
       </function>
       <function name="sane_qsort">
         <parameters>
-          <par name="base" nr="1"/>
           <par name="nmemb" nr="2"/>
-          <par name="size" nr="3"/>
           <par name="compar" nr="4"/>
+          <par name="size" nr="3"/>
+          <par name="base" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -868,15 +915,45 @@
       </function>
       <function name="search_line_log_data">
         <parameters>
+          <par name="insertion_point" nr="3"/>
           <par name="list" nr="1"/>
           <par name="path" nr="2"/>
-          <par name="insertion_point" nr="3"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ranges">
+                      <field name="ranges"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ranges">
+                      <field name="nr"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -898,8 +975,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>

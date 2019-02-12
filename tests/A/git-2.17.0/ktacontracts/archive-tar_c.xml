@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:44.473600"/>
-  <cfile name="archive-tar">
-    <data-structures/>
+  <header time="2018-12-19 12:02:24">
+    <application file="archive-tar.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="alloc_tar_filters"/>
+      <gvar name="nr_tar_filters"/>
+      <gvar name="offset"/>
+      <gvar name="tar_filters"/>
+    </global-variables>
     <functions>
       <function name="const_error">
         <parameters/>
@@ -18,9 +25,24 @@
       </function>
       <function name="do_write_blocked">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="size" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <lt/>
+                <apply>
+                  <times/>
+                  <ci>offset</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>10240</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -33,9 +55,27 @@
       </function>
       <function name="find_tar_filter">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>tar_filters</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tar_filters</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -44,10 +84,33 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="finish_record">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <lt/>
+                <apply>
+                  <times/>
+                  <ci>offset</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>10240</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -60,8 +123,8 @@
       </function>
       <function name="get_path_prefix">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="pathlen" nr="2"/>
+          <par name="path" nr="1"/>
           <par name="maxlen" nr="3"/>
         </parameters>
         <postconditions>
@@ -76,9 +139,9 @@
       </function>
       <function name="git_tar_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -92,6 +155,24 @@
       </function>
       <function name="init_tar_archiver">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>tar_filters</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tar_filters</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -105,9 +186,9 @@
       <function name="prepare_header">
         <parameters>
           <par name="args" nr="1"/>
-          <par name="header" nr="2"/>
-          <par name="mode" nr="3"/>
           <par name="size" nr="4"/>
+          <par name="mode" nr="3"/>
+          <par name="header" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -121,8 +202,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -136,8 +217,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -167,8 +248,8 @@
       <function name="strbuf_append_ext_header">
         <parameters>
           <par name="sb" nr="1"/>
-          <par name="keyword" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="keyword" nr="2"/>
           <par name="valuelen" nr="4"/>
         </parameters>
         <postconditions>
@@ -184,8 +265,8 @@
       <function name="strbuf_append_ext_header_uint">
         <parameters>
           <par name="sb" nr="1"/>
-          <par name="keyword" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="keyword" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -227,10 +308,96 @@
       </function>
       <function name="tar_filter_config">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="value" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="var" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>tar_filters</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tar_filters</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>alloc_tar_filters</ci>
+                  <cn>16</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>alloc_tar_filters</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>alloc_tar_filters</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>nr_tar_filters</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>tar_filters</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -257,8 +424,8 @@
       </function>
       <function name="write_blocked">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="size" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -273,9 +440,9 @@
       <function name="write_extended_header">
         <parameters>
           <par name="args" nr="1"/>
-          <par name="sha1" nr="2"/>
           <par name="buffer" nr="3"/>
           <par name="size" nr="4"/>
+          <par name="sha1" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -315,8 +482,8 @@
       </function>
       <function name="write_tar_archive">
         <parameters>
-          <par name="ar" nr="1"/>
           <par name="args" nr="2"/>
+          <par name="ar" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -331,10 +498,10 @@
       <function name="write_tar_entry">
         <parameters>
           <par name="args" nr="1"/>
-          <par name="sha1" nr="2"/>
-          <par name="path" nr="3"/>
           <par name="pathlen" nr="4"/>
           <par name="mode" nr="5"/>
+          <par name="sha1" nr="2"/>
+          <par name="path" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -348,8 +515,8 @@
       </function>
       <function name="write_tar_filter_archive">
         <parameters>
-          <par name="ar" nr="1"/>
           <par name="args" nr="2"/>
+          <par name="ar" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -363,6 +530,47 @@
       </function>
       <function name="write_trailer">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <cn>10240</cn>
+                  <ci>offset</ci>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <lt/>
+                <apply>
+                  <times/>
+                  <ci>offset</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>10240</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <ci>offset</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>10240</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

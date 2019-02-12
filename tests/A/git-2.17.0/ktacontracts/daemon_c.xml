@@ -1,15 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:55.366502"/>
-  <cfile name="daemon">
-    <data-structures/>
+  <header time="2018-12-19 15:34:18">
+    <application file="daemon.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="access_hook"/>
+      <gvar name="base_path"/>
+      <gvar name="interpolated_path"/>
+      <gvar name="live_children"/>
+      <gvar name="max_connections"/>
+      <gvar name="ok_paths"/>
+      <gvar name="user_path"/>
+    </global-variables>
     <functions>
       <function name="add_child">
         <parameters>
-          <par name="cld" nr="1"/>
-          <par name="addr" nr="2"/>
           <par name="addrlen" nr="3"/>
+          <par name="addr" nr="2"/>
+          <par name="cld" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>live_children</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -22,8 +47,8 @@
       </function>
       <function name="addrcmp">
         <parameters>
-          <par name="s1" nr="1"/>
           <par name="s2" nr="2"/>
+          <par name="s1" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -78,8 +103,8 @@
       </function>
       <function name="cmd_main">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -107,8 +132,8 @@
       </function>
       <function name="daemon_die">
         <parameters>
-          <par name="err" nr="1"/>
           <par name="params" nr="2"/>
+          <par name="err" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -151,8 +176,8 @@
       </function>
       <function name="enable_service">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="ena" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -179,8 +204,8 @@
       <function name="expand_path">
         <parameters>
           <par name="sb" nr="1"/>
-          <par name="placeholder" nr="2"/>
           <par name="ctx" nr="3"/>
+          <par name="placeholder" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -204,6 +229,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_ip_address">
@@ -218,14 +251,33 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="handle">
         <parameters>
           <par name="incoming" nr="1"/>
-          <par name="addr" nr="2"/>
           <par name="addrlen" nr="3"/>
+          <par name="addr" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>max_connections</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -266,9 +318,9 @@
       </function>
       <function name="ip2str">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="family" nr="1"/>
           <par name="sin" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -323,8 +375,8 @@
       <function name="logreport">
         <parameters>
           <par name="priority" nr="1"/>
-          <par name="err" nr="2"/>
           <par name="params" nr="3"/>
+          <par name="err" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -352,8 +404,8 @@
       </function>
       <function name="make_service_overridable">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="ena" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -367,9 +419,9 @@
       </function>
       <function name="parse_extra_args">
         <parameters>
+          <par name="extra_args" nr="3"/>
           <par name="hi" nr="1"/>
           <par name="env" nr="2"/>
-          <par name="extra_args" nr="3"/>
           <par name="buflen" nr="4"/>
         </parameters>
         <postconditions>
@@ -384,9 +436,9 @@
       </function>
       <function name="parse_host_and_port">
         <parameters>
-          <par name="hostport" nr="1"/>
           <par name="host" nr="2"/>
           <par name="port" nr="3"/>
+          <par name="hostport" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -400,8 +452,8 @@
       </function>
       <function name="parse_host_arg">
         <parameters>
-          <par name="hi" nr="1"/>
           <par name="extra_args" nr="2"/>
+          <par name="hi" nr="1"/>
           <par name="buflen" nr="3"/>
         </parameters>
         <postconditions>
@@ -419,6 +471,86 @@
           <par name="directory" nr="1"/>
           <par name="hi" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>ok_paths</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>user_path</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>interpolated_path</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>ok_paths</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>user_path</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>base_path</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>ok_paths</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>base_path</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>user_path</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -431,8 +563,8 @@
       </function>
       <function name="prepare_credentials">
         <parameters>
-          <par name="user_name" nr="1"/>
           <par name="group_name" nr="2"/>
+          <par name="user_name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -460,11 +592,21 @@
       </function>
       <function name="run_access_hook">
         <parameters>
-          <par name="service" nr="1"/>
           <par name="dir" nr="2"/>
-          <par name="path" nr="3"/>
+          <par name="service" nr="1"/>
           <par name="hi" nr="4"/>
+          <par name="path" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>access_hook</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -523,8 +665,8 @@
       </function>
       <function name="serve">
         <parameters>
-          <par name="listen_addr" nr="1"/>
           <par name="listen_port" nr="2"/>
+          <par name="listen_addr" nr="1"/>
           <par name="cred" nr="3"/>
         </parameters>
         <postconditions>
@@ -581,9 +723,9 @@
       </function>
       <function name="setup_named_sock">
         <parameters>
-          <par name="listen_addr" nr="1"/>
-          <par name="listen_port" nr="2"/>
           <par name="socklist" nr="3"/>
+          <par name="listen_port" nr="2"/>
+          <par name="listen_addr" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -597,9 +739,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -613,9 +755,9 @@
       </function>
       <function name="socksetup">
         <parameters>
-          <par name="listen_addr" nr="1"/>
-          <par name="listen_port" nr="2"/>
           <par name="socklist" nr="3"/>
+          <par name="listen_port" nr="2"/>
+          <par name="listen_addr" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -629,8 +771,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -644,8 +786,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -688,8 +830,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

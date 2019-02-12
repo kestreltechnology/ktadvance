@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:00.392930"/>
-  <cfile name="pack-bitmap">
-    <data-structures/>
+  <header time="2018-12-19 16:19:37">
+    <application file="pack-bitmap.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="add_to_include_set">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="sha1" nr="2"/>
           <par name="bitmap_pos" nr="3"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -29,6 +31,15 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -77,9 +88,9 @@
       <function name="count_bitmap_commit_list">
         <parameters>
           <par name="commits" nr="1"/>
-          <par name="trees" nr="2"/>
-          <par name="blobs" nr="3"/>
           <par name="tags" nr="4"/>
+          <par name="blobs" nr="3"/>
+          <par name="trees" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -133,19 +144,54 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="find_objects">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="roots" nr="2"/>
           <par name="seen" nr="3"/>
+          <par name="revs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="word_alloc"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="words"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -211,8 +257,8 @@
       </function>
       <function name="kh_get_sha1">
         <parameters>
-          <par name="h" nr="1"/>
           <par name="key" nr="2"/>
+          <par name="h" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -226,8 +272,8 @@
       </function>
       <function name="kh_get_sha1_pos">
         <parameters>
-          <par name="h" nr="1"/>
           <par name="key" nr="2"/>
+          <par name="h" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -249,6 +295,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="kh_init_sha1_pos">
@@ -265,9 +319,9 @@
       </function>
       <function name="kh_put_sha1">
         <parameters>
-          <par name="h" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="ret" nr="3"/>
+          <par name="key" nr="2"/>
+          <par name="h" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -281,9 +335,9 @@
       </function>
       <function name="kh_put_sha1_pos">
         <parameters>
-          <par name="h" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="ret" nr="3"/>
+          <par name="key" nr="2"/>
+          <par name="h" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -297,8 +351,8 @@
       </function>
       <function name="kh_resize_sha1">
         <parameters>
-          <par name="h" nr="1"/>
           <par name="new_n_buckets" nr="2"/>
+          <par name="h" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -312,8 +366,8 @@
       </function>
       <function name="kh_resize_sha1_pos">
         <parameters>
-          <par name="h" nr="1"/>
           <par name="new_n_buckets" nr="2"/>
+          <par name="h" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -377,6 +431,53 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="bit_size"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="buffer"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="buffer_size"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="open_pack_bitmap">
@@ -414,6 +515,22 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -461,8 +578,8 @@
       </function>
       <function name="read_be32">
         <parameters>
-          <par name="buffer" nr="1"/>
           <par name="pos" nr="2"/>
+          <par name="buffer" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -490,8 +607,8 @@
       </function>
       <function name="read_u8">
         <parameters>
-          <par name="buffer" nr="1"/>
           <par name="pos" nr="2"/>
+          <par name="buffer" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -501,13 +618,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="rebuild_bitmap">
         <parameters>
           <par name="reposition" nr="1"/>
-          <par name="source" nr="2"/>
           <par name="dest" nr="3"/>
+          <par name="source" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -521,9 +647,9 @@
       </function>
       <function name="rebuild_existing_bitmaps">
         <parameters>
-          <par name="mapping" nr="1"/>
           <par name="reused_bitmaps" nr="2"/>
           <par name="show_progress" nr="3"/>
+          <par name="mapping" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -537,8 +663,8 @@
       </function>
       <function name="reuse_partial_packfile_from_bitmap">
         <parameters>
-          <par name="packfile" nr="1"/>
           <par name="entries" nr="2"/>
+          <par name="packfile" nr="1"/>
           <par name="up_to" nr="3"/>
         </parameters>
         <postconditions>
@@ -567,8 +693,8 @@
       </function>
       <function name="should_include">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="_data" nr="2"/>
+          <par name="commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -613,8 +739,8 @@
       <function name="show_object">
         <parameters>
           <par name="object" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -629,8 +755,8 @@
       <function name="show_objects_for_type">
         <parameters>
           <par name="objects" nr="1"/>
-          <par name="type_filter" nr="2"/>
           <par name="object_type___0" nr="3"/>
+          <par name="type_filter" nr="2"/>
           <par name="show_reach" nr="4"/>
         </parameters>
         <postconditions>
@@ -645,8 +771,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -660,10 +786,10 @@
       </function>
       <function name="store_bitmap">
         <parameters>
+          <par name="xor_with" nr="4"/>
+          <par name="sha1" nr="3"/>
           <par name="index___0" nr="1"/>
           <par name="root" nr="2"/>
-          <par name="sha1" nr="3"/>
-          <par name="xor_with" nr="4"/>
           <par name="flags" nr="5"/>
         </parameters>
         <postconditions>
@@ -678,9 +804,9 @@
       </function>
       <function name="strip_suffix">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="str" nr="1"/>
           <par name="suffix" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -694,8 +820,8 @@
       </function>
       <function name="strip_suffix_mem">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="suffix" nr="3"/>
         </parameters>
         <postconditions>
@@ -740,8 +866,8 @@
       <function name="test_show_object">
         <parameters>
           <par name="object" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>

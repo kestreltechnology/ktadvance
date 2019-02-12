@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:49.079538"/>
-  <cfile name="builtin/merge">
-    <data-structures/>
+  <header time="2018-12-19 14:11:13">
+    <application file="builtin/merge.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="branch_mergeoptions"/>
+      <gvar name="option_renormalize"/>
+      <gvar name="use_strategies_alloc"/>
+      <gvar name="use_strategies_nr"/>
+      <gvar name="xopts_alloc"/>
+      <gvar name="xopts_nr"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -13,6 +22,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -52,6 +69,51 @@
         <parameters>
           <par name="s" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>use_strategies_nr</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>use_strategies_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>use_strategies_alloc</ci>
+                  <cn>16</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -64,10 +126,28 @@
       </function>
       <function name="cmd_merge">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>branch_mergeoptions</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>branch_mergeoptions</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -80,17 +160,51 @@
       </function>
       <function name="collect_parents">
         <parameters>
-          <par name="head_commit" nr="1"/>
-          <par name="head_subsumed" nr="2"/>
-          <par name="argc" nr="3"/>
-          <par name="argv" nr="4"/>
           <par name="merge_msg___0" nr="5"/>
+          <par name="head_subsumed" nr="2"/>
+          <par name="head_commit" nr="1"/>
+          <par name="argv" nr="4"/>
+          <par name="argc" nr="3"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="item"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="next"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -110,9 +224,9 @@
       </function>
       <function name="count_diff_files">
         <parameters>
-          <par name="q" nr="1"/>
           <par name="opt" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="q" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -174,9 +288,9 @@
       </function>
       <function name="finish">
         <parameters>
-          <par name="head_commit" nr="1"/>
           <par name="remoteheads" nr="2"/>
           <par name="new_head" nr="3"/>
+          <par name="head_commit" nr="1"/>
           <par name="msg" nr="4"/>
         </parameters>
         <postconditions>
@@ -191,12 +305,12 @@
       </function>
       <function name="finish_automerge">
         <parameters>
-          <par name="head" nr="1"/>
-          <par name="head_subsumed" nr="2"/>
-          <par name="common" nr="3"/>
           <par name="remoteheads" nr="4"/>
           <par name="result_tree" nr="5"/>
           <par name="wt_strategy" nr="6"/>
+          <par name="head" nr="1"/>
+          <par name="head_subsumed" nr="2"/>
+          <par name="common" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -238,10 +352,28 @@
       </function>
       <function name="git_merge_config">
         <parameters>
-          <par name="k" nr="1"/>
-          <par name="v" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="v" nr="2"/>
+          <par name="k" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>branch_mergeoptions</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>branch_mergeoptions</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -254,8 +386,8 @@
       </function>
       <function name="handle_fetch_head">
         <parameters>
-          <par name="remotes" nr="1"/>
           <par name="merge_names" nr="2"/>
+          <par name="remotes" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -313,8 +445,8 @@
       </function>
       <function name="merge_trivial">
         <parameters>
-          <par name="head" nr="1"/>
           <par name="remoteheads" nr="2"/>
+          <par name="head" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -343,9 +475,9 @@
       <function name="move_array">
         <parameters>
           <par name="dst" nr="1"/>
+          <par name="size" nr="4"/>
           <par name="src" nr="2"/>
           <par name="n" nr="3"/>
-          <par name="size" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -388,8 +520,8 @@
       </function>
       <function name="option_parse_message">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -404,8 +536,8 @@
       </function>
       <function name="option_parse_n">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -421,8 +553,8 @@
       <function name="option_parse_strategy">
         <parameters>
           <par name="opt" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="unset" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -436,10 +568,55 @@
       </function>
       <function name="option_parse_x">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>xopts_nr</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>xopts_alloc</ci>
+                  <cn>16</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>xopts_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -509,8 +686,8 @@
       </function>
       <function name="read_empty">
         <parameters>
-          <par name="sha1" nr="1"/>
           <par name="verbose" nr="2"/>
+          <par name="sha1" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -538,8 +715,8 @@
       </function>
       <function name="read_tree_trivial">
         <parameters>
-          <par name="common" nr="1"/>
           <par name="head" nr="2"/>
+          <par name="common" nr="1"/>
           <par name="one" nr="3"/>
         </parameters>
         <postconditions>
@@ -554,9 +731,9 @@
       </function>
       <function name="reduce_parents">
         <parameters>
-          <par name="head_commit" nr="1"/>
-          <par name="head_subsumed" nr="2"/>
           <par name="remoteheads" nr="3"/>
+          <par name="head_subsumed" nr="2"/>
+          <par name="head_commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -570,8 +747,8 @@
       </function>
       <function name="reset_hard">
         <parameters>
-          <par name="sha1" nr="1"/>
           <par name="verbose" nr="2"/>
+          <par name="sha1" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -585,8 +762,8 @@
       </function>
       <function name="restore_state">
         <parameters>
-          <par name="head" nr="1"/>
           <par name="stash" nr="2"/>
+          <par name="head" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -628,9 +805,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -644,8 +821,8 @@
       </function>
       <function name="squash_message">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="remoteheads" nr="2"/>
+          <par name="commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -659,8 +836,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -674,8 +851,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -689,8 +866,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -733,8 +910,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -760,11 +937,22 @@
       </function>
       <function name="try_merge_strategy">
         <parameters>
-          <par name="strategy" nr="1"/>
-          <par name="common" nr="2"/>
           <par name="remoteheads" nr="3"/>
+          <par name="strategy" nr="1"/>
           <par name="head" nr="4"/>
+          <par name="common" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>option_renormalize</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

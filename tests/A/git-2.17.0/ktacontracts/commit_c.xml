@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:52.711791"/>
-  <cfile name="commit">
-    <data-structures/>
+  <header time="2018-12-19 14:51:18">
+    <application file="commit.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="commit_graft"/>
+      <gvar name="commit_graft_alloc"/>
+      <gvar name="commit_graft_nr"/>
+      <gvar name="commit_type"/>
+      <gvar name="git_commit_encoding"/>
+      <gvar name="gpg_sig_header_len"/>
+      <gvar name="stat_author_date_slabrealloc"/>
+      <gvar name="stat_buffer_slabrealloc"/>
+      <gvar name="stat_indegree_slabrealloc"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -13,6 +25,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -50,8 +70,8 @@
       </function>
       <function name="author_date_slab_at">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -61,14 +81,48 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="author_date_slab_at_peek">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="s" nr="1"/>
           <par name="add_if_missing" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>stat_author_date_slabrealloc</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -81,8 +135,8 @@
       </function>
       <function name="buffer_slab_at">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -92,14 +146,37 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="buffer_slab_at_peek">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="s" nr="1"/>
           <par name="add_if_missing" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>stat_buffer_slabrealloc</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -112,14 +189,40 @@
       </function>
       <function name="buffer_slab_peek">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="buffer"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="size"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -219,6 +322,38 @@
         <parameters>
           <par name="sha1" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>commit_graft</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>commit_graft_nr</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>commit_graft_nr</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -231,8 +366,8 @@
       </function>
       <function name="commit_graft_sha1_access">
         <parameters>
-          <par name="index___0" nr="1"/>
           <par name="table" nr="2"/>
+          <par name="index___0" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -246,8 +381,8 @@
       </function>
       <function name="commit_list_append">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="next" nr="2"/>
+          <par name="commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -257,12 +392,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="commit_list_compare_by_date">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -283,6 +426,15 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -315,6 +467,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="commit_list_insert_by_date">
@@ -334,8 +494,8 @@
       </function>
       <function name="commit_list_set_next">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="next" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -363,13 +523,13 @@
       </function>
       <function name="commit_tree">
         <parameters>
-          <par name="msg" nr="1"/>
-          <par name="msg_len" nr="2"/>
-          <par name="tree" nr="3"/>
-          <par name="parents" nr="4"/>
-          <par name="ret" nr="5"/>
           <par name="author" nr="6"/>
           <par name="sign_commit" nr="7"/>
+          <par name="msg_len" nr="2"/>
+          <par name="parents" nr="4"/>
+          <par name="ret" nr="5"/>
+          <par name="msg" nr="1"/>
+          <par name="tree" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -383,15 +543,33 @@
       </function>
       <function name="commit_tree_extended">
         <parameters>
-          <par name="msg" nr="1"/>
-          <par name="msg_len" nr="2"/>
-          <par name="tree" nr="3"/>
-          <par name="parents" nr="4"/>
-          <par name="ret" nr="5"/>
           <par name="author" nr="6"/>
           <par name="sign_commit" nr="7"/>
+          <par name="msg_len" nr="2"/>
+          <par name="parents" nr="4"/>
+          <par name="ret" nr="5"/>
+          <par name="msg" nr="1"/>
+          <par name="tree" nr="3"/>
           <par name="extra" nr="8"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>git_commit_encoding</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>commit_type</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -405,8 +583,8 @@
       <function name="compare_commits_by_author_date">
         <parameters>
           <par name="a_" nr="1"/>
-          <par name="b_" nr="2"/>
           <par name="cb_data" nr="3"/>
+          <par name="b_" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -449,9 +627,9 @@
       <function name="copy_array">
         <parameters>
           <par name="dst" nr="1"/>
+          <par name="size" nr="4"/>
           <par name="src" nr="2"/>
           <par name="n" nr="3"/>
-          <par name="size" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -497,6 +675,30 @@
           <par name="buf" nr="1"/>
           <par name="keyid" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>gpg_sig_header_len</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <ci>gpg_sig_header_len</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>7</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -509,9 +711,9 @@
       </function>
       <function name="excluded_header_field">
         <parameters>
-          <par name="field" nr="1"/>
           <par name="len" nr="2"/>
           <par name="exclude" nr="3"/>
+          <par name="field" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -525,9 +727,9 @@
       </function>
       <function name="find_commit_header">
         <parameters>
+          <par name="out_len" nr="3"/>
           <par name="msg" nr="1"/>
           <par name="key" nr="2"/>
-          <par name="out_len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -541,8 +743,8 @@
       </function>
       <function name="find_commit_subject">
         <parameters>
-          <par name="commit_buffer" nr="1"/>
           <par name="subject" nr="2"/>
+          <par name="commit_buffer" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -556,8 +758,8 @@
       </function>
       <function name="find_invalid_utf8">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -571,9 +773,27 @@
       </function>
       <function name="for_each_commit_graft">
         <parameters>
-          <par name="fn" nr="1"/>
           <par name="cb_data" nr="2"/>
+          <par name="fn" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>commit_graft</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>commit_graft</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -670,6 +890,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_merge_bases">
@@ -689,9 +925,9 @@
       </function>
       <function name="get_merge_bases_many">
         <parameters>
+          <par name="twos" nr="3"/>
           <par name="one" nr="1"/>
           <par name="n" nr="2"/>
-          <par name="twos" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -705,10 +941,10 @@
       </function>
       <function name="get_merge_bases_many_0">
         <parameters>
-          <par name="one" nr="1"/>
-          <par name="n" nr="2"/>
           <par name="twos" nr="3"/>
           <par name="cleanup" nr="4"/>
+          <par name="one" nr="1"/>
+          <par name="n" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -722,9 +958,9 @@
       </function>
       <function name="get_merge_bases_many_dirty">
         <parameters>
+          <par name="twos" nr="3"/>
           <par name="one" nr="1"/>
           <par name="n" nr="2"/>
-          <par name="twos" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -766,8 +1002,8 @@
       </function>
       <function name="handle_signed_tag">
         <parameters>
-          <par name="parent" nr="1"/>
           <par name="tail" nr="2"/>
+          <par name="parent" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -796,8 +1032,8 @@
       </function>
       <function name="ignore_non_trailer">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -826,8 +1062,8 @@
       </function>
       <function name="in_merge_bases_many">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="nr_reference" nr="2"/>
+          <par name="commit" nr="1"/>
           <par name="reference" nr="3"/>
         </parameters>
         <postconditions>
@@ -842,8 +1078,8 @@
       </function>
       <function name="indegree_slab_at">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -853,14 +1089,48 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="indegree_slab_at_peek">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="s" nr="1"/>
           <par name="add_if_missing" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>stat_indegree_slabrealloc</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -887,8 +1157,8 @@
       </function>
       <function name="init_author_date_slab_with_stride">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="stride" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -916,8 +1186,8 @@
       </function>
       <function name="init_indegree_slab_with_stride">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="stride" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -931,8 +1201,8 @@
       </function>
       <function name="is_descendant_of">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="with_commit" nr="2"/>
+          <par name="commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -962,6 +1232,24 @@
         <parameters>
           <par name="oid" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>commit_graft</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>commit_graft</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -970,12 +1258,25 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr_parent"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="lookup_commit_or_die">
         <parameters>
-          <par name="oid" nr="1"/>
           <par name="ref_name" nr="2"/>
+          <par name="oid" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -996,6 +1297,29 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="object">
+                      <field name="parsed"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -1032,9 +1356,9 @@
       </function>
       <function name="merge_bases_many">
         <parameters>
+          <par name="twos" nr="3"/>
           <par name="one" nr="1"/>
           <par name="n" nr="2"/>
-          <par name="twos" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1044,14 +1368,27 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="next"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="move_array">
         <parameters>
           <par name="dst" nr="1"/>
+          <par name="size" nr="4"/>
           <par name="src" nr="2"/>
           <par name="n" nr="3"/>
-          <par name="size" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1080,15 +1417,31 @@
       </function>
       <function name="paint_down_to_common">
         <parameters>
+          <par name="twos" nr="3"/>
           <par name="one" nr="1"/>
           <par name="n" nr="2"/>
-          <par name="twos" nr="3"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1170,9 +1523,9 @@
       </function>
       <function name="parse_signed_commit">
         <parameters>
-          <par name="commit" nr="1"/>
-          <par name="payload" nr="2"/>
           <par name="signature" nr="3"/>
+          <par name="payload" nr="2"/>
+          <par name="commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1193,6 +1546,55 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="object">
+                      <field name="flags"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="parents"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="date"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -1296,19 +1698,35 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1359,9 +1777,112 @@
       </function>
       <function name="register_commit_graft">
         <parameters>
-          <par name="graft" nr="1"/>
           <par name="ignore_dups" nr="2"/>
+          <par name="graft" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>commit_graft</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>commit_graft</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>commit_graft_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <apply>
+                    <plus/>
+                    <ci>commit_graft_nr</ci>
+                    <cn>1</cn>
+                  </apply>
+                  <cn>-2</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>commit_graft_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>commit_graft_nr</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>commit_graft_alloc</ci>
+                  <cn>16</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>commit_graft</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1374,8 +1895,8 @@
       </function>
       <function name="remove_redundant">
         <parameters>
-          <par name="array" nr="1"/>
           <par name="cnt" nr="2"/>
+          <par name="array" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1403,9 +1924,9 @@
       </function>
       <function name="set_commit_buffer">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="buffer" nr="2"/>
           <par name="size" nr="3"/>
+          <par name="commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1420,8 +1941,8 @@
       <function name="set_merge_remote_desc">
         <parameters>
           <par name="commit" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="obj" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1435,8 +1956,8 @@
       </function>
       <function name="sort_in_topological_order">
         <parameters>
-          <par name="list" nr="1"/>
           <par name="sort_order" nr="2"/>
+          <par name="list" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1450,8 +1971,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1465,8 +1986,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1480,8 +2001,8 @@
       </function>
       <function name="standard_header_field">
         <parameters>
-          <par name="field" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="field" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1495,8 +2016,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1539,8 +2060,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1556,6 +2077,37 @@
         <parameters>
           <par name="oid" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>commit_graft</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>commit_graft</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>commit_graft_nr</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1568,8 +2120,8 @@
       </function>
       <function name="unuse_commit_buffer">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="buffer" nr="2"/>
+          <par name="commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>

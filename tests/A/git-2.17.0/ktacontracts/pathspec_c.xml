@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:01.264482"/>
-  <cfile name="pathspec">
-    <data-structures/>
+  <header time="2018-12-19 16:25:41">
+    <application file="pathspec.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="_">
         <parameters>
@@ -20,9 +22,9 @@
       </function>
       <function name="add_pathspec_matches_against_index">
         <parameters>
+          <par name="seen" nr="3"/>
           <par name="pathspec" nr="1"/>
           <par name="istate" nr="2"/>
-          <par name="seen" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,8 +53,8 @@
       <function name="ce_path_match">
         <parameters>
           <par name="ce" nr="1"/>
-          <par name="pathspec" nr="2"/>
           <par name="seen" nr="3"/>
+          <par name="pathspec" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -81,9 +83,9 @@
       <function name="copy_array">
         <parameters>
           <par name="dst" nr="1"/>
+          <par name="size" nr="4"/>
           <par name="src" nr="2"/>
           <par name="n" nr="3"/>
-          <par name="size" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -149,6 +151,15 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_icase_global">
@@ -190,10 +201,10 @@
       <function name="init_pathspec_item">
         <parameters>
           <par name="item" nr="1"/>
-          <par name="flags" nr="2"/>
-          <par name="prefix" nr="3"/>
           <par name="prefixlen" nr="4"/>
           <par name="elt" nr="5"/>
+          <par name="flags" nr="2"/>
+          <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -221,10 +232,10 @@
       </function>
       <function name="parse_element_magic">
         <parameters>
-          <par name="magic" nr="1"/>
-          <par name="prefix_len" nr="2"/>
           <par name="item" nr="3"/>
           <par name="elem" nr="4"/>
+          <par name="prefix_len" nr="2"/>
+          <par name="magic" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -234,14 +245,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="parse_long_magic">
         <parameters>
-          <par name="magic" nr="1"/>
-          <par name="prefix_len" nr="2"/>
           <par name="item" nr="3"/>
           <par name="elem" nr="4"/>
+          <par name="prefix_len" nr="2"/>
+          <par name="magic" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -255,11 +274,11 @@
       </function>
       <function name="parse_pathspec">
         <parameters>
-          <par name="pathspec" nr="1"/>
+          <par name="argv" nr="5"/>
           <par name="magic_mask" nr="2"/>
+          <par name="pathspec" nr="1"/>
           <par name="flags" nr="3"/>
           <par name="prefix" nr="4"/>
-          <par name="argv" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -288,8 +307,8 @@
       </function>
       <function name="parse_short_magic">
         <parameters>
-          <par name="magic" nr="1"/>
           <par name="elem" nr="2"/>
+          <par name="magic" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -318,8 +337,8 @@
       </function>
       <function name="prefix_magic">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="prefixlen" nr="2"/>
+          <par name="sb" nr="1"/>
           <par name="magic" nr="3"/>
         </parameters>
         <postconditions>
@@ -334,10 +353,10 @@
       </function>
       <function name="sane_qsort">
         <parameters>
-          <par name="base" nr="1"/>
           <par name="nmemb" nr="2"/>
-          <par name="size" nr="3"/>
           <par name="compar" nr="4"/>
+          <par name="size" nr="3"/>
+          <par name="base" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -351,8 +370,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -366,8 +385,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -410,8 +429,8 @@
       </function>
       <function name="strcspn_escaped">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="stop" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>

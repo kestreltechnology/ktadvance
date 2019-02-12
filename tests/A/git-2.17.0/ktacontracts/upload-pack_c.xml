@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:10.237400"/>
-  <cfile name="upload-pack">
-    <data-structures/>
+  <header time="2018-12-19 17:37:17">
+    <application file="upload-pack.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="capabilities"/>
+      <gvar name="use_sideband"/>
+    </global-variables>
     <functions>
       <function name="check_non_tip">
         <parameters/>
@@ -18,10 +23,10 @@
       </function>
       <function name="check_ref">
         <parameters>
-          <par name="refname_full" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="oid" nr="2"/>
+          <par name="refname_full" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -35,8 +40,8 @@
       </function>
       <function name="cmd_main">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv___0" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -74,9 +79,9 @@
       </function>
       <function name="deepen">
         <parameters>
+          <par name="shallows" nr="3"/>
           <par name="depth" nr="1"/>
           <par name="deepen_relative___0" nr="2"/>
-          <par name="shallows" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -90,9 +95,9 @@
       </function>
       <function name="deepen_by_rev_list">
         <parameters>
+          <par name="shallows" nr="3"/>
           <par name="ac" nr="1"/>
           <par name="av" nr="2"/>
-          <par name="shallows" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -122,10 +127,10 @@
       </function>
       <function name="find_symref">
         <parameters>
-          <par name="refname" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="refname" nr="1"/>
+          <par name="oid" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -181,8 +186,8 @@
       </function>
       <function name="got_oid">
         <parameters>
-          <par name="hex" nr="1"/>
           <par name="oid" nr="2"/>
+          <par name="hex" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -225,8 +230,8 @@
       <function name="mark_our_ref">
         <parameters>
           <par name="refname" nr="1"/>
-          <par name="refname_full" nr="2"/>
           <par name="oid" nr="3"/>
+          <par name="refname_full" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -290,10 +295,38 @@
       </function>
       <function name="send_client_data">
         <parameters>
-          <par name="fd" nr="1"/>
-          <par name="data" nr="2"/>
           <par name="sz" nr="3"/>
+          <par name="data" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>use_sideband</ci>
+                  <cn>5</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>use_sideband</ci>
+                  <cn>5</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -306,11 +339,21 @@
       </function>
       <function name="send_ref">
         <parameters>
-          <par name="refname" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="refname" nr="1"/>
+          <par name="oid" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>capabilities</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -351,9 +394,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -379,9 +422,9 @@
       </function>
       <function name="upload_pack_config">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="value" nr="2"/>
           <par name="unused" nr="3"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -395,8 +438,8 @@
       </function>
       <function name="write_one_shallow">
         <parameters>
-          <par name="graft" nr="1"/>
           <par name="cb_data" nr="2"/>
+          <par name="graft" nr="1"/>
         </parameters>
         <postconditions>
           <post>

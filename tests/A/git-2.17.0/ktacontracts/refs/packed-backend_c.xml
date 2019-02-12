@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:03.128821"/>
-  <cfile name="refs/packed-backend">
-    <data-structures/>
+  <header time="2018-12-19 16:40:44">
+    <application file="refs/packed-backend.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="_">
         <parameters>
@@ -76,8 +78,8 @@
       </function>
       <function name="cmp_packed_ref_records">
         <parameters>
-          <par name="v1" nr="1"/>
           <par name="v2" nr="2"/>
+          <par name="v1" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -91,8 +93,8 @@
       </function>
       <function name="cmp_record_to_refname">
         <parameters>
-          <par name="rec" nr="1"/>
           <par name="refname" nr="2"/>
+          <par name="rec" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -132,9 +134,9 @@
       </function>
       <function name="die_invalid_line">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="p" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="p" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -148,9 +150,9 @@
       </function>
       <function name="die_unterminated_line">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="p" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="p" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -164,8 +166,8 @@
       </function>
       <function name="find_end_of_record">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="end" nr="2"/>
+          <par name="p" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -179,8 +181,8 @@
       </function>
       <function name="find_reference_location">
         <parameters>
-          <par name="snapshot" nr="1"/>
           <par name="refname" nr="2"/>
+          <par name="snapshot" nr="1"/>
           <par name="mustexist" nr="3"/>
         </parameters>
         <postconditions>
@@ -206,6 +208,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_snapshot">
@@ -217,6 +227,53 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="eof"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="start"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="referrers"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -383,10 +440,10 @@
       </function>
       <function name="packed_copy_ref">
         <parameters>
+          <par name="logmsg" nr="4"/>
           <par name="ref_store" nr="1"/>
           <par name="oldrefname" nr="2"/>
           <par name="newrefname" nr="3"/>
-          <par name="logmsg" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -417,10 +474,10 @@
       </function>
       <function name="packed_create_symref">
         <parameters>
+          <par name="logmsg" nr="4"/>
+          <par name="target" nr="3"/>
           <par name="ref_store" nr="1"/>
           <par name="refname" nr="2"/>
-          <par name="target" nr="3"/>
-          <par name="logmsg" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -450,8 +507,8 @@
       <function name="packed_delete_refs">
         <parameters>
           <par name="ref_store" nr="1"/>
-          <par name="msg" nr="2"/>
           <par name="refnames" nr="3"/>
+          <par name="msg" nr="2"/>
           <par name="flags" nr="4"/>
         </parameters>
         <postconditions>
@@ -478,14 +535,61 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="path"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="tempfile"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="snapshot"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="packed_for_each_reflog_ent">
         <parameters>
           <par name="ref_store" nr="1"/>
+          <par name="cb_data" nr="4"/>
           <par name="refname" nr="2"/>
           <par name="fn" nr="3"/>
-          <par name="cb_data" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -500,9 +604,9 @@
       <function name="packed_for_each_reflog_ent_reverse">
         <parameters>
           <par name="ref_store" nr="1"/>
+          <par name="cb_data" nr="4"/>
           <par name="refname" nr="2"/>
           <par name="fn" nr="3"/>
-          <par name="cb_data" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -609,8 +713,8 @@
       <function name="packed_ref_iterator_begin">
         <parameters>
           <par name="ref_store" nr="1"/>
-          <par name="prefix" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="prefix" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -620,12 +724,33 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="vtable"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="packed_ref_iterator_peel">
         <parameters>
-          <par name="ref_iterator" nr="1"/>
           <par name="peeled" nr="2"/>
+          <par name="ref_iterator" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -639,8 +764,8 @@
       </function>
       <function name="packed_ref_store_create">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="store_flags" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -672,11 +797,11 @@
           <par name="ref_store" nr="1"/>
           <par name="refname" nr="2"/>
           <par name="oid" nr="3"/>
+          <par name="policy_cb_data" nr="8"/>
+          <par name="should_prune_fn" nr="6"/>
           <par name="flags" nr="4"/>
           <par name="prepare_fn" nr="5"/>
-          <par name="should_prune_fn" nr="6"/>
           <par name="cleanup_fn" nr="7"/>
-          <par name="policy_cb_data" nr="8"/>
         </parameters>
         <postconditions>
           <post>
@@ -748,10 +873,10 @@
       </function>
       <function name="packed_rename_ref">
         <parameters>
+          <par name="logmsg" nr="4"/>
           <par name="ref_store" nr="1"/>
           <par name="oldrefname" nr="2"/>
           <par name="newrefname" nr="3"/>
-          <par name="logmsg" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -856,10 +981,10 @@
       </function>
       <function name="sane_qsort">
         <parameters>
-          <par name="base" nr="1"/>
           <par name="nmemb" nr="2"/>
-          <par name="size" nr="3"/>
           <par name="compar" nr="4"/>
+          <par name="size" nr="3"/>
+          <par name="base" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -873,9 +998,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -903,8 +1028,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -933,8 +1058,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -976,10 +1101,10 @@
       </function>
       <function name="write_packed_entry">
         <parameters>
-          <par name="fh" nr="1"/>
           <par name="refname" nr="2"/>
           <par name="oid" nr="3"/>
           <par name="peeled" nr="4"/>
+          <par name="fh" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -993,8 +1118,8 @@
       </function>
       <function name="write_with_updates">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="updates" nr="2"/>
+          <par name="refs" nr="1"/>
           <par name="err" nr="3"/>
         </parameters>
         <postconditions>

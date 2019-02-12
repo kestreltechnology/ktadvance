@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:05.576529"/>
-  <cfile name="remote">
-    <data-structures/>
+  <header time="2018-12-19 16:45:46">
+    <application file="remote.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="branches"/>
+      <gvar name="branches_alloc"/>
+      <gvar name="branches_nr"/>
+      <gvar name="current_branch"/>
+      <gvar name="remotes"/>
+      <gvar name="remotes_alloc"/>
+      <gvar name="remotes_nr"/>
+      <gvar name="startup_info"/>
+      <gvar name="tag_refspec"/>
+    </global-variables>
     <functions>
       <function name="Q_">
         <parameters>
           <par name="msgid" nr="1"/>
-          <par name="plu" nr="2"/>
           <par name="n" nr="3"/>
+          <par name="plu" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -32,6 +44,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="add_cas_entry">
@@ -48,12 +68,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="add_fetch_refspec">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="ref" nr="2"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -67,8 +95,8 @@
       </function>
       <function name="add_instead_of">
         <parameters>
-          <par name="rewrite" nr="1"/>
           <par name="instead_of" nr="2"/>
+          <par name="rewrite" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -97,9 +125,9 @@
       </function>
       <function name="add_missing_tags">
         <parameters>
-          <par name="src" nr="1"/>
           <par name="dst" nr="2"/>
           <par name="dst_tail" nr="3"/>
+          <par name="src" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -115,6 +143,24 @@
         <parameters>
           <par name="remote" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>tag_refspec</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tag_refspec</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -127,8 +173,8 @@
       </function>
       <function name="add_push_refspec">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="ref" nr="2"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -142,8 +188,8 @@
       </function>
       <function name="add_pushurl">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="pushurl" nr="2"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -157,8 +203,8 @@
       </function>
       <function name="add_pushurl_alias">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="url" nr="2"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -172,8 +218,8 @@
       </function>
       <function name="add_to_tips">
         <parameters>
-          <par name="tips" nr="1"/>
           <par name="oid" nr="2"/>
+          <par name="tips" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -187,8 +233,8 @@
       </function>
       <function name="add_url">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="url" nr="2"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -202,8 +248,8 @@
       </function>
       <function name="add_url_alias">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="url" nr="2"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -217,6 +263,24 @@
       </function>
       <function name="alias_all_urls">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>remotes</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>remotes</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -229,8 +293,8 @@
       </function>
       <function name="alias_url">
         <parameters>
-          <par name="url" nr="1"/>
           <par name="r" nr="2"/>
+          <par name="url" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -266,12 +330,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="alloc_ref_with_prefix">
         <parameters>
-          <par name="prefix" nr="1"/>
           <par name="prefixlen" nr="2"/>
+          <par name="prefix" nr="1"/>
           <par name="name" nr="3"/>
         </parameters>
         <postconditions>
@@ -287,8 +359,8 @@
       <function name="apply_cas">
         <parameters>
           <par name="cas" nr="1"/>
-          <par name="remote" nr="2"/>
           <par name="ref" nr="3"/>
+          <par name="remote" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -318,8 +390,8 @@
       </function>
       <function name="apply_refspecs">
         <parameters>
-          <par name="refspecs" nr="1"/>
           <par name="nr_refspec" nr="2"/>
+          <par name="refspecs" nr="1"/>
           <par name="name" nr="3"/>
         </parameters>
         <postconditions>
@@ -327,6 +399,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -407,8 +487,8 @@
       </function>
       <function name="branch_merge_matches">
         <parameters>
-          <par name="branch" nr="1"/>
           <par name="i" nr="2"/>
+          <par name="branch" nr="1"/>
           <par name="refname" nr="3"/>
         </parameters>
         <postconditions>
@@ -423,9 +503,9 @@
       </function>
       <function name="check_push_refs">
         <parameters>
-          <par name="src" nr="1"/>
           <par name="nr_refspec" nr="2"/>
           <par name="refspec_names" nr="3"/>
+          <par name="src" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -475,6 +555,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="copy_ref_list">
@@ -494,8 +582,8 @@
       <function name="count_refspec_match">
         <parameters>
           <par name="pattern" nr="1"/>
-          <par name="refs" nr="2"/>
           <par name="matched_ref" nr="3"/>
+          <par name="refs" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -509,8 +597,8 @@
       </function>
       <function name="error_buf">
         <parameters>
-          <par name="err" nr="1"/>
           <par name="fmt" nr="2"/>
+          <par name="err" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -535,6 +623,45 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="peer_ref"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="remote_status"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="symref"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="find_ref_by_name_abbrev">
@@ -550,6 +677,45 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="peer_ref"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="remote_status"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="symref"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="for_each_remote">
@@ -557,6 +723,24 @@
           <par name="fn" nr="1"/>
           <par name="priv" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>remotes</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>remotes</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -570,8 +754,8 @@
       <function name="format_tracking_info">
         <parameters>
           <par name="branch" nr="1"/>
-          <par name="sb" nr="2"/>
           <par name="abf" nr="3"/>
+          <par name="sb" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -628,8 +812,8 @@
       </function>
       <function name="get_expanded_map">
         <parameters>
-          <par name="remote_refs" nr="1"/>
           <par name="refspec" nr="2"/>
+          <par name="remote_refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -643,10 +827,10 @@
       </function>
       <function name="get_fetch_map">
         <parameters>
-          <par name="remote_refs" nr="1"/>
+          <par name="missing_ok" nr="4"/>
           <par name="refspec" nr="2"/>
           <par name="tail" nr="3"/>
-          <par name="missing_ok" nr="4"/>
+          <par name="remote_refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -686,18 +870,26 @@
       </function>
       <function name="get_ref_match">
         <parameters>
+          <par name="ret_pat" nr="6"/>
+          <par name="ref" nr="3"/>
+          <par name="direction" nr="5"/>
           <par name="rs" nr="1"/>
           <par name="rs_nr" nr="2"/>
-          <par name="ref" nr="3"/>
           <par name="send_mirror" nr="4"/>
-          <par name="direction" nr="5"/>
-          <par name="ret_pat" nr="6"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -720,9 +912,9 @@
       </function>
       <function name="get_stale_heads">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="ref_count" nr="2"/>
           <par name="fetch_map" nr="3"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -736,10 +928,10 @@
       </function>
       <function name="get_stale_heads_cb">
         <parameters>
+          <par name="cb_data" nr="4"/>
           <par name="refname" nr="1"/>
           <par name="oid" nr="2"/>
           <par name="flags" nr="3"/>
-          <par name="cb_data" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -767,14 +959,22 @@
       </function>
       <function name="guess_ref">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="peer" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -798,9 +998,9 @@
       </function>
       <function name="handle_config">
         <parameters>
-          <par name="key" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -859,8 +1059,8 @@
       </function>
       <function name="hashmap_entry_init">
         <parameters>
-          <par name="entry" nr="1"/>
           <par name="hash" nr="2"/>
+          <par name="entry" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -938,18 +1138,160 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="make_branch">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>branches_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>branches_alloc</ci>
+                  <cn>16</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>branches</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>branches</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>branches_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>branches_nr</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>branches</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="merge_name"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="merge_alloc"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="merge_nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -957,14 +1299,22 @@
       </function>
       <function name="make_linked_ref">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="tail" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -972,14 +1322,303 @@
       </function>
       <function name="make_remote">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>remotes_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>remotes</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>remotes_nr</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>remotes_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>remotes</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>remotes_alloc</ci>
+                  <cn>16</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>remotes</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="uploadpack"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="receivepack"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="push_refspec_nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="push_refspec"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="fetch_refspec"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="fetch_refspec_nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="name"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="push_refspec_alloc"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="pushurl_nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="pushurl"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="pushurl_alloc"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="fetch_refspec_alloc"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="url_nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="url_alloc"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="url"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -987,9 +1626,9 @@
       </function>
       <function name="make_rewrite">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="r" nr="1"/>
           <par name="base" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -999,13 +1638,60 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="instead_of_alloc"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="instead_of_nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="instead_of"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="match_explicit">
         <parameters>
-          <par name="src" nr="1"/>
           <par name="dst" nr="2"/>
           <par name="dst_tail" nr="3"/>
+          <par name="src" nr="1"/>
           <par name="rs" nr="4"/>
         </parameters>
         <postconditions>
@@ -1020,10 +1706,10 @@
       </function>
       <function name="match_explicit_lhs">
         <parameters>
+          <par name="allocated_match" nr="4"/>
           <par name="src" nr="1"/>
           <par name="rs" nr="2"/>
           <par name="match" nr="3"/>
-          <par name="allocated_match" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1037,9 +1723,9 @@
       </function>
       <function name="match_explicit_refs">
         <parameters>
-          <par name="src" nr="1"/>
           <par name="dst" nr="2"/>
           <par name="dst_tail" nr="3"/>
+          <par name="src" nr="1"/>
           <par name="rs" nr="4"/>
           <par name="rs_nr" nr="5"/>
         </parameters>
@@ -1055,10 +1741,10 @@
       </function>
       <function name="match_name_with_pattern">
         <parameters>
+          <par name="result" nr="4"/>
+          <par name="value" nr="3"/>
           <par name="key" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="value" nr="3"/>
-          <par name="result" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1072,9 +1758,9 @@
       </function>
       <function name="match_push_refs">
         <parameters>
-          <par name="src" nr="1"/>
-          <par name="dst" nr="2"/>
           <par name="nr_refspec" nr="3"/>
+          <par name="dst" nr="2"/>
+          <par name="src" nr="1"/>
           <par name="refspec" nr="4"/>
           <par name="flags" nr="5"/>
         </parameters>
@@ -1134,10 +1820,10 @@
       </function>
       <function name="one_local_ref">
         <parameters>
-          <par name="refname" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="refname" nr="1"/>
+          <par name="oid" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1207,13 +1893,29 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="parse_refspec_internal">
         <parameters>
           <par name="nr_refspec" nr="1"/>
-          <par name="refspec" nr="2"/>
           <par name="fetch" nr="3"/>
+          <par name="refspec" nr="2"/>
           <par name="verify" nr="4"/>
         </parameters>
         <postconditions>
@@ -1224,12 +1926,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="parseopt_push_cas_option">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -1244,8 +1954,8 @@
       </function>
       <function name="prepare_ref_index">
         <parameters>
-          <par name="ref_index" nr="1"/>
           <par name="ref" nr="2"/>
+          <par name="ref_index" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1259,8 +1969,8 @@
       </function>
       <function name="pushremote_for_branch">
         <parameters>
-          <par name="branch" nr="1"/>
           <par name="explicit" nr="2"/>
+          <par name="branch" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1288,9 +1998,9 @@
       </function>
       <function name="query_refspecs">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="ref_count" nr="2"/>
           <par name="query" nr="3"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1304,10 +2014,10 @@
       </function>
       <function name="query_refspecs_multiple">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="ref_count" nr="2"/>
           <par name="query" nr="3"/>
           <par name="results" nr="4"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1335,6 +2045,37 @@
       </function>
       <function name="read_config">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="have_repository"/>
+                  </addressed-value>
+                  <ci>startup_info</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1390,8 +2131,8 @@
       </function>
       <function name="ref_list_set_next">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="next" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1434,8 +2175,8 @@
       </function>
       <function name="remote_find_tracking">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="refspec" nr="2"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1449,8 +2190,8 @@
       </function>
       <function name="remote_for_branch">
         <parameters>
-          <par name="branch" nr="1"/>
           <par name="explicit" nr="2"/>
+          <par name="branch" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1474,13 +2215,109 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="push_refspec_nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="fetch_refspec_nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="name"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="mirror"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="push"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="fetch"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="remote_get_1">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="get_default" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>current_branch</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1493,8 +2330,8 @@
       </function>
       <function name="remote_has_url">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="url" nr="2"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1508,8 +2345,8 @@
       </function>
       <function name="remote_is_configured">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="in_repo" nr="2"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1523,9 +2360,9 @@
       </function>
       <function name="remote_ref_for_branch">
         <parameters>
+          <par name="explicit" nr="3"/>
           <par name="branch" nr="1"/>
           <par name="for_push" nr="2"/>
-          <par name="explicit" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1539,9 +2376,9 @@
       </function>
       <function name="remote_tracking">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="refname" nr="2"/>
           <par name="oid" nr="3"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1555,10 +2392,10 @@
       </function>
       <function name="remotes_hash_cmp">
         <parameters>
+          <par name="keydata" nr="4"/>
           <par name="unused_cmp_data" nr="1"/>
           <par name="entry" nr="2"/>
           <par name="entry_or_key" nr="3"/>
-          <par name="keydata" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1601,9 +2438,9 @@
       </function>
       <function name="set_ref_status_for_push">
         <parameters>
-          <par name="remote_refs" nr="1"/>
-          <par name="send_mirror" nr="2"/>
           <par name="force_update" nr="3"/>
+          <par name="send_mirror" nr="2"/>
+          <par name="remote_refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1617,9 +2454,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1643,6 +2480,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="sort_ref_list">
@@ -1662,8 +2507,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1677,8 +2522,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1692,10 +2537,10 @@
       </function>
       <function name="stat_tracking_info">
         <parameters>
-          <par name="branch" nr="1"/>
           <par name="num_ours" nr="2"/>
-          <par name="num_theirs" nr="3"/>
           <par name="upstream_name" nr="4"/>
+          <par name="branch" nr="1"/>
+          <par name="num_theirs" nr="3"/>
           <par name="abf" nr="5"/>
         </parameters>
         <postconditions>
@@ -1754,8 +2599,8 @@
       </function>
       <function name="tracking_for_push_dest">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="refname" nr="2"/>
+          <par name="remote" nr="1"/>
           <par name="err" nr="3"/>
         </parameters>
         <postconditions>
@@ -1770,8 +2615,8 @@
       </function>
       <function name="try_explicit_object_name">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="match" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>

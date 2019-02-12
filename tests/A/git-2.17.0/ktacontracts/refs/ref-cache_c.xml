@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:03.194856"/>
-  <cfile name="refs/ref-cache">
-    <data-structures/>
+  <header time="2018-12-19 16:41:32">
+    <application file="refs/ref-cache.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="add_entry_to_dir">
         <parameters>
@@ -64,9 +66,9 @@
       </function>
       <function name="cache_ref_iterator_begin">
         <parameters>
+          <par name="prime_dir" nr="3"/>
           <par name="cache" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="prime_dir" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -80,8 +82,8 @@
       </function>
       <function name="cache_ref_iterator_peel">
         <parameters>
-          <par name="ref_iterator" nr="1"/>
           <par name="peeled" nr="2"/>
+          <par name="ref_iterator" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -109,10 +111,10 @@
       </function>
       <function name="create_dir_entry">
         <parameters>
-          <par name="cache" nr="1"/>
-          <par name="dirname___0" nr="2"/>
-          <par name="len" nr="3"/>
           <par name="incomplete" nr="4"/>
+          <par name="len" nr="3"/>
+          <par name="dirname___0" nr="2"/>
+          <par name="cache" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -126,8 +128,8 @@
       </function>
       <function name="create_ref_cache">
         <parameters>
-          <par name="refs" nr="1"/>
           <par name="fill_ref_dir" nr="2"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -141,9 +143,9 @@
       </function>
       <function name="create_ref_entry">
         <parameters>
+          <par name="flag" nr="3"/>
           <par name="refname" nr="1"/>
           <par name="oid" nr="2"/>
-          <par name="flag" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -166,6 +168,66 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="entries"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="alloc"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="sorted"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -226,6 +288,40 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="entries"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="hashcmp">
@@ -276,9 +372,9 @@
       <function name="move_array">
         <parameters>
           <par name="dst" nr="1"/>
+          <par name="size" nr="4"/>
           <par name="src" nr="2"/>
           <par name="n" nr="3"/>
-          <par name="size" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -352,8 +448,8 @@
       </function>
       <function name="ref_entry_cmp">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -367,8 +463,8 @@
       </function>
       <function name="ref_entry_cmp_sslice">
         <parameters>
-          <par name="key_" nr="1"/>
           <par name="ent_" nr="2"/>
+          <par name="key_" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -397,10 +493,10 @@
       </function>
       <function name="sane_qsort">
         <parameters>
-          <par name="base" nr="1"/>
           <par name="nmemb" nr="2"/>
-          <par name="size" nr="3"/>
           <par name="compar" nr="4"/>
+          <par name="size" nr="3"/>
+          <par name="base" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -415,9 +511,9 @@
       <function name="search_for_subdir">
         <parameters>
           <par name="dir" nr="1"/>
-          <par name="subdirname" nr="2"/>
           <par name="len" nr="3"/>
           <par name="mkdir___0" nr="4"/>
+          <par name="subdirname" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -427,13 +523,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="search_ref_dir">
         <parameters>
           <par name="dir" nr="1"/>
-          <par name="refname" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="refname" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -461,8 +565,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -476,8 +580,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>

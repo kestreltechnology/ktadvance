@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:47.424664"/>
-  <cfile name="builtin/diff">
-    <data-structures/>
+  <header time="2018-12-19 13:31:49">
+    <application file="builtin/diff.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -34,10 +38,10 @@
       </function>
       <function name="builtin_diff_b_f">
         <parameters>
-          <par name="revs" nr="1"/>
-          <par name="argc" nr="2"/>
           <par name="argv" nr="3"/>
+          <par name="revs" nr="1"/>
           <par name="blob" nr="4"/>
+          <par name="argc" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,10 +55,10 @@
       </function>
       <function name="builtin_diff_blobs">
         <parameters>
-          <par name="revs" nr="1"/>
-          <par name="argc" nr="2"/>
           <par name="argv" nr="3"/>
+          <par name="revs" nr="1"/>
           <par name="blob" nr="4"/>
+          <par name="argc" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -68,11 +72,11 @@
       </function>
       <function name="builtin_diff_combined">
         <parameters>
+          <par name="ents" nr="5"/>
+          <par name="argv" nr="3"/>
           <par name="revs" nr="1"/>
           <par name="argc" nr="2"/>
-          <par name="argv" nr="3"/>
           <par name="ent" nr="4"/>
-          <par name="ents" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -86,9 +90,9 @@
       </function>
       <function name="builtin_diff_files">
         <parameters>
+          <par name="argv" nr="3"/>
           <par name="revs" nr="1"/>
           <par name="argc" nr="2"/>
-          <par name="argv" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -102,9 +106,9 @@
       </function>
       <function name="builtin_diff_index">
         <parameters>
+          <par name="argv" nr="3"/>
           <par name="revs" nr="1"/>
           <par name="argc" nr="2"/>
-          <par name="argv" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -118,11 +122,11 @@
       </function>
       <function name="builtin_diff_tree">
         <parameters>
+          <par name="ent0" nr="4"/>
+          <par name="argv" nr="3"/>
+          <par name="ent1" nr="5"/>
           <par name="revs" nr="1"/>
           <par name="argc" nr="2"/>
-          <par name="argv" nr="3"/>
-          <par name="ent0" nr="4"/>
-          <par name="ent1" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -150,10 +154,41 @@
       </function>
       <function name="cmd_diff">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -234,15 +269,15 @@
       </function>
       <function name="stuff_change">
         <parameters>
+          <par name="new_oid_valid" nr="7"/>
+          <par name="new_oid" nr="5"/>
           <par name="opt" nr="1"/>
+          <par name="new_path" nr="9"/>
           <par name="old_mode" nr="2"/>
           <par name="new_mode" nr="3"/>
-          <par name="old_oid" nr="4"/>
-          <par name="new_oid" nr="5"/>
-          <par name="old_oid_valid" nr="6"/>
-          <par name="new_oid_valid" nr="7"/>
           <par name="old_path" nr="8"/>
-          <par name="new_path" nr="9"/>
+          <par name="old_oid" nr="4"/>
+          <par name="old_oid_valid" nr="6"/>
         </parameters>
         <postconditions>
           <post>

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:51.456268"/>
-  <cfile name="builtin/submodule--helper">
-    <data-structures/>
+  <header time="2018-12-19 14:35:53">
+    <application file="builtin/submodule--helper.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -16,12 +20,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="absorb_git_dirs">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -51,8 +63,8 @@
       </function>
       <function name="capture_command">
         <parameters>
-          <par name="cmd" nr="1"/>
           <par name="out" nr="2"/>
+          <par name="cmd" nr="1"/>
           <par name="hint" nr="3"/>
         </parameters>
         <postconditions>
@@ -67,8 +79,8 @@
       </function>
       <function name="chop_last_dir">
         <parameters>
-          <par name="remoteurl" nr="1"/>
           <par name="is_relative" nr="2"/>
+          <par name="remoteurl" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -82,13 +94,13 @@
       </function>
       <function name="clone_submodule">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="gitdir" nr="2"/>
           <par name="url" nr="3"/>
           <par name="depth" nr="4"/>
-          <par name="reference" nr="5"/>
-          <par name="quiet" nr="6"/>
           <par name="progress" nr="7"/>
+          <par name="gitdir" nr="2"/>
+          <par name="quiet" nr="6"/>
+          <par name="path" nr="1"/>
+          <par name="reference" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -102,8 +114,8 @@
       </function>
       <function name="cmd_submodule__helper">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -118,14 +130,22 @@
       </function>
       <function name="compute_rev_name">
         <parameters>
-          <par name="sub_path" nr="1"/>
           <par name="object_id" nr="2"/>
+          <par name="sub_path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -146,8 +166,8 @@
       <function name="deinit_submodule">
         <parameters>
           <par name="path" nr="1"/>
-          <par name="prefix" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="prefix" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -191,9 +211,9 @@
       </function>
       <function name="for_each_listed_submodule">
         <parameters>
-          <par name="list" nr="1"/>
-          <par name="fn" nr="2"/>
           <par name="cb_data" nr="3"/>
+          <par name="fn" nr="2"/>
+          <par name="list" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -215,6 +235,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_submodule_displaypath">
@@ -230,6 +258,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_up_path">
@@ -241,6 +277,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -290,9 +334,9 @@
       </function>
       <function name="gitmodules_update_clone_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -306,10 +350,10 @@
       </function>
       <function name="handle_submodule_head_ref">
         <parameters>
+          <par name="cb_data" nr="4"/>
           <par name="refname" nr="1"/>
           <par name="oid" nr="2"/>
           <par name="flags" nr="3"/>
-          <par name="cb_data" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -339,9 +383,40 @@
       <function name="init_submodule">
         <parameters>
           <par name="path" nr="1"/>
-          <par name="prefix" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="prefix" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -383,10 +458,41 @@
       </function>
       <function name="is_active">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -399,8 +505,8 @@
       </function>
       <function name="module_clone">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -415,8 +521,8 @@
       </function>
       <function name="module_deinit">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -431,8 +537,8 @@
       </function>
       <function name="module_init">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -447,8 +553,8 @@
       </function>
       <function name="module_list">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -465,6 +571,37 @@
         <parameters>
           <par name="list" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -477,11 +614,11 @@
       </function>
       <function name="module_list_compute">
         <parameters>
-          <par name="argc" nr="1"/>
-          <par name="argv" nr="2"/>
-          <par name="prefix" nr="3"/>
-          <par name="pathspec" nr="4"/>
           <par name="list" nr="5"/>
+          <par name="argv" nr="2"/>
+          <par name="pathspec" nr="4"/>
+          <par name="argc" nr="1"/>
+          <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -495,8 +632,8 @@
       </function>
       <function name="module_name">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -511,8 +648,8 @@
       </function>
       <function name="module_status">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -527,8 +664,8 @@
       </function>
       <function name="module_sync">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -543,9 +680,9 @@
       </function>
       <function name="next_submodule_warn_missing">
         <parameters>
-          <par name="suc" nr="1"/>
           <par name="out" nr="2"/>
           <par name="displaypath" nr="3"/>
+          <par name="suc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -589,11 +726,42 @@
       </function>
       <function name="prepare_to_clone_next_submodule">
         <parameters>
-          <par name="ce" nr="1"/>
-          <par name="child" nr="2"/>
-          <par name="suc" nr="3"/>
           <par name="out" nr="4"/>
+          <par name="child" nr="2"/>
+          <par name="ce" nr="1"/>
+          <par name="suc" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -606,8 +774,8 @@
       </function>
       <function name="print_default_remote">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -622,11 +790,11 @@
       </function>
       <function name="print_status">
         <parameters>
+          <par name="oid" nr="4"/>
+          <par name="displaypath" nr="5"/>
           <par name="flags" nr="1"/>
           <par name="state" nr="2"/>
           <par name="path" nr="3"/>
-          <par name="oid" nr="4"/>
-          <par name="displaypath" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -640,8 +808,8 @@
       </function>
       <function name="push_check">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -656,8 +824,8 @@
       </function>
       <function name="relative_url">
         <parameters>
-          <par name="remote_url" nr="1"/>
           <par name="url" nr="2"/>
+          <par name="remote_url" nr="1"/>
           <par name="up_path" nr="3"/>
         </parameters>
         <postconditions>
@@ -668,12 +836,59 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="remote_submodule_branch">
         <parameters>
           <par name="path" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -682,12 +897,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="resolve_relative_path">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -702,8 +925,8 @@
       </function>
       <function name="resolve_relative_url">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -718,8 +941,8 @@
       </function>
       <function name="resolve_relative_url_test">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -734,8 +957,8 @@
       </function>
       <function name="resolve_remote_submodule_branch">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -750,9 +973,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -766,8 +989,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -809,12 +1032,43 @@
       </function>
       <function name="status_submodule">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="ce_oid" nr="2"/>
           <par name="ce_flags" nr="3"/>
-          <par name="prefix" nr="4"/>
+          <par name="path" nr="1"/>
           <par name="flags" nr="5"/>
+          <par name="prefix" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -842,8 +1096,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -886,8 +1140,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -916,9 +1170,9 @@
       </function>
       <function name="strip_suffix">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="str" nr="1"/>
           <par name="suffix" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -932,8 +1186,8 @@
       </function>
       <function name="strip_suffix_mem">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="suffix" nr="3"/>
         </parameters>
         <postconditions>
@@ -949,9 +1203,40 @@
       <function name="sync_submodule">
         <parameters>
           <par name="path" nr="1"/>
-          <par name="prefix" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="prefix" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -979,8 +1264,8 @@
       </function>
       <function name="update_clone">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -996,9 +1281,9 @@
       <function name="update_clone_get_next_task">
         <parameters>
           <par name="child" nr="1"/>
-          <par name="err" nr="2"/>
-          <par name="suc_cb" nr="3"/>
           <par name="idx_task_cb" nr="4"/>
+          <par name="suc_cb" nr="3"/>
+          <par name="err" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1012,9 +1297,9 @@
       </function>
       <function name="update_clone_start_failure">
         <parameters>
-          <par name="err" nr="1"/>
-          <par name="suc_cb" nr="2"/>
           <par name="idx_task_cb" nr="3"/>
+          <par name="suc_cb" nr="2"/>
+          <par name="err" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1029,9 +1314,9 @@
       <function name="update_clone_task_finished">
         <parameters>
           <par name="result" nr="1"/>
-          <par name="err" nr="2"/>
-          <par name="suc_cb" nr="3"/>
           <par name="idx_task_cb" nr="4"/>
+          <par name="suc_cb" nr="3"/>
+          <par name="err" nr="2"/>
         </parameters>
         <postconditions>
           <post>

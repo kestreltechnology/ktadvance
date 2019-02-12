@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:59.439831"/>
-  <cfile name="mailmap">
-    <data-structures/>
+  <header time="2018-12-19 16:08:54">
+    <application file="mailmap.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="git_mailmap_file"/>
+      <gvar name="startup_info"/>
+    </global-variables>
     <functions>
       <function name="add_mapping">
         <parameters>
           <par name="map" nr="1"/>
           <par name="new_name" nr="2"/>
-          <par name="new_email" nr="3"/>
           <par name="old_name" nr="4"/>
           <par name="old_email" nr="5"/>
+          <par name="new_email" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -78,8 +83,8 @@
       </function>
       <function name="free_mailmap_entry">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="p" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -93,8 +98,8 @@
       </function>
       <function name="free_mailmap_info">
         <parameters>
-          <par name="p" nr="1"/>
           <par name="s" nr="2"/>
+          <par name="p" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -108,9 +113,9 @@
       </function>
       <function name="lookup_prefix">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="map" nr="1"/>
           <par name="string" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -120,15 +125,36 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="util"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="map_user">
         <parameters>
           <par name="map" nr="1"/>
           <par name="email" nr="2"/>
+          <par name="namelen" nr="5"/>
           <par name="emaillen" nr="3"/>
           <par name="name" nr="4"/>
-          <par name="namelen" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -142,8 +168,8 @@
       </function>
       <function name="namemap_cmp">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -157,10 +183,10 @@
       </function>
       <function name="parse_name_and_email">
         <parameters>
+          <par name="allow_empty_email" nr="4"/>
+          <par name="email" nr="3"/>
           <par name="buffer" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="email" nr="3"/>
-          <par name="allow_empty_email" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -177,6 +203,53 @@
           <par name="map" nr="1"/>
           <par name="repo_abbrev" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="have_repository"/>
+                  </addressed-value>
+                  <ci>startup_info</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>git_mailmap_file</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>git_mailmap_file</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -190,8 +263,8 @@
       <function name="read_mailmap_blob">
         <parameters>
           <par name="map" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="repo_abbrev" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -206,8 +279,8 @@
       <function name="read_mailmap_file">
         <parameters>
           <par name="map" nr="1"/>
-          <par name="filename" nr="2"/>
           <par name="repo_abbrev" nr="3"/>
+          <par name="filename" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -253,15 +326,23 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>

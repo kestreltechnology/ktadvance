@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:10.119811"/>
-  <cfile name="unpack-trees">
-    <data-structures/>
+  <header time="2018-12-19 17:37:09">
+    <application file="unpack-trees.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="idx"/>
+      <gvar name="repository_format_partial_clone"/>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -13,6 +19,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -53,8 +67,8 @@
       </function>
       <function name="add_same_unmerged">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -68,9 +82,9 @@
       </function>
       <function name="apply_sparse_checkout">
         <parameters>
-          <par name="istate" nr="1"/>
-          <par name="ce" nr="2"/>
           <par name="o" nr="3"/>
+          <par name="ce" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -99,8 +113,8 @@
       </function>
       <function name="bind_merge">
         <parameters>
-          <par name="src" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="src" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -114,8 +128,8 @@
       </function>
       <function name="call_unpack_fn">
         <parameters>
-          <par name="src" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="src" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -158,13 +172,13 @@
       </function>
       <function name="check_ok_to_remove">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="o" nr="7"/>
+          <par name="st" nr="5"/>
           <par name="dtype" nr="3"/>
           <par name="ce" nr="4"/>
-          <par name="st" nr="5"/>
           <par name="error_type" nr="6"/>
-          <par name="o" nr="7"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -178,10 +192,10 @@
       </function>
       <function name="check_submodule_move_head">
         <parameters>
+          <par name="o" nr="4"/>
           <par name="ce" nr="1"/>
           <par name="old_id" nr="2"/>
           <par name="new_id" nr="3"/>
-          <par name="o" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -197,6 +211,16 @@
         <parameters>
           <par name="o" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>repository_format_partial_clone</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -209,9 +233,9 @@
       </function>
       <function name="clear_ce_flags">
         <parameters>
+          <par name="select_mask" nr="3"/>
           <par name="cache" nr="1"/>
           <par name="nr" nr="2"/>
-          <par name="select_mask" nr="3"/>
           <par name="clear_mask" nr="4"/>
           <par name="el" nr="5"/>
         </parameters>
@@ -227,13 +251,13 @@
       </function>
       <function name="clear_ce_flags_1">
         <parameters>
+          <par name="select_mask" nr="4"/>
+          <par name="defval" nr="7"/>
           <par name="cache" nr="1"/>
           <par name="nr" nr="2"/>
-          <par name="prefix" nr="3"/>
-          <par name="select_mask" nr="4"/>
           <par name="clear_mask" nr="5"/>
+          <par name="prefix" nr="3"/>
           <par name="el" nr="6"/>
-          <par name="defval" nr="7"/>
         </parameters>
         <postconditions>
           <post>
@@ -247,14 +271,14 @@
       </function>
       <function name="clear_ce_flags_dir">
         <parameters>
-          <par name="cache" nr="1"/>
-          <par name="nr" nr="2"/>
-          <par name="prefix" nr="3"/>
           <par name="__xpg_basename___0" nr="4"/>
           <par name="select_mask" nr="5"/>
-          <par name="clear_mask" nr="6"/>
-          <par name="el" nr="7"/>
           <par name="defval" nr="8"/>
+          <par name="cache" nr="1"/>
+          <par name="nr" nr="2"/>
+          <par name="clear_mask" nr="6"/>
+          <par name="prefix" nr="3"/>
+          <par name="el" nr="7"/>
         </parameters>
         <postconditions>
           <post>
@@ -312,8 +336,8 @@
       <function name="create_ce_entry">
         <parameters>
           <par name="info" nr="1"/>
-          <par name="n" nr="2"/>
           <par name="stage" nr="3"/>
+          <par name="n" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -384,11 +408,11 @@
       </function>
       <function name="debug_unpack_callback">
         <parameters>
-          <par name="n" nr="1"/>
           <par name="mask" nr="2"/>
           <par name="dirmask" nr="3"/>
-          <par name="names" nr="4"/>
           <par name="info" nr="5"/>
+          <par name="names" nr="4"/>
+          <par name="n" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -402,9 +426,9 @@
       </function>
       <function name="deleted_entry">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="old" nr="2"/>
           <par name="o" nr="3"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -491,6 +515,35 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ce_flags"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="find_cache_entry">
@@ -503,6 +556,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -584,9 +645,9 @@
       <function name="icase_exists">
         <parameters>
           <par name="o" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="len" nr="3"/>
           <par name="st" nr="4"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -600,8 +661,8 @@
       </function>
       <function name="invalidate_ce_path">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -615,8 +676,8 @@
       </function>
       <function name="keep_entry">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -633,6 +694,16 @@
           <par name="index___0" nr="1"/>
           <par name="state" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -645,14 +716,23 @@
       </function>
       <function name="locate_in_src_index">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -674,8 +754,8 @@
       </function>
       <function name="mark_ce_used">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -689,8 +769,8 @@
       </function>
       <function name="mark_ce_used_same_name">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -704,8 +784,8 @@
       </function>
       <function name="mark_fsmonitor_invalid">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="ce" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -719,9 +799,9 @@
       </function>
       <function name="mark_new_skip_worktree">
         <parameters>
-          <par name="el" nr="1"/>
           <par name="the_index___0" nr="2"/>
           <par name="select_flag" nr="3"/>
+          <par name="el" nr="1"/>
           <par name="skip_wt_flag" nr="4"/>
         </parameters>
         <postconditions>
@@ -736,9 +816,9 @@
       </function>
       <function name="merged_entry">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="old" nr="2"/>
           <par name="o" nr="3"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -759,6 +839,32 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ce_flags"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="ce_namelen"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -796,8 +902,8 @@
       </function>
       <function name="oneway_merge">
         <parameters>
-          <par name="src" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="src" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -811,8 +917,8 @@
       </function>
       <function name="reject_merge">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -841,8 +947,8 @@
       </function>
       <function name="same">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -856,8 +962,8 @@
       </function>
       <function name="setup_unpack_trees_porcelain">
         <parameters>
-          <par name="opts" nr="1"/>
           <par name="cmd" nr="2"/>
+          <par name="opts" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -871,8 +977,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -915,8 +1021,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -932,6 +1038,21 @@
         <parameters>
           <par name="path" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>idx</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -958,8 +1079,8 @@
       </function>
       <function name="threeway_merge">
         <parameters>
-          <par name="stages" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="stages" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -998,15 +1119,24 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="traverse_trees_recursive">
         <parameters>
-          <par name="n" nr="1"/>
           <par name="dirmask" nr="2"/>
           <par name="df_conflicts" nr="3"/>
-          <par name="names" nr="4"/>
           <par name="info" nr="5"/>
+          <par name="names" nr="4"/>
+          <par name="n" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1030,12 +1160,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="twoway_merge">
         <parameters>
-          <par name="src" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="src" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1063,11 +1202,11 @@
       </function>
       <function name="unpack_callback">
         <parameters>
-          <par name="n" nr="1"/>
           <par name="mask" nr="2"/>
           <par name="dirmask" nr="3"/>
-          <par name="names" nr="4"/>
           <par name="info" nr="5"/>
+          <par name="names" nr="4"/>
+          <par name="n" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1096,8 +1235,8 @@
       </function>
       <function name="unpack_index_entry">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1111,12 +1250,12 @@
       </function>
       <function name="unpack_nondirectories">
         <parameters>
-          <par name="n" nr="1"/>
           <par name="mask" nr="2"/>
           <par name="dirmask" nr="3"/>
           <par name="src" nr="4"/>
-          <par name="names" nr="5"/>
           <par name="info" nr="6"/>
+          <par name="names" nr="5"/>
+          <par name="n" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1131,8 +1270,8 @@
       <function name="unpack_trees">
         <parameters>
           <par name="len" nr="1"/>
-          <par name="t" nr="2"/>
           <par name="o" nr="3"/>
+          <par name="t" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1146,9 +1285,9 @@
       </function>
       <function name="verify_absent">
         <parameters>
+          <par name="o" nr="3"/>
           <par name="ce" nr="1"/>
           <par name="error_type" nr="2"/>
-          <par name="o" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1162,9 +1301,9 @@
       </function>
       <function name="verify_absent_1">
         <parameters>
+          <par name="o" nr="3"/>
           <par name="ce" nr="1"/>
           <par name="error_type" nr="2"/>
-          <par name="o" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1178,9 +1317,9 @@
       </function>
       <function name="verify_absent_sparse">
         <parameters>
+          <par name="o" nr="3"/>
           <par name="ce" nr="1"/>
           <par name="error_type" nr="2"/>
-          <par name="o" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1194,9 +1333,9 @@
       </function>
       <function name="verify_clean_subdirectory">
         <parameters>
+          <par name="o" nr="3"/>
           <par name="ce" nr="1"/>
           <par name="error_type" nr="2"/>
-          <par name="o" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1211,9 +1350,9 @@
       <function name="verify_clean_submodule">
         <parameters>
           <par name="old_sha1" nr="1"/>
+          <par name="o" nr="4"/>
           <par name="ce" nr="2"/>
           <par name="error_type" nr="3"/>
-          <par name="o" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1227,8 +1366,8 @@
       </function>
       <function name="verify_uptodate">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1242,8 +1381,8 @@
       </function>
       <function name="verify_uptodate_1">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="ce" nr="1"/>
           <par name="error_type" nr="3"/>
         </parameters>
         <postconditions>
@@ -1258,8 +1397,8 @@
       </function>
       <function name="verify_uptodate_sparse">
         <parameters>
-          <par name="ce" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="ce" nr="1"/>
         </parameters>
         <postconditions>
           <post>

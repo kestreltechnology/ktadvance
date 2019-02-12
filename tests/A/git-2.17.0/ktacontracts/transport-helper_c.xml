@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:09.664124"/>
-  <cfile name="transport-helper">
-    <data-structures/>
+  <header time="2018-12-19 17:33:26">
+    <application file="transport-helper.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="_">
         <parameters>
@@ -35,10 +37,10 @@
       </function>
       <function name="connect_helper">
         <parameters>
-          <par name="transport" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="exec" nr="3"/>
+          <par name="transport" nr="1"/>
           <par name="fd" nr="4"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -92,8 +94,8 @@
       </function>
       <function name="fetch">
         <parameters>
-          <par name="transport" nr="1"/>
           <par name="nr_heads" nr="2"/>
+          <par name="transport" nr="1"/>
           <par name="to_fetch" nr="3"/>
         </parameters>
         <postconditions>
@@ -108,8 +110,8 @@
       </function>
       <function name="fetch_with_fetch">
         <parameters>
-          <par name="transport" nr="1"/>
           <par name="nr_heads" nr="2"/>
+          <par name="transport" nr="1"/>
           <par name="to_fetch" nr="3"/>
         </parameters>
         <postconditions>
@@ -124,8 +126,8 @@
       </function>
       <function name="fetch_with_import">
         <parameters>
-          <par name="transport" nr="1"/>
           <par name="nr_heads" nr="2"/>
+          <par name="transport" nr="1"/>
           <par name="to_fetch" nr="3"/>
         </parameters>
         <postconditions>
@@ -140,9 +142,9 @@
       </function>
       <function name="get_exporter">
         <parameters>
-          <par name="transport" nr="1"/>
           <par name="fastexport" nr="2"/>
           <par name="revlist_args" nr="3"/>
+          <par name="transport" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -166,6 +168,40 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="in"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="out"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_importer">
@@ -185,8 +221,8 @@
       </function>
       <function name="get_refs_list">
         <parameters>
-          <par name="transport" nr="1"/>
           <par name="for_push" nr="2"/>
+          <par name="transport" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -200,8 +236,8 @@
       </function>
       <function name="has_attribute">
         <parameters>
-          <par name="attrs" nr="1"/>
           <par name="attr" nr="2"/>
+          <par name="attrs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -245,8 +281,8 @@
       </function>
       <function name="process_connect">
         <parameters>
-          <par name="transport" nr="1"/>
           <par name="for_push" nr="2"/>
+          <par name="transport" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -260,9 +296,9 @@
       </function>
       <function name="process_connect_service">
         <parameters>
+          <par name="exec" nr="3"/>
           <par name="transport" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="exec" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -324,8 +360,8 @@
       </function>
       <function name="push_update_ref_status">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="ref" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="remote_refs" nr="3"/>
         </parameters>
         <postconditions>
@@ -411,6 +447,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="sendline">
@@ -431,8 +475,8 @@
       <function name="set_common_push_options">
         <parameters>
           <par name="transport" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -447,8 +491,8 @@
       <function name="set_helper_option">
         <parameters>
           <par name="transport" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -462,9 +506,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -478,8 +522,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -507,8 +551,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -551,8 +595,8 @@
       </function>
       <function name="strbuf_set_helper_option">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="buf" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -566,8 +610,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -581,9 +625,9 @@
       </function>
       <function name="string_list_set_helper_option">
         <parameters>
+          <par name="list" nr="3"/>
           <par name="data" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="list" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -711,8 +755,8 @@
       </function>
       <function name="write_constant">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="str" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -726,8 +770,8 @@
       </function>
       <function name="write_str_in_full">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="str" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>

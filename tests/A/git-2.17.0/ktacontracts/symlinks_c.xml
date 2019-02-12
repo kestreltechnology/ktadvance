@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:08.630591"/>
-  <cfile name="symlinks">
-    <data-structures/>
+  <header time="2018-12-19 17:17:41">
+    <application file="symlinks.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="check_leading_path">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -35,9 +37,9 @@
       </function>
       <function name="has_dirs_only_path">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="len" nr="2"/>
           <par name="prefix_len" nr="3"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,8 +53,8 @@
       </function>
       <function name="has_symlink_leading_path">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -67,10 +69,10 @@
       <function name="longest_path_match">
         <parameters>
           <par name="name_a" nr="1"/>
-          <par name="len_a" nr="2"/>
-          <par name="name_b" nr="3"/>
           <par name="len_b" nr="4"/>
           <par name="previous_slash" nr="5"/>
+          <par name="len_a" nr="2"/>
+          <par name="name_b" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -80,15 +82,24 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="lstat_cache">
         <parameters>
-          <par name="cache" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="len" nr="3"/>
-          <par name="track_flags" nr="4"/>
           <par name="prefix_len_stat_func" nr="5"/>
+          <par name="cache" nr="1"/>
+          <par name="track_flags" nr="4"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -102,12 +113,12 @@
       </function>
       <function name="lstat_cache_matchlen">
         <parameters>
-          <par name="cache" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="len" nr="3"/>
-          <par name="ret_flags" nr="4"/>
-          <par name="track_flags" nr="5"/>
           <par name="prefix_len_stat_func" nr="6"/>
+          <par name="ret_flags" nr="4"/>
+          <par name="cache" nr="1"/>
+          <par name="track_flags" nr="5"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -147,8 +158,8 @@
       </function>
       <function name="schedule_dir_for_removal">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -162,8 +173,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -177,9 +188,9 @@
       </function>
       <function name="threaded_check_leading_path">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="cache" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -193,10 +204,10 @@
       </function>
       <function name="threaded_has_dirs_only_path">
         <parameters>
-          <par name="cache" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="len" nr="3"/>
           <par name="prefix_len" nr="4"/>
+          <par name="cache" nr="1"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -210,9 +221,9 @@
       </function>
       <function name="threaded_has_symlink_leading_path">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="cache" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>

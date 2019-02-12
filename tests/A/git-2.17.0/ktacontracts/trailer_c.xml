@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:09.367213"/>
-  <cfile name="trailer">
-    <data-structures/>
+  <header time="2018-12-19 17:32:28">
+    <application file="trailer.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="separators"/>
+      <gvar name="stdout"/>
+      <gvar name="trailers_tempfile"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -13,6 +19,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -35,11 +49,11 @@
       </function>
       <function name="add_arg_item">
         <parameters>
-          <par name="arg_head" nr="1"/>
           <par name="tok" nr="2"/>
-          <par name="val" nr="3"/>
           <par name="conf" nr="4"/>
           <par name="new_trailer_item" nr="5"/>
+          <par name="arg_head" nr="1"/>
+          <par name="val" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -68,8 +82,8 @@
       </function>
       <function name="add_trailer_item">
         <parameters>
-          <par name="head" nr="1"/>
           <par name="tok" nr="2"/>
+          <par name="head" nr="1"/>
           <par name="val" nr="3"/>
         </parameters>
         <postconditions>
@@ -98,10 +112,10 @@
       </function>
       <function name="apply_arg_if_exists">
         <parameters>
-          <par name="in_tok" nr="1"/>
-          <par name="arg_tok" nr="2"/>
           <par name="on_tok" nr="3"/>
           <par name="head" nr="4"/>
+          <par name="arg_tok" nr="2"/>
+          <par name="in_tok" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -130,8 +144,8 @@
       </function>
       <function name="apply_command">
         <parameters>
-          <par name="command" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="command" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -145,8 +159,8 @@
       </function>
       <function name="apply_item_command">
         <parameters>
-          <par name="in_tok" nr="1"/>
           <par name="arg_tok" nr="2"/>
+          <par name="in_tok" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -160,8 +174,8 @@
       </function>
       <function name="capture_command">
         <parameters>
-          <par name="cmd" nr="1"/>
           <par name="out" nr="2"/>
+          <par name="cmd" nr="1"/>
           <par name="hint" nr="3"/>
         </parameters>
         <postconditions>
@@ -176,10 +190,10 @@
       </function>
       <function name="check_if_different">
         <parameters>
-          <par name="in_tok" nr="1"/>
+          <par name="head" nr="4"/>
           <par name="arg_tok" nr="2"/>
           <par name="check_all" nr="3"/>
-          <par name="head" nr="4"/>
+          <par name="in_tok" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -207,6 +221,47 @@
         <parameters>
           <par name="file" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="fp"/>
+                  </addressed-value>
+                  <ci>trailers_tempfile</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="fd"/>
+                  </addressed-value>
+                  <ci>trailers_tempfile</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="active"/>
+                  </addressed-value>
+                  <ci>trailers_tempfile</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -234,8 +289,8 @@
       </function>
       <function name="ends_with_blank_line">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -271,6 +326,15 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="find_same_and_apply_arg">
@@ -290,14 +354,23 @@
       </function>
       <function name="find_separator">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="separators___0" nr="2"/>
+          <par name="line" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -305,8 +378,8 @@
       </function>
       <function name="find_trailer_end">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -316,18 +389,54 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="find_trailer_start">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>separators</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>separators</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -339,6 +448,24 @@
           <par name="info" nr="2"/>
           <par name="opts" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>separators</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>separators</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -352,8 +479,8 @@
       <function name="format_trailers_from_commit">
         <parameters>
           <par name="out" nr="1"/>
-          <par name="msg" nr="2"/>
           <par name="opts" nr="3"/>
+          <par name="msg" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -419,13 +546,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_trailer_config">
         <parameters>
           <par name="conf_key" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -440,8 +575,8 @@
       <function name="git_trailer_default_config">
         <parameters>
           <par name="conf_key" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -469,8 +604,8 @@
       </function>
       <function name="last_line">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -498,8 +633,8 @@
       </function>
       <function name="list_add">
         <parameters>
-          <par name="newp" nr="1"/>
           <par name="head" nr="2"/>
+          <par name="newp" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -513,8 +648,8 @@
       </function>
       <function name="list_add_tail">
         <parameters>
-          <par name="newp" nr="1"/>
           <par name="head" nr="2"/>
+          <par name="newp" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -566,13 +701,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="parse_trailer">
         <parameters>
           <par name="tok" nr="1"/>
-          <par name="val" nr="2"/>
           <par name="conf" nr="3"/>
+          <par name="val" nr="2"/>
           <par name="trailer" nr="4"/>
           <par name="separator_pos" nr="5"/>
         </parameters>
@@ -588,8 +731,8 @@
       </function>
       <function name="print_all">
         <parameters>
-          <par name="outfile" nr="1"/>
           <par name="head" nr="2"/>
+          <par name="outfile" nr="1"/>
           <par name="opts" nr="3"/>
         </parameters>
         <postconditions>
@@ -604,10 +747,28 @@
       </function>
       <function name="print_tok_val">
         <parameters>
-          <par name="outfile" nr="1"/>
           <par name="tok" nr="2"/>
+          <par name="outfile" nr="1"/>
           <par name="val" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>separators</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>separators</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -623,6 +784,16 @@
           <par name="arg_head" nr="1"/>
           <par name="new_trailer_head" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>separators</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -635,11 +806,29 @@
       </function>
       <function name="process_input_file">
         <parameters>
+          <par name="head" nr="3"/>
           <par name="outfile" nr="1"/>
           <par name="str" nr="2"/>
-          <par name="head" nr="3"/>
           <par name="opts" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>separators</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>separators</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -648,14 +837,33 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="process_trailers">
         <parameters>
-          <par name="file" nr="1"/>
           <par name="opts" nr="2"/>
+          <par name="file" nr="1"/>
           <par name="new_trailer_head" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>stdout</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -698,8 +906,8 @@
       </function>
       <function name="same_token">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -713,8 +921,8 @@
       </function>
       <function name="same_trailer">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -728,8 +936,8 @@
       </function>
       <function name="same_value">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -743,9 +951,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -759,8 +967,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -774,8 +982,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -819,8 +1027,8 @@
       <function name="strbuf_replace">
         <parameters>
           <par name="sb" nr="1"/>
-          <par name="a" nr="2"/>
           <par name="b" nr="3"/>
+          <par name="a" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -834,8 +1042,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -864,8 +1072,8 @@
       </function>
       <function name="strbuf_swap">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -879,8 +1087,8 @@
       </function>
       <function name="strip_suffix_mem">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="suffix" nr="3"/>
         </parameters>
         <postconditions>
@@ -906,12 +1114,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="token_len_without_separator">
         <parameters>
-          <par name="token" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="token" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -921,12 +1137,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="token_matches_item">
         <parameters>
-          <par name="tok" nr="1"/>
           <par name="item" nr="2"/>
+          <par name="tok" nr="1"/>
           <par name="tok_len" nr="3"/>
         </parameters>
         <postconditions>
@@ -951,6 +1176,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="trailer_info_get">
@@ -958,6 +1191,24 @@
           <par name="info" nr="1"/>
           <par name="str" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>separators</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>separators</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:53.130631"/>
-  <cfile name="config">
-    <data-structures/>
+  <header time="2018-12-19 15:20:41">
+    <application file="config.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="cf"/>
+      <gvar name="core_fsmonitor"/>
+      <gvar name="current_config_kvi"/>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -123,6 +130,37 @@
           <par name="fn" nr="1"/>
           <par name="data" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="worktree"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -135,9 +173,9 @@
       </function>
       <function name="config_set_callback">
         <parameters>
-          <par name="key" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -151,10 +189,10 @@
       </function>
       <function name="config_set_element_cmp">
         <parameters>
+          <par name="unused_keydata" nr="4"/>
           <par name="unused_cmp_data" nr="1"/>
           <par name="entry" nr="2"/>
           <par name="entry_or_key" nr="3"/>
-          <par name="unused_keydata" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -168,10 +206,10 @@
       </function>
       <function name="config_with_options">
         <parameters>
-          <par name="fn" nr="1"/>
-          <par name="data" nr="2"/>
           <par name="config_source" nr="3"/>
+          <par name="fn" nr="1"/>
           <par name="opts" nr="4"/>
+          <par name="data" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -186,9 +224,66 @@
       <function name="configset_add_value">
         <parameters>
           <par name="cs" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="key" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="linenr"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="origin_type"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="name"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -209,6 +304,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -244,6 +347,66 @@
       </function>
       <function name="current_config_name">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>current_config_kvi</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>current_config_kvi</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="name"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="filename"/>
+                  </addressed-value>
+                  <ci>current_config_kvi</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -256,6 +419,66 @@
       </function>
       <function name="current_config_origin_type">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>current_config_kvi</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>current_config_kvi</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="origin_type"/>
+                  </addressed-value>
+                  <ci>current_config_kvi</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="origin_type"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -268,6 +491,37 @@
       </function>
       <function name="current_config_scope">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>current_config_kvi</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>current_config_kvi</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="scope"/>
+                  </addressed-value>
+                  <ci>current_config_kvi</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -280,9 +534,53 @@
       </function>
       <function name="die_bad_number">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="origin_type"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="name"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -299,6 +597,16 @@
           <par name="fn" nr="2"/>
           <par name="data" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -311,12 +619,12 @@
       </function>
       <function name="do_config_from_file">
         <parameters>
-          <par name="fn" nr="1"/>
           <par name="origin_type" nr="2"/>
-          <par name="name" nr="3"/>
-          <par name="path" nr="4"/>
+          <par name="fn" nr="1"/>
           <par name="f" nr="5"/>
           <par name="data" nr="6"/>
+          <par name="path" nr="4"/>
+          <par name="name" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -330,8 +638,8 @@
       </function>
       <function name="do_git_config_sequence">
         <parameters>
-          <par name="opts" nr="1"/>
           <par name="fn" nr="2"/>
+          <par name="opts" nr="1"/>
           <par name="data" nr="3"/>
         </parameters>
         <postconditions>
@@ -346,10 +654,10 @@
       </function>
       <function name="find_beginning_of_line">
         <parameters>
-          <par name="contents" nr="1"/>
           <par name="size" nr="2"/>
-          <par name="offset_" nr="3"/>
           <par name="found_bracket" nr="4"/>
+          <par name="offset_" nr="3"/>
+          <par name="contents" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -359,12 +667,52 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_base_var">
         <parameters>
           <par name="name" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="eof"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -377,9 +725,40 @@
       </function>
       <function name="get_extended_base_var">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="linenr"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -402,15 +781,107 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_next_char">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="linenr"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="do_fgetc"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="do_ungetc"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <leq/>
+                <return/>
+                <cn>255</cn>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>-128</cn>
               </apply>
             </math>
           </post>
@@ -422,6 +893,50 @@
           <par name="data" nr="2"/>
           <par name="name" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="linenr"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="eof"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -437,6 +952,37 @@
           <par name="fn" nr="1"/>
           <par name="data" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -449,8 +995,8 @@
       </function>
       <function name="git_config_bool">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -464,9 +1010,9 @@
       </function>
       <function name="git_config_bool_or_int">
         <parameters>
-          <par name="name" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="is_bool" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -494,6 +1040,37 @@
       </function>
       <function name="git_config_clear">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -506,10 +1083,10 @@
       </function>
       <function name="git_config_copy_or_rename_section_in_file">
         <parameters>
-          <par name="config_filename" nr="1"/>
-          <par name="old_name" nr="2"/>
           <par name="new_name" nr="3"/>
           <par name="copy" nr="4"/>
+          <par name="old_name" nr="2"/>
+          <par name="config_filename" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -523,8 +1100,8 @@
       </function>
       <function name="git_config_copy_section">
         <parameters>
-          <par name="old_name" nr="1"/>
           <par name="new_name" nr="2"/>
+          <par name="old_name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -538,9 +1115,9 @@
       </function>
       <function name="git_config_copy_section_in_file">
         <parameters>
-          <par name="config_filename" nr="1"/>
-          <par name="old_name" nr="2"/>
           <par name="new_name" nr="3"/>
+          <par name="old_name" nr="2"/>
+          <par name="config_filename" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -555,8 +1132,8 @@
       <function name="git_config_expiry_date">
         <parameters>
           <par name="timestamp" nr="1"/>
-          <par name="var" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="var" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -570,10 +1147,10 @@
       </function>
       <function name="git_config_from_blob_oid">
         <parameters>
-          <par name="fn" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="oid" nr="3"/>
+          <par name="fn" nr="1"/>
           <par name="data" nr="4"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -588,8 +1165,8 @@
       <function name="git_config_from_blob_ref">
         <parameters>
           <par name="fn" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -619,12 +1196,12 @@
       </function>
       <function name="git_config_from_mem">
         <parameters>
-          <par name="fn" nr="1"/>
           <par name="origin_type" nr="2"/>
-          <par name="name" nr="3"/>
-          <par name="buf" nr="4"/>
           <par name="len" nr="5"/>
+          <par name="buf" nr="4"/>
+          <par name="fn" nr="1"/>
           <par name="data" nr="6"/>
+          <par name="name" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -641,6 +1218,16 @@
           <par name="fn" nr="1"/>
           <par name="data" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -668,9 +1255,40 @@
       </function>
       <function name="git_config_get_bool">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="dest" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -683,10 +1301,41 @@
       </function>
       <function name="git_config_get_bool_or_int">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="is_bool" nr="2"/>
           <par name="dest" nr="3"/>
+          <par name="key" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -699,8 +1348,8 @@
       </function>
       <function name="git_config_get_expiry">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="output" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -714,9 +1363,9 @@
       </function>
       <function name="git_config_get_expiry_in_days">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="expiry" nr="2"/>
           <par name="now" nr="3"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -730,6 +1379,19 @@
       </function>
       <function name="git_config_get_fsmonitor">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>core_fsmonitor</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -742,9 +1404,40 @@
       </function>
       <function name="git_config_get_int">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="dest" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -769,9 +1462,40 @@
       </function>
       <function name="git_config_get_maybe_bool">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="dest" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -784,9 +1508,40 @@
       </function>
       <function name="git_config_get_pathname">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="dest" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -811,9 +1566,40 @@
       </function>
       <function name="git_config_get_string">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="dest" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -826,9 +1612,40 @@
       </function>
       <function name="git_config_get_string_const">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="dest" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -841,9 +1658,40 @@
       </function>
       <function name="git_config_get_ulong">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="dest" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -868,9 +1716,40 @@
       </function>
       <function name="git_config_get_value">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -885,6 +1764,37 @@
         <parameters>
           <par name="key" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="config"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -893,13 +1803,47 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="items"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_config_include">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="value" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -913,8 +1857,8 @@
       </function>
       <function name="git_config_int">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -928,8 +1872,8 @@
       </function>
       <function name="git_config_int64">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -957,8 +1901,8 @@
       </function>
       <function name="git_config_parse_key">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="store_key" nr="2"/>
+          <par name="key" nr="1"/>
           <par name="baselen" nr="3"/>
         </parameters>
         <postconditions>
@@ -973,10 +1917,10 @@
       </function>
       <function name="git_config_parse_key_1">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="store_key" nr="2"/>
           <par name="baselen_" nr="3"/>
           <par name="quiet" nr="4"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -990,8 +1934,8 @@
       </function>
       <function name="git_config_parse_parameter">
         <parameters>
-          <par name="text" nr="1"/>
           <par name="fn" nr="2"/>
+          <par name="text" nr="1"/>
           <par name="data" nr="3"/>
         </parameters>
         <postconditions>
@@ -1007,8 +1951,8 @@
       <function name="git_config_pathname">
         <parameters>
           <par name="dest" nr="1"/>
-          <par name="var" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="var" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1036,8 +1980,8 @@
       </function>
       <function name="git_config_rename_section">
         <parameters>
-          <par name="old_name" nr="1"/>
           <par name="new_name" nr="2"/>
+          <par name="old_name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1051,9 +1995,9 @@
       </function>
       <function name="git_config_rename_section_in_file">
         <parameters>
-          <par name="config_filename" nr="1"/>
-          <par name="old_name" nr="2"/>
           <par name="new_name" nr="3"/>
+          <par name="old_name" nr="2"/>
+          <par name="config_filename" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1067,8 +2011,8 @@
       </function>
       <function name="git_config_set">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1082,8 +2026,8 @@
       </function>
       <function name="git_config_set_gently">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1097,9 +2041,9 @@
       </function>
       <function name="git_config_set_in_file">
         <parameters>
-          <par name="config_filename" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="key" nr="2"/>
+          <par name="config_filename" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1113,9 +2057,9 @@
       </function>
       <function name="git_config_set_in_file_gently">
         <parameters>
-          <par name="config_filename" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="key" nr="2"/>
+          <par name="config_filename" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1129,10 +2073,10 @@
       </function>
       <function name="git_config_set_multivar">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="value" nr="2"/>
-          <par name="value_regex" nr="3"/>
           <par name="multi_replace" nr="4"/>
+          <par name="value_regex" nr="3"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1146,10 +2090,10 @@
       </function>
       <function name="git_config_set_multivar_gently">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="value" nr="2"/>
-          <par name="value_regex" nr="3"/>
           <par name="multi_replace" nr="4"/>
+          <par name="value_regex" nr="3"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1163,11 +2107,11 @@
       </function>
       <function name="git_config_set_multivar_in_file">
         <parameters>
-          <par name="config_filename" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="value" nr="3"/>
-          <par name="value_regex" nr="4"/>
           <par name="multi_replace" nr="5"/>
+          <par name="value_regex" nr="4"/>
+          <par name="key" nr="2"/>
+          <par name="config_filename" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1181,11 +2125,11 @@
       </function>
       <function name="git_config_set_multivar_in_file_gently">
         <parameters>
-          <par name="config_filename" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="value" nr="3"/>
-          <par name="value_regex" nr="4"/>
           <par name="multi_replace" nr="5"/>
+          <par name="value_regex" nr="4"/>
+          <par name="key" nr="2"/>
+          <par name="config_filename" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1199,8 +2143,8 @@
       </function>
       <function name="git_config_ssize_t">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1215,8 +2159,8 @@
       <function name="git_config_string">
         <parameters>
           <par name="dest" nr="1"/>
-          <par name="var" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="var" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1242,8 +2186,8 @@
       </function>
       <function name="git_config_ulong">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1287,8 +2231,8 @@
       <function name="git_configset_get_bool">
         <parameters>
           <par name="cs" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="dest" nr="3"/>
+          <par name="key" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1303,9 +2247,9 @@
       <function name="git_configset_get_bool_or_int">
         <parameters>
           <par name="cs" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="is_bool" nr="3"/>
           <par name="dest" nr="4"/>
+          <par name="key" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1320,8 +2264,8 @@
       <function name="git_configset_get_int">
         <parameters>
           <par name="cs" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="dest" nr="3"/>
+          <par name="key" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1336,8 +2280,8 @@
       <function name="git_configset_get_maybe_bool">
         <parameters>
           <par name="cs" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="dest" nr="3"/>
+          <par name="key" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1352,8 +2296,8 @@
       <function name="git_configset_get_pathname">
         <parameters>
           <par name="cs" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="dest" nr="3"/>
+          <par name="key" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1368,8 +2312,8 @@
       <function name="git_configset_get_string">
         <parameters>
           <par name="cs" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="dest" nr="3"/>
+          <par name="key" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1384,8 +2328,8 @@
       <function name="git_configset_get_string_const">
         <parameters>
           <par name="cs" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="dest" nr="3"/>
+          <par name="key" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1400,8 +2344,8 @@
       <function name="git_configset_get_ulong">
         <parameters>
           <par name="cs" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="dest" nr="3"/>
+          <par name="key" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1416,8 +2360,8 @@
       <function name="git_configset_get_value">
         <parameters>
           <par name="cs" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="key" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1442,6 +2386,32 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="items"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_configset_init">
@@ -1460,8 +2430,8 @@
       </function>
       <function name="git_default_branch_config">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1475,9 +2445,9 @@
       </function>
       <function name="git_default_config">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="value" nr="2"/>
           <par name="dummy" nr="3"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1491,8 +2461,8 @@
       </function>
       <function name="git_default_core_config">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1506,8 +2476,8 @@
       </function>
       <function name="git_default_i18n_config">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1521,8 +2491,8 @@
       </function>
       <function name="git_default_mailmap_config">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1536,8 +2506,8 @@
       </function>
       <function name="git_default_push_config">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1566,9 +2536,9 @@
       </function>
       <function name="git_die_config_linenr">
         <parameters>
+          <par name="linenr" nr="3"/>
           <par name="key" nr="1"/>
           <par name="filename" nr="2"/>
-          <par name="linenr" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1582,8 +2552,8 @@
       </function>
       <function name="git_env_bool">
         <parameters>
-          <par name="k" nr="1"/>
           <par name="def" nr="2"/>
+          <par name="k" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1597,8 +2567,8 @@
       </function>
       <function name="git_env_ulong">
         <parameters>
-          <par name="k" nr="1"/>
           <par name="val" nr="2"/>
+          <par name="k" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1620,6 +2590,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_find_last_dir_sep">
@@ -1631,6 +2609,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1743,6 +2729,89 @@
           <par name="fn" nr="1"/>
           <par name="data" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="linenr"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="origin_type"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="die_on_error"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="name"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="eof"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1801,9 +2870,53 @@
       </function>
       <function name="handle_path_include">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="inc" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="name"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="path"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1816,8 +2929,8 @@
       </function>
       <function name="hashmap_entry_init">
         <parameters>
-          <par name="entry" nr="1"/>
           <par name="hash" nr="2"/>
+          <par name="entry" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1831,9 +2944,9 @@
       </function>
       <function name="hold_lock_file_for_update">
         <parameters>
-          <par name="lk" nr="1"/>
           <par name="path" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1847,10 +2960,10 @@
       </function>
       <function name="include_by_gitdir">
         <parameters>
-          <par name="opts" nr="1"/>
-          <par name="cond" nr="2"/>
           <par name="cond_len" nr="3"/>
           <par name="icase" nr="4"/>
+          <par name="opts" nr="1"/>
+          <par name="cond" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1864,9 +2977,9 @@
       </function>
       <function name="include_condition_is_true">
         <parameters>
+          <par name="cond_len" nr="3"/>
           <par name="opts" nr="1"/>
           <par name="cond" nr="2"/>
-          <par name="cond_len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1908,8 +3021,8 @@
       </function>
       <function name="matches">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1923,11 +3036,11 @@
       </function>
       <function name="parse_config_key">
         <parameters>
-          <par name="var" nr="1"/>
           <par name="section" nr="2"/>
           <par name="subsection" nr="3"/>
           <par name="subsection_len" nr="4"/>
           <par name="key" nr="5"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1956,6 +3069,37 @@
       </function>
       <function name="parse_value">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="linenr"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1970,11 +3114,51 @@
         <parameters>
           <par name="pat" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="path"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -1997,9 +3181,9 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -2009,12 +3193,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="repo_config">
         <parameters>
-          <par name="repo" nr="1"/>
           <par name="fn" nr="2"/>
+          <par name="repo" nr="1"/>
           <par name="data" nr="3"/>
         </parameters>
         <postconditions>
@@ -2043,9 +3235,9 @@
       </function>
       <function name="repo_config_get_bool">
         <parameters>
+          <par name="dest" nr="3"/>
           <par name="repo" nr="1"/>
           <par name="key" nr="2"/>
-          <par name="dest" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -2059,10 +3251,10 @@
       </function>
       <function name="repo_config_get_bool_or_int">
         <parameters>
-          <par name="repo" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="is_bool" nr="3"/>
           <par name="dest" nr="4"/>
+          <par name="repo" nr="1"/>
+          <par name="key" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -2076,9 +3268,9 @@
       </function>
       <function name="repo_config_get_int">
         <parameters>
+          <par name="dest" nr="3"/>
           <par name="repo" nr="1"/>
           <par name="key" nr="2"/>
-          <par name="dest" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -2092,9 +3284,9 @@
       </function>
       <function name="repo_config_get_maybe_bool">
         <parameters>
+          <par name="dest" nr="3"/>
           <par name="repo" nr="1"/>
           <par name="key" nr="2"/>
-          <par name="dest" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -2108,9 +3300,9 @@
       </function>
       <function name="repo_config_get_pathname">
         <parameters>
+          <par name="dest" nr="3"/>
           <par name="repo" nr="1"/>
           <par name="key" nr="2"/>
-          <par name="dest" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -2124,9 +3316,9 @@
       </function>
       <function name="repo_config_get_string">
         <parameters>
+          <par name="dest" nr="3"/>
           <par name="repo" nr="1"/>
           <par name="key" nr="2"/>
-          <par name="dest" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -2140,9 +3332,9 @@
       </function>
       <function name="repo_config_get_string_const">
         <parameters>
+          <par name="dest" nr="3"/>
           <par name="repo" nr="1"/>
           <par name="key" nr="2"/>
-          <par name="dest" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -2156,9 +3348,9 @@
       </function>
       <function name="repo_config_get_ulong">
         <parameters>
+          <par name="dest" nr="3"/>
           <par name="repo" nr="1"/>
           <par name="key" nr="2"/>
-          <par name="dest" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -2173,8 +3365,8 @@
       <function name="repo_config_get_value">
         <parameters>
           <par name="repo" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="key" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -2231,14 +3423,41 @@
       </function>
       <function name="sane_case">
         <parameters>
-          <par name="x" nr="1"/>
           <par name="high" nr="2"/>
+          <par name="x" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <leq/>
+                <return/>
+                <cn>255</cn>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>-128</cn>
               </apply>
             </math>
           </post>
@@ -2275,9 +3494,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -2291,11 +3510,11 @@
       </function>
       <function name="skip_prefix_mem">
         <parameters>
-          <par name="buf" nr="1"/>
-          <par name="len" nr="2"/>
-          <par name="prefix" nr="3"/>
           <par name="out" nr="4"/>
           <par name="outlen" nr="5"/>
+          <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
+          <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -2309,8 +3528,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2324,10 +3543,41 @@
       </function>
       <function name="store_aux">
         <parameters>
-          <par name="key" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>cf</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="do_ftell"/>
+                  </addressed-value>
+                  <ci>cf</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -2354,8 +3604,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2398,8 +3648,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2414,14 +3664,30 @@
       <function name="strbuf_split_str">
         <parameters>
           <par name="str" nr="1"/>
-          <par name="terminator" nr="2"/>
           <par name="max" nr="3"/>
+          <par name="terminator" nr="2"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -2457,9 +3723,9 @@
       </function>
       <function name="write_pair">
         <parameters>
-          <par name="fd" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="key" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2473,8 +3739,8 @@
       </function>
       <function name="write_section">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="key" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -2488,8 +3754,8 @@
       </function>
       <function name="write_str_in_full">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="str" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>

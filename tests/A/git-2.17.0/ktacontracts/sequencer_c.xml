@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:06.948149"/>
-  <cfile name="sequencer">
-    <data-structures/>
+  <header time="2018-12-19 17:01:11">
+    <application file="sequencer.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -13,6 +17,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -27,6 +39,25 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -73,13 +104,34 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="command"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="append_signoff">
         <parameters>
+          <par name="flag" nr="3"/>
           <par name="msgbuf" nr="1"/>
           <par name="ignore_footer" nr="2"/>
-          <par name="flag" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -147,8 +199,8 @@
       </function>
       <function name="commit_post_rewrite">
         <parameters>
-          <par name="old_head" nr="1"/>
           <par name="new_head" nr="2"/>
+          <par name="old_head" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -226,9 +278,9 @@
       </function>
       <function name="do_commit">
         <parameters>
-          <par name="msg_file" nr="1"/>
           <par name="author" nr="2"/>
           <par name="opts" nr="3"/>
+          <par name="msg_file" nr="1"/>
           <par name="flags" nr="4"/>
         </parameters>
         <postconditions>
@@ -257,11 +309,42 @@
       </function>
       <function name="do_pick_commit">
         <parameters>
-          <par name="command" nr="1"/>
-          <par name="commit" nr="2"/>
-          <par name="opts" nr="3"/>
           <par name="final_fixup" nr="4"/>
+          <par name="command" nr="1"/>
+          <par name="opts" nr="3"/>
+          <par name="commit" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -274,13 +357,13 @@
       </function>
       <function name="do_recursive_merge">
         <parameters>
-          <par name="base" nr="1"/>
           <par name="next" nr="2"/>
-          <par name="base_label" nr="3"/>
-          <par name="next_label" nr="4"/>
           <par name="head" nr="5"/>
           <par name="msgbuf" nr="6"/>
           <par name="opts" nr="7"/>
+          <par name="next_label" nr="4"/>
+          <par name="base_label" nr="3"/>
+          <par name="base" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -294,11 +377,50 @@
       </function>
       <function name="empty_tree">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -320,9 +442,9 @@
       </function>
       <function name="error_failed_squash">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="opts" nr="2"/>
           <par name="subject_len" nr="3"/>
+          <par name="commit" nr="1"/>
           <par name="subject" nr="4"/>
         </parameters>
         <postconditions>
@@ -337,12 +459,12 @@
       </function>
       <function name="error_with_patch">
         <parameters>
-          <par name="commit" nr="1"/>
-          <par name="subject" nr="2"/>
+          <par name="to_amend" nr="6"/>
+          <par name="exit_code" nr="5"/>
           <par name="subject_len" nr="3"/>
           <par name="opts" nr="4"/>
-          <par name="exit_code" nr="5"/>
-          <par name="to_amend" nr="6"/>
+          <par name="commit" nr="1"/>
+          <par name="subject" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -356,10 +478,10 @@
       </function>
       <function name="fast_forward_to">
         <parameters>
-          <par name="to" nr="1"/>
-          <par name="from" nr="2"/>
-          <par name="unborn" nr="3"/>
           <par name="opts" nr="4"/>
+          <par name="unborn" nr="3"/>
+          <par name="from" nr="2"/>
+          <par name="to" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -424,12 +546,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_message">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="out" nr="2"/>
+          <par name="commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -465,13 +595,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_config_string_dup">
         <parameters>
           <par name="dest" nr="1"/>
-          <par name="var" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="var" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -493,6 +631,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_path_commit_editmsg">
@@ -502,6 +648,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -517,6 +671,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_path_opts_file">
@@ -529,6 +691,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_path_seq_dir">
@@ -538,6 +708,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -557,9 +735,9 @@
       </function>
       <function name="git_sequencer_config">
         <parameters>
-          <par name="k" nr="1"/>
-          <par name="v" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="v" nr="2"/>
+          <par name="k" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -583,12 +761,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="has_conforming_footer">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="sob" nr="2"/>
+          <par name="sb" nr="1"/>
           <par name="ignore_footer" nr="3"/>
         </parameters>
         <postconditions>
@@ -633,8 +819,8 @@
       </function>
       <function name="hashmap_entry_init">
         <parameters>
-          <par name="entry" nr="1"/>
           <par name="hash" nr="2"/>
+          <par name="entry" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -660,13 +846,34 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="i"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="hold_lock_file_for_update">
         <parameters>
-          <par name="lk" nr="1"/>
           <par name="path" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -685,6 +892,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -774,6 +989,37 @@
         <parameters>
           <par name="commit" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -800,8 +1046,8 @@
       </function>
       <function name="make_patch">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="opts" nr="2"/>
+          <par name="commit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -902,8 +1148,8 @@
       </function>
       <function name="parse_insn_buffer">
         <parameters>
-          <par name="buf___0" nr="1"/>
           <par name="todo_list" nr="2"/>
+          <par name="buf___0" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -963,8 +1209,8 @@
       </function>
       <function name="populate_opts_cb">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
           <par name="data" nr="3"/>
         </parameters>
         <postconditions>
@@ -993,8 +1239,8 @@
       </function>
       <function name="print_advice">
         <parameters>
-          <par name="show_hint" nr="1"/>
           <par name="opts" nr="2"/>
+          <par name="show_hint" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1008,9 +1254,9 @@
       </function>
       <function name="print_commit_summary">
         <parameters>
-          <par name="prefix" nr="1"/>
           <par name="oid" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="prefix" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1052,9 +1298,9 @@
       </function>
       <function name="read_oneliner">
         <parameters>
-          <par name="buf___0" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="skip_if_empty" nr="3"/>
+          <par name="path" nr="2"/>
+          <par name="buf___0" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1144,6 +1390,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="rebase_path_amend">
@@ -1153,6 +1407,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1168,6 +1430,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="rebase_path_autostash">
@@ -1177,6 +1447,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1192,6 +1470,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="rebase_path_fixup_msg">
@@ -1201,6 +1487,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1216,6 +1510,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="rebase_path_head_name">
@@ -1225,6 +1527,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1240,6 +1550,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="rebase_path_msgnum">
@@ -1249,6 +1567,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1264,6 +1590,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="rebase_path_onto">
@@ -1273,6 +1607,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1288,6 +1630,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="rebase_path_rewritten_list">
@@ -1297,6 +1647,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1312,6 +1670,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="rebase_path_squash_msg">
@@ -1321,6 +1687,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1336,6 +1710,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="rebase_path_strategy">
@@ -1345,6 +1727,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1360,6 +1750,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="rebase_path_todo">
@@ -1369,6 +1767,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1384,12 +1790,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="record_in_rewritten">
         <parameters>
-          <par name="oid" nr="1"/>
           <par name="next_command" nr="2"/>
+          <par name="oid" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1403,8 +1817,8 @@
       </function>
       <function name="reflog_message">
         <parameters>
-          <par name="opts" nr="1"/>
           <par name="sub_action" nr="2"/>
+          <par name="opts" nr="1"/>
           <par name="fmt" nr="3"/>
         </parameters>
         <postconditions>
@@ -1412,6 +1826,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -1448,9 +1870,9 @@
       </function>
       <function name="rewrite_file">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="buf___1" nr="2"/>
           <par name="len" nr="3"/>
+          <par name="buf___1" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1502,9 +1924,9 @@
       </function>
       <function name="run_git_commit">
         <parameters>
-          <par name="defmsg" nr="1"/>
           <par name="opts" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="defmsg" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1533,8 +1955,8 @@
       </function>
       <function name="run_rewrite_hook">
         <parameters>
-          <par name="oldoid" nr="1"/>
           <par name="newoid" nr="2"/>
+          <par name="oldoid" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1634,9 +2056,9 @@
       <function name="sequencer_make_script">
         <parameters>
           <par name="out" nr="1"/>
-          <par name="argc" nr="2"/>
           <par name="argv" nr="3"/>
           <par name="flags" nr="4"/>
+          <par name="argc" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1702,12 +2124,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="single_pick">
         <parameters>
-          <par name="cmit" nr="1"/>
           <par name="opts" nr="2"/>
+          <par name="cmit" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1721,9 +2151,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1749,8 +2179,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1764,8 +2194,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1779,8 +2209,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1823,8 +2253,8 @@
       </function>
       <function name="strbuf_complete">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="term" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1867,8 +2297,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1883,9 +2313,9 @@
       <function name="subject2item_cmp">
         <parameters>
           <par name="fndata" nr="1"/>
-          <par name="a" nr="2"/>
           <par name="b" nr="3"/>
           <par name="key" nr="4"/>
+          <par name="a" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1899,8 +2329,8 @@
       </function>
       <function name="template_untouched">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="template_file" nr="2"/>
+          <par name="sb" nr="1"/>
           <par name="cleanup_mode" nr="3"/>
         </parameters>
         <postconditions>
@@ -1943,11 +2373,11 @@
       </function>
       <function name="try_to_commit">
         <parameters>
-          <par name="msg" nr="1"/>
           <par name="author" nr="2"/>
-          <par name="opts" nr="3"/>
-          <par name="flags" nr="4"/>
           <par name="oid" nr="5"/>
+          <par name="opts" nr="3"/>
+          <par name="msg" nr="1"/>
+          <par name="flags" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -1973,10 +2403,10 @@
       </function>
       <function name="update_head_with_reflog">
         <parameters>
-          <par name="old_head" nr="1"/>
           <par name="new_head" nr="2"/>
-          <par name="action" nr="3"/>
           <par name="msg" nr="4"/>
+          <par name="action" nr="3"/>
+          <par name="old_head" nr="1"/>
           <par name="err" nr="5"/>
         </parameters>
         <postconditions>
@@ -1992,8 +2422,8 @@
       <function name="update_squash_messages">
         <parameters>
           <par name="command" nr="1"/>
-          <par name="commit" nr="2"/>
           <par name="opts" nr="3"/>
+          <par name="commit" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -2036,10 +2466,10 @@
       </function>
       <function name="write_message">
         <parameters>
-          <par name="buf___0" nr="1"/>
           <par name="len" nr="2"/>
-          <par name="filename" nr="3"/>
           <par name="append_eol" nr="4"/>
+          <par name="filename" nr="3"/>
+          <par name="buf___0" nr="1"/>
         </parameters>
         <postconditions>
           <post>

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:00.984878"/>
-  <cfile name="patch-delta">
-    <data-structures/>
+  <header time="2018-12-19 16:23:52">
+    <application file="patch-delta.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="const_error">
         <parameters/>
@@ -18,8 +20,8 @@
       </function>
       <function name="get_delta_hdr_size">
         <parameters>
-          <par name="datap" nr="1"/>
           <par name="top" nr="2"/>
+          <par name="datap" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -29,15 +31,33 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <leq/>
+                <return/>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="patch_delta">
         <parameters>
+          <par name="delta_buf" nr="3"/>
+          <par name="dst_size" nr="5"/>
+          <par name="delta_size" nr="4"/>
           <par name="src_buf" nr="1"/>
           <par name="src_size" nr="2"/>
-          <par name="delta_buf" nr="3"/>
-          <par name="delta_size" nr="4"/>
-          <par name="dst_size" nr="5"/>
         </parameters>
         <postconditions>
           <post>

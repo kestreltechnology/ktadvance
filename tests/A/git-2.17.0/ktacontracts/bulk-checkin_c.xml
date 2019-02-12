@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:52.021294"/>
-  <cfile name="bulk-checkin">
-    <data-structures/>
+  <header time="2018-12-19 14:41:38">
+    <application file="bulk-checkin.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="already_written">
         <parameters>
@@ -34,13 +38,44 @@
       <function name="deflate_to_pack">
         <parameters>
           <par name="state___0" nr="1"/>
-          <par name="result_sha1" nr="2"/>
-          <par name="fd" nr="3"/>
           <par name="size" nr="4"/>
+          <par name="result_sha1" nr="2"/>
           <par name="type" nr="5"/>
+          <par name="fd" nr="3"/>
           <par name="path" nr="6"/>
           <par name="flags" nr="7"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -111,10 +146,10 @@
       </function>
       <function name="index_bulk_checkin">
         <parameters>
-          <par name="sha1" nr="1"/>
-          <par name="fd" nr="2"/>
           <par name="size" nr="3"/>
+          <par name="sha1" nr="1"/>
           <par name="type" nr="4"/>
+          <par name="fd" nr="2"/>
           <par name="path" nr="5"/>
           <par name="flags" nr="6"/>
         </parameters>
@@ -157,8 +192,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -172,15 +207,46 @@
       </function>
       <function name="stream_to_pack">
         <parameters>
-          <par name="state___0" nr="1"/>
-          <par name="ctx" nr="2"/>
           <par name="already_hashed_to" nr="3"/>
-          <par name="fd" nr="4"/>
+          <par name="state___0" nr="1"/>
           <par name="size" nr="5"/>
+          <par name="ctx" nr="2"/>
           <par name="type" nr="6"/>
+          <par name="fd" nr="4"/>
           <par name="path" nr="7"/>
           <par name="flags" nr="8"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

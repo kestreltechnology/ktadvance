@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:00.577743"/>
-  <cfile name="pack-write">
-    <data-structures/>
+  <header time="2018-12-19 16:21:14">
+    <application file="pack-write.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="cmp_uint32">
         <parameters>
@@ -35,10 +39,10 @@
       </function>
       <function name="encode_in_pack_object_header">
         <parameters>
-          <par name="hdr" nr="1"/>
-          <par name="hdr_len" nr="2"/>
-          <par name="type" nr="3"/>
           <par name="size" nr="4"/>
+          <par name="hdr_len" nr="2"/>
+          <par name="hdr" nr="1"/>
+          <par name="type" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -52,12 +56,12 @@
       </function>
       <function name="finish_tmp_packfile">
         <parameters>
-          <par name="name_buffer" nr="1"/>
           <par name="pack_tmp_name" nr="2"/>
+          <par name="pack_idx_opts" nr="5"/>
+          <par name="name_buffer" nr="1"/>
+          <par name="sha1" nr="6"/>
           <par name="written_list" nr="3"/>
           <par name="nr_written" nr="4"/>
-          <par name="pack_idx_opts" nr="5"/>
-          <par name="sha1" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -71,13 +75,44 @@
       </function>
       <function name="fixup_pack_header_footer">
         <parameters>
-          <par name="pack_fd" nr="1"/>
-          <par name="new_pack_hash" nr="2"/>
-          <par name="pack_name" nr="3"/>
-          <par name="object_count" nr="4"/>
-          <par name="partial_pack_hash" nr="5"/>
           <par name="partial_pack_offset" nr="6"/>
+          <par name="pack_name" nr="3"/>
+          <par name="partial_pack_hash" nr="5"/>
+          <par name="object_count" nr="4"/>
+          <par name="new_pack_hash" nr="2"/>
+          <par name="pack_fd" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -121,6 +156,37 @@
         <parameters>
           <par name="ip_out" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -133,8 +199,8 @@
       </function>
       <function name="need_large_offset">
         <parameters>
-          <par name="offset" nr="1"/>
           <par name="opts" nr="2"/>
+          <par name="offset" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -177,10 +243,10 @@
       </function>
       <function name="sane_qsort">
         <parameters>
-          <par name="base" nr="1"/>
           <par name="nmemb" nr="2"/>
-          <par name="size" nr="3"/>
           <par name="compar" nr="4"/>
+          <par name="size" nr="3"/>
+          <par name="base" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -209,9 +275,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -225,8 +291,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -240,12 +306,43 @@
       </function>
       <function name="write_idx_file">
         <parameters>
-          <par name="index_name" nr="1"/>
           <par name="objects" nr="2"/>
-          <par name="nr_objects" nr="3"/>
-          <par name="opts" nr="4"/>
           <par name="sha1" nr="5"/>
+          <par name="opts" nr="4"/>
+          <par name="nr_objects" nr="3"/>
+          <par name="index_name" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="hash_algo"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -254,12 +351,28 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="write_pack_header">
         <parameters>
-          <par name="f" nr="1"/>
           <par name="nr_entries" nr="2"/>
+          <par name="f" nr="1"/>
         </parameters>
         <postconditions>
           <post>

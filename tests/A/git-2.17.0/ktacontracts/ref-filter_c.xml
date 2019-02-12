@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:02.313037"/>
-  <cfile name="ref-filter">
-    <data-structures/>
+  <header time="2018-12-19 16:32:36">
+    <application file="ref-filter.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="minimum_abbrev"/>
+      <gvar name="stat_contains_cacherealloc"/>
+      <gvar name="used_atom"/>
+      <gvar name="used_atom_cnt"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -13,6 +20,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -35,8 +50,8 @@
       </function>
       <function name="align_atom_parser">
         <parameters>
-          <par name="format" nr="1"/>
           <par name="atom" nr="2"/>
+          <par name="format" nr="1"/>
           <par name="arg" nr="3"/>
         </parameters>
         <postconditions>
@@ -67,9 +82,9 @@
       <function name="append_lines">
         <parameters>
           <par name="out" nr="1"/>
+          <par name="lines" nr="4"/>
           <par name="buf" nr="2"/>
           <par name="size" nr="3"/>
-          <par name="lines" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -99,8 +114,8 @@
       </function>
       <function name="body_atom_parser">
         <parameters>
-          <par name="format" nr="1"/>
           <par name="atom" nr="2"/>
+          <par name="format" nr="1"/>
           <par name="arg" nr="3"/>
         </parameters>
         <postconditions>
@@ -130,9 +145,27 @@
       <function name="cmp_ref_sorting">
         <parameters>
           <par name="s" nr="1"/>
-          <par name="a" nr="2"/>
           <par name="b" nr="3"/>
+          <par name="a" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -145,8 +178,8 @@
       </function>
       <function name="color_atom_parser">
         <parameters>
-          <par name="format" nr="1"/>
           <par name="atom" nr="2"/>
+          <par name="format" nr="1"/>
           <par name="color_value" nr="3"/>
         </parameters>
         <postconditions>
@@ -162,9 +195,9 @@
       <function name="commit_contains">
         <parameters>
           <par name="filter" nr="1"/>
-          <par name="commit" nr="2"/>
-          <par name="list" nr="3"/>
           <par name="cache" nr="4"/>
+          <par name="list" nr="3"/>
+          <par name="commit" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -178,9 +211,9 @@
       </function>
       <function name="compare_refs">
         <parameters>
+          <par name="ref_sorting" nr="3"/>
           <par name="a_" nr="1"/>
           <par name="b_" nr="2"/>
-          <par name="ref_sorting" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -206,8 +239,8 @@
       </function>
       <function name="contains_cache_at">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -217,14 +250,48 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="contains_cache_at_peek">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="s" nr="1"/>
           <par name="add_if_missing" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>stat_contains_cacherealloc</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -238,8 +305,8 @@
       <function name="contains_tag_algo">
         <parameters>
           <par name="candidate" nr="1"/>
-          <par name="want" nr="2"/>
           <par name="cache" nr="3"/>
+          <par name="want" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -254,8 +321,8 @@
       <function name="contains_test">
         <parameters>
           <par name="candidate" nr="1"/>
-          <par name="want" nr="2"/>
           <par name="cache" nr="3"/>
+          <par name="want" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -269,8 +336,8 @@
       </function>
       <function name="contents_atom_parser">
         <parameters>
-          <par name="format" nr="1"/>
           <par name="atom" nr="2"/>
+          <par name="format" nr="1"/>
           <par name="arg" nr="3"/>
         </parameters>
         <postconditions>
@@ -293,6 +360,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -342,8 +417,8 @@
       </function>
       <function name="copy_subject">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -472,12 +547,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="filter_refs">
         <parameters>
-          <par name="array" nr="1"/>
           <par name="filter" nr="2"/>
+          <par name="array" nr="1"/>
           <par name="type" nr="3"/>
         </parameters>
         <postconditions>
@@ -521,15 +605,15 @@
       </function>
       <function name="find_subpos">
         <parameters>
-          <par name="buf" nr="1"/>
-          <par name="sz" nr="2"/>
           <par name="sub" nr="3"/>
+          <par name="buf" nr="1"/>
+          <par name="siglen" nr="9"/>
           <par name="sublen" nr="4"/>
           <par name="body" nr="5"/>
           <par name="bodylen" nr="6"/>
           <par name="nonsiglen" nr="7"/>
+          <par name="sz" nr="2"/>
           <par name="sig" nr="8"/>
-          <par name="siglen" nr="9"/>
         </parameters>
         <postconditions>
           <post>
@@ -543,10 +627,10 @@
       </function>
       <function name="find_wholine">
         <parameters>
-          <par name="who" nr="1"/>
-          <par name="wholen" nr="2"/>
           <par name="buf" nr="3"/>
+          <par name="who" nr="1"/>
           <par name="sz" nr="4"/>
+          <par name="wholen" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -560,8 +644,8 @@
       </function>
       <function name="for_each_fullref_in_pattern">
         <parameters>
-          <par name="filter" nr="1"/>
           <par name="cb" nr="2"/>
+          <par name="filter" nr="1"/>
           <par name="cb_data" nr="3"/>
           <par name="broken" nr="4"/>
         </parameters>
@@ -577,9 +661,9 @@
       </function>
       <function name="format_ref_array_item">
         <parameters>
-          <par name="info" nr="1"/>
-          <par name="format" nr="2"/>
           <par name="final_buf" nr="3"/>
+          <par name="format" nr="2"/>
+          <par name="info" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -620,9 +704,9 @@
       <function name="get_obj">
         <parameters>
           <par name="oid" nr="1"/>
-          <par name="obj" nr="2"/>
           <par name="sz" nr="3"/>
           <par name="eaten" nr="4"/>
+          <par name="obj" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -632,14 +716,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_object">
         <parameters>
           <par name="ref" nr="1"/>
           <par name="oid" nr="2"/>
-          <par name="deref" nr="3"/>
           <par name="obj" nr="4"/>
+          <par name="deref" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -653,8 +745,8 @@
       </function>
       <function name="get_ref_atom_value">
         <parameters>
-          <par name="ref" nr="1"/>
           <par name="atom" nr="2"/>
+          <par name="ref" nr="1"/>
           <par name="v" nr="3"/>
         </parameters>
         <postconditions>
@@ -699,12 +791,30 @@
       </function>
       <function name="grab_commit_values">
         <parameters>
-          <par name="val" nr="1"/>
-          <par name="deref" nr="2"/>
-          <par name="obj" nr="3"/>
           <par name="buf" nr="4"/>
           <par name="sz" nr="5"/>
+          <par name="obj" nr="3"/>
+          <par name="val" nr="1"/>
+          <par name="deref" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -717,12 +827,30 @@
       </function>
       <function name="grab_common_values">
         <parameters>
-          <par name="val" nr="1"/>
-          <par name="deref" nr="2"/>
-          <par name="obj" nr="3"/>
           <par name="buf" nr="4"/>
           <par name="sz" nr="5"/>
+          <par name="obj" nr="3"/>
+          <par name="val" nr="1"/>
+          <par name="deref" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -751,10 +879,10 @@
       </function>
       <function name="grab_objectname">
         <parameters>
-          <par name="name" nr="1"/>
+          <par name="atom" nr="4"/>
           <par name="sha1" nr="2"/>
           <par name="v" nr="3"/>
-          <par name="atom" nr="4"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -768,13 +896,31 @@
       </function>
       <function name="grab_person">
         <parameters>
+          <par name="buf" nr="5"/>
           <par name="who" nr="1"/>
+          <par name="sz" nr="6"/>
+          <par name="obj" nr="4"/>
           <par name="val" nr="2"/>
           <par name="deref" nr="3"/>
-          <par name="obj" nr="4"/>
-          <par name="buf" nr="5"/>
-          <par name="sz" nr="6"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -787,12 +933,30 @@
       </function>
       <function name="grab_sub_body_contents">
         <parameters>
-          <par name="val" nr="1"/>
-          <par name="deref" nr="2"/>
-          <par name="obj" nr="3"/>
           <par name="buf" nr="4"/>
           <par name="sz" nr="5"/>
+          <par name="obj" nr="3"/>
+          <par name="val" nr="1"/>
+          <par name="deref" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -805,12 +969,30 @@
       </function>
       <function name="grab_tag_values">
         <parameters>
-          <par name="val" nr="1"/>
-          <par name="deref" nr="2"/>
-          <par name="obj" nr="3"/>
           <par name="buf" nr="4"/>
           <par name="sz" nr="5"/>
+          <par name="obj" nr="3"/>
+          <par name="val" nr="1"/>
+          <par name="deref" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -823,11 +1005,11 @@
       </function>
       <function name="grab_values">
         <parameters>
-          <par name="val" nr="1"/>
-          <par name="deref" nr="2"/>
-          <par name="obj" nr="3"/>
           <par name="buf" nr="4"/>
           <par name="sz" nr="5"/>
+          <par name="obj" nr="3"/>
+          <par name="val" nr="1"/>
+          <par name="deref" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -871,8 +1053,8 @@
       </function>
       <function name="head_atom_parser">
         <parameters>
-          <par name="format" nr="1"/>
           <par name="atom" nr="2"/>
+          <par name="format" nr="1"/>
           <par name="arg" nr="3"/>
         </parameters>
         <postconditions>
@@ -930,8 +1112,8 @@
       </function>
       <function name="if_atom_parser">
         <parameters>
-          <par name="format" nr="1"/>
           <par name="atom" nr="2"/>
+          <par name="format" nr="1"/>
           <par name="arg" nr="3"/>
         </parameters>
         <postconditions>
@@ -960,8 +1142,8 @@
       </function>
       <function name="in_commit_list">
         <parameters>
-          <par name="want" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="want" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -989,8 +1171,8 @@
       </function>
       <function name="init_contains_cache_with_stride">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="stride" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1018,8 +1200,8 @@
       </function>
       <function name="lstrip_ref_components">
         <parameters>
-          <par name="refname" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="refname" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1063,9 +1245,9 @@
       </function>
       <function name="match_points_at">
         <parameters>
-          <par name="points_at" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="refname" nr="3"/>
+          <par name="oid" nr="2"/>
+          <par name="points_at" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1079,9 +1261,9 @@
       </function>
       <function name="new_ref_array_item">
         <parameters>
-          <par name="refname" nr="1"/>
           <par name="objectname" nr="2"/>
           <par name="flag" nr="3"/>
+          <par name="refname" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1091,14 +1273,54 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="symref"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="objectname_atom_parser">
         <parameters>
-          <par name="format" nr="1"/>
           <par name="atom" nr="2"/>
+          <par name="format" nr="1"/>
           <par name="arg" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>minimum_abbrev</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1140,8 +1362,8 @@
       </function>
       <function name="parse_opt_merge_filter">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -1156,8 +1378,8 @@
       </function>
       <function name="parse_opt_ref_sorting">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -1172,10 +1394,62 @@
       </function>
       <function name="parse_ref_filter_atom">
         <parameters>
-          <par name="format" nr="1"/>
           <par name="atom" nr="2"/>
+          <par name="format" nr="1"/>
           <par name="ep" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>used_atom_cnt</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <plus/>
+                  <ci>used_atom_cnt</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1188,8 +1462,8 @@
       </function>
       <function name="parse_ref_sorting">
         <parameters>
-          <par name="sorting_tail" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="sorting_tail" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1233,6 +1507,46 @@
         <parameters>
           <par name="ref" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>used_atom_cnt</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <ci>used_atom_cnt</ci>
+                  <cn>16</cn>
+                </apply>
+                <cn>4294967295</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -1245,9 +1559,9 @@
       </function>
       <function name="pretty_print_ref">
         <parameters>
-          <par name="name" nr="1"/>
-          <par name="sha1" nr="2"/>
           <par name="format" nr="3"/>
+          <par name="sha1" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1275,8 +1589,8 @@
       </function>
       <function name="push_to_contains_stack">
         <parameters>
-          <par name="candidate" nr="1"/>
           <par name="contains_stack" nr="2"/>
+          <par name="candidate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1306,9 +1620,9 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1363,10 +1677,10 @@
       </function>
       <function name="ref_filter_handler">
         <parameters>
-          <par name="refname" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="refname" nr="1"/>
+          <par name="oid" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1390,12 +1704,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="refname_atom_parser">
         <parameters>
-          <par name="format" nr="1"/>
           <par name="atom" nr="2"/>
+          <par name="format" nr="1"/>
           <par name="arg" nr="3"/>
         </parameters>
         <postconditions>
@@ -1426,8 +1749,8 @@
       </function>
       <function name="remote_ref_atom_parser">
         <parameters>
-          <par name="format" nr="1"/>
           <par name="atom" nr="2"/>
+          <par name="format" nr="1"/>
           <par name="arg" nr="3"/>
         </parameters>
         <postconditions>
@@ -1442,8 +1765,8 @@
       </function>
       <function name="rstrip_ref_components">
         <parameters>
-          <par name="refname" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="refname" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1484,8 +1807,8 @@
       </function>
       <function name="show_ref_array_item">
         <parameters>
-          <par name="info" nr="1"/>
           <par name="format" nr="2"/>
+          <par name="info" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1499,9 +1822,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1515,8 +1838,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1530,8 +1853,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1545,8 +1868,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1589,8 +1912,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1604,8 +1927,8 @@
       </function>
       <function name="strbuf_swap">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1619,9 +1942,9 @@
       </function>
       <function name="strtol_i">
         <parameters>
+          <par name="result" nr="3"/>
           <par name="s" nr="1"/>
           <par name="base" nr="2"/>
-          <par name="result" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1635,9 +1958,9 @@
       </function>
       <function name="strtoul_ui">
         <parameters>
+          <par name="result" nr="3"/>
           <par name="s" nr="1"/>
           <par name="base" nr="2"/>
-          <par name="result" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1651,8 +1974,8 @@
       </function>
       <function name="subject_atom_parser">
         <parameters>
-          <par name="format" nr="1"/>
           <par name="atom" nr="2"/>
+          <par name="format" nr="1"/>
           <par name="arg" nr="3"/>
         </parameters>
         <postconditions>
@@ -1682,8 +2005,8 @@
       </function>
       <function name="trailers_atom_parser">
         <parameters>
-          <par name="format" nr="1"/>
           <par name="atom" nr="2"/>
+          <par name="format" nr="1"/>
           <par name="arg" nr="3"/>
         </parameters>
         <postconditions>
@@ -1700,6 +2023,24 @@
         <parameters>
           <par name="format" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>used_atom</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

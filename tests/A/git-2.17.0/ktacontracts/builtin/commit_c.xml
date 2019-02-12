@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:46.303470"/>
-  <cfile name="builtin/commit">
-    <data-structures/>
+  <header time="2018-12-19 13:28:37">
+    <application file="builtin/commit.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="author_message"/>
+      <gvar name="author_message_buffer"/>
+      <gvar name="use_message_buffer"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -13,6 +19,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -48,8 +62,8 @@
       </function>
       <function name="assert_split_ident">
         <parameters>
-          <par name="id" nr="1"/>
           <par name="buf" nr="2"/>
+          <par name="id" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -76,8 +90,8 @@
       <function name="ce_path_match">
         <parameters>
           <par name="ce" nr="1"/>
-          <par name="pathspec" nr="2"/>
           <par name="seen" nr="3"/>
+          <par name="pathspec" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -91,8 +105,8 @@
       </function>
       <function name="cmd_commit">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -107,8 +121,8 @@
       </function>
       <function name="cmd_status">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -163,6 +177,24 @@
         <parameters>
           <par name="author_ident" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>author_message</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>author_message_buffer</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -189,11 +221,11 @@
       </function>
       <function name="dry_run_commit">
         <parameters>
-          <par name="argc" nr="1"/>
+          <par name="s" nr="5"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
           <par name="current_head" nr="4"/>
-          <par name="s" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -207,10 +239,10 @@
       </function>
       <function name="export_one">
         <parameters>
-          <par name="var" nr="1"/>
+          <par name="hack" nr="4"/>
           <par name="s" nr="2"/>
           <par name="e" nr="3"/>
-          <par name="hack" nr="4"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -262,13 +294,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_commit_config">
         <parameters>
-          <par name="k" nr="1"/>
-          <par name="v" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="v" nr="2"/>
+          <par name="k" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -282,9 +322,9 @@
       </function>
       <function name="git_status_config">
         <parameters>
-          <par name="k" nr="1"/>
-          <par name="v" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="v" nr="2"/>
+          <par name="k" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -341,9 +381,9 @@
       </function>
       <function name="hold_lock_file_for_update">
         <parameters>
-          <par name="lk" nr="1"/>
           <par name="path" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -371,10 +411,10 @@
       </function>
       <function name="list_paths">
         <parameters>
-          <par name="list" nr="1"/>
           <par name="with_tree" nr="2"/>
-          <par name="prefix" nr="3"/>
           <par name="pattern" nr="4"/>
+          <par name="list" nr="1"/>
+          <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -388,8 +428,8 @@
       </function>
       <function name="opt_parse_m">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -404,8 +444,8 @@
       </function>
       <function name="opt_parse_porcelain">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -420,13 +460,13 @@
       </function>
       <function name="parse_and_validate_options">
         <parameters>
-          <par name="argc" nr="1"/>
+          <par name="usage___0" nr="4"/>
+          <par name="s" nr="7"/>
           <par name="argv" nr="2"/>
           <par name="options" nr="3"/>
-          <par name="usage___0" nr="4"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="5"/>
           <par name="current_head" nr="6"/>
-          <par name="s" nr="7"/>
         </parameters>
         <postconditions>
           <post>
@@ -454,8 +494,8 @@
       </function>
       <function name="parse_force_date">
         <parameters>
-          <par name="in" nr="1"/>
           <par name="out" nr="2"/>
+          <par name="in" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -497,11 +537,11 @@
       </function>
       <function name="prepare_index">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="is_status" nr="5"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
           <par name="current_head" nr="4"/>
-          <par name="is_status" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -515,12 +555,30 @@
       </function>
       <function name="prepare_to_commit">
         <parameters>
+          <par name="author_ident" nr="5"/>
           <par name="index_file" nr="1"/>
+          <par name="s" nr="4"/>
           <par name="prefix" nr="2"/>
           <par name="current_head" nr="3"/>
-          <par name="s" nr="4"/>
-          <par name="author_ident" nr="5"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>use_message_buffer</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>use_message_buffer</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -601,8 +659,8 @@
       </function>
       <function name="run_commit_hook">
         <parameters>
-          <par name="editor_is_used" nr="1"/>
           <par name="index_file" nr="2"/>
+          <par name="editor_is_used" nr="1"/>
           <par name="name" nr="3"/>
         </parameters>
         <postconditions>
@@ -617,11 +675,11 @@
       </function>
       <function name="run_status">
         <parameters>
-          <par name="fp" nr="1"/>
-          <par name="index_file" nr="2"/>
-          <par name="prefix" nr="3"/>
           <par name="nowarn" nr="4"/>
+          <par name="index_file" nr="2"/>
+          <par name="fp" nr="1"/>
           <par name="s" nr="5"/>
+          <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -650,9 +708,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -666,8 +724,8 @@
       </function>
       <function name="status_init_config">
         <parameters>
-          <par name="s" nr="1"/>
           <par name="fn" nr="2"/>
+          <par name="s" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -681,8 +739,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -725,8 +783,8 @@
       </function>
       <function name="strbuf_complete">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="term" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -754,8 +812,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -776,6 +834,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>

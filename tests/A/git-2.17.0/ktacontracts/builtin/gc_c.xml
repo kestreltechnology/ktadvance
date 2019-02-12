@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:48.065365"/>
-  <cfile name="builtin/gc">
-    <data-structures/>
+  <header time="2018-12-19 13:39:33">
+    <application file="builtin/gc.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="pidfile"/>
+      <gvar name="scan_fmt"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -13,6 +18,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -56,8 +69,8 @@
       </function>
       <function name="cmd_gc">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -122,9 +135,9 @@
       </function>
       <function name="hold_lock_file_for_update">
         <parameters>
-          <par name="lk" nr="1"/>
           <par name="path" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -152,9 +165,32 @@
       </function>
       <function name="lock_repo_for_gc">
         <parameters>
-          <par name="force" nr="1"/>
           <par name="ret_pid" nr="2"/>
+          <par name="force" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>scan_fmt</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="active"/>
+                  </addressed-value>
+                  <ci>pidfile</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

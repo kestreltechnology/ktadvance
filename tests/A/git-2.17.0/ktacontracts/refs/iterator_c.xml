@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:02.980190"/>
-  <cfile name="refs/iterator">
-    <data-structures/>
+  <header time="2018-12-19 16:39:16">
+    <application file="refs/iterator.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="current_ref_iter"/>
+    </global-variables>
     <functions>
       <function name="base_ref_iterator_free">
         <parameters>
@@ -21,8 +25,8 @@
       <function name="base_ref_iterator_init">
         <parameters>
           <par name="iter" nr="1"/>
-          <par name="vtable" nr="2"/>
           <par name="ordered" nr="3"/>
+          <par name="vtable" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -52,9 +56,19 @@
       <function name="do_for_each_ref_iterator">
         <parameters>
           <par name="iter" nr="1"/>
-          <par name="fn" nr="2"/>
           <par name="cb_data" nr="3"/>
+          <par name="fn" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>current_ref_iter</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -107,8 +121,8 @@
       </function>
       <function name="empty_ref_iterator_peel">
         <parameters>
-          <par name="ref_iterator" nr="1"/>
           <par name="peeled" nr="2"/>
+          <par name="ref_iterator" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -164,11 +178,11 @@
       </function>
       <function name="merge_ref_iterator_begin">
         <parameters>
-          <par name="ordered" nr="1"/>
           <par name="iter0" nr="2"/>
-          <par name="iter1" nr="3"/>
-          <par name="select___0" nr="4"/>
+          <par name="ordered" nr="1"/>
           <par name="cb_data" nr="5"/>
+          <par name="select___0" nr="4"/>
+          <par name="iter1" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -182,8 +196,8 @@
       </function>
       <function name="merge_ref_iterator_peel">
         <parameters>
-          <par name="ref_iterator" nr="1"/>
           <par name="peeled" nr="2"/>
+          <par name="ref_iterator" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -197,9 +211,9 @@
       </function>
       <function name="overlay_iterator_select">
         <parameters>
-          <par name="front" nr="1"/>
-          <par name="back" nr="2"/>
           <par name="cb_data" nr="3"/>
+          <par name="back" nr="2"/>
+          <par name="front" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -213,8 +227,8 @@
       </function>
       <function name="overlay_ref_iterator_begin">
         <parameters>
-          <par name="front" nr="1"/>
           <par name="back" nr="2"/>
+          <par name="front" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -257,8 +271,8 @@
       <function name="prefix_ref_iterator_begin">
         <parameters>
           <par name="iter0" nr="1"/>
-          <par name="prefix" nr="2"/>
           <par name="trim" nr="3"/>
+          <par name="prefix" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -272,8 +286,8 @@
       </function>
       <function name="prefix_ref_iterator_peel">
         <parameters>
-          <par name="ref_iterator" nr="1"/>
           <par name="peeled" nr="2"/>
+          <par name="ref_iterator" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -315,8 +329,8 @@
       </function>
       <function name="ref_iterator_peel">
         <parameters>
-          <par name="ref_iterator" nr="1"/>
           <par name="peeled" nr="2"/>
+          <par name="ref_iterator" nr="1"/>
         </parameters>
         <postconditions>
           <post>

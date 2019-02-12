@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:45.892766"/>
-  <cfile name="builtin/checkout-index">
-    <data-structures/>
+  <header time="2018-12-19 13:00:06">
+    <application file="builtin/checkout-index.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="checkout_stage"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -20,9 +24,20 @@
       </function>
       <function name="checkout_all">
         <parameters>
-          <par name="prefix" nr="1"/>
           <par name="prefix_length" nr="2"/>
+          <par name="prefix" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>checkout_stage</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -38,6 +53,17 @@
           <par name="name" nr="1"/>
           <par name="prefix" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>checkout_stage</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -50,8 +76,8 @@
       </function>
       <function name="cmd_checkout_index">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -94,8 +120,8 @@
       </function>
       <function name="option_parse_stage">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -110,8 +136,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -125,8 +151,8 @@
       </function>
       <function name="strbuf_swap">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -143,6 +169,26 @@
           <par name="name" nr="1"/>
           <par name="prefix" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>checkout_stage</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <lt/>
+                <ci>checkout_stage</ci>
+                <cn>4</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

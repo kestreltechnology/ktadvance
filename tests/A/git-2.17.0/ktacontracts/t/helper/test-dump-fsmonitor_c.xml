@@ -1,14 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:08.716942"/>
-  <cfile name="t/helper/test-dump-fsmonitor">
-    <data-structures/>
+  <header time="2018-12-19 17:25:12">
+    <application file="t/helper/test-dump-fsmonitor.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="the_index"/>
+    </global-variables>
     <functions>
       <function name="cmd_main">
         <parameters>
           <par name="ac" nr="1"/>
           <par name="av" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="fsmonitor_last_update"/>
+                  </addressed-value>
+                  <ci>the_index</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache_nr"/>
+                  </addressed-value>
+                  <ci>the_index</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cache"/>
+                  </addressed-value>
+                  <ci>the_index</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

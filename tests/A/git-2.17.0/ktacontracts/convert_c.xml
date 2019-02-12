@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:53.444837"/>
-  <cfile name="convert">
-    <data-structures/>
+  <header time="2018-12-19 15:30:18">
+    <application file="convert.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="check"/>
+      <gvar name="user_convert_tail"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -20,14 +25,14 @@
       </function>
       <function name="apply_filter">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="src" nr="2"/>
           <par name="len" nr="3"/>
-          <par name="fd" nr="4"/>
           <par name="dst" nr="5"/>
+          <par name="src" nr="2"/>
+          <par name="dco" nr="8"/>
           <par name="drv" nr="6"/>
           <par name="wanted_capability" nr="7"/>
-          <par name="dco" nr="8"/>
+          <par name="fd" nr="4"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -41,14 +46,14 @@
       </function>
       <function name="apply_multi_file_filter">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="src" nr="2"/>
           <par name="len" nr="3"/>
-          <par name="fd" nr="4"/>
-          <par name="dst" nr="5"/>
           <par name="cmd" nr="6"/>
-          <par name="wanted_capability" nr="7"/>
+          <par name="dst" nr="5"/>
+          <par name="src" nr="2"/>
           <par name="dco" nr="8"/>
+          <par name="wanted_capability" nr="7"/>
+          <par name="fd" nr="4"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -62,12 +67,12 @@
       </function>
       <function name="apply_single_file_filter">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="src" nr="2"/>
           <par name="len" nr="3"/>
-          <par name="fd" nr="4"/>
-          <par name="dst" nr="5"/>
           <par name="cmd" nr="6"/>
+          <par name="dst" nr="5"/>
+          <par name="src" nr="2"/>
+          <par name="fd" nr="4"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -81,11 +86,11 @@
       </function>
       <function name="async_convert_to_working_tree">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="src" nr="2"/>
           <par name="len" nr="3"/>
           <par name="dst" nr="4"/>
+          <par name="src" nr="2"/>
           <par name="dco" nr="5"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -99,8 +104,8 @@
       </function>
       <function name="async_query_available_blobs">
         <parameters>
-          <par name="cmd" nr="1"/>
           <par name="available_paths" nr="2"/>
+          <par name="cmd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -161,11 +166,11 @@
       </function>
       <function name="check_global_conv_flags_eol">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="crlf_action" nr="2"/>
-          <par name="old_stats" nr="3"/>
           <par name="new_stats" nr="4"/>
           <par name="conv_flags" nr="5"/>
+          <par name="crlf_action" nr="2"/>
+          <par name="old_stats" nr="3"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -194,6 +199,16 @@
           <par name="ca" nr="1"/>
           <par name="path" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>check</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -206,8 +221,8 @@
       </function>
       <function name="convert_is_binary">
         <parameters>
-          <par name="size" nr="1"/>
           <par name="stats" nr="2"/>
+          <par name="size" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -221,12 +236,12 @@
       </function>
       <function name="convert_to_git">
         <parameters>
-          <par name="istate" nr="1"/>
-          <par name="path" nr="2"/>
-          <par name="src" nr="3"/>
           <par name="len" nr="4"/>
           <par name="dst" nr="5"/>
           <par name="conv_flags" nr="6"/>
+          <par name="src" nr="3"/>
+          <par name="istate" nr="1"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -240,11 +255,11 @@
       </function>
       <function name="convert_to_git_filter_fd">
         <parameters>
-          <par name="istate" nr="1"/>
-          <par name="path" nr="2"/>
-          <par name="fd" nr="3"/>
           <par name="dst" nr="4"/>
           <par name="conv_flags" nr="5"/>
+          <par name="fd" nr="3"/>
+          <par name="istate" nr="1"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -258,10 +273,10 @@
       </function>
       <function name="convert_to_working_tree">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="src" nr="2"/>
           <par name="len" nr="3"/>
           <par name="dst" nr="4"/>
+          <par name="src" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -275,12 +290,12 @@
       </function>
       <function name="convert_to_working_tree_internal">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="src" nr="2"/>
           <par name="len" nr="3"/>
           <par name="dst" nr="4"/>
-          <par name="normalizing" nr="5"/>
+          <par name="src" nr="2"/>
           <par name="dco" nr="6"/>
+          <par name="normalizing" nr="5"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -294,8 +309,8 @@
       </function>
       <function name="count_ident">
         <parameters>
-          <par name="cp" nr="1"/>
           <par name="size" nr="2"/>
+          <par name="cp" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -309,13 +324,13 @@
       </function>
       <function name="crlf_to_git">
         <parameters>
-          <par name="istate" nr="1"/>
-          <par name="path" nr="2"/>
-          <par name="src" nr="3"/>
           <par name="len" nr="4"/>
           <par name="buf" nr="5"/>
-          <par name="crlf_action" nr="6"/>
           <par name="conv_flags" nr="7"/>
+          <par name="src" nr="3"/>
+          <par name="crlf_action" nr="6"/>
+          <par name="istate" nr="1"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -329,11 +344,11 @@
       </function>
       <function name="crlf_to_worktree">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="src" nr="2"/>
           <par name="len" nr="3"/>
           <par name="buf" nr="4"/>
+          <par name="src" nr="2"/>
           <par name="crlf_action" nr="5"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -347,8 +362,8 @@
       </function>
       <function name="filter_buffer_or_fd">
         <parameters>
-          <par name="in" nr="1"/>
           <par name="out" nr="2"/>
+          <par name="in" nr="1"/>
           <par name="data" nr="3"/>
         </parameters>
         <postconditions>
@@ -377,8 +392,8 @@
       </function>
       <function name="gather_convert_stats">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="size" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -392,8 +407,8 @@
       </function>
       <function name="gather_convert_stats_ascii">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="size" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -407,9 +422,9 @@
       </function>
       <function name="gather_stats">
         <parameters>
+          <par name="stats" nr="3"/>
           <par name="buf" nr="1"/>
           <par name="size" nr="2"/>
-          <par name="stats" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -452,8 +467,8 @@
       </function>
       <function name="get_stream_filter">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="sha1" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -537,9 +552,9 @@
       </function>
       <function name="handle_filter_error">
         <parameters>
-          <par name="filter_status" nr="1"/>
           <par name="entry" nr="2"/>
           <par name="wanted_capability" nr="3"/>
+          <par name="filter_status" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -568,9 +583,9 @@
       </function>
       <function name="ident_drain">
         <parameters>
-          <par name="ident" nr="1"/>
           <par name="output_p" nr="2"/>
           <par name="osize_p" nr="3"/>
+          <par name="ident" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -630,10 +645,10 @@
       </function>
       <function name="ident_to_git">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="src" nr="2"/>
           <par name="len" nr="3"/>
           <par name="buf" nr="4"/>
+          <par name="src" nr="2"/>
+          <par name="path" nr="1"/>
           <par name="ident" nr="5"/>
         </parameters>
         <postconditions>
@@ -648,10 +663,10 @@
       </function>
       <function name="ident_to_worktree">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="src" nr="2"/>
           <par name="len" nr="3"/>
           <par name="buf" nr="4"/>
+          <par name="src" nr="2"/>
+          <par name="path" nr="1"/>
           <par name="ident" nr="5"/>
         </parameters>
         <postconditions>
@@ -784,10 +799,28 @@
       </function>
       <function name="read_convert_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>user_convert_tail</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>user_convert_tail</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -800,11 +833,11 @@
       </function>
       <function name="renormalize_buffer">
         <parameters>
-          <par name="istate" nr="1"/>
-          <par name="path" nr="2"/>
-          <par name="src" nr="3"/>
           <par name="len" nr="4"/>
           <par name="dst" nr="5"/>
+          <par name="src" nr="3"/>
+          <par name="istate" nr="1"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -818,9 +851,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -848,8 +881,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -892,8 +925,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -907,8 +940,8 @@
       </function>
       <function name="strbuf_swap">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>

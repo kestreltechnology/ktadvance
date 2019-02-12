@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:48.895625"/>
-  <cfile name="builtin/mailsplit">
-    <data-structures/>
+  <header time="2018-12-19 13:53:59">
+    <application file="builtin/mailsplit.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="stdin"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -20,8 +24,8 @@
       </function>
       <function name="cmd_mailsplit">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -48,8 +52,8 @@
       </function>
       <function name="is_from_line">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="line" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -77,8 +81,8 @@
       </function>
       <function name="maildir_filename_cmp">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -107,10 +111,10 @@
       </function>
       <function name="split_maildir">
         <parameters>
-          <par name="maildir" nr="1"/>
           <par name="dir" nr="2"/>
-          <par name="nr_prec" nr="3"/>
+          <par name="maildir" nr="1"/>
           <par name="skip" nr="4"/>
+          <par name="nr_prec" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -124,12 +128,30 @@
       </function>
       <function name="split_mbox">
         <parameters>
-          <par name="file" nr="1"/>
           <par name="dir" nr="2"/>
+          <par name="skip" nr="5"/>
+          <par name="file" nr="1"/>
           <par name="allow_bare" nr="3"/>
           <par name="nr_prec" nr="4"/>
-          <par name="skip" nr="5"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>stdin</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>stdin</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -143,8 +165,8 @@
       <function name="split_one">
         <parameters>
           <par name="mbox" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="allow_bare" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -158,8 +180,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -187,8 +209,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

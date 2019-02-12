@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:47.813630"/>
-  <cfile name="builtin/fetch">
-    <data-structures/>
+  <header time="2018-12-19 13:35:34">
+    <application file="builtin/fetch.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="gsecondary"/>
+      <gvar name="gtransport"/>
+      <gvar name="refmap_alloc"/>
+      <gvar name="refmap_array"/>
+      <gvar name="refmap_nr"/>
+      <gvar name="repository_format_partial_clone"/>
+      <gvar name="tag_refspec"/>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -16,14 +27,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="add_existing">
         <parameters>
+          <par name="cbdata" nr="4"/>
+          <par name="flag" nr="3"/>
           <par name="refname" nr="1"/>
           <par name="oid" nr="2"/>
-          <par name="flag" nr="3"/>
-          <par name="cbdata" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -37,10 +56,10 @@
       </function>
       <function name="add_merge_config">
         <parameters>
-          <par name="head" nr="1"/>
-          <par name="remote_refs" nr="2"/>
           <par name="branch" nr="3"/>
+          <par name="head" nr="1"/>
           <par name="tail" nr="4"/>
+          <par name="remote_refs" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -68,8 +87,8 @@
       </function>
       <function name="add_remote_or_group">
         <parameters>
-          <par name="name" nr="1"/>
           <par name="list" nr="2"/>
+          <par name="name" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -97,8 +116,8 @@
       </function>
       <function name="backfill_tags">
         <parameters>
-          <par name="transport" nr="1"/>
           <par name="ref_map" nr="2"/>
+          <par name="transport" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -126,10 +145,20 @@
       </function>
       <function name="cmd_fetch">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -154,9 +183,9 @@
       </function>
       <function name="do_fetch">
         <parameters>
+          <par name="ref_count" nr="3"/>
           <par name="transport" nr="1"/>
           <par name="refs" nr="2"/>
-          <par name="ref_count" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -199,10 +228,10 @@
       </function>
       <function name="fetch_one">
         <parameters>
-          <par name="remote" nr="1"/>
-          <par name="argc" nr="2"/>
           <par name="argv" nr="3"/>
+          <par name="remote" nr="1"/>
           <par name="prune_tags_ok" nr="4"/>
+          <par name="argc" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -218,6 +247,24 @@
         <parameters>
           <par name="remote" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>repository_format_partial_clone</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>repository_format_partial_clone</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -230,8 +277,8 @@
       </function>
       <function name="fetch_refs">
         <parameters>
-          <par name="transport" nr="1"/>
           <par name="ref_map" nr="2"/>
+          <par name="transport" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -245,8 +292,8 @@
       </function>
       <function name="find_and_replace">
         <parameters>
-          <par name="haystack" nr="1"/>
           <par name="needle" nr="2"/>
+          <par name="haystack" nr="1"/>
           <par name="placeholder" nr="3"/>
         </parameters>
         <postconditions>
@@ -261,8 +308,8 @@
       </function>
       <function name="find_non_local_tags">
         <parameters>
-          <par name="transport" nr="1"/>
           <par name="head" nr="2"/>
+          <par name="transport" nr="1"/>
           <par name="tail" nr="3"/>
         </parameters>
         <postconditions>
@@ -278,12 +325,12 @@
       <function name="format_display">
         <parameters>
           <par name="display" nr="1"/>
-          <par name="code" nr="2"/>
           <par name="summary" nr="3"/>
-          <par name="error___0" nr="4"/>
+          <par name="summary_width" nr="7"/>
+          <par name="code" nr="2"/>
           <par name="remote" nr="5"/>
           <par name="local" nr="6"/>
-          <par name="summary_width" nr="7"/>
+          <par name="error___0" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -312,12 +359,120 @@
       </function>
       <function name="get_ref_map">
         <parameters>
-          <par name="transport" nr="1"/>
-          <par name="refspecs" nr="2"/>
           <par name="refspec_count" nr="3"/>
           <par name="tags___0" nr="4"/>
+          <par name="refspecs" nr="2"/>
+          <par name="transport" nr="1"/>
           <par name="autotags" nr="5"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>refmap_array</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>refmap_array</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tag_refspec</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="exact_sha1"/>
+                  </addressed-value>
+                  <ci>tag_refspec</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="pattern"/>
+                  </addressed-value>
+                  <ci>tag_refspec</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="dst"/>
+                  </addressed-value>
+                  <ci>tag_refspec</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>tag_refspec</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="src"/>
+                  </addressed-value>
+                  <ci>tag_refspec</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="force"/>
+                  </addressed-value>
+                  <ci>tag_refspec</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>refmap_nr</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -330,8 +485,8 @@
       </function>
       <function name="get_remote_group">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
           <par name="priv" nr="3"/>
         </parameters>
         <postconditions>
@@ -346,9 +501,9 @@
       </function>
       <function name="git_fetch_config">
         <parameters>
-          <par name="k" nr="1"/>
-          <par name="v" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="v" nr="2"/>
+          <par name="k" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -362,9 +517,9 @@
       </function>
       <function name="gitmodules_fetch_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -467,10 +622,96 @@
       </function>
       <function name="parse_refmap_arg">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>refmap_nr</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>refmap_array</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>refmap_array</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>refmap_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <ci>refmap_alloc</ci>
+                    <cn>16</cn>
+                  </apply>
+                  <cn>3</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>refmap_alloc</ci>
+                  <cn>16</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>refmap_array</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -497,14 +738,61 @@
       </function>
       <function name="prepare_transport">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="deepen___0" nr="2"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="url"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="remote"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cannot_reuse"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -544,10 +832,10 @@
       </function>
       <function name="prune_refs">
         <parameters>
-          <par name="refs" nr="1"/>
-          <par name="ref_count" nr="2"/>
           <par name="ref_map" nr="3"/>
+          <par name="ref_count" nr="2"/>
           <par name="raw_url" nr="4"/>
+          <par name="refs" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -575,8 +863,8 @@
       </function>
       <function name="s_update_ref">
         <parameters>
-          <par name="action" nr="1"/>
           <par name="ref" nr="2"/>
+          <par name="action" nr="1"/>
           <par name="check_old" nr="3"/>
         </parameters>
         <postconditions>
@@ -592,8 +880,8 @@
       <function name="set_option">
         <parameters>
           <par name="transport" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -607,9 +895,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -623,8 +911,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -638,8 +926,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -653,9 +941,9 @@
       </function>
       <function name="store_updated_refs">
         <parameters>
-          <par name="raw_url" nr="1"/>
-          <par name="remote_name" nr="2"/>
           <par name="ref_map" nr="3"/>
+          <par name="remote_name" nr="2"/>
+          <par name="raw_url" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -684,8 +972,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -699,9 +987,9 @@
       </function>
       <function name="strip_suffix">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="str" nr="1"/>
           <par name="suffix" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -715,8 +1003,8 @@
       </function>
       <function name="strip_suffix_mem">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="suffix" nr="3"/>
         </parameters>
         <postconditions>
@@ -743,6 +1031,24 @@
       </function>
       <function name="unlock_pack">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>gsecondary</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>gtransport</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -770,10 +1076,10 @@
       <function name="update_local_ref">
         <parameters>
           <par name="ref" nr="1"/>
-          <par name="remote" nr="2"/>
           <par name="remote_ref" nr="3"/>
           <par name="display" nr="4"/>
           <par name="summary_width" nr="5"/>
+          <par name="remote" nr="2"/>
         </parameters>
         <postconditions>
           <post>

@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:10.726324"/>
-  <cfile name="walker">
-    <data-structures/>
+  <header time="2018-12-19 17:41:11">
+    <application file="walker.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="complete"/>
+      <gvar name="process_queue"/>
+      <gvar name="process_queue_end"/>
+    </global-variables>
     <functions>
       <function name="const_error">
         <parameters/>
@@ -48,9 +54,9 @@
       </function>
       <function name="interpret_target">
         <parameters>
-          <par name="walker" nr="1"/>
           <par name="target" nr="2"/>
           <par name="oid" nr="3"/>
+          <par name="walker" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -80,6 +86,21 @@
         <parameters>
           <par name="walker" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="item"/>
+                  </addressed-value>
+                  <ci>process_queue</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -92,10 +113,10 @@
       </function>
       <function name="mark_complete">
         <parameters>
-          <par name="path" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="oid" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -155,6 +176,35 @@
           <par name="walker" nr="1"/>
           <par name="obj" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>process_queue_end</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>process_queue_end</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>process_queue_end</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -170,6 +220,21 @@
           <par name="walker" nr="1"/>
           <par name="commit" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="item"/>
+                  </addressed-value>
+                  <ci>complete</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -241,8 +306,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -256,8 +321,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -271,10 +336,10 @@
       </function>
       <function name="walker_fetch">
         <parameters>
-          <par name="walker" nr="1"/>
-          <par name="targets" nr="2"/>
           <par name="target" nr="3"/>
           <par name="write_ref" nr="4"/>
+          <par name="walker" nr="1"/>
+          <par name="targets" nr="2"/>
           <par name="write_ref_log_details" nr="5"/>
         </parameters>
         <postconditions>
@@ -318,9 +383,9 @@
       </function>
       <function name="walker_targets_free">
         <parameters>
-          <par name="targets" nr="1"/>
           <par name="target" nr="2"/>
           <par name="write_ref" nr="3"/>
+          <par name="targets" nr="1"/>
         </parameters>
         <postconditions>
           <post>

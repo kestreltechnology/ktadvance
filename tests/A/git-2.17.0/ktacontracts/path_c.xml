@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:01.184052"/>
-  <cfile name="path">
-    <data-structures/>
+  <header time="2018-12-19 16:25:08">
+    <application file="path.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="git_hooks_path"/>
+      <gvar name="index___0"/>
+      <gvar name="report_garbage"/>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -20,9 +27,9 @@
       </function>
       <function name="add_to_trie">
         <parameters>
-          <par name="root" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="key" nr="2"/>
+          <par name="root" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -36,10 +43,28 @@
       </function>
       <function name="adjust_git_path">
         <parameters>
-          <par name="repo" nr="1"/>
-          <par name="buf" nr="2"/>
           <par name="git_dir_len" nr="3"/>
+          <par name="buf" nr="2"/>
+          <par name="repo" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>git_hooks_path</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>git_hooks_path</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -96,14 +121,23 @@
       </function>
       <function name="chomp_trailing_dir_sep">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -118,6 +152,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -139,8 +181,8 @@
       </function>
       <function name="dir_prefix">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="dir" nr="2"/>
+          <par name="buf" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -154,10 +196,10 @@
       </function>
       <function name="do_git_common_path">
         <parameters>
-          <par name="repo" nr="1"/>
-          <par name="buf" nr="2"/>
-          <par name="fmt" nr="3"/>
           <par name="args" nr="4"/>
+          <par name="buf" nr="2"/>
+          <par name="repo" nr="1"/>
+          <par name="fmt" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -171,11 +213,11 @@
       </function>
       <function name="do_git_path">
         <parameters>
+          <par name="args" nr="5"/>
+          <par name="buf" nr="3"/>
           <par name="repo" nr="1"/>
           <par name="wt" nr="2"/>
-          <par name="buf" nr="3"/>
           <par name="fmt" nr="4"/>
-          <par name="args" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -189,10 +231,10 @@
       </function>
       <function name="do_submodule_path">
         <parameters>
-          <par name="buf" nr="1"/>
-          <par name="path" nr="2"/>
-          <par name="fmt" nr="3"/>
           <par name="args" nr="4"/>
+          <par name="buf" nr="1"/>
+          <par name="fmt" nr="3"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -206,10 +248,10 @@
       </function>
       <function name="do_worktree_path">
         <parameters>
-          <par name="repo" nr="1"/>
-          <par name="buf" nr="2"/>
-          <par name="fmt" nr="3"/>
           <par name="args" nr="4"/>
+          <par name="buf" nr="2"/>
+          <par name="repo" nr="1"/>
+          <par name="fmt" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -223,8 +265,8 @@
       </function>
       <function name="enter_repo">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="strict" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -238,8 +280,8 @@
       </function>
       <function name="expand_user_path">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="real_home" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -253,6 +295,52 @@
       </function>
       <function name="get_pathname">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>index___0</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>index___0</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <lt/>
+                <ci>index___0</ci>
+                <cn>4</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <plus/>
+                  <ci>index___0</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -261,12 +349,59 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="buf"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="len"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="alloc"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_st_mode_bits">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="mode" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -291,12 +426,43 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="pw_dir"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_common_path">
         <parameters>
           <par name="fmt" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -353,6 +519,24 @@
         <parameters>
           <par name="fmt" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -368,6 +552,24 @@
           <par name="buf" nr="1"/>
           <par name="fmt" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -490,6 +692,24 @@
         <parameters>
           <par name="fmt" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -502,8 +722,8 @@
       </function>
       <function name="git_pathdup_submodule">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="fmt" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -517,8 +737,8 @@
       </function>
       <function name="have_same_root">
         <parameters>
-          <par name="path1" nr="1"/>
           <par name="path2" nr="2"/>
+          <par name="path1" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -558,8 +778,8 @@
       </function>
       <function name="is_dir_file">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="dir" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="file" nr="3"/>
         </parameters>
         <postconditions>
@@ -588,8 +808,8 @@
       </function>
       <function name="longest_ancestor_length">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="prefixes" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -617,8 +837,8 @@
       </function>
       <function name="make_trie_node">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -661,8 +881,8 @@
       <function name="mksnpath">
         <parameters>
           <par name="buf" nr="1"/>
-          <par name="n" nr="2"/>
           <par name="fmt" nr="3"/>
+          <par name="n" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -691,9 +911,9 @@
       </function>
       <function name="normalize_path_copy_len">
         <parameters>
+          <par name="prefix_len" nr="3"/>
           <par name="dst" nr="1"/>
           <par name="src" nr="2"/>
-          <par name="prefix_len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -707,9 +927,9 @@
       </function>
       <function name="only_spaces_and_periods">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="len" nr="2"/>
           <par name="skip" nr="3"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -723,9 +943,9 @@
       </function>
       <function name="relative_path">
         <parameters>
+          <par name="sb" nr="3"/>
           <par name="in" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="sb" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -754,8 +974,8 @@
       </function>
       <function name="replace_dir">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="newdir" nr="3"/>
         </parameters>
         <postconditions>
@@ -800,6 +1020,53 @@
       </function>
       <function name="report_linked_checkout_garbage">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>report_garbage</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="different_commondir"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>report_garbage</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -827,8 +1094,8 @@
       </function>
       <function name="sane_case">
         <parameters>
-          <par name="x" nr="1"/>
           <par name="high" nr="2"/>
+          <par name="x" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -842,9 +1109,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -858,8 +1125,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -916,8 +1183,8 @@
       </function>
       <function name="strbuf_complete">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="term" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -950,6 +1217,24 @@
           <par name="sb" nr="1"/>
           <par name="fmt" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -963,8 +1248,8 @@
       <function name="strbuf_git_path_submodule">
         <parameters>
           <par name="buf" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="fmt" nr="3"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -1010,8 +1295,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1041,8 +1326,8 @@
       </function>
       <function name="strip_path_suffix">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="suffix___0" nr="2"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1056,10 +1341,10 @@
       </function>
       <function name="trie_find">
         <parameters>
-          <par name="root" nr="1"/>
-          <par name="key" nr="2"/>
           <par name="fn" nr="3"/>
+          <par name="key" nr="2"/>
           <par name="baton" nr="4"/>
+          <par name="root" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1073,8 +1358,8 @@
       </function>
       <function name="update_common_dir">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="git_dir_len" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="common_dir" nr="3"/>
         </parameters>
         <postconditions>
@@ -1106,6 +1391,24 @@
           <par name="wt" nr="1"/>
           <par name="fmt" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

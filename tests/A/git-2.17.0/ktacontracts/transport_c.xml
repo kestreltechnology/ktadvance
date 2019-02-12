@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:09.519898"/>
-  <cfile name="transport">
-    <data-structures/>
+  <header time="2018-12-19 17:34:19">
+    <application file="transport.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="stdout"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -13,6 +17,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -35,9 +47,9 @@
       <function name="connect_git">
         <parameters>
           <par name="transport" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="executable" nr="3"/>
           <par name="fd" nr="4"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,8 +63,8 @@
       </function>
       <function name="connect_setup">
         <parameters>
-          <par name="transport" nr="1"/>
           <par name="for_push" nr="2"/>
+          <par name="transport" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -104,12 +116,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="fetch_refs_from_bundle">
         <parameters>
-          <par name="transport" nr="1"/>
           <par name="nr_heads" nr="2"/>
+          <par name="transport" nr="1"/>
           <par name="to_fetch" nr="3"/>
         </parameters>
         <postconditions>
@@ -124,8 +145,8 @@
       </function>
       <function name="fetch_refs_via_pack">
         <parameters>
-          <par name="transport" nr="1"/>
           <par name="nr_heads" nr="2"/>
+          <par name="transport" nr="1"/>
           <par name="to_fetch" nr="3"/>
         </parameters>
         <postconditions>
@@ -169,8 +190,8 @@
       </function>
       <function name="get_refs_from_bundle">
         <parameters>
-          <par name="transport" nr="1"/>
           <par name="for_push" nr="2"/>
+          <par name="transport" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -184,8 +205,8 @@
       </function>
       <function name="get_refs_via_connect">
         <parameters>
-          <par name="transport" nr="1"/>
           <par name="for_push" nr="2"/>
+          <par name="transport" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -273,8 +294,8 @@
       </function>
       <function name="is_transport_allowed">
         <parameters>
-          <par name="type" nr="1"/>
           <par name="from_user" nr="2"/>
+          <par name="type" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -333,8 +354,8 @@
       </function>
       <function name="parse_protocol_config">
         <parameters>
-          <par name="key" nr="1"/>
           <par name="value" nr="2"/>
+          <par name="key" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -370,6 +391,16 @@
           <par name="porcelain" nr="4"/>
           <par name="summary_width" nr="5"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>stdout</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -384,11 +415,11 @@
         <parameters>
           <par name="flag" nr="1"/>
           <par name="summary" nr="2"/>
-          <par name="to" nr="3"/>
-          <par name="from" nr="4"/>
-          <par name="msg" nr="5"/>
           <par name="porcelain" nr="6"/>
           <par name="summary_width" nr="7"/>
+          <par name="msg" nr="5"/>
+          <par name="from" nr="4"/>
+          <par name="to" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -410,6 +441,45 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="nr"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="items"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="cmp"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="push_had_errors">
@@ -428,9 +498,9 @@
       </function>
       <function name="read_alternate_refs">
         <parameters>
-          <par name="path" nr="1"/>
           <par name="cb" nr="2"/>
           <par name="data" nr="3"/>
+          <par name="path" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -474,9 +544,9 @@
       </function>
       <function name="set_git_option">
         <parameters>
+          <par name="value" nr="3"/>
           <par name="opts" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="value" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -490,9 +560,9 @@
       </function>
       <function name="set_upstreams">
         <parameters>
+          <par name="pretend" nr="3"/>
           <par name="transport" nr="1"/>
           <par name="refs" nr="2"/>
-          <par name="pretend" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -506,8 +576,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -536,8 +606,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -566,8 +636,8 @@
       </function>
       <function name="strip_suffix_mem">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="suffix" nr="3"/>
         </parameters>
         <postconditions>
@@ -592,6 +662,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="transport_check_allowed">
@@ -610,10 +696,10 @@
       </function>
       <function name="transport_connect">
         <parameters>
-          <par name="transport" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="exec" nr="3"/>
+          <par name="transport" nr="1"/>
           <par name="fd" nr="4"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -656,8 +742,8 @@
       </function>
       <function name="transport_get">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="url" nr="2"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -686,10 +772,10 @@
       <function name="transport_print_push_status">
         <parameters>
           <par name="dest" nr="1"/>
-          <par name="refs" nr="2"/>
           <par name="verbose" nr="3"/>
-          <par name="porcelain" nr="4"/>
           <par name="reject_reasons" nr="5"/>
+          <par name="porcelain" nr="4"/>
+          <par name="refs" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -703,11 +789,11 @@
       </function>
       <function name="transport_push">
         <parameters>
-          <par name="transport" nr="1"/>
           <par name="refspec_nr" nr="2"/>
+          <par name="reject_reasons" nr="5"/>
+          <par name="transport" nr="1"/>
           <par name="refspec" nr="3"/>
           <par name="flags" nr="4"/>
-          <par name="reject_reasons" nr="5"/>
         </parameters>
         <postconditions>
           <post>
@@ -736,8 +822,8 @@
       <function name="transport_set_option">
         <parameters>
           <par name="transport" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="value" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -751,8 +837,8 @@
       </function>
       <function name="transport_set_verbosity">
         <parameters>
-          <par name="transport" nr="1"/>
           <par name="verbosity" nr="2"/>
+          <par name="transport" nr="1"/>
           <par name="force_progress" nr="3"/>
         </parameters>
         <postconditions>
@@ -781,8 +867,8 @@
       </function>
       <function name="transport_take_over">
         <parameters>
-          <par name="transport" nr="1"/>
           <par name="child" nr="2"/>
+          <par name="transport" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -810,9 +896,9 @@
       </function>
       <function name="transport_update_tracking_ref">
         <parameters>
-          <par name="remote" nr="1"/>
           <par name="ref" nr="2"/>
           <par name="verbose" nr="3"/>
+          <par name="remote" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -826,8 +912,8 @@
       </function>
       <function name="transport_verify_remote_names">
         <parameters>
-          <par name="nr_heads" nr="1"/>
           <par name="heads" nr="2"/>
+          <par name="nr_heads" nr="1"/>
         </parameters>
         <postconditions>
           <post>

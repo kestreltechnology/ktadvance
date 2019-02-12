@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:59.141013"/>
-  <cfile name="lockfile">
-    <data-structures/>
+  <header time="2018-12-19 16:05:44">
+    <application file="lockfile.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="_">
         <parameters>
@@ -34,8 +36,8 @@
       </function>
       <function name="commit_lock_file_to">
         <parameters>
-          <par name="lk" nr="1"/>
           <par name="path" nr="2"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -71,6 +73,22 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="git_has_dos_drive_prefix">
@@ -103,10 +121,10 @@
       </function>
       <function name="hold_lock_file_for_update_timeout">
         <parameters>
-          <par name="lk" nr="1"/>
+          <par name="timeout_ms" nr="4"/>
           <par name="path" nr="2"/>
           <par name="flags" nr="3"/>
-          <par name="timeout_ms" nr="4"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -134,9 +152,9 @@
       </function>
       <function name="lock_file">
         <parameters>
-          <par name="lk" nr="1"/>
           <par name="path" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -150,10 +168,10 @@
       </function>
       <function name="lock_file_timeout">
         <parameters>
-          <par name="lk" nr="1"/>
+          <par name="timeout_ms" nr="4"/>
           <par name="path" nr="2"/>
           <par name="flags" nr="3"/>
-          <par name="timeout_ms" nr="4"/>
+          <par name="lk" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -196,8 +214,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -240,9 +258,9 @@
       </function>
       <function name="unable_to_lock_message">
         <parameters>
+          <par name="buf" nr="3"/>
           <par name="path" nr="1"/>
           <par name="err" nr="2"/>
-          <par name="buf" nr="3"/>
         </parameters>
         <postconditions>
           <post>

@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:00.225732"/>
-  <cfile name="object">
-    <data-structures/>
+  <header time="2018-12-19 16:16:17">
+    <application file="object.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="nr_objs"/>
+      <gvar name="obj_hash"/>
+      <gvar name="obj_hash_size"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -20,9 +26,9 @@
       </function>
       <function name="add_object_array">
         <parameters>
+          <par name="array" nr="3"/>
           <par name="obj" nr="1"/>
           <par name="name" nr="2"/>
-          <par name="array" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -36,11 +42,11 @@
       </function>
       <function name="add_object_array_with_path">
         <parameters>
-          <par name="obj" nr="1"/>
-          <par name="name" nr="2"/>
-          <par name="array" nr="3"/>
           <par name="mode" nr="4"/>
+          <par name="array" nr="3"/>
+          <par name="obj" nr="1"/>
           <par name="path" nr="5"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -56,6 +62,24 @@
         <parameters>
           <par name="flags" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>obj_hash</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>obj_hash</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -70,6 +94,24 @@
         <parameters>
           <par name="flags" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>obj_hash</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>obj_hash</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -109,9 +151,101 @@
       </function>
       <function name="create_object">
         <parameters>
-          <par name="sha1" nr="1"/>
           <par name="o" nr="2"/>
+          <par name="sha1" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>obj_hash_size</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>obj_hash_size</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>nr_objs</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <times/>
+                  <ci>nr_objs</ci>
+                  <cn>2</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <times/>
+                  <ci>nr_objs</ci>
+                  <cn>2</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>obj_hash</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>obj_hash</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>obj_hash_size</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -126,6 +260,24 @@
         <parameters>
           <par name="idx" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>obj_hash</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>obj_hash</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -138,6 +290,17 @@
       </function>
       <function name="get_max_object_index">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>obj_hash_size</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -150,6 +313,45 @@
       </function>
       <function name="grow_object_hash">
         <parameters/>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>obj_hash</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>obj_hash</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <allocation-base/>
+                <ci>obj_hash</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <times/>
+                  <cn>2</cn>
+                  <ci>obj_hash_size</ci>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -207,9 +409,9 @@
       </function>
       <function name="insert_obj_hash">
         <parameters>
-          <par name="obj" nr="1"/>
           <par name="hash" nr="2"/>
           <par name="size" nr="3"/>
+          <par name="obj" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -225,11 +427,77 @@
         <parameters>
           <par name="sha1" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>obj_hash_size</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>obj_hash</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>obj_hash</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>obj_hash_size</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="parsed"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="type"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -244,6 +512,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -279,9 +555,9 @@
       </function>
       <function name="object_array_filter">
         <parameters>
-          <par name="array" nr="1"/>
-          <par name="want" nr="2"/>
           <par name="cb_data" nr="3"/>
+          <par name="want" nr="2"/>
+          <par name="array" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -338,8 +614,8 @@
       <function name="object_as_type">
         <parameters>
           <par name="obj" nr="1"/>
-          <par name="type" nr="2"/>
           <par name="quiet" nr="3"/>
+          <par name="type" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -398,10 +674,10 @@
       <function name="parse_object_buffer">
         <parameters>
           <par name="oid" nr="1"/>
-          <par name="type" nr="2"/>
           <par name="size" nr="3"/>
           <par name="buffer" nr="4"/>
           <par name="eaten_p" nr="5"/>
+          <par name="type" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -430,15 +706,23 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -460,8 +744,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -475,9 +759,9 @@
       </function>
       <function name="type_from_string_gently">
         <parameters>
-          <par name="str" nr="1"/>
-          <par name="len" nr="2"/>
           <par name="gentle" nr="3"/>
+          <par name="len" nr="2"/>
+          <par name="str" nr="1"/>
         </parameters>
         <postconditions>
           <post>

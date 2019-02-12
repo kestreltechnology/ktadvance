@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:51.121528"/>
-  <cfile name="builtin/shortlog">
-    <data-structures/>
+  <header time="2018-12-19 14:31:21">
+    <application file="builtin/shortlog.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="startup_info"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -16,13 +20,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="add_wrapped_shortlog_msg">
         <parameters>
+          <par name="log" nr="3"/>
           <par name="sb" nr="1"/>
           <par name="s" nr="2"/>
-          <par name="log" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -36,10 +48,41 @@
       </function>
       <function name="cmd_shortlog">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="have_repository"/>
+                  </addressed-value>
+                  <ci>startup_info</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>startup_info</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -109,8 +152,8 @@
       </function>
       <function name="insert_one_record">
         <parameters>
-          <par name="log" nr="1"/>
           <par name="author" nr="2"/>
+          <par name="log" nr="1"/>
           <par name="oneline" nr="3"/>
         </parameters>
         <postconditions>
@@ -125,8 +168,8 @@
       </function>
       <function name="parse_stdin_author">
         <parameters>
-          <par name="log" nr="1"/>
           <par name="out" nr="2"/>
+          <par name="log" nr="1"/>
           <par name="in" nr="3"/>
         </parameters>
         <postconditions>
@@ -141,9 +184,9 @@
       </function>
       <function name="parse_uint">
         <parameters>
+          <par name="defval" nr="3"/>
           <par name="arg" nr="1"/>
           <par name="comma" nr="2"/>
-          <par name="defval" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -157,8 +200,8 @@
       </function>
       <function name="parse_wrap_args">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -187,10 +230,10 @@
       </function>
       <function name="sane_qsort">
         <parameters>
-          <par name="base" nr="1"/>
           <par name="nmemb" nr="2"/>
-          <par name="size" nr="3"/>
           <par name="compar" nr="4"/>
+          <par name="size" nr="3"/>
+          <par name="base" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -247,9 +290,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -263,8 +306,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -292,8 +335,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

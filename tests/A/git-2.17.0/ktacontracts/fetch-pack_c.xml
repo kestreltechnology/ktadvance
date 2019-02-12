@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:57.710991"/>
-  <cfile name="fetch-pack">
-    <data-structures/>
+  <header time="2018-12-19 15:52:24">
+    <application file="fetch-pack.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="alternate_shallow_file"/>
+      <gvar name="complete"/>
+      <gvar name="non_common_revs"/>
+      <gvar name="unpack_limit"/>
+    </global-variables>
     <functions>
       <function name="_">
         <parameters>
@@ -51,10 +58,10 @@
       </function>
       <function name="clear_marks">
         <parameters>
-          <par name="refname" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="refname" nr="1"/>
+          <par name="oid" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -111,12 +118,12 @@
       <function name="do_fetch_pack">
         <parameters>
           <par name="args" nr="1"/>
-          <par name="fd" nr="2"/>
-          <par name="orig_ref" nr="3"/>
           <par name="sought" nr="4"/>
+          <par name="orig_ref" nr="3"/>
           <par name="nr_sought" nr="5"/>
-          <par name="si" nr="6"/>
           <par name="pack_lockfile" nr="7"/>
+          <par name="fd" nr="2"/>
+          <par name="si" nr="6"/>
         </parameters>
         <postconditions>
           <post>
@@ -131,9 +138,9 @@
       <function name="everything_local">
         <parameters>
           <par name="args" nr="1"/>
-          <par name="refs" nr="2"/>
           <par name="sought" nr="3"/>
           <par name="nr_sought" nr="4"/>
+          <par name="refs" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -148,14 +155,14 @@
       <function name="fetch_pack">
         <parameters>
           <par name="args" nr="1"/>
-          <par name="fd" nr="2"/>
-          <par name="conn" nr="3"/>
+          <par name="shallow" nr="8"/>
+          <par name="sought" nr="6"/>
           <par name="ref" nr="4"/>
           <par name="dest" nr="5"/>
-          <par name="sought" nr="6"/>
           <par name="nr_sought" nr="7"/>
-          <par name="shallow" nr="8"/>
           <par name="pack_lockfile" nr="9"/>
+          <par name="conn" nr="3"/>
+          <par name="fd" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -194,9 +201,9 @@
       <function name="filter_refs">
         <parameters>
           <par name="args" nr="1"/>
-          <par name="refs" nr="2"/>
           <par name="sought" nr="3"/>
           <par name="nr_sought" nr="4"/>
+          <par name="refs" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -211,8 +218,8 @@
       <function name="find_common">
         <parameters>
           <par name="args" nr="1"/>
-          <par name="fd" nr="2"/>
           <par name="result_oid" nr="3"/>
+          <par name="fd" nr="2"/>
           <par name="refs" nr="4"/>
         </parameters>
         <postconditions>
@@ -241,8 +248,8 @@
       </function>
       <function name="get_ack">
         <parameters>
-          <par name="fd" nr="1"/>
           <par name="result_oid" nr="2"/>
+          <par name="fd" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -257,9 +264,20 @@
       <function name="get_pack">
         <parameters>
           <par name="args" nr="1"/>
-          <par name="xd" nr="2"/>
           <par name="pack_lockfile" nr="3"/>
+          <par name="xd" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>unpack_limit</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -341,10 +359,25 @@
       </function>
       <function name="mark_common">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="ancestors_only" nr="2"/>
           <par name="dont_parse" nr="3"/>
+          <par name="commit" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <apply>
+                  <minus/>
+                  <ci>non_common_revs</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>-2147483648</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -371,10 +404,10 @@
       </function>
       <function name="mark_complete_oid">
         <parameters>
-          <par name="refname" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="refname" nr="1"/>
+          <par name="oid" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -391,6 +424,21 @@
           <par name="args" nr="1"/>
           <par name="cutoff" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="item"/>
+                  </addressed-value>
+                  <ci>complete</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -507,10 +555,10 @@
       </function>
       <function name="rev_list_insert_ref_oid">
         <parameters>
-          <par name="refname" nr="1"/>
-          <par name="oid" nr="2"/>
           <par name="flag" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="refname" nr="1"/>
+          <par name="oid" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -527,6 +575,21 @@
           <par name="commit" nr="1"/>
           <par name="mark" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <leq/>
+                <apply>
+                  <plus/>
+                  <ci>non_common_revs</ci>
+                  <cn>1</cn>
+                </apply>
+                <cn>2147483647</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -553,10 +616,10 @@
       </function>
       <function name="sane_qsort">
         <parameters>
-          <par name="base" nr="1"/>
           <par name="nmemb" nr="2"/>
-          <par name="size" nr="3"/>
           <par name="compar" nr="4"/>
+          <par name="size" nr="3"/>
+          <par name="base" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -571,8 +634,8 @@
       <function name="send_request">
         <parameters>
           <par name="args" nr="1"/>
-          <par name="fd" nr="2"/>
           <par name="buf" nr="3"/>
+          <par name="fd" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -586,8 +649,8 @@
       </function>
       <function name="sideband_demux">
         <parameters>
-          <par name="in" nr="1"/>
           <par name="out" nr="2"/>
+          <par name="in" nr="1"/>
           <par name="data" nr="3"/>
         </parameters>
         <postconditions>
@@ -602,9 +665,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -618,8 +681,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -648,8 +711,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -663,9 +726,9 @@
       </function>
       <function name="tip_oids_contain">
         <parameters>
-          <par name="tip_oids" nr="1"/>
           <par name="unmatched" nr="2"/>
           <par name="newlist" nr="3"/>
+          <par name="tip_oids" nr="1"/>
           <par name="id" nr="4"/>
         </parameters>
         <postconditions>
@@ -685,6 +748,19 @@
           <par name="nr_sought" nr="3"/>
           <par name="si" nr="4"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>alternate_shallow_file</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>

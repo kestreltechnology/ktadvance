@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:45.005006"/>
-  <cfile name="blame">
-    <data-structures/>
+  <header time="2018-12-19 12:13:07">
+    <application file="blame.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="_">
         <parameters>
@@ -20,8 +22,8 @@
       </function>
       <function name="add_blame_entry">
         <parameters>
-          <par name="queue" nr="1"/>
           <par name="src" nr="2"/>
+          <par name="queue" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -49,8 +51,8 @@
       </function>
       <function name="append_parent">
         <parameters>
-          <par name="tail" nr="1"/>
           <par name="oid" nr="2"/>
+          <par name="tail" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -60,12 +62,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="assign_blame">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="opt" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -79,11 +89,11 @@
       </function>
       <function name="blame_chunk">
         <parameters>
-          <par name="dstq" nr="1"/>
-          <par name="srcq" nr="2"/>
-          <par name="tlno" nr="3"/>
-          <par name="offset" nr="4"/>
           <par name="same" nr="5"/>
+          <par name="tlno" nr="3"/>
+          <par name="srcq" nr="2"/>
+          <par name="dstq" nr="1"/>
+          <par name="offset" nr="4"/>
           <par name="parent" nr="6"/>
         </parameters>
         <postconditions>
@@ -98,11 +108,11 @@
       </function>
       <function name="blame_chunk_cb">
         <parameters>
-          <par name="start_a" nr="1"/>
           <par name="count_a" nr="2"/>
-          <par name="start_b" nr="3"/>
           <par name="count_b" nr="4"/>
+          <par name="start_a" nr="1"/>
           <par name="data" nr="5"/>
+          <par name="start_b" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -130,10 +140,10 @@
       </function>
       <function name="blame_entry_prepend">
         <parameters>
+          <par name="o" nr="4"/>
+          <par name="end" nr="3"/>
           <par name="head" nr="1"/>
           <par name="start" nr="2"/>
-          <par name="end" nr="3"/>
-          <par name="o" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -185,6 +195,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -278,9 +296,9 @@
       </function>
       <function name="compare_commits_by_reverse_commit_date">
         <parameters>
-          <par name="a" nr="1"/>
-          <par name="b" nr="2"/>
           <par name="c" nr="3"/>
+          <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -295,8 +313,8 @@
       <function name="copy_split_if_better">
         <parameters>
           <par name="sb" nr="1"/>
-          <par name="best_so_far" nr="2"/>
           <par name="potential" nr="3"/>
+          <par name="best_so_far" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -354,8 +372,8 @@
         <parameters>
           <par name="file_a" nr="1"/>
           <par name="file_b" nr="2"/>
-          <par name="hunk_func" nr="3"/>
           <par name="cb_data" nr="4"/>
+          <par name="hunk_func" nr="3"/>
           <par name="xdl_opts" nr="5"/>
         </parameters>
         <postconditions>
@@ -399,9 +417,9 @@
       </function>
       <function name="dup_entry">
         <parameters>
-          <par name="queue" nr="1"/>
           <par name="dst" nr="2"/>
           <par name="src" nr="3"/>
+          <par name="queue" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -431,14 +449,22 @@
       <function name="fake_working_tree_commit">
         <parameters>
           <par name="opt" nr="1"/>
-          <par name="path" nr="2"/>
           <par name="contents_from" nr="3"/>
+          <par name="path" nr="2"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -460,10 +486,10 @@
       </function>
       <function name="fill_origin_blob">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="o" nr="2"/>
-          <par name="file" nr="3"/>
+          <par name="opt" nr="1"/>
           <par name="num_read_blob" nr="4"/>
+          <par name="file" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -477,10 +503,10 @@
       </function>
       <function name="filter_small">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="small" nr="2"/>
-          <par name="source" nr="3"/>
+          <par name="sb" nr="1"/>
           <par name="score_min" nr="4"/>
+          <par name="source" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -494,10 +520,10 @@
       </function>
       <function name="find_copy_in_blob">
         <parameters>
-          <par name="sb" nr="1"/>
-          <par name="ent" nr="2"/>
-          <par name="parent" nr="3"/>
           <par name="split" nr="4"/>
+          <par name="sb" nr="1"/>
+          <par name="parent" nr="3"/>
+          <par name="ent" nr="2"/>
           <par name="file_p" nr="5"/>
         </parameters>
         <postconditions>
@@ -512,13 +538,13 @@
       </function>
       <function name="find_copy_in_parent">
         <parameters>
+          <par name="target" nr="4"/>
+          <par name="porigin" nr="6"/>
+          <par name="opt" nr="7"/>
           <par name="sb" nr="1"/>
           <par name="blamed" nr="2"/>
           <par name="toosmall" nr="3"/>
-          <par name="target" nr="4"/>
           <par name="parent" nr="5"/>
-          <par name="porigin" nr="6"/>
-          <par name="opt" nr="7"/>
         </parameters>
         <postconditions>
           <post>
@@ -532,10 +558,10 @@
       </function>
       <function name="find_move_in_parent">
         <parameters>
+          <par name="target" nr="4"/>
           <par name="sb" nr="1"/>
           <par name="blamed" nr="2"/>
           <par name="toosmall" nr="3"/>
-          <par name="target" nr="4"/>
           <par name="parent" nr="5"/>
         </parameters>
         <postconditions>
@@ -550,8 +576,8 @@
       </function>
       <function name="find_origin">
         <parameters>
-          <par name="parent" nr="1"/>
           <par name="origin" nr="2"/>
+          <par name="parent" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -565,8 +591,8 @@
       </function>
       <function name="find_rename">
         <parameters>
-          <par name="parent" nr="1"/>
           <par name="origin" nr="2"/>
+          <par name="parent" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -591,6 +617,14 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="find_single_initial">
@@ -610,8 +644,8 @@
       </function>
       <function name="first_scapegoat">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
           <par name="reverse" nr="3"/>
         </parameters>
         <postconditions>
@@ -640,14 +674,22 @@
       </function>
       <function name="get_next_line">
         <parameters>
-          <par name="start" nr="1"/>
           <par name="end" nr="2"/>
+          <par name="start" nr="1"/>
         </parameters>
         <postconditions>
           <post>
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -666,17 +708,139 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="mode"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="commit"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="refcnt"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="next"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="file">
+                      <field name="ptr"/>
+                    </field>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="previous"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="file"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="path"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="handle_split">
         <parameters>
-          <par name="sb" nr="1"/>
-          <par name="ent" nr="2"/>
-          <par name="tlno" nr="3"/>
-          <par name="plno" nr="4"/>
           <par name="same" nr="5"/>
-          <par name="parent" nr="6"/>
+          <par name="tlno" nr="3"/>
           <par name="split" nr="7"/>
+          <par name="sb" nr="1"/>
+          <par name="plno" nr="4"/>
+          <par name="parent" nr="6"/>
+          <par name="ent" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -690,11 +854,11 @@
       </function>
       <function name="handle_split_cb">
         <parameters>
-          <par name="start_a" nr="1"/>
           <par name="count_a" nr="2"/>
-          <par name="start_b" nr="3"/>
           <par name="count_b" nr="4"/>
+          <par name="start_a" nr="1"/>
           <par name="data" nr="5"/>
+          <par name="start_b" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -777,12 +941,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="num_scapegoats">
         <parameters>
-          <par name="revs" nr="1"/>
           <par name="commit" nr="2"/>
+          <par name="revs" nr="1"/>
           <par name="reverse" nr="3"/>
         </parameters>
         <postconditions>
@@ -790,6 +962,15 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
               </apply>
             </math>
           </post>
@@ -855,9 +1036,9 @@
       </function>
       <function name="pass_blame">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="origin" nr="2"/>
           <par name="opt" nr="3"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -871,8 +1052,8 @@
       </function>
       <function name="pass_blame_to_parent">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="target" nr="2"/>
+          <par name="sb" nr="1"/>
           <par name="parent" nr="3"/>
         </parameters>
         <postconditions>
@@ -887,9 +1068,9 @@
       </function>
       <function name="pass_whole_blame">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="origin" nr="2"/>
           <par name="porigin" nr="3"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -917,9 +1098,9 @@
       </function>
       <function name="queue_blames">
         <parameters>
-          <par name="sb" nr="1"/>
-          <par name="porigin" nr="2"/>
           <par name="sorted" nr="3"/>
+          <par name="porigin" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -933,9 +1114,9 @@
       </function>
       <function name="read_sha1_file">
         <parameters>
+          <par name="size" nr="3"/>
           <par name="sha1" nr="1"/>
           <par name="type" nr="2"/>
-          <par name="size" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -957,6 +1138,19 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="s_lno"/>
+                  </addressed-value>
+                  <return/>
+                </apply>
               </apply>
             </math>
           </post>
@@ -1019,13 +1213,29 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="setup_scoreboard">
         <parameters>
+          <par name="orig" nr="3"/>
           <par name="sb" nr="1"/>
           <par name="path" nr="2"/>
-          <par name="orig" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -1039,9 +1249,9 @@
       </function>
       <function name="split_blame">
         <parameters>
+          <par name="split" nr="3"/>
           <par name="blamed" nr="1"/>
           <par name="unblamed" nr="2"/>
-          <par name="split" nr="3"/>
           <par name="e" nr="4"/>
         </parameters>
         <postconditions>
@@ -1056,11 +1266,11 @@
       </function>
       <function name="split_overlap">
         <parameters>
+          <par name="same" nr="5"/>
+          <par name="tlno" nr="3"/>
           <par name="split" nr="1"/>
           <par name="e" nr="2"/>
-          <par name="tlno" nr="3"/>
           <par name="plno" nr="4"/>
-          <par name="same" nr="5"/>
           <par name="parent" nr="6"/>
         </parameters>
         <postconditions>
@@ -1075,8 +1285,8 @@
       </function>
       <function name="st_add">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -1090,8 +1300,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>

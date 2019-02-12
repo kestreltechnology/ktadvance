@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:59.398263"/>
-  <cfile name="mailinfo">
-    <data-structures/>
+  <header time="2018-12-19 16:08:11">
+    <application file="mailinfo.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="check_header">
         <parameters>
+          <par name="hdr_data" nr="3"/>
           <par name="mi" nr="1"/>
           <par name="line" nr="2"/>
-          <par name="hdr_data" nr="3"/>
           <par name="overwrite" nr="4"/>
         </parameters>
         <postconditions>
@@ -108,9 +110,9 @@
       </function>
       <function name="convert_to_utf8">
         <parameters>
+          <par name="charset" nr="3"/>
           <par name="mi" nr="1"/>
           <par name="line" nr="2"/>
-          <par name="charset" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -131,6 +133,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -161,6 +171,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -213,8 +231,8 @@
       <function name="get_sane_name">
         <parameters>
           <par name="out" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="email" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -228,9 +246,9 @@
       </function>
       <function name="git_mailinfo_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="mi_" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -421,8 +439,8 @@
       </function>
       <function name="is_format_patch_separator">
         <parameters>
-          <par name="line" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="line" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -494,9 +512,9 @@
       </function>
       <function name="mailinfo">
         <parameters>
+          <par name="patch" nr="3"/>
           <par name="mi" nr="1"/>
           <par name="msg" nr="2"/>
-          <par name="patch" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -570,9 +588,9 @@
       </function>
       <function name="reencode_string">
         <parameters>
-          <par name="in" nr="1"/>
-          <par name="out_encoding" nr="2"/>
           <par name="in_encoding" nr="3"/>
+          <par name="out_encoding" nr="2"/>
+          <par name="in" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -586,8 +604,8 @@
       </function>
       <function name="sane_case">
         <parameters>
-          <par name="x" nr="1"/>
           <par name="high" nr="2"/>
+          <par name="x" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -615,9 +633,9 @@
       </function>
       <function name="skip_prefix">
         <parameters>
+          <par name="out" nr="3"/>
           <par name="str" nr="1"/>
           <par name="prefix" nr="2"/>
-          <par name="out" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -632,8 +650,8 @@
       <function name="slurp_attr">
         <parameters>
           <par name="line" nr="1"/>
-          <par name="name" nr="2"/>
           <par name="attr" nr="3"/>
+          <par name="name" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -647,8 +665,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -691,8 +709,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -717,13 +735,29 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <allocation-base/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="strbuf_split_max">
         <parameters>
           <par name="sb" nr="1"/>
-          <par name="terminator" nr="2"/>
           <par name="max" nr="3"/>
+          <par name="terminator" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -752,8 +786,8 @@
       </function>
       <function name="strbuf_swap">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -767,8 +801,8 @@
       </function>
       <function name="strip_suffix_mem">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="suffix" nr="3"/>
         </parameters>
         <postconditions>
@@ -791,6 +825,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -820,6 +862,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>

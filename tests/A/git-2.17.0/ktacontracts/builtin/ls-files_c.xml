@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:48.821048"/>
-  <cfile name="builtin/ls-files">
-    <data-structures/>
+  <header time="2018-12-19 13:52:51">
+    <application file="builtin/ls-files.c"/>
+  </header>
+  <cfile>
+    <global-variables>
+      <gvar name="max_prefix_len"/>
+      <gvar name="ps_matched"/>
+      <gvar name="tag_killed"/>
+      <gvar name="tag_modified"/>
+      <gvar name="tag_other"/>
+      <gvar name="tag_removed"/>
+      <gvar name="tag_resolve_undo"/>
+      <gvar name="the_repository"/>
+    </global-variables>
     <functions>
       <function name="ce_excluded">
         <parameters>
           <par name="dir" nr="1"/>
-          <par name="istate" nr="2"/>
           <par name="fullname" nr="3"/>
           <par name="ce" nr="4"/>
+          <par name="istate" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -37,10 +48,54 @@
       </function>
       <function name="cmd_ls_files">
         <parameters>
-          <par name="argc" nr="1"/>
-          <par name="argv" nr="2"/>
           <par name="cmd_prefix" nr="3"/>
+          <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="index"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>the_repository</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value>
+                    <field name="submodule_prefix"/>
+                  </addressed-value>
+                  <ci>the_repository</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -54,8 +109,8 @@
       <function name="construct_fullname">
         <parameters>
           <par name="out" nr="1"/>
-          <par name="repo" nr="2"/>
           <par name="ce" nr="3"/>
+          <par name="repo" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -69,10 +124,10 @@
       </function>
       <function name="dir_path_match">
         <parameters>
-          <par name="ent" nr="1"/>
-          <par name="pathspec" nr="2"/>
-          <par name="prefix" nr="3"/>
           <par name="seen" nr="4"/>
+          <par name="pathspec" nr="2"/>
+          <par name="ent" nr="1"/>
+          <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -96,6 +151,15 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="get_tag">
@@ -108,6 +172,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>
@@ -130,9 +202,9 @@
       <function name="move_array">
         <parameters>
           <par name="dst" nr="1"/>
+          <par name="size" nr="4"/>
           <par name="src" nr="2"/>
           <par name="n" nr="3"/>
-          <par name="size" nr="4"/>
         </parameters>
         <postconditions>
           <post>
@@ -146,8 +218,8 @@
       </function>
       <function name="option_parse_exclude">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -162,8 +234,8 @@
       </function>
       <function name="option_parse_exclude_from">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -178,8 +250,8 @@
       </function>
       <function name="option_parse_exclude_standard">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -194,9 +266,9 @@
       </function>
       <function name="overlay_tree_on_index">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="tree_name" nr="2"/>
           <par name="prefix___0" nr="3"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -224,9 +296,9 @@
       </function>
       <function name="prune_index">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="prefix___0" nr="2"/>
           <par name="prefixlen" nr="3"/>
+          <par name="istate" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -240,8 +312,8 @@
       </function>
       <function name="sane_case">
         <parameters>
-          <par name="x" nr="1"/>
           <par name="high" nr="2"/>
+          <par name="x" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -251,16 +323,44 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <geq/>
+                <return/>
+                <cn>-128</cn>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="show_ce">
         <parameters>
-          <par name="repo" nr="1"/>
           <par name="dir" nr="2"/>
-          <par name="ce" nr="3"/>
           <par name="fullname" nr="4"/>
+          <par name="ce" nr="3"/>
+          <par name="repo" nr="1"/>
           <par name="tag" nr="5"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>ps_matched</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>max_prefix_len</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -276,6 +376,25 @@
           <par name="tag" nr="1"/>
           <par name="ent" nr="2"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>ps_matched</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <geq/>
+                <ci>max_prefix_len</ci>
+                <cn>0</cn>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -288,9 +407,49 @@
       </function>
       <function name="show_files">
         <parameters>
-          <par name="repo" nr="1"/>
           <par name="dir" nr="2"/>
+          <par name="repo" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tag_removed</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tag_modified</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>tag_modified</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <initialized/>
+                <apply>
+                  <addressed-value/>
+                  <ci>tag_removed</ci>
+                </apply>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -303,9 +462,27 @@
       </function>
       <function name="show_killed_files">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="dir" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tag_killed</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>tag_killed</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -318,9 +495,27 @@
       </function>
       <function name="show_other_files">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="dir" nr="2"/>
+          <par name="istate" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tag_other</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <not-null/>
+                <ci>tag_other</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -335,6 +530,24 @@
         <parameters>
           <par name="istate" nr="1"/>
         </parameters>
+        <preconditions>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>ps_matched</ci>
+              </apply>
+            </math>
+          </pre>
+          <pre>
+            <math>
+              <apply>
+                <valid-mem/>
+                <ci>tag_resolve_undo</ci>
+              </apply>
+            </math>
+          </pre>
+        </preconditions>
         <postconditions>
           <post>
             <math>
@@ -347,8 +560,8 @@
       </function>
       <function name="show_submodule">
         <parameters>
-          <par name="superproject" nr="1"/>
           <par name="dir" nr="2"/>
+          <par name="superproject" nr="1"/>
           <par name="path" nr="3"/>
         </parameters>
         <postconditions>
@@ -363,8 +576,8 @@
       </function>
       <function name="st_mult">
         <parameters>
-          <par name="a" nr="1"/>
           <par name="b" nr="2"/>
+          <par name="a" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -393,8 +606,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -408,8 +621,8 @@
       </function>
       <function name="write_eolinfo">
         <parameters>
-          <par name="istate" nr="1"/>
           <par name="ce" nr="2"/>
+          <par name="istate" nr="1"/>
           <par name="path" nr="3"/>
         </parameters>
         <postconditions>

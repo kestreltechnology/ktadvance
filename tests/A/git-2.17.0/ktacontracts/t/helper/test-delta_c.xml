@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:44:08.696601"/>
-  <cfile name="t/helper/test-delta">
-    <data-structures/>
+  <header time="2018-12-19 17:19:10">
+    <application file="t/helper/test-delta.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="cmd_main">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -21,11 +23,11 @@
       </function>
       <function name="diff_delta">
         <parameters>
-          <par name="src_buf" nr="1"/>
+          <par name="delta_size" nr="5"/>
+          <par name="trg_bufsize" nr="4"/>
           <par name="src_bufsize" nr="2"/>
           <par name="trg_buf" nr="3"/>
-          <par name="trg_bufsize" nr="4"/>
-          <par name="delta_size" nr="5"/>
+          <par name="src_buf" nr="1"/>
           <par name="max_delta_size" nr="6"/>
         </parameters>
         <postconditions>
@@ -33,6 +35,14 @@
             <math>
               <apply>
                 <preserves-all-memory/>
+              </apply>
+            </math>
+          </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
               </apply>
             </math>
           </post>

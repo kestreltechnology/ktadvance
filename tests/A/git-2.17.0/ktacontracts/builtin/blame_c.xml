@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:45.497487"/>
-  <cfile name="builtin/blame">
-    <data-structures/>
+  <header time="2018-12-19 12:54:31">
+    <application file="builtin/blame.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="Q_">
         <parameters>
           <par name="msgid" nr="1"/>
-          <par name="plu" nr="2"/>
           <par name="n" nr="3"/>
+          <par name="plu" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -36,8 +38,8 @@
       </function>
       <function name="add_prefix">
         <parameters>
-          <par name="prefix" nr="1"/>
           <par name="path" nr="2"/>
+          <par name="prefix" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,9 +53,9 @@
       </function>
       <function name="blame_copy_callback">
         <parameters>
-          <par name="option" nr="1"/>
           <par name="arg" nr="2"/>
           <par name="unset" nr="3"/>
+          <par name="option" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -67,9 +69,9 @@
       </function>
       <function name="blame_move_callback">
         <parameters>
-          <par name="option" nr="1"/>
           <par name="arg" nr="2"/>
           <par name="unset" nr="3"/>
+          <par name="option" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -83,8 +85,8 @@
       </function>
       <function name="cmd_blame">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -139,8 +141,8 @@
       </function>
       <function name="emit_one_suspect_detail">
         <parameters>
-          <par name="suspect" nr="1"/>
           <par name="repeat" nr="2"/>
+          <par name="suspect" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -154,9 +156,9 @@
       </function>
       <function name="emit_other">
         <parameters>
+          <par name="opt" nr="3"/>
           <par name="sb" nr="1"/>
           <par name="ent" nr="2"/>
-          <par name="opt" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -170,9 +172,9 @@
       </function>
       <function name="emit_porcelain">
         <parameters>
+          <par name="opt" nr="3"/>
           <par name="sb" nr="1"/>
           <par name="ent" nr="2"/>
-          <par name="opt" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -186,8 +188,8 @@
       </function>
       <function name="emit_porcelain_details">
         <parameters>
-          <par name="suspect" nr="1"/>
           <par name="repeat" nr="2"/>
+          <par name="suspect" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -217,8 +219,8 @@
       <function name="format_time">
         <parameters>
           <par name="time___0" nr="1"/>
-          <par name="tz_str" nr="2"/>
           <par name="show_raw_time" nr="3"/>
+          <par name="tz_str" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -228,12 +230,20 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="found_guilty_entry">
         <parameters>
-          <par name="ent" nr="1"/>
           <par name="data" nr="2"/>
+          <par name="ent" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -247,12 +257,12 @@
       </function>
       <function name="get_ac_line">
         <parameters>
-          <par name="inbuf" nr="1"/>
-          <par name="what" nr="2"/>
-          <par name="name" nr="3"/>
-          <par name="mail" nr="4"/>
           <par name="time___0" nr="5"/>
+          <par name="what" nr="2"/>
           <par name="tz" nr="6"/>
+          <par name="inbuf" nr="1"/>
+          <par name="mail" nr="4"/>
+          <par name="name" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -266,8 +276,8 @@
       </function>
       <function name="get_commit_info">
         <parameters>
-          <par name="commit" nr="1"/>
           <par name="ret" nr="2"/>
+          <par name="commit" nr="1"/>
           <par name="detailed" nr="3"/>
         </parameters>
         <postconditions>
@@ -282,9 +292,9 @@
       </function>
       <function name="git_blame_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -312,8 +322,8 @@
       </function>
       <function name="nth_line_cb">
         <parameters>
-          <par name="data" nr="1"/>
           <par name="lno" nr="2"/>
+          <par name="data" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -385,8 +395,8 @@
       </function>
       <function name="strbuf_addch">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="c" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -429,8 +439,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>

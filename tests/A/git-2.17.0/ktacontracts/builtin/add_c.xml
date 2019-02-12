@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c-analysis>
-  <header info="cfile" name="cfile" time="2018-06-11 11:43:45.125475"/>
-  <cfile name="builtin/add">
-    <data-structures/>
+  <header time="2018-12-19 12:20:41">
+    <application file="builtin/add.c"/>
+  </header>
+  <cfile>
+    <global-variables/>
     <functions>
       <function name="_">
         <parameters>
@@ -16,13 +18,21 @@
               </apply>
             </math>
           </post>
+          <post>
+            <math>
+              <apply>
+                <not-null/>
+                <return/>
+              </apply>
+            </math>
+          </post>
         </postconditions>
       </function>
       <function name="add_config">
         <parameters>
-          <par name="var" nr="1"/>
-          <par name="value" nr="2"/>
           <par name="cb" nr="3"/>
+          <par name="value" nr="2"/>
+          <par name="var" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -51,9 +61,9 @@
       </function>
       <function name="add_files_to_cache">
         <parameters>
-          <par name="prefix" nr="1"/>
           <par name="pathspec" nr="2"/>
           <par name="flags" nr="3"/>
+          <par name="prefix" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -68,8 +78,8 @@
       <function name="ce_path_match">
         <parameters>
           <par name="ce" nr="1"/>
-          <par name="pathspec" nr="2"/>
           <par name="seen" nr="3"/>
+          <par name="pathspec" nr="2"/>
         </parameters>
         <postconditions>
           <post>
@@ -112,8 +122,8 @@
       </function>
       <function name="cmd_add">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -128,10 +138,10 @@
       </function>
       <function name="dir_path_match">
         <parameters>
-          <par name="ent" nr="1"/>
-          <par name="pathspec" nr="2"/>
-          <par name="prefix" nr="3"/>
           <par name="seen" nr="4"/>
+          <par name="pathspec" nr="2"/>
+          <par name="ent" nr="1"/>
+          <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -145,8 +155,8 @@
       </function>
       <function name="edit_patch">
         <parameters>
-          <par name="argc" nr="1"/>
           <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
           <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
@@ -191,8 +201,8 @@
       </function>
       <function name="ignore_removal_cb">
         <parameters>
-          <par name="opt" nr="1"/>
           <par name="arg" nr="2"/>
+          <par name="opt" nr="1"/>
           <par name="unset" nr="3"/>
         </parameters>
         <postconditions>
@@ -207,10 +217,10 @@
       </function>
       <function name="interactive_add">
         <parameters>
-          <par name="argc" nr="1"/>
-          <par name="argv" nr="2"/>
-          <par name="prefix" nr="3"/>
           <par name="patch" nr="4"/>
+          <par name="argv" nr="2"/>
+          <par name="argc" nr="1"/>
+          <par name="prefix" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -301,8 +311,8 @@
       </function>
       <function name="strbuf_setlen">
         <parameters>
-          <par name="sb" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="sb" nr="1"/>
         </parameters>
         <postconditions>
           <post>
@@ -331,9 +341,9 @@
       </function>
       <function name="strip_suffix">
         <parameters>
+          <par name="len" nr="3"/>
           <par name="str" nr="1"/>
           <par name="suffix" nr="2"/>
-          <par name="len" nr="3"/>
         </parameters>
         <postconditions>
           <post>
@@ -347,8 +357,8 @@
       </function>
       <function name="strip_suffix_mem">
         <parameters>
-          <par name="buf" nr="1"/>
           <par name="len" nr="2"/>
+          <par name="buf" nr="1"/>
           <par name="suffix" nr="3"/>
         </parameters>
         <postconditions>
@@ -363,9 +373,9 @@
       </function>
       <function name="update_callback">
         <parameters>
-          <par name="q" nr="1"/>
-          <par name="opt" nr="2"/>
           <par name="cbdata" nr="3"/>
+          <par name="opt" nr="2"/>
+          <par name="q" nr="1"/>
         </parameters>
         <postconditions>
           <post>
