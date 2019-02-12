@@ -67,7 +67,7 @@ directory, as follows:
 - **kendra**: scripts to analyze and report on the test cases in
      ```tests/sard/kendra```
 - **zitser**: scripts to analyze and report on the test cases in
-     ```tests/sard/zitser```
+     ```tests/sard/zitser``` ([quickstart instructions](advance/cmdline/zitser/README.md))
 - **juliet**: scripts to analyze and report on sets of test cases in
      ```tests/sard/juliet-1.3``` ([quickstart instructions](advance/cmdline/juliet/README.md))
 
@@ -77,7 +77,7 @@ report on new files and projects:
 
 - **sfapp**: scripts to analyze an application that consists of a
      single C file that can be compiled directly with GCC (without a
-     makefile). See the ```README.md``` file in this directory for a walk-through of the command scripts available.
+     makefile).
 - **mfapp**: scripts to analyze an application that comes with a
 	makefile. It is expected that the makefile exists (that is,
 	a configure script has already been run, if necessary).
