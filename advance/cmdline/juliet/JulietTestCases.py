@@ -35,14 +35,11 @@ missingscorekeys = {
 
 worklist = {
     "CWE194": [
-        "s02/listen_socket_memcpy",
         "s02/listen_socket_memmove",
         "s02/listen_socket_strncpy",
-        "s02/negative_malloc",
         "s02/negative_memcpy",
         "s02/negative_memmove",
         "s02/negative_strncpy",
-        "s02/rand_malloc",
         "s02/rand_memcpy",
         "s02/rand_memmove",
         "s02/rand_strncpy"
@@ -807,7 +804,10 @@ testcases = {
         "s01/fscanf_memcpy",
         "s01/fscanf_memmove",
         "s01/fscanf_strncpy",
-        "s02/listen_socket_malloc"
+        "s02/listen_socket_malloc",
+        "s02/listen_socket_memcpy",
+        "s02/negative_malloc",
+        "s02/rand_malloc"        
         ],
     "CWE195": [
         "s01/connect_socket_malloc",
