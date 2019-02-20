@@ -571,6 +571,15 @@ def get_juliet_reference(testname):
             d = json.load(fp)
         return d
 
+# ----------------------------------------------------------- itc tests  ------
+
+def get_itc_path():
+    sardpath = os.path.join(Config().testdir,'sard')
+    return os.path.abspath(os.path.join(sardpath,'itc'))
+
+def get_itc_testpath(testname):
+    return os.path.join(get_itc_path(),testname)
+
 # ---------------------------------------------------- functional tests  ------
 
 def get_functional_tests_path():
