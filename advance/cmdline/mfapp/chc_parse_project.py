@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
-# Copyright (c) 2017-2018 Kestrel Technology LLC
+# Copyright (c) 2017-2019 Kestrel Technology LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -51,6 +51,8 @@ def parse():
                         action='store_true')
     parser.add_argument('--removesemantics',help='remove semantics directory if present',
                         action='store_true')
+    parser.add_argument('--platformwordsize',help='wordsize of target platform (32 or 64)',type=int,
+                            default='64')
     args = parser.parse_args()
     return args
 
@@ -126,7 +128,9 @@ if __name__ == '__main__':
                 print('*' * 80)
                 exit(1)
 
-    parsemanager = ParseManager(cpath,tgtpath,filter=args.filter,keepUnused=args.keepUnused)
+    tgtplatform = '-m' + str(args.platformwordsize)
+    parsemanager = ParseManager(cpath,tgtpath,filter=args.filter,keepUnused=args.keepUnused,
+                                    tgtplatform=tgtplatform)
     parsemanager.initialize_paths()
 
     if doclean:
