@@ -580,6 +580,30 @@ def get_itc_path():
 def get_itc_testpath(testname):
     return os.path.join(get_itc_path(),testname)
 
+# ----------------------------------------------------------- cgc tests  ------
+
+def get_cgc_path():
+    return os.path.join(Config().testdir,'cgc')
+
+def make_cgc_challenge_path(testname,targetname):
+    challengepath = os.path.join(get_cgc_path(),'challenges')
+    testpath = os.path.join(challengepath,testname)
+    if not os.path.isdir(testpath): os.mkdir(testpath)
+    tgtpath = os.path.join(testpath,targetname)
+    if not os.path.isdir(tgtpath): os.mkdir(tgtpath)
+    return tgtpath
+
+def get_cgc_challenge_path(testname,targetname):
+    challengepath = os.path.join(get_cgc_path(),'challenges')
+    testpath = os.path.join(challengepath,testname)
+    tgtpath = os.path.join(testpath,targetname)
+    return tgtpath
+
+def get_cgc_summaries():
+    cgcpath = get_cgc_path()
+    summarypath = os.path.join(cgcpath,'cgcsummaries')
+    return os.path.join(summarypath,'cgcsummaries.jar')
+
 # ---------------------------------------------------- functional tests  ------
 
 def get_functional_tests_path():
