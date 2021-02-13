@@ -53,6 +53,8 @@ def parse():
     parser.add_argument('--savesemantics',
                             help='create gzipped tar file with semantics files',
                             action='store_true')
+    parser.add_argument('--compiler', help='compiler to use', default='gcc')
+    parser.add_argument('--cpuarch', help='target architecture', default=None)
     args = parser.parse_args()
     return args
 
@@ -102,12 +104,14 @@ if __name__ == '__main__':
             print('Removing semantics_linux.tar.gz')
             os.remove('semantics_linux.tar.gz')
     
-    parsemanager = ParseManager(cpath,targetpath)
+    parsemanager = ParseManager(cpath,targetpath,
+                                tgtcompiler=args.compiler,
+                                tgtcpuarch=args.cpuarch)
     parsemanager.initialize_paths()
 
     try:
         basename = os.path.basename(cfilename)
-        ifilename = parsemanager.preprocess_file_with_gcc(basename)
+        ifilename = parsemanager.preprocess_file(basename)
         result = parsemanager.parse_ifile(ifilename)
         if result != 0:
             print('*' * 80)
